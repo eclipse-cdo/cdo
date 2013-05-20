@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+org.eclipse.net4j.spi.db.ddl (Net4j DB Framework Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="org.eclipse.net4j.spi.db.ddl (Net4j DB Framework Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/spi/db/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
+&nbsp;NEXT PACKAGE</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/spi/db/ddl/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<H2>
+Package org.eclipse.net4j.spi.db.ddl
+</H2>
+<A NAME="package_description"><!-- --></A>
+Server service provider interfaces for the Net4j DB framework.
+
+<P>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="../../../db/ddl/IDBElement.html" title="&#171;interface&#187; IDBElement (org.eclipse.net4j.db.ddl)" alt="" coords="6,227,170,282"/>
+<area shape="rect" id="node2" href="../../../db/ddl/IDBField.html" title="&#171;interface&#187; IDBField (org.eclipse.net4j.db.ddl)" alt="" coords="602,5,766,59"/>
+<area shape="rect" id="node3" href="../../../db/ddl/IDBIndex.html" title="&#171;interface&#187; IDBIndex (org.eclipse.net4j.db.ddl)" alt="" coords="602,83,766,138"/>
+<area shape="rect" id="node4" href="../../../db/ddl/IDBIndexField.html" title="&#171;interface&#187; IDBIndexField (org.eclipse.net4j.db.ddl)" alt="" coords="602,227,766,282"/>
+<area shape="rect" id="node5" href="../../../db/ddl/IDBNamedElement.html" title="&#171;interface&#187; IDBNamedElement (org.eclipse.net4j.db.ddl)" alt="" coords="201,155,365,210"/>
+<area shape="rect" id="node6" href="../../../db/ddl/IDBSchema.html" title="&#171;interface&#187; IDBSchema (org.eclipse.net4j.db.ddl)" alt="" coords="602,306,766,361"/>
+<area shape="rect" id="node7" href="../../../db/ddl/IDBSchemaElement.html" title="&#171;interface&#187; IDBSchemaElement (org.eclipse.net4j.db.ddl)" alt="" coords="398,119,562,174"/>
+<area shape="rect" id="node8" href="../../../db/ddl/IDBTable.html" title="&#171;interface&#187; IDBTable (org.eclipse.net4j.db.ddl)" alt="" coords="602,385,766,439"/>
+<area shape="rect" id="node9" href="InternalDBElement.html" title="&#171;interface&#187; InternalDBElement" alt="" coords="217,235,348,275"/>
+<area shape="rect" id="node10" href="InternalDBField.html" title="&#171;interface&#187; InternalDBField" alt="" coords="818,35,929,75"/>
+<area shape="rect" id="node11" href="InternalDBIndex.html" title="&#171;interface&#187; InternalDBIndex" alt="" coords="817,141,930,181"/>
+<area shape="rect" id="node12" href="InternalDBIndexField.html" title="&#171;interface&#187; InternalDBIndexField" alt="" coords="803,220,944,260"/>
+<area shape="rect" id="node13" href="InternalDBNamedElement.html" title="&#171;interface&#187; InternalDBNamedElement" alt="" coords="395,199,565,239"/>
+<area shape="rect" id="node14" href="InternalDBSchema.html" title="&#171;interface&#187; InternalDBSchema" alt="" coords="808,299,939,339"/>
+<area shape="rect" id="node15" href="InternalDBSchemaElement.html" title="&#171;interface&#187; InternalDBSchemaElement" alt="" coords="595,163,773,203"/>
+<area shape="rect" id="node16" href="InternalDBTable.html" title="&#171;interface&#187; InternalDBTable" alt="" coords="817,369,930,409"/>
+</map>
+
+<CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+<BR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Interface Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBElement.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBElement</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBField.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBField</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBIndex.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBIndex</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBIndexField.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBIndexField</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBNamedElement.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBNamedElement</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBSchema</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBSchemaElement.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBSchemaElement</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBTable.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBTable</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+<P>
+
+<P>
+<DL>
+</DL>
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/spi/db/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
+&nbsp;NEXT PACKAGE</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/spi/db/ddl/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

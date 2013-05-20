@@ -225,7 +225,7 @@ Various static methods that may help in setting up and dealing with <A HREF="../
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache()">createStatementCache</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a prepared statement cache with the <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#DEFAULT_STATEMENT_CACHE_CAPACITY"><CODE>default capacity</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement(java.lang.String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</CODE></A>.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -233,7 +233,7 @@ Various static methods that may help in setting up and dealing with <A HREF="../
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache(int)">createStatementCache</A></B>(int&nbsp;capacity)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a prepared statement cache with the given capacity.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement(java.lang.String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</CODE></A>.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -241,6 +241,17 @@ Various static methods that may help in setting up and dealing with <A HREF="../
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy, org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">createStore</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</A>&nbsp;mappingStrategy,
             <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
             <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;dbConnectionProvider)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy, org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider, java.util.Map)">createStore</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</A>&nbsp;mappingStrategy,
+            <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+            <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;dbConnectionProvider,
+            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;properties)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -373,6 +384,22 @@ public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.
 </DL>
 <HR>
 
+<A NAME="createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy, org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider, java.util.Map)"><!-- --></A><H3>
+createStore</H3>
+<PRE>
+public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</A> <B>createStore</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</A>&nbsp;mappingStrategy,
+                                   <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+                                   <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;dbConnectionProvider,
+                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;properties)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="createHorizontalMappingStrategy(boolean)"><!-- --></A><H3>
 createHorizontalMappingStrategy</H3>
 <PRE>
@@ -451,14 +478,15 @@ public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/mapping/I
 <A NAME="createStatementCache()"><!-- --></A><H3>
 createStatementCache</H3>
 <PRE>
-public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</A> <B>createStatementCache</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</A> <B>createStatementCache</B>()</PRE>
 <DL>
-<DD>Creates a prepared statement cache with the <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#DEFAULT_STATEMENT_CACHE_CAPACITY"><CODE>default capacity</CODE></A>.
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement(java.lang.String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</CODE></A>.</I>
 <P>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
-<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache(int)"><CODE>createStatementCache(int)</CODE></A></DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -466,9 +494,10 @@ public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPrepared
 <A NAME="createStatementCache(int)"><!-- --></A><H3>
 createStatementCache</H3>
 <PRE>
-public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</A> <B>createStatementCache</B>(int&nbsp;capacity)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</A> <B>createStatementCache</B>(int&nbsp;capacity)</PRE>
 <DL>
-<DD>Creates a prepared statement cache with the given capacity.
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement(java.lang.String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</CODE></A>.</I>
 <P>
 <DD><DL>
 <DT><B>Since:</B></DT>
@@ -536,6 +565,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

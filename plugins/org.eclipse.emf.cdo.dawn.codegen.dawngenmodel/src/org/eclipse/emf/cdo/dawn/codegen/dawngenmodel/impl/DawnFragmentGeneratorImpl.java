@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -34,23 +34,16 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * Generator</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @since 1.0
  */
 public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragmentGenerator
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * The default value of the '{@link #getFragmentName() <em>Fragment Name</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getFragmentName()
    * @generated
    * @ordered
@@ -60,7 +53,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
   /**
    * The cached value of the '{@link #getFragmentName() <em>Fragment Name</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getFragmentName()
    * @generated
    * @ordered
@@ -70,7 +63,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
   /**
    * The default value of the '{@link #getDawnEditorClassName() <em>Dawn Editor Class Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditorClassName()
    * @generated
    * @ordered
@@ -80,7 +73,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
   /**
    * The cached value of the '{@link #getDawnEditorClassName() <em>Dawn Editor Class Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditorClassName()
    * @generated
    * @ordered
@@ -90,7 +83,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
   /**
    * The cached value of the '{@link #getDawnGenerator() <em>Dawn Generator</em>}' reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnGenerator()
    * @generated
    * @ordered
@@ -99,7 +92,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnFragmentGeneratorImpl()
@@ -109,7 +102,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -120,7 +113,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getFragmentName()
@@ -130,7 +123,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setFragmentName(String newFragmentName)
@@ -146,7 +139,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnEditorClassName()
@@ -156,7 +149,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnEditorClassName(String newDawnEditorClassName)
@@ -173,7 +166,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawnGenerator getDawnGenerator()
@@ -196,7 +189,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawnGenerator basicGetDawnGenerator()
@@ -206,7 +199,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnGenerator(DawnGenerator newDawnGenerator)
@@ -222,7 +215,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -246,7 +239,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -269,7 +262,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -292,7 +285,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -313,7 +306,7 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

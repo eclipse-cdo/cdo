@@ -101,6 +101,10 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/db/DBException.html"
 <TD><A HREF="#org.eclipse.net4j.spi.db"><B>org.eclipse.net4j.spi.db</B></A></TD>
 <TD>Server service provider interfaces and useful base implementations for the Net4j DB framework.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.spi.db.ddl"><B>org.eclipse.net4j.spi.db.ddl</B></A></TD>
+<TD>Server service provider interfaces for the Net4j DB framework.&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -257,6 +261,16 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>IDBAdapter.</B><B><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#updateSchema(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">updateSchema</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+             <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema,
+             <A HREF="../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -265,6 +279,22 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</A> in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subclasses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</A> in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -394,7 +424,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
 <TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#addTable(java.lang.String)">addTable</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -402,7 +432,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
 <TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#assertUnlocked()">assertUnlocked</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -411,7 +441,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -420,7 +450,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -429,7 +459,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
        <A HREF="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -456,7 +486,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -465,7 +495,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -474,7 +504,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
      <A HREF="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -492,7 +522,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;out)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -501,13 +531,23 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;out)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider, java.io.PrintStream)">export</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;out)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#updateSchema(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">updateSchema</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+             <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema,
+             <A HREF="../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A>&nbsp;delta)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -517,6 +557,31 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
 <CODE>protected &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">validateTable</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table,
               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</A>&nbsp;statement)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.spi.db.ddl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</A> in <A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> that throw <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalDBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html#assertUnlocked()">assertUnlocked</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -577,6 +642,6 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/DBException.html" title="cl
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

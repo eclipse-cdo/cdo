@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,12 +34,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class SalesOrderImpl extends OrderImpl implements SalesOrder
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -105,7 +99,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     int oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__ID, oldId, id));
+    }
   }
 
   /**
@@ -121,8 +117,10 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       if (customer != oldCustomer)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.SALES_ORDER__CUSTOMER, oldCustomer,
               customer));
+        }
       }
     }
     return customer;
@@ -150,9 +148,13 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model1Package.SALES_ORDER__CUSTOMER, oldCustomer, newCustomer);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -167,18 +169,26 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     {
       NotificationChain msgs = null;
       if (customer != null)
+      {
         msgs = ((InternalEObject)customer).eInverseRemove(this, Model1Package.CUSTOMER__SALES_ORDERS, Customer.class,
             msgs);
+      }
       if (newCustomer != null)
+      {
         msgs = ((InternalEObject)newCustomer).eInverseAdd(this, Model1Package.CUSTOMER__SALES_ORDERS, Customer.class,
             msgs);
+      }
       msgs = basicSetCustomer(newCustomer, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__CUSTOMER, newCustomer,
           newCustomer));
+    }
   }
 
   /**
@@ -192,8 +202,10 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     {
     case Model1Package.SALES_ORDER__CUSTOMER:
       if (customer != null)
+      {
         msgs = ((InternalEObject)customer).eInverseRemove(this, Model1Package.CUSTOMER__SALES_ORDERS, Customer.class,
             msgs);
+      }
       return basicSetCustomer((Customer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -227,7 +239,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       return getId();
     case Model1Package.SALES_ORDER__CUSTOMER:
       if (resolve)
+      {
         return getCustomer();
+      }
       return basicGetCustomer();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -296,7 +310,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");

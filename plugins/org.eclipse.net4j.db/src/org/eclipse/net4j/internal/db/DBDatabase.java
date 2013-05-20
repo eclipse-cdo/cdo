@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,7 +53,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     this.adapter = adapter;
     this.connectionProvider = connectionProvider;
 
-    schema = DBUtil.execute(connectionProvider, new RunnableWithConnection<IDBSchema>()
+    schema = DBUtil.execute(DBDatabase.this, new RunnableWithConnection<IDBSchema>()
     {
       public IDBSchema run(Connection connection) throws SQLException
       {

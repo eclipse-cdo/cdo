@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -145,6 +145,23 @@ Protects a given <A HREF="../../../../../../org/eclipse/emf/cdo/server/IReposito
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Modifies a security <A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><CODE>realm</CODE></A> in a safe transaction.</TD>
 </TR>
 </TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html#SYSTEM_USER_ID">SYSTEM_USER_ID</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
 &nbsp;
 <!-- ========== METHOD SUMMARY =========== -->
 
@@ -178,6 +195,23 @@ Protects a given <A HREF="../../../../../../org/eclipse/emf/cdo/server/IReposito
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html#modify(org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation, boolean)">modify</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.RealmOperation.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager.RealmOperation</A>&nbsp;operation,
+       boolean&nbsp;waitUntilReadable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html#read(org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation)">read</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.RealmOperation.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager.RealmOperation</A>&nbsp;operation)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.SecurityItemContainer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -199,6 +233,27 @@ Protects a given <A HREF="../../../../../../org/eclipse/emf/cdo/server/IReposito
 </TABLE>
 &nbsp;
 <P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="SYSTEM_USER_ID"><!-- --></A><H3>
+SYSTEM_USER_ID</H3>
+<PRE>
+static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>SYSTEM_USER_ID</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.security.ISecurityManager.SYSTEM_USER_ID">Constant Field Values</A></DL>
+</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -238,6 +293,22 @@ getRealm</H3>
 </DL>
 <HR>
 
+<A NAME="read(org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation)"><!-- --></A><H3>
+read</H3>
+<PRE>
+void <B>read</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.RealmOperation.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager.RealmOperation</A>&nbsp;operation)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="modify(org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation)"><!-- --></A><H3>
 modify</H3>
 <PRE>
@@ -247,6 +318,23 @@ void <B>modify</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/securit
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="modify(org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation, boolean)"><!-- --></A><H3>
+modify</H3>
+<PRE>
+void <B>modify</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.RealmOperation.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager.RealmOperation</A>&nbsp;operation,
+            boolean&nbsp;waitUntilReadable)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -301,15 +389,15 @@ void <B>modify</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/securit
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,16 +22,13 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.NClob;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
-import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -465,7 +462,7 @@ public final class DBPreparedStatement implements IDBPreparedStatement
     return delegate.getParameterMetaData();
   }
 
-  public void setRowId(int parameterIndex, RowId x) throws SQLException
+  public void setRowId(int parameterIndex, java.sql.RowId x) throws SQLException
   {
     delegate.setRowId(parameterIndex, x);
   }
@@ -490,7 +487,7 @@ public final class DBPreparedStatement implements IDBPreparedStatement
     return delegate.execute(sql, columnNames);
   }
 
-  public void setNClob(int parameterIndex, NClob value) throws SQLException
+  public void setNClob(int parameterIndex, java.sql.NClob value) throws SQLException
   {
     delegate.setNClob(parameterIndex, value);
   }
@@ -530,7 +527,7 @@ public final class DBPreparedStatement implements IDBPreparedStatement
     return delegate.isPoolable();
   }
 
-  public void setSQLXML(int parameterIndex, SQLXML xmlObject) throws SQLException
+  public void setSQLXML(int parameterIndex, java.sql.SQLXML xmlObject) throws SQLException
   {
     delegate.setSQLXML(parameterIndex, xmlObject);
   }
@@ -1311,22 +1308,22 @@ public final class DBPreparedStatement implements IDBPreparedStatement
       delegate.updateArray(columnLabel, x);
     }
 
-    public RowId getRowId(int columnIndex) throws SQLException
+    public java.sql.RowId getRowId(int columnIndex) throws SQLException
     {
       return delegate.getRowId(columnIndex);
     }
 
-    public RowId getRowId(String columnLabel) throws SQLException
+    public java.sql.RowId getRowId(String columnLabel) throws SQLException
     {
       return delegate.getRowId(columnLabel);
     }
 
-    public void updateRowId(int columnIndex, RowId x) throws SQLException
+    public void updateRowId(int columnIndex, java.sql.RowId x) throws SQLException
     {
       delegate.updateRowId(columnIndex, x);
     }
 
-    public void updateRowId(String columnLabel, RowId x) throws SQLException
+    public void updateRowId(String columnLabel, java.sql.RowId x) throws SQLException
     {
       delegate.updateRowId(columnLabel, x);
     }
@@ -1351,42 +1348,42 @@ public final class DBPreparedStatement implements IDBPreparedStatement
       delegate.updateNString(columnLabel, nString);
     }
 
-    public void updateNClob(int columnIndex, NClob nClob) throws SQLException
+    public void updateNClob(int columnIndex, java.sql.NClob nClob) throws SQLException
     {
       delegate.updateNClob(columnIndex, nClob);
     }
 
-    public void updateNClob(String columnLabel, NClob nClob) throws SQLException
+    public void updateNClob(String columnLabel, java.sql.NClob nClob) throws SQLException
     {
       delegate.updateNClob(columnLabel, nClob);
     }
 
-    public NClob getNClob(int columnIndex) throws SQLException
+    public java.sql.NClob getNClob(int columnIndex) throws SQLException
     {
       return delegate.getNClob(columnIndex);
     }
 
-    public NClob getNClob(String columnLabel) throws SQLException
+    public java.sql.NClob getNClob(String columnLabel) throws SQLException
     {
       return delegate.getNClob(columnLabel);
     }
 
-    public SQLXML getSQLXML(int columnIndex) throws SQLException
+    public java.sql.SQLXML getSQLXML(int columnIndex) throws SQLException
     {
       return delegate.getSQLXML(columnIndex);
     }
 
-    public SQLXML getSQLXML(String columnLabel) throws SQLException
+    public java.sql.SQLXML getSQLXML(String columnLabel) throws SQLException
     {
       return delegate.getSQLXML(columnLabel);
     }
 
-    public void updateSQLXML(int columnIndex, SQLXML xmlObject) throws SQLException
+    public void updateSQLXML(int columnIndex, java.sql.SQLXML xmlObject) throws SQLException
     {
       delegate.updateSQLXML(columnIndex, xmlObject);
     }
 
-    public void updateSQLXML(String columnLabel, SQLXML xmlObject) throws SQLException
+    public void updateSQLXML(String columnLabel, java.sql.SQLXML xmlObject) throws SQLException
     {
       delegate.updateSQLXML(columnLabel, xmlObject);
     }

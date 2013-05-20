@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,8 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
+
+import java.sql.SQLException;
 
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://db.apache.org/derby">Derby</a> databases.
@@ -87,5 +89,32 @@ public abstract class DerbyAdapter extends DBAdapter
     default:
       return super.isValidFirstChar(ch);
     }
+  }
+
+  @Override
+  public boolean isDuplicateKeyException(SQLException ex)
+  {
+    // The statement was aborted because it would have caused a duplicate key value in a unique or primary key
+    // constraint or unique index identified by '<value>' defined on '<value>'
+    String sqlState = ex.getSQLState();
+    return "23505".equals(sqlState) || super.isDuplicateKeyException(ex);
+  }
+
+  @Override
+  public boolean isTableNotFoundException(SQLException ex)
+  {
+    // Table/View '<objectName>' does not exist
+    String sqlState = ex.getSQLState();
+    return "42X05".equals(sqlState) || super.isTableNotFoundException(ex);
+  }
+
+  @Override
+  public boolean isColumnNotFoundException(SQLException ex)
+  {
+    // Column '<columnName>' is either not in any table in the FROM list or appears within a join specification and is
+    // outside the scope of the join specification or appears in a HAVING clause and is not in the GROUP BY list. If
+    // this is a CREATE or ALTER TABLE statement then '<columnName>' is not a column in the target table.
+    String sqlState = ex.getSQLState();
+    return "42X04".equals(sqlState) || super.isColumnNotFoundException(ex);
   }
 }

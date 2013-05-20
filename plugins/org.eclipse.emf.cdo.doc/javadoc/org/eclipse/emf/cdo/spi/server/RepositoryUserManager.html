@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryInjector.html" title="class in org.eclipse.emf.cdo.spi.server"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RepositoryUserManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -98,19 +98,20 @@ Class RepositoryUserManager</H2>
           <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.spi.server.RepositoryUserManager</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A></DD>
 </DL>
 <HR>
 <DL>
   <DT>public abstract class <B>RepositoryUserManager</B>
   <DD>extends <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A>
-  <DD>implements <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A>
+  <DD>implements <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" title="&#171;interface&#187; IUserManager (org.eclipse.net4j.util.security)" alt="" coords="5,6,200,61"/>
-<area shape="rect" id="node2" href="RepositoryUserManager.html" title="RepositoryUserManager" alt="" coords="137,101,295,126"/>
-<area shape="rect" id="node3" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="231,13,428,53"/>
+<area shape="rect" id="node2" title="&#171;interface&#187; IAuthenticator (org.eclipse.net4j.util.security)" alt="" coords="230,6,425,61"/>
+<area shape="rect" id="node3" href="RepositoryUserManager.html" title="RepositoryUserManager" alt="" coords="249,101,407,126"/>
+<area shape="rect" id="node4" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="456,13,653,53"/>
 </map>
 
 <CENTER><IMG SRC="RepositoryUserManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -136,6 +137,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryAuthenticatorFactory</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -220,6 +229,15 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#authenticate(java.lang.String, char[])">authenticate</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
+             char[]&nbsp;password)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;byte[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#encrypt(java.lang.String, byte[], java.lang.String, byte[], int)">encrypt</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
         byte[]&nbsp;data,
@@ -235,6 +253,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <CODE>protected abstract &nbsp;char[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#getPassword(org.eclipse.emf.cdo.server.IRepository, java.lang.String)">getPassword</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository,
             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;char[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#getPassword(java.lang.String)">getPassword</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -382,6 +408,26 @@ public byte[] <B>encrypt</B>(<A HREF="http://download.oracle.com/javase/1.5.0/do
 </DL>
 <HR>
 
+<A NAME="authenticate(java.lang.String, char[])"><!-- --></A><H3>
+authenticate</H3>
+<PRE>
+public void <B>authenticate</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
+                         char[]&nbsp;password)
+                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true#authenticate(java.lang.String, char[])" title="class or interface in org.eclipse.net4j.util.security">authenticate</A></CODE> in interface <CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IAuthenticator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IAuthenticator</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</A></CODE><DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getRepository(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)"><!-- --></A><H3>
 getRepository</H3>
 <PRE>
@@ -392,6 +438,22 @@ protected <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPassword(java.lang.String)"><!-- --></A><H3>
+getPassword</H3>
+<PRE>
+protected char[] <B>getPassword</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -456,7 +518,7 @@ public static void <B>prepareContainer</B>(<A HREF="../../../../../../../../org.
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryInjector.html" title="class in org.eclipse.emf.cdo.spi.server"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RepositoryUserManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -485,6 +547,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

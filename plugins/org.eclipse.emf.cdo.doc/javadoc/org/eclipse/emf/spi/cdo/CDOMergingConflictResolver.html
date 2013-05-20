@@ -101,13 +101,12 @@ Class CDOMergingConflictResolver</H2>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</A></DD>
 </DL>
 <HR>
-<B>Deprecated.</B>&nbsp;<I>This conflict resolver is still under development. It's not safe to use it.</I>
-<P>
 <DL>
-<DT><PRE><FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>public class <B>CDOMergingConflictResolver</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</A></DL>
-</PRE><map id="APIVIZ" name="APIVIZ">
+  <DT>public class <B>CDOMergingConflictResolver</B>
+  <DD>extends <A HREF="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="AbstractChangeSetsConflictResolver.html" title="AbstractChangeSetsConflictResolver" alt="" coords="5,6,243,31"/>
 <area shape="rect" id="node2" href="CDOMergingConflictResolver.html" title="CDOMergingConflictResolver" alt="" coords="30,71,217,97"/>
 </map>
@@ -141,13 +140,13 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver()">CDOMergingConflictResolver</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver(org.eclipse.emf.cdo.transaction.CDOMerger)">CDOMergingConflictResolver</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</A>&nbsp;merger)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -165,7 +164,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#getMerger()">getMerger</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -173,7 +172,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#resolveConflicts(java.util.Set)">resolveConflicts</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;conflicts)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.spi.cdo.AbstractChangeSetsConflictResolver"><!-- --></A>
@@ -221,7 +220,7 @@ CDOMergingConflictResolver</H3>
 <PRE>
 public <B>CDOMergingConflictResolver</B>()</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;</DL>
+</DL>
 <HR>
 
 <A NAME="CDOMergingConflictResolver(org.eclipse.emf.cdo.transaction.CDOMerger)"><!-- --></A><H3>
@@ -229,7 +228,7 @@ CDOMergingConflictResolver</H3>
 <PRE>
 public <B>CDOMergingConflictResolver</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</A>&nbsp;merger)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;</DL>
+</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -246,7 +245,7 @@ getMerger</H3>
 <PRE>
 public <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</A> <B>getMerger</B>()</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+<DD><DL>
 </DL>
 </DD>
 </DL>
@@ -257,7 +256,7 @@ resolveConflicts</H3>
 <PRE>
 public void <B>resolveConflicts</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;conflicts)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html#resolveConflicts(java.util.Set)">CDOConflictResolver</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html#resolveConflicts(java.util.Set)">CDOConflictResolver</A></CODE></B></DD>
 <DD>Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.
 <P>
 <DD><DL>
@@ -324,6 +323,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

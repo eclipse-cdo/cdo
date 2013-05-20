@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/SecurityUtil.html" title="class in org.eclipse.net4j.util.security"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/security/UserManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="UserManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -98,7 +98,7 @@ Class UserManager</H2>
           <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.security.UserManager</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</A></DD>
 </DL>
 <DL>
 <DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/security/FileUserManager.html" title="class in org.eclipse.net4j.util.security">FileUserManager</A></DD>
@@ -107,14 +107,15 @@ Class UserManager</H2>
 <DL>
   <DT>public class <B>UserManager</B>
   <DD>extends <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A>
-  <DD>implements <A HREF="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</A>
+  <DD>implements <A HREF="../../../../../org/eclipse/net4j/util/security/IUserManager.html" title="interface in org.eclipse.net4j.util.security">IUserManager</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="IUserManager.html" title="&#171;interface&#187; IUserManager" alt="" coords="5,5,107,45"/>
-<area shape="rect" id="node2" href="UserManager.html" title="UserManager" alt="" coords="96,85,195,110"/>
-<area shape="rect" id="node3" href="../lifecycle/Lifecycle.html" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="137,5,335,45"/>
-<area shape="rect" id="node4" href="FileUserManager.html" title="FileUserManager" alt="" coords="85,150,205,175"/>
+<area shape="rect" id="node2" href="IAuthenticator.html" title="&#171;interface&#187; IAuthenticator" alt="" coords="137,5,239,45"/>
+<area shape="rect" id="node3" href="UserManager.html" title="UserManager" alt="" coords="139,85,237,110"/>
+<area shape="rect" id="node4" href="../lifecycle/Lifecycle.html" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="269,5,467,45"/>
+<area shape="rect" id="node5" href="FileUserManager.html" title="FileUserManager" alt="" coords="128,150,248,175"/>
 </map>
 
 <CENTER><IMG SRC="UserManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -206,6 +207,16 @@ Class UserManager</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/security/UserManager.html#authenticate(java.lang.String, char[])">authenticate</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
+             char[]&nbsp;password)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
+ matches the password <i>stored</i> for this user.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/security/UserManager.html#doActivate()">doActivate</A></B>()</CODE>
 
@@ -228,6 +239,14 @@ Class UserManager</H2>
         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;algorithmName,
         byte[]&nbsp;salt,
         int&nbsp;count)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;char[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/security/UserManager.html#getPassword(java.lang.String)">getPassword</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -371,6 +390,45 @@ public void <B>removeUser</B>(<A HREF="http://download.oracle.com/javase/1.5.0/d
 </DL>
 <HR>
 
+<A NAME="getPassword(java.lang.String)"><!-- --></A><H3>
+getPassword</H3>
+<PRE>
+public char[] <B>getPassword</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="authenticate(java.lang.String, char[])"><!-- --></A><H3>
+authenticate</H3>
+<PRE>
+public void <B>authenticate</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
+                         char[]&nbsp;password)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String, char[])">IAuthenticator</A></CODE></B></DD>
+<DD>Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
+ matches the password <i>stored</i> for this user.
+ <p>
+ The implementation is required to throw a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang"><CODE>SecurityException</CODE></A> if the passwords do <b>not</b> match.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String, char[])">authenticate</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="encrypt(java.lang.String, byte[], java.lang.String, byte[], int)"><!-- --></A><H3>
 encrypt</H3>
 <PRE>
@@ -491,7 +549,7 @@ protected void <B>save</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/SecurityUtil.html" title="class in org.eclipse.net4j.util.security"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/security/UserManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="UserManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -520,6 +578,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

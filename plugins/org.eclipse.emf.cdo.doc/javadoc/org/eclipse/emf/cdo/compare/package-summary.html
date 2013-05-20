@@ -88,16 +88,16 @@ Client concepts for integrating EMF Compare with CDO.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="AbstractComparisonScope ()" alt="" coords="19,212,197,252"/>
-<area shape="rect" id="node2" href="CDOComparison.html" title="CDOComparison" alt="" coords="481,102,599,127"/>
-<area shape="rect" id="node3" href="CDOComparisonScope.AllContents.html" title="CDOComparisonScope.AllContents" alt="" coords="427,177,653,202"/>
-<area shape="rect" id="node4" href="CDOComparisonScope.Minimal.html" title="CDOComparisonScope.Minimal" alt="" coords="437,226,643,251"/>
-<area shape="rect" id="node5" href="CDOIDFunction.html" title="CDOIDFunction" alt="" coords="52,70,164,95"/>
-<area shape="rect" id="node6" href="DelegatingComparison.html" title="DelegatingComparison" alt="" coords="243,77,395,102"/>
-<area shape="rect" id="node7" href="CDOComparisonScope.html" title="CDOComparisonScope" alt="" coords="241,219,397,245"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="5,119,211,174"/>
-<area shape="rect" id="node9" href="CloseableComparison.html" title="&#171;interface&#187; CloseableComparison" alt="" coords="245,127,393,167"/>
-<area shape="rect" id="node10" href="CDOCompareUtil.html" title="&#171;static&#187; CDOCompareUtil" alt="" coords="47,5,169,45"/>
+<area shape="rect" id="node1" title="AbstractComparisonScope ()" alt="" coords="46,284,223,324"/>
+<area shape="rect" id="node2" href="CDOCompare.html" title="CDOCompare" alt="" coords="83,234,186,259"/>
+<area shape="rect" id="node3" href="CDOCompare.CDOIDFunction.html" title="CDOCompare.CDOIDFunction" alt="" coords="37,185,233,210"/>
+<area shape="rect" id="node4" href="CDOCompare.CDOMatchEngine.html" title="CDOCompare.CDOMatchEngine" alt="" coords="293,127,504,153"/>
+<area shape="rect" id="node5" href="CDOCompare.CDOMatchEngine.Factory.html" title="CDOCompare.CDOMatchEngine.Factory" alt="" coords="5,70,264,95"/>
+<area shape="rect" id="node6" href="CDOComparisonScope.AllContents.html" title="CDOComparisonScope.AllContents" alt="" coords="533,266,760,291"/>
+<area shape="rect" id="node7" href="CDOComparisonScope.Minimal.html" title="CDOComparisonScope.Minimal" alt="" coords="544,315,749,341"/>
+<area shape="rect" id="node8" title="DefaultMatchEngine ()" alt="" coords="65,120,204,160"/>
+<area shape="rect" id="node9" href="CDOComparisonScope.html" title="CDOComparisonScope" alt="" coords="321,291,477,317"/>
+<area shape="rect" id="node10" href="CDOCompareUtil.html" title="&#171;static&#187; CDOCompareUtil" alt="" coords="74,5,195,45"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -105,29 +105,27 @@ Client concepts for integrating EMF Compare with CDO.
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Interface Summary</B></FONT></TH>
+<B>Class Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></B></TD>
-<TD>A <CODE>comparison</CODE> that can be closed to dispose of used resources.</TD>
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</A></B></TD>
+<TD>A class with many overridable factory methods that help to create EMF <CODE>comparisons</CODE>.</TD>
 </TR>
-</TABLE>
-&nbsp;
-
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class Summary</B></FONT></TH>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</A></B></TD>
+<TD>An <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><CODE>ID function</CODE></A> that considers the <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>CDOID</CODE></A>s of <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</A></B></TD>
+<TD>A <CODE>match engine</CODE> that treats <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resources</CODE></A> as <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObjects</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine.Factory</A></B></TD>
+<TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil</A></B></TD>
 <TD>Provides static factory methods that return CDO-scoped <CODE>comparisons</CODE>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></B></TD>
-<TD>A <CODE>comparison</CODE> that can be closed to dispose of used resources.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</A></B></TD>
@@ -142,14 +140,6 @@ Client concepts for integrating EMF Compare with CDO.
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.Minimal</A></B></TD>
 <TD>Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
  and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOIDFunction</A></B></TD>
-<TD>An <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><CODE>ID function</CODE></A> that considers the <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>CDOID</CODE></A>s of <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/DelegatingComparison.html" title="class in org.eclipse.emf.cdo.compare">DelegatingComparison</A></B></TD>
-<TD>A <CODE>comparison</CODE> that delegates all methods to another comparison.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -213,6 +203,6 @@ Client concepts for integrating EMF Compare with CDO.
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

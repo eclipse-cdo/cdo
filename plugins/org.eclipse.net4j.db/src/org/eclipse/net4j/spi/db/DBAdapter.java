@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -189,14 +189,20 @@ public abstract class DBAdapter implements IDBAdapter
     try
     {
       statement = connection.createStatement();
+      statement.setMaxRows(1);
       resultSet = statement.executeQuery("SELECT * FROM " + table);
       ResultSetMetaData metaData = resultSet.getMetaData();
 
       for (int i = 0; i < metaData.getColumnCount(); i++)
       {
         int column = i + 1;
-
         String name = metaData.getColumnName(column);
+        if (name == null)
+        {
+          // Bug 405924: Just to be sure in case this happens with Oracle.
+          continue;
+        }
+
         DBType type = DBType.getTypeByCode(metaData.getColumnType(column));
         int precision = metaData.getPrecision(column);
         int scale = metaData.getScale(column);
@@ -242,6 +248,12 @@ public abstract class DBAdapter implements IDBAdapter
       while (resultSet.next())
       {
         String name = resultSet.getString(indexNameColumn);
+        if (name == null)
+        {
+          // Bug 405924: It seems that this can happen with Oracle.
+          continue;
+        }
+
         if (indexName != null && !indexName.equals(name))
         {
           addIndex(connection, table, indexName, indexType, fieldInfos);
@@ -980,7 +992,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isDuplicateKeyException(SQLException ex)
   {
-    return "23001".equals(ex.getSQLState());
+    String sqlState = ex.getSQLState();
+    return "23001".equals(sqlState);
   }
 
   /**
@@ -988,7 +1001,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isTableNotFoundException(SQLException ex)
   {
-    return "42S02".equals(ex.getSQLState());
+    String sqlState = ex.getSQLState();
+    return "42S02".equals(sqlState);
   }
 
   /**
@@ -996,7 +1010,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isColumnNotFoundException(SQLException ex)
   {
-    return "42S22".equals(ex.getSQLState());
+    String sqlState = ex.getSQLState();
+    return "42S22".equals(sqlState);
   }
 
   /**

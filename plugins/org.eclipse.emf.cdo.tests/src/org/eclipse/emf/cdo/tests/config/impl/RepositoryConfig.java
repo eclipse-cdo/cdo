@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -113,21 +113,21 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final long serialVersionUID = 1L;
 
+  protected static Map<String, InternalRepository> repositories;
+
+  private static String lastRepoProps;
+
   private boolean supportingAudits;
 
   private boolean supportingBranches;
 
   private IDGenerationLocation idGenerationLocation;
 
-  protected transient Map<String, InternalRepository> repositories;
-
   /**
    * Flag used to signal that a repository is being restarted. This prevents cleaning and reinitialization of persistent
    * data and should only be used during {@link ConfigTest#restartRepository(String)}.
    */
   private transient boolean restarting;
-
-  private transient String lastRepoProps;
 
   private transient CDOServerBrowser serverBrowser;
 

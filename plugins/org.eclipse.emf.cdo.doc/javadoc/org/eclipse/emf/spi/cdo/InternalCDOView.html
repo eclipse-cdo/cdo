@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOView.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOView.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -138,6 +138,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Optimizes the storage of <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView()"><CODE>CDOObject.cdoView()</CODE></A> and <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState()"><CODE>CDOObject.cdoState()</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.view.CDOView"><!-- --></A>
@@ -325,6 +333,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo">CDOStore</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getStore()">getStore</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewAndState(org.eclipse.emf.cdo.CDOState)">getViewAndState</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</A>&nbsp;state)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1228,6 +1244,22 @@ getLockStates</H3>
 </DL>
 </DD>
 </DL>
+<HR>
+
+<A NAME="getViewAndState(org.eclipse.emf.cdo.CDOState)"><!-- --></A><H3>
+getViewAndState</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</A> <B>getViewAndState</B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</A>&nbsp;state)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -1259,7 +1291,7 @@ getLockStates</H3>
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOView.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOView.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -1279,7 +1311,7 @@ getLockStates</H3>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -1288,6 +1320,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHO
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

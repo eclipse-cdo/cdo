@@ -193,6 +193,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected </CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#AbstractCDORevision(org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo)">AbstractCDORevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo</A>&nbsp;classInfo)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <!-- ========== METHOD SUMMARY =========== -->
@@ -238,7 +246,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A></CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getClassInfo()">getClassInfo</A></B>()</CODE>
 
 <BR>
@@ -262,8 +270,32 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getProperRevision()">getProperRevision</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getRevisionForID(org.eclipse.emf.cdo.common.id.CDOID)">getRevisionForID</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#hashCode()">hashCode</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#initClassInfo(org.eclipse.emf.ecore.EClass)">initClassInfo</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -343,14 +375,6 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#setClassInfo(org.eclipse.emf.cdo.common.model.CDOClassInfo)">setClassInfo</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A>&nbsp;classInfo)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#toString()">toString</A></B>()</CODE>
 
@@ -373,7 +397,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.spi.common.revision.<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#add(org.eclipse.emf.ecore.EStructuralFeature, int, java.lang.Object)">add</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#clear(org.eclipse.emf.ecore.EStructuralFeature)">clear</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#compare(org.eclipse.emf.cdo.common.revision.CDORevision)">compare</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#convertEObjects(org.eclipse.emf.cdo.common.id.CDOIDProvider)">convertEObjects</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#copy()">copy</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#freeze()">freeze</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getList(org.eclipse.emf.ecore.EStructuralFeature)">getList</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getList(org.eclipse.emf.ecore.EStructuralFeature, int)">getList</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getValue(org.eclipse.emf.ecore.EStructuralFeature)">getValue</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#isUnchunked()">isUnchunked</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#move(org.eclipse.emf.ecore.EStructuralFeature, int, int)">move</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput)">read</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#remove(org.eclipse.emf.ecore.EStructuralFeature, int)">remove</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#set(org.eclipse.emf.ecore.EStructuralFeature, int, java.lang.Object)">set</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setBranchPoint</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setContainerID(java.lang.Object)">setContainerID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setContainingFeatureID(int)">setContainingFeatureID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)">setID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setList(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.spi.common.revision.InternalCDOList)">setList</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setPermission(org.eclipse.emf.cdo.common.security.CDOPermission)">setPermission</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)">setResourceID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setRevised(long)">setRevised</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setUnchunked()">setUnchunked</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setValue(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)">setValue</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setVersion(int)">setVersion</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#unset(org.eclipse.emf.ecore.EStructuralFeature)">unset</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int)">write</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">write</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#add(org.eclipse.emf.ecore.EStructuralFeature, int, java.lang.Object)">add</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#clear(org.eclipse.emf.ecore.EStructuralFeature)">clear</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#compare(org.eclipse.emf.cdo.common.revision.CDORevision)">compare</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#convertEObjects(org.eclipse.emf.cdo.common.id.CDOIDProvider)">convertEObjects</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#copy()">copy</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#freeze()">freeze</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getBranch()">getBranch</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getList(org.eclipse.emf.ecore.EStructuralFeature)">getList</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getList(org.eclipse.emf.ecore.EStructuralFeature, int)">getList</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getValue(org.eclipse.emf.ecore.EStructuralFeature)">getValue</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#isFrozen()">isFrozen</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#isUnchunked()">isUnchunked</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#move(org.eclipse.emf.ecore.EStructuralFeature, int, int)">move</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput)">read</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#remove(org.eclipse.emf.ecore.EStructuralFeature, int)">remove</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#set(org.eclipse.emf.ecore.EStructuralFeature, int, java.lang.Object)">set</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setBranchPoint</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setContainerID(java.lang.Object)">setContainerID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setContainingFeatureID(int)">setContainingFeatureID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)">setID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setList(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.spi.common.revision.InternalCDOList)">setList</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setPermission(org.eclipse.emf.cdo.common.security.CDOPermission)">setPermission</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)">setResourceID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setRevised(long)">setRevised</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setUnchunked()">setUnchunked</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setValue(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)">setValue</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#setVersion(int)">setVersion</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#unset(org.eclipse.emf.ecore.EStructuralFeature)">unset</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int)">write</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">write</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.revision.CDORevision"><!-- --></A>
@@ -409,7 +433,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.branch.<A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()">getBranch</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchVersion"><!-- --></A>
@@ -418,7 +442,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.branch.<A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()">getBranch</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()">getVersion</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()">getVersion</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.revision.CDORevisionData"><!-- --></A>
@@ -462,6 +486,18 @@ protected <B>AbstractCDORevision</B>(<A HREF="http://download.eclipse.org/modeli
   <DD>3.0</DD>
 </DL>
 </DL>
+<HR>
+
+<A NAME="AbstractCDORevision(org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo)"><!-- --></A><H3>
+AbstractCDORevision</H3>
+<PRE>
+protected <B>AbstractCDORevision</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo</A>&nbsp;classInfo)</PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -476,14 +512,14 @@ protected <B>AbstractCDORevision</B>(<A HREF="http://download.eclipse.org/modeli
 <A NAME="getClassInfo()"><!-- --></A><H3>
 getClassInfo</H3>
 <PRE>
-public <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A> <B>getClassInfo</B>()</PRE>
+public final <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOClassInfo</A> <B>getClassInfo</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getClassInfo()">getClassInfo</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getClassInfo()">getClassInfo</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getClassInfo()">getClassInfo</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
-  <DD>3.0</DD>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -492,12 +528,44 @@ public <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassIn
 <A NAME="getEClass()"><!-- --></A><H3>
 getEClass</H3>
 <PRE>
-public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getEClass</B>()</PRE>
+public final <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getEClass</B>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getEClass()">getEClass</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A></CODE></DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRevisionForID(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
+getRevisionForID</H3>
+<PRE>
+public <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A> <B>getRevisionForID</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getRevisionForID(org.eclipse.emf.cdo.common.id.CDOID)">getRevisionForID</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getProperRevision()"><!-- --></A><H3>
+getProperRevision</H3>
+<PRE>
+public <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A> <B>getProperRevision</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getProperRevision()">getProperRevision</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -714,17 +782,17 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 </DL>
 <HR>
 
-<A NAME="setClassInfo(org.eclipse.emf.cdo.common.model.CDOClassInfo)"><!-- --></A><H3>
-setClassInfo</H3>
+<A NAME="initClassInfo(org.eclipse.emf.ecore.EClass)"><!-- --></A><H3>
+initClassInfo</H3>
 <PRE>
-protected void <B>setClassInfo</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A>&nbsp;classInfo)</PRE>
+protected void <B>initClassInfo</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
-  <DD>3.0</DD>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -820,6 +888,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

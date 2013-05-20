@@ -98,6 +98,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.h
 <TD>The Net4j DB framework concepts for the abstraction of the SQL data definition language.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.db.ddl.delta"><B>org.eclipse.net4j.db.ddl.delta</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.db.derby"><B>org.eclipse.net4j.db.derby</B></A></TD>
 <TD>The Net4j DB Framework support for Derby databases.&nbsp;</TD>
 </TR>
@@ -124,6 +128,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.h
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.spi.db"><B>org.eclipse.net4j.spi.db</B></A></TD>
 <TD>Server service provider interfaces and useful base implementations for the Net4j DB framework.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.spi.db.ddl"><B>org.eclipse.net4j.spi.db.ddl</B></A></TD>
+<TD>Server service provider interfaces for the Net4j DB framework.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -238,6 +246,14 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B>IDBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">sqlModifyField</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B>IDBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</CODE>
 
@@ -327,7 +343,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
-<TD><CODE><B>IDBIndex.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html#getField(int)">getField</A></B>(int&nbsp;index)</CODE>
+<TD><CODE><B>IDBIndexField.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndexField.html#getField()">getField</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -335,7 +351,23 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
-<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getField(int)">getField</A></B>(int&nbsp;index)</CODE>
+<TD><CODE><B>IDBIndex.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html#getField(int)">getField</A></B>(int&nbsp;position)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getField(int)">getField</A></B>(int&nbsp;position)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
+<TD><CODE><B>IDBIndex.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html#getField(java.lang.String)">getField</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -364,6 +396,30 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>[]</CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getFields(java.lang.String...)">getFields</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>...&nbsp;fieldNames)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
+<TD><CODE><B>IDBIndex.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html#getFieldSafe(java.lang.String)">getFieldSafe</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getFieldSafe(java.lang.String)">getFieldSafe</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -377,6 +433,65 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
 <TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField...)">addIndex</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
          <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>...&nbsp;fields)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndex(java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField...)">addIndex</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>...&nbsp;fields)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndexField.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndexField</A></CODE></FONT></TD>
+<TD><CODE><B>IDBIndex.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html#addIndexField(org.eclipse.net4j.db.ddl.IDBField)">addIndexField</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>IDBSchemaVisitor.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.html#visit(org.eclipse.net4j.db.ddl.IDBField)">visit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>IDBSchemaVisitor.Default.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.IDBField)">visit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.db.ddl.delta"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A> in <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</A> that return <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
+<TD><CODE><B>IDBFieldDelta.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html#getSchemaElement(org.eclipse.net4j.db.ddl.IDBSchema)">getSchemaElement</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -429,7 +544,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <TD><CODE><B>IDBStatement.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/dml/IDBStatement.html#addParameter(org.eclipse.net4j.db.ddl.IDBField)">addParameter</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -452,6 +567,18 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B>H2Adapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/h2/H2Adapter.html#getTypeName(org.eclipse.net4j.db.ddl.IDBField)">getTypeName</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>H2Adapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/h2/H2Adapter.html#isPrimaryKeyShadow(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField[])">isPrimaryKeyShadow</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                   <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table,
+                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                   <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+                   <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>[]&nbsp;fields)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -602,9 +729,113 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isPrimaryKeyShadow(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField[])">isPrimaryKeyShadow</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                   <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table,
+                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                   <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+                   <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>[]&nbsp;fields)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">sqlModifyField</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.spi.db.ddl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A> in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A> in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBField.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBField</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Fields in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> declared as <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>[]</CODE></FONT></TD>
+<TD><CODE><B>InternalDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBTable.html#NO_FIELDS">NO_FIELDS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> that return <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></CODE></FONT></TD>
+<TD><CODE><B>InternalDBField.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBField.html#getWrapper()">getWrapper</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B>InternalDBSchema.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html#createIndexName(org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField[], int)">createIndexName</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table,
+                <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+                <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>[]&nbsp;fields,
+                int&nbsp;position)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBTable.html#removeField(org.eclipse.net4j.db.ddl.IDBField)">removeField</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;fieldToRemove)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -665,6 +896,6 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

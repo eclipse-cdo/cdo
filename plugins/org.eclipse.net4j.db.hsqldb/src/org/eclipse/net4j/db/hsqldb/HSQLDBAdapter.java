@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,8 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
+
+import java.sql.SQLException;
 
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://hsqldb.org/">HyperSQL</a> databases.
@@ -81,5 +83,19 @@ public class HSQLDBAdapter extends DBAdapter
   public String[] getReservedWords()
   {
     return getSQL92ReservedWords();
+  }
+
+  @Override
+  public boolean isTableNotFoundException(SQLException ex)
+  {
+    String sqlState = ex.getSQLState();
+    return "42501".equals(sqlState);
+  }
+
+  @Override
+  public boolean isColumnNotFoundException(SQLException ex)
+  {
+    String sqlState = ex.getSQLState();
+    return "42501".equals(sqlState);
   }
 }

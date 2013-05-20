@@ -8,8 +8,10 @@
       <topic label="Net4j DB Framework" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.db.ddl" href="javadoc/org/eclipse/net4j/db/ddl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.db.ddl.delta" href="javadoc/org/eclipse/net4j/db/ddl/delta/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.db.dml" href="javadoc/org/eclipse/net4j/db/dml/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.spi.db" href="javadoc/org/eclipse/net4j/spi/db/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.spi.db.ddl" href="javadoc/org/eclipse/net4j/spi/db/ddl/package-summary.html" icon="package" />
       </topic>
       <topic label="Net4j DB Framework Derby Adapter" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.db.derby" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="package" />

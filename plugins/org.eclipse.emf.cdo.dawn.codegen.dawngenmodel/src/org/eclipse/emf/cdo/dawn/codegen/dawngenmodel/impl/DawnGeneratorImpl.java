@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -31,23 +31,16 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * Color</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @since 1.0
  */
 public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * The default value of the '{@link #getConflictColor() <em>Conflict Color</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getConflictColor()
    * @generated
    * @ordered
@@ -57,7 +50,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
   /**
    * The cached value of the '{@link #getConflictColor() <em>Conflict Color</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getConflictColor()
    * @generated
    * @ordered
@@ -67,7 +60,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
   /**
    * The default value of the '{@link #getLocalLockColor() <em>Local Lock Color</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getLocalLockColor()
    * @generated
    * @ordered
@@ -77,7 +70,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
   /**
    * The cached value of the '{@link #getLocalLockColor() <em>Local Lock Color</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getLocalLockColor()
    * @generated
    * @ordered
@@ -87,7 +80,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
   /**
    * The default value of the '{@link #getRemoteLockColor() <em>Remote Lock Color</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getRemoteLockColor()
    * @generated
    * @ordered
@@ -97,7 +90,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
   /**
    * The cached value of the '{@link #getRemoteLockColor() <em>Remote Lock Color</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getRemoteLockColor()
    * @generated
    * @ordered
@@ -106,7 +99,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnGeneratorImpl()
@@ -116,7 +109,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -127,7 +120,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getConflictColor()
@@ -137,7 +130,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setConflictColor(String newConflictColor)
@@ -153,7 +146,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getLocalLockColor()
@@ -163,7 +156,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setLocalLockColor(String newLocalLockColor)
@@ -179,7 +172,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getRemoteLockColor()
@@ -189,7 +182,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setRemoteLockColor(String newRemoteLockColor)
@@ -205,7 +198,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -225,7 +218,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -248,7 +241,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -271,7 +264,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -293,7 +286,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

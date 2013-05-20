@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -49,7 +49,7 @@ import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
  * <em>GMF Gen Editor Generator</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator()
  * @model
  * @generated
@@ -58,20 +58,13 @@ import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
 public interface DawnGMFGenerator extends DawnFragmentGenerator
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * Returns the value of the '<em><b>Dawn Document Provider Class Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Dawn Document Provider Class Name</em>' attribute isn't clear, there really should be
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Document Provider Class Name</em>' attribute.
    * @see #setDawnDocumentProviderClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnDocumentProviderClassName()
@@ -84,7 +77,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnDocumentProviderClassName
    * <em>Dawn Document Provider Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Document Provider Class Name</em>' attribute.
    * @see #getDawnDocumentProviderClassName()
@@ -99,7 +92,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Editor Util Class Name</em>' attribute.
    * @see #setDawnEditorUtilClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnEditorUtilClassName()
@@ -112,7 +105,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnEditorUtilClassName
    * <em>Dawn Editor Util Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Editor Util Class Name</em>' attribute.
    * @see #getDawnEditorUtilClassName()
@@ -127,7 +120,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Creation Wizard Class Name</em>' attribute.
    * @see #setDawnCreationWizardClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnCreationWizardClassName()
@@ -140,7 +133,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnCreationWizardClassName
    * <em>Dawn Creation Wizard Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Creation Wizard Class Name</em>' attribute.
    * @see #getDawnCreationWizardClassName()
@@ -156,7 +149,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Canonical Editing Policy Class Name</em>' attribute.
    * @see #setDawnCanonicalEditingPolicyClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnCanonicalEditingPolicyClassName()
@@ -169,7 +162,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnCanonicalEditingPolicyClassName
    * <em>Dawn Canonical Editing Policy Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Canonical Editing Policy Class Name</em>' attribute.
    * @see #getDawnCanonicalEditingPolicyClassName()
@@ -184,7 +177,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Diagram Edit Part Class Name</em>' attribute.
    * @see #setDawnDiagramEditPartClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnDiagramEditPartClassName()
@@ -197,7 +190,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnDiagramEditPartClassName
    * <em>Dawn Diagram Edit Part Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Diagram Edit Part Class Name</em>' attribute.
    * @see #getDawnDiagramEditPartClassName()
@@ -212,7 +205,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Edit Part Factory Class Name</em>' attribute.
    * @see #setDawnEditPartFactoryClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnEditPartFactoryClassName()
@@ -225,7 +218,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnEditPartFactoryClassName
    * <em>Dawn Edit Part Factory Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Edit Part Factory Class Name</em>' attribute.
    * @see #getDawnEditPartFactoryClassName()
@@ -240,7 +233,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Edit Part Provider Class Name</em>' attribute.
    * @see #setDawnEditPartProviderClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnEditPartProviderClassName()
@@ -253,7 +246,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnEditPartProviderClassName
    * <em>Dawn Edit Part Provider Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Edit Part Provider Class Name</em>' attribute.
    * @see #getDawnEditPartProviderClassName()
@@ -268,7 +261,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dawn Edit Policy Provider Class Name</em>' attribute.
    * @see #setDawnEditPolicyProviderClassName(String)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_DawnEditPolicyProviderClassName()
@@ -281,7 +274,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getDawnEditPolicyProviderClassName
    * <em>Dawn Edit Policy Provider Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Dawn Edit Policy Provider Class Name</em>' attribute.
    * @see #getDawnEditPolicyProviderClassName()
@@ -296,7 +289,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>GMF Gen Editor Generator</em>' reference.
    * @see #setGMFGenEditorGenerator(GenEditorGenerator)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#getDawnGMFGenerator_GMFGenEditorGenerator()
@@ -309,7 +302,7 @@ public interface DawnGMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGMFGenerator#getGMFGenEditorGenerator
    * <em>GMF Gen Editor Generator</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>GMF Gen Editor Generator</em>' reference.
    * @see #getGMFGenEditorGenerator()

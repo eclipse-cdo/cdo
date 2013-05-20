@@ -119,7 +119,7 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSess
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.ui.compare"><B>org.eclipse.emf.cdo.ui.compare</B></A></TD>
-<TD>&nbsp;&nbsp;</TD>
+<TD>Classes that help to open EMF Compare user interfaces on CDO models.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.ui.widgets"><B>org.eclipse.emf.cdo.ui.widgets</B></A></TD>
@@ -462,10 +462,10 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>CDOCompareEditorInput.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorInput.html#openCompareDialog(org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openCompareDialog</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
-                  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;left,
-                  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>CDOCompareEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#openDialog(org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openDialog</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+           <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;leftPoint,
+           <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;rightPoint)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -694,7 +694,7 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></CODE></FONT></TD>
-<TD><CODE><B>CDOSessionInvalidationAggregator.</B><B><A HREF="../../../../../../org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html#getSession()">getSession</A></B>()</CODE>
+<TD><CODE><B>CDOSessionInvalidationEventQueue.</B><B><A HREF="../../../../../../org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#getSession()">getSession</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -709,6 +709,12 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html#CDOSessionInvalidationAggregator(org.eclipse.emf.cdo.session.CDOSession)">CDOSessionInvalidationAggregator</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#CDOSessionInvalidationEventQueue(org.eclipse.emf.cdo.session.CDOSession)">CDOSessionInvalidationEventQueue</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -769,6 +775,6 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" 
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

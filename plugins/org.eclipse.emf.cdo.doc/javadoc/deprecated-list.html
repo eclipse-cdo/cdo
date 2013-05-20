@@ -100,6 +100,11 @@ function windowTitle()
 <B>Deprecated Interfaces</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">org.eclipse.emf.cdo.common.protocol.CDOAuthenticator</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><CODE>IPasswordCredentialsProvider</CODE></A> directly</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j.CDOSession</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSession</CODE></A>.</I>&nbsp;</TD>
@@ -134,6 +139,11 @@ function windowTitle()
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/server/mem/IMEMStore.html" title="interface in org.eclipse.emf.cdo.server.mem"><CODE>IMEMStore</CODE></A></I>&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">org.eclipse.emf.cdo.server.db.IPreparedStatementCache</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection</CODE></A>.</I>&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -159,9 +169,14 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.CDOMergingConflictResolver</A>
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/CDOAuthenticationResult.html" title="class in org.eclipse.emf.cdo.spi.common">org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>This conflict resolver is still under development. It's not safe to use it.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.CDOSessionInvalidationAggregator</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html" title="class in org.eclipse.emf.spi.cdo"><CODE>CDOSessionInvalidationEventQueue</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/common/model/DelegatingCDOPackageRegistry.html" title="class in org.eclipse.emf.cdo.spi.common.model">org.eclipse.emf.cdo.spi.common.model.DelegatingCDOPackageRegistry</A>
@@ -183,6 +198,11 @@ function windowTitle()
 <B>Deprecated Exceptions</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/util/LegacyModeNotEnabledException.html" title="class in org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util.LegacyModeNotEnabledException</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/util/ServerException.html" title="class in org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util.ServerException</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not used.</I>&nbsp;</TD>
@@ -195,6 +215,11 @@ function windowTitle()
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Deprecated Fields</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IRepository.Props.html#SUPPORTING_ECORE">org.eclipse.emf.cdo.server.IRepository.Props.SUPPORTING_ECORE</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 instances of Ecore are always supported (on demand).</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/Store.html#UNSPECIFIED_DATE">org.eclipse.emf.cdo.spi.server.Store.UNSPECIFIED_DATE</A>
@@ -225,6 +250,16 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)">org.eclipse.emf.spi.cdo.InternalCDOSession.cacheRevisions(CDORevisionAvailabilityInfo)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 not used anymore.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalDynamicFeature(int)">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalDynamicFeature(int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalDynamicFeature(int)">org.eclipse.emf.spi.cdo.InternalCDOObject.cdoInternalDynamicFeature(int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 no longer supported.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore, org.eclipse.emf.cdo.workspace.CDOWorkspaceBase, org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</A>
@@ -262,6 +297,26 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createCDOIDObject(org.eclipse.emf.cdo.common.id.CDOID.ObjectType)">org.eclipse.emf.cdo.common.id.CDOIDUtil.createCDOIDObject(CDOID.ObjectType)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 no longer supported. IDs can't be created without a value anymore.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable)">org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping.createDBField(IDBTable)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable)">org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.createDBField(IDBTable)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)"><CODE>ITypeMapping.createDBField(IDBTable, String)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createLongWithClassifier(org.eclipse.emf.cdo.common.model.CDOClassifierRef, long)">org.eclipse.emf.cdo.common.id.CDOIDUtil.createLongWithClassifier(CDOClassifierRef, long)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createLongWithClassifier(long, org.eclipse.emf.cdo.common.model.CDOClassifierRef)"><CODE>CDOIDUtil.createLongWithClassifier(long, CDOClassifierRef)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOSession.createRevisionAvailabilityInfo(CDOBranchPoint)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 not used anymore.</I>&nbsp;</TD>
@@ -275,6 +330,21 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionConfiguration()">org.eclipse.emf.cdo.server.CDOServerUtil.createSessionConfiguration()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not yet supported.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache()">org.eclipse.emf.cdo.server.db.CDODBUtil.createStatementCache()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement(java.lang.String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStatementCache(int)">org.eclipse.emf.cdo.server.db.CDODBUtil.createStatementCache(int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true#prepareStatement(java.lang.String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" title="class or interface in org.eclipse.net4j.db"><CODE>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createStringWithClassifier(org.eclipse.emf.cdo.common.model.CDOClassifierRef, java.lang.String)">org.eclipse.emf.cdo.common.id.CDOIDUtil.createStringWithClassifier(CDOClassifierRef, String)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createStringWithClassifier(java.lang.String, org.eclipse.emf.cdo.common.model.CDOClassifierRef)"><CODE>CDOIDUtil.createStringWithClassifier(String, CDOClassifierRef)</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#doReadResult(org.eclipse.emf.cdo.common.protocol.CDODataInput)">org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.doReadResult(CDODataInput)</A>
@@ -302,6 +372,21 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)"><CODE>IDurableLockingManager.LockGrade.get(boolean, boolean, boolean)</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/model/CDOModelUtil.html#getAllPersistentFeatures(org.eclipse.emf.ecore.EClass)">org.eclipse.emf.cdo.common.model.CDOModelUtil.getAllPersistentFeatures(EClass)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <code>CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures()</code>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getAuthenticator()">org.eclipse.emf.cdo.session.CDOSessionConfiguration.getAuthenticator()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getCredentialsProvider()"><CODE>CDOSessionConfiguration.getCredentialsProvider()</CODE></A> and <A HREF="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><CODE>CDOSessionConfiguration.setCredentialsProvider(IPasswordCredentialsProvider)</CODE></A>, respectively</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#getAuthenticator()">org.eclipse.emf.spi.cdo.InternalCDOSession.getAuthenticator()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#getCredentialsProvider()"><CODE>InternalCDOSession.getCredentialsProvider()</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoHandlers()">org.eclipse.emf.cdo.server.IRepository.getCommitInfoHandlers()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 call <A HREF="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()"><CODE>CDOCommitInfoProvider.getCommitInfoHandlers()</CODE></A></I>&nbsp;</TD>
@@ -310,6 +395,16 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">org.eclipse.emf.spi.cdo.InternalCDOView.getFeatureAnalyzer()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">org.eclipse.emf.cdo.common.model.CDOClassInfo.getFeatureIndex(EStructuralFeature)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 pushed down to <A HREF="org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>InternalCDOClassInfo.getPersistentFeatureIndex(EStructuralFeature)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(int)">org.eclipse.emf.cdo.common.model.CDOClassInfo.getFeatureIndex(int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 pushed down to <A HREF="org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(int)"><CODE>InternalCDOClassInfo.getPersistentFeatureIndex(int)</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/server/IRepository.html#getLockManager()">org.eclipse.emf.cdo.server.IRepository.getLockManager()</A>
@@ -340,6 +435,16 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/etypes/impl/EtypesFactoryImpl.html#getPackage()">org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl.getPackage()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I></I>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, java.lang.String)">org.eclipse.emf.cdo.server.IPermissionManager.getPermission(CDORevision, CDOBranchPoint, String)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 call <A HREF="org/eclipse/emf/cdo/server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.server.ISession)"><CODE>IPermissionManager.getPermission(CDORevision, CDOBranchPoint, ISession)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/model/EMFUtil.html#getPersistentFeatures(org.eclipse.emf.common.util.EList)">org.eclipse.emf.cdo.common.model.EMFUtil.getPersistentFeatures(EList<EStructuralFeature>)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>This method is expensive and will be removed in the future.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.Options.html#getProtocol()">org.eclipse.emf.cdo.net4j.CDOSession.Options.getProtocol()</A>
@@ -377,6 +482,16 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()"><CODE>CDOView.Options.getStaleReferencePolicy()</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html#getStatementCache()">org.eclipse.emf.cdo.server.db.IDBStoreAccessor.getStatementCache()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getUserManager()">org.eclipse.emf.cdo.spi.server.InternalSessionManager.getUserManager()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/server/ISessionManager.html#getAuthenticator()"><CODE>ISessionManager.getAuthenticator()</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html#getView()">org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent.getView()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html#getLocalTransaction()"><CODE>CDOSessionInvalidationEvent.getLocalTransaction()</CODE></A>.</I>&nbsp;</TD>
@@ -397,9 +512,44 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction, boolean)"><CODE>InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/id/CDOID.html#isDangling()">org.eclipse.emf.cdo.common.id.CDOID.isDangling()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I></I>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#isDangling()">org.eclipse.emf.cdo.spi.common.id.AbstractCDOID.isDangling()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/util/CDOUtil.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.util.CDOUtil.isInvalidationRunnerActive()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.0 use CDOView.isInvalidationRunnerActive()</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/util/CDOUtil.html#isLegacyModeDefault()">org.eclipse.emf.cdo.util.CDOUtil.isLegacyModeDefault()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.common.util.CDOQueryInfo.isLegacyModeEnabled()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler.isLegacyModeEnabled()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.transaction.CDOPushTransaction.isLegacyModeEnabled()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.view.CDOView.isLegacyModeEnabled()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)">org.eclipse.emf.cdo.spi.server.InternalStore.isLocal(CDOID)</A>
@@ -415,6 +565,16 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/server/db/IIDHandler.html#isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)">org.eclipse.emf.cdo.server.db.IIDHandler.isLocalCDOID(CDOID)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not used anymore.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingEcore()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingEcore()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 instances of Ecore are always supported (on demand).</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore()">org.eclipse.emf.cdo.common.CDOCommonRepository.isSupportingEcore()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 instances of Ecore are always supported (on demand).</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, long)">org.eclipse.emf.cdo.spi.server.InternalLockManager.lock(boolean, IRWLockManager.LockType, IView, Collection<? extends Object>, long)</A>
@@ -437,9 +597,44 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#openNet4jSession()"><CODE>openNet4jSession()</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">org.eclipse.emf.cdo.server.CDOServerUtil.openView(ISession, CDOBranchPoint, boolean)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>CDOServerUtil.openView(ISession, CDOBranchPoint)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">org.eclipse.emf.cdo.server.CDOServerUtil.openView(ISession, CDOBranchPoint, boolean, CDORevisionProvider)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><CODE>CDOServerUtil.openView(ISession, CDOBranchPoint, CDORevisionProvider)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, boolean)">org.eclipse.emf.cdo.server.CDOServerUtil.openView(IStoreAccessor.CommitContext, boolean)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><CODE>CDOServerUtil.openView(IStoreAccessor.CommitContext)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView, boolean)">org.eclipse.emf.cdo.server.CDOServerUtil.openView(IView, boolean)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)"><CODE>CDOServerUtil.openView(IView)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.html#options()">org.eclipse.emf.cdo.net4j.CDOSession.options()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.html#options()"><CODE>CDONet4jSession.options()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#read(org.eclipse.net4j.util.io.ExtendedDataInput)">org.eclipse.emf.cdo.common.id.CDOIDUtil.read(ExtendedDataInput)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput)"><CODE>CDOIDUtil.read(CDODataInput)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#read(org.eclipse.net4j.util.io.ExtendedDataInput)">org.eclipse.emf.cdo.spi.common.id.AbstractCDOID.read(ExtendedDataInput)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 not called anymore.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#read(java.lang.String)">org.eclipse.emf.cdo.spi.common.id.AbstractCDOID.read(String)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 not called anymore.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.recalculateSharedDetachedObjects()</A>
@@ -455,6 +650,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.rollbackObject(CDOObject)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Don't call this method. Rolling back single objects is exremely risky.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendAuthenticationChallenge(byte[])">org.eclipse.emf.cdo.spi.server.ISessionProtocol.sendAuthenticationChallenge(byte[])</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 <CODE>#sendAuthenticationChallenge(Challenge)</CODE> is called.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">org.eclipse.emf.cdo.spi.server.ISessionProtocol.sendCommitNotification(CDOCommitInfo)</A>
@@ -496,9 +696,19 @@ function windowTitle()
              instead</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator)">org.eclipse.emf.spi.cdo.InternalCDOSession.setAuthenticator(CDOAuthenticator)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><CODE>InternalCDOSession.setCredentialsProvider(IPasswordCredentialsProvider)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">org.eclipse.emf.spi.cdo.InternalCDOView.setFeatureAnalyzer(CDOFeatureAnalyzer)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/util/CDOUtil.html#setLegacyModeDefault(boolean)">org.eclipse.emf.cdo.util.CDOUtil.setLegacyModeDefault(boolean)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">org.eclipse.emf.cdo.view.CDOView.Options.setStaleReferenceBehaviour(CDOStaleReferencePolicy)</A>
@@ -509,6 +719,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setTimeProvider(org.eclipse.emf.cdo.common.util.CDOTimeProvider)">org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.setTimeProvider(CDOTimeProvider)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 replaced by <A HREF="org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)"><CODE>InternalCDOBranchManager.setRepository(CDOCommonRepository)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#setUserManager(org.eclipse.net4j.util.security.IUserManager)">org.eclipse.emf.cdo.spi.server.InternalSessionManager.setUserManager(IUserManager)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/server/ISessionManager.html#setAuthenticator(org.eclipse.net4j.util.security.IAuthenticator)"><CODE>ISessionManager.setAuthenticator(IAuthenticator)</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection)">org.eclipse.emf.cdo.spi.server.InternalLockManager.unlock(boolean, IRWLockManager.LockType, IView, Collection<? extends Object>)</A>
@@ -536,6 +751,16 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I></I>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#write(org.eclipse.net4j.util.io.ExtendedDataOutput)">org.eclipse.emf.cdo.spi.common.id.AbstractCDOID.write(ExtendedDataOutput)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 <A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput)"><CODE>AbstractCDOID.write(CDODataOutput)</CODE></A> is called.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#write(org.eclipse.net4j.util.io.ExtendedDataOutput, org.eclipse.emf.cdo.common.id.CDOID)">org.eclipse.emf.cdo.common.id.CDOIDUtil.write(ExtendedDataOutput, CDOID)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput, org.eclipse.emf.cdo.common.id.CDOID)"><CODE>CDOIDUtil.write(CDODataOutput, CDOID)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int)">org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.writeResult(CDODataOutput, int)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore by the framework</I>&nbsp;</TD>
@@ -560,6 +785,11 @@ function windowTitle()
 <B>Deprecated Constructors</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult(CDOIDProvider, CDOBranchPoint, long)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult(CDOIDProvider, String, CDOBranchPoint, long, List<CDOObjectReference>)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2</I>&nbsp;</TD>
@@ -568,6 +798,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#CDOSessionProtocol.LockObjectsResult(boolean, boolean, boolean, long, org.eclipse.emf.cdo.common.revision.CDORevisionKey[])">org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult(boolean, boolean, boolean, long, CDORevisionKey[])</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#ObjectWriteAccessHandler(boolean)">org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler(boolean)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -625,6 +860,6 @@ function windowTitle()
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

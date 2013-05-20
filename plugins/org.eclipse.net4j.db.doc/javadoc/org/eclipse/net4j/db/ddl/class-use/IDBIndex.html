@@ -94,8 +94,20 @@ Packages that use <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.h
 <TD>The Net4j DB framework concepts for the abstraction of the SQL data definition language.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.db.ddl.delta"><B>org.eclipse.net4j.db.ddl.delta</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.db.mysql"><B>org.eclipse.net4j.db.mysql</B></A></TD>
+<TD>The Net4j DB Framework support for MYSQL databases.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.spi.db"><B>org.eclipse.net4j.spi.db</B></A></TD>
 <TD>Server service provider interfaces and useful base implementations for the Net4j DB framework.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.spi.db.ddl"><B>org.eclipse.net4j.spi.db.ddl</B></A></TD>
+<TD>Server service provider interfaces for the Net4j DB framework.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -125,6 +137,84 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type, java.lang.String...)">addIndex</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>...&nbsp;fieldNames)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndex(java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField...)">addIndex</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>...&nbsp;fields)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndex(java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, java.lang.String...)">addIndex</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type,
+         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>...&nbsp;fieldNames)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndexEmpty(org.eclipse.net4j.db.ddl.IDBIndex.Type)">addIndexEmpty</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#addIndexEmpty(java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type)">addIndexEmpty</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+              <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBIndexField.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndexField.html#getIndex()">getIndex</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getIndex(int)">getIndex</A></B>(int&nbsp;position)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getIndex(java.lang.String)">getIndex</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getIndexSafe(java.lang.String)">getIndexSafe</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>[]</CODE></FONT></TD>
 <TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getIndices()">getIndices</A></B>()</CODE>
 
@@ -134,7 +224,90 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBIndexField.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndexField.html#getParent()">getParent</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
 <TD><CODE><B>IDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html#getPrimaryKeyIndex()">getPrimaryKeyIndex</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>IDBSchemaVisitor.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.html#visit(org.eclipse.net4j.db.ddl.IDBIndex)">visit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>IDBSchemaVisitor.Default.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.IDBIndex)">visit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.db.ddl.delta"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A> in <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</A> that return <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>IDBIndexDelta.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html#getSchemaElement(org.eclipse.net4j.db.ddl.IDBSchema)">getSchemaElement</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.db.mysql"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A> in <A HREF="../../../../../../org/eclipse/net4j/db/mysql/package-summary.html">org.eclipse.net4j.db.mysql</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/db/mysql/package-summary.html">org.eclipse.net4j.db.mysql</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>MYSQLAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/db/mysql/MYSQLAdapter.html#dropPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropPrimaryKey</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -159,9 +332,147 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBIndex, org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">createIndex</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+            <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+            <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.sql.Statement, int)">createIndex</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</A>&nbsp;statement,
             int&nbsp;num)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createIndex</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createIndexFields</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createPrimaryKey</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBIndex, org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">dropIndex</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+          <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+          <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropIndex</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropPrimaryKey</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;index,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.spi.db.ddl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A> in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A> in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBIndex.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBIndex</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Fields in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> declared as <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>[]</CODE></FONT></TD>
+<TD><CODE><B>InternalDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBTable.html#NO_INDICES">NO_INDICES</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> that return <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></CODE></FONT></TD>
+<TD><CODE><B>InternalDBIndex.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBIndex.html#getWrapper()">getWrapper</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalDBTable.</B><B><A HREF="../../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBTable.html#removeIndex(org.eclipse.net4j.db.ddl.IDBIndex)">removeIndex</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>&nbsp;indexToRemove)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -222,6 +533,6 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

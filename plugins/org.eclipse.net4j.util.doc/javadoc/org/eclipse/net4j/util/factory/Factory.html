@@ -99,7 +99,7 @@ Class Factory</H2>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</A></DD>
 </DL>
 <DL>
-<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</A></DD>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</A></DD>
 </DL>
 <HR>
 <DL>
@@ -113,12 +113,13 @@ Class Factory</H2>
 <area shape="rect" id="node2" href="FactoryDescriptor.html" title="FactoryDescriptor" alt="" coords="396,65,521,90"/>
 <area shape="rect" id="node3" href="../security/RandomizerFactory.html" title="RandomizerFactory (org.eclipse.net4j.util.security)" alt="" coords="361,109,557,149"/>
 <area shape="rect" id="node4" href="../concurrent/TimerLifecycle.DaemonFactory.html" title="TimerLifecycle.DaemonFactory (org.eclipse.net4j.util.concurrent)" alt="" coords="353,168,564,208"/>
-<area shape="rect" id="node5" href="../security/CredentialsProviderFactory.html" title="CredentialsProviderFactory (org.eclipse.net4j.util.security)" alt="" coords="361,227,556,267"/>
-<area shape="rect" id="node6" href="../ui/container/ElementWizardFactory.html" title="ElementWizardFactory (org.eclipse.net4j.util.ui.container)" alt="" coords="350,285,567,325"/>
-<area shape="rect" id="node7" href="Factory.html" title="Factory" alt="" coords="187,205,253,230"/>
-<area shape="rect" id="node8" href="../security/NegotiatorFactory.html" title="NegotiatorFactory (org.eclipse.net4j.util.security)" alt="" coords="361,344,556,384"/>
-<area shape="rect" id="node9" href="../security/UserManagerFactory.html" title="UserManagerFactory (org.eclipse.net4j.util.security)" alt="" coords="361,403,556,443"/>
-<area shape="rect" id="node10" href="IFactory.html" title="&#171;interface&#187; IFactory" alt="" coords="5,197,91,237"/>
+<area shape="rect" id="node5" href="../security/AuthenticatorFactory.html" title="AuthenticatorFactory (org.eclipse.net4j.util.security)" alt="" coords="361,227,556,267"/>
+<area shape="rect" id="node6" href="../security/CredentialsProviderFactory.html" title="CredentialsProviderFactory (org.eclipse.net4j.util.security)" alt="" coords="361,285,556,325"/>
+<area shape="rect" id="node7" href="../ui/container/ElementWizardFactory.html" title="ElementWizardFactory (org.eclipse.net4j.util.ui.container)" alt="" coords="350,344,567,384"/>
+<area shape="rect" id="node8" href="Factory.html" title="Factory" alt="" coords="187,234,253,259"/>
+<area shape="rect" id="node9" href="../security/NegotiatorFactory.html" title="NegotiatorFactory (org.eclipse.net4j.util.security)" alt="" coords="361,403,556,443"/>
+<area shape="rect" id="node10" href="../security/UserManagerFactory.html" title="UserManagerFactory (org.eclipse.net4j.util.security)" alt="" coords="361,461,556,501"/>
+<area shape="rect" id="node11" href="IFactory.html" title="&#171;interface&#187; IFactory" alt="" coords="5,227,91,267"/>
 </map>
 
 <CENTER><IMG SRC="Factory.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -391,6 +392,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

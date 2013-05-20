@@ -184,7 +184,7 @@ Various static helper methods for dealing with CDO meta models.
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOModelUtil.html#getAllPersistentFeatures(org.eclipse.emf.ecore.EClass)">getAllPersistentFeatures</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <code>CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures()</code>.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -192,7 +192,7 @@ Various static helper methods for dealing with CDO meta models.
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOModelUtil.html#getClassInfo(org.eclipse.emf.ecore.EClass)">getClassInfo</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns additional CDO infos for an <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EClass</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -639,6 +639,11 @@ getClassInfo</H3>
 <PRE>
 public static <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A> <B>getClassInfo</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</PRE>
 <DL>
+<DD>Returns additional CDO infos for an <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EClass</CODE></A>.
+ <p>
+ This operation is somewhat expensive because it synchronizes on the EClass and iterates over all adapters.
+ Whenever possible use <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getClassInfo()"><CODE>CDORevision.getClassInfo()</CODE></A> or <code>InternalCDOObject.getClassInfo()</code>.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -653,15 +658,22 @@ public static <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOCla
 <A NAME="getAllPersistentFeatures(org.eclipse.emf.ecore.EClass)"><!-- --></A><H3>
 getAllPersistentFeatures</H3>
 <PRE>
-public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>[] <B>getAllPersistentFeatures</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>[] <B>getAllPersistentFeatures</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <code>CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures()</code>.</I>
+<P>
+<DD>Returns all persistent <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>features</CODE></A> of an <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EClass</CODE></A>.
+ <p>
+ This operation is somewhat expensive because it synchronizes on the EClass and iterates over all adapters.
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOModelUtil.html#getClassInfo(org.eclipse.emf.ecore.EClass)"><CODE>getClassInfo(EClass)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -831,6 +843,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHO
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

@@ -55,8 +55,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/compare/CDOCompareUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOCompareUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -118,30 +118,23 @@ Provides static factory methods that return CDO-scoped <CODE>comparisons</CODE>.
  and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
- The following methods return comparisons that are based on this scope algorithm:
+ The following method returns comparisons that are based on this scope algorithm:
  <ul>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>compare(EObject, CDOBranchPoint)</CODE></A>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(EObject, CDOBranchPoint, boolean)</CODE></A>
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><CODE>compare(CDOObject, CDOView, CDOView[])</CODE></A>
  </ul>
  <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare"><CODE>CDOComparisonScope.Minimal</CODE></A> takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
  and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.
  The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
  objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
- The following methods return comparisons that are based on this scope algorithm:
+ The following method returns comparisons that are based on this scope algorithm:
  <ul>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>compare(CDOView, CDOBranchPoint)</CODE></A>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(CDOView, CDOBranchPoint, boolean)</CODE></A>
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><CODE>compare(CDOView, CDOView, CDOView[])</CODE></A>
  </ul>
  </ul>
- The <CODE>right side</CODE> of a comparison is specified as a <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>CDOBranchPoint</CODE></A> which, among others, can be another <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView</CODE></A>
- (which then is not closed when the comparison is closed) or a <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>CDOCommitInfo</CODE></A>. The <CODE>origin side</CODE> of a comparison is
- automatically <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#getAncestor(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>determined</CODE></A> by inspecting the <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch tree</CODE></A> and used if its different from the left or right side.
+ The <CODE>origin side</CODE> of a comparison is automatically <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#getAncestor(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>determined</CODE></A> by
+ inspecting the <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch tree</CODE></A> and used if its different from the left or right side.
  <p>
- The comparions returned from these factory methods are all of the type <A HREF="../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare"><CODE>CloseableComparison</CODE></A> and the caller is responsible to call <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection"><CODE>Closeable.close()</CODE></A>
- on them when they're not needed anymore. The reason is that the scopes may or may not open a number of addional <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> on the local <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A>
- that need to be closed at some point.
- <p>
- The <CODE>matcher</CODE> used by the comparisons is based on an <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><CODE>ID function</CODE></A> that considers the <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>CDOID</CODE></A>s of the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.
+ The <CODE>matcher</CODE> used by the comparisons is based on an <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><CODE>ID function</CODE></A> that considers the <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>CDOID</CODE></A>s of the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.
  <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>Resources</CODE></A> and <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>folders</CODE></A> are treated as normal <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject</CODE></A>s.
 <P>
 
@@ -160,19 +153,20 @@ Provides static factory methods that return CDO-scoped <CODE>comparisons</CODE>.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compare</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-        <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
+<CODE>static&nbsp;Comparison</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">compare</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;left,
+        <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+        <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftView, right, true)</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>) and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">compare</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-        <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
-        boolean&nbsp;tryThreeWay)</CODE>
+<CODE>static&nbsp;Comparison</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">compare</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+        <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+        <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
@@ -180,22 +174,30 @@ Provides static factory methods that return CDO-scoped <CODE>comparisons</CODE>.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compare</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;leftRoot,
-        <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
+<CODE>static&nbsp;Comparison</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[], java.util.Set)">compare</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+        <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+        <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView,
+        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftRoot, right, true)</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">compare</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;leftRoot,
-        <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
-        boolean&nbsp;tryThreeWay)</CODE>
+<CODE>static&nbsp;Comparison</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(IComparisonScope)">compare</A></B>(IComparisonScope&nbsp;scope)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>) and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;Comparison</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction)">compareUncommittedChanges</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -220,26 +222,23 @@ Provides static factory methods that return CDO-scoped <CODE>comparisons</CODE>.
 </TR>
 </TABLE>
 
-<A NAME="compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
+<A NAME="compare(IComparisonScope)"><!-- --></A><H3>
 compare</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A> <B>compare</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;leftRoot,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</PRE>
+public static Comparison <B>compare</B>(IComparisonScope&nbsp;scope)</PRE>
 <DL>
-<DD>Same as <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftRoot, right, true)</CODE></A>.
-<P>
 <DD><DL>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><!-- --></A><H3>
+<A NAME="compare(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><!-- --></A><H3>
 compare</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A> <B>compare</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;leftRoot,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
-                                    boolean&nbsp;tryThreeWay)</PRE>
+public static Comparison <B>compare</B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;left,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</PRE>
 <DL>
 <DD>Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>) and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
@@ -251,13 +250,17 @@ public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.
 </DL>
 <HR>
 
-<A NAME="compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
+<A NAME="compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><!-- --></A><H3>
 compare</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A> <B>compare</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</PRE>
+public static Comparison <B>compare</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</PRE>
 <DL>
-<DD>Same as <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftView, right, true)</CODE></A>.
+<DD>Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
+ and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.
+ The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
+ objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
 <P>
 <DD><DL>
 </DL>
@@ -265,18 +268,25 @@ public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.
 </DL>
 <HR>
 
-<A NAME="compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><!-- --></A><H3>
+<A NAME="compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[], java.util.Set)"><!-- --></A><H3>
 compare</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A> <B>compare</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
-                                    boolean&nbsp;tryThreeWay)</PRE>
+public static Comparison <B>compare</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView,
+                                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</PRE>
 <DL>
-<DD>Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
- and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.
- The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
- objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
-<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction)"><!-- --></A><H3>
+compareUncommittedChanges</H3>
+<PRE>
+public static Comparison <B>compareUncommittedChanges</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</PRE>
+<DL>
 <DD><DL>
 </DL>
 </DD>
@@ -311,8 +321,8 @@ public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/compare/CDOCompareUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOCompareUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -341,6 +351,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHO
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

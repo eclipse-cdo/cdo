@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;NEXT CLASS</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOComparisonScope.Minimal.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -120,10 +120,9 @@ Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
  and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.
  The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
  objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
- The following methods return comparisons that are based on this scope algorithm:
+ The following method returns comparisons that are based on this scope algorithm:
  <ul>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>CDOCompareUtil.compare(CDOView, CDOBranchPoint)</CODE></A>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>CDOCompareUtil.compare(CDOView, CDOBranchPoint, boolean)</CODE></A>
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><CODE>CDOCompareUtil.compare(CDOView, CDOView, CDOView[])</CODE></A>
  </ul>
 <P>
 
@@ -198,6 +197,35 @@ Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;IComparisonScope</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#create(org.eclipse.emf.cdo.transaction.CDOTransaction)">create</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;IComparisonScope</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#create(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">create</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+       <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+       <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;IComparisonScope</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#create(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[], java.util.Set)">create</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+       <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+       <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;? extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#getChildren(org.eclipse.emf.ecore.EObject)">getChildren</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;eObject)</CODE>
 
@@ -211,7 +239,7 @@ Takes a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.cdo.compare.<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredEObjects(org.eclipse.emf.ecore.resource.Resource)">getCoveredEObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredResources(org.eclipse.emf.ecore.resource.ResourceSet)">getCoveredResources</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredEObjects(org.eclipse.emf.ecore.resource.Resource)">getCoveredEObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredResources(org.eclipse.emf.ecore.resource.ResourceSet)">getCoveredResources</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#isResolveProxies()">isResolveProxies</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#setResolveProxies(boolean)">setResolveProxies</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -289,6 +317,44 @@ protected void <B>collectRequiredParentID</B>(<A HREF="../../../../../org/eclips
 </DL>
 </DD>
 </DL>
+<HR>
+
+<A NAME="create(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><!-- --></A><H3>
+create</H3>
+<PRE>
+public static IComparisonScope <B>create</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+                                      <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                      <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="create(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[], java.util.Set)"><!-- --></A><H3>
+create</H3>
+<PRE>
+public static IComparisonScope <B>create</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+                                      <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                      <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView,
+                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="create(org.eclipse.emf.cdo.transaction.CDOTransaction)"><!-- --></A><H3>
+create</H3>
+<PRE>
+public static IComparisonScope <B>create</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -320,7 +386,7 @@ protected void <B>collectRequiredParentID</B>(<A HREF="../../../../../org/eclips
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;NEXT CLASS</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOComparisonScope.Minimal.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -349,6 +415,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

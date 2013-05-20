@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -27,22 +27,15 @@ import java.util.List;
  * This is the item provider adapter for a
  * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEMFGenerator} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  * @author Martin Fluegge
  */
 public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvider
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawnEMFGeneratorItemProvider(AdapterFactory adapterFactory)
@@ -52,7 +45,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -69,7 +62,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This adds a property descriptor for the Emf Gen Model feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addEmfGenModelPropertyDescriptor(Object object)
@@ -85,7 +78,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This returns DawnEMFGenerator.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -96,7 +89,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -110,7 +103,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -123,7 +116,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -134,7 +127,7 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

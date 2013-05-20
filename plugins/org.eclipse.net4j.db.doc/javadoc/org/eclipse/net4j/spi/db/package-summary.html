@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/db/postgresql/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
-&nbsp;NEXT PACKAGE</FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/spi/db/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -88,11 +88,12 @@ Server service provider interfaces and useful base implementations for the Net4j
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="DBSchema.html" title="DBSchema" alt="" coords="245,127,333,153"/>
-<area shape="rect" id="node2" href="DBAdapter.html" title="DBAdapter" alt="" coords="247,19,332,45"/>
-<area shape="rect" id="node3" title="DBSchemaElement (org.eclipse.net4j.internal.db.ddl)" alt="" coords="5,84,216,124"/>
-<area shape="rect" id="node4" href="../../db/IDBAdapter.html" title="&#171;interface&#187; IDBAdapter (org.eclipse.net4j.db)" alt="" coords="39,5,182,59"/>
-<area shape="rect" id="node5" href="../../db/ddl/IDBSchema.html" title="&#171;interface&#187; IDBSchema (org.eclipse.net4j.db.ddl)" alt="" coords="29,149,193,203"/>
+<area shape="rect" id="node1" href="DBAdapter.FieldInfo.html" title="DBAdapter.FieldInfo" alt="" coords="246,163,383,189"/>
+<area shape="rect" id="node2" title="DBSchema (org.eclipse.net4j.internal.db.ddl)" alt="" coords="5,84,216,124"/>
+<area shape="rect" id="node3" href="DBSchema.html" title="DBSchema" alt="" coords="271,91,359,117"/>
+<area shape="rect" id="node4" href="DBAdapter.html" title="DBAdapter" alt="" coords="272,19,357,45"/>
+<area shape="rect" id="node5" title="&#171;interface&#187; Comparable (java.lang)" alt="" coords="65,149,156,203"/>
+<area shape="rect" id="node6" href="../../db/IDBAdapter.html" title="&#171;interface&#187; IDBAdapter (org.eclipse.net4j.db)" alt="" coords="39,5,182,59"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -107,8 +108,13 @@ Server service provider interfaces and useful base implementations for the Net4j
 <TD>A useful base class for implementing custom <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapters</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</A></B></TD>
-<TD>A useful base class for implementing custom <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schemas</CODE></A>.</TD>
+<TD><B>Deprecated.</B>&nbsp;<I>As of 4.2 call <A HREF="../../../../../org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)"><CODE>DBUtil.createSchema(String)</CODE></A>, <A HREF="../../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema)"><CODE>DBUtil.readSchema(IDBAdapter, Connection, IDBSchema)</CODE></A>,
+    <A HREF="../../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, java.lang.String)"><CODE>DBUtil.readSchema(IDBAdapter, Connection, String)</CODE></A> or <A HREF="../../../../../org/eclipse/net4j/db/DBUtil.html#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)"><CODE>DBUtil.copySchema(IDBSchema)</CODE></A>.</I></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -149,7 +155,7 @@ Server service provider interfaces and useful base implementations for the Net4j
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/db/postgresql/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
-&nbsp;NEXT PACKAGE</FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/spi/db/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -172,6 +178,6 @@ Server service provider interfaces and useful base implementations for the Net4j
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

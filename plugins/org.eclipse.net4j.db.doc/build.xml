@@ -81,7 +81,7 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${project.path}/overview.html"
-		         bottom="&lt;i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+		         bottom="&lt;i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<doclet name="org.jboss.apiviz.APIviz" path="${path.supplemental}/bin">
 				<param name="-nopackagediagram" />
@@ -97,15 +97,19 @@
 				<include name="org.eclipse.net4j.db.postgresql/src/org/eclipse/net4j/db/postgresql/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/ddl/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/ddl/delta/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/dml/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/spi/db/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/spi/db/ddl/*.java" />
 			</fileset>
 
 			<group title="Net4j DB Framework">
 				<package name="org.eclipse.net4j.db" />
 				<package name="org.eclipse.net4j.db.ddl" />
+				<package name="org.eclipse.net4j.db.ddl.delta" />
 				<package name="org.eclipse.net4j.db.dml" />
 				<package name="org.eclipse.net4j.spi.db" />
+				<package name="org.eclipse.net4j.spi.db.ddl" />
 			</group>
 			<group title="Net4j DB Framework Derby Adapter">
 				<package name="org.eclipse.net4j.db.derby" />

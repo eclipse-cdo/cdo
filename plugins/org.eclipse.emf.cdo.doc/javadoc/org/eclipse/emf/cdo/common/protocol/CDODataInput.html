@@ -95,7 +95,7 @@ Interface CDODataInput</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInput.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInput</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl</A></DD>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.Default.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl.Default</A></DD>
 </DL>
 <HR>
 <DL>
@@ -157,6 +157,14 @@ Provides I/O methods for reading various CDO data types and concepts from stream
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html#getPackageRegistry()">getPackageRegistry</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1037,6 +1045,22 @@ readCDOLockArea</H3>
 </DL>
 </DD>
 </DL>
+<HR>
+
+<A NAME="getPackageRegistry()"><!-- --></A><H3>
+getPackageRegistry</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A> <B>getPackageRegistry</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -1097,6 +1121,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHO
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

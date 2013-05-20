@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelFactory
  * @model kind="package"
  * @generated
@@ -32,36 +32,29 @@ import org.eclipse.emf.ecore.EReference;
 public interface DawngenmodelPackage extends EPackage
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "dawngenmodel";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/cdo/dawn/2010/GenModel";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "dawngenmodel";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   DawngenmodelPackage eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl.init();
@@ -69,7 +62,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
    * <em>Dawn Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnGenerator()
    * @generated
@@ -79,7 +72,7 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Conflict Color</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -88,7 +81,7 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Local Lock Color</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -97,7 +90,7 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Remote Lock Color</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -107,7 +100,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * The number of structural features of the '<em>Dawn Generator</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -117,7 +110,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
    * <em>Dawn Fragment Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnFragmentGenerator()
    * @generated
@@ -127,7 +120,7 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Fragment Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -137,7 +130,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * The feature id for the '<em><b>Dawn Editor Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -146,7 +139,7 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Dawn Generator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -156,7 +149,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * The number of structural features of the '<em>Dawn Fragment Generator</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    * @since 1.0
@@ -166,7 +159,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * <em>Dawn Generator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Dawn Generator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * @generated
@@ -178,7 +171,7 @@ public interface DawngenmodelPackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getConflictColor <em>Conflict Color</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Conflict Color</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getConflictColor()
    * @see #getDawnGenerator()
@@ -191,7 +184,7 @@ public interface DawngenmodelPackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getLocalLockColor <em>Local Lock Color</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Local Lock Color</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getLocalLockColor()
    * @see #getDawnGenerator()
@@ -204,7 +197,7 @@ public interface DawngenmodelPackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getRemoteLockColor <em>Remote Lock Color</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Remote Lock Color</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getRemoteLockColor()
    * @see #getDawnGenerator()
@@ -216,7 +209,7 @@ public interface DawngenmodelPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
    * <em>Dawn Fragment Generator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Dawn Fragment Generator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
    * @generated
@@ -228,7 +221,7 @@ public interface DawngenmodelPackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName <em>Fragment Name</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Fragment Name</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName()
    * @see #getDawnFragmentGenerator()
@@ -241,7 +234,7 @@ public interface DawngenmodelPackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName
    * <em>Dawn Editor Class Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Dawn Editor Class Name</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName()
    * @see #getDawnFragmentGenerator()
@@ -254,7 +247,7 @@ public interface DawngenmodelPackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnGenerator
    * <em>Dawn Generator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Dawn Generator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnGenerator()
    * @see #getDawnFragmentGenerator()
@@ -265,7 +258,7 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -280,7 +273,7 @@ public interface DawngenmodelPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -288,7 +281,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
      * <em>Dawn Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnGenerator()
      * @generated
@@ -299,7 +292,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Conflict Color</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      * @since 1.0
      */
@@ -308,7 +301,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Local Lock Color</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @since 1.0
      */
@@ -317,7 +310,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Remote Lock Color</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @since 1.0
      */
@@ -327,7 +320,7 @@ public interface DawngenmodelPackage extends EPackage
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
      * <em>Dawn Fragment Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnFragmentGenerator()
      * @generated
@@ -338,7 +331,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Fragment Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      * @since 1.0
      */
@@ -347,7 +340,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Dawn Editor Class Name</b></em>' attribute feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      * @since 1.0
      */
@@ -357,7 +350,7 @@ public interface DawngenmodelPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Dawn Generator</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      * @since 1.0
      */

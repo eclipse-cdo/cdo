@@ -60,7 +60,7 @@
         -->
 
         <!-- Optional:
-        <property name="objectTypeCacheSize" value="100000" />
+        <property name="objectTypeCacheSize" value="100000"/>
         -->
 
       </mappingStrategy>
@@ -79,7 +79,7 @@
       <!-- Example:
       <dbAdapter name="hsqldb"/>
       <dataSource class="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource"
-        database="jdbc:hsqldb:mem:repo1"
+        database="jdbc:hsqldb:file:/temp/repo1"
         user="sa"/>
       -->
 
@@ -96,16 +96,19 @@
 				serverName="localhost"
 				portNumber="5432"
 				databaseName="repo1"
-				user="cdo"
-				password="cdo"/>
+				user="postgres"
+				password="postgres"/>
       -->
 
       <!-- Example:
 			<dbAdapter name="oracle"/>
-      <dataSource class="oracle.jdbc.pool.OracleDataSource"
-        url="jdbc:oracle:thin:@localhost:1521:xe"
-        user="username"
-        password="password"/>
+			<dataSource class="oracle.jdbc.pool.OracleDataSource"
+				driverType="thin"
+				serverName="serverURL"
+				portNumber="1521"
+				databaseName="SID"
+				user="user"
+				password="passwd"/>
 			-->
 
     </store>

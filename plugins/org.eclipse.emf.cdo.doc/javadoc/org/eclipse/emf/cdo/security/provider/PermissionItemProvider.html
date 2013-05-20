@@ -101,7 +101,7 @@ Class PermissionItemProvider</H2>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/ResourceLocator.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">ResourceLocator</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/command/CreateChildCommand.Helper.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command">CreateChildCommand.Helper</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IDisposable</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IEditingDomainItemProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemColorProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemFontProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemLabelProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertySource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IStructuredItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IStructuredItemContentProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemColorProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemFontProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemLabelProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITreeItemContentProvider</A></DD>
 </DL>
 <DL>
-<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ClassPermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">ClassPermissionItemProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PackagePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PackagePermissionItemProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ResourcePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">ResourcePermissionItemProvider</A></DD>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ClassPermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">ClassPermissionItemProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">ObjectPermissionItemProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PackagePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PackagePermissionItemProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ResourcePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">ResourcePermissionItemProvider</A></DD>
 </DL>
 <HR>
 <DL>
@@ -111,21 +111,22 @@ Class PermissionItemProvider</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="ClassPermissionItemProvider.html" title="ClassPermissionItemProvider" alt="" coords="571,329,762,354"/>
+<area shape="rect" id="node1" href="ClassPermissionItemProvider.html" title="ClassPermissionItemProvider" alt="" coords="571,306,762,331"/>
 <area shape="rect" id="node2" title="ItemProviderAdapter (org.eclipse.emf.edit.provider)" alt="" coords="11,5,202,45"/>
-<area shape="rect" id="node3" href="PackagePermissionItemProvider.html" title="PackagePermissionItemProvider" alt="" coords="562,373,771,398"/>
-<area shape="rect" id="node4" href="PermissionItemProvider.html" title="PermissionItemProvider" alt="" coords="305,373,463,398"/>
-<area shape="rect" id="node5" href="ResourcePermissionItemProvider.html" title="ResourcePermissionItemProvider" alt="" coords="560,417,773,442"/>
-<area shape="rect" id="node6" title="&#171;interface&#187; IEditingDomainItemProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,65,202,119"/>
-<area shape="rect" id="node7" title="&#171;interface&#187; IItemColorProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,138,202,193"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; IItemFontProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,211,202,266"/>
-<area shape="rect" id="node9" title="&#171;interface&#187; IItemLabelProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,285,202,339"/>
-<area shape="rect" id="node10" title="&#171;interface&#187; IItemPropertySource (org.eclipse.emf.edit.provider)" alt="" coords="11,358,202,413"/>
-<area shape="rect" id="node11" title="&#171;interface&#187; IStructuredItemContentProvider (org.eclipse.emf.edit.provider)" alt="" coords="6,431,207,486"/>
-<area shape="rect" id="node12" title="&#171;interface&#187; ITableItemColorProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,505,202,559"/>
-<area shape="rect" id="node13" title="&#171;interface&#187; ITableItemFontProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,578,202,633"/>
-<area shape="rect" id="node14" title="&#171;interface&#187; ITableItemLabelProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,651,202,706"/>
-<area shape="rect" id="node15" title="&#171;interface&#187; ITreeItemContentProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,725,202,779"/>
+<area shape="rect" id="node3" href="ObjectPermissionItemProvider.html" title="ObjectPermissionItemProvider" alt="" coords="569,350,765,375"/>
+<area shape="rect" id="node4" href="PackagePermissionItemProvider.html" title="PackagePermissionItemProvider" alt="" coords="562,394,771,419"/>
+<area shape="rect" id="node5" href="PermissionItemProvider.html" title="PermissionItemProvider" alt="" coords="305,373,463,398"/>
+<area shape="rect" id="node6" href="ResourcePermissionItemProvider.html" title="ResourcePermissionItemProvider" alt="" coords="560,438,773,463"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; IEditingDomainItemProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,65,202,119"/>
+<area shape="rect" id="node8" title="&#171;interface&#187; IItemColorProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,138,202,193"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; IItemFontProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,211,202,266"/>
+<area shape="rect" id="node10" title="&#171;interface&#187; IItemLabelProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,285,202,339"/>
+<area shape="rect" id="node11" title="&#171;interface&#187; IItemPropertySource (org.eclipse.emf.edit.provider)" alt="" coords="11,358,202,413"/>
+<area shape="rect" id="node12" title="&#171;interface&#187; IStructuredItemContentProvider (org.eclipse.emf.edit.provider)" alt="" coords="6,431,207,486"/>
+<area shape="rect" id="node13" title="&#171;interface&#187; ITableItemColorProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,505,202,559"/>
+<area shape="rect" id="node14" title="&#171;interface&#187; ITableItemFontProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,578,202,633"/>
+<area shape="rect" id="node15" title="&#171;interface&#187; ITableItemLabelProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,651,202,706"/>
+<area shape="rect" id="node16" title="&#171;interface&#187; ITreeItemContentProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,725,202,779"/>
 </map>
 
 <CENTER><IMG SRC="PermissionItemProvider.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -687,6 +688,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

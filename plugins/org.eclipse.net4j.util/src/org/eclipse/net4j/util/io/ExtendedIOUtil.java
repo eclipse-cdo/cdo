@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2007-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -24,6 +24,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.ObjectStreamClass;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 
 /**
  * @author Eike Stepper
@@ -43,6 +45,10 @@ public final class ExtendedIOUtil
   private static final int MAX_ENUM_LITERALS = Byte.MAX_VALUE - Byte.MIN_VALUE;
 
   private static final byte NO_ENUM_LITERAL = Byte.MIN_VALUE;
+
+  private static final int BYTE_BUFFER_SIZE = 8192;
+
+  private static final int CHARACTER_BUFFER_SIZE = 4096;
 
   private ExtendedIOUtil()
   {
@@ -205,6 +211,112 @@ public final class ExtendedIOUtil
     } while (more);
 
     return builder.toString();
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static long writeBinaryStream(DataOutput out, InputStream inputStream) throws IOException
+  {
+    long length = 0;
+    byte[] buffer = new byte[BYTE_BUFFER_SIZE];
+
+    for (;;)
+    {
+      int n = inputStream.read(buffer);
+      if (n == IOUtil.EOF)
+      {
+        out.writeShort(0);
+        break;
+      }
+
+      out.writeShort(n);
+      out.write(buffer, 0, n);
+      length += n;
+    }
+
+    return length;
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static long readBinaryStream(DataInput in, OutputStream outputStream) throws IOException
+  {
+    long length = 0;
+    byte[] buffer = new byte[BYTE_BUFFER_SIZE];
+
+    for (;;)
+    {
+      int n = in.readShort();
+      if (n == 0)
+      {
+        break;
+      }
+
+      in.readFully(buffer, 0, n);
+      outputStream.write(buffer, 0, n);
+      length += n;
+    }
+
+    return length;
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static long writeCharacterStream(DataOutput out, Reader reader) throws IOException
+  {
+    long length = 0;
+    char[] buffer = new char[CHARACTER_BUFFER_SIZE];
+
+    for (;;)
+    {
+      int n = reader.read(buffer);
+      if (n == IOUtil.EOF)
+      {
+        out.writeShort(0);
+        break;
+      }
+
+      out.writeShort(n);
+      for (int i = 0; i < n; i++)
+      {
+        out.writeChar(buffer[i]);
+      }
+
+      length += n;
+    }
+
+    return length;
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static long readCharacterStream(DataInput in, Writer writer) throws IOException
+  {
+    long length = 0;
+    char[] buffer = new char[CHARACTER_BUFFER_SIZE];
+
+    for (;;)
+    {
+      int n = in.readShort();
+      if (n == 0)
+      {
+        break;
+      }
+
+      for (int i = 0; i < n; i++)
+      {
+        buffer[i] = in.readChar();
+      }
+
+      writer.write(buffer, 0, n);
+      length += n;
+    }
+
+    return length;
   }
 
   /**

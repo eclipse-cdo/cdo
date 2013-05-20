@@ -1,0 +1,615 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+ObjectPermissionItemProvider (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ObjectPermissionItemProvider (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ObjectPermissionItemProvider.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/GroupItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PackagePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ObjectPermissionItemProvider.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.security.provider</FONT>
+<BR>
+Class ObjectPermissionItemProvider</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">org.eclipse.emf.common.notify.impl.AdapterImpl</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">org.eclipse.emf.edit.provider.ItemProviderAdapter</A>
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">org.eclipse.emf.cdo.security.provider.PermissionItemProvider</A>
+              <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.security.provider.ObjectPermissionItemProvider</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/ResourceLocator.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">ResourceLocator</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/command/CreateChildCommand.Helper.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command">CreateChildCommand.Helper</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IChangeNotifier.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IChangeNotifier</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IDisposable.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IDisposable</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IEditingDomainItemProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemColorProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemFontProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemLabelProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertySource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IStructuredItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IStructuredItemContentProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemColorProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemFontProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemLabelProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITreeItemContentProvider</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public class <B>ObjectPermissionItemProvider</B>
+  <DD>extends <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A>
+  <DD>implements <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IEditingDomainItemProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IStructuredItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IStructuredItemContentProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITreeItemContentProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemLabelProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertySource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemLabelProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemColorProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemFontProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemColorProvider</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemFontProvider</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="ObjectPermissionItemProvider.html" title="ObjectPermissionItemProvider" alt="" coords="305,357,501,382"/>
+<area shape="rect" id="node2" href="PermissionItemProvider.html" title="PermissionItemProvider" alt="" coords="27,5,186,30"/>
+<area shape="rect" id="node3" title="&#171;interface&#187; IEditingDomainItemProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,49,202,103"/>
+<area shape="rect" id="node4" title="&#171;interface&#187; IItemColorProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,122,202,177"/>
+<area shape="rect" id="node5" title="&#171;interface&#187; IItemFontProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,195,202,250"/>
+<area shape="rect" id="node6" title="&#171;interface&#187; IItemLabelProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,269,202,323"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; IItemPropertySource (org.eclipse.emf.edit.provider)" alt="" coords="11,342,202,397"/>
+<area shape="rect" id="node8" title="&#171;interface&#187; IStructuredItemContentProvider (org.eclipse.emf.edit.provider)" alt="" coords="6,415,207,470"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; ITableItemColorProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,489,202,543"/>
+<area shape="rect" id="node10" title="&#171;interface&#187; ITableItemFontProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,562,202,617"/>
+<area shape="rect" id="node11" title="&#171;interface&#187; ITableItemLabelProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,635,202,690"/>
+<area shape="rect" id="node12" title="&#171;interface&#187; ITreeItemContentProvider (org.eclipse.emf.edit.provider)" alt="" coords="11,709,202,763"/>
+</map>
+
+<CENTER><IMG SRC="ObjectPermissionItemProvider.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+This is the item provider adapter for a <A HREF="../../../../../../org/eclipse/emf/cdo/security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE>ObjectPermission</CODE></A> object.
+ <!-- begin-user-doc -->
+<P>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.ChildrenStore.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter.ChildrenStore</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.ModifiableSingletonEList.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter.ModifiableSingletonEList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.ModifiableSingletonEList.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">E</A>&gt;, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.ResultAndAffectedObjectsWrappingCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter.ResultAndAffectedObjectsWrappingCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.ResultAndAffectedObjectsWrappingCommandActionDelegate.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter.ResultAndAffectedObjectsWrappingCommandActionDelegate</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.common.notify.Adapter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#adapterFactory" title="class or interface in org.eclipse.emf.edit.provider">adapterFactory</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#changeNotifier" title="class or interface in org.eclipse.emf.edit.provider">changeNotifier</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#childrenFeatures" title="class or interface in org.eclipse.emf.edit.provider">childrenFeatures</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#childrenReferences" title="class or interface in org.eclipse.emf.edit.provider">childrenReferences</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#childrenStoreMap" title="class or interface in org.eclipse.emf.edit.provider">childrenStoreMap</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#itemPropertyDescriptors" title="class or interface in org.eclipse.emf.edit.provider">itemPropertyDescriptors</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#targets" title="class or interface in org.eclipse.emf.edit.provider">targets</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#wrappers" title="class or interface in org.eclipse.emf.edit.provider">wrappers</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#wrappingNeeded" title="class or interface in org.eclipse.emf.edit.provider">wrappingNeeded</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.common.notify.impl.AdapterImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.emf.common.notify.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true#target" title="class or interface in org.eclipse.emf.common.notify.impl">target</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.edit.provider.IItemColorProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemColorProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true#GRAYED_OUT_COLOR" title="class or interface in org.eclipse.emf.edit.provider">GRAYED_OUT_COLOR</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.edit.provider.IItemFontProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemFontProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true#BOLD_FONT" title="class or interface in org.eclipse.emf.edit.provider">BOLD_FONT</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true#BOLD_ITALIC_FONT" title="class or interface in org.eclipse.emf.edit.provider">BOLD_ITALIC_FONT</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true#ITALIC_FONT" title="class or interface in org.eclipse.emf.edit.provider">ITALIC_FONT</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true#NORMAL_FONT" title="class or interface in org.eclipse.emf.edit.provider">NORMAL_FONT</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html#ObjectPermissionItemProvider(org.eclipse.emf.common.notify.AdapterFactory)">ObjectPermissionItemProvider</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</A>&nbsp;adapterFactory)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This constructs an instance from a factory and a notifier</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html#collectNewChildDescriptors(java.util.Collection, java.lang.Object)">collectNewChildDescriptors</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;newChildDescriptors,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This adds <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/command/CommandParameter.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>CommandParameter</CODE></A>s describing the children
+ that can be created under this object</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertyDescriptor</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html#getPropertyDescriptors(java.lang.Object)">getPropertyDescriptors</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This returns the property descriptors for the adapted class</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html#getText(java.lang.Object)">getText</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This returns the label text for the adapted class</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html#notifyChanged(org.eclipse.emf.common.notify.Notification)">notifyChanged</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;notification)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This handles model notifications by calling <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#updateChildren(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.updateChildren(org.eclipse.emf.common.notify.Notification)</CODE></A> to update any cached
+ children and by creating a viewer notification, which it passes to <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#fireNotifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.fireNotifyChanged(org.eclipse.emf.common.notify.Notification)</CODE></A></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html#shouldComposeCreationImage()">shouldComposeCreationImage</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.provider.PermissionItemProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.cdo.security.provider.<A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#addAccessPropertyDescriptor(java.lang.Object)">addAccessPropertyDescriptor</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#getResourceLocator()">getResourceLocator</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#hasChildren(java.lang.Object)">hasChildren</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ItemProviderAdapter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#addListener(org.eclipse.emf.edit.provider.INotifyChangedListener)" title="class or interface in org.eclipse.emf.edit.provider">addListener</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#adjustWrapperIndex(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">adjustWrapperIndex</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#adjustWrapperIndices(java.util.List, int, int)" title="class or interface in org.eclipse.emf.edit.provider">adjustWrapperIndices</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#adjustWrapperIndices(java.util.List, int, int, int)" title="class or interface in org.eclipse.emf.edit.provider">adjustWrapperIndices</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createAddCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference, java.util.Collection, int)" title="class or interface in org.eclipse.emf.edit.provider">createAddCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createAddCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.util.Collection, int)" title="class or interface in org.eclipse.emf.edit.provider">createAddCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createChildParameter(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">createChildParameter</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createChildrenStore(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">createChildrenStore</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCommand(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Class, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">createCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCopyCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.edit.command.CopyCommand.Helper)" title="class or interface in org.eclipse.emf.edit.provider">createCopyCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCreateChildCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference, org.eclipse.emf.ecore.EObject, int, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createCreateChildCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCreateChildCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object, int, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createCreateChildCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCreateCopyCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.edit.command.CopyCommand.Helper)" title="class or interface in org.eclipse.emf.edit.provider">createCreateCopyCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createDragAndDropCommand(org.eclipse.emf.edit.domain.EditingDomain, java.lang.Object, float, int, int, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createDragAndDropCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createInitializeCopyCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.edit.command.CopyCommand.Helper)" title="class or interface in org.eclipse.emf.edit.provider">createInitializeCopyCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createItemPropertyDescriptor(org.eclipse.emf.common.notify.AdapterFactory, org.eclipse.emf.common.util.ResourceLocator, java.lang.String, java.lang.String, org.eclipse.emf.ecore.EStructuralFeature, boolean, boolean, boolean, java.lang.Object, java.lang.String, java.lang.String[])" title="class or interface in org.eclipse.emf.edit.provider">createItemPropertyDescriptor</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createItemPropertyDescriptor(org.eclipse.emf.common.notify.AdapterFactory, org.eclipse.emf.common.util.ResourceLocator, java.lang.String, java.lang.String, org.eclipse.emf.ecore.EStructuralFeature, boolean, java.lang.Object, java.lang.String, java.lang.String[])" title="class or interface in org.eclipse.emf.edit.provider">createItemPropertyDescriptor</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createMoveCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference, org.eclipse.emf.ecore.EObject, int)" title="class or interface in org.eclipse.emf.edit.provider">createMoveCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createMoveCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">createMoveCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createRemoveCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createRemoveCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createRemoveCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createRemoveCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createReplaceCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference, org.eclipse.emf.ecore.EObject, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createReplaceCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createReplaceCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.ecore.EObject, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">createReplaceCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createSetCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">createSetCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createSetCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">createSetCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createWrapper(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">createWrapper</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#crop(java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">crop</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#dispose()" title="class or interface in org.eclipse.emf.edit.provider">dispose</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#disposeWrapper(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">disposeWrapper</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#disposeWrappers(java.util.List)" title="class or interface in org.eclipse.emf.edit.provider">disposeWrappers</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#factorAddCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">factorAddCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#factorMoveCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">factorMoveCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#factorRemoveCommand(org.eclipse.emf.edit.domain.EditingDomain, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">factorRemoveCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#fireNotifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider">fireNotifyChanged</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getAdapterFactory()" title="class or interface in org.eclipse.emf.edit.provider">getAdapterFactory</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getBackground(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getBackground</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getBackground(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getBackground</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getBaseURL()" title="class or interface in org.eclipse.emf.edit.provider">getBaseURL</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildFeature(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildReference(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildReference</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildren</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildrenFeatures(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildrenFeatures</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildrenReferences(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildrenReferences</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildrenStore(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildrenStore</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getColumnImage(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getColumnImage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getColumnText(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getColumnText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getCreateChildDescription(java.lang.Object, java.lang.Object, java.lang.Object, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">getCreateChildDescription</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getCreateChildImage(java.lang.Object, java.lang.Object, java.lang.Object, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">getCreateChildImage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getCreateChildResult(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getCreateChildResult</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getCreateChildText(java.lang.Object, java.lang.Object, java.lang.Object, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">getCreateChildText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getCreateChildToolTipText(java.lang.Object, java.lang.Object, java.lang.Object, java.util.Collection)" title="class or interface in org.eclipse.emf.edit.provider">getCreateChildToolTipText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getEditableValue(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getEditableValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getElements</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getFeatureText(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getFeatureText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getFeatureValue(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.edit.provider">getFeatureValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getFont</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getFont(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getFont</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getForeground</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getForeground(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getForeground</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getImage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getImage(java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">getImage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getNewChildDescriptors(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getNewChildDescriptors</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getParent</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getPropertyDescriptor(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getPropertyDescriptor</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getPropertyValue(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">getPropertyValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getReferenceValue(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)" title="class or interface in org.eclipse.emf.edit.provider">getReferenceValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getResourceLocator(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getResourceLocator</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getRootAdapterFactory()" title="class or interface in org.eclipse.emf.edit.provider">getRootAdapterFactory</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getSetFeature(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getSetFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getSetFeatures(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getSetFeatures</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, boolean)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, java.lang.Object[])" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, java.lang.Object[], boolean)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, java.lang.String, boolean)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, java.lang.String, java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getString(java.lang.String, java.lang.String, java.lang.String, boolean)" title="class or interface in org.eclipse.emf.edit.provider">getString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getTypeText(org.eclipse.emf.ecore.EAttribute)" title="class or interface in org.eclipse.emf.edit.provider">getTypeText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getTypeText(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getTypeText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getUpdateableText(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getUpdateableText</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getValue(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.edit.provider">getValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getWrappedValues(org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">getWrappedValues</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#hasChildren(java.lang.Object, boolean)" title="class or interface in org.eclipse.emf.edit.provider">hasChildren</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">isAdapterForType</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#isEquivalentValue(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">isEquivalentValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#isPropertySet(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">isPropertySet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#isResolveProxies()" title="class or interface in org.eclipse.emf.edit.provider">isResolveProxies</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#isValidValue(java.lang.Object, java.lang.Object, org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.edit.provider">isValidValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#isWrappingNeeded(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">isWrappingNeeded</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#overlayImage(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">overlayImage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#removeListener(org.eclipse.emf.edit.provider.INotifyChangedListener)" title="class or interface in org.eclipse.emf.edit.provider">removeListener</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#resetPropertyValue(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.emf.edit.provider">resetPropertyValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#setPropertyValue(java.lang.Object, java.lang.String, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">setPropertyValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.edit.provider">setTarget</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#shouldTranslate()" title="class or interface in org.eclipse.emf.edit.provider">shouldTranslate</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#unsetTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.edit.provider">unsetTarget</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#unwrap(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">unwrap</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#unwrapCommandValues(org.eclipse.emf.edit.command.CommandParameter, java.lang.Class)" title="class or interface in org.eclipse.emf.edit.provider">unwrapCommandValues</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#updateChildren(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider">updateChildren</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#wrap(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">wrap</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#wrapCommand(org.eclipse.emf.common.command.Command, java.lang.Object, java.lang.Class, org.eclipse.emf.edit.command.CommandParameter, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">wrapCommand</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.impl.AdapterImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.common.notify.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/AdapterImpl.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify.impl">getTarget</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.IEditingDomainItemProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IEditingDomainItemProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true#createCommand(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Class, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider">createCommand</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildren</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true#getNewChildDescriptors(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getNewChildDescriptors</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IEditingDomainItemProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getParent</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.ITreeItemContentProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITreeItemContentProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getChildren</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getParent</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITreeItemContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">hasChildren</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.IStructuredItemContentProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IStructuredItemContentProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IStructuredItemContentProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IStructuredItemContentProvider.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getElements</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.IItemLabelProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemLabelProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getImage</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.IItemPropertySource"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertySource</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true#getEditableValue(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getEditableValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true#getPropertyDescriptor(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getPropertyDescriptor</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.ITableItemLabelProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemLabelProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemLabelProvider.html?is-external=true#getColumnImage(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getColumnImage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemLabelProvider.html?is-external=true#getColumnText(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getColumnText</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.ITableItemColorProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemColorProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemColorProvider.html?is-external=true#getBackground(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getBackground</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemColorProvider.html?is-external=true#getForeground(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getForeground</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.ITableItemFontProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">ITableItemFontProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ITableItemFontProvider.html?is-external=true#getFont(java.lang.Object, int)" title="class or interface in org.eclipse.emf.edit.provider">getFont</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.IItemColorProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemColorProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true#getBackground(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getBackground</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemColorProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getForeground</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.edit.provider.IItemFontProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.edit.provider.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemFontProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getFont</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="ObjectPermissionItemProvider(org.eclipse.emf.common.notify.AdapterFactory)"><!-- --></A><H3>
+ObjectPermissionItemProvider</H3>
+<PRE>
+public <B>ObjectPermissionItemProvider</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</A>&nbsp;adapterFactory)</PRE>
+<DL>
+<DD>This constructs an instance from a factory and a notifier.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getPropertyDescriptors(java.lang.Object)"><!-- --></A><H3>
+getPropertyDescriptors</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertyDescriptor</A>&gt; <B>getPropertyDescriptors</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
+<DL>
+<DD>This returns the property descriptors for the adapted class.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true#getPropertyDescriptors(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getPropertyDescriptors</A></CODE> in interface <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemPropertySource.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemPropertySource</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#getPropertyDescriptors(java.lang.Object)">getPropertyDescriptors</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="shouldComposeCreationImage()"><!-- --></A><H3>
+shouldComposeCreationImage</H3>
+<PRE>
+protected boolean <B>shouldComposeCreationImage</B>()</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#shouldComposeCreationImage()">shouldComposeCreationImage</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getText(java.lang.Object)"><!-- --></A><H3>
+getText</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getText</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
+<DL>
+<DD>This returns the label text for the adapted class.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider">getText</A></CODE> in interface <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/IItemLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.provider">IItemLabelProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#getText(java.lang.Object)">getText</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="notifyChanged(org.eclipse.emf.common.notify.Notification)"><!-- --></A><H3>
+notifyChanged</H3>
+<PRE>
+public void <B>notifyChanged</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;notification)</PRE>
+<DL>
+<DD>This handles model notifications by calling <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#updateChildren(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.updateChildren(org.eclipse.emf.common.notify.Notification)</CODE></A> to update any cached
+ children and by creating a viewer notification, which it passes to <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#fireNotifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.fireNotifyChanged(org.eclipse.emf.common.notify.Notification)</CODE></A>.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">notifyChanged</A></CODE> in interface <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#notifyChanged(org.eclipse.emf.common.notify.Notification)">notifyChanged</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="collectNewChildDescriptors(java.util.Collection, java.lang.Object)"><!-- --></A><H3>
+collectNewChildDescriptors</H3>
+<PRE>
+protected void <B>collectNewChildDescriptors</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;newChildDescriptors,
+                                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
+<DL>
+<DD>This adds <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/edit/command/CommandParameter.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>CommandParameter</CODE></A>s describing the children
+ that can be created under this object.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html#collectNewChildDescriptors(java.util.Collection, java.lang.Object)">collectNewChildDescriptors</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider">PermissionItemProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ObjectPermissionItemProvider.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/GroupItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/PackagePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/provider/ObjectPermissionItemProvider.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ObjectPermissionItemProvider.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.emf.edit.provider.ItemProviderAdapter">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2007-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,21 +13,19 @@ package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -470,36 +468,28 @@ public enum DBType
     public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
         throws SQLException, IOException
     {
-      Clob value = resultSet.getClob(column);
-      if (canBeNull)
-      {
-        if (resultSet.wasNull())
-        {
-          out.writeBoolean(false);
-          return null;
-        }
-
-        out.writeBoolean(true);
-      }
-
-      long length = value.length();
-      Reader reader = value.getCharacterStream();
+      Reader value = null;
 
       try
       {
-        out.writeLong(length);
-        while (length-- > 0)
+        value = resultSet.getCharacterStream(column);
+        if (canBeNull)
         {
-          int c = reader.read();
-          out.writeChar(c);
+          if (resultSet.wasNull())
+          {
+            out.writeBoolean(false);
+            return null;
+          }
+
+          out.writeBoolean(true);
         }
+
+        return ExtendedIOUtil.writeCharacterStream(out, value);
       }
       finally
       {
-        IOUtil.close(reader);
+        IOUtil.close(value);
       }
-
-      return null;
     }
 
     @Override
@@ -512,92 +502,11 @@ public enum DBType
         return null;
       }
 
-      Reader reader;
+      ReaderWithLength value = ReaderWithLength.create(in);
+      long length = value.getLength();
 
-      long length = in.readLong();
-      if (length > 0)
-      {
-        reader = createFileReader(in, length);
-      }
-      else
-      {
-        reader = new Reader()
-        {
-          @Override
-          public int read(char[] cbuf, int off, int len) throws IOException
-          {
-            return -1;
-          }
-
-          @Override
-          public void close() throws IOException
-          {
-            // Do nothing
-          }
-        };
-      }
-
-      statement.setCharacterStream(column, reader, (int)length);
-      // reader.close();
-      return null;
-    }
-
-    private FileReader createFileReader(final ExtendedDataInput in, long length) throws IOException
-    {
-      FileWriter fw = null;
-
-      try
-      {
-        final File tempFile = TMPUtil.createTempFile("clob_", ".tmp");
-        tempFile.deleteOnExit();
-
-        fw = new FileWriter(tempFile);
-
-        Reader reader = new Reader()
-        {
-          @Override
-          public int read(char[] cbuf, int off, int len) throws IOException
-          {
-            int read = 0;
-
-            try
-            {
-              while (read < len)
-              {
-                cbuf[off++] = in.readChar();
-                read++;
-              }
-            }
-            catch (EOFException ex)
-            {
-              read = -1;
-            }
-
-            return read;
-          }
-
-          @Override
-          public void close() throws IOException
-          {
-          }
-        };
-
-        IOUtil.copyCharacter(reader, fw, length);
-
-        return new FileReader(tempFile)
-        {
-          @Override
-          public void close() throws IOException
-          {
-            super.close();
-            tempFile.delete();
-          }
-        };
-      }
-      finally
-      {
-        IOUtil.close(fw);
-      }
+      statement.setCharacterStream(column, value, (int)length);
+      return length;
     }
   },
 
@@ -844,32 +753,28 @@ public enum DBType
     public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
         throws SQLException, IOException
     {
-      Blob value = resultSet.getBlob(column);
-      if (canBeNull)
-      {
-        if (resultSet.wasNull())
-        {
-          out.writeBoolean(false);
-          return null;
-        }
-
-        out.writeBoolean(true);
-      }
-
-      long length = value.length();
-      InputStream stream = value.getBinaryStream();
+      InputStream value = null;
 
       try
       {
-        out.writeLong(length);
-        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length);
+        value = resultSet.getBinaryStream(column);
+        if (canBeNull)
+        {
+          if (resultSet.wasNull())
+          {
+            out.writeBoolean(false);
+            return null;
+          }
+
+          out.writeBoolean(true);
+        }
+
+        return ExtendedIOUtil.writeBinaryStream(out, value);
       }
       finally
       {
-        IOUtil.close(stream);
+        IOUtil.close(value);
       }
-
-      return null;
     }
 
     @Override
@@ -882,53 +787,11 @@ public enum DBType
         return null;
       }
 
-      long length = in.readLong();
-      InputStream value = null;
-
-      if (length > 0)
-      {
-        value = createFileInputStream(in, length);
-      }
-      else
-      {
-        value = new ByteArrayInputStream(new byte[0]);
-      }
+      InputStreamWithLength value = InputStreamWithLength.create(in);
+      long length = value.getLength();
 
       statement.setBinaryStream(column, value, (int)length);
-
-      // XXX cannot close the input stream here, because
-      // it is still used in executeBatch() later.
-      // so maybe we could return it here and let the caller
-      // collect and close the streams.
-      return null;
-    }
-
-    private FileInputStream createFileInputStream(final ExtendedDataInput in, long length) throws IOException
-    {
-      FileOutputStream fos = null;
-
-      try
-      {
-        final File tempFile = TMPUtil.createTempFile("blob_", ".tmp");
-        tempFile.deleteOnExit();
-
-        fos = new FileOutputStream(tempFile);
-        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length);
-
-        return new FileInputStream(tempFile)
-        {
-          @Override
-          public void close() throws IOException
-          {
-            super.close();
-            tempFile.delete();
-          }
-        };
-      }
-      finally
-      {
-        IOUtil.close(fos);
-      }
+      return length;
     }
   };
 
@@ -1083,5 +946,131 @@ public enum DBType
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class InputStreamWithLength extends FileInputStream
+  {
+    private final File file;
+
+    private final long length;
+
+    private InputStreamWithLength(File file, long length) throws FileNotFoundException
+    {
+      super(file);
+      this.file = file;
+      this.length = length;
+    }
+
+    public long getLength()
+    {
+      return length;
+    }
+
+    @Override
+    public void close() throws IOException
+    {
+      super.close();
+      file.delete();
+    }
+
+    public static InputStreamWithLength create(final ExtendedDataInput in) throws IOException
+    {
+      // new Reader()
+      // {
+      // @Override
+      // public int read(char[] cbuf, int off, int len) throws IOException
+      // {
+      // return IOUtil.EOF;
+      // }
+      //
+      // @Override
+      // public void close() throws IOException
+      // {
+      // // Do nothing
+      // }
+      // };
+
+      FileOutputStream fileOutputStream = null;
+
+      try
+      {
+        File tempFile = TMPUtil.createTempFile("lob_", ".tmp");
+        fileOutputStream = new FileOutputStream(tempFile);
+
+        long length = ExtendedIOUtil.readBinaryStream(in, fileOutputStream);
+
+        return new InputStreamWithLength(tempFile, length);
+      }
+      finally
+      {
+        IOUtil.close(fileOutputStream);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ReaderWithLength extends FileReader
+  {
+    private final File file;
+
+    private final long length;
+
+    private ReaderWithLength(File file, long length) throws FileNotFoundException
+    {
+      super(file);
+      this.file = file;
+      this.length = length;
+    }
+
+    public long getLength()
+    {
+      return length;
+    }
+
+    @Override
+    public void close() throws IOException
+    {
+      super.close();
+      file.delete();
+    }
+
+    public static ReaderWithLength create(final ExtendedDataInput in) throws IOException
+    {
+      // new Reader()
+      // {
+      // @Override
+      // public int read(char[] cbuf, int off, int len) throws IOException
+      // {
+      // return IOUtil.EOF;
+      // }
+      //
+      // @Override
+      // public void close() throws IOException
+      // {
+      // // Do nothing
+      // }
+      // };
+
+      FileWriter fileWriter = null;
+
+      try
+      {
+        File tempFile = TMPUtil.createTempFile("lob_", ".tmp");
+        fileWriter = new FileWriter(tempFile);
+
+        long length = ExtendedIOUtil.readCharacterStream(in, fileWriter);
+
+        return new ReaderWithLength(tempFile, length);
+      }
+      finally
+      {
+        IOUtil.close(fileWriter);
+      }
+    }
   }
 }

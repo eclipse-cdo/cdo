@@ -56,4 +56,36 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/presentation/DawnCodeGenEditorPlugin.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawnCodeGenEditorPlugin">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawnCodeGenEditorPlugin"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/presentation/DawngenmodelActionBarContributor.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelActionBarContributor">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelActionBarContributor"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/presentation/DawngenmodelEditor.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelEditor">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelEditor"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/presentation/DawngenmodelModelWizard.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelModelWizard">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelModelWizard"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

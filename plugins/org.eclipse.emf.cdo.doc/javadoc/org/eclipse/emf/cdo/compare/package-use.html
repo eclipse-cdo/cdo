@@ -103,10 +103,16 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/compare/package-su
 Classes in <A HREF="../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/CDOComparison.html#org.eclipse.emf.cdo.compare"><B>CDOComparison</B></A></B>
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/CDOCompare.CDOIDFunction.html#org.eclipse.emf.cdo.compare"><B>CDOCompare.CDOIDFunction</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <CODE>comparison</CODE> that can be closed to dispose of used resources.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><CODE>ID function</CODE></A> that considers the <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>CDOID</CODE></A>s of <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/CDOCompare.CDOMatchEngine.html#org.eclipse.emf.cdo.compare"><B>CDOCompare.CDOMatchEngine</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <CODE>match engine</CODE> that treats <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resources</CODE></A> as <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObjects</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/CDOComparisonScope.html#org.eclipse.emf.cdo.compare"><B>CDOComparisonScope</B></A></B>
@@ -115,16 +121,11 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/compare/package-summary.h
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A CDO-specific base implementation of a <CODE>comparison scope</CODE>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/CloseableComparison.html#org.eclipse.emf.cdo.compare"><B>CloseableComparison</B></A></B>
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/CDOComparisonScope.AllContents.html#org.eclipse.emf.cdo.compare"><B>CDOComparisonScope.AllContents</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <CODE>comparison</CODE> that can be closed to dispose of used resources.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/class-use/DelegatingComparison.html#org.eclipse.emf.cdo.compare"><B>DelegatingComparison</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <CODE>comparison</CODE> that delegates all methods to another comparison.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>)
+ and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -182,6 +183,6 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/compare/package-summary.h
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

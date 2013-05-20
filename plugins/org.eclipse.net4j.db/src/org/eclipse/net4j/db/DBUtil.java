@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2007-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -329,7 +329,7 @@ public final class DBUtil
     catch (SQLException ex)
     {
       OM.LOG.error(ex);
-      rollback(connection);
+      rollbackSilently(connection);
       throw new DBException(ex);
     }
     finally
@@ -444,7 +444,7 @@ public final class DBUtil
         // first to clear any open transactions.
         if (!connection.getAutoCommit())
         {
-          rollback(connection);
+          rollbackSilently(connection);
         }
 
         connection.close();
@@ -480,15 +480,24 @@ public final class DBUtil
     }
   }
 
-  private static void rollback(Connection connection)
+  /**
+   * @since 4.2
+   */
+  public static Exception rollbackSilently(Connection connection)
   {
     try
     {
-      connection.rollback();
+      if (!connection.getAutoCommit())
+      {
+        connection.rollback();
+      }
+
+      return null;
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+      return ex;
     }
   }
 
@@ -768,7 +777,10 @@ public final class DBUtil
     try
     {
       connection = connectionProvider.getConnection();
-      return runnable.run(connection);
+
+      T result = runnable.run(connection);
+      connection.commit();
+      return result;
     }
     catch (SQLException ex)
     {
@@ -832,14 +844,17 @@ public final class DBUtil
       for (int i = 0; i < results.length; i++)
       {
         int result = results[i];
-        if (result < 0 && result != Statement.SUCCESS_NO_INFO)
+        if (result != Statement.SUCCESS_NO_INFO)
         {
-          throw new DBException("Result " + i + " is not successful: " + result);
-        }
+          if (result < 0)
+          {
+            throw new DBException("Result " + i + " is not successful: " + result);
+          }
 
-        if (checkExactlyOne && result != 1)
-        {
-          throw new DBException("Result " + i + " did not affect exactly one row: " + result);
+          if (checkExactlyOne && result != 1)
+          {
+            throw new DBException("Result " + i + " did not affect exactly one row: " + result);
+          }
         }
       }
     }

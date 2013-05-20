@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -24,28 +24,21 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DawngenmodelPackageImpl extends EPackageImpl implements DawngenmodelPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass dawnGeneratorEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass dawnFragmentGeneratorEClass = null;
@@ -57,7 +50,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#eNS_URI
    * @see #init()
@@ -70,7 +63,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -81,7 +74,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * This method is used to initialize {@link DawngenmodelPackage#eINSTANCE} when that field is accessed. Clients should
    * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -119,7 +112,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -130,7 +123,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -141,7 +134,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -152,7 +145,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -163,7 +156,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -174,7 +167,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -185,7 +178,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -196,7 +189,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -207,7 +200,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawngenmodelFactory getDawngenmodelFactory()
@@ -217,7 +210,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -225,7 +218,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -250,7 +243,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -258,7 +251,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

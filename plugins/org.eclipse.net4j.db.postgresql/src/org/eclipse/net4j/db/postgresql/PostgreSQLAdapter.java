@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,7 +61,7 @@ public class PostgreSQLAdapter extends DBAdapter
   @Override
   public int getMaxTableNameLength()
   {
-    // http://www.postgresql.org/docs/9.0/static/sql-syntax-lexical.html
+    // http://www.postgresql.org/docs/9.2/static/sql-syntax-lexical.html
     return 63;
   }
 
@@ -71,23 +71,34 @@ public class PostgreSQLAdapter extends DBAdapter
   @Override
   public int getMaxFieldNameLength()
   {
-    // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html
+    // http://www.postgresql.org/docs/9.2/static/sql-syntax-lexical.html
     return 63;
   }
 
   @Override
   protected String getTypeName(IDBField field)
   {
+    // http://www.postgresql.org/docs/9.2/static/datatype.html
     DBType type = field.getType();
     switch (type)
     {
-    case LONGVARCHAR:
+    case BIT:
+      return "boolean"; //$NON-NLS-1$
+
+    case TINYINT:
+      return DBType.SMALLINT.toString();
+
     case VARCHAR:
+    case LONGVARCHAR:
     case CLOB:
       return "text"; //$NON-NLS-1$
+
+    case BINARY:
     case VARBINARY:
+    case LONGVARBINARY:
     case BLOB:
       return "bytea"; //$NON-NLS-1$
+
     case DOUBLE:
       return "double precision"; //$NON-NLS-1$
     }
@@ -128,19 +139,6 @@ public class PostgreSQLAdapter extends DBAdapter
   {
     // UNDEFINED COLUMN
     return "42703".equals(ex.getSQLState());
-  }
-
-  @Override
-  public DBType adaptType(DBType type)
-  {
-    switch (type)
-    {
-    // Due to Bug 289194: [DB] BLOB not correctly handled by PostgreSQL DBAdapter
-    case BLOB:
-      return DBType.VARBINARY;
-    }
-
-    return super.adaptType(type);
   }
 
   /**

@@ -98,6 +98,10 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 <B>Interface Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</A></B></TD>
+<TD>Authenticates users.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security">IChallengeResponse</A></B></TD>
 <TD>&nbsp;</TD>
 </TR>
@@ -107,6 +111,10 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/ICredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">ICredentialsProvider</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/ICredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security">ICredentialsProvider2</A></B></TD>
 <TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -134,6 +142,10 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 <TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider2</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/IRandomizer.html" title="interface in org.eclipse.net4j.util.security">IRandomizer</A></B></TD>
 <TD>&nbsp;</TD>
 </TR>
@@ -154,6 +166,10 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</A></B></TD>
+<TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiator</A></B></TD>
@@ -178,6 +194,38 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</A></B></TD>
 <TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.html" title="class in org.eclipse.net4j.util.security">DiffieHellman</A></B></TD>
+<TD>Executes the Diffie-Hellman key agreement protocol between 2 parties: <A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security"><CODE>DiffieHellman.Server</CODE></A> and <A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security"><CODE>DiffieHellman.Client</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Client</A></B></TD>
+<TD>Executes the client-side of the Diffie-Hellman key agreement protocol.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Client.Response.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Client.Response</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.ParameterSpecGenerator.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.ParameterSpecGenerator</A></B></TD>
+<TD>Creates Diffie-Hellman parameters.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Server</A></B></TD>
+<TD>Executes the server-side of the Diffie-Hellman key agreement protocol.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.Server.Challenge</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/DiffieHellman.SkipParameterSpec.html" title="class in org.eclipse.net4j.util.security">DiffieHellman.SkipParameterSpec</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/FileAuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">FileAuthenticatorFactory</A></B></TD>
+<TD>TODO Consider file attributes when creating initially empty file</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/FileUserManager.html" title="class in org.eclipse.net4j.util.security">FileUserManager</A></B></TD>
@@ -237,6 +285,10 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security">UserManagerAuthenticator</A></B></TD>
 <TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -337,6 +389,6 @@ Interfaces and classes for security, negotiation, authentication, authorization 
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

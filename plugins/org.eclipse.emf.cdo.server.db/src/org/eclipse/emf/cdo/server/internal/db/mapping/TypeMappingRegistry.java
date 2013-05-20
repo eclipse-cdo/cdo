@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.ColumnTypeModifier;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
@@ -25,6 +26,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.ContainerEvent;
+import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -33,6 +35,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -108,6 +111,18 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     registerCoreTypeMappings();
     populator.connect();
+  }
+
+  public void registerColumnTypeModifier(String factoryType, final ColumnTypeModifier columnTypeModifier)
+  {
+    getContainer().registerFactory(new ColumnTypeModifier.Factory(factoryType)
+    {
+      @Override
+      public ColumnTypeModifier create(String description) throws ProductCreationException
+      {
+        return columnTypeModifier;
+      }
+    });
   }
 
   /**
@@ -241,8 +256,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     }
     else
     {
-      IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
-      DBType dbType = getDBType(feature, dbAdapter);
+      DBType dbType = getDBType(mappingStrategy, feature);
 
       ITypeMapping.Descriptor descriptor = null;
 
@@ -280,6 +294,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     typeMapping.setMappingStrategy(mappingStrategy);
     typeMapping.setFeature(feature);
+
     return typeMapping;
   }
 
@@ -310,23 +325,60 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     return EcorePackage.eINSTANCE.getEDataType();
   }
 
-  private DBType getDBType(EStructuralFeature feature, IDBAdapter dbAdapter)
+  private DBType getDBType(IMappingStrategy mappingStrategy, EStructuralFeature feature)
   {
+    DBType dbType;
+
     String typeKeyword = DBAnnotation.COLUMN_TYPE.getValue(feature);
     if (typeKeyword != null)
     {
-      DBType dbType = DBType.getTypeByKeyword(typeKeyword);
+      dbType = DBType.getTypeByKeyword(typeKeyword);
       if (dbType == null)
       {
         throw new IllegalArgumentException("Unsupported columnType (" + typeKeyword + ") annotation of feature "
             + feature.getName());
       }
-
-      return dbType;
+    }
+    else
+    {
+      // No annotation present - lookup default DB type.
+      IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
+      dbType = getDefaultDBType(getEType(feature), dbAdapter);
     }
 
-    // No annotation present - lookup default DB type.
-    return getDefaultDBType(getEType(feature), dbAdapter);
+    ColumnTypeModifier columnTypeModifier = getColumnTypeModifier(mappingStrategy);
+    if (columnTypeModifier != null)
+    {
+      dbType = columnTypeModifier.modify(this, mappingStrategy, feature, dbType);
+    }
+
+    return dbType;
+  }
+
+  private ColumnTypeModifier getColumnTypeModifier(IMappingStrategy mappingStrategy)
+  {
+    String factoryType = mappingStrategy.getProperties().get(IMappingStrategy.PROP_COLUMN_TYPE_MODIFIER);
+    if (factoryType == null)
+    {
+      factoryType = mappingStrategy.getStore().getDBAdapter().getName();
+    }
+
+    ColumnTypeModifier columnTypeModifier = null;
+
+    try
+    {
+      columnTypeModifier = (ColumnTypeModifier)IPluginContainer.INSTANCE.getElement(
+          ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
+    }
+    catch (FactoryNotFoundException ex)
+    {
+      //$FALL-THROUGH$
+    }
+    catch (ProductCreationException ex)
+    {
+      //$FALL-THROUGH$
+    }
+    return columnTypeModifier;
   }
 
   private DBType getDefaultDBType(EClassifier type, IDBAdapter dbAdapter)
@@ -395,10 +447,10 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     private void populateTypeMappingRegistry()
     {
-      // get available factory types
+      // Get available factory types
       Set<String> factoryTypes = container.getFactoryTypes(ITypeMapping.Factory.PRODUCT_GROUP);
 
-      // parse the descriptor of each factory type
+      // Parse the descriptor of each factory type
       for (String factoryType : factoryTypes)
       {
         registerFactoryType(factoryType);
@@ -430,7 +482,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
         for (IContainerDelta<Map.Entry<IFactoryKey, IFactory>> delta : ev.getDeltas())
         {
           IFactoryKey key = delta.getElement().getKey();
-          if (key.getProductGroup().equals(ITypeMapping.Factory.PRODUCT_GROUP))
+          String productGroup = key.getProductGroup();
+          if (productGroup.equals(ITypeMapping.Factory.PRODUCT_GROUP))
           {
             if (delta.getKind() == Kind.ADDED)
             {

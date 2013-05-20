@@ -97,6 +97,13 @@ public interface IMappingStrategy
   public static final String PROP_OBJECT_TYPE_CACHE_SIZE = "objectTypeCacheSize"; //$NON-NLS-1$
 
   /**
+   * Name of a String property that specifies the name of a {@link ColumnTypeModifier column type modifier}.
+   *
+   * @since 4.2
+   */
+  public static final String PROP_COLUMN_TYPE_MODIFIER = "columnTypeModifier"; //$NON-NLS-1$
+
+  /**
    * @return the store, this MappingStrategy instance belongs to.
    */
   public IDBStore getStore();

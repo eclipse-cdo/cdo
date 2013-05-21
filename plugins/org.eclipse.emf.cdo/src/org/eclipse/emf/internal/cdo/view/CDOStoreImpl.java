@@ -549,7 +549,7 @@ public final class CDOStoreImpl implements CDOStore
       InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
       Object result = revision.move(feature, target, source);
 
-      result = convertToEMF(eObject, revision, feature, EStore.NO_INDEX, result);
+      result = convertToEMF(eObject, revision, feature, target, result);
       return result;
     }
   }

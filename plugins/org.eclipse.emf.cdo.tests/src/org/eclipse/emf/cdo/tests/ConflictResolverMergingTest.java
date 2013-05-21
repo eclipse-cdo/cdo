@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
@@ -67,6 +68,7 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
     commitAndSync(transaction2, transaction1);
   }
 
+  @Skips(IConfig.EFFORT_MERGING)
   public void testMergeLocalChangesPerFeature_Bug2() throws Exception
   {
     msg("Opening session");

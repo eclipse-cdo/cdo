@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -142,8 +143,8 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(1)).getVersion());
   }
 
+  @Skips(IConfig.EFFORT_MERGING)
   @SuppressWarnings("unused")
-  @Deprecated
   public void testRemergeAfterAdditionsInSource() throws Exception
   {
     CDOSession session = openSession();
@@ -190,8 +191,8 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(false, transaction.isDirty());
   }
 
+  @Skips(IConfig.EFFORT_MERGING)
   @SuppressWarnings("unused")
-  @Deprecated
   public void testRemergeAfterAdditionsInSource2() throws Exception
   {
     CDOSession session = openSession();
@@ -265,7 +266,7 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(false, transaction.isDirty());
   }
 
-  @Deprecated
+  @Skips(IConfig.EFFORT_MERGING)
   public void testAdditionsInSourceAndTarget() throws Exception
   {
     CDOSession session = openSession();
@@ -336,7 +337,7 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(false, transaction.isDirty());
   }
 
-  @Deprecated
+  @Skips(IConfig.EFFORT_MERGING)
   public void testRemergeAfterAdditionsInSourceAndTarget() throws Exception
   {
     CDOSession session = openSession();

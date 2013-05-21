@@ -23,6 +23,8 @@ public interface IConfig extends ITestLifecycle, Serializable
 
   public static final String CAPABILITY_UNAVAILABLE = "___UNAVAILABLE___";
 
+  public static final String EFFORT_MERGING = "___MERGING___";
+
   public String getName();
 
   public Map<String, Object> getTestProperties();

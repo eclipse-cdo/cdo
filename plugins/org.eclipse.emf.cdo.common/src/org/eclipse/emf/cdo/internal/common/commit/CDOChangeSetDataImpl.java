@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -213,6 +215,31 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     return MessageFormat
         .format(
             "ChangeSetData[newObjects={0}, changedObjects={1}, detachedObjects={2}]", newObjects.size(), changedObjects.size(), detachedObjects.size()); //$NON-NLS-1$
+  }
+
+  public static String format(CDOChangeSetData changeSetData)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(changeSetData);
+    builder.append(StringUtil.NL);
+
+    format(builder, "  New Objects:", changeSetData.getNewObjects());
+    format(builder, "  Changed Objects:", changeSetData.getChangedObjects());
+    format(builder, "  Detached Objects:", changeSetData.getDetachedObjects());
+    return builder.toString();
+  }
+
+  private static void format(StringBuilder builder, String label, List<?> objects)
+  {
+    builder.append(label);
+    builder.append(StringUtil.NL);
+
+    for (Object object : objects)
+    {
+      builder.append("    ");
+      builder.append(object);
+      builder.append(StringUtil.NL);
+    }
   }
 
   private static <T extends CDOIDAndVersion> void fillMap(Map<CDOID, T> map, Collection<T> c)

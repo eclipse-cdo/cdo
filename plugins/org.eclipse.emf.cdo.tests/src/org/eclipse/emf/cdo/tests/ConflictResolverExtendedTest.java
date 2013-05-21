@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
@@ -48,12 +48,12 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void _testProvokeConflictOnServerTest() throws Exception
   {
+    initTestModelSimple();
+
     // Should provoke an "attempt to modify historical revision" error.
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-
-    initTestModelSimple();
 
     BaseObject thisObject = getTestModelRoot(thisTransaction).getListA().get(0);
     BaseObject thatObject = thatTransaction.getObject(thisObject);
@@ -75,12 +75,12 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void _testProvokeConflictLocalTest() throws Exception
   {
+    initTestModelSimple();
+
     // Should provoke an "this transaction has conflicts" error.
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-
-    initTestModelSimple();
 
     BaseObject thisObject = getTestModelRoot(thisTransaction).getListA().get(0);
     BaseObject thatObject = thatTransaction.getObject(thisObject);
@@ -104,11 +104,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testChangeChangeTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     BaseObject thisObject = getTestModelRoot(thisTransaction).getListA().get(0);
@@ -125,11 +125,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveChangeTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     BaseObject thisObject = getTestModelRoot(thisTransaction).getListA().get(0);
@@ -147,12 +147,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testChangeRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
-
-    // Add conflict resolver.
     addConflictResolver(thatTransaction);
 
     BaseObject thisObject = getTestModelRoot(thisTransaction).getListA().get(0);
@@ -177,12 +176,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveAddTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
-
-    // Add conflict resolver.
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -205,12 +203,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
-
-    // Add conflict resolver.
     addConflictResolver(thatTransaction);
 
     ContainmentObject thisObject = (ContainmentObject)getTestModelRoot(thisTransaction).getListB().get(0);
@@ -238,12 +235,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
-
-    // Add conflict resolver.
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -268,10 +264,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedAddAddTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -295,10 +292,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedAddChangeTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -325,10 +323,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedChangeAddTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -355,10 +354,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedAddRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -384,10 +384,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedRemoveAddTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -413,10 +414,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedChangeRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -440,10 +442,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedChangeRemoveTest2() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -470,10 +473,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedRemoveChangeTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -497,10 +501,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedRemoveChangeTest2() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     // Remove element
@@ -519,10 +524,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedChangeChangeTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -547,10 +553,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedChangeChangeTest2() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -575,10 +582,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedRemoveRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -601,10 +609,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedRemoveRemoveTest2() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -627,11 +636,12 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedAddAddRemoveRemoveTest() throws Exception
   {
+    initTestModelSimple();
+
     // test to produce exception of bug #306710
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -659,10 +669,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedAddAddRemoveRemove2Test() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -693,10 +704,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testManyValuedRemoveRemoveAddAddTest() throws Exception
   {
+    initTestModelSimple();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModelSimple();
     addConflictResolver(thatTransaction);
 
     int objects = getTestModelRoot(thisTransaction).getListA().size();
@@ -727,10 +739,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -768,10 +781,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -809,10 +823,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -849,10 +864,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -894,10 +910,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -939,10 +956,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -986,10 +1004,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1033,10 +1052,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1081,10 +1101,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1122,10 +1143,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -1161,10 +1183,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1202,10 +1225,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1243,10 +1267,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddHeadClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1283,10 +1308,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testAddTailClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1323,10 +1349,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1368,10 +1395,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1414,10 +1442,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1460,10 +1489,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1506,10 +1536,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1554,10 +1585,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1605,10 +1637,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1656,10 +1689,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1707,10 +1741,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -1756,10 +1791,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1805,10 +1841,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1854,10 +1891,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1902,10 +1940,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1945,10 +1984,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveTailClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -1988,10 +2028,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2032,10 +2073,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2076,10 +2118,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2120,10 +2163,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2164,10 +2208,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2210,10 +2255,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2258,10 +2304,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2306,10 +2353,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2353,10 +2401,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2404,10 +2453,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2455,10 +2505,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2506,10 +2557,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2557,10 +2609,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2601,10 +2654,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveTailClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2645,10 +2699,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearAddHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2684,10 +2739,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearAddTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2723,10 +2779,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearRemoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2765,10 +2822,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearRemoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2807,10 +2865,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearMoveHeadTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2850,10 +2909,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearMoveTailTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2893,10 +2953,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testClearClearTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2932,10 +2993,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadMoveHeadRemoveMiddleTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -2986,10 +3048,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadMoveHeadRemoveMiddleTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3039,10 +3102,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testMoveHeadRemoveHeadRemoveMiddleTest() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3096,10 +3160,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadAddChildHead() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -3153,10 +3218,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadSetChildHead() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3207,10 +3273,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadRemoveChildHead() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3252,10 +3319,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadRemoveChildChildHead() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3300,10 +3368,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadMoveChildHead() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3356,10 +3425,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testRemoveHeadReAttachHead() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Access objects.
@@ -3399,10 +3469,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   public void testContainerAddDifferentParent() throws Exception
   {
+    initTestModel();
+
     CDOSession session = openSessionWithAdditionsMode();
     CDOTransaction thisTransaction = session.openTransaction();
     CDOTransaction thatTransaction = session.openTransaction();
-    initTestModel();
     addConflictResolver(thatTransaction);
 
     // Create initial model.
@@ -3502,7 +3573,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(true);
-    session.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
+    session.options().setPassiveUpdateMode(CDOCommonSession.Options.PassiveUpdateMode.ADDITIONS);
     return session;
   }
 
@@ -3532,6 +3603,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     testRoot.getListB().add(cObject1L1);
 
     transaction.commit();
+    session.close();
   }
 
   private void initTestModel() throws CommitException

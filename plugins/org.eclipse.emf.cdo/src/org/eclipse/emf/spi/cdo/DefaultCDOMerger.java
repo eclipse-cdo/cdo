@@ -829,8 +829,7 @@ public class DefaultCDOMerger implements CDOMerger
 
           case CLEAR:
           case UNSET:
-            int removeme;
-            System.out.println();
+            throw new IllegalStateException("Unhandled change type: " + changeType);
 
           default:
             throw new IllegalStateException("Illegal change type: " + changeType);
@@ -957,8 +956,8 @@ public class DefaultCDOMerger implements CDOMerger
 
           case SET:
           {
-            CDOSetFeatureDelta setChange = (CDOSetFeatureDelta)change;
-            throw new UnsupportedOperationException();
+            throw new IllegalStateException("Unhandled change type: " + changeType);
+            // CDOSetFeatureDelta setChange = (CDOSetFeatureDelta)change;
             // break;
           }
 

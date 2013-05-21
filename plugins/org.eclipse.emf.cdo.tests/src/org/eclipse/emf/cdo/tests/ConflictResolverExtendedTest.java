@@ -14,7 +14,11 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
@@ -37,6 +41,9 @@ import java.util.List;
 /**
  * @author Pascal Lehmann
  */
+// TODO Remove Me
+@Requires(IConfig.CAPABILITY_UNAVAILABLE)
+@Skips(IModelConfig.CAPABILITY_LEGACY)
 @CleanRepositoriesBefore
 public class ConflictResolverExtendedTest extends AbstractCDOTest
 {

@@ -140,6 +140,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     List<CDORevisionKey> changedObjects = commitData.getChangedObjects();
     List<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
 
+    out.writeLong(transaction.getLastUpdateTime());
     out.writeBoolean(releaseLocks);
     out.writeString(comment);
     out.writeInt(newPackageUnits.size());

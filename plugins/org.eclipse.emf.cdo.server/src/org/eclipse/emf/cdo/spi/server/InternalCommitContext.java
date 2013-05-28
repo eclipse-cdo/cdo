@@ -64,6 +64,16 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
 
   public InternalTransaction getTransaction();
 
+  /**
+   * @since 4.2
+   */
+  public long getTimeStamp();
+
+  /**
+   * @since 4.2
+   */
+  public void setLastTreeRestructuringCommit(long lastTreeRestructuringCommit);
+
   public void preWrite();
 
   public void write(OMMonitor monitor);
@@ -116,6 +126,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
    * @since 4.2
    */
   public void setDetachedObjectVersions(CDOBranchVersion[] detachedObjectVersions);
+
+  /**
+   * @since 4.2
+   */
+  public void setLastUpdateTime(long lastUpdateTime);
 
   public void setAutoReleaseLocksEnabled(boolean on);
 

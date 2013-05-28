@@ -307,6 +307,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public String getCommitComment();
 
     /**
+     * @since 4.2
+     */
+    public long getLastUpdateTime();
+
+    /**
      * @since 3.0
      */
     public boolean isAutoReleaseLocksEnabled();

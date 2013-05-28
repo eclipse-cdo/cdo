@@ -120,8 +120,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     initializeCommitContext(in);
     commitContext.preWrite();
 
+    long lastUpdateTime = in.readLong();
     boolean autoReleaseLocksEnabled = in.readBoolean();
-    commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
     String commitComment = in.readString();
 
     InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
@@ -266,6 +266,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         detachedObjectTypes = null;
       }
 
+      commitContext.setLastUpdateTime(lastUpdateTime);
+      commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
       commitContext.setClearResourcePathCache(clearResourcePathCache);
       commitContext.setUsingEcore(usingEcore);
       commitContext.setUsingEtypes(usingEtypes);

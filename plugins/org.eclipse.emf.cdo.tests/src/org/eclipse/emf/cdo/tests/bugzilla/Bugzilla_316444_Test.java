@@ -164,8 +164,11 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     map.put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
   }
 
+  /**
+   * Not needed anymore because of {@link Bugzilla_409284_Test}.
+   */
   @CleanRepositoriesBefore
-  public void testMovingSubtree() throws Exception
+  public void _testMovingSubtree() throws Exception
   {
     exceptions.clear();
 

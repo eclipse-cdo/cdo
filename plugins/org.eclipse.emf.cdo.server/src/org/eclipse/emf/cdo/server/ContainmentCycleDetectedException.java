@@ -10,10 +10,16 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 /**
- * An unchecked exception that is thrown from concurrent commit operations if cycles in the tree containmnent structure
- * would result.
- * 
+ * An unchecked exception that can thrown from a commit operation that is based on stale information
+ * about the tree structure of the model and would introduce a containment cycle.
+ * <p>
+ * This situation results from a network race condition and can not be prevented by write locks on
+ * the changed objects. The committing client must {@link CDOTransaction#rollback() rollback} the transaction
+ * , replay the original changes and try to {@link CDOTransaction#commit() commit} again.
+ *
  * @author Eike Stepper
  * @since 4.0
  */

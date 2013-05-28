@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * TODO Optimize createCommitInfo()
- * 
+ *
  * @author Eike Stepper
  */
 public final class ReplicatorCommitContext extends TransactionCommitContext
@@ -106,6 +106,12 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
 
   @Override
   protected void checkXRefs()
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void checkContainmentCycles()
   {
     // Do nothing
   }

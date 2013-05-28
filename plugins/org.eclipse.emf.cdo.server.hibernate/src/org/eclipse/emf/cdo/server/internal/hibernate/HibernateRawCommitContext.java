@@ -102,6 +102,20 @@ public class HibernateRawCommitContext implements InternalCommitContext
     return null;
   }
 
+  public long getLastUpdateTime()
+  {
+    return 0;
+  }
+
+  public long getTimeStamp()
+  {
+    return 0;
+  }
+
+  public void setLastTreeRestructuringCommit(long lastTreeRestructuringCommit)
+  {
+  }
+
   public boolean isAutoReleaseLocksEnabled()
   {
     return false;
@@ -287,6 +301,10 @@ public class HibernateRawCommitContext implements InternalCommitContext
   }
 
   public void setDetachedObjectVersions(CDOBranchVersion[] detachedObjectVersions)
+  {
+  }
+
+  public void setLastUpdateTime(long lastUpdateTime)
   {
   }
 

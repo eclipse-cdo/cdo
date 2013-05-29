@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -53,6 +55,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +73,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   private String sqlSelectCurrentAttributes;
 
+  private String sqlSelectCurrentVersion;
+
   private String sqlInsertAttributes;
 
   private String sqlUpdateAffix;
@@ -79,6 +84,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   private String sqlUpdateContainerPart;
 
   private String sqlDelete;
+
+  private boolean hasLists;
 
   private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
   {
@@ -93,6 +100,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   {
     super(mappingStrategy, eClass);
     initSQLStrings();
+    hasLists = !getListMappings().isEmpty();
   }
 
   private void initSQLStrings()
@@ -120,6 +128,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(ATTRIBUTES_ID);
     builder.append("=?"); //$NON-NLS-1$
     sqlSelectCurrentAttributes = builder.toString();
+
+    // ----------- Select Version ---------------------------
+    builder = new StringBuilder();
+    builder.append("SELECT "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append("=?"); //$NON-NLS-1$
+    sqlSelectCurrentVersion = builder.toString();
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
@@ -336,24 +355,60 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       throw new UnsupportedOperationException("Mapping strategy does not support audits"); //$NON-NLS-1$
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes,
+    CDOID id = revision.getID();
+
+    DBStore store = (DBStore)getMappingStrategy().getStore();
+    IIDHandler idHandler = store.getIDHandler();
+    IDBPreparedStatement stmtVersion = null;
+    IDBPreparedStatement stmtAttributes = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes,
         ReuseProbability.HIGH);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, revision.getID());
-
-      // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(stmt, revision, accessor);
-
-      // Read multival tables only if revision exists
-      if (success)
+      if (hasLists)
       {
-        readLists(accessor, revision, listChunk);
+        stmtVersion = accessor.getDBConnection().prepareStatement(sqlSelectCurrentVersion, ReuseProbability.HIGH);
+        stmtVersion.setMaxRows(1); // Optimization: only 1 row
+        idHandler.setCDOID(stmtVersion, 1, id);
       }
 
-      return success;
+      idHandler.setCDOID(stmtAttributes, 1, id);
+
+      for (;;)
+      {
+        // Read singleval-attribute table always (even without modeled attributes!)
+        boolean success = readValuesFromStatement(stmtAttributes, revision, accessor);
+
+        if (hasLists)
+        {
+          // Read multival tables only if revision exists
+          if (success)
+          {
+            int currentVersion;
+
+            try
+            {
+              readLists(accessor, revision, listChunk);
+              currentVersion = readVersion(stmtVersion);
+            }
+            catch (IndexOutOfBoundsException ex)
+            {
+              // A commit has appended list rows after the list size has been read in readValuesFromStatement().
+              // Trigger start from scratch below.
+              currentVersion = CDOBranchVersion.UNSPECIFIED_VERSION;
+            }
+
+            if (currentVersion != revision.getVersion())
+            {
+              // A commit has changed the revision while reading the lists. Start from scratch!
+              revision.clearValues(); // Make sure that lists are recreated
+              continue;
+            }
+          }
+        }
+
+        return success;
+      }
     }
     catch (SQLException ex)
     {
@@ -361,7 +416,32 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      DBUtil.close(stmt);
+      DBUtil.close(stmtAttributes);
+      DBUtil.close(stmtVersion);
+    }
+  }
+
+  private int readVersion(IDBPreparedStatement stmt)
+  {
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = stmt.executeQuery();
+      if (resultSet.next())
+      {
+        return resultSet.getInt(1);
+      }
+
+      return CDOBranchVersion.UNSPECIFIED_VERSION;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
     }
   }
 

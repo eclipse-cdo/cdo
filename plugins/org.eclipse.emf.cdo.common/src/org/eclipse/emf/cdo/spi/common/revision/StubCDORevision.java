@@ -278,6 +278,14 @@ public class StubCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.2
+   */
+  public EStructuralFeature[] clearValues()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
    * @since 4.1
    */
   public CDOPermission getPermission()

@@ -893,7 +893,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         // First lock all objects (incl. possible ref targets).
         // This is a transient operation, it does not check for existance!
-        lockManager.lock2(LockType.WRITE, transaction, lockedObjects, 1000);
+        lockManager.lock2(LockType.WRITE, transaction, lockedObjects, 10000);
 
         // If all locks could be acquired, check if locked targets do still exist
         if (lockedTargets != null)
@@ -1114,6 +1114,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
     if (oldRevision == null)
     {
+      // If the object is logically locked (see lockObjects) but has a wrong (newer) version, someone else modified it
       throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
           + delta);
     }
@@ -1162,7 +1163,6 @@ public class TransactionCommitContext implements InternalCommitContext
       rollbackMessage = message;
 
       removePackageAdapters();
-      unlockObjects();
 
       if (accessor != null)
       {
@@ -1179,6 +1179,8 @@ public class TransactionCommitContext implements InternalCommitContext
           repository.failCommit(timeStamp);
         }
       }
+
+      unlockObjects();
     }
   }
 

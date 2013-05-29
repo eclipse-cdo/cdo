@@ -39,8 +39,7 @@ public class CDORevisionImpl extends BaseCDORevision
   protected CDORevisionImpl(CDORevisionImpl source)
   {
     super(source);
-    EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
-    initValues(features);
+    EStructuralFeature[] features = clearValues();
 
     int length = features.length;
     for (int i = 0; i < length; i++)

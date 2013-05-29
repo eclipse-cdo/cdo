@@ -352,6 +352,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   /**
+   * @since 4.2
+   */
+  public EStructuralFeature[] clearValues()
+  {
+    return getDelegate().clearValues();
+  }
+
+  /**
    * @since 4.1
    */
   public CDOPermission getPermission()

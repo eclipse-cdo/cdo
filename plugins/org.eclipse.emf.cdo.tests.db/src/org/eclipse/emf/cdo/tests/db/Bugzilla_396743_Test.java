@@ -44,6 +44,8 @@ import java.util.concurrent.TimeUnit;
  * @author Eike Stepper
  */
 @Skips(IRepositoryConfig.CAPABILITY_AUDITING)
+@org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore
+@org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter
 public class Bugzilla_396743_Test extends AbstractCDOTest
 {
   private CountDownLatch readValueLatch;

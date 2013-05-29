@@ -725,6 +725,16 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.2
+   */
+  public EStructuralFeature[] clearValues()
+  {
+    EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
+    initValues(features);
+    return features;
+  }
+
+  /**
    * @since 4.1
    */
   public CDOPermission getPermission()

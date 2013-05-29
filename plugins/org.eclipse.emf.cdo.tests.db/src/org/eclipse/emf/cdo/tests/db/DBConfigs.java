@@ -40,6 +40,7 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(CustomTypeMappingTest.class);
     testClasses.add(SQLQueryTest.class);
     testClasses.add(Bugzilla_351068_Test.class);
+    testClasses.add(Bugzilla_396743_Test.class);
 
     super.initTestClasses(testClasses, scenario);
     testClasses.remove(MEMStoreQueryTest.class);

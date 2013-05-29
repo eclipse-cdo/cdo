@@ -38,6 +38,8 @@ public abstract class DBConfig extends RepositoryConfig
 
   public static final String CAPABILITY_COPY_ON_BRANCH = "DB.copy.on.branch";
 
+  public static final String PROP_TEST_MAPPING_STRATEGY = "test.repository.MappingStrategy";
+
   private static final long serialVersionUID = 1L;
 
   private boolean withRanges;
@@ -127,7 +129,18 @@ public abstract class DBConfig extends RepositoryConfig
 
   protected IMappingStrategy createMappingStrategy()
   {
+    IMappingStrategy mappingStrategy = getTestMappingStrategy();
+    if (mappingStrategy != null)
+    {
+      return mappingStrategy;
+    }
+
     return CDODBUtil.createHorizontalMappingStrategy(isSupportingAudits(), isSupportingBranches(), withRanges);
+  }
+
+  protected IMappingStrategy getTestMappingStrategy()
+  {
+    return (IMappingStrategy)getTestProperty(PROP_TEST_MAPPING_STRATEGY);
   }
 
   @Override

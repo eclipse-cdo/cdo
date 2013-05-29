@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -102,6 +103,12 @@ public abstract class RevisionInfo
   {
     out.writeByte(getType().ordinal());
     out.writeCDOID(getID());
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("RevisionInfo.{0}[{1}, {2}]", getClass().getSimpleName(), id, requestedBranchPoint); //$NON-NLS-1$
   }
 
   public static RevisionInfo read(CDODataInput in, CDOBranchPoint requestedBranchPoint) throws IOException

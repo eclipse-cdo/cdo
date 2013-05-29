@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 
 /**
  * This is a default implementation for the {@link ITypeMapping} interface which provides default behavor for all common
@@ -58,9 +59,9 @@ public abstract class AbstractTypeMapping implements ITypeMapping
 
   private EStructuralFeature feature;
 
-  private IDBField field;
-
   private DBType dbType;
+
+  private IDBField field;
 
   /**
    * Create a new type mapping
@@ -69,14 +70,19 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   {
   }
 
+  public final IMappingStrategy getMappingStrategy()
+  {
+    return mappingStrategy;
+  }
+
   public final void setMappingStrategy(IMappingStrategy mappingStrategy)
   {
     this.mappingStrategy = mappingStrategy;
   }
 
-  public final IMappingStrategy getMappingStrategy()
+  public final EStructuralFeature getFeature()
   {
-    return mappingStrategy;
+    return feature;
   }
 
   public final void setFeature(EStructuralFeature feature)
@@ -84,9 +90,14 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     this.feature = feature;
   }
 
-  public final EStructuralFeature getFeature()
+  public final void setDBType(DBType dbType)
   {
-    return feature;
+    this.dbType = dbType;
+  }
+
+  public DBType getDBType()
+  {
+    return dbType;
   }
 
   public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision)
@@ -151,14 +162,14 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     field = table.addField(fieldName, fieldType, fieldLength);
   }
 
-  public final void setDBField(IDBTable table, String fieldName)
-  {
-    field = table.getFieldSafe(fieldName);
-  }
-
   public final IDBField getField()
   {
     return field;
+  }
+
+  public final void setDBField(IDBTable table, String fieldName)
+  {
+    field = table.getFieldSafe(fieldName);
   }
 
   public final void readValueToRevision(ResultSet resultSet, InternalCDORevision revision) throws SQLException
@@ -208,6 +219,15 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     return value;
   }
 
+  @Override
+  public String toString()
+  {
+    Object mappedElement = field != null ? field : dbType;
+    return MessageFormat
+        .format(
+            "{0}[{1}.{2} --> {3}]", getClass().getSimpleName(), feature.getEContainingClass().getName(), feature.getName(), mappedElement); //$NON-NLS-1$
+  }
+
   protected Object getDefaultValue()
   {
     return feature.getDefaultValue();
@@ -243,16 +263,6 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   protected int getSqlType()
   {
     return getDBType().getCode();
-  }
-
-  public final void setDBType(DBType dbType)
-  {
-    this.dbType = dbType;
-  }
-
-  public DBType getDBType()
-  {
-    return dbType;
   }
 
   protected int getDBLength(DBType type)

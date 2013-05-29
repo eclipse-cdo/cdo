@@ -149,8 +149,26 @@ Class ExtendedIOUtil</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html#readBinaryStream(java.io.DataInput, java.io.OutputStream)">readBinaryStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</A>&nbsp;in,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;outputStream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;byte[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html#readByteArray(java.io.DataInput)">readByteArray</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</A>&nbsp;in)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html#readCharacterStream(java.io.DataInput, java.io.Writer)">readCharacterStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</A>&nbsp;in,
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -209,9 +227,27 @@ T</CODE></FONT></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html#writeBinaryStream(java.io.DataOutput, java.io.InputStream)">writeBinaryStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataOutput.html?is-external=true" title="class or interface in java.io">DataOutput</A>&nbsp;out,
+                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;inputStream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html#writeByteArray(java.io.DataOutput, byte[])">writeByteArray</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataOutput.html?is-external=true" title="class or interface in java.io">DataOutput</A>&nbsp;out,
                byte[]&nbsp;b)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html#writeCharacterStream(java.io.DataOutput, java.io.Reader)">writeCharacterStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataOutput.html?is-external=true" title="class or interface in java.io">DataOutput</A>&nbsp;out,
+                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</A>&nbsp;reader)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -379,6 +415,74 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lan
 
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="writeBinaryStream(java.io.DataOutput, java.io.InputStream)"><!-- --></A><H3>
+writeBinaryStream</H3>
+<PRE>
+public static long <B>writeBinaryStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataOutput.html?is-external=true" title="class or interface in java.io">DataOutput</A>&nbsp;out,
+                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;inputStream)
+                              throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readBinaryStream(java.io.DataInput, java.io.OutputStream)"><!-- --></A><H3>
+readBinaryStream</H3>
+<PRE>
+public static long <B>readBinaryStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</A>&nbsp;in,
+                                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;outputStream)
+                             throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="writeCharacterStream(java.io.DataOutput, java.io.Reader)"><!-- --></A><H3>
+writeCharacterStream</H3>
+<PRE>
+public static long <B>writeCharacterStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataOutput.html?is-external=true" title="class or interface in java.io">DataOutput</A>&nbsp;out,
+                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</A>&nbsp;reader)
+                                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readCharacterStream(java.io.DataInput, java.io.Writer)"><!-- --></A><H3>
+readCharacterStream</H3>
+<PRE>
+public static long <B>readCharacterStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</A>&nbsp;in,
+                                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer)
+                                throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
 </DD>
 </DL>
 <HR>

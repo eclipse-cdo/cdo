@@ -168,6 +168,15 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">addFeatureDelta</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;delta)</CODE>
 
 <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><CODE>addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</CODE></A>.</I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)">addFeatureDelta</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;delta,
+                <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOOriginSizeProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOOriginSizeProvider</A>&nbsp;originSizeProvider)</CODE>
+
+<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -209,7 +218,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.revision.delta.<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor)">accept</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#apply(org.eclipse.emf.cdo.common.revision.CDORevision)">apply</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#copy()">copy</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getEClass()">getEClass</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDelta(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureDelta</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDeltas()">getFeatureDeltas</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getTarget()">getTarget</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#isEmpty()">isEmpty</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#size()">size</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor)">accept</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor, org.eclipse.net4j.util.Predicate)">accept</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#apply(org.eclipse.emf.cdo.common.revision.CDORevision)">apply</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#copy()">copy</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getEClass()">getEClass</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDelta(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureDelta</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDeltas()">getFeatureDeltas</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getTarget()">getTarget</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#isEmpty()">isEmpty</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#size()">size</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchVersion"><!-- --></A>
@@ -271,12 +280,32 @@ getFeatureDeltaMap</H3>
 <A NAME="addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><!-- --></A><H3>
 addFeatureDelta</H3>
 <PRE>
-void <B>addFeatureDelta</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;delta)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>addFeatureDelta</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><CODE>addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</CODE></A>.</I>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><!-- --></A><H3>
+addFeatureDelta</H3>
+<PRE>
+void <B>addFeatureDelta</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;delta,
+                     <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOOriginSizeProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOOriginSizeProvider</A>&nbsp;originSizeProvider)</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

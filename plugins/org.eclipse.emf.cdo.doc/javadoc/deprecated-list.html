@@ -91,6 +91,7 @@ function windowTitle()
 <LI><A HREF="#field">Deprecated Fields</A>
 <LI><A HREF="#method">Deprecated Methods</A>
 <LI><A HREF="#constructor">Deprecated Constructors</A>
+<LI><A HREF="#enum_constant">Deprecated Enum Constants</A>
 </UL>
 
 <A NAME="interface"><!-- --></A>
@@ -241,6 +242,26 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 call <A HREF="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><CODE>CDOCommitInfoProvider.addCommitInfoHandler(CDOCommitInfoHandler)</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta.addFeatureDelta(CDOFeatureDelta)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><CODE>InternalCDORevisionDelta.addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#adjustAfterAddition(java.util.List, int)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.adjustAfterAddition(List<CDOFeatureDelta>, int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#adjustAfterMove(java.util.List, int, int)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.adjustAfterMove(List<CDOFeatureDelta>, int, int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#adjustAfterRemoval(java.util.List, int)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.adjustAfterRemoval(List<CDOFeatureDelta>, int)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOTransaction.applyChangeSetData(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use
@@ -315,6 +336,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createLongWithClassifier(org.eclipse.emf.cdo.common.model.CDOClassifierRef, long)">org.eclipse.emf.cdo.common.id.CDOIDUtil.createLongWithClassifier(CDOClassifierRef, long)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#createLongWithClassifier(long, org.eclipse.emf.cdo.common.model.CDOClassifierRef)"><CODE>CDOIDUtil.createLongWithClassifier(long, CDOClassifierRef)</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#createResult(org.eclipse.emf.ecore.EStructuralFeature)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.createResult(EStructuralFeature)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOSession.createRevisionAvailabilityInfo(CDOBranchPoint)</A>
@@ -500,6 +526,26 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleCommitNotification(CDOCommitInfo)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 use <A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, boolean)"><CODE>InternalCDOSession.handleCommitNotification(CDOCommitInfo, boolean)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDelta(java.util.List, java.util.List, java.util.List)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.handleListDelta(List<CDOFeatureDelta>, List<CDOFeatureDelta>, List<CDOFeatureDelta>)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaAdd(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta, java.util.List)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.handleListDeltaAdd(List<CDOFeatureDelta>, CDOAddFeatureDelta, List<CDOFeatureDelta>)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaMove(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta, java.util.List)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.handleListDeltaMove(List<CDOFeatureDelta>, CDOMoveFeatureDelta, List<CDOFeatureDelta>)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaRemove(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta, java.util.List)">org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.handleListDeltaRemove(List<CDOFeatureDelta>, CDORemoveFeatureDelta, List<CDOFeatureDelta>)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean)">org.eclipse.emf.spi.cdo.InternalCDOView.invalidate(CDOBranch, long, List<CDORevisionKey>, List<CDOIDAndVersion>, Map<CDOID, InternalCDORevision>, boolean)</A>
@@ -803,6 +849,35 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#ObjectWriteAccessHandler(boolean)">org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler(boolean)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 the legacy mode is always enabled.</I>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="enum_constant"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Deprecated Enum Constants</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html#CHANGE_OVER_DETACH">org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference.CHANGE_OVER_DETACH</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html#DETACH_OVER_CHANGE">org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference.DETACH_OVER_CHANGE</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html#SOURCE_OVER_TARGET">org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference.SOURCE_OVER_TARGET</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html#TARGET_OVER_SOURCE">org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference.TARGET_OVER_SOURCE</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

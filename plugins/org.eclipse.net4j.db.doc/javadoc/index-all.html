@@ -91,9 +91,6 @@ Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)"><B>adaptType(DBType)</B></A> - 
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
 <DD>Provide a way for the DBAdapter to override unsupported DB types with replacements.
-<DT><A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html#adaptType(org.eclipse.net4j.db.DBType)"><B>adaptType(DBType)</B></A> - 
-Method in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</A>
-<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)"><B>adaptType(DBType)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
@@ -1300,6 +1297,12 @@ Method in class org.eclipse.net4j.db.ddl.delta.<A HREF="./org/eclipse/net4j/db/d
 <DT><A HREF="./org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta)"><B>isAllowed(IDBDelta)</B></A> - 
 Method in class org.eclipse.net4j.db.ddl.delta.<A HREF="./org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.derby.<A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.hsqldb.<A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb">HSQLDBAdapter</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
 <DD>&nbsp;
@@ -1308,6 +1311,9 @@ Method in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net4j/db/
 <DD>See <a href="http://www.postgresql.org/docs/9.0/static/errcodes-appendix.html">Appendix A.
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.derby.<A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
 Method in class org.eclipse.net4j.db.h2.<A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</A>
@@ -1368,6 +1374,12 @@ Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdap
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)"><B>isReservedWord(String)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html#isTableNotFoundException(java.sql.SQLException)"><B>isTableNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.derby.<A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html#isTableNotFoundException(java.sql.SQLException)"><B>isTableNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.hsqldb.<A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb">HSQLDBAdapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#isTableNotFoundException(java.sql.SQLException)"><B>isTableNotFoundException(SQLException)</B></A> - 
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
@@ -1611,6 +1623,9 @@ Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBS
 <DD><B>Deprecated.</B>&nbsp;&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html#removeTable(java.lang.String)"><B>removeTable(String)</B></A> - 
 Method in interface org.eclipse.net4j.spi.db.ddl.<A HREF="./org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBSchema</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#rollbackSilently(java.sql.Connection)"><B>rollbackSilently(Connection)</B></A> - 
+Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html#run(java.sql.Connection)"><B>run(Connection)</B></A> - 
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</A>

@@ -118,7 +118,7 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Optional:<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="objectTypeCacheSize"&nbsp;value="100000"&nbsp;/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="objectTypeCacheSize"&nbsp;value="100000"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/mappingStrategy&gt;</font><br/>
@@ -136,7 +136,7 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dbAdapter&nbsp;name="hsqldb"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dataSource&nbsp;class="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database="jdbc:hsqldb:mem:repo1"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database="jdbc:hsqldb:file:/temp/repo1"<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user="sa"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
@@ -153,16 +153,19 @@ function windowTitle()
 				serverName="localhost"<br/>
 				portNumber="5432"<br/>
 				databaseName="repo1"<br/>
-				user="cdo"<br/>
-				password="cdo"/&gt;<br/>
+				user="postgres"<br/>
+				password="postgres"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>
 			&lt;dbAdapter&nbsp;name="oracle"/&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dataSource&nbsp;class="oracle.jdbc.pool.OracleDataSource"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url="jdbc:oracle:thin:@localhost:1521:xe"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user="username"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password="password"/&gt;<br/>
+			&lt;dataSource&nbsp;class="oracle.jdbc.pool.OracleDataSource"<br/>
+				driverType="thin"<br/>
+				serverName="serverURL"<br/>
+				portNumber="1521"<br/>
+				databaseName="SID"<br/>
+				user="user"<br/>
+				password="passwd"/&gt;<br/>
 			--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/store&gt;</font><br/>

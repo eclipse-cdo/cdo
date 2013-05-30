@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
@@ -108,8 +109,6 @@ public class TransactionCommitContext implements InternalCommitContext
   private final CDOBranch branch;
 
   private InternalRepository repository;
-
-  private InternalCDORevisionManager revisionManager;
 
   private InternalLockManager lockManager;
 
@@ -187,7 +186,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
     branch = transaction.getBranch();
     repository = transaction.getRepository();
-    revisionManager = repository.getRevisionManager();
     lockManager = repository.getLockingManager();
     serializingCommits = repository.isSerializingCommits();
     ensuringReferentialIntegrity = repository.isEnsuringReferentialIntegrity();
@@ -901,9 +899,7 @@ public class TransactionCommitContext implements InternalCommitContext
         {
           for (CDOID id : lockedTargets)
           {
-            InternalCDORevision revision = //
-            revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
-
+            CDORevision revision = transaction.getRevision(id);
             if (revision == null || revision instanceof DetachedCDORevision)
             {
               throw new IllegalStateException("Object " + id
@@ -1103,10 +1099,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
     try
     {
-      oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
+      oldRevision = (InternalCDORevision)transaction.getRevision(id);
       if (oldRevision != null)
       {
-        if (oldRevision.getBranch() == branch && oldRevision.isHistorical())
+        if (oldRevision.getBranch() != delta.getBranch() || oldRevision.getVersion() != delta.getVersion())
         {
           oldRevision = null;
         }
@@ -1319,6 +1315,8 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(revisions.length);
+      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+
       for (CDORevision revision : revisions)
       {
         if (revision != null)
@@ -1367,12 +1365,14 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(size);
+      InternalCDORevisionCache cache = repository.getRevisionManager().getCache();
+
       for (int i = 0; i < size; i++)
       {
         CDOID id = detachedObjects[i];
 
         // Remember the cached revision that must be revised after successful commit through updateInfraStructure
-        cachedDetachedRevisions[i] = (InternalCDORevision)revisionManager.getCache().getRevision(id, transaction);
+        cachedDetachedRevisions[i] = (InternalCDORevision)cache.getRevision(id, transaction);
         monitor.worked();
       }
     }

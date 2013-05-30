@@ -244,7 +244,17 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
+        if (stmt.getMaxRows() != listChunk)
+        {
         stmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
+      }
+      }
+      else
+      {
+        if (stmt.getMaxRows() != 0)
+        {
+          stmt.setMaxRows(0);
+        }
       }
 
       resultSet = stmt.executeQuery();

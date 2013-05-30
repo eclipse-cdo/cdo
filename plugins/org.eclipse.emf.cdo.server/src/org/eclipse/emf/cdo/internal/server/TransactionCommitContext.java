@@ -105,6 +105,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private final InternalTransaction transaction;
 
+  private final CDOBranch branch;
+
   private InternalRepository repository;
 
   private InternalCDORevisionManager revisionManager;
@@ -183,6 +185,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     this.transaction = transaction;
 
+    branch = transaction.getBranch();
     repository = transaction.getRepository();
     revisionManager = repository.getRevisionManager();
     lockManager = repository.getLockingManager();
@@ -199,7 +202,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public CDOBranchPoint getBranchPoint()
   {
-    return transaction.getBranch().getPoint(timeStamp);
+    return branch.getPoint(timeStamp);
   }
 
   public String getUserID()
@@ -668,9 +671,9 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void setTimeStamp(OMMonitor mmonitor)
+  private void setTimeStamp(OMMonitor monitor)
   {
-    long[] times = createTimeStamp(mmonitor); // Could throw an exception
+    long[] times = createTimeStamp(monitor); // Could throw an exception
     timeStamp = times[0];
     previousTimeStamp = times[1];
     CheckUtil.checkState(timeStamp != CDOBranchPoint.UNSPECIFIED_DATE, "Commit timestamp must not be 0");
@@ -731,7 +734,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public CDOCommitInfo createCommitInfo()
   {
-    CDOBranch branch = transaction.getBranch();
     String userID = transaction.getSession().getUserID();
     CDOCommitData commitData = createCommitData();
 
@@ -804,7 +806,6 @@ public class TransactionCommitContext implements InternalCommitContext
       newPackageUnit.setTimeStamp(timeStamp);
     }
 
-    CDOBranch branch = transaction.getBranch();
     for (InternalCDORevision newObject : newObjects)
     {
       newObject.adjustForCommit(branch, timeStamp);
@@ -869,7 +870,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
         CDOID id = delta.getID();
-        Object key = lockManager.getLockKey(id, transaction.getBranch());
+        Object key = lockManager.getLockKey(id, branch);
         lockedObjects.add(key);
       }
 
@@ -885,7 +886,7 @@ public class TransactionCommitContext implements InternalCommitContext
       for (int i = 0; i < detachedObjects.length; i++)
       {
         CDOID id = detachedObjects[i];
-        Object key = lockManager.getLockKey(id, transaction.getBranch());
+        Object key = lockManager.getLockKey(id, branch);
         lockedObjects.add(key);
       }
 
@@ -942,7 +943,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       // Let this object be locked
-      Object key = lockManager.getLockKey(id, transaction.getBranch());
+      Object key = lockManager.getLockKey(id, branch);
       lockedObjects.add(key);
 
       // Let this object be checked for existance after it has been locked
@@ -1052,7 +1053,7 @@ public class TransactionCommitContext implements InternalCommitContext
         List<CDOIDAndBranch> keys = new ArrayList<CDOIDAndBranch>(detachedObjects.length);
         for (CDOID id : detachedObjects)
         {
-          CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(id, transaction.getBranch());
+          CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(id, branch);
           keys.add(idAndBranch);
         }
 
@@ -1096,7 +1097,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
   {
-    CDOBranch branch = transaction.getBranch();
     CDOID id = delta.getID();
 
     InternalCDORevision oldRevision = null;
@@ -1284,12 +1284,10 @@ public class TransactionCommitContext implements InternalCommitContext
     CDOLockState[] newStates = Repository.toCDOLockStates(newLockStates);
 
     long timeStamp = getTimeStamp();
-    InternalTransaction tx = getTransaction();
-    CDOBranch branch = tx.getBranch();
     Operation unlock = Operation.UNLOCK;
 
-    CDOLockChangeInfo info = CDOLockUtil.createLockChangeInfo(timeStamp, tx, branch, unlock, null, newStates);
-    repository.getSessionManager().sendLockNotification(tx.getSession(), info);
+    CDOLockChangeInfo info = CDOLockUtil.createLockChangeInfo(timeStamp, transaction, branch, unlock, null, newStates);
+    repository.getSessionManager().sendLockNotification(transaction.getSession(), info);
   }
 
   private void addNewPackageUnits(OMMonitor monitor)
@@ -1505,7 +1503,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
     public CDOBranch getBranch()
     {
-      return transaction.getBranch();
+      return branch;
     }
 
     public Map<CDOID, EClass> getTargetObjects()

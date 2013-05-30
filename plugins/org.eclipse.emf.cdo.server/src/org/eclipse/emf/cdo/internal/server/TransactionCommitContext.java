@@ -976,6 +976,12 @@ public class TransactionCommitContext implements InternalCommitContext
       return;
     }
 
+    if (lastUpdateTime == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      // Happens during replication (see CommitDelegationRequest). Commits are checked in the master repo.
+      return;
+    }
+
     if (lastTreeRestructuringCommit <= lastUpdateTime)
     {
       // If this client's original state includes the state of the last tree-restructuring commit there's no danger.

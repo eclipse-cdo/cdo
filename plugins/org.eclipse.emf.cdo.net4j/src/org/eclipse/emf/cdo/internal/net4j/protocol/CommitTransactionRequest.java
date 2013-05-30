@@ -140,7 +140,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     List<CDORevisionKey> changedObjects = commitData.getChangedObjects();
     List<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
 
-    out.writeLong(transaction.getLastUpdateTime());
+    out.writeLong(getLastUpdateTime());
     out.writeBoolean(releaseLocks);
     out.writeString(comment);
     out.writeInt(newPackageUnits.size());
@@ -266,6 +266,11 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         IOUtil.copyCharacter(clob.getContents(), new OutputStreamWriter(out), size);
       }
     }
+  }
+
+  protected long getLastUpdateTime()
+  {
+    return transaction.getLastUpdateTime();
   }
 
   protected CDOBranch getBranch()

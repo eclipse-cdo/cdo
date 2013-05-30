@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -47,7 +48,13 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   }
 
   @Override
-  public CDOBranch getBranch()
+  protected long getLastUpdateTime()
+  {
+    return CDOBranchPoint.UNSPECIFIED_DATE;
+  }
+
+  @Override
+  protected CDOBranch getBranch()
   {
     return branch;
   }

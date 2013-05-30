@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.NonAuditListTableMapping.NewListSizeResult;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -534,11 +535,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private int newVersion;
 
-    /*
-     * this is a temporary copy of the revision to track list size changes...
-     */
-    private InternalCDORevision tempRevision;
-
     public FeatureDeltaWriter()
     {
       attributeChanges = new ArrayList<Pair<ITypeMapping, Object>>();
@@ -552,25 +548,29 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       updateContainer = false;
     }
 
-    public void process(IDBStoreAccessor a, CDORevisionDelta d, long c)
+    public void process(IDBStoreAccessor accessor, CDORevisionDelta delta, long created)
     {
-      // set context
-      id = d.getID();
+      try
+      {
+        // Set context
+        id = delta.getID();
 
-      branchId = d.getBranch().getID();
-      oldVersion = d.getVersion();
-      newVersion = oldVersion + 1;
-      created = c;
-      accessor = a;
+        branchId = delta.getBranch().getID();
+        oldVersion = delta.getVersion();
+        newVersion = oldVersion + 1;
+        this.created = created;
+        this.accessor = accessor;
 
-      tempRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id).copy();
+        // Process revision delta tree
+        delta.accept(this);
 
-      // process revision delta tree
-      d.accept(this);
-
-      updateAttributes();
-      // clean up
-      reset();
+        updateAttributes();
+      }
+      finally
+      {
+        // Clean up
+        reset();
+      }
     }
 
     public void visit(CDOMoveFeatureDelta delta)
@@ -605,13 +605,18 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     public void visit(CDOListFeatureDelta delta)
     {
       EStructuralFeature feature = delta.getFeature();
+      int oldSize = delta.getOriginSize();
+      int newSize = -1;
 
-      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(feature);
-      listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
-
-      int oldSize = tempRevision.getList(feature).size();
-      delta.apply(tempRevision);
-      int newSize = tempRevision.getList(feature).size();
+      try
+      {
+        IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(feature);
+        listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+      }
+      catch (NewListSizeResult result)
+      {
+        newSize = result.getNewListSize();
+      }
 
       if (oldSize != newSize)
       {
@@ -645,8 +650,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     private void updateAttributes()
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(buildUpdateStatement(),
-          ReuseProbability.MEDIUM);
+      String sql = buildUpdateSQL();
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
 
       try
       {
@@ -677,7 +682,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
-    private String buildUpdateStatement()
+    private String buildUpdateSQL()
     {
       StringBuilder builder = new StringBuilder(sqlUpdatePrefix);
       if (updateContainer)

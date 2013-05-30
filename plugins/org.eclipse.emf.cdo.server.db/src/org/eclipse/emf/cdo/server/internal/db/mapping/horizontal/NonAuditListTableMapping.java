@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -31,7 +30,6 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -282,15 +280,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int branchId, int oldVersion,
       final int newVersion, long created, CDOListFeatureDelta delta)
   {
-    CDOBranchPoint main = accessor.getStore().getRepository().getBranchManager().getMainBranch().getHead();
-
-    InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
-        .getRevisionManager().getRevision(id, main, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
-    int oldListSize = originalRevision.getList(getFeature()).size();
+    int oldListSize = delta.getOriginSize();
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
+      TRACER.format("ListTableMapping.processDelta for object {0} - original list size: {1}", id, //$NON-NLS-1$
           oldListSize);
     }
 
@@ -311,6 +305,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     // finally, write results to the database
     visitor.writeResultToDatabase(accessor, id);
+
+    throw new NewListSizeResult(visitor.getNewListSize());
   }
 
   private void close(PreparedStatement... stmts)
@@ -359,6 +355,26 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   /**
    * @author Eike Stepper
    */
+  static final class NewListSizeResult extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final int newListSize;
+
+    public NewListSizeResult(int newListSize)
+    {
+      this.newListSize = newListSize;
+    }
+
+    public int getNewListSize()
+    {
+      return newListSize;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private final class ListDeltaVisitor implements CDOFeatureDeltaVisitor
   {
     private boolean clearFirst;
@@ -371,6 +387,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
      */
     private int tempIndex = -1;
 
+    private int newListSize;
+
     public ListDeltaVisitor(int oldListSize)
     {
       // reset the clear-flag
@@ -382,6 +400,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         manipulations.add(ManipulationElement.createOriginalElement(i));
       }
+
+      newListSize = oldListSize;
+    }
+
+    public int getNewListSize()
+    {
+      return newListSize;
     }
 
     public void visit(CDOAddFeatureDelta delta)
@@ -396,6 +421,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       // create the item
       manipulations.add(ManipulationElement.createInsertedElement(delta.getIndex(), delta.getValue()));
+      ++newListSize;
     }
 
     public void visit(CDORemoveFeatureDelta delta)
@@ -410,6 +436,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       // fill the gap by shifting all subsequent items down
       shiftIndexes(delta.getIndex() + 1, UNBOUNDED_SHIFT, -1);
+      --newListSize;
     }
 
     public void visit(CDOSetFeatureDelta delta)
@@ -450,6 +477,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       // and also clear all manipulation items
       manipulations.clear();
+      newListSize = 0;
     }
 
     public void visit(CDOClearFeatureDelta delta)
@@ -464,6 +492,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       // and also clear all manipulation items
       manipulations.clear();
+      newListSize = 0;
     }
 
     public void visit(CDOMoveFeatureDelta delta)

@@ -1126,6 +1126,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
             context.terminate();
           }
         }
+
+        @Override
+        protected String getThreadName()
+        {
+          return "CDOSessionInvalidationRunner-" + CDOSessionImpl.this;
+        }
       };
 
       invalidationRunner.activate();

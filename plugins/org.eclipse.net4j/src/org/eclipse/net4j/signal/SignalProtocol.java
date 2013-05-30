@@ -252,6 +252,12 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   @Override
   public String toString()
   {
+    IChannel channel = getChannel();
+    if (channel != null)
+    {
+      return MessageFormat.format("SignalProtocol[{0}, {1}, {2}]", channel.getID(), channel.getLocation(), getType()); //$NON-NLS-1$
+    }
+
     return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$
   }
 

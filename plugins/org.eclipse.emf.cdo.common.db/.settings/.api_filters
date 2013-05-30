@@ -33,6 +33,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/common/internal/db/cache/DBRevisionCache.java" type="org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="InternalCDORevisionCache"/>
+                <message_argument value="DBRevisionCache"/>
+            </message_arguments>
+        </filter>
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="InternalCDORevisionCache"/>

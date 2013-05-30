@@ -219,7 +219,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
     if (listChunk == 0 || list.size() == 0)
     {
-      // nothing to read take shortcut
+      // Nothing to read. Take shortcut.
       return;
     }
 

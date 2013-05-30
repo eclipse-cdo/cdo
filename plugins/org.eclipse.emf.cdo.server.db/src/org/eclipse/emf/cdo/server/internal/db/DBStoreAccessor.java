@@ -243,13 +243,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     if (eClass != null)
     {
       InternalCDORevision revision = getStore().createRevision(eClass, id);
-      revision.setBranchPoint(branchPoint);
+      revision.setBranchPoint(branchPoint); // This is part of the search criterion, being replaced later
 
       IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
       if (mapping.readRevision(this, revision, listChunk))
       {
         int version = revision.getVersion();
-        if (version < CDOBranchVersion.FIRST_VERSION - 1)
+        if (version < CDOBranchVersion.UNSPECIFIED_VERSION)
         {
           return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(),
               revision.getRevised());

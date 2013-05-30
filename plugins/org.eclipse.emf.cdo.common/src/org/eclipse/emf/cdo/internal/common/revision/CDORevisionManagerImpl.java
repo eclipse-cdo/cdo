@@ -480,6 +480,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     {
       cache = (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache(supportingAudits, supportingBranches);
     }
+
+    if (cache instanceof AbstractCDORevisionCache)
+    {
+      String name = revisionLoader.toString();
+      ((AbstractCDORevisionCache)cache).setName(name);
+    }
   }
 
   @Override

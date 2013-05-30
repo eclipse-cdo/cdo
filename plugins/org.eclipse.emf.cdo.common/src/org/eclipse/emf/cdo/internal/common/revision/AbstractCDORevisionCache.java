@@ -16,10 +16,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceQueueWorker;
 
 import java.lang.ref.Reference;
@@ -33,11 +35,37 @@ import java.text.MessageFormat;
 public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<InternalCDORevision> implements
     InternalCDORevisionCache
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, AbstractCDORevisionCache.class);
+
   private static boolean disableGC;
+
+  private String name;
 
   public AbstractCDORevisionCache()
   {
     setDaemon(true);
+  }
+
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
+  @Override
+  public String toString()
+  {
+    return formatName("CDORevisionCache");
+  }
+
+  @Override
+  protected String getThreadName()
+  {
+    return formatName("CDORevisionCacheCleaner");
+  }
+
+  private String formatName(String prefix)
+  {
+    return prefix + (name == null ? "" : "-" + name);
   }
 
   @Override
@@ -61,22 +89,36 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
     {
       fireEvent(new EvictionEventImpl(this, key), listeners);
     }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Evicted {0} from {1}", key, this); //$NON-NLS-1$
+    }
   }
 
   protected Reference<InternalCDORevision> createReference(CDORevision revision)
   {
     if (disableGC)
     {
-      return new CacheStrongReference((InternalCDORevision)revision);
+      return createStrongReference(revision);
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Adding revision {0} to {1}", revision, this); //$NON-NLS-1$
     }
 
     return new CacheSoftReference((InternalCDORevision)revision, getQueue());
   }
 
-  @Override
-  protected String getThreadName()
+  private Reference<InternalCDORevision> createStrongReference(CDORevision revision)
   {
-    return "CDORevisionCacheCleaner";
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Adding revision {0} to {1} (STRONGLY REFERENCED)", revision, this); //$NON-NLS-1$
+    }
+
+    return new CacheStrongReference((InternalCDORevision)revision);
   }
 
   /**

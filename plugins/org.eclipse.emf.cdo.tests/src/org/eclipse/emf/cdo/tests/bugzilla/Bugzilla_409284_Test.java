@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ContainmentCycleException;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -77,12 +77,11 @@ public class Bugzilla_409284_Test extends AbstractCDOTest
     try
     {
       transaction2.commit();
-      fail("CommitException expected");
+      fail("ContainmentCycleException expected");
     }
-    catch (CommitException expected)
+    catch (ContainmentCycleException expected)
     {
-      String message = expected.getMessage();
-      assertEquals(true, message.contains("ContainmentCycleDetectedException"));
+      // SUCCESS
     }
   }
 

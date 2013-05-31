@@ -304,8 +304,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     boolean success = in.readBoolean();
     if (!success)
     {
+      byte rollbackReason = in.readByte();
       String rollbackMessage = in.readString();
-      OM.LOG.error(rollbackMessage);
 
       CDOBranchPoint branchPoint = in.readCDOBranchPoint();
       long previousTimeStamp = in.readLong();
@@ -322,8 +322,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         }
       }
 
-      return new CommitTransactionResult(idProvider, rollbackMessage, branchPoint, previousTimeStamp, xRefs,
-          clearResourcePathCache);
+      return new CommitTransactionResult(idProvider, rollbackReason, rollbackMessage, branchPoint, previousTimeStamp,
+          xRefs, clearResourcePathCache);
     }
 
     return null;

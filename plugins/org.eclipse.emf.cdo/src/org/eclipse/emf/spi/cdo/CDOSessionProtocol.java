@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -675,6 +676,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   {
     private CDOIDProvider idProvider;
 
+    private byte rollbackReason;
+
     private String rollbackMessage;
 
     private List<CDOObjectReference> xRefs;
@@ -699,16 +702,19 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
         long previousTimeStamp, List<CDOObjectReference> xRefs)
     {
-      this(idProvider, rollbackMessage, branchPoint, previousTimeStamp, xRefs, true);
+      this(idProvider, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN, rollbackMessage, branchPoint, previousTimeStamp,
+          xRefs, true);
     }
 
     /**
      * @since 4.2
      */
-    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
-        long previousTimeStamp, List<CDOObjectReference> xRefs, boolean clearResourcePathCache)
+    public CommitTransactionResult(CDOIDProvider idProvider, byte rollbackReason, String rollbackMessage,
+        CDOBranchPoint branchPoint, long previousTimeStamp, List<CDOObjectReference> xRefs,
+        boolean clearResourcePathCache)
     {
       this.idProvider = idProvider;
+      this.rollbackReason = rollbackReason;
       this.rollbackMessage = rollbackMessage;
       this.branchPoint = branchPoint;
       this.previousTimeStamp = previousTimeStamp;
@@ -757,6 +763,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public void setReferenceAdjuster(CDOReferenceAdjuster referenceAdjuster)
     {
       this.referenceAdjuster = referenceAdjuster;
+    }
+
+    /**
+     * @since 4.2
+     */
+    public byte getRollbackReason()
+    {
+      return rollbackReason;
     }
 
     public String getRollbackMessage()

@@ -6,57 +6,42 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - initial API and implementation
  */
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
-
 /**
- * A checked exception being thrown from {@link CDOTransaction#commit()} in case of unrecoverable commit problems such
- * as commit conflicts.
- *
  * @author Eike Stepper
- * @since 3.0
+ * @since 4.2
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
-public class CommitException extends Exception
+public class ConcurrentAccessException extends CommitException
 {
   private static final long serialVersionUID = 1L;
 
-  public CommitException()
+  public ConcurrentAccessException()
   {
   }
 
-  public CommitException(String message)
-  {
-    super(message);
-  }
-
-  public CommitException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public CommitException(String message, Throwable cause)
+  public ConcurrentAccessException(String message, Throwable cause)
   {
     super(message, cause);
   }
 
-  /**
-   * @since 4.2
-   */
-  public boolean isLocal()
+  public ConcurrentAccessException(String message)
   {
-    return false;
+    super(message);
   }
 
-  /**
-   * @since 4.2
-   */
+  public ConcurrentAccessException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  @Override
   public boolean isFatal()
   {
-    return true;
+    return false;
   }
 }

@@ -425,6 +425,12 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public CDOCommitInfo createCommitInfo();
 
     /**
+     * @see CDOProtocolConstants
+     * @since 4.2
+     */
+    public byte getRollbackReason();
+
+    /**
      * @since 3.0
      */
     public String getRollbackMessage();

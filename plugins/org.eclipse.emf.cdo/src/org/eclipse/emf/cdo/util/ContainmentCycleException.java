@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,32 +10,18 @@
  */
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOObjectReference;
-
-import java.util.List;
-
 /**
- * A {@link CommitException commit exception} that indicates referential integrity problems detected by the server.
- *
  * @author Eike Stepper
- * @since 4.0
+ * @since 4.2
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
-public class ReferentialIntegrityException extends DataIntegrityException
+public class ContainmentCycleException extends ConcurrentAccessException
 {
   private static final long serialVersionUID = 1L;
 
-  private transient List<CDOObjectReference> xRefs;
-
-  public ReferentialIntegrityException(String msg, List<CDOObjectReference> xRefs)
+  public ContainmentCycleException(String message)
   {
-    super(msg);
-    this.xRefs = xRefs;
-  }
-
-  public List<CDOObjectReference> getXRefs()
-  {
-    return xRefs;
+    super(message);
   }
 }

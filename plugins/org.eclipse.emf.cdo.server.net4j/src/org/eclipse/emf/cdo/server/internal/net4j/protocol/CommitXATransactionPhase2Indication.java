@@ -86,7 +86,7 @@ public class CommitXATransactionPhase2Indication extends CommitTransactionIndica
       exceptionMessage = commitContext.getRollbackMessage();
     }
 
-    respondingException(out, exceptionMessage, null);
+    respondingException(out, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN, exceptionMessage, null);
   }
 
   @Override

@@ -37,6 +37,7 @@ public class CommitXATransactionCancelIndication extends CommitTransactionIndica
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     String exceptionMessage = null;
+
     try
     {
       if (commitContext != null)
@@ -54,7 +55,7 @@ public class CommitXATransactionCancelIndication extends CommitTransactionIndica
       exceptionMessage = commitContext.getRollbackMessage();
     }
 
-    respondingException(out, exceptionMessage, null);
+    respondingException(out, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN, exceptionMessage, null);
   }
 
   @Override

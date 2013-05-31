@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -26,7 +26,7 @@ import java.text.MessageFormat;
  * An unchecked exception being thrown from {@link CDOTransaction#commit()} if the commit {@link CDOCommitData change
  * set} is referencing {@link EObject objects} that are not contained by any {@link Resource resource} before the server
  * is contacted.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -36,7 +36,7 @@ public class DanglingReferenceException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 
-  private EObject target;
+  private transient EObject target;
 
   public DanglingReferenceException(EObject object)
   {

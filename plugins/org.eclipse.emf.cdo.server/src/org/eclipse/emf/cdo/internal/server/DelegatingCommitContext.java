@@ -11,18 +11,27 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+
 import org.eclipse.emf.ecore.EClass;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -102,8 +111,68 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
     return getDelegate().getIDMappings();
   }
 
+  public long getPreviousTimeStamp()
+  {
+    return getDelegate().getPreviousTimeStamp();
+  }
+
+  public long getLastUpdateTime()
+  {
+    return getDelegate().getLastUpdateTime();
+  }
+
+  public boolean isClearResourcePathCache()
+  {
+    return getDelegate().isClearResourcePathCache();
+  }
+
+  public boolean isUsingEcore()
+  {
+    return getDelegate().isUsingEcore();
+  }
+
+  public boolean isUsingEtypes()
+  {
+    return getDelegate().isUsingEtypes();
+  }
+
+  public CDOLockState[] getLocksOnNewObjects()
+  {
+    return getDelegate().getLocksOnNewObjects();
+  }
+
+  public CDOBranchVersion[] getDetachedObjectVersions()
+  {
+    return getDelegate().getDetachedObjectVersions();
+  }
+
+  public ExtendedDataInputStream getLobs()
+  {
+    return getDelegate().getLobs();
+  }
+
+  public CDOCommitInfo createCommitInfo()
+  {
+    return getDelegate().createCommitInfo();
+  }
+
+  public List<LockState<Object, IView>> getPostCommmitLockStates()
+  {
+    return getDelegate().getPostCommmitLockStates();
+  }
+
+  public byte getRollbackReason()
+  {
+    return getDelegate().getRollbackReason();
+  }
+
   public String getRollbackMessage()
   {
     return getDelegate().getRollbackMessage();
+  }
+
+  public List<CDOIDReference> getXRefs()
+  {
+    return getDelegate().getXRefs();
   }
 }

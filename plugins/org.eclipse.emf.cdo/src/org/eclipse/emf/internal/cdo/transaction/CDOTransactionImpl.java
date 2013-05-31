@@ -100,6 +100,9 @@ import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.DanglingIntegrityException;
+import org.eclipse.emf.cdo.util.DanglingReferenceException;
+import org.eclipse.emf.cdo.util.LocalCommitConflictException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
@@ -1176,7 +1179,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       checkActive();
       if (hasConflict())
       {
-        throw new CommitException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+        throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
       }
 
       if (progressMonitor == null)
@@ -1192,6 +1195,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       return info;
+    }
+    catch (DanglingReferenceException ex)
+    {
+      throw new DanglingIntegrityException(ex);
     }
     catch (CommitException ex)
     {

@@ -10,12 +10,15 @@
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
-import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.util.CommitConflictException;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ContainmentCycleException;
+import org.eclipse.emf.cdo.util.ImplicitLockingException;
 import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -34,8 +37,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-
-import java.util.List;
 
 /**
  * @author Simon McDuff
@@ -75,13 +76,27 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     String rollbackMessage = result.getRollbackMessage();
     if (rollbackMessage != null)
     {
-      List<CDOObjectReference> xRefs = result.getXRefs();
-      if (xRefs != null)
+      byte rollbackReason = result.getRollbackReason();
+      switch (rollbackReason)
       {
-        throw new ReferentialIntegrityException(rollbackMessage, xRefs);
-      }
+      case CDOProtocolConstants.ROLLBACK_REASON_IMPLICIT_LOCKING:
+        throw new ImplicitLockingException(rollbackMessage);
 
-      throw new CommitException(rollbackMessage);
+      case CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT:
+        throw new CommitConflictException(rollbackMessage);
+
+      case CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE:
+        throw new ContainmentCycleException(rollbackMessage);
+
+      case CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY:
+        throw new ReferentialIntegrityException(rollbackMessage, result.getXRefs());
+
+      case CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN:
+        throw new CommitException(rollbackMessage);
+
+      default:
+        throw new IllegalStateException("Invalid rollbackreason: " + rollbackReason);
+      }
     }
 
     transaction.setCommitComment(null);

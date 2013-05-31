@@ -339,4 +339,29 @@ public interface CDOProtocolConstants
    * @since 4.1
    */
   public static final byte REPLICATE_LOCKAREA = 3;
+
+  /**
+   * @since 4.2
+   */
+  public static final byte ROLLBACK_REASON_UNKNOWN = 0;
+
+  /**
+   * @since 4.2
+   */
+  public static final byte ROLLBACK_REASON_IMPLICIT_LOCKING = 1;
+
+  /**
+   * @since 4.2
+   */
+  public static final byte ROLLBACK_REASON_COMMIT_CONFLICT = 2;
+
+  /**
+   * @since 4.2
+   */
+  public static final byte ROLLBACK_REASON_CONTAINMENT_CYCLE = 3;
+
+  /**
+   * @since 4.2
+   */
+  public static final byte ROLLBACK_REASON_REFERENTIAL_INTEGRITY = 4;
 }

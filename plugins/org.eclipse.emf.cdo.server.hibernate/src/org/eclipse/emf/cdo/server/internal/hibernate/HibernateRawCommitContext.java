@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -210,6 +211,11 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public CDOCommitInfo createCommitInfo()
   {
     return null;
+  }
+
+  public byte getRollbackReason()
+  {
+    return CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN;
   }
 
   public String getRollbackMessage()

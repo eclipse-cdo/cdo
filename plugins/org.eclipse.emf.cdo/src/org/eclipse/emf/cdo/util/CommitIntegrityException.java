@@ -19,17 +19,17 @@ import java.util.Set;
 /**
  * A {@link CommitException commit exception} that indicates referential integrity problems with
  * {@link CDOTransaction#setCommittables(Set) partial commits} before the server is contacted.
- * 
+ *
  * @author Caspar De Groot
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
-public class CommitIntegrityException extends CommitException
+public class CommitIntegrityException extends DataIntegrityException
 {
   private static final long serialVersionUID = 1L;
 
-  private Set<? extends EObject> missingObjects;
+  private transient Set<? extends EObject> missingObjects;
 
   public CommitIntegrityException(String msg, Set<? extends EObject> missingObjects)
   {
@@ -40,5 +40,11 @@ public class CommitIntegrityException extends CommitException
   public Set<? extends EObject> getMissingObjects()
   {
     return missingObjects;
+  }
+
+  @Override
+  public boolean isLocal()
+  {
+    return true;
   }
 }

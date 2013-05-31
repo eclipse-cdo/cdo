@@ -63,7 +63,7 @@ public class CommitXATransactionPhase1Indication extends CommitTransactionIndica
       exceptionMessage = commitContext.getRollbackMessage();
     }
 
-    boolean success = respondingException(out, exceptionMessage, null);
+    boolean success = respondingException(out, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN, exceptionMessage, null);
     if (success)
     {
       respondingResult(out);

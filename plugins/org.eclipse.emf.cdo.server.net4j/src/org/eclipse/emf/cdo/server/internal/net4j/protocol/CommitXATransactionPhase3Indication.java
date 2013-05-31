@@ -37,7 +37,8 @@ public class CommitXATransactionPhase3Indication extends CommitTransactionIndica
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     commitContext.commit(monitor);
-    boolean success = respondingException(out, commitContext.getRollbackMessage(), null);
+    boolean success = respondingException(out, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN,
+        commitContext.getRollbackMessage(), null);
     commitContext.postCommit(success);
   }
 

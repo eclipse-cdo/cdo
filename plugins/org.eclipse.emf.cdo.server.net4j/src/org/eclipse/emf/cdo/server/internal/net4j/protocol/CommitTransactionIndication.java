@@ -322,7 +322,11 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
     try
     {
-      success = respondingException(out, commitContext.getRollbackMessage(), commitContext.getXRefs());
+      byte rollbackReason = commitContext.getRollbackReason();
+      String rollbackMessage = commitContext.getRollbackMessage();
+      List<CDOIDReference> xRefs = commitContext.getXRefs();
+
+      success = respondingException(out, rollbackReason, rollbackMessage, xRefs);
       if (success)
       {
         respondingResult(out);
@@ -336,13 +340,14 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
   }
 
-  protected boolean respondingException(CDODataOutput out, String rollbackMessage, List<CDOIDReference> xRefs)
-      throws Exception
+  protected boolean respondingException(CDODataOutput out, byte rollbackReason, String rollbackMessage,
+      List<CDOIDReference> xRefs) throws Exception
   {
     boolean success = rollbackMessage == null;
     out.writeBoolean(success);
     if (!success)
     {
+      out.writeByte(rollbackReason);
       out.writeString(rollbackMessage);
       out.writeCDOBranchPoint(commitContext.getBranchPoint());
       out.writeLong(commitContext.getPreviousTimeStamp());

@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -44,7 +45,6 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IView;
@@ -89,7 +89,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -164,6 +163,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
+  private byte rollbackReason = CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN;
+
   private String rollbackMessage;
 
   private List<CDOIDReference> xRefs;
@@ -221,6 +222,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public boolean isAutoReleaseLocksEnabled()
   {
     return autoReleaseLocksEnabled;
+  }
+
+  public byte getRollbackReason()
+  {
+    return rollbackReason;
   }
 
   public String getRollbackMessage()
@@ -414,6 +420,32 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  private void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(revisions.length);
+      for (InternalCDORevision revision : revisions)
+      {
+        if (revision != null)
+        {
+          CDOID newID = idMappings.get(revision.getID());
+          if (newID != null)
+          {
+            revision.setID(newID);
+          }
+
+          revision.adjustReferences(idMapper);
+          monitor.worked();
+        }
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
   protected void notifyBeforeCommitting(OMMonitor monitor)
   {
     repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
@@ -573,11 +605,13 @@ public class TransactionCommitContext implements InternalCommitContext
       checkXRefs();
       monitor.worked();
 
-      if (rollbackMessage == null)
-      {
-        detachObjects(monitor.fork());
-        accessor.write(this, monitor.fork(100));
-      }
+      detachObjects(monitor.fork());
+      accessor.write(this, monitor.fork(100));
+    }
+    catch (RollbackException ex)
+    {
+      rollbackReason = ex.getRollbackReason();
+      rollback(ex.getRollbackMessage());
     }
     catch (Throwable t)
     {
@@ -890,9 +924,16 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (!lockedObjects.isEmpty())
       {
-        // First lock all objects (incl. possible ref targets).
-        // This is a transient operation, it does not check for existance!
-        lockManager.lock2(LockType.WRITE, transaction, lockedObjects, 10000);
+        try
+        {
+          // First lock all objects (incl. possible ref targets).
+          // This is a transient operation, it does not check for existance!
+          lockManager.lock2(LockType.WRITE, transaction, lockedObjects, 10000);
+        }
+        catch (Exception ex)
+        {
+          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_IMPLICIT_LOCKING, ex);
+        }
 
         // If all locks could be acquired, check if locked targets do still exist
         if (lockedTargets != null)
@@ -902,8 +943,8 @@ public class TransactionCommitContext implements InternalCommitContext
             CDORevision revision = transaction.getRevision(id);
             if (revision == null || revision instanceof DetachedCDORevision)
             {
-              throw new IllegalStateException("Object " + id
-                  + " can not be referenced anymore because it has been detached");
+              throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY, "Attempt by "
+                  + transaction + " to introduce a stale reference");
             }
           }
         }
@@ -950,86 +991,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
       lockedTargets.add(id);
     }
-  }
-
-  protected void checkXRefs()
-  {
-    if (ensuringReferentialIntegrity && detachedObjectTypes != null)
-    {
-      XRefContext context = new XRefContext();
-      xRefs = context.getXRefs(accessor);
-      if (!xRefs.isEmpty())
-      {
-        rollbackMessage = "Referential integrity violated";
-      }
-    }
-  }
-
-  protected void checkContainmentCycles()
-  {
-    if (lastTreeRestructuringCommit == 0)
-    {
-      // If this was a tree-restructuring commit then lastTreeRestructuringCommit would be initialized.
-      return;
-    }
-
-    if (lastUpdateTime == CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      // Happens during replication (see CommitDelegationRequest). Commits are checked in the master repo.
-      return;
-    }
-
-    if (lastTreeRestructuringCommit <= lastUpdateTime)
-    {
-      // If this client's original state includes the state of the last tree-restructuring commit there's no danger.
-      return;
-    }
-
-    Set<CDOID> objectsThatReachTheRoot = new HashSet<CDOID>();
-    for (int i = 0; i < dirtyObjectDeltas.length; i++)
-    {
-      InternalCDORevisionDelta revisionDelta = dirtyObjectDeltas[i];
-      CDOFeatureDelta containerDelta = revisionDelta.getFeatureDelta(CDOContainerFeatureDelta.CONTAINER_FEATURE);
-      if (containerDelta != null)
-      {
-        InternalCDORevision revision = dirtyObjects[i];
-        if (!isTheRootReachable(revision, objectsThatReachTheRoot, new HashSet<CDOID>()))
-        {
-          throw new ContainmentCycleDetectedException("Attempt by " + transaction + " to introduce a containment cycle");
-        }
-      }
-    }
-  }
-
-  private boolean isTheRootReachable(InternalCDORevision revision, Set<CDOID> objectsThatReachTheRoot,
-      Set<CDOID> visited)
-  {
-    CDOID id = revision.getID();
-    if (!visited.add(id))
-    {
-      // Cycle detected on the way up to the root.
-      return false;
-    }
-
-    if (!objectsThatReachTheRoot.add(id))
-    {
-      // Has already been checked before.
-      return true;
-    }
-
-    CDOID containerID = (CDOID)revision.getContainerID();
-    if (CDOIDUtil.isNull(containerID))
-    {
-      // The tree root has been reached.
-      return true;
-    }
-
-    // Use this commit context as CDORevisionProvider for the container revisions.
-    // This is safe because Repository.commit() serializes all tree-restructuring commits.
-    InternalCDORevision containerRevision = getRevision(containerID);
-
-    // Recurse Up
-    return isTheRootReachable(containerRevision, objectsThatReachTheRoot, visited);
   }
 
   private synchronized void unlockObjects()
@@ -1117,8 +1078,8 @@ public class TransactionCommitContext implements InternalCommitContext
     if (oldRevision == null)
     {
       // If the object is logically locked (see lockObjects) but has a wrong (newer) version, someone else modified it
-      throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
-          + delta);
+      throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT, "Attempt by " + transaction
+          + " to modify historical revision: " + delta);
     }
 
     // Make sure all chunks are loaded
@@ -1131,29 +1092,85 @@ public class TransactionCommitContext implements InternalCommitContext
     return newRevision;
   }
 
-  private void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)
+  protected void checkContainmentCycles()
   {
-    try
+    if (lastTreeRestructuringCommit == 0)
     {
-      monitor.begin(revisions.length);
-      for (InternalCDORevision revision : revisions)
-      {
-        if (revision != null)
-        {
-          CDOID newID = idMappings.get(revision.getID());
-          if (newID != null)
-          {
-            revision.setID(newID);
-          }
+      // If this was a tree-restructuring commit then lastTreeRestructuringCommit would be initialized.
+      return;
+    }
 
-          revision.adjustReferences(idMapper);
-          monitor.worked();
+    if (lastUpdateTime == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      // Happens during replication (see CommitDelegationRequest). Commits are checked in the master repo.
+      return;
+    }
+
+    if (lastTreeRestructuringCommit <= lastUpdateTime)
+    {
+      // If this client's original state includes the state of the last tree-restructuring commit there's no danger.
+      return;
+    }
+
+    Set<CDOID> objectsThatReachTheRoot = new HashSet<CDOID>();
+    for (int i = 0; i < dirtyObjectDeltas.length; i++)
+    {
+      InternalCDORevisionDelta revisionDelta = dirtyObjectDeltas[i];
+      CDOFeatureDelta containerDelta = revisionDelta.getFeatureDelta(CDOContainerFeatureDelta.CONTAINER_FEATURE);
+      if (containerDelta != null)
+      {
+        InternalCDORevision revision = dirtyObjects[i];
+        if (!isTheRootReachable(revision, objectsThatReachTheRoot, new HashSet<CDOID>()))
+        {
+          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE, "Attempt by "
+              + transaction + " to introduce a containment cycle");
         }
       }
     }
-    finally
+  }
+
+  private boolean isTheRootReachable(InternalCDORevision revision, Set<CDOID> objectsThatReachTheRoot,
+      Set<CDOID> visited)
+  {
+    CDOID id = revision.getID();
+    if (!visited.add(id))
     {
-      monitor.done();
+      // Cycle detected on the way up to the root.
+      return false;
+    }
+
+    if (!objectsThatReachTheRoot.add(id))
+    {
+      // Has already been checked before.
+      return true;
+    }
+
+    CDOID containerID = (CDOID)revision.getContainerID();
+    if (CDOIDUtil.isNull(containerID))
+    {
+      // The tree root has been reached.
+      return true;
+    }
+
+    // Use this commit context as CDORevisionProvider for the container revisions.
+    // This is safe because Repository.commit() serializes all tree-restructuring commits.
+    InternalCDORevision containerRevision = getRevision(containerID);
+
+    // Recurse Up
+    return isTheRootReachable(containerRevision, objectsThatReachTheRoot, visited);
+  }
+
+  protected void checkXRefs()
+  {
+    if (ensuringReferentialIntegrity && detachedObjectTypes != null)
+    {
+      XRefContext context = new XRefContext();
+      xRefs = context.getXRefs(accessor);
+      if (!xRefs.isEmpty())
+      {
+        throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY, "Attempt by "
+            + transaction + " to introduce a stale reference");
+      }
     }
   }
 
@@ -1432,6 +1449,41 @@ public class TransactionCommitContext implements InternalCommitContext
     public String toString()
     {
       return "TransactionPackageRegistry";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RollbackException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final byte rollbackReason;
+
+    private final String rollbackMessage;
+
+    public RollbackException(byte rollbackReason, String rollbackMessage)
+    {
+      this.rollbackReason = rollbackReason;
+      this.rollbackMessage = rollbackMessage;
+    }
+
+    public RollbackException(byte rollbackReason, Throwable cause)
+    {
+      super(cause);
+      this.rollbackReason = rollbackReason;
+      rollbackMessage = cause.getMessage();
+    }
+
+    public byte getRollbackReason()
+    {
+      return rollbackReason;
+    }
+
+    public String getRollbackMessage()
+    {
+      return rollbackMessage;
     }
   }
 

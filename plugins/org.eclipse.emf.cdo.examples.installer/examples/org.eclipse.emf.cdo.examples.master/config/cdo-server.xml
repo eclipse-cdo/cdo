@@ -20,6 +20,8 @@
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="CLIENT"/> <!-- Possible values: STORE | CLIENT -->
+    <property name="serializeCommits" value="false"/>
+    <property name="optimisticLockingTimeout" value="10000"/>
 
     <!-- Example http://bugs.eclipse.org/380629
 			<securityManager type="default" realmPath="/security"/>

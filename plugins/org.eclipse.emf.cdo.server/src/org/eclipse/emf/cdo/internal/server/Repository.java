@@ -162,6 +162,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private IDGenerationLocation idGenerationLocation;
 
+  private long optimisticLockingTimeout = 10000L;
+
   /**
    * Must not be thread-bound to support XA commits.
    */
@@ -345,6 +347,11 @@ public class Repository extends Container<Object> implements InternalRepository
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  public long getOptimisticLockingTimeout()
+  {
+    return optimisticLockingTimeout;
   }
 
   public String getStoreType()
@@ -1644,6 +1651,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   protected void initProperties()
   {
+    // SUPPORTING_AUDITS
     String valueAudits = properties.get(Props.SUPPORTING_AUDITS);
     if (valueAudits != null)
     {
@@ -1654,6 +1662,7 @@ public class Repository extends Container<Object> implements InternalRepository
       supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
     }
 
+    // SUPPORTING_BRANCHES
     String valueBranches = properties.get(Props.SUPPORTING_BRANCHES);
     if (valueBranches != null)
     {
@@ -1664,18 +1673,21 @@ public class Repository extends Container<Object> implements InternalRepository
       supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
     }
 
+    // SERIALIZE_COMMITS
     String valueCommits = properties.get(Props.SERIALIZE_COMMITS);
     if (valueCommits != null)
     {
       serializingCommits = Boolean.valueOf(valueCommits);
     }
 
+    // ENSURE_REFERENTIAL_INTEGRITY
     String valueIntegrity = properties.get(Props.ENSURE_REFERENTIAL_INTEGRITY);
     if (valueIntegrity != null)
     {
       ensuringReferentialIntegrity = Boolean.valueOf(valueIntegrity);
     }
 
+    // ID_GENERATION_LOCATION
     String valueIDLocation = properties.get(Props.ID_GENERATION_LOCATION);
     if (valueIDLocation != null)
     {
@@ -1685,6 +1697,13 @@ public class Repository extends Container<Object> implements InternalRepository
     if (idGenerationLocation == null)
     {
       idGenerationLocation = IDGenerationLocation.STORE;
+    }
+
+    // ENSURE_REFERENTIAL_INTEGRITY
+    String valueTimeout = properties.get(Props.OPTIMISTIC_LOCKING_TIMEOUT);
+    if (valueTimeout != null)
+    {
+      optimisticLockingTimeout = Long.valueOf(valueTimeout);
     }
   }
 

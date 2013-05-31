@@ -256,4 +256,10 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @since 4.1
    */
   public UnlockObjectsResult unlock(InternalView view, LockType type, List<CDOID> ids, boolean recursive);
+
+  /**
+   * @since 4.2
+   */
+  public long getOptimisticLockingTimeout();
+
 }

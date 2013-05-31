@@ -305,5 +305,10 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 4.1
      */
     public static final String ID_GENERATION_LOCATION = "idGenerationLocation"; //$NON-NLS-1$
+
+    /**
+     * @since 4.2
+     */
+    public static final String OPTIMISTIC_LOCKING_TIMEOUT = "optimisticLockingTimeout"; //$NON-NLS-1$
   }
 }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.ContainmentCycleException;
 
 /**
  * An unchecked exception that can thrown from a commit operation that is based on stale information
@@ -22,7 +23,9 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  *
  * @author Eike Stepper
  * @since 4.0
+ * @deprecated As of 4.2 no longer used in the server; replaced by {@link ContainmentCycleException} in the client.
  */
+@Deprecated
 public class ContainmentCycleDetectedException extends IllegalStateException
 {
   private static final long serialVersionUID = 1L;

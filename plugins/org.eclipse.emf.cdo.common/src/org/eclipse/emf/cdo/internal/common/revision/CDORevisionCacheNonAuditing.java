@@ -67,6 +67,8 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
 
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
+    checkBranch(branchPoint.getBranch());
+
     synchronized (revisions)
     {
       Reference<InternalCDORevision> ref = revisions.get(id);
@@ -85,6 +87,8 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
 
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
+    checkBranch(branchVersion.getBranch());
+
     synchronized (revisions)
     {
       Reference<InternalCDORevision> ref = revisions.get(id);
@@ -145,7 +149,9 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
 
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
+    checkBranch(branchPoint.getBranch());
     List<CDORevision> result = new ArrayList<CDORevision>();
+
     synchronized (revisions)
     {
       for (Reference<InternalCDORevision> ref : revisions.values())
@@ -164,6 +170,8 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   public void addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
+    checkBranch(revision.getBranch());
+
     if (!revision.isHistorical())
     {
       Reference<InternalCDORevision> reference = createReference(revision);
@@ -176,6 +184,7 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
 
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
+    checkBranch(branchVersion.getBranch());
     synchronized (revisions)
     {
       Reference<InternalCDORevision> ref = revisions.get(id);

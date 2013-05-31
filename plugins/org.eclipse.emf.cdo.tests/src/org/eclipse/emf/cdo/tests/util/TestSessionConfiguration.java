@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -122,6 +123,16 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
   }
 
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOBranchManager getBranchManager()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setBranchManager(CDOBranchManager branchManager)
   {
     throw new UnsupportedOperationException();
   }

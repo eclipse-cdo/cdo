@@ -31,11 +31,11 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
@@ -317,7 +317,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
       storeAccessor.handleRevisions(null, null, timeStamp, true, new CDORevisionHandler.Filtered.Undetached(this));
 
       List<CDOIDAndVersion> detachedObjects = detachCounter.getDetachedObjects();
-      return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+      return CDOCommitInfoUtil.createCommitData(newPackageUnits, newObjects, changedObjects, detachedObjects);
     }
 
     /**

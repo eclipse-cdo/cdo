@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.Repos
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -142,6 +143,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     super.doActivate();
+    CDORepositoryInfo repository = getRepositoryInfo();
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
 
     InternalCDORevisionManager revisionManager = getRevisionManager();
     if (revisionManager == null)
@@ -150,11 +153,14 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setRevisionManager(revisionManager);
     }
 
-    revisionManager.setSupportingAudits(getRepositoryInfo().isSupportingAudits());
-    revisionManager.setSupportingBranches(getRepositoryInfo().isSupportingBranches());
-    revisionManager.setRevisionLoader(getSessionProtocol());
-    revisionManager.setRevisionLocker(this);
-    revisionManager.activate();
+    if (!revisionManager.isActive())
+    {
+      revisionManager.setSupportingAudits(repository.isSupportingAudits());
+      revisionManager.setSupportingBranches(repository.isSupportingBranches());
+      revisionManager.setRevisionLoader(sessionProtocol);
+      revisionManager.setRevisionLocker(this);
+      revisionManager.activate();
+    }
 
     InternalCDOBranchManager branchManager = getBranchManager();
     if (branchManager == null)
@@ -163,10 +169,13 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setBranchManager(branchManager);
     }
 
-    branchManager.setRepository(getRepositoryInfo());
-    branchManager.setBranchLoader(getSessionProtocol());
-    branchManager.initMainBranch(isMainBranchLocal(), getRepositoryInfo().getCreationTime());
-    branchManager.activate();
+    if (!branchManager.isActive())
+    {
+      branchManager.setRepository(repository);
+      branchManager.setBranchLoader(sessionProtocol);
+      branchManager.initMainBranch(isMainBranchLocal(), repository.getCreationTime());
+      branchManager.activate();
+    }
 
     InternalCDOCommitInfoManager commitInfoManager = getCommitInfoManager();
     if (commitInfoManager == null)
@@ -175,16 +184,19 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setCommitInfoManager(commitInfoManager);
     }
 
-    commitInfoManager.setRepository(getRepositoryInfo());
-    commitInfoManager.setCommitInfoLoader(getSessionProtocol());
-    commitInfoManager.activate();
+    if (!commitInfoManager.isActive())
+    {
+      commitInfoManager.setRepository(repository);
+      commitInfoManager.setCommitInfoLoader(sessionProtocol);
+      commitInfoManager.activate();
+    }
 
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
     {
       getPackageRegistry().putPackageUnit(packageUnit);
     }
 
-    getRepositoryInfo().getTimeStamp(true);
+    repository.getTimeStamp(true);
   }
 
   private CDOClientProtocol createProtocol()
@@ -206,15 +218,15 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
    */
   private CDOClientProtocol getClientProtocol()
   {
-    CDOSessionProtocol protocol = getSessionProtocol();
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
     CDOClientProtocol clientProtocol;
-    if (protocol instanceof DelegatingSessionProtocol)
+    if (sessionProtocol instanceof DelegatingSessionProtocol)
     {
-      clientProtocol = (CDOClientProtocol)((DelegatingSessionProtocol)protocol).getDelegate();
+      clientProtocol = (CDOClientProtocol)((DelegatingSessionProtocol)sessionProtocol).getDelegate();
     }
     else
     {
-      clientProtocol = (CDOClientProtocol)protocol;
+      clientProtocol = (CDOClientProtocol)sessionProtocol;
     }
 
     return clientProtocol;
@@ -258,11 +270,27 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   @Override
   protected void doDeactivate() throws Exception
   {
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
     super.doDeactivate();
 
-    getCommitInfoManager().deactivate();
-    getRevisionManager().deactivate();
-    getBranchManager().deactivate();
+    InternalCDOCommitInfoManager commitInfoManager = getCommitInfoManager();
+    if (commitInfoManager.getCommitInfoLoader() == sessionProtocol)
+    {
+      commitInfoManager.deactivate();
+    }
+
+    InternalCDORevisionManager revisionManager = getRevisionManager();
+    if (revisionManager.getRevisionLoader() == sessionProtocol)
+    {
+      revisionManager.deactivate();
+    }
+
+    InternalCDOBranchManager branchManager = getBranchManager();
+    if (branchManager.getBranchLoader() == sessionProtocol)
+    {
+      branchManager.deactivate();
+    }
+
     getPackageRegistry().deactivate();
   }
 

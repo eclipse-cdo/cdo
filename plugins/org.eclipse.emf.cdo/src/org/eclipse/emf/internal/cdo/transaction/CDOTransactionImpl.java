@@ -66,11 +66,11 @@ import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
-import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
@@ -2738,7 +2738,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOLockState[] locksOnNewObjectsArray = getLockStates(newObjects.keySet(), false);
       locksOnNewObjects = Arrays.asList(locksOnNewObjectsArray);
 
-      commitData = new CDOCommitDataImpl(newPackageUnits, revisions, deltas, detached);
+      commitData = CDOCommitInfoUtil.createCommitData(newPackageUnits, revisions, deltas, detached);
     }
 
     private <T> Map<CDOID, T> filterCommittables(Map<CDOID, T> map)

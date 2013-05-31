@@ -75,6 +75,8 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
 
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
+    checkBranch(branchPoint.getBranch());
+
     RevisionList revisionList = getRevisionList(id, branchPoint.getBranch());
     if (revisionList != null)
     {
@@ -86,7 +88,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
 
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
-    RevisionList revisionList = getRevisionList(id, branchVersion.getBranch());
+    CDOBranch branch = branchVersion.getBranch();
+    checkBranch(branch);
+
+    RevisionList revisionList = getRevisionList(id, branch);
     if (revisionList != null)
     {
       return revisionList.getRevisionByVersion(branchVersion.getVersion());
@@ -129,8 +134,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
 
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
-    List<CDORevision> result = new ArrayList<CDORevision>();
     CDOBranch branch = branchPoint.getBranch();
+    checkBranch(branch);
+
+    List<CDORevision> result = new ArrayList<CDORevision>();
     synchronized (revisionLists)
     {
       for (Map.Entry<Object, RevisionList> entry : revisionLists.entrySet())
@@ -155,8 +162,11 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   {
     CheckUtil.checkArg(revision, "revision");
 
+    CDOBranch branch = revision.getBranch();
+    checkBranch(branch);
+
     CDOID id = revision.getID();
-    Object key = createKey(id, revision.getBranch());
+    Object key = createKey(id, branch);
 
     synchronized (revisionLists)
     {
@@ -174,7 +184,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
 
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
-    Object key = createKey(id, branchVersion.getBranch());
+    CDOBranch branch = branchVersion.getBranch();
+    checkBranch(branch);
+
+    Object key = createKey(id, branch);
     synchronized (revisionLists)
     {
       RevisionList list = revisionLists.get(key);

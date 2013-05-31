@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -39,11 +40,41 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
 
   private static boolean disableGC;
 
+  private CDOBranchManager branchManager;
+
   private String name;
 
   public AbstractCDORevisionCache()
   {
     setDaemon(true);
+  }
+
+  public CDOBranchManager getBranchManager()
+  {
+    return branchManager;
+  }
+
+  public void setBranchManager(CDOBranchManager branchManager)
+  {
+    this.branchManager = branchManager;
+  }
+
+  protected final void checkBranch(CDOBranch branch)
+  {
+    if (branchManager != null)
+    {
+      CDOBranchManager actualBranchManager = branch.getBranchManager();
+      if (actualBranchManager != branchManager)
+      {
+        throw new IllegalArgumentException("Wrong branch manager: " + actualBranchManager + "; expected: "
+            + branchManager);
+      }
+    }
+  }
+
+  public String getName()
+  {
+    return name;
   }
 
   public void setName(String name)

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
@@ -122,6 +123,16 @@ public interface CDOSessionConfiguration extends INotifier
    * @since 4.1
    */
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager);
+
+  /**
+   * @since 4.2
+   */
+  public CDOBranchManager getBranchManager();
+
+  /**
+   * @since 4.2
+   */
+  public void setBranchManager(CDOBranchManager branchManager);
 
   /**
    * Returns the authenticator of this configuration, never <code>null</code>.

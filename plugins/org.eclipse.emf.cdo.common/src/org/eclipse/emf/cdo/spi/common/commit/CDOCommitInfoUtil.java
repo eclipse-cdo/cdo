@@ -12,12 +12,15 @@ package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitInfoManagerImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -50,6 +53,15 @@ public final class CDOCommitInfoUtil
   public static InternalCDOCommitInfoManager createCommitInfoManager()
   {
     return createCommitInfoManager(false);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static CDOCommitData createCommitData(List<CDOPackageUnit> newPackageUnits, List<CDOIDAndVersion> newObjects,
+      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
+  {
+    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
   }
 
   /**

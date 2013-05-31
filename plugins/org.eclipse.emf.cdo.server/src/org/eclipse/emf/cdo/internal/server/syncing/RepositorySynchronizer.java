@@ -228,10 +228,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
 
     if (remoteSession != null)
     {
-      remoteSession.removeListener(remoteSessionListener);
-      remoteSession.getBranchManager().removeListener(remoteSessionListener);
-      remoteSession.close();
-      remoteSession = null;
+      closeRemoteSession();
     }
 
     super.doDeactivate();
@@ -266,16 +263,19 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     if (remoteSession != null)
     {
       CDOSession element = remoteSession;
-
-      remoteSession.getBranchManager().removeListener(remoteSessionListener);
-      remoteSession.removeListener(remoteSessionListener);
-      remoteSession.close();
-      remoteSession = null;
-
+      closeRemoteSession();
       fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, element, IContainerDelta.Kind.REMOVED));
     }
 
     reconnect();
+  }
+
+  private void closeRemoteSession()
+  {
+    remoteSession.removeListener(remoteSessionListener);
+    remoteSession.getBranchManager().removeListener(remoteSessionListener);
+    remoteSession.close();
+    remoteSession = null;
   }
 
   private void reconnect()
@@ -391,6 +391,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         try
         {
           CDOSessionConfiguration masterConfiguration = remoteSessionConfigurationFactory.createSessionConfiguration();
+          masterConfiguration.setBranchManager(localRepository.getBranchManager());
           masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
           masterConfiguration.setLockNotificationMode(LockNotificationMode.ALWAYS);
 

@@ -27,6 +27,7 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.ref.ReferenceValueMap.Soft;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 /**
@@ -209,7 +210,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   @Override
   public String toString()
   {
-    return "BranchManager";
+    return MessageFormat.format("BranchManager[loader={0}]", branchLoader);
   }
 
   /**

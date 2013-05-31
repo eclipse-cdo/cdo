@@ -38,7 +38,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
-import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -443,7 +444,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       List<CDORevisionKey> changedObjects = changeSet.getChangedObjects();
       List<CDOIDAndVersion> detachedObjects = changeSet.getDetachedObjects();
 
-      CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
+      CDOCommitData data = CDOCommitInfoUtil.createCommitData(newPackages, newObjects, changedObjects, detachedObjects);
 
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
       CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, fromCommitTime, SYSTEM_USER_ID,
@@ -517,6 +518,13 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    InternalCDORevisionCache cache = getRevisionManager().getCache();
+    if (cache instanceof AbstractCDORevisionCache)
+    {
+      // Enable branch checks to ensure that no branches from the replicator session are used
+      ((AbstractCDORevisionCache)cache).setBranchManager(getBranchManager());
+    }
 
     InternalStore store = getStore();
     if (!store.isFirstStart())

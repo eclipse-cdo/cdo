@@ -10,7 +10,15 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 /**
+ * A {@link CommitException commit exception} that indicates problems that are caused by concurrent access to the repository.
+ * <p>
+ * Subtypes of this exception allow to determine a more specific reason for the problem. They all have in common that it's usually
+ * possible and adequate to {@link CDOTransaction#rollback() rollback} the transaction, <i>replay</i> the model modifications and
+ * commit the transaction again.
+ *
  * @author Eike Stepper
  * @since 4.2
  * @noextend This interface is not intended to be extended by clients.
@@ -37,11 +45,5 @@ public class ConcurrentAccessException extends CommitException
   public ConcurrentAccessException(Throwable cause)
   {
     super(cause);
-  }
-
-  @Override
-  public boolean isFatal()
-  {
-    return false;
   }
 }

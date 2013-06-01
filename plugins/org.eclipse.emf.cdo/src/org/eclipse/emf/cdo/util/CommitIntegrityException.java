@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.EObject;
 import java.util.Set;
 
 /**
- * A {@link CommitException commit exception} that indicates referential integrity problems with
- * {@link CDOTransaction#setCommittables(Set) partial commits} before the server is contacted.
+ * A local {@link DataIntegrityException data integrity exception} that indicates that the subset of object modifications in a
+ * {@link CDOTransaction#setCommittables(Set) partial commit} is inconsistent.
  *
  * @author Caspar De Groot
  * @since 4.0

@@ -12,9 +12,42 @@ package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 /**
- * A checked exception being thrown from {@link CDOTransaction#commit()} in case of unrecoverable commit problems such
- * as commit conflicts.
+ * A checked exception being thrown from {@link CDOTransaction#commit()} in case of commit problems such as commit conflicts.
+ * <p>
+ * This class is the root of an exception hierarchy that allows to determine and handle specific causes of commit problems:
+ *
+ * <pre>
+    CDOTransaction transaction = session.openTransaction();
+
+    for (;;)
+    {
+      try
+      {
+        synchronized (transaction)
+        {
+          CDOResource resource = transaction.getResource("/stock/resource1");
+
+          // Modify the model here...
+
+          transaction.commit();
+          break;
+        }
+      }
+      catch (ConcurrentAccessException ex)
+      {
+        transaction.rollback();
+      }
+      catch (CommitException ex)
+      {
+        throw ex.wrap();
+      }
+    }
+ * </pre>
+ *
+ * Instances of this class indicate low-level technical problems such as database or network issues.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -55,8 +88,8 @@ public class CommitException extends Exception
   /**
    * @since 4.2
    */
-  public boolean isFatal()
+  public TransactionException wrap()
   {
-    return true;
+    return new TransactionException(this);
   }
 }

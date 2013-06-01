@@ -10,7 +10,24 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.transaction.CDOAutoLocker;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 /**
+ * A {@link ConcurrentAccessException concurrent access exception} that indicates that some of the local modifications are based on old revisions
+ * because other transactions have intermittently committed their modifications.
+ * <p>
+ * It's usually possible and adequate to {@link CDOTransaction#rollback() rollback} the transaction, <i>replay</i> the model modifications and
+ * commit the transaction again (optimistic strategy). Pessimistic {@link CDOObject#cdoWriteLock() locks} can help to avoid the problematic situation
+ * (see also {@link CDOAutoLocker}).
+ * <p>
+ * Instances of this class indicate commit conflicts that are detected in the repository. They can also occur if a {@link CDOConflictResolver conflict resolver}
+ * is used locally (network race condition).
+ * <p>
+ * For detection of local commit conflicts see {@link LocalCommitConflictException}.
+ *
  * @author Eike Stepper
  * @since 4.2
  * @noextend This interface is not intended to be extended by clients.

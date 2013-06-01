@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.util.CommitConflictException;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ContainmentCycleException;
-import org.eclipse.emf.cdo.util.ImplicitLockingException;
+import org.eclipse.emf.cdo.util.OptimisticLockingException;
 import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -79,8 +79,8 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       byte rollbackReason = result.getRollbackReason();
       switch (rollbackReason)
       {
-      case CDOProtocolConstants.ROLLBACK_REASON_IMPLICIT_LOCKING:
-        throw new ImplicitLockingException(rollbackMessage);
+      case CDOProtocolConstants.ROLLBACK_REASON_OPTIMISTIC_LOCKING:
+        throw new OptimisticLockingException(rollbackMessage);
 
       case CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT:
         throw new CommitConflictException(rollbackMessage);

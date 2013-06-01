@@ -340,6 +340,9 @@ public interface CDOProtocolConstants
    */
   public static final byte REPLICATE_LOCKAREA = 3;
 
+  // //////////////////////////////////////////////////////////////////////
+  // Committing Transactions
+
   /**
    * @since 4.2
    */
@@ -348,7 +351,7 @@ public interface CDOProtocolConstants
   /**
    * @since 4.2
    */
-  public static final byte ROLLBACK_REASON_IMPLICIT_LOCKING = 1;
+  public static final byte ROLLBACK_REASON_OPTIMISTIC_LOCKING = 1;
 
   /**
    * @since 4.2

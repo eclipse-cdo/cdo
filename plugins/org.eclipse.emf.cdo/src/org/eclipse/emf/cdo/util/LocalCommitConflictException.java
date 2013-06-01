@@ -10,7 +10,21 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.transaction.CDOAutoLocker;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 /**
+ * A {@link CommitConflictException commit conflict exception} that indicates that the transaction has local {@link CDOTransaction#hasConflict() conflicts}.
+ * <p>
+ * It's usually possible and adequate to {@link CDOTransaction#rollback() rollback} the transaction, <i>replay</i> the model modifications and
+ * commit the transaction again (optimistic strategy). Pessimistic {@link CDOObject#cdoWriteLock() locks} can help to avoid the problematic situation
+ * (see also {@link CDOAutoLocker}).
+ * <p>
+ * Instances of this class indicate commit conflicts that are detected locally by analyzing the {@link org.eclipse.emf.cdo.session.CDOSession.Options#setPassiveUpdateEnabled(boolean) passive updates}
+ * that result from commits of other transactions. {@link CDOConflictResolver Conflict resolvers} can help to reduce the risk of local commit conflicts.
+ *
  * @author Eike Stepper
  * @since 4.2
  * @noextend This interface is not intended to be extended by clients.

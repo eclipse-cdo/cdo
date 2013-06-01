@@ -10,8 +10,14 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
+ * A {@link CommitException commit exception} that indicates data integrity problems.
+ * <p>
+ * Subtypes of this exception allow to determine a more specific reason for the problem. They all have in common that it's usually
+ * <b>not</b> adequate to {@link CDOTransaction#rollback() rollback} the transaction, <i>replay</i> the model modifications and commit the transaction again.
+ *
  * @author Eike Stepper
  * @since 4.2
  * @noextend This interface is not intended to be extended by clients.

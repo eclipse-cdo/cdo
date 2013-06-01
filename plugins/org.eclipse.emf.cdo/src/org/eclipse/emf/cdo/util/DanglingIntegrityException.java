@@ -11,9 +11,17 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.transaction.CDOAutoAttacher;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * A local {@link DataIntegrityException data integrity exception} that indicates the addition of one or more cross references to objects
+ * that are not (or no longer) contained in the repository.
+ * <p>
+ * The target objects of the respective dangling references must be attached to the repository.
+ * A {@link CDOAutoAttacher} can help to do so.
+ *
  * @author Eike Stepper
  * @since 4.2
  * @noextend This interface is not intended to be extended by clients.

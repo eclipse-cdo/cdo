@@ -11,11 +11,26 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObjectReference;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import java.util.List;
 
 /**
- * A {@link CommitException commit exception} that indicates referential integrity problems detected by the server.
+ * A {@link DataIntegrityException data integrity exception} that indicates an attempt to create <i>stale references</i>.
+ * A stale reference is a refenrence that points to a target object that does not (or no longer) exist.
+ * <p>
+ * Detection of referential integrity violations must be explicitely enabled on the server side because it can be expensive:
+ *
+ * <pre>
+    &lt;property name="ensureReferentialIntegrity" value="true"/>
+ * </pre>
+ * The risk of referential integrity violations can be <b>reduced</b> (but not eliminated) by using local cross reference queries
+ * before committing:
+ * <p>
+ * <ul>
+ * <li> {@link CDOView#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...) CDOView#queryXRefs()}
+ * <li> {@link CDOView#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...) CDOView#queryXRefsAsync()}
+ * </ul>
  *
  * @author Eike Stepper
  * @since 4.0

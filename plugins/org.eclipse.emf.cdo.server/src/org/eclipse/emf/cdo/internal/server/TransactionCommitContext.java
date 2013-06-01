@@ -933,7 +933,7 @@ public class TransactionCommitContext implements InternalCommitContext
         }
         catch (Exception ex)
         {
-          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_IMPLICIT_LOCKING, ex);
+          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_OPTIMISTIC_LOCKING, ex);
         }
 
         // If all locks could be acquired, check if locked targets do still exist

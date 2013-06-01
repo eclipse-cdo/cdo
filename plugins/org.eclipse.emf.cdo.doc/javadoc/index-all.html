@@ -1351,6 +1351,13 @@ Constructor for class org.eclipse.emf.cdo.spi.common.<A HREF="./org/eclipse/emf/
  <A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource</CODE></A> that contains the referencing <A HREF="./org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#CDOAutoAttacher(org.eclipse.emf.cdo.transaction.CDOTransaction)"><B>CDOAutoAttacher(CDOTransaction)</B></A> - 
 Constructor for class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoAttacher</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction"><B>CDOAutoLocker</B></A> - Class in <A HREF="./org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A><DD>A <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction handler</CODE></A> that automatically acquires <A HREF="./org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()"><CODE>write locks</CODE></A> when
+ <A HREF="./org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> are modified.<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#CDOAutoLocker(long)"><B>CDOAutoLocker(long)</B></A> - 
+Constructor for class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#CDOAutoLocker()"><B>CDOAutoLocker()</B></A> - 
+Constructor for class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/CDOBalancedTree.html" title="class in org.eclipse.emf.cdo.util"><B>CDOBalancedTree</B></A> - Class in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A utility class that attaches <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> to a <A HREF="./org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>folder</CODE></A> rooted, balanced tree such that configurable
  capacities for resources per folder and objects per resource are never exceeded.<DT><A HREF="./org/eclipse/emf/cdo/util/CDOBalancedTree.html#CDOBalancedTree(org.eclipse.emf.cdo.eresource.CDOResourceFolder, int, int)"><B>CDOBalancedTree(CDOResourceFolder, int, int)</B></A> - 
 Constructor for class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOBalancedTree.html" title="class in org.eclipse.emf.cdo.util">CDOBalancedTree</A>
@@ -2096,7 +2103,7 @@ Constructor for class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo
 <DT><A HREF="./org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session"><B>CDOSessionLocksChangedEvent</B></A> - Interface in <A HREF="./org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</A><DD>A <A HREF="./org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when lock-change notifications are received from a remote repository.<DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><B>CDOSessionProtocol</B></A> - Interface in <A HREF="./org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A><DD>If the meaning of this type isn't clear, there really should be more of a description here...<DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo"><B>CDOSessionProtocol.CommitTransactionResult</B></A> - Class in <A HREF="./org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A><DD>If the meaning of this type isn't clear, there really should be more of a description here...<DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List)"><B>CDOSessionProtocol.CommitTransactionResult(CDOIDProvider, String, CDOBranchPoint, long, List&lt;CDOObjectReference&gt;)</B></A> - 
 Constructor for class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</A>
 <DD><B>Deprecated.</B>&nbsp;<I>As of 4.2</I>
-<DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List, boolean)"><B>CDOSessionProtocol.CommitTransactionResult(CDOIDProvider, String, CDOBranchPoint, long, List&lt;CDOObjectReference&gt;, boolean)</B></A> - 
+<DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, byte, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List, boolean)"><B>CDOSessionProtocol.CommitTransactionResult(CDOIDProvider, byte, String, CDOBranchPoint, long, List&lt;CDOObjectReference&gt;, boolean)</B></A> - 
 Constructor for class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long)"><B>CDOSessionProtocol.CommitTransactionResult(CDOIDProvider, CDOBranchPoint, long)</B></A> - 
@@ -2611,10 +2618,10 @@ Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/t
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><B>commit()</B></A> - 
 Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</A>
-<DD>&nbsp;
+<DD>Same as <A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)"><CODE>commit(null)</CODE></A>.
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)"><B>commit(IProgressMonitor)</B></A> - 
 Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</A>
-<DD>&nbsp;
+<DD>Commits the modifications of this transaction to the repository and returns a <A HREF="./org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info</CODE></A> object if successful.
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#commit(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.core.runtime.IProgressMonitor)"><B>commit(InternalCDOTransaction, IProgressMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" title="interface in org.eclipse.emf.spi.cdo">CDOTransactionStrategy</A>
 <DD>TODO Better use an <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor"><CODE>OMMonitor</CODE></A>?
@@ -2633,14 +2640,17 @@ Static variable in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/e
 <DT><A HREF="./org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMIT_USER"><B>COMMIT_USER</B></A> - 
 Static variable in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.XMLConstants</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><B>CommitConflictException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><CODE>concurrent access exception</CODE></A> that indicates that some of the local modifications are based on old revisions
+ because other transactions have intermittently committed their modifications.<DT><A HREF="./org/eclipse/emf/cdo/util/CommitConflictException.html#CommitConflictException(java.lang.String)"><B>CommitConflictException(String)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util">CommitConflictException</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.cdo.common.branch.CDOBranch, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Map, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>commitDelegation(CDOBranch, String, String, CDOCommitData, Map&lt;CDOID, EClass&gt;, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
 <DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>commitDelegation(InternalCDOTransaction.InternalCDOCommitContext, OMMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><B>CommitException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A checked exception being thrown from <A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of unrecoverable commit problems such
- as commit conflicts.<DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html#CommitException()"><B>CommitException()</B></A> - 
+<DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><B>CommitException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A checked exception being thrown from <A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of commit problems such as commit conflicts.<DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html#CommitException()"><B>CommitException()</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html#CommitException(java.lang.String)"><B>CommitException(String)</B></A> - 
@@ -2670,8 +2680,8 @@ Constructor for class org.eclipse.emf.cdo.ui.widgets.<A HREF="./org/eclipse/emf/
 <DT><A HREF="./org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.html#commitInfoChanged(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><B>commitInfoChanged(CDOCommitInfo)</B></A> - 
 Method in class org.eclipse.emf.cdo.ui.widgets.<A HREF="./org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets">CommitHistoryComposite</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>CommitIntegrityException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates referential integrity problems with
- <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set)"><CODE>partial commits</CODE></A> before the server is contacted.<DT><A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html#CommitIntegrityException(java.lang.String, java.util.Set)"><B>CommitIntegrityException(String, Set&lt;? extends EObject&gt;)</B></A> - 
+<DT><A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>CommitIntegrityException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A local <A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><CODE>data integrity exception</CODE></A> that indicates that the subset of object modifications in a
+ <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set)"><CODE>partial commit</CODE></A> is inconsistent.<DT><A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html#CommitIntegrityException(java.lang.String, java.util.Set)"><B>CommitIntegrityException(String, Set&lt;? extends EObject&gt;)</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">CommitIntegrityException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html#COMMITS"><B>COMMITS</B></A> - 
@@ -2811,6 +2821,18 @@ Static method in class org.eclipse.emf.cdo.compare.<A HREF="./org/eclipse/emf/cd
  <A HREF="./org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession</CODE></A><DT><A HREF="./org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#ComposeBranchPointComposite(org.eclipse.swt.widgets.Composite, int, org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><B>ComposeBranchPointComposite(Composite, int, CDOSession, CDOBranchPoint, boolean)</B></A> - 
 Constructor for class org.eclipse.emf.cdo.ui.widgets.<A HREF="./org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets">ComposeBranchPointComposite</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><B>ConcurrentAccessException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates problems that are caused by concurrent access to the repository.<DT><A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html#ConcurrentAccessException()"><B>ConcurrentAccessException()</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html#ConcurrentAccessException(java.lang.String, java.lang.Throwable)"><B>ConcurrentAccessException(String, Throwable)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html#ConcurrentAccessException(java.lang.String)"><B>ConcurrentAccessException(String)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html#ConcurrentAccessException(java.lang.Throwable)"><B>ConcurrentAccessException(Throwable)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure(java.io.File)"><B>configure(File)</B></A> - 
 Method in class org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</A>
 <DD>&nbsp;
@@ -2838,18 +2860,20 @@ Constructor for class org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/
 <DT><A HREF="./org/eclipse/emf/cdo/common/model/EMFUtil.html#CONTAINMENT_REFERENCES"><B>CONTAINMENT_REFERENCES</B></A> - 
 Static variable in class org.eclipse.emf.cdo.common.model.<A HREF="./org/eclipse/emf/cdo/common/model/EMFUtil.html" title="class in org.eclipse.emf.cdo.common.model">EMFUtil</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server"><B>ContainmentCycleDetectedException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</A><DD>An unchecked exception that can thrown from a commit operation that is based on stale information
- about the tree structure of the model and would introduce a containment cycle.<DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html#ContainmentCycleDetectedException()"><B>ContainmentCycleDetectedException()</B></A> - 
+<DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server"><B>ContainmentCycleDetectedException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</A><DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 no longer used in the server; replaced by <A HREF="./org/eclipse/emf/cdo/util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util"><CODE>ContainmentCycleException</CODE></A> in the client.</I><DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html#ContainmentCycleDetectedException()"><B>ContainmentCycleDetectedException()</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server">ContainmentCycleDetectedException</A>
-<DD>&nbsp;
+<DD><B>Deprecated.</B>&nbsp;&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html#ContainmentCycleDetectedException(java.lang.String, java.lang.Throwable)"><B>ContainmentCycleDetectedException(String, Throwable)</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server">ContainmentCycleDetectedException</A>
-<DD>&nbsp;
+<DD><B>Deprecated.</B>&nbsp;&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html#ContainmentCycleDetectedException(java.lang.String)"><B>ContainmentCycleDetectedException(String)</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server">ContainmentCycleDetectedException</A>
-<DD>&nbsp;
+<DD><B>Deprecated.</B>&nbsp;&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html#ContainmentCycleDetectedException(java.lang.Throwable)"><B>ContainmentCycleDetectedException(Throwable)</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/ContainmentCycleDetectedException.html" title="class in org.eclipse.emf.cdo.server">ContainmentCycleDetectedException</A>
+<DD><B>Deprecated.</B>&nbsp;&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util"><B>ContainmentCycleException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><CODE>concurrent access exception</CODE></A> that indicates an attempt of the local transaction to introduce a <i>containment cycle</i>.<DT><A HREF="./org/eclipse/emf/cdo/util/ContainmentCycleException.html#ContainmentCycleException(java.lang.String)"><B>ContainmentCycleException(String)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util">ContainmentCycleException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/revision/CDORevisionData.html#contains(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)"><B>contains(EStructuralFeature, Object)</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.revision.<A HREF="./org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</A>
@@ -3327,6 +3351,9 @@ Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cd
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createCommitContext()"><B>createCommitContext()</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html#createCommitData(java.util.List, java.util.List, java.util.List, java.util.List)"><B>createCommitData(List&lt;CDOPackageUnit&gt;, List&lt;CDOIDAndVersion&gt;, List&lt;CDORevisionKey&gt;, List&lt;CDOIDAndVersion&gt;)</B></A> - 
+Static method in class org.eclipse.emf.cdo.spi.common.commit.<A HREF="./org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOCommitInfoUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#createCommitInfo()"><B>createCommitInfo()</B></A> - 
 Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>
@@ -4170,6 +4197,10 @@ Static variable in interface org.eclipse.emf.cdo.common.model.<A HREF="./org/ecl
 <A NAME="_D_"><!-- --></A><H2>
 <B>D</B></H2>
 <DL>
+<DT><A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>DanglingIntegrityException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A local <A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><CODE>data integrity exception</CODE></A> that indicates the addition of one or more cross references to objects
+ that are not (or no longer) contained in the repository.<DT><A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html#DanglingIntegrityException(org.eclipse.emf.cdo.util.DanglingReferenceException)"><B>DanglingIntegrityException(DanglingReferenceException)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DanglingIntegrityException</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/DanglingReferenceException.html" title="class in org.eclipse.emf.cdo.util"><B>DanglingReferenceException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>An unchecked exception being thrown from <A HREF="./org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> if the commit <A HREF="./org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
  set</CODE></A> is referencing <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> that are not contained by any <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource</CODE></A> before the server
  is contacted.<DT><A HREF="./org/eclipse/emf/cdo/util/DanglingReferenceException.html#DanglingReferenceException(org.eclipse.emf.ecore.EObject)"><B>DanglingReferenceException(EObject)</B></A> - 
@@ -4183,6 +4214,18 @@ Method in class org.eclipse.emf.cdo.spi.common.revision.<A HREF="./org/eclipse/e
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.html#data()"><B>data()</B></A> - 
 Method in class org.eclipse.emf.cdo.spi.common.revision.<A HREF="./org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>DataIntegrityException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates data integrity problems.<DT><A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html#DataIntegrityException()"><B>DataIntegrityException()</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html#DataIntegrityException(java.lang.String, java.lang.Throwable)"><B>DataIntegrityException(String, Throwable)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html#DataIntegrityException(java.lang.String)"><B>DataIntegrityException(String)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html#DataIntegrityException(java.lang.Throwable)"><B>DataIntegrityException(Throwable)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/model/CDOType.html#DATE"><B>DATE</B></A> - 
 Static variable in interface org.eclipse.emf.cdo.common.model.<A HREF="./org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</A>
@@ -6086,6 +6129,9 @@ Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/se
 Method in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>
 <DD>Returns the CDO <A HREF="./org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch manager</CODE></A> that manages the <A HREF="./org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branches</CODE></A> of the
  repository of this session.
+<DT><A HREF="./org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getBranchManager()"><B>getBranchManager()</B></A> - 
+Method in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#getBranchManager()"><B>getBranchManager()</B></A> - 
 Method in interface org.eclipse.emf.cdo.spi.common.branch.<A HREF="./org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</A>
 <DD>&nbsp;
@@ -6157,6 +6203,9 @@ Method in class org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/sp
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/edit/CDOItemProviderAdapter.CDOPropertyDescriptor.html#getCategory(java.lang.Object)"><B>getCategory(Object)</B></A> - 
 Method in class org.eclipse.emf.cdo.edit.<A HREF="./org/eclipse/emf/cdo/edit/CDOItemProviderAdapter.CDOPropertyDescriptor.html" title="class in org.eclipse.emf.cdo.edit">CDOItemProviderAdapter.CDOPropertyDescriptor</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html#getCause()"><B>getCause()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DanglingIntegrityException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOBinaryResource()"><B>getCDOBinaryResource()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</A>
@@ -8897,6 +8946,9 @@ Method in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/s
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html#getOperation()"><B>getOperation()</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/spi/server/InternalRepository.html#getOptimisticLockingTimeout()"><B>getOptimisticLockingTimeout()</B></A> - 
+Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getOrCreateBinaryResource(java.lang.String)"><B>getOrCreateBinaryResource(String)</B></A> - 
 Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A>
 <DD>&nbsp;
@@ -10370,6 +10422,12 @@ Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/se
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getRollbackMessage()"><B>getRollbackMessage()</B></A> - 
 Method in class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackReason()"><B>getRollbackReason()</B></A> - 
+Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getRollbackReason()"><B>getRollbackReason()</B></A> - 
+Method in class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/CDOBalancedTree.html#getRoot()"><B>getRoot()</B></A> - 
 Method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOBalancedTree.html" title="class in org.eclipse.emf.cdo.util">CDOBalancedTree</A>
 <DD>&nbsp;
@@ -10867,6 +10925,9 @@ Method in class org.eclipse.emf.cdo.spi.common.revision.<A HREF="./org/eclipse/e
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getTarget()"><B>getTarget()</B></A> - 
 Method in interface org.eclipse.emf.cdo.transfer.<A HREF="./org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html#getTarget()"><B>getTarget()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DanglingIntegrityException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/DanglingReferenceException.html#getTarget()"><B>getTarget()</B></A> - 
 Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DanglingReferenceException.html" title="class in org.eclipse.emf.cdo.util">DanglingReferenceException</A>
@@ -13009,6 +13070,18 @@ Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cd
 <DT><A HREF="./org/eclipse/emf/cdo/spi/server/LongIDStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)"><B>isLocal(CDOID)</B></A> - 
 Method in class org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStore</A>
 <DD><B>Deprecated.</B>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html#isLocal()"><B>isLocal()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html#isLocal()"><B>isLocal()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">CommitIntegrityException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html#isLocal()"><B>isLocal()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/DanglingIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DanglingIntegrityException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/LocalCommitConflictException.html#isLocal()"><B>isLocal()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/LocalCommitConflictException.html" title="class in org.eclipse.emf.cdo.util">LocalCommitConflictException</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/db/IIDHandler.html#isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)"><B>isLocalCDOID(CDOID)</B></A> - 
 Method in interface org.eclipse.emf.cdo.server.db.<A HREF="./org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</A>
 <DD><B>Deprecated.</B>&nbsp;<I>Not used anymore.</I>
@@ -13642,6 +13715,9 @@ Static variable in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/e
 <DT><A HREF="./org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html#LOCAL_ROLLBACK"><B>LOCAL_ROLLBACK</B></A> - 
 Static variable in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/LocalCommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><B>LocalCommitConflictException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit conflict exception</CODE></A> that indicates that the transaction has local <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()"><CODE>conflicts</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/util/LocalCommitConflictException.html#LocalCommitConflictException(java.lang.String)"><B>LocalCommitConflictException(String)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/LocalCommitConflictException.html" title="class in org.eclipse.emf.cdo.util">LocalCommitConflictException</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/CDOLock.html#lock(long, java.util.concurrent.TimeUnit)"><B>lock(long, TimeUnit)</B></A> - 
 Method in interface org.eclipse.emf.cdo.<A HREF="./org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</A>
 <DD>&nbsp;
@@ -13888,6 +13964,9 @@ Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/t
 <DD>Asynchronously executes the delegate handler's <A HREF="./org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><CODE>modifyingObject()</CODE></A> method.
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><B>modifyingObject(CDOTransaction, CDOObject, CDOFeatureDelta)</B></A> - 
 Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoAttacher</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><B>modifyingObject(CDOTransaction, CDOObject, CDOFeatureDelta)</B></A> - 
+Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><B>modifyingObject(CDOTransaction, CDOObject, CDOFeatureDelta)</B></A> - 
 Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler1</A>
@@ -14515,6 +14594,12 @@ Static method in class org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#OPS"><B>OPS</B></A> - 
 Static variable in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/server/IRepository.Props.html#OPTIMISTIC_LOCKING_TIMEOUT"><B>OPTIMISTIC_LOCKING_TIMEOUT</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/IRepository.Props.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Props</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/OptimisticLockingException.html" title="class in org.eclipse.emf.cdo.util"><B>OptimisticLockingException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><CODE>concurrent access exception</CODE></A> that indicates that the repository can not acquire optimistic locks for some of the locally modified objects.<DT><A HREF="./org/eclipse/emf/cdo/util/OptimisticLockingException.html#OptimisticLockingException(java.lang.String)"><B>OptimisticLockingException(String)</B></A> - 
+Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/OptimisticLockingException.html" title="class in org.eclipse.emf.cdo.util">OptimisticLockingException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#OPTION_SAVE_BASE_URI"><B>OPTION_SAVE_BASE_URI</B></A> - 
 Static variable in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
@@ -15635,7 +15720,7 @@ Static variable in class org.eclipse.emf.cdo.transfer.ui.<A HREF="./org/eclipse/
 <DT><A HREF="./org/eclipse/emf/cdo/common/model/EMFUtil.html#REFERENCES"><B>REFERENCES</B></A> - 
 Static variable in class org.eclipse.emf.cdo.common.model.<A HREF="./org/eclipse/emf/cdo/common/model/EMFUtil.html" title="class in org.eclipse.emf.cdo.common.model">EMFUtil</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/emf/cdo/util/ReferentialIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>ReferentialIntegrityException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates referential integrity problems detected by the server.<DT><A HREF="./org/eclipse/emf/cdo/util/ReferentialIntegrityException.html#ReferentialIntegrityException(java.lang.String, java.util.List)"><B>ReferentialIntegrityException(String, List&lt;CDOObjectReference&gt;)</B></A> - 
+<DT><A HREF="./org/eclipse/emf/cdo/util/ReferentialIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>ReferentialIntegrityException</B></A> - Exception in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>A <A HREF="./org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><CODE>data integrity exception</CODE></A> that indicates an attempt to create <i>stale references</i>.<DT><A HREF="./org/eclipse/emf/cdo/util/ReferentialIntegrityException.html#ReferentialIntegrityException(java.lang.String, java.util.List)"><B>ReferentialIntegrityException(String, List&lt;CDOObjectReference&gt;)</B></A> - 
 Constructor for exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/ReferentialIntegrityException.html" title="class in org.eclipse.emf.cdo.util">ReferentialIntegrityException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/session/CDOSession.html#refresh()"><B>refresh()</B></A> - 
@@ -16389,6 +16474,21 @@ Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/C
 <DT><A HREF="./org/eclipse/emf/spi/cdo/InternalCDOXATransaction.html#rollback(org.eclipse.emf.spi.cdo.InternalCDOXASavepoint)"><B>rollback(InternalCDOXASavepoint)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/InternalCDOXATransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_COMMIT_CONFLICT"><B>ROLLBACK_REASON_COMMIT_CONFLICT</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.common.protocol.<A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_CONTAINMENT_CYCLE"><B>ROLLBACK_REASON_CONTAINMENT_CYCLE</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.common.protocol.<A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_OPTIMISTIC_LOCKING"><B>ROLLBACK_REASON_OPTIMISTIC_LOCKING</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.common.protocol.<A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_REFERENTIAL_INTEGRITY"><B>ROLLBACK_REASON_REFERENTIAL_INTEGRITY</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.common.protocol.<A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#ROLLBACK_REASON_UNKNOWN"><B>ROLLBACK_REASON_UNKNOWN</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.common.protocol.<A HREF="./org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)"><B>rollbackObject(CDOObject)</B></A> - 
 Static method in class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</A>
 <DD><B>Deprecated.</B>&nbsp;<I>Don't call this method. Rolling back single objects is exremely risky.</I>
@@ -16776,6 +16876,9 @@ Method in interface org.eclipse.emf.cdo.spi.common.branch.<A HREF="./org/eclipse
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)"><B>setBranchManager(CDOBranchManager)</B></A> - 
 Method in interface org.eclipse.emf.cdo.net4j.<A HREF="./org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)"><B>setBranchManager(CDOBranchManager)</B></A> - 
+Method in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/spi/server/InternalRepository.html#setBranchManager(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager)"><B>setBranchManager(InternalCDOBranchManager)</B></A> - 
 Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</A>
@@ -19583,6 +19686,9 @@ Method in class org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transfer/spi/workspace/WorkspaceTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer.spi.workspace"><B>WorkspaceTransferSystem</B></A> - Class in <A HREF="./org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html">org.eclipse.emf.cdo.transfer.spi.workspace</A><DD>An Eclipse <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IWorkspace.html?is-external=true" title="class or interface in org.eclipse.core.resources"><CODE>workspace</CODE></A>-based implementation of a <A HREF="./org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>transfer system</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/transfer/spi/workspace/WorkspaceTransferSystem.html#WorkspaceTransferSystem()"><B>WorkspaceTransferSystem()</B></A> - 
 Constructor for class org.eclipse.emf.cdo.transfer.spi.workspace.<A HREF="./org/eclipse/emf/cdo/transfer/spi/workspace/WorkspaceTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer.spi.workspace">WorkspaceTransferSystem</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/CommitException.html#wrap()"><B>wrap()</B></A> - 
+Method in exception org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><B>wrapExternalObject(EObject, CDOView)</B></A> - 
 Static method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util">CDOUtil</A>

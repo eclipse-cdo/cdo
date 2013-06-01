@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/util/CommitException.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#methods_inherited_from_class_java.lang.Throwable">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;METHOD</FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -101,7 +101,7 @@ Class CommitException</H2>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A></DD>
 </DL>
 <DL>
-<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util">CommitIntegrityException</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/ReferentialIntegrityException.html" title="class in org.eclipse.emf.cdo.util">ReferentialIntegrityException</A></DD>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/DataIntegrityException.html" title="class in org.eclipse.emf.cdo.util">DataIntegrityException</A></DD>
 </DL>
 <HR>
 <DL>
@@ -110,10 +110,10 @@ Class CommitException</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="ReferentialIntegrityException.html" title="&#171;exception&#187; ReferentialIntegrityException" alt="" coords="5,179,192,219"/>
-<area shape="rect" id="node2" title="&#171;exception&#187; Exception (java.lang)" alt="" coords="157,6,248,61"/>
-<area shape="rect" id="node3" href="CommitIntegrityException.html" title="&#171;exception&#187; CommitIntegrityException" alt="" coords="221,179,392,219"/>
-<area shape="rect" id="node4" href="CommitException.html" title="&#171;exception&#187; CommitException" alt="" coords="140,100,265,140"/>
+<area shape="rect" id="node1" title="&#171;exception&#187; Exception (java.lang)" alt="" coords="135,6,227,61"/>
+<area shape="rect" id="node2" href="DataIntegrityException.html" title="&#171;exception&#187; DataIntegrityException" alt="" coords="5,179,157,219"/>
+<area shape="rect" id="node3" href="ConcurrentAccessException.html" title="&#171;exception&#187; ConcurrentAccessException" alt="" coords="188,179,375,219"/>
+<area shape="rect" id="node4" href="CommitException.html" title="&#171;exception&#187; CommitException" alt="" coords="119,100,244,140"/>
 </map>
 
 <CENTER><IMG SRC="CommitException.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -121,8 +121,39 @@ Class CommitException</H2>
 
 
 <P>
-A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of unrecoverable commit problems such
- as commit conflicts.
+A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of commit problems such as commit conflicts.
+ <p>
+ This class is the root of an exception hierarchy that allows to determine and handle specific causes of commit problems:
+
+ <pre>
+    CDOTransaction transaction = session.openTransaction();
+
+    for (;;)
+    {
+      try
+      {
+        synchronized (transaction)
+        {
+          CDOResource resource = transaction.getResource("/stock/resource1");
+
+          // Modify the model here...
+
+          transaction.commit();
+          break;
+        }
+      }
+      catch (ConcurrentAccessException ex)
+      {
+        transaction.rollback();
+      }
+      catch (CommitException ex)
+      {
+        throw ex.wrap();
+      }
+    }
+ </pre>
+
+ Instances of this class indicate low-level technical problems such as database or network issues.
 <P>
 
 <P>
@@ -180,6 +211,22 @@ A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cd
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html#isLocal()">isLocal</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/transaction/TransactionException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.transaction">TransactionException</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html#wrap()">wrap</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Throwable"><!-- --></A>
@@ -244,6 +291,41 @@ public <B>CommitException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/d
                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;cause)</PRE>
 <DL>
 </DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="isLocal()"><!-- --></A><H3>
+isLocal</H3>
+<PRE>
+public boolean <B>isLocal</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="wrap()"><!-- --></A><H3>
+wrap</H3>
+<PRE>
+public <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/transaction/TransactionException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.transaction">TransactionException</A> <B>wrap</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -274,7 +356,7 @@ public <B>CommitException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/d
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/util/CommitConflictException.html" title="class in org.eclipse.emf.cdo.util"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/util/CommitIntegrityException.html" title="class in org.eclipse.emf.cdo.util"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/util/CommitException.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -295,9 +377,9 @@ public <B>CommitException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/d
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#methods_inherited_from_class_java.lang.Throwable">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;METHOD</FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

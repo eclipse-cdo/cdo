@@ -188,8 +188,13 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/util/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/CommitException.html#org.eclipse.emf.cdo.transaction"><B>CommitException</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of unrecoverable commit problems such
- as commit conflicts.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of commit problems such as commit conflicts.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/ConcurrentAccessException.html#org.eclipse.emf.cdo.transaction"><B>ConcurrentAccessException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates problems that are caused by concurrent access to the repository.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -207,11 +212,37 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/util/package-summary.html
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A scalable <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/util/EContentAdapter.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.util"><CODE>content adapter</CODE></A> that uses CDO mechansims to attach itself to <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> when they are lazily loaded.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/CommitConflictException.html#org.eclipse.emf.cdo.util"><B>CommitConflictException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util"><CODE>concurrent access exception</CODE></A> that indicates that some of the local modifications are based on old revisions
+ because other transactions have intermittently committed their modifications.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/CommitException.html#org.eclipse.emf.cdo.util"><B>CommitException</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of unrecoverable commit problems such
- as commit conflicts.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of commit problems such as commit conflicts.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/ConcurrentAccessException.html#org.eclipse.emf.cdo.util"><B>ConcurrentAccessException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates problems that are caused by concurrent access to the repository.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/DanglingReferenceException.html#org.eclipse.emf.cdo.util"><B>DanglingReferenceException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> if the commit <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> is referencing <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> that are not contained by any <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource</CODE></A> before the server
+ is contacted.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/DataIntegrityException.html#org.eclipse.emf.cdo.util"><B>DataIntegrityException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util"><CODE>commit exception</CODE></A> that indicates data integrity problems.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/InvalidURIException.html#org.eclipse.emf.cdo.util"><B>InvalidURIException</B></A></B>
@@ -248,8 +279,7 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/util/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/util/class-use/CommitException.html#org.eclipse.emf.cdo.workspace"><B>CommitException</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of unrecoverable commit problems such
- as commit conflicts.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A checked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> in case of commit problems such as commit conflicts.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -279,13 +279,13 @@ public class Release implements IRelease
       String name = getString(attributes, NAME_ATTRIBUTE);
       Version version = new Version(getString(attributes, VERSION_ATTRIBUTE));
       Element element = new Element(type, name, version);
-      
+
       String license = getString(attributes, LICENSE_ATTRIBUTE);
       if ("true".equals(license))
       {
         element.setLicenseFeature(true);
       }
-      
+
       return element;
     }
 

@@ -106,8 +106,8 @@ public class ByteArrayTypeMapper extends BasicTypeMapper implements ISingleTypeM
   }
 
   /**
-	 * 
-	 */
+   * 
+   */
   public boolean createSchema(Proposed_Class proposedClass, EStructuralFeature feature)
   {
     if (TRACER_DEBUG.isEnabled())

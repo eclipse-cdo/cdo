@@ -97,16 +97,16 @@ public abstract class ObjyArrayList<T>
   }
 
   /**
-	 *
-	 */
+   *
+   */
   protected void grow(int item)
   {
     getVArray().resize(getVArraySize() + Math.max(item + 10, 10));
   }
 
   /**
-	 *
-	 */
+   *
+   */
   private void prepareToInsert(int numberToAdd)
   {
     long size = cachedSize();

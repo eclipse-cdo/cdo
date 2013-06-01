@@ -13,3 +13,4 @@
  * A generic caching and memory monitoring framework.
  */
 package org.eclipse.net4j.util.cache;
+

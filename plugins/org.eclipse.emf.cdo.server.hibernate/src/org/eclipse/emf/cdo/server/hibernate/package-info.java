@@ -13,3 +13,4 @@
  * Server concepts for dealing with Hibernate stores and accessors.
  */
 package org.eclipse.emf.cdo.server.hibernate;
+

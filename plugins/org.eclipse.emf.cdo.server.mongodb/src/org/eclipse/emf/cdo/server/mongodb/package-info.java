@@ -13,3 +13,4 @@
  * Server concepts for dealing with MongoDB stores and accessors.
  */
 package org.eclipse.emf.cdo.server.mongodb;
+

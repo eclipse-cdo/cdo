@@ -37,14 +37,14 @@ public final class ViewUtil
       views = new HashMap<CDORevisionProvider, CDOView>();
       VIEWS.set(views);
     }
-  
+
     return views;
   }
 
   public static CDOView getView(CDORevisionProvider revisionProvider)
   {
     Map<CDORevisionProvider, CDOView> views = getViews();
-  
+
     CDOView view = views.get(revisionProvider);
     if (view == null)
     {
@@ -53,11 +53,11 @@ public final class ViewUtil
       {
         throw new IllegalStateException("No view creator available for " + revisionProvider);
       }
-  
+
       view = viewCreator.createView(revisionProvider);
       views.put(revisionProvider, view);
     }
-  
+
     return view;
   }
 

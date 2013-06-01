@@ -13,3 +13,4 @@
  * Helpers for drag and drop support.
  */
 package org.eclipse.net4j.util.ui.dnd;
+

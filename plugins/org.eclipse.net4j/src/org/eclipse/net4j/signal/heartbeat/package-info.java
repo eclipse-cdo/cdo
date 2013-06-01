@@ -13,3 +13,4 @@
  * A signal protocol implementation that realizes a configurable heart beat protocol.
  */
 package org.eclipse.net4j.signal.heartbeat;
+

@@ -13,3 +13,4 @@
  * A framework for transactional operations.
  */
 package org.eclipse.net4j.util.transaction;
+

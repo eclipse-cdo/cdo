@@ -67,8 +67,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   // Schema
   // ---------------------------------
   /**
-	 *
-	 */
+   *
+   */
   public boolean createSchema(Proposed_Class proposedClass, EStructuralFeature feature)
   {
     if (TRACER_DEBUG.isEnabled())
@@ -108,8 +108,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   }
 
   /**
-	 *
-	 */
+   *
+   */
   public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)
   {
     d_Type type = ooAttribute.type_of();

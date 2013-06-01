@@ -13,3 +13,4 @@
  * Copied from org.eclipse.ui.texteditor.
  */
 package org.eclipse.net4j.util.ui.proposals;
+

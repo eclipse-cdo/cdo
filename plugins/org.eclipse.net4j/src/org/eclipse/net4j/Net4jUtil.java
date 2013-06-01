@@ -190,7 +190,7 @@ public final class Net4jUtil
     {
       return protocol.getType();
     }
-  
+
     return null;
   }
 

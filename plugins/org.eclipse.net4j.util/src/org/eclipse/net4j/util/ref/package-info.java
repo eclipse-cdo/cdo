@@ -13,3 +13,4 @@
  * A framework for memory-sensitive keyed references and value maps.
  */
 package org.eclipse.net4j.util.ref;
+

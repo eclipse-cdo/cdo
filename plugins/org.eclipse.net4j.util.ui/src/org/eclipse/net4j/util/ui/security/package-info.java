@@ -13,3 +13,4 @@
  * Credentials dialogs.
  */
 package org.eclipse.net4j.util.ui.security;
+

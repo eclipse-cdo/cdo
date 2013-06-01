@@ -13,3 +13,4 @@
  * Utility classes.
  */
 package org.eclipse.net4j.util;
+

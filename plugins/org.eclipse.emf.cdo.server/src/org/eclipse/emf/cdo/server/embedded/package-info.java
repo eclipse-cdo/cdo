@@ -13,3 +13,4 @@
  * Server concepts for dealing with embedded sessions.
  */
 package org.eclipse.emf.cdo.server.embedded;
+

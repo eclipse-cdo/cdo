@@ -13,3 +13,4 @@
  * Helpers for O&amp;M based preference pages.
  */
 package org.eclipse.net4j.util.ui.prefs;
+

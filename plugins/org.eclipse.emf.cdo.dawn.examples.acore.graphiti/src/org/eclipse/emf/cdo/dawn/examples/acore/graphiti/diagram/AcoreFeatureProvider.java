@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreAddAssocia
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreAddCompositionFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreAddImplementationFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreAddSubClassesFeature;
+import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCopyAClassFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateAClassFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateAInterfaceFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateAggregationFeature;
@@ -27,7 +28,6 @@ import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateAsso
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateCompositionsFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateImplementationFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCreateSubclassFeature;
-import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreCopyAClassFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreDirectEditAClassFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcorePasteAClassFeature;
 import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features.AcoreReconnectionFeature;

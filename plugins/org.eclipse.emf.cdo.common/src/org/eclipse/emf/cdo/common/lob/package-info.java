@@ -13,3 +13,4 @@
  * Common concepts for dealing with large binary objects and large character objects.
  */
 package org.eclipse.emf.cdo.common.lob;
+

@@ -267,8 +267,8 @@ public class ObjyArrayListString
   }
 
   /**
-	 *
-	 */
+   *
+   */
   private void grow(int numToAdd)
   {
     long arraySize = cachedSize();
@@ -291,8 +291,8 @@ public class ObjyArrayListString
   }
 
   /**
-	 *
-	 */
+   *
+   */
   private void prepareToInsert(int numberToAdd)
   {
     long size = cachedSize();

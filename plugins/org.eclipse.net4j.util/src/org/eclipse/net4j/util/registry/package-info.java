@@ -20,3 +20,4 @@
  * <ul>
  */
 package org.eclipse.net4j.util.registry;
+

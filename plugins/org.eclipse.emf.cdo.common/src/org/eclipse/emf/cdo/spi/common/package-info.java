@@ -13,3 +13,4 @@
  * Common service provider interfaces and useful base implementations.
  */
 package org.eclipse.emf.cdo.spi.common;
+

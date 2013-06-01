@@ -13,3 +13,4 @@
  * Interfaces and classes for platform-independent tracing.
  */
 package org.eclipse.net4j.util.om.trace;
+

@@ -246,8 +246,8 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
       {
         if (stmt.getMaxRows() != listChunk)
         {
-        stmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
-      }
+          stmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
+        }
       }
       else
       {

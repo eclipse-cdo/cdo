@@ -13,3 +13,4 @@
  * Some useful commit info handler implementations.
  */
 package org.eclipse.emf.cdo.common.commit.handler;
+

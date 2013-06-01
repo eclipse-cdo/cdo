@@ -13,3 +13,4 @@
  * A framework of notifying collections and wiring containers.
  */
 package org.eclipse.net4j.util.container;
+

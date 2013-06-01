@@ -13,3 +13,4 @@
  * Reusable UI components specific to the Net4j Signalling Platform.
  */
 package org.eclipse.net4j.ui;
+

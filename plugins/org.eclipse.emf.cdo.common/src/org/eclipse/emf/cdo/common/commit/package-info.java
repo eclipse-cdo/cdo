@@ -13,3 +13,4 @@
  * Common concepts for dealing with commits and change sets.
  */
 package org.eclipse.emf.cdo.common.commit;
+

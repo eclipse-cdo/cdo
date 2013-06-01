@@ -152,7 +152,7 @@ public final class EMFUtil
         EReference reference = (EReference)feature;
         return reference.isContainer();
       }
-  
+
       return false;
     }
   };
@@ -169,7 +169,7 @@ public final class EMFUtil
         EReference reference = (EReference)feature;
         return !(reference.isContainer() || reference.isContainment());
       }
-  
+
       return false;
     }
   };
@@ -186,7 +186,7 @@ public final class EMFUtil
         EReference reference = (EReference)feature;
         return reference.isContainment();
       }
-  
+
       return false;
     }
   };

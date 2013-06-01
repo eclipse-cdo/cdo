@@ -13,3 +13,4 @@
  * Server concepts for dealing with Objectivity/DB stores and accessors.
  */
 package org.eclipse.emf.cdo.server.objectivity;
+

@@ -63,14 +63,14 @@ public class Articles
       public class Java
       {
       }
-    
+
       /**
        * Embedding XML Code
        */
       public class XML
       {
       }
-    
+
       /**
        * Embedding Excel Tables
        */

@@ -13,3 +13,4 @@
  * Helpers for Eclipse view parts.
  */
 package org.eclipse.net4j.util.ui.views;
+

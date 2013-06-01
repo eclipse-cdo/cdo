@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui.quickfixes;
 
-
 import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.filebuffers.LocationKind;

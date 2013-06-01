@@ -13,3 +13,4 @@
  * Reusable UI components.
  */
 package org.eclipse.net4j.util.ui;
+

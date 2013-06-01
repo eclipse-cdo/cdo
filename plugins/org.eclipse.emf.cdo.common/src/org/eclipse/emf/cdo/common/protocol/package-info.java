@@ -13,3 +13,4 @@
  * Common concepts for dealing with protocols and CDO-specific I/O.
  */
 package org.eclipse.emf.cdo.common.protocol;
+

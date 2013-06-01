@@ -114,8 +114,8 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   }
 
   /**
-	 *
-	 */
+   *
+   */
   public boolean createSchema(Proposed_Class proposedClass, EStructuralFeature feature)
   {
     if (TRACER_DEBUG.isEnabled())

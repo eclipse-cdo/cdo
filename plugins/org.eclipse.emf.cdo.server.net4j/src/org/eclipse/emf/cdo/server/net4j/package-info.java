@@ -13,3 +13,4 @@
  * Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.
  */
 package org.eclipse.emf.cdo.server.net4j;
+

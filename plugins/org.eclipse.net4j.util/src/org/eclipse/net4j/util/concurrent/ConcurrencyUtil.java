@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
-
 /**
  * @author Eike Stepper
  */

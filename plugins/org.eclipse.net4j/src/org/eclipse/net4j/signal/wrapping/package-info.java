@@ -13,3 +13,4 @@
  * Some container injectors for use with signal protocols. 
  */
 package org.eclipse.net4j.signal.wrapping;
+

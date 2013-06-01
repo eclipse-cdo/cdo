@@ -13,3 +13,4 @@
  * Server concepts for dealing with in-memory stores.
  */
 package org.eclipse.emf.cdo.server.mem;
+

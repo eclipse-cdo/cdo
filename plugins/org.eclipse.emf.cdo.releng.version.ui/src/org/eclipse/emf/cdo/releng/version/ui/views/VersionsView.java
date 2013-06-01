@@ -186,11 +186,11 @@ public class VersionsView extends ViewPart
     public void inputChanged(Viewer v, Object oldInput, Object newInput)
     {
     }
-  
+
     public void dispose()
     {
     }
-  
+
     public Object[] getElements(Object parent)
     {
       return new String[] { "One", "Two", "Three" };
@@ -206,12 +206,12 @@ public class VersionsView extends ViewPart
     {
       return getText(obj);
     }
-  
+
     public Image getColumnImage(Object obj, int index)
     {
       return getImage(obj);
     }
-  
+
     @Override
     public Image getImage(Object obj)
     {

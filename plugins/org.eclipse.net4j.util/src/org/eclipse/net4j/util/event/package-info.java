@@ -13,3 +13,4 @@
  * A framework for sending of and listening to events.
  */
 package org.eclipse.net4j.util.event;
+

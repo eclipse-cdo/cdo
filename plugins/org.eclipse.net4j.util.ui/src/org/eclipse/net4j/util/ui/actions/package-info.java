@@ -13,3 +13,4 @@
  * Reusable actions and action delegates.
  */
 package org.eclipse.net4j.util.ui.actions;
+

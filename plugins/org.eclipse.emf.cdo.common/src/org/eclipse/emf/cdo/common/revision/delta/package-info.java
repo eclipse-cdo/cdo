@@ -13,3 +13,4 @@
  * Common concepts for dealing with revision deltas and feature deltas.
  */
 package org.eclipse.emf.cdo.common.revision.delta;
+

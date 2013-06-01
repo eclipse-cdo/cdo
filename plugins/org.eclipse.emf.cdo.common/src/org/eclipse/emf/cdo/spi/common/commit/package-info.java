@@ -13,3 +13,4 @@
  * Common service provider interfaces and useful base implementations for dealing with commits and change sets.
  */
 package org.eclipse.emf.cdo.spi.common.commit;
+

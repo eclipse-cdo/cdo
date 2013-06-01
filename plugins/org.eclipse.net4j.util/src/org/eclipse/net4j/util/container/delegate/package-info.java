@@ -13,3 +13,4 @@
  * Hybrid interfaces of notifying containers and the Java Collection Framework.
  */
 package org.eclipse.net4j.util.container.delegate;
+

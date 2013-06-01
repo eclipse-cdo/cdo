@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
-
 /**
  * @author Victor Roldan Betancort
  */

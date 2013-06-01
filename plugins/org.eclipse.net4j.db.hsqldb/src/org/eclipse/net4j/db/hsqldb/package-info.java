@@ -13,3 +13,4 @@
  * The Net4j DB Framework support for HSQLDB databases.
  */
 package org.eclipse.net4j.db.hsqldb;
+

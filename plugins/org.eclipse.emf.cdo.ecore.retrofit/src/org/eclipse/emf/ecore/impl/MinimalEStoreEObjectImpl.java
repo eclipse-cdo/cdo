@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.ecore.impl;
 
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
-
 
 /**
  * A minimal abstract implementation of '<em><b>EObject</b></em>' that delegates to a {@link org.eclipse.emf.ecore.InternalEObject.EStore store}.
@@ -155,12 +153,8 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
   @Override
   protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
   {
-    return
-      dynamicFeatureID < 0 ?
-        eOpenIsSet(eFeature) :
-        eFeature.isTransient() ?
-          eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID) :
-          eStore().isSet(this, eFeature);
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eFeature.isTransient() ? eSettingDelegate(eFeature)
+        .dynamicIsSet(this, eSettings(), dynamicFeatureID) : eStore().isSet(this, eFeature);
   }
 
   @SuppressWarnings("nls")
@@ -175,46 +169,44 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
 
         public EStoreEcoreEMap()
         {
-          super
-            ((EClass)eType,
-             BasicEMap.Entry.class,
-             null);
-          delegateEList =
-             new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(MinimalEStoreEObjectImpl.this, eStructuralFeature)
-             {
-                private static final long serialVersionUID = 1L;
+          super((EClass)eType, BasicEMap.Entry.class, null);
+          delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(
+              MinimalEStoreEObjectImpl.this, eStructuralFeature)
+          {
+            private static final long serialVersionUID = 1L;
 
-                @Override
-                protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
-                {
-                  EStoreEcoreEMap.this.doPut(newObject);
-                }
+            @Override
+            protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
+            {
+              EStoreEcoreEMap.this.doPut(newObject);
+            }
 
-                @Override
-                protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject, BasicEMap.Entry<Object, Object> oldObject)
-                {
-                  didRemove(index, oldObject);
-                  didAdd(index, newObject);
-                }
+            @Override
+            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
+                BasicEMap.Entry<Object, Object> oldObject)
+            {
+              didRemove(index, oldObject);
+              didAdd(index, newObject);
+            }
 
-                @Override
-                protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
-                {
-                  EStoreEcoreEMap.this.doRemove(oldObject);
-                }
+            @Override
+            protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
+            {
+              EStoreEcoreEMap.this.doRemove(oldObject);
+            }
 
-                @Override
-                protected void didClear(int size, Object [] oldObjects)
-                {
-                  EStoreEcoreEMap.this.doClear();
-                }
+            @Override
+            protected void didClear(int size, Object[] oldObjects)
+            {
+              EStoreEcoreEMap.this.doClear();
+            }
 
-                @Override
-                protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
-                {
-                  EStoreEcoreEMap.this.doMove(movedObject);
-                }
-             };
+            @Override
+            protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
+            {
+              EStoreEcoreEMap.this.doMove(movedObject);
+            }
+          };
           size = delegateEList.size();
         }
       }
@@ -313,12 +305,12 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
     super.eBasicSetAdapterArray(adapters);
   }
 
-  protected  EObservableAdapterList.Listener[] eBasicAdapterListeners()
+  protected EObservableAdapterList.Listener[] eBasicAdapterListeners()
   {
     throw new UnsupportedOperationException();
   }
 
-  protected  void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners)
+  protected void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners)
   {
     throw new UnsupportedOperationException();
   }

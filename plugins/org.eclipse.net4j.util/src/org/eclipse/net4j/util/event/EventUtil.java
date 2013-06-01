@@ -92,7 +92,7 @@ public final class EventUtil
         }
       }
     }
-  
+
     return false;
   }
 }

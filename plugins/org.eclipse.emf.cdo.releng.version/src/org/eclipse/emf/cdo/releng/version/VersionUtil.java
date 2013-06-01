@@ -483,7 +483,7 @@ public final class VersionUtil
         return buildModel;
       }
     }
-    
+
     throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
   }
 

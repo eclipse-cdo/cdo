@@ -37,9 +37,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -447,6 +449,16 @@ public class AssembleScripts
         BufferedWriter writer = new BufferedWriter(out);
 
         writer.write("<?xml version=\"1.0\"?>" + NL);
+        writer.write("<!--" + NL);
+        writer.write("  Copyright (c) 2004-" + getCurrentYear() + " Eike Stepper (Berlin, Germany) and others." + NL);
+        writer.write("  All rights reserved. This program and the accompanying materials" + NL);
+        writer.write("  are made available under the terms of the Eclipse Public License v1.0" + NL);
+        writer.write("  which accompanies this distribution, and is available at" + NL);
+        writer.write("  http://www.eclipse.org/legal/epl-v10.html" + NL);
+        writer.write(NL);
+        writer.write("  Contributors:" + NL);
+        writer.write("    Eike Stepper - initial API and implementation" + NL);
+        writer.write("-->" + NL);
         writer.write("<project name=\"JavaDocLib\" default=\"delegate\" basedir=\"..\">" + NL);
 
         writer.write("" + NL);
@@ -581,6 +593,11 @@ public class AssembleScripts
           out.close();
         }
       }
+    }
+
+    private int getCurrentYear()
+    {
+      return new GregorianCalendar().get(Calendar.YEAR);
     }
   }
 

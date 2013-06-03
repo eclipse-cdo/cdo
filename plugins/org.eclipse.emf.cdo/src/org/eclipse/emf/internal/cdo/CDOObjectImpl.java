@@ -567,6 +567,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final Resource.Internal eInternalResource()
   {
+    CDOView view = cdoView();
+    if (view != null && view.isClosed())
+    {
+      return null;
+    }
+
     if (FSMUtil.isInvalid(this))
     {
       return null;

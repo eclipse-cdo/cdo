@@ -1187,6 +1187,27 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
+    // TODO A prototype of resource-less object URIs:
+    // try
+    // {
+    // String repositoryUUID = session.getRepositoryInfo().getUUID();
+    // String prefix = CDOURIUtil.PROTOCOL_NAME + "://" + repositoryUUID + "/";
+    // for (Entry<CDOID, InternalCDOObject> entry : getObjects().entrySet())
+    // {
+    // InternalCDOObject object = entry.getValue();
+    // StringBuilder builder = new StringBuilder(prefix);
+    // CDOIDUtil.write(builder, object.cdoID());
+    // URI uri = URI.createURI(builder.toString());
+    // object.eSetProxyURI(uri);
+    // int xxx;
+    // System.out.println(uri);
+    // }
+    // }
+    // catch (Exception ex)
+    // {
+    // OM.LOG.error(ex);
+    // }
+
     CDOViewRegistryImpl.INSTANCE.deregister(this);
 
     if (invalidationRunner != null)

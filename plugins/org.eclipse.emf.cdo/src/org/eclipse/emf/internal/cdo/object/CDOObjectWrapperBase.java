@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil;
 
@@ -320,6 +321,12 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 
   public Resource.Internal eInternalResource()
   {
+    CDOView view = cdoView();
+    if (view != null && view.isClosed())
+    {
+      return null;
+    }
+
     return instance.eInternalResource();
   }
 

@@ -70,6 +70,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * The base class of all <em>native</em> {@link CDOObject objects}.
@@ -1212,7 +1213,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
           if (feature.isMany())
           {
             @SuppressWarnings("unchecked")
-            InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
+            List<Object> list = (List<Object>)object.eGet(feature);
             int index = list.indexOf(instance);
             if (index != -1)
             {
@@ -1527,7 +1528,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         if (feature.isMany())
         {
           @SuppressWarnings("unchecked")
-          InternalEList<Object> list = (InternalEList<Object>)eObject.eGet(feature);
+          List<Object> list = (InternalEList<Object>)eObject.eGet(feature);
           return list != null && !list.isEmpty();
         }
 

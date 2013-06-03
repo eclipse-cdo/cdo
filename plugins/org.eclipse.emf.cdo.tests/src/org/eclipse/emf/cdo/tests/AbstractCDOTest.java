@@ -324,6 +324,12 @@ public abstract class AbstractCDOTest extends ConfigTest
   protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables)
       throws CommitException
   {
+    return commitAndSync(transaction, null, updatables);
+  }
+
+  protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, String comment, CDOUpdatable... updatables)
+      throws CommitException
+  {
     final RuntimeException[] exception = { null };
     IListener listener = new IListener()
     {
@@ -348,6 +354,11 @@ public abstract class AbstractCDOTest extends ConfigTest
 
     try
     {
+      if (comment != null)
+      {
+        transaction.setCommitComment(comment);
+      }
+
       CDOCommitInfo info = transaction.commit();
       if (info != null)
       {

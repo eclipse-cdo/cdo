@@ -219,15 +219,6 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     }
   }
 
-  @Override
-  public String toString()
-  {
-    synchronized (revisionLists)
-    {
-      return revisionLists.toString();
-    }
-  }
-
   protected void typeRefIncrease(CDOID id, EClass type)
   {
     // Do nothing

@@ -216,13 +216,4 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
       revisions.clear();
     }
   }
-
-  @Override
-  public String toString()
-  {
-    synchronized (revisions)
-    {
-      return revisions.toString();
-    }
-  }
 }

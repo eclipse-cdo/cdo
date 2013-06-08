@@ -678,8 +678,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOStateMachine.INSTANCE.internalReattach(object, this);
         }
 
-        object.cdoInternalSetState(CDOState.DIRTY);
         object.cdoInternalSetRevision(goalRevision);
+        object.cdoInternalSetState(CDOState.DIRTY);
         revisionChanged = true;
 
         dirtyObjects.put(id, object);
@@ -764,8 +764,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Iterator<CDORevision> revision = revisions.iterator();
       for (CDOObject object : conflicts.keySet())
       {
-        ((InternalCDOObject)object).cdoInternalSetState(state.next());
         ((InternalCDOObject)object).cdoInternalSetRevision(revision.next());
+        ((InternalCDOObject)object).cdoInternalSetState(state.next());
       }
 
       throw WrappedException.wrap(ex);
@@ -1234,8 +1234,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void removeObject(CDOID id, final CDOObject object)
   {
-    InternalCDOObject internal = (InternalCDOObject)object;
-    internal.cdoInternalSetState(CDOState.TRANSIENT);
     removeObject(id);
 
     if (object instanceof CDOResource)
@@ -1252,8 +1250,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       });
     }
 
+    InternalCDOObject internal = (InternalCDOObject)object;
     internal.cdoInternalSetView(null);
     internal.cdoInternalSetID(null);
+    internal.cdoInternalSetState(CDOState.TRANSIENT);
   }
 
   private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
@@ -2188,8 +2188,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     InternalCDOObject object = newInstance(revision.getEClass());
     object.cdoInternalSetRevision(revision);
-    object.cdoInternalSetState(CDOState.NEW);
     object.cdoInternalSetView(this);
+    object.cdoInternalSetState(CDOState.NEW);
     return object;
   }
 

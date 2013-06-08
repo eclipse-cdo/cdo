@@ -59,8 +59,8 @@ public class Bugzilla_397232_Test extends AbstractCDOTest
 
     // Simulate GC
     InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(g);
-    cdoObject.cdoInternalSetState(CDOState.PROXY);
     cdoObject.cdoInternalSetRevision(null);
+    cdoObject.cdoInternalSetState(CDOState.PROXY);
 
     // Re-load
     g.getDummy();

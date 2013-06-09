@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -38,6 +40,7 @@ import java.util.concurrent.CountDownLatch;
  * @author Pascal Lehmann
  * @since 4.0
  */
+@Requires(IConfig.CAPABILITY_UNAVAILABLE)
 public class Bugzilla_329254_Test extends AbstractCDOTest
 {
   private static final String REPOSITORY_NAME = "repo1";

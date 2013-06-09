@@ -19,21 +19,19 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
- * NullPointerException on reload
- * <p>
- * See bug 267352
- * 
+ * Bug 267352: NullPointerException on reload
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_267352_Test extends AbstractCDOTest
 {
-  public void testBugzilla_267352() throws Exception
+  public void testReload() throws Exception
   {
     final Customer customer = getModel1Factory().createCustomer();
-    final boolean done[] = new boolean[1];
-    final Exception exception[] = new Exception[1];
-    done[0] = false;
     customer.setName("customer");
+
+    final boolean[] done = { false };
+    final Exception[] exception = { null };
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -41,15 +39,18 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
     resource.getContents().add(customer);
     transaction.commit();
 
-    Runnable changeObjects = new Runnable()
+    Thread thread = new Thread("ChangeObjects")
     {
+      @Override
       public void run()
       {
+        CDOSession session = openSession();
+
         try
         {
-          CDOSession session = openSession();
           CDOTransaction transaction = session.openTransaction();
-          CDOObject customerToLoad = transaction.getObject(CDOUtil.getCDOObject(customer).cdoID());
+          CDOObject customerToLoad = CDOUtil.getCDOObject(transaction.getObject(customer));
+
           while (!done[0])
           {
             sleep(10);
@@ -57,31 +58,81 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
             // Could fail if the attach is not thread safe
             transaction.reload(customerToLoad);
           }
-
-          transaction.close();
-          session.close();
         }
         catch (Exception ex)
         {
           exception[0] = ex;
         }
+        finally
+        {
+          session.close();
+        }
       }
     };
 
-    new Thread(changeObjects).start();
+    thread.start();
+
     for (int i = 0; i < 100 && exception[0] == null; i++)
     {
-      customer.setName("Ottawa" + i);
-      transaction.commit();
+      synchronized (transaction)
+      {
+        customer.setName("Ottawa" + i);
+        transaction.commit();
+      }
     }
 
     done[0] = true;
+    thread.join(DEFAULT_TIMEOUT);
+
     if (exception[0] != null)
     {
       exception[0].printStackTrace();
       fail(exception[0].getMessage());
     }
+  }
 
-    session.close();
+  public void test1() throws Exception
+  {
+    testReload();
+  }
+
+  public void test2() throws Exception
+  {
+    testReload();
+  }
+
+  public void test3() throws Exception
+  {
+    testReload();
+  }
+
+  public void test4() throws Exception
+  {
+    testReload();
+  }
+
+  public void test5() throws Exception
+  {
+    testReload();
+  }
+
+  public void test6() throws Exception
+  {
+    testReload();
+  }
+
+  public void test7() throws Exception
+  {
+    testReload();
+  }
+
+  public void test8() throws Exception
+  {
+    testReload();
+  }
+
+  public void test9() throws Exception
+  {
+    testReload();
   }
 }

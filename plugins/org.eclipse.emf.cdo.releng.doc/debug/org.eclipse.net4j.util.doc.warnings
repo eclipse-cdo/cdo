@@ -47,7 +47,7 @@ Class description missing: org.eclipse.net4j.util.collection.RoundRobinBlockingQ
 Class description missing: org.eclipse.net4j.util.collection.Triplet.class(Triplet.java:19)
 Class description missing: org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer.class(AsynchronousWorkSerializer.java:23)
 Class description missing: org.eclipse.net4j.util.concurrent.CompletionWorkSerializer.class(CompletionWorkSerializer.java:22)
-Class description missing: org.eclipse.net4j.util.concurrent.ConcurrencyUtil.class(ConcurrencyUtil.java:17)
+Class description missing: org.eclipse.net4j.util.concurrent.ConcurrencyUtil.class(ConcurrencyUtil.java:16)
 Class description missing: org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.class(ExecutorServiceFactory.java:30)
 Class description missing: org.eclipse.net4j.util.concurrent.ICorrelator.class(ICorrelator.java:16)
 Class description missing: org.eclipse.net4j.util.concurrent.IRWLockManager$LockType.class(IRWLockManager.java:54)

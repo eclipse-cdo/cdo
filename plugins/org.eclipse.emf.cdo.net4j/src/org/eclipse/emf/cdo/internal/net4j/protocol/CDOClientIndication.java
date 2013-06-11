@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.StringIO;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -53,6 +55,14 @@ public abstract class CDOClientIndication extends Indication
   @Override
   protected final void indicating(ExtendedDataInputStream in) throws Exception
   {
+    final InternalCDOSession session = getSession();
+    if (session.getLifecycleState() == LifecycleState.DEACTIVATING)
+    {
+      LifecycleUtil.waitForActive(session, 10000L);
+    }
+
+    LifecycleUtil.checkActive(session);
+
     indicating(new CDODataInputImpl(in)
     {
       @Override
@@ -69,31 +79,31 @@ public abstract class CDOClientIndication extends Indication
 
       public CDOPackageRegistry getPackageRegistry()
       {
-        return getSession().getPackageRegistry();
+        return session.getPackageRegistry();
       }
 
       @Override
       protected CDOBranchManager getBranchManager()
       {
-        return getSession().getBranchManager();
+        return session.getBranchManager();
       }
 
       @Override
       protected CDOCommitInfoManager getCommitInfoManager()
       {
-        return getSession().getCommitInfoManager();
+        return session.getCommitInfoManager();
       }
 
       @Override
       protected CDORevisionFactory getRevisionFactory()
       {
-        return getSession().getRevisionManager().getFactory();
+        return session.getRevisionManager().getFactory();
       }
 
       @Override
       protected CDOLobStore getLobStore()
       {
-        return getSession().getLobStore();
+        return session.getLobStore();
       }
     });
   }

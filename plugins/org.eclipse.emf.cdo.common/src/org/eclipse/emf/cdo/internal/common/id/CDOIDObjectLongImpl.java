@@ -41,6 +41,15 @@ public final class CDOIDObjectLongImpl extends AbstractCDOID implements Internal
     this.value = value;
   }
 
+  /**
+   * A private default constructor for technologies (such as Hessian) that initialize the instance fields via reflection.
+   * Note that {@link #readResolve()} must be called in any case to ensure value uniqueness.
+   */
+  private CDOIDObjectLongImpl()
+  {
+    value = 0L;
+  }
+
   public long getLongValue()
   {
     return value;

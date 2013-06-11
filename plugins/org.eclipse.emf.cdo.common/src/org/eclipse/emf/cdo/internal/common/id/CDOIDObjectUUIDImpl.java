@@ -43,6 +43,15 @@ public final class CDOIDObjectUUIDImpl extends AbstractCDOID implements Internal
     this.value = value;
   }
 
+  /**
+   * A private default constructor for technologies (such as Hessian) that initialize the instance fields via reflection.
+   * Note that {@link #readResolve()} must be called in any case to ensure value uniqueness.
+   */
+  private CDOIDObjectUUIDImpl()
+  {
+    value = null;
+  }
+
   public byte[] getByteArrayValue()
   {
     return value;

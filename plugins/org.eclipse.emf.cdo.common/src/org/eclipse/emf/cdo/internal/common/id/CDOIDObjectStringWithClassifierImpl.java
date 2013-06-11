@@ -47,6 +47,16 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID imp
     this.classifierRef = classifierRef;
   }
 
+  /**
+   * A private default constructor for technologies (such as Hessian) that initialize the instance fields via reflection.
+   * Note that {@link #readResolve()} must be called in any case to ensure value uniqueness.
+   */
+  private CDOIDObjectStringWithClassifierImpl()
+  {
+    value = null;
+    classifierRef = null;
+  }
+
   public String getStringValue()
   {
     return value;

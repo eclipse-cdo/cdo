@@ -41,6 +41,15 @@ public final class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExter
     this.uri = uri;
   }
 
+  /**
+   * A private default constructor for technologies (such as Hessian) that initialize the instance fields via reflection.
+   * Note that {@link #readResolve()} must be called in any case to ensure value uniqueness.
+   */
+  private CDOIDExternalImpl()
+  {
+    uri = null;
+  }
+
   @Override
   public void write(CDODataOutput out) throws IOException
   {

@@ -40,6 +40,15 @@ public final class CDOIDTempObjectImpl extends AbstractCDOID implements CDOIDTem
     this.value = value;
   }
 
+  /**
+   * A private default constructor for technologies (such as Hessian) that initialize the instance fields via reflection.
+   * Note that {@link #readResolve()} must be called in any case to ensure value uniqueness.
+   */
+  private CDOIDTempObjectImpl()
+  {
+    value = 0;
+  }
+
   public int getIntValue()
   {
     return value;

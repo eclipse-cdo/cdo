@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
@@ -22,7 +23,7 @@ import java.text.MessageFormat;
 
 /**
  * Exception occurs when an id doesn't exist on the server.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -50,7 +51,7 @@ public class ObjectNotFoundException extends CDOException
     super(MessageFormat.format(Messages.getString("ObjectNotFoundException.1"), //$NON-NLS-1$
         id, branchPoint.getBranch().getID(), CDOCommonUtil.formatTimeStamp(branchPoint.getTimeStamp())));
     this.id = id;
-    this.branchPoint = branchPoint;
+    this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
   }
 
   /**

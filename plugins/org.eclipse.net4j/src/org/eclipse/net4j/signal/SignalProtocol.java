@@ -290,19 +290,24 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   @Override
   protected void doDeactivate() throws Exception
   {
-    synchronized (signals)
+    try
     {
-      signals.clear();
-    }
+      synchronized (signals)
+      {
+        signals.clear();
+      }
 
-    IChannel channel = getChannel();
-    if (channel != null)
+      IChannel channel = getChannel();
+      if (channel != null)
+      {
+        channel.close();
+        setChannel(null);
+      }
+    }
+    finally
     {
-      channel.close();
-      setChannel(null);
+      super.doDeactivate();
     }
-
-    super.doDeactivate();
   }
 
   @Override

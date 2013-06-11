@@ -258,8 +258,14 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     @Override
     protected void doDeactivate() throws Exception
     {
-      cancelHeartBeatTask();
-      super.doDeactivate();
+      try
+      {
+        cancelHeartBeatTask();
+      }
+      finally
+      {
+        super.doDeactivate();
+      }
     }
 
     /**

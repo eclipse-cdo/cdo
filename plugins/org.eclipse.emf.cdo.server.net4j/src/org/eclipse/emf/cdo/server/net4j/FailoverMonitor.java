@@ -336,8 +336,17 @@ public class FailoverMonitor extends Container<AgentProtocol>
     @Override
     protected void doDeactivate() throws Exception
     {
-      failoverMonitor.deregisterAgent(this);
-      super.doDeactivate();
+      try
+      {
+        if (failoverMonitor != null)
+        {
+          failoverMonitor.deregisterAgent(this);
+        }
+      }
+      finally
+      {
+        super.doDeactivate();
+      }
     }
 
     /**

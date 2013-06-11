@@ -424,10 +424,7 @@ public class Buffer implements InternalBuffer
   {
     try
     {
-      if (socketChannel.read(buffer) == -1)
-      {
-        throw new ClosedChannelException();
-      }
+      socketChannel.read(buffer);
     }
     catch (ClosedChannelException ex)
     {

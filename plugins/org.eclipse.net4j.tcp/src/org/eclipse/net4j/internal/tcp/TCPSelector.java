@@ -61,6 +61,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     return selector;
   }
 
+  @Override
+  public String toString()
+  {
+    return "TCPSelector"; //$NON-NLS-1$
+  }
+
   public void orderRegistration(final ServerSocketChannel channel, final ITCPPassiveSelectorListener listener)
   {
     assertValidListener(listener);
@@ -165,22 +171,26 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
             SelectionKey selKey = it.next();
             it.remove();
 
-            try
+            SelectableChannel channel = selKey.channel();
+            if (channel.isOpen())
             {
-              handleSelection(selKey);
-            }
-            catch (CancelledKeyException ignore)
-            {
-              // Do nothing
-            }
-            catch (NullPointerException ignore)
-            {
-              // Do nothing
-            }
-            catch (Exception ex)
-            {
-              OM.LOG.info(ex.getMessage());
-              selKey.cancel();
+              try
+              {
+                handleSelection(selKey);
+              }
+              catch (CancelledKeyException ignore)
+              {
+                // Do nothing
+              }
+              catch (NullPointerException ignore)
+              {
+                // Do nothing
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.info(ex.getMessage());
+                selKey.cancel();
+              }
             }
           }
         }
@@ -203,66 +213,55 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     deactivate();
   }
 
-  @Override
-  public String toString()
-  {
-    return "TCPSelector"; //$NON-NLS-1$
-  }
-
   protected void handleSelection(SelectionKey selKey) throws IOException
   {
     SelectableChannel channel = selKey.channel();
     if (channel instanceof ServerSocketChannel)
     {
-      ServerSocketChannel ssChannel = (ServerSocketChannel)selKey.channel();
-      if (ssChannel.isOpen())
+      ITCPPassiveSelectorListener listener = (ITCPPassiveSelectorListener)selKey.attachment();
+
+      if (selKey.isAcceptable())
       {
-        ITCPPassiveSelectorListener listener = (ITCPPassiveSelectorListener)selKey.attachment();
-
-        if (selKey.isAcceptable())
+        if (TRACER.isEnabled())
         {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Accepting " + ssChannel); //$NON-NLS-1$
-          }
-
-          listener.handleAccept(this, ssChannel);
+          TRACER.trace("Accepting " + channel); //$NON-NLS-1$
         }
+
+        listener.handleAccept(this, (ServerSocketChannel)channel);
       }
     }
     else if (channel instanceof SocketChannel)
     {
-      SocketChannel sChannel = (SocketChannel)channel;
       ITCPActiveSelectorListener listener = (ITCPActiveSelectorListener)selKey.attachment();
 
       if (selKey.isConnectable())
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Connecting " + sChannel); //$NON-NLS-1$
+          TRACER.trace("Connecting " + channel); //$NON-NLS-1$
         }
 
-        listener.handleConnect(this, sChannel);
+        listener.handleConnect(this, (SocketChannel)channel);
       }
 
       if (selKey.isReadable())
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Reading " + sChannel); //$NON-NLS-1$
+          TRACER.trace("Reading " + channel); //$NON-NLS-1$
         }
 
-        listener.handleRead(this, sChannel);
+        listener.handleRead(this, (SocketChannel)channel);
       }
 
       if (selKey.isWritable())
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Writing " + sChannel); //$NON-NLS-1$
+          TRACER.trace("Writing " + channel); //$NON-NLS-1$
         }
 
-        listener.handleWrite(this, sChannel);
+        listener.handleWrite(this, (SocketChannel)channel);
       }
     }
   }

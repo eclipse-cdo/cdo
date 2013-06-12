@@ -1106,6 +1106,8 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       /**
+       * Enumerates the possible sides of a merge, i.e., {@link #SOURCE} and {@link #TARGET}.
+       *
        * @author Eike Stepper
        * @since 4.2
        */

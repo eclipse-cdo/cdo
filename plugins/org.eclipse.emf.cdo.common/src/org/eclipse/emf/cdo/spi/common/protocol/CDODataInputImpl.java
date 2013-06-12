@@ -637,6 +637,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   protected abstract CDOLobStore getLobStore();
 
   /**
+   * A concrete subclass of {@link CDODataInputImpl}.
+   *
    * @author Eike Stepper
    */
   public static final class Default extends CDODataInputImpl

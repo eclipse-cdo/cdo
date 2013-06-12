@@ -4,11 +4,15 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.doc;
+
+import org.eclipse.emf.cdo.server.IPermissionManager;
+
+import org.eclipse.net4j.util.security.IAuthenticator;
 
 /**
  * Overview
@@ -20,7 +24,7 @@ package org.eclipse.emf.cdo.doc;
  * <p>
  * CDO supports plentyfold deployments such as embedded repositories, offline clones or replicated clusters. The
  * following diagram illustrates the most common scenario: {@img cdo-overview.png}
- * 
+ *
  * @default
  * @author Eike Stepper
  */
@@ -86,6 +90,11 @@ public class Overview
    * <dd>Data integrity can be ensured by enabling optional commit checks in the repository server such as referential
    * integrity checks and containment cycle checks, as well as custom checks implemented by write access handlers.
    * <p>
+   * <dt><b>Security</b>
+   * <dd>The data in a repository can be secured through pluggable {@link IAuthenticator authenticators} and
+   * {@link IPermissionManager permission managers}. A default security model is provided on top of these low-level
+   * components. The model comprises the concepts of users, groups, roles and extensible permissions.
+   * <p>
    * <dt><b>Fault Tolerance</b>
    * <dd>Fault tolerance on multiple levels, namely the setup of fail-over clusters of replicating repositories under
    * the control of a fail-over monitor, as well as the usage of a number of special session types such as fail-over or
@@ -131,7 +140,7 @@ public class Overview
      * Client Architecture
      * <p>
      * {@link org.eclipse.emf.cdo.doc.programmers.client.Architecture !!inline!!}
-     * 
+     *
      * @see org.eclipse.emf.cdo.doc.programmers.client.Architecture
      */
     public class Client
@@ -142,7 +151,7 @@ public class Overview
      * Repository Architecture
      * <p>
      * {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture !!inline!!}
-     * 
+     *
      * @see org.eclipse.emf.cdo.doc.programmers.server.Architecture
      */
     public class Repository

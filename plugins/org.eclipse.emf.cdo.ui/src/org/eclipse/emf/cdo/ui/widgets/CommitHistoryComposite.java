@@ -59,6 +59,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 /**
+ * A UI component that renders a the elements of a {@link CDOCommitHistory} in form of a commit table with a branch tree.
+ *
  * @author Eike Stepper
  * @since 4.2
  */
@@ -270,6 +272,8 @@ public class CommitHistoryComposite extends Composite
   }
 
   /**
+   * Encapsulates the input of a {@link CommitHistoryComposite}.
+   *
    * @author Eike Stepper
    */
   public static class Input extends Notifier implements ILifecycle
@@ -470,6 +474,8 @@ public class CommitHistoryComposite extends Composite
   }
 
   /**
+   * Provides the content of a CommitHistoryComposite, i.e., the elements of a {@link CDOCommitHistory}.
+   *
    * @author Eike Stepper
    */
   public static class ContentProvider extends StructuredContentProvider<CDOCommitHistory>
@@ -493,6 +499,8 @@ public class CommitHistoryComposite extends Composite
   }
 
   /**
+   * A {@link TableLabelProvider} for the content of a CommitHistoryComposite, i.e., the elements of a {@link CDOCommitHistory}.
+   *
    * @author Eike Stepper
    */
   public static class LabelProvider extends TableLabelProvider<CDOCommitInfo>

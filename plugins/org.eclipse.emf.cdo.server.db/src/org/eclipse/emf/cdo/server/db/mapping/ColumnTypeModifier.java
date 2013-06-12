@@ -45,6 +45,8 @@ public abstract class ColumnTypeModifier
       EStructuralFeature feature, DBType dbType);
 
   /**
+   * Creates {@link ColumnTypeModifier} instances.
+   *
    * @author Eike Stepper
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory

@@ -128,6 +128,8 @@ public final class StoreThreadLocal
   }
 
   /**
+   * An {@link IllegalStateException} that can be thrown from {@link StoreThreadLocal#getSession()}.
+   *
    * @author Eike Stepper
    * @since 4.2
    */

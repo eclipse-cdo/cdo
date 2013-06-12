@@ -208,6 +208,8 @@ public class CDOCompare
     }
 
     /**
+     * Creates {@link CDOMatchEngine match engine} instances.
+     *
      * @author Eike Stepper
      */
     public static class Factory implements IMatchEngine.Factory

@@ -32,12 +32,17 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.http.common.IHTTPConnector;
+import org.eclipse.net4j.http.server.IHTTPAcceptor;
+import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -117,7 +122,7 @@ public class Architecture
    * Concrete implementations are fully separated and can be plugged into the core as described in {@link Store}.
    * <p>
    * All <b>communication aspects</b> (the sending/receiving of signals to/from a network system) are fully abstracted
-   * through the service provider interface (SPI) ISessionProtocol. Concrete implementations are fully separated
+   * through the service provider interface (SPI) {@link ISessionProtocol}. Concrete implementations are fully separated
    * and can be plugged into the core as described in {@link Protocol}.
    */
   public class Core
@@ -127,7 +132,7 @@ public class Architecture
   /**
    * CDO Store
    * <p>
-   * A concrete storage adapter, an {@link IStore} implementation, operates on top of the generic {@link Core server
+   * A concrete storage adapter, an {@link IStore} implementation that operates on top of the generic {@link Core server
    * core}. A number of such stores already ship with CDO, making it possible to connect a repository to all sorts of
    * JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.
    *
@@ -140,7 +145,7 @@ public class Architecture
   /**
    * Protocol
    * <p>
-   * A concrete communications adapter, an ISessionProtocol implementation, operates on top of the generic
+   * A concrete communications adapter, an {@link ISessionProtocol} implementation that operates on top of the generic
    * {@link Core server core}. The only session protocol implementation that currently ships with CDO is based on
    * {@link Net4j}.
    */
@@ -150,6 +155,11 @@ public class Architecture
 
   /**
    * OCL
+   * <p>
+   * An {@link IQueryHandler} implementation that provides support for OCL queries by executing them at the generic repository level,
+   * i.e., independent of the concrete {@link Store} being used.
+   * <p>
+   * The OCL component is optional.
    */
   public class OCL
   {
@@ -174,6 +184,10 @@ public class Architecture
 
   /**
    * Transport
+   * <p>
+   * A concrete transport adapter, an {@link IAcceptor} implementation that operates on top of the
+   * {@link Net4j Net4j core}. Net4j currently ships with {@link IJVMAcceptor}, {@link ITCPAcceptor}
+   * (optionally with SSL support) and {@link IHTTPAcceptor}.
    */
   public class Transport
   {

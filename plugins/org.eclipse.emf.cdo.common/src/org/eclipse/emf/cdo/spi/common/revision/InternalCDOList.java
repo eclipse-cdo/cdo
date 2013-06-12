@@ -50,6 +50,8 @@ public interface InternalCDOList extends CDOList
   public void setWithoutFrozenCheck(int i, Object value);
 
   /**
+   * A mixin interface for {@link InternalCDOList} that allows to optimize the speed of equality checks.
+   *
    * @author Eike Stepper
    * @since 4.2
    */

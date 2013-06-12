@@ -36,7 +36,7 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw
 
   /**
    * @since 2.0
-   * @depreacted As of 4.2 use {@link IDBConnection#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
+   * @deprecated As of 4.2 use {@link IDBConnection#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
    */
   @Deprecated
   public IPreparedStatementCache getStatementCache();

@@ -81,12 +81,12 @@ function windowTitle()
  Concrete implementations are fully separated and can be plugged into the core as described in <a href="Architecture.html#Store" title="Chapter in CDO Model Repository Documentation">CDO Store</a>.
  <p>
  All <b>communication aspects</b> (the sending/receiving of signals to/from a network system) are fully abstracted
- through the service provider interface (SPI) ISessionProtocol. Concrete implementations are fully separated
+ through the service provider interface (SPI) <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ISessionProtocol</code></a>. Concrete implementations are fully separated
  and can be plugged into the core as described in <a href="Architecture.html#Protocol" title="Chapter in CDO Model Repository Documentation">Protocol</a>.
 
 <h2><a name="Store"></a>3&nbsp;&nbsp;CDO Store</h2>
 <p>
- A concrete storage adapter, an <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> implementation, operates on top of the generic <a href="Architecture.html#Core" title="Chapter in CDO Model Repository Documentation">server
+ A concrete storage adapter, an <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> implementation that operates on top of the generic <a href="Architecture.html#Core" title="Chapter in CDO Model Repository Documentation">server
  core</a>. A number of such stores already ship with CDO, making it possible to connect a repository to all sorts of
  JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.<p><b>See Also:</b></p>
 <ul>
@@ -96,12 +96,16 @@ function windowTitle()
 
 <h2><a name="Protocol"></a>4&nbsp;&nbsp;Protocol</h2>
 <p>
- A concrete communications adapter, an ISessionProtocol implementation, operates on top of the generic
+ A concrete communications adapter, an <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ISessionProtocol</code></a> implementation that operates on top of the generic
  <a href="Architecture.html#Core" title="Chapter in CDO Model Repository Documentation">server core</a>. The only session protocol implementation that currently ships with CDO is based on
  <a href="Architecture.html#Net4j" title="Chapter in CDO Model Repository Documentation">Net4j Core</a>.
 
 <h2><a name="OCL"></a>5&nbsp;&nbsp;OCL</h2>
-
+<p>
+ An <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryHandler</code></a> implementation that provides support for OCL queries by executing them at the generic repository level,
+ i.e., independent of the concrete <a href="Architecture.html#Store" title="Chapter in CDO Model Repository Documentation">CDO Store</a> being used.
+ <p>
+ The OCL component is optional.
 
 <h2><a name="Net4j"></a>6&nbsp;&nbsp;Net4j Core</h2>
 <p>
@@ -118,7 +122,10 @@ function windowTitle()
 
 
 <h2><a name="Transport"></a>7&nbsp;&nbsp;Transport</h2>
-
+<p>
+ A concrete transport adapter, an <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" title="Interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a> implementation that operates on top of the
+ <a href="Architecture.html#Net4j" title="Chapter in CDO Model Repository Documentation">Net4j core</a>. Net4j currently ships with <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html" title="Interface in org.eclipse.net4j.jvm"><code>IJVMAcceptor</code></a>, <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html" title="Interface in org.eclipse.net4j.tcp"><code>ITCPAcceptor</code></a>
+ (optionally with SSL support) and <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/http/server/IHTTPAcceptor.html" title="Interface in org.eclipse.net4j.http.server"><code>IHTTPAcceptor</code></a>.
 
 <p align="right">
 <a href="index.html" title="Backward to Dealing with Servers"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../../reference/index.html" title="Forward to Reference"><img src="../../../images/forward.png" border="0"></a></p>

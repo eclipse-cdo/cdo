@@ -56,7 +56,7 @@ public abstract class CDOClientIndication extends Indication
   protected final void indicating(ExtendedDataInputStream in) throws Exception
   {
     final InternalCDOSession session = getSession();
-    if (session.getLifecycleState() == LifecycleState.DEACTIVATING)
+    if (session.getLifecycleState() == LifecycleState.ACTIVATING)
     {
       LifecycleUtil.waitForActive(session, 10000L);
     }

@@ -259,7 +259,7 @@
 						<arg value="-r" />
 						<arg value="http://download.eclipse.org/eclipse/updates/3.8" />
 						<arg value="-r" />
-						<arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
+						<arg value="${cdo.releng.repo}" />
 						<arg value="-d" />
 						<arg value="${tools}/buckminster" />
 						<arg value="-p" />

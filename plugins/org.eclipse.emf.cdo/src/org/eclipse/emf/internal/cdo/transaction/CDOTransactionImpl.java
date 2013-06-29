@@ -2932,11 +2932,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         InternalCDOSession session = getSession();
         long timeStamp = result.getTimeStamp();
+        boolean clearResourcePathCache = result.isClearResourcePathCache();
 
         if (result.getRollbackMessage() != null)
         {
           CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
-          session.invalidate(commitInfo, transaction, result.isClearResourcePathCache());
+          session.invalidate(commitInfo, transaction, clearResourcePathCache);
           return;
         }
 
@@ -2969,7 +2970,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
         if (!commitInfo.isEmpty())
         {
-          boolean clearResourcePathCache = result.isClearResourcePathCache();
           session.invalidate(commitInfo, transaction, clearResourcePathCache);
         }
 

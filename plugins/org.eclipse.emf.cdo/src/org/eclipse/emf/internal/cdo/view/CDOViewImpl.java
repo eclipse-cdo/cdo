@@ -859,7 +859,7 @@ public class CDOViewImpl extends AbstractCDOView
   {
     try
     {
-      if (branch == getBranch())
+      if (branch == getBranch()) // Also false for FailureCommitInfos. Only setLastUpdateTime() is called below.
       {
         if (clearResourcePathCache)
         {

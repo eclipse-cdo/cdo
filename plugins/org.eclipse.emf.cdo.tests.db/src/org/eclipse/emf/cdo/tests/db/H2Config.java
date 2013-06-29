@@ -65,13 +65,13 @@ public class H2Config extends DBConfig
     if (defaultDataSource == null)
     {
       defaultDataSource = new JdbcDataSource();
-      defaultDataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test");
+      defaultDataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;LOCK_TIMEOUT=10000");
     }
 
     H2Adapter.createSchema(defaultDataSource, repoName, !isRestarting());
 
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
+    dataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;LOCK_TIMEOUT=10000;SCHEMA=" + repoName);
     return dataSource;
   }
 

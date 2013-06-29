@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,39 +32,52 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * Bug 349804: Session is not invalidated after commit.
+ *
  * @author Egidijus Vaisnora
  */
 public class Bugzilla_349804_Test extends AbstractCDOTest
 {
   public void testInvalidation() throws CommitException, InterruptedException
   {
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction1 = session.openTransaction();
+    disableConsole();
+    long timeStamp;
 
-      transaction1.createResource(getResourcePath("test"));
-      transaction1.commit();
+    {
+      InternalRepository repository = getRepository();
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+
+      transaction.createResource(getResourcePath("test"));
+      timeStamp = transaction.commit().getTimeStamp();
 
       Failure handler = new Failure();
-      getRepository().addHandler(handler);
-      CDOTransaction failureTransaction = session.openTransaction();
-      failureTransaction.createResource(getResourcePath("fail"));
+      repository.addHandler(handler);
 
       try
       {
         // Creating failure commit. It will change last update time on server TimeStampAuthority
-        failureTransaction.commit();
+        transaction.createResource(getResourcePath("fail"));
+        transaction.commit();
         fail("CommitException expected");
       }
       catch (CommitException expected)
       {
+        // SUCCESS
+      }
+      finally
+      {
+        repository.removeHandler(handler);
+        session.close();
       }
 
-      getRepository().removeHandler(handler);
-      session.close();
+      assertNotSame(timeStamp, repository.getLastCommitTimeStamp());
     }
 
     CDOSession session = openSession();
+    assertEquals(getRepository().getLastCommitTimeStamp(), session.getLastUpdateTime());
+
     CDOTransaction transaction = session.openTransaction();
 
     final CountDownLatch invalidationLatch = new CountDownLatch(1);
@@ -85,7 +99,7 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
     // Invalidation shall fail, because it will use lastUpdateTime from TimeStampAuthority for commit result
     transaction.commit();
 
-    invalidationLatch.await(500, TimeUnit.MILLISECONDS);
+    invalidationLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     assertEquals("Invalidation was not delivered", 0, invalidationLatch.getCount());
   }
 
@@ -98,11 +112,11 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
       transaction1.createResource(getResourcePath("test"));
       transaction1.commit();
 
-      Failure handler = new Failure();
-      getRepository().addHandler(handler);
-
       CDOTransaction failureTransaction = session.openTransaction();
       failureTransaction.createResource(getResourcePath("fail"));
+
+      Failure handler = new Failure();
+      getRepository().addHandler(handler);
 
       try
       {
@@ -112,10 +126,13 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
       }
       catch (CommitException expected)
       {
+        // SUCCESS
       }
-
-      getRepository().removeHandler(handler);
-      session.close();
+      finally
+      {
+        getRepository().removeHandler(handler);
+        session.close();
+      }
     }
 
     CDOSession session = openSession();

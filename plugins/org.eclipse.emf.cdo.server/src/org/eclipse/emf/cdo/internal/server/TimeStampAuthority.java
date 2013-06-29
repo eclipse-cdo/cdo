@@ -33,17 +33,21 @@ class TimeStampAuthority
   private InternalRepository repository;
 
   /**
-   * Holds the timestamp that was issued in response to the last call to {@link #createTimestamp()}
+   * Holds the <i>begin</i> timestamp that was issued in response to the last call to {@link #startCommit(long, OMMonitor)}.
+   * <p>
+   * Synchronized on <code>TimeStampAuthority.this</code>.
    */
   @ExcludeFromDump
   private transient long lastIssuedTimeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
 
   /**
-   * Holds the timestamp that was last reported finished by a call to {@link #endCommit(long)}
+   * Holds the <i>begin</i> timestamp that was last reported finished by a call to {@link #endCommit(long)}.
+   * <p>
+   * Synchronized on <code>lastFinishedTimeStampLock</code>.
    */
   private long lastFinishedTimeStamp;
 
-  private LastCommitTimeStampLock lastCommitTimeStampLock = new LastCommitTimeStampLock();
+  private LastCommitTimeStampLock lastFinishedTimeStampLock = new LastCommitTimeStampLock();
 
   private boolean strictOrdering; // TODO (CD) Should be a repo property
 
@@ -76,11 +80,7 @@ class TimeStampAuthority
   synchronized long[] startCommit(long timeStampOverride, OMMonitor monitor)
   {
     monitor.begin();
-
-    if (strictOrdering)
-    {
-      strictOrderingLock.lock();
-    }
+    lockIfNeeded();
 
     try
     {
@@ -100,10 +100,11 @@ class TimeStampAuthority
         now = timeStampOverride;
       }
 
+      long previousTimeStamp = lastIssuedTimeStamp;
       lastIssuedTimeStamp = now;
 
-      runningTransactions.add(lastIssuedTimeStamp);
-      return new long[] { lastIssuedTimeStamp, getLastFinishedTimeStamp() };
+      runningTransactions.add(now);
+      return new long[] { now, previousTimeStamp };
     }
     finally
     {
@@ -124,41 +125,35 @@ class TimeStampAuthority
     // of the runningTransactions. Since both sets are sorted, we only need to compare the heads.
     long oldestRunning = runningTransactions.isEmpty() ? Long.MAX_VALUE : runningTransactions.get(0);
     long oldestFinished;
-    synchronized (lastCommitTimeStampLock)
+    synchronized (lastFinishedTimeStampLock)
     {
       long oldValue = lastFinishedTimeStamp;
       while (!finishedTransactions.isEmpty() && (oldestFinished = finishedTransactions.first()) < oldestRunning)
       {
         finishedTransactions.remove(oldestFinished);
-        internalSetLastFinished(oldestFinished);
+        setLastFinishedTimeStampUnsynced(oldestFinished);
       }
 
       // If we actually changed the lastFinishedTimeStamp, we need to notify waiting threads
       if (lastFinishedTimeStamp != oldValue)
       {
-        lastCommitTimeStampLock.notifyAll();
+        lastFinishedTimeStampLock.notifyAll();
       }
     }
 
-    if (strictOrdering)
-    {
-      strictOrderingLock.unlock();
-    }
+    unlockIfNeeded();
   }
 
   synchronized void failCommit(long timeStamp)
   {
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE) // Exclude problems before TransactionCommitContext.setTimeStamp()
+    // Exclude problems before TransactionCommitContext.setTimeStamp()
+    if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      if (!runningTransactions.remove(timeStamp))
-      {
-        throw new IllegalArgumentException("Cannot fail transaction with unknown timestamp " + timeStamp);
-      }
+      unlockIfNeeded();
     }
-
-    if (strictOrdering)
+    else
     {
-      strictOrderingLock.unlock();
+      endCommit(timeStamp);
     }
   }
 
@@ -183,11 +178,11 @@ class TimeStampAuthority
 
   long waitForCommit(long timeout)
   {
-    synchronized (lastCommitTimeStampLock)
+    synchronized (lastFinishedTimeStampLock)
     {
       try
       {
-        lastCommitTimeStampLock.wait(timeout);
+        lastFinishedTimeStampLock.wait(timeout);
       }
       catch (Exception ignore)
       {
@@ -199,20 +194,36 @@ class TimeStampAuthority
 
   void setLastFinishedTimeStamp(long lastCommitTimeStamp)
   {
-    synchronized (lastCommitTimeStampLock)
+    synchronized (lastFinishedTimeStampLock)
     {
       if (lastFinishedTimeStamp < lastCommitTimeStamp)
       {
-        internalSetLastFinished(lastCommitTimeStamp);
-        lastCommitTimeStampLock.notifyAll();
+        setLastFinishedTimeStampUnsynced(lastCommitTimeStamp);
+        lastFinishedTimeStampLock.notifyAll();
       }
     }
   }
 
-  private void internalSetLastFinished(long lastCommitTimeStamp)
+  private void setLastFinishedTimeStampUnsynced(long lastCommitTimeStamp)
   {
     lastFinishedTimeStamp = lastCommitTimeStamp;
     repository.getStore().setLastCommitTime(lastFinishedTimeStamp);
+  }
+
+  private void lockIfNeeded()
+  {
+    if (strictOrdering)
+    {
+      strictOrderingLock.lock();
+    }
+  }
+
+  private void unlockIfNeeded()
+  {
+    if (strictOrdering)
+    {
+      strictOrderingLock.unlock();
+    }
   }
 
   /**

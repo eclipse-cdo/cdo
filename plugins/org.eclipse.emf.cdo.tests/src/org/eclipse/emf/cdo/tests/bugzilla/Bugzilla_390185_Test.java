@@ -30,9 +30,9 @@ import java.util.concurrent.TimeoutException;
  */
 public class Bugzilla_390185_Test extends AbstractCDOTest
 {
-  private static final int THREADS = 5;
+  private static final int THREADS = 3;
 
-  private static final int TRANSACTIONS_PER_THREAD = 100;
+  private static final int TRANSACTIONS_PER_THREAD = 20;
 
   public void testIvalidationDeadlock() throws Exception
   {
@@ -46,7 +46,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
       actors.add(actor);
     }
 
-    if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+    if (!latch.await(2 * DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
     {
       throw new TimeoutException();
     }

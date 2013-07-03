@@ -19,7 +19,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 /**
- * Encapsulates a Java {@link Selector socket selector} and orchestrates a number of {@link ITCPPassiveSelectorListener
+ * Encapsulates a Java {@link Selector socket selector} and orchestrates a number of {@link ITCPActiveSelectorListener
  * active} and {@link ITCPPassiveSelectorListener passive} consumers, usually {@link IConnector connectors} and
  * {@link IAcceptor acceptors} that compete for the socket selector's I/O time.
  * 

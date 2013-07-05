@@ -424,7 +424,10 @@ public class Buffer implements InternalBuffer
   {
     try
     {
-      socketChannel.read(buffer);
+      if (socketChannel.read(buffer) == -1)
+      {
+        throw new IOException("Channel has reached end-of-stream");
+      }
     }
     catch (ClosedChannelException ex)
     {
@@ -432,7 +435,9 @@ public class Buffer implements InternalBuffer
     }
     catch (IOException ex)
     {
-      throw new ClosedChannelException();
+      ClosedChannelException exception = new ClosedChannelException();
+      exception.initCause(ex);
+      throw exception;
     }
   }
 }

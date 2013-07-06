@@ -307,6 +307,8 @@
 				<loadresource property="build.trigger">
 					<propertyresource name="action.cause.shortDescription" />
 					<filterchain>
+						<replaceregex pattern="^Triggered by " replace="" />
+						<replaceregex pattern="^Gerrit: .*" replace="gerrit" />
 						<replaceregex pattern="^Started by " replace="" />
 						<replaceregex pattern="^Gestartet durch " replace="" />
 						<replaceregex pattern="Benutzer" replace="user" />
@@ -314,6 +316,9 @@
 				</loadresource>
 			</then>
 		</if>
+		<condition property="gerrit.trigger" value="true">
+			<equals arg1="${build.trigger}" arg2="gerrit" />
+		</condition>
 		<echo message="build.trigger = ${build.trigger}" />
 
 		<if>
@@ -543,7 +548,8 @@
 	<!-- Generate All -->
 	<!-- ============ -->
 
-	<target name="-generate.all">
+	<!-- Gerrit Test 1 -->
+	<target name="-generate.all" unless="${gerrit.trigger}">
 		<mkdir dir="${zips}" />
 
 		<antcall target="-generate.help" />

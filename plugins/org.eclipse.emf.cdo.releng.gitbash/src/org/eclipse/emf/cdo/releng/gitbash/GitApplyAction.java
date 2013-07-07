@@ -125,7 +125,7 @@ public class GitApplyAction extends BaseSelectionListenerAction implements IObje
       return;
     }
 
-    Repository[] repositories = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache().getAllRepositories();
+    Repository[] repositories = getRepositories();
     List<Repository> sorted = Arrays.asList(repositories);
     Collections.sort(sorted, new Comparator<Repository>()
     {
@@ -143,6 +143,12 @@ public class GitApplyAction extends BaseSelectionListenerAction implements IObje
       ActionContributionItem item = new ActionContributionItem(action);
       item.fill(dropDownMenu, -1);
     }
+  }
+
+  @SuppressWarnings("restriction")
+  private Repository[] getRepositories()
+  {
+    return org.eclipse.egit.core.Activator.getDefault().getRepositoryCache().getAllRepositories();
   }
 
   /**

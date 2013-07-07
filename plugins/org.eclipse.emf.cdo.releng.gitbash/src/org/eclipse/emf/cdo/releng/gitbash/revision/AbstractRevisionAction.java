@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.releng.gitbash.AbstractAction;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.swt.widgets.Shell;
@@ -69,7 +67,8 @@ public abstract class AbstractRevisionAction extends AbstractAction<RevObject>
 
     if (input instanceof IResource)
     {
-      RepositoryMapping mapping = RepositoryMapping.getMapping((IResource)input);
+      org.eclipse.egit.core.project.RepositoryMapping mapping = org.eclipse.egit.core.project.RepositoryMapping
+          .getMapping((IResource)input);
       if (mapping != null)
       {
         return mapping.getRepository();
@@ -81,7 +80,8 @@ public abstract class AbstractRevisionAction extends AbstractAction<RevObject>
       IResource resource = (IResource)((IAdaptable)input).getAdapter(IResource.class);
       if (resource != null)
       {
-        RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+        org.eclipse.egit.core.project.RepositoryMapping mapping = org.eclipse.egit.core.project.RepositoryMapping
+            .getMapping(resource);
         if (mapping != null)
         {
           return mapping.getRepository();
@@ -89,7 +89,7 @@ public abstract class AbstractRevisionAction extends AbstractAction<RevObject>
       }
     }
 
-    Repository repo = AdapterUtils.adapt(input, Repository.class);
+    Repository repo = org.eclipse.egit.core.AdapterUtils.adapt(input, Repository.class);
     if (repo != null)
     {
       return repo;

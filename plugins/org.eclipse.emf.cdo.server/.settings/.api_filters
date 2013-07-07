@@ -8,6 +8,13 @@
                 <message_argument value="DelegatingRepository"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="DelegatingRepository"/>
+                <message_argument value="CDOCommonRepository"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/LockingManager.java" type="org.eclipse.emf.cdo.internal.server.LockingManager$DurableView">
         <filter id="574619656">
@@ -23,6 +30,13 @@
                 <message_argument value="DurableView"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="IView"/>
+                <message_argument value="DurableView"/>
+                <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/QueryManager.java" type="org.eclipse.emf.cdo.internal.server.QueryManager$QueryContext">
         <filter id="574660632">
@@ -30,6 +44,13 @@
                 <message_argument value="IQueryContext"/>
                 <message_argument value="CDOBranchPoint"/>
                 <message_argument value="QueryContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="IQueryContext"/>
+                <message_argument value="QueryContext"/>
+                <message_argument value="CDOBranchPoint"/>
             </message_arguments>
         </filter>
     </resource>
@@ -47,6 +68,19 @@
                 <message_argument value="Repository"/>
             </message_arguments>
         </filter>
+        <filter id="574664731">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.Repository.replicateRaw(CDODataOutput, int, long)"/>
+                <message_argument value="CDOReplicationInfo"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="Repository"/>
+                <message_argument value="CDOCommonRepository"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/ResourcesQueryHandler.java" type="org.eclipse.emf.cdo.internal.server.ResourcesQueryHandler$QueryContext">
         <filter id="574660632">
@@ -54,6 +88,13 @@
                 <message_argument value="QueryResourcesContext"/>
                 <message_argument value="CDOBranchPoint"/>
                 <message_argument value="QueryContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="QueryResourcesContext"/>
+                <message_argument value="QueryContext"/>
+                <message_argument value="CDOBranchPoint"/>
             </message_arguments>
         </filter>
     </resource>
@@ -87,6 +128,13 @@
                 <message_argument value="Session"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalSession"/>
+                <message_argument value="Session"/>
+                <message_argument value="CDOCommonSession"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContext.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContext$XRefContext">
         <filter id="572522506">
@@ -100,6 +148,13 @@
                 <message_argument value="QueryXRefsContext"/>
                 <message_argument value="CDOBranchPoint"/>
                 <message_argument value="XRefContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="QueryXRefsContext"/>
+                <message_argument value="XRefContext"/>
+                <message_argument value="CDOBranchPoint"/>
             </message_arguments>
         </filter>
     </resource>
@@ -117,6 +172,13 @@
                 <message_argument value="View"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalView"/>
+                <message_argument value="View"/>
+                <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/XRefsQueryHandler.java" type="org.eclipse.emf.cdo.internal.server.XRefsQueryHandler$QueryContext">
         <filter id="572522506">
@@ -130,6 +192,13 @@
                 <message_argument value="QueryXRefsContext"/>
                 <message_argument value="CDOBranchPoint"/>
                 <message_argument value="QueryContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="QueryXRefsContext"/>
+                <message_argument value="QueryContext"/>
+                <message_argument value="CDOBranchPoint"/>
             </message_arguments>
         </filter>
     </resource>
@@ -155,6 +224,13 @@
                 <message_argument value="ISessionProtocol"/>
                 <message_argument value="CDOProtocol"/>
                 <message_argument value="EmbeddedServerSessionProtocol"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="ISessionProtocol"/>
+                <message_argument value="EmbeddedServerSessionProtocol"/>
+                <message_argument value="CDOProtocol"/>
             </message_arguments>
         </filter>
     </resource>
@@ -188,6 +264,12 @@
             <message_arguments>
                 <message_argument value="InternalCDOCommitContext"/>
                 <message_argument value="WriteThroughCommitContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574664731">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.syncing.SynchronizableRepository.WriteThroughCommitContext.commit(OMMonitor)"/>
+                <message_argument value="InternalCDOCommitContext"/>
             </message_arguments>
         </filter>
     </resource>
@@ -279,6 +361,13 @@
                 <message_argument value="DelegatingQueryResourcesContext"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="QueryResourcesContext"/>
+                <message_argument value="DelegatingQueryResourcesContext"/>
+                <message_argument value="CDOBranchPoint"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/DurableLockArea.java" type="org.eclipse.emf.cdo.spi.server.DurableLockArea">
         <filter id="574619656">
@@ -326,6 +415,13 @@
                 <message_argument value="ExactMatch"/>
                 <message_argument value="CDOBranchPoint"/>
                 <message_argument value="Store"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.Store.createExactMatchContext(CDOID, String, CDOBranchPoint)"/>
+                <message_argument value="ExactMatch"/>
+                <message_argument value="CDOBranchPoint"/>
             </message_arguments>
         </filter>
     </resource>

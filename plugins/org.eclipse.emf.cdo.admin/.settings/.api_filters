@@ -24,5 +24,12 @@
                 <message_argument value="CDOAdminClientRepositoryImpl"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOAdminClientRepository"/>
+                <message_argument value="CDOAdminClientRepositoryImpl"/>
+                <message_argument value="CDOAdminRepository"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

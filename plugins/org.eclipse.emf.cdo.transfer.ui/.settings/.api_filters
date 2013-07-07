@@ -95,5 +95,11 @@
                 <message_argument value="TransferDetailsComposite"/>
             </message_arguments>
         </filter>
+        <filter id="574664731">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.transfer.ui.swt.TransferDetailsComposite"/>
+                <message_argument value="ModelTransferResolution"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

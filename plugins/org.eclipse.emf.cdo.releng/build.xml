@@ -489,31 +489,39 @@
 	<!-- ======= -->
 
 	<target name="site.p2" depends="build" description="Generates the site and depending artifacts">
-		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
-		<buckminster command="perform">
-			<cmdargs>
-				<arg value="org.eclipse.emf.cdo.site#site.p2" />
-			</cmdargs>
-		</buckminster>
+		<if>
+			<isset property="gerrit.trigger" />
+			<then>
+				<echo message="Skipping org.eclipse.emf.cdo.site#site.p2" />
+			</then>
+			<else>
+				<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
+				<buckminster command="perform">
+					<cmdargs>
+						<arg value="org.eclipse.emf.cdo.site#site.p2" />
+					</cmdargs>
+				</buckminster>
 
-		<pathconvert property="site.p2.dir">
-			<dirset dir="${buckminster.output.root}">
-				<filename name="org.eclipse.emf.cdo.site_*-eclipse.feature/site.p2" />
-			</dirset>
-		</pathconvert>
-		<echoproperties destfile="${result}/all.properties" />
+				<pathconvert property="site.p2.dir">
+					<dirset dir="${buckminster.output.root}">
+						<filename name="org.eclipse.emf.cdo.site_*-eclipse.feature/site.p2" />
+					</dirset>
+				</pathconvert>
+				<echoproperties destfile="${result}/all.properties" />
 
-		<copy todir="${hudson.WORKSPACE}"
-		      overwrite="true"
-		      includeemptydirs="true"
-		      preservelastmodified="true"
-		      failonerror="true">
-			<fileset dir="${site.p2.dir}">
-				<include name="**" />
-			</fileset>
-		</copy>
+				<copy todir="${hudson.WORKSPACE}"
+				      overwrite="true"
+				      includeemptydirs="true"
+				      preservelastmodified="true"
+				      failonerror="true">
+					<fileset dir="${site.p2.dir}">
+						<include name="**" />
+					</fileset>
+				</copy>
 
-		<antcall target="-generate.all" />
+				<antcall target="-generate.all" />
+			</else>
+		</if>
 	</target>
 
 	<!-- ==== -->
@@ -521,11 +529,14 @@
 	<!-- ==== -->
 
 	<target name="test" depends="site.p2" description="Runs the tests">
-		<echo message="Running JUnit tests" />
+		<condition property="launch.config" value="org.eclipse.emf.cdo.tests.all/CDO GerritTests" else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
+			<isset property="gerrit.trigger" />
+		</condition>
+		<echo message="Running ${launch.config}" />
 		<buckminster command="junit">
 			<cmdargs>
 				<arg value="-l" />
-				<arg value="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL).launch" />
+				<arg value="${launch.config}.launch" />
 				<arg value="-o" />
 				<arg value="${test.report}" />
 				<arg value="--terseXML" />
@@ -548,8 +559,7 @@
 	<!-- Generate All -->
 	<!-- ============ -->
 
-	<!-- Gerrit Test 1 -->
-	<target name="-generate.all" unless="${gerrit.trigger}">
+	<target name="-generate.all">
 		<mkdir dir="${zips}" />
 
 		<antcall target="-generate.help" />

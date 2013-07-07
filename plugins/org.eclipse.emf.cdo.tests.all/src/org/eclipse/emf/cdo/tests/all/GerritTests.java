@@ -9,9 +9,11 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - introduced variable mapping strategies
  */
-package org.eclipse.emf.cdo.tests.db;
+package org.eclipse.emf.cdo.tests.all;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.tests.db.DBConfigs;
+import org.eclipse.emf.cdo.tests.db.H2Config;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -19,24 +21,16 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsDBH2All extends DBConfigs
+public class GerritTests extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2All().getTestSuite();
+    return new GerritTests().getTestSuite();
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenarios(parent, IDGenerationLocation.STORE);
-    addScenarios(parent, IDGenerationLocation.CLIENT);
-  }
-
-  private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)
-  {
-    AllTestsDBH2NonAudit.initConfigSuites(this, parent, idGenerationLocation);
-    AllTestsDBH2Audit.initConfigSuites(this, parent, idGenerationLocation);
-    AllTestsDBH2Branching.initConfigSuites(this, parent, idGenerationLocation);
+    addScenario(parent, COMBINED, new H2Config(true, true, true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 }

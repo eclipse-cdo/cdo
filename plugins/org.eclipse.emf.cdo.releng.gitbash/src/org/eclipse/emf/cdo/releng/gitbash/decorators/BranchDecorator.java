@@ -2,10 +2,13 @@ package org.eclipse.emf.cdo.releng.gitbash.decorators;
 
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.swt.graphics.Image;
+
+import java.io.IOException;
 
 @SuppressWarnings("restriction")
 public class BranchDecorator implements ILabelDecorator
@@ -75,7 +78,8 @@ public class BranchDecorator implements ILabelDecorator
   private String getDecoration(org.eclipse.egit.ui.internal.repository.tree.RefNode node)
   {
     String branchName = Repository.shortenRefName(node.getObject().getName());
-    StoredConfig config = node.getRepository().getConfig();
+    Repository repository = node.getRepository();
+    StoredConfig config = repository.getConfig();
 
     String branch = config.getString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
         ConfigConstants.CONFIG_KEY_MERGE);
@@ -94,7 +98,22 @@ public class BranchDecorator implements ILabelDecorator
       }
 
       String prefix = ".".equals(remote) ? "" : remote + "/";
-      return (rebaseFlag ? "REBASE" : "MERGE") + ": " + prefix + branch;
+      String result = (rebaseFlag ? "REBASE" : "MERGE") + ": " + prefix + branch;
+
+      try
+      {
+        BranchTrackingStatus trackingStatus = BranchTrackingStatus.of(repository, branchName);
+        if (trackingStatus != null && (trackingStatus.getAheadCount() != 0 || trackingStatus.getBehindCount() != 0))
+        {
+          result += " " + org.eclipse.egit.ui.internal.GitLabelProvider.formatBranchTrackingStatus(trackingStatus);
+        }
+      }
+      catch (IOException ex)
+      {
+        //$FALL-THROUGH$
+      }
+
+      return result;
     }
 
     return null;

@@ -20,5 +20,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.cdo.releng.gitbash;version="1.0.200";x-internal:=true,
+ org.eclipse.emf.cdo.releng.gitbash.decorators;version="1.0.200";x-internal:=true,
  org.eclipse.emf.cdo.releng.gitbash.repository;version="1.0.200";x-internal:=true,
  org.eclipse.emf.cdo.releng.gitbash.revision;version="1.0.200";x-internal:=true

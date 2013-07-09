@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="CDO Target" sequenceNumber="99">
+<?pde version="3.8"?><target name="CDO Target" sequenceNumber="104">
 <locations>
 <location path="${workspace_loc}\.buckminster\tp" type="Directory"/>
-<location path="/develop/bin/extensions/db2/eclipse" type="Directory"/>
 </locations>
 <environment>
 <os>win32</os>

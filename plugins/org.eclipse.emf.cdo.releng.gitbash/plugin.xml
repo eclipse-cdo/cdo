@@ -140,5 +140,21 @@
                tooltip="Apply patch to a Git repository"/>
       </objectContribution>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            class="org.eclipse.emf.cdo.releng.gitbash.decorators.BranchDecorator"
+            id="org.eclipse.emf.cdo.releng.gitbash.BranchDecorator"
+            label="Branch Upstream Infos"
+            lightweight="false"
+            state="true">
+        <enablement>
+           <objectClass
+                 name="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+           </objectClass>
+        </enablement>
+      </decorator>
+   </extension>
 
 </plugin>

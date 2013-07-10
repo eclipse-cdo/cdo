@@ -76,10 +76,8 @@ import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
-import org.eclipse.net4j.util.ref.KeyedReference;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
-import org.eclipse.net4j.util.ref.ReferenceValueMap2;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -106,7 +104,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -1105,7 +1102,10 @@ public class CDOViewImpl extends AbstractCDOView
    */
   public synchronized void subscribe(EObject eObject, Adapter adapter)
   {
-    changeSubscriptionManager.subscribe(eObject, adapter);
+    if (changeSubscriptionManager != null)
+    {
+      changeSubscriptionManager.subscribe(eObject, adapter);
+    }
   }
 
   /**
@@ -1113,7 +1113,10 @@ public class CDOViewImpl extends AbstractCDOView
    */
   public synchronized void unsubscribe(EObject eObject, Adapter adapter)
   {
-    changeSubscriptionManager.unsubscribe(eObject, adapter);
+    if (changeSubscriptionManager != null)
+    {
+      changeSubscriptionManager.unsubscribe(eObject, adapter);
+    }
   }
 
   /**
@@ -1121,7 +1124,12 @@ public class CDOViewImpl extends AbstractCDOView
    */
   public synchronized boolean hasSubscription(CDOID id)
   {
-    return changeSubscriptionManager.getSubcribeObject(id) != null;
+    if (changeSubscriptionManager != null)
+    {
+      return changeSubscriptionManager.getSubcribeObject(id) != null;
+    }
+
+    return false;
   }
 
   /**
@@ -1239,7 +1247,6 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     changeSubscriptionManager = null;
-    options = null;
     super.doDeactivate();
   }
 
@@ -1790,7 +1797,6 @@ public class CDOViewImpl extends AbstractCDOView
 
     public OptionsImpl()
     {
-      setCacheReferenceType(null);
     }
 
     public CDOViewImpl getContainer()
@@ -1808,6 +1814,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setLoadNotificationEnabled(boolean enabled)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1831,6 +1839,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setDetachmentNotificationEnabled(boolean enabled)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1854,6 +1864,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setInvalidationNotificationEnabled(boolean enabled)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1877,6 +1889,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setInvalidationPolicy(CDOInvalidationPolicy policy)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1897,6 +1911,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setLockNotificationEnabled(boolean enabled)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1930,6 +1946,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1945,6 +1963,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
@@ -1968,6 +1988,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setStrongReferencePolicy(CDOAdapterPolicy adapterPolicy)
     {
+      checkActive();
+
       if (adapterPolicy == null)
       {
         adapterPolicy = CDOAdapterPolicy.ALL;
@@ -1997,6 +2019,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
     {
+      checkActive();
+
       if (prefetchingPolicy == null)
       {
         prefetchingPolicy = CDORevisionPrefetchingPolicy.NO_PREFETCHING;
@@ -2025,6 +2049,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
     {
+      checkActive();
+
       if (featureAnalyzer == null)
       {
         featureAnalyzer = CDOFeatureAnalyzer.NOOP;
@@ -2065,6 +2091,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void setStaleReferencePolicy(CDOStaleReferencePolicy policy)
     {
+      checkActive();
+
       if (policy == null)
       {
         policy = CDOStaleReferencePolicy.DEFAULT;
@@ -2109,6 +2137,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     public boolean setCacheReferenceType(ReferenceType referenceType)
     {
+      checkActive();
+
       if (referenceType == null)
       {
         referenceType = ReferenceType.SOFT;
@@ -2116,69 +2146,9 @@ public class CDOViewImpl extends AbstractCDOView
 
       synchronized (CDOViewImpl.this)
       {
-        Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
-        ReferenceValueMap2<CDOID, InternalCDOObject> newObjects;
-
-        switch (referenceType)
+        if (!initObjectsMap(referenceType))
         {
-        case STRONG:
-        {
-          if (objects instanceof ReferenceValueMap2.Strong<?, ?>)
-          {
-            return false;
-          }
-
-          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-          newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map);
-          break;
-        }
-
-        case SOFT:
-        {
-          if (objects instanceof ReferenceValueMap2.Soft<?, ?>)
-          {
-            return false;
-          }
-
-          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-          newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map);
-          break;
-        }
-
-        case WEAK:
-        {
-          if (objects instanceof ReferenceValueMap2.Weak<?, ?>)
-          {
-            return false;
-          }
-
-          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-          newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map);
-          break;
-        }
-
-        default:
-          throw new IllegalArgumentException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$
-        }
-
-        if (objects == null)
-        {
-          setObjects(newObjects);
-        }
-        else
-        {
-          for (Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
-          {
-            InternalCDOObject object = entry.getValue();
-            if (object != null)
-            {
-              newObjects.put(entry.getKey(), object);
-            }
-          }
-
-          Map<CDOID, InternalCDOObject> oldObjects = objects;
-          setObjects(newObjects);
-          oldObjects.clear();
+          return false;
         }
       }
 

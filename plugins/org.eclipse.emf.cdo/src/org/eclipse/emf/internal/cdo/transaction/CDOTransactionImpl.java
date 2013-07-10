@@ -3239,6 +3239,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void setConflictResolvers(CDOConflictResolver[] resolvers)
     {
+      checkActive();
+
       synchronized (CDOTransactionImpl.this)
       {
         for (CDOConflictResolver resolver : conflictResolvers)
@@ -3260,6 +3262,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void addConflictResolver(CDOConflictResolver resolver)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOTransactionImpl.this)
       {
@@ -3273,6 +3277,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void removeConflictResolver(CDOConflictResolver resolver)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOTransactionImpl.this)
       {
@@ -3325,6 +3331,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void setAutoReleaseLocksEnabled(boolean on)
     {
+      checkActive();
+
       IEvent event = null;
       synchronized (CDOTransactionImpl.this)
       {

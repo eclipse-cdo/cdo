@@ -83,6 +83,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ref.KeyedReference;
+import org.eclipse.net4j.util.ref.ReferenceType;
+import org.eclipse.net4j.util.ref.ReferenceValueMap2;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -112,6 +115,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -157,10 +161,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public AbstractCDOView(CDOBranchPoint branchPoint)
   {
     basicSetBranchPoint(branchPoint);
+    initObjectsMap(ReferenceType.SOFT);
   }
 
   public AbstractCDOView()
   {
+    initObjectsMap(ReferenceType.SOFT);
   }
 
   public boolean isReadOnly()
@@ -192,6 +198,75 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   protected synchronized final void setObjects(Map<CDOID, InternalCDOObject> objects)
   {
     this.objects = objects;
+  }
+
+  protected boolean initObjectsMap(ReferenceType referenceType)
+  {
+    ReferenceValueMap2<CDOID, InternalCDOObject> newObjects;
+
+    switch (referenceType)
+    {
+    case STRONG:
+    {
+      if (objects instanceof ReferenceValueMap2.Strong<?, ?>)
+      {
+        return false;
+      }
+
+      Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+      newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map);
+      break;
+    }
+
+    case SOFT:
+    {
+      if (objects instanceof ReferenceValueMap2.Soft<?, ?>)
+      {
+        return false;
+      }
+
+      Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+      newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map);
+      break;
+    }
+
+    case WEAK:
+    {
+      if (objects instanceof ReferenceValueMap2.Weak<?, ?>)
+      {
+        return false;
+      }
+
+      Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+      newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map);
+      break;
+    }
+
+    default:
+      throw new IllegalArgumentException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$
+    }
+
+    if (objects == null)
+    {
+      setObjects(newObjects);
+    }
+    else
+    {
+      for (Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
+      {
+        InternalCDOObject object = entry.getValue();
+        if (object != null)
+        {
+          newObjects.put(entry.getKey(), object);
+        }
+      }
+
+      Map<CDOID, InternalCDOObject> oldObjects = objects;
+      setObjects(newObjects);
+      oldObjects.clear();
+    }
+
+    return true;
   }
 
   public ViewAndState getViewAndState(CDOState state)
@@ -1541,6 +1616,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public String toString()
   {
+    if (!isActive())
+    {
+      return super.toString();
+    }
+
     StringBuilder builder = new StringBuilder();
     if (isReadOnly())
     {

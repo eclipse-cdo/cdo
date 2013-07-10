@@ -30,10 +30,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 @Requires(IModelConfig.CAPABILITY_LEGACY)
 public class Bugzilla_381395_Test extends AbstractCDOTest
 {
-
   public void testAdapterRemoveAfterCDOServerShutdown() throws Exception
   {
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
@@ -60,7 +58,6 @@ public class Bugzilla_381395_Test extends AbstractCDOTest
 
   public void testAdapterRemoveAfterCDOViewClosed() throws Exception
   {
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
@@ -84,5 +81,4 @@ public class Bugzilla_381395_Test extends AbstractCDOTest
       fail("Exception in removal of adapter.");
     }
   }
-
 }

@@ -156,6 +156,9 @@
    <feature id="org.eclipse.emf.cdo.releng.winexplorer" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.releng.gitbash" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.releng.workingsets" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
@@ -171,9 +174,6 @@
    <feature id="org.eclipse.emf.cdo.migrator" version="0.0.0">
       <category name="org.eclipse.emf.cdo.category"/>
    </feature>
-   <feature id="org.eclipse.emf.cdo.releng.gitbash" version="0.0.0">
-      <category name="org.eclipse.emf.releng.category"/>
-   </feature>
    <feature id="org.eclipse.emf.cdo.releng.projectcopy" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
@@ -184,7 +184,7 @@
       <category name="org.eclipse.emf.cdo.hidden.category"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.epp" version="0.0.0">
-      <category name="hidden_category"/>
+      <category name="org.eclipse.emf.releng.hidden.category"/>
    </feature>
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>
    <category-def name="org.eclipse.emf.cdo.category" label="CDO Model Repository"/>
@@ -192,5 +192,5 @@
    <category-def name="org.eclipse.emf.cdo.dawn.category" label="CDO Dawn"/>
    <category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>
    <category-def name="org.eclipse.net4j.db.category" label="Net4j DB Framework"/>
-   <category-def name="hidden_category"/>
+   <category-def name="org.eclipse.emf.releng.hidden.category"/>
 </site>

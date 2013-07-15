@@ -4,7 +4,7 @@
 
 	<!-- Properties -->
 
-	<rm:property mutable="true" key="platform.version" value="3.8"/>
+	<rm:property mutable="true" key="platform.version" value="4.3"/>
 	<rm:property mutable="true" key="emf.version" value="2.9"/>
 	<rm:property mutable="true" key="orbit.version" value="R20130517111416"/>
 
@@ -13,6 +13,10 @@
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.net4j(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.gastro(?:\..+)?$"/>
+	<!--
+	<rm:locator searchPathRef="p2pool" />
+		-->
+	<rm:locator searchPathRef="junit4" pattern="^org\.junit4$"/>
 	<rm:locator searchPathRef="p2"/>
 
 	<!-- Search Paths -->
@@ -34,6 +38,28 @@
 		</rm:provider>
 	</rm:searchPath>
 
+	<!--
+	<rm:searchPath name="p2pool">
+		<rm:provider componentTypes="jar,osgi.bundle,buckminster" readerType="url" mutable="false" source="false">
+			<rm:uri format="file:/C:/develop/bin/p2pool/plugins/{0}_*.jar">
+				<bc:propertyRef key="buckminster.component" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="jar,eclipse.feature" readerType="url" mutable="false" source="false">
+			<rm:uri format="file:/C:/develop/bin/p2pool/features/{0}_*.jar">
+				<bc:propertyRef key="buckminster.component" />
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+	-->
+		
+	<rm:searchPath name="junit4">
+		<rm:provider componentTypes="osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/3.8">
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+	
 	<rm:searchPath name="p2">
 
 		<!-- PLATFORM -->
@@ -140,7 +166,7 @@
 
 		<!-- BUCKMINSTER -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
+			<rm:uri format="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
 		</rm:provider>
 
 		<!-- NEBULA -->
@@ -162,7 +188,7 @@
 
 		<!-- ORACLE.COM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.oracle.com/otn_software/oepe/juno"/>
+			<rm:uri format="http://download.oracle.com/otn_software/oepe/kepler"/>
 		</rm:provider>
 
 		<!-- EVLER.ORG -->

@@ -27,6 +27,13 @@
 		<cs:dependency name="org.eclipse.jgit" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
 		
+		<cs:dependency name="org.eclipse.buckminster.core.feature.feature.group" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.buckminster.git.feature.feature.group" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.buckminster.pde.feature.feature.group" componentType="eclipse.feature"/>
+		
+		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
+		
 		<cs:dependency name="org.eclipse.swtbot" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse.gef" componentType="eclipse.feature"/>
@@ -39,7 +46,7 @@
 		<cs:dependency name="org.dom4j" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.persistence" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.annotation" componentType="osgi.bundle"/>
-		<cs:dependency name="oracle.database.driver.jdk50" componentType="osgi.bundle"/>
+		<cs:dependency name="oracle.database.driver" componentType="osgi.bundle"/>
 	</cs:dependencies>
 
 	<cs:actions>

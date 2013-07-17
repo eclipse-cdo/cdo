@@ -62,6 +62,7 @@
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
 					<jvmarg value="-Dgit.clone=${git.clone}" />
+					<jvmarg value="-Dp2.pool=none" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />

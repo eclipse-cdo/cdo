@@ -437,8 +437,8 @@
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
 		<mkdir dir="${tp}" />
-		<move file="${releng}/hudson/target.xml" tofile="${releng}/hudson/cdo.target"/>
-		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target"/>
+		<move file="${releng}/hudson/target.xml" tofile="${releng}/hudson/cdo.target" />
+		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target" />
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="maxParallelResolutions=1" />
@@ -723,6 +723,7 @@
 		</delete>
 		<mkdir dir="${temp.products}" />
 
+		<!-- Windows -->
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
 		                  profile="CDOServer"
 		                  platform="Windows"
@@ -747,6 +748,7 @@
 		                  arch="x86"
 		                  priority="250" />
 
+		<!-- Linux -->
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
 		                  profile="CDOServer"
 		                  platform="Linux"
@@ -771,6 +773,7 @@
 		                  arch="x86"
 		                  priority="240" />
 
+		<!-- Mac -->
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
 		                  profile="CDOServer"
 		                  platform="Mac"

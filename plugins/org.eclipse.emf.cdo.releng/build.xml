@@ -437,6 +437,8 @@
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
 		<mkdir dir="${tp}" />
+		<move file="${releng}/hudson/target.xml" tofile="${releng}/hudson/cdo.target"/>
+		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target"/>
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="maxParallelResolutions=1" />
@@ -530,7 +532,9 @@
 	<!-- ==== -->
 
 	<target name="test" depends="site.p2" description="Runs the tests">
-		<condition property="launch.config" value="org.eclipse.emf.cdo.tests.all/CDO GerritTests" else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
+		<condition property="launch.config"
+		           value="org.eclipse.emf.cdo.tests.all/CDO GerritTests"
+		           else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
 			<isset property="gerrit.trigger" />
 		</condition>
 		<echo message="Running ${launch.config}" />
@@ -735,6 +739,14 @@
 		                  arch="x86"
 		                  priority="350" />
 
+		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
+		                  profile="Setup"
+		                  platform="Windows"
+		                  os="win32"
+		                  ws="win32"
+		                  arch="x86"
+		                  priority="250" />
+
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
 		                  profile="CDOServer"
 		                  platform="Linux"
@@ -751,6 +763,14 @@
 		                  arch="x86"
 		                  priority="340" />
 
+		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
+		                  profile="Setup"
+		                  platform="Linux"
+		                  os="linux"
+		                  ws="gtk"
+		                  arch="x86"
+		                  priority="240" />
+
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
 		                  profile="CDOServer"
 		                  platform="Mac"
@@ -766,6 +786,14 @@
 		                  ws="cocoa"
 		                  arch="x86"
 		                  priority="330" />
+
+		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
+		                  profile="Setup"
+		                  platform="Mac"
+		                  os="macosx"
+		                  ws="cocoa"
+		                  arch="x86"
+		                  priority="230" />
 	</target>
 
 </project>

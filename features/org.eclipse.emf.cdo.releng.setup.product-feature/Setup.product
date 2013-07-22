@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Setup" id="org.eclipse.emf.cdo.releng.setup.product.ide" application="org.eclipse.emf.cdo.releng.setup.app" useFeatures="true" includeLaunchers="true">
+
+   <configIni use="">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-debug
+-console
+--launcher.XXMaxPermSize
+128M</programArgs>
+      <vmArgs>-Xms256M
+-Xmx1024M</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher name="setup">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.emf.cdo.releng.setup.product"/>
+   </features>
+
+</product>

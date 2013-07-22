@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.releng.setup/src" modelPluginID="org.eclipse.emf.cdo.releng.setup"
+    modelName="Setup" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>setup.ecore</foreignModel>
+  <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
+      ecorePackage="setup.ecore#/">
+    <genDataTypes ecoreDataType="setup.ecore#//URI"/>
+    <genClasses ecoreClass="setup.ecore#//Configuration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/projects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/eclipseVersions"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Project">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/branches"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Project/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/apiBaselines"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Branch">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Branch/gitClones"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Branch/apiBaseline"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/mspecFilePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/targetFilePath"/>
+      <genOperations ecoreOperation="setup.ecore#//Branch/isInstalled"/>
+      <genOperations ecoreOperation="setup.ecore#//Branch/getURI">
+        <genParameters ecoreParameter="setup.ecore#//Branch/getURI/installFolder"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ToolInstallation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ToolInstallation/directorCalls"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//EclipseVersion">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipseVersion/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//EclipseVersion/directorCall"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//DirectorCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//DirectorCall/installableUnits"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//DirectorCall/p2Repositories"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//InstallableUnit">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/id"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//P2Repository">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Repository/url"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ApiBaseline">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaseline/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaseline/zipLocation"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//GitClone">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitClone/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitClone/remoteURI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitClone/checkoutBranch"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Preferences">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/userName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/bundlePool"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Workspace">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Workspace/branch"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Workspace/eclipseVersion"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

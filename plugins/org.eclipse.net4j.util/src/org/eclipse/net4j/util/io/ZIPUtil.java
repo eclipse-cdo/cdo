@@ -221,7 +221,7 @@ public final class ZIPUtil
   /**
    * @author Eike Stepper
    */
-  public static final class FileSystemZipHandler implements ZipEntryHandler
+  public static class FileSystemZipHandler implements ZipEntryHandler
   {
     private int sourceFolderLength;
 
@@ -359,7 +359,7 @@ public final class ZIPUtil
   /**
    * @author Eike Stepper
    */
-  public static final class FileSystemUnzipHandler implements UnzipHandler
+  public static class FileSystemUnzipHandler implements UnzipHandler
   {
     private File targetFolder;
 
@@ -369,6 +369,14 @@ public final class ZIPUtil
     {
       this.targetFolder = targetFolder;
       buffer = new byte[bufferSize];
+    }
+
+    /**
+     * @since 3.4
+     */
+    public FileSystemUnzipHandler(File targetFolder)
+    {
+      this(targetFolder, DEFALULT_BUFFER_SIZE);
     }
 
     public File getTargetFolder()

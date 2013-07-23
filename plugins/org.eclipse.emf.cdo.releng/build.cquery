@@ -3,7 +3,6 @@
 	<cq:property key="target.arch" value="*"/>
 	<cq:property key="target.os" value="*"/>
 	<cq:property key="target.ws" value="*"/>
-	<!-- <cq:property key="git.clone" value="${user.home}/git/cdo" mutable="true"/> -->
 
 	<cq:rootRequest name="org.eclipse.emf.cdo.releng" componentType="osgi.bundle"/>
 
@@ -17,11 +16,5 @@
 	<!-- For unknown reasons source 1.0.4 gets included for 1.1.1 -->
 	<cq:advisorNode namePattern="org\.apache\.commons\.logging\.source" skipComponent="true"/>
 
-	<!--
-	<cq:advisorNode namePattern="^org\.eclipse\.swt\.(?:gtk\.(?:linux\.s390x|aix\.ppc(?:64)?)|motif\.solaris\.sparc|photon\.qnx\.x86)\.source$" skipComponent="true"/>
-	<cq:advisorNode namePattern="^org\.eclipse\.swt\.(?:gtk\.aix\.ppc(?:64)?|motif\.solaris\.sparc|photon\.qnx\.x86)$" skipComponent="true"/>
-	<cq:advisorNode namePattern="^org\.eclipse\.equinox\.launcher\.gtk\.aix\.ppc(?:64)?$" skipComponent="true"/>
-	-->
-	
 	<cq:advisorNode namePattern=".*" useMaterialization="false" useTargetPlatform="false"/>
 </cq:componentQuery>

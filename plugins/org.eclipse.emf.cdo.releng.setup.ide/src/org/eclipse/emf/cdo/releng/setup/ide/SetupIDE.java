@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.setup.ide;
 
-import org.eclipse.emf.cdo.releng.setup.dialogs.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.setup.helper.OS;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
+import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.widgets.Display;

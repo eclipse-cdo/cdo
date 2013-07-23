@@ -10,6 +10,7 @@
 		<cs:dependency name="org.eclipse.emf.cdo.examples.clone" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.efs" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.ui.efs" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.releng.setup.product" componentType="osgi.bundle"/>
 
 		<cs:dependency name="org.eclipse.equinox.executable" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.platform" componentType="eclipse.feature"/>

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.product;
+package org.eclipse.emf.cdo.releng.setup.ui;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin
 {
-  public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.setup.product";
+  public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.setup.ui";
 
   private static Activator plugin;
 

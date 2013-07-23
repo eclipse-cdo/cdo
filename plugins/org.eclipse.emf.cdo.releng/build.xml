@@ -550,16 +550,6 @@
 		</buckminster>
 	</target>
 
-	<!-- ============= -->
-	<!-- Generate Only -->
-	<!-- ============= -->
-
-	<target name="generate.only" depends="-init.properties" description="Runs the post-site.p2 generators">
-		<echo message="Loading build-info.xml" />
-		<xmlproperty file="${hudson.WORKSPACE}/build-info.xml" collapseAttributes="true" />
-		<antcall target="-generate.all" />
-	</target>
-
 	<!-- ============ -->
 	<!-- Generate All -->
 	<!-- ============ -->

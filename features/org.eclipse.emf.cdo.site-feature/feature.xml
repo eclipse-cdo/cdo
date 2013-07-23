@@ -155,14 +155,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.setup"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.setup.product"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.apireports"
          version="0.0.0"/>
 
@@ -223,6 +215,41 @@
 
    <plugin
          id="org.eclipse.emf.cdo.examples.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.setup"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.setup.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.setup.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.setup.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.setup.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

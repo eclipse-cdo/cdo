@@ -20,9 +20,17 @@ public class Application implements IApplication
 {
   public Object start(IApplicationContext context) throws Exception
   {
-    SetupDialog dialog = new SetupDialog(null);
-    dialog.open();
-    return 0;
+    try
+    {
+      SetupDialog dialog = new SetupDialog(null);
+      dialog.open();
+      return 0;
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+      return 1;
+    }
   }
 
   public void stop()

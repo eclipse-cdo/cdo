@@ -8,12 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.dialogs;
+package org.eclipse.emf.cdo.releng.setup.ui;
 
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
-import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -34,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +41,8 @@ import java.util.Date;
 
 public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 {
+  public static final String TITLE = "Setup Development Environment";
+
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
   private Text text;
@@ -56,13 +58,18 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   public ProgressLogDialog(Shell parentShell)
   {
     super(parentShell);
+    setHelpAvailable(false);
     setShellStyle(SWT.BORDER | SWT.MAX | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    setTitle("Log");
+    setMessage("Please wait until the setup process is finished and the OK button is enabled...");
+    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.editor", "icons/install_wiz.gif"));
+    getShell().setText(TITLE);
+    setTitle(TITLE);
+
     Composite area = (Composite)super.createDialogArea(parent);
     Composite container = new Composite(area, SWT.NONE);
     GridLayout gl_container = new GridLayout(1, false);
@@ -238,7 +245,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
               }
               catch (Exception ex)
               {
-                SetupEditorPlugin.getPlugin().log(ex);
+                Activator.log(ex);
                 dialog.addLine("An error occured: " + ex.getMessage());
                 dialog.addLine("The Error Log contains more infos...");
               }
@@ -262,7 +269,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     }
     catch (Exception ex)
     {
-      SetupEditorPlugin.getPlugin().log(ex);
+      Activator.log(ex);
     }
   }
 }

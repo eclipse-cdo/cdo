@@ -33,79 +33,234 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <includes
-         id="org.eclipse.emf.cdo.releng.setup"
-         version="0.0.0"/>
+   <requires>
+      <import feature="org.eclipse.rcp"/>
+      <!--
+			<import plugin="com.ibm.icu"/>
+			<import plugin="javax.annotation"/>
+			<import plugin="javax.inject"/>
+			<import plugin="javax.servlet"/>
+			<import plugin="javax.xml"/>
+			<import plugin="org.apache.batik.css"/>
+			<import plugin="org.apache.batik.util.gui"/>
+			<import plugin="org.apache.batik.util"/>
+			<import plugin="org.eclipse.ant.core"/>
+			<import plugin="org.eclipse.compare.core"/>
+			<import plugin="org.eclipse.core.commands"/>
+			<import plugin="org.eclipse.core.contenttype"/>
+			<import plugin="org.eclipse.core.databinding.observable"/>
+			<import plugin="org.eclipse.core.databinding.property"/>
+			<import plugin="org.eclipse.core.databinding"/>
+			<import plugin="org.eclipse.core.expressions"/>
+			<import plugin="org.eclipse.core.filesystem"/>
+			<import plugin="org.eclipse.core.jobs"/>
+			<import plugin="org.eclipse.core.net"/>
+			<import plugin="org.eclipse.core.resources"/>
+			<import plugin="org.eclipse.core.runtime.compatibility.auth"/>
+			<import plugin="org.eclipse.core.runtime"/>
+			<import plugin="org.eclipse.core.variables"/>
+			<import plugin="org.eclipse.e4.core.commands"/>
+			<import plugin="org.eclipse.e4.core.contexts"/>
+			<import plugin="org.eclipse.e4.core.di.extensions"/>
+			<import plugin="org.eclipse.e4.core.di"/>
+			<import plugin="org.eclipse.e4.core.services"/>
+			<import plugin="org.eclipse.e4.ui.bindings"/>
+			<import plugin="org.eclipse.e4.ui.css.core"/>
+			<import plugin="org.eclipse.e4.ui.css.swt.theme"/>
+			<import plugin="org.eclipse.e4.ui.css.swt"/>
+			<import plugin="org.eclipse.e4.ui.di"/>
+			<import plugin="org.eclipse.e4.ui.model.workbench"/>
+			<import plugin="org.eclipse.e4.ui.services"/>
+			<import plugin="org.eclipse.e4.ui.widgets"/>
+			<import plugin="org.eclipse.e4.ui.workbench.addons.swt"/>
+			<import plugin="org.eclipse.e4.ui.workbench.renderers.swt"/>
+			<import plugin="org.eclipse.e4.ui.workbench.swt"/>
+			<import plugin="org.eclipse.e4.ui.workbench3"/>
+			<import plugin="org.eclipse.e4.ui.workbench"/>
+			<import plugin="org.eclipse.ecf.filetransfer"/>
+			<import plugin="org.eclipse.ecf.identity"/>
+			<import plugin="org.eclipse.ecf.provider.filetransfer"/>
+			<import plugin="org.eclipse.ecf"/>
+			<import plugin="org.eclipse.emf.common.ui"/>
+			<import plugin="org.eclipse.emf.common"/>
+			<import plugin="org.eclipse.emf.ecore.change"/>
+			<import plugin="org.eclipse.emf.ecore.xmi"/>
+			<import plugin="org.eclipse.emf.ecore"/>
+			<import plugin="org.eclipse.emf.edit.ui"/>
+			<import plugin="org.eclipse.emf.edit"/>
+			<import plugin="org.eclipse.equinox.app"/>
+			<import plugin="org.eclipse.equinox.bidi"/>
+			<import plugin="org.eclipse.equinox.common"/>
+			<import plugin="org.eclipse.equinox.ds"/>
+			<import plugin="org.eclipse.equinox.event"/>
+			<import plugin="org.eclipse.equinox.frameworkadmin.equinox"/>
+			<import plugin="org.eclipse.equinox.frameworkadmin"/>
+			<import plugin="org.eclipse.equinox.p2.artifact.repository"/>
+			<import plugin="org.eclipse.equinox.p2.core"/>
+			<import plugin="org.eclipse.equinox.p2.director.app"/>
+			<import plugin="org.eclipse.equinox.p2.director"/>
+			<import plugin="org.eclipse.equinox.p2.directorywatcher"/>
+			<import plugin="org.eclipse.equinox.p2.engine"/>
+			<import plugin="org.eclipse.equinox.p2.extensionlocation"/>
+			<import plugin="org.eclipse.equinox.p2.garbagecollector"/>
+			<import plugin="org.eclipse.equinox.p2.jarprocessor"/>
+			<import plugin="org.eclipse.equinox.p2.metadata.repository"/>
+			<import plugin="org.eclipse.equinox.p2.metadata"/>
+			<import plugin="org.eclipse.equinox.p2.operations"/>
+			<import plugin="org.eclipse.equinox.p2.publisher.eclipse"/>
+			<import plugin="org.eclipse.equinox.p2.publisher"/>
+			<import plugin="org.eclipse.equinox.p2.ql"/>
+			<import plugin="org.eclipse.equinox.p2.reconciler.dropins"/>
+			<import plugin="org.eclipse.equinox.p2.repository.tools"/>
+			<import plugin="org.eclipse.equinox.p2.repository"/>
+			<import plugin="org.eclipse.equinox.p2.touchpoint.eclipse"/>
+			<import plugin="org.eclipse.equinox.p2.touchpoint.natives"/>
+			<import plugin="org.eclipse.equinox.p2.transport.ecf"/>
+			<import plugin="org.eclipse.equinox.preferences"/>
+			<import plugin="org.eclipse.equinox.registry"/>
+			<import plugin="org.eclipse.equinox.security"/>
+			<import plugin="org.eclipse.equinox.simpleconfigurator.manipulator"/>
+			<import plugin="org.eclipse.equinox.simpleconfigurator"/>
+			<import plugin="org.eclipse.equinox.util"/>
+			<import plugin="org.eclipse.help"/>
+			<import plugin="org.eclipse.jface.databinding"/>
+			<import plugin="org.eclipse.jface.text"/>
+			<import plugin="org.eclipse.jface"/>
+			<import plugin="org.eclipse.osgi.services"/>
+			<import plugin="org.eclipse.osgi"/>
+			<import plugin="org.eclipse.swt"/>
+			<import plugin="org.eclipse.team.core"/>
+			<import plugin="org.eclipse.text"/>
+			<import plugin="org.eclipse.ui.forms"/>
+			<import plugin="org.eclipse.ui.ide.application"/>
+			<import plugin="org.eclipse.ui.ide"/>
+			<import plugin="org.eclipse.ui.views"/>
+			<import plugin="org.eclipse.ui.workbench"/>
+			<import plugin="org.eclipse.ui"/>
+			<import plugin="org.sat4j.core"/>
+			<import plugin="org.sat4j.pb"/>
+			<import plugin="org.w3c.css.sac"/>
+			<import plugin="org.w3c.dom.smil"/>
+			<import plugin="org.w3c.dom.svg"/>
+			-->
+   </requires>
 
-   <plugin
-         id="org.eclipse.emf.cdo.releng.setup.product"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
-   <plugin
-         id="org.eclipse.core.contenttype"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.jobs"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.runtime.compatibility.registry"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.app"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.preferences"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.registry"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.osgi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
+		<plugin id="org.eclipse.emf.cdo.releng.setup" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.releng.setup.edit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.releng.setup.editor" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.releng.setup.product" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		
+		<!--
+		<plugin id="org.eclipse.core.runtime.compatibility.registry" download-size="0" install-size="0" version="0.0.0" unpack="false" fragment="true"/>
+		<plugin id="org.eclipse.ecf.provider.filetransfer.ssl" download-size="0" install-size="0" version="0.0.0" unpack="false" fragment="true"/>
+		<plugin id="org.eclipse.ecf.ssl" download-size="0" install-size="0" version="0.0.0" unpack="false" fragment="true"/>
+		<plugin id="org.eclipse.core.runtime.compatibility.registry" download-size="0" install-size="0" version="0.0.0" unpack="false" fragment="true"/>
+		<plugin id="com.ibm.icu" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="javax.annotation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="javax.inject" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="javax.servlet" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="javax.xml" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.apache.batik.css" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.apache.batik.util.gui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.apache.batik.util" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ant.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.compare.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.commands" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.contenttype" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.databinding.observable" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.databinding.property" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.databinding" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.expressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.filesystem" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.jobs" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.net" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.resources" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.runtime.compatibility.auth" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.runtime" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.core.variables" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.core.commands" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.core.contexts" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.core.di.extensions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.core.di" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.core.services" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.bindings" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.css.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.css.swt.theme" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.css.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.di" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.model.workbench" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.services" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.widgets" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.workbench.addons.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.workbench.renderers.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.workbench.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.workbench3" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.e4.ui.workbench" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ecf.filetransfer" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ecf.identity" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ecf.provider.filetransfer" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ecf" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.common.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.common" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.ecore.change" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.ecore.xmi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.ecore" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.edit.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.edit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.app" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.bidi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.common" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.ds" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.event" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.frameworkadmin.equinox" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.frameworkadmin" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.artifact.repository" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.director.app" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.director" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.directorywatcher" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.engine" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.extensionlocation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.garbagecollector" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.jarprocessor" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.metadata.repository" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.metadata" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.operations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.publisher.eclipse" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.publisher" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.ql" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.reconciler.dropins" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.repository.tools" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.repository" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.touchpoint.eclipse" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.touchpoint.natives" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.p2.transport.ecf" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.preferences" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.registry" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.security" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.simpleconfigurator.manipulator" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.simpleconfigurator" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.equinox.util" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.help" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.jface.databinding" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.jface.text" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.jface" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.osgi.services" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.osgi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.team.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.text" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ui.forms" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ui.ide.application" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ui.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ui.views" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ui.workbench" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.sat4j.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.sat4j.pb" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.w3c.css.sac" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.w3c.dom.smil" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.w3c.dom.svg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+-->
 </feature>

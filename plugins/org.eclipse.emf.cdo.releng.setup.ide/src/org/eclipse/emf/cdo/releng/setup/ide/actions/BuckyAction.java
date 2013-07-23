@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.setup.ide.actions;
 
-import org.eclipse.emf.cdo.releng.setup.dialogs.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.ide.Buckminster;
+import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;

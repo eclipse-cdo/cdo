@@ -13,19 +13,6 @@
 
 <plugin>
 
-   <extension
-         id="app"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            cardinality="singleton-global"
-            thread="main"
-            visible="true">
-         <run
-               class="org.eclipse.emf.cdo.releng.setup.Application">
-         </run>
-      </application>
-   </extension>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated setup -->
       <package

@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.dialogs.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.setup.helper.OS;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
@@ -28,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.provider.BranchItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ConfigurationItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ProjectItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -147,9 +147,9 @@ public class SetupDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    getShell().setText("Setup Development Environment");
-    setTitle("Setup Development Environment");
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.product", "icons/install_wiz.gif"));
+    getShell().setText(ProgressLogDialog.TITLE);
+    setTitle(ProgressLogDialog.TITLE);
+    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.editor", "icons/install_wiz.gif"));
 
     URI configurationURI = URI.createURI(CONFIG);
     Resource resource = resourceSet.getResource(configurationURI, true);

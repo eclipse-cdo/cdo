@@ -10,15 +10,6 @@
  *******************************************************************************/
 package org.eclipse.wb.swt;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.resource.CompositeImageDescriptor;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-
-import org.osgi.framework.Bundle;
-
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -28,6 +19,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.CompositeImageDescriptor;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.osgi.framework.Bundle;
 
 /**
  * Utility class for managing OS resources associated with SWT/JFace controls such as colors, fonts, images,

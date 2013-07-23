@@ -94,7 +94,7 @@ import java.util.List;
 public class SetupDialog extends TitleAreaDialog
 {
   private static final String CONFIG = System.getProperty("setup.uri",
-      "http://www.eclipse.org/cdo/development/setup/Configuration.xmi");
+      "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.xmi");
 
   private static final String ECLIPSE_VERSION_COLUMN = "eclipseVersion";
 

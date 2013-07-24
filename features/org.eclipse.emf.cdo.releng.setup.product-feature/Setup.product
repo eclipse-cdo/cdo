@@ -44,4 +44,5 @@ configuration</programArgs>
       <feature id="org.eclipse.equinox.p2.core.feature"/>
    </features>
 
+
 </product>

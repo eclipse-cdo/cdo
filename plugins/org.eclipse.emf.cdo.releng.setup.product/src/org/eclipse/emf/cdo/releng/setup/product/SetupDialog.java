@@ -43,7 +43,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -478,8 +477,8 @@ public class SetupDialog extends TitleAreaDialog
 
   private void init()
   {
-    IPath stateLocation = Activator.getDefault().getStateLocation();
-    URI preferencesURI = URI.createFileURI(stateLocation.append("preferences.xmi").toOSString());
+    URI preferencesURI = URI.createFileURI(new File(System.getProperty("user.home", "."), "setup-eclipse.xmi")
+        .getAbsolutePath());
 
     if (resourceSet.getURIConverter().exists(preferencesURI, null))
     {

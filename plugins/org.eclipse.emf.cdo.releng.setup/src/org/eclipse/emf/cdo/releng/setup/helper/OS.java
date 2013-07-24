@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.releng.setup.helper;
 
 import org.eclipse.core.runtime.Platform;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Closeable;
@@ -24,9 +23,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +31,6 @@ import java.util.List;
  */
 public abstract class OS
 {
-  private static final int BUFFER_SIZE = 4096;
-
   public static final OS INSTANCE = create();
 
   public List<String> readText(File file)
@@ -97,103 +91,29 @@ public abstract class OS
     }
   }
 
-  public File downloadURL(String url)
-  {
-    if (url.endsWith("/"))
-    {
-      url = url.substring(0, url.length() - 1);
-    }
-
-    StringBuilder builder = new StringBuilder(url);
-    for (int i = 0; i < builder.length(); i++)
-    {
-      char c = builder.charAt(i);
-      if (!(Character.isLetter(c) || Character.isDigit(c)))
-      {
-        builder.setCharAt(i, '_');
-      }
-    }
-
-    String name = builder.toString();
-
-    try
-    {
-      File tmp = File.createTempFile(name + "-", ".part");
-      File file = new File(tmp.getParentFile(), name);
-      if (!file.exists())
-      {
-        downloadURL(url, tmp);
-        tmp.renameTo(file);
-      }
-
-      return file;
-    }
-    catch (IOException ex)
-    {
-      throw new RuntimeException(ex);
-    }
-  }
-
-  public void downloadURL(String url, File file)
-  {
-    final byte data[] = new byte[BUFFER_SIZE];
-    BufferedInputStream in = null;
-    FileOutputStream out = null;
-
-    try
-    {
-      URLConnection connection = new URL(url).openConnection();
-      if (connection instanceof HttpURLConnection)
-      {
-        connection.connect();
-
-        int result = ((HttpURLConnection)connection).getResponseCode();
-        if (result >= 400)
-        {
-          throw new IOException("HTTP error " + result);
-        }
-      }
-
-      int length = connection.getContentLength();
-      float factor = 100f / length;
-      String fileName = new File(connection.getURL().getFile()).getName();
-
-      in = new BufferedInputStream(connection.getInputStream());
-      out = new FileOutputStream(file);
-
-      int lastPercent = 0;
-      int read = 0;
-      int n;
-      while ((n = in.read(data, 0, BUFFER_SIZE)) != -1)
-      {
-        out.write(data, 0, n);
-        read += n;
-
-        int percent = Math.round(factor * read);
-        if (percent != lastPercent)
-        {
-          Progress.log().addLine("Downloading " + fileName + " (" + percent + "%)");
-        }
-      }
-    }
-    catch (IOException ex)
-    {
-      throw new RuntimeException(ex);
-    }
-    finally
-    {
-      close(out);
-      close(in);
-    }
-  }
-
   public abstract String getEclipseExecutable();
 
   public abstract String getGitPrefix();
 
+  public static void close(Closeable closeable)
+  {
+    if (closeable != null)
+    {
+      try
+      {
+        closeable.close();
+      }
+      catch (IOException ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    }
+  }
+
   private static OS create()
   {
     String os = Platform.getOS();
+
     if (Platform.OS_WIN32.equals(os))
     {
       return new Win();
@@ -210,21 +130,6 @@ public abstract class OS
     }
 
     throw new IllegalStateException("Operating system not supported: " + os);
-  }
-
-  private static void close(Closeable closeable)
-  {
-    if (closeable != null)
-    {
-      try
-      {
-        closeable.close();
-      }
-      catch (IOException ex)
-      {
-        throw new RuntimeException(ex);
-      }
-    }
   }
 
   /**

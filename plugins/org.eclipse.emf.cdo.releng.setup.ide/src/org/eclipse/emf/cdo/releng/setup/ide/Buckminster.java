@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.ide;
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.helper.Downloads;
 import org.eclipse.emf.cdo.releng.setup.helper.OS;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogProvider;
@@ -78,9 +79,8 @@ public final class Buckminster
     File target = new File(baselineDir, version);
     if (!target.exists())
     {
-      // File file = new File("C:/develop/bin/zips/emf-cdo-4.2-baseline.zip");
       String url = apiBaseline.getZipLocation();
-      File file = OS.INSTANCE.downloadURL(url);
+      File file = Downloads.downloadURL(url);
       baselineDir.mkdirs();
 
       final File[] rootDir = { null };

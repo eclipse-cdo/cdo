@@ -757,14 +757,16 @@ public class SetupDialog extends TitleAreaDialog
 
   private void mangleEclipseIni(List<String> lines, File branchFolder, String gitPrefix)
   {
+    String maxHeap = Platform.getOSArch().endsWith("_64") ? "-Xmx4g" : "-Xmx1g";
+
     int xmx = findLine(lines, "-Xmx");
     if (xmx == -1)
     {
-      lines.add("-Xmx2g");
+      lines.add(maxHeap);
     }
     else
     {
-      lines.set(xmx, "-Xmx2g");
+      lines.set(xmx, maxHeap);
     }
 
     int maxperm = findLine(lines, "--launcher.XXMaxPermSize");

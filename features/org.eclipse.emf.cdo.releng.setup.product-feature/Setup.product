@@ -42,7 +42,6 @@ configuration</programArgs>
       <feature id="org.eclipse.e4.rcp"/>
       <feature id="org.eclipse.rcp"/>
       <feature id="org.eclipse.equinox.p2.core.feature"/>
-      <feature id="org.eclipse.platform"/>
    </features>
 
 

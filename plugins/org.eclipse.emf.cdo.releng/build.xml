@@ -108,11 +108,13 @@
 							<arg value="-r" />
 							<arg value="file:${hudson.WORKSPACE}" />
 							<arg value="-r" />
-							<arg value="${train.releases}" />
+							<arg value="http://download.eclipse.org/releases/${train}" />
 							<arg value="-r" />
-							<arg value="${eclipse.updates}" />
+							<arg value="http://download.eclipse.org/releases/${train.previous}" />
 							<arg value="-r" />
-							<arg value="${eclipse.milestones}" />
+							<arg value="http://download.eclipse.org/eclipse/updates/${eclipse}" />
+							<arg value="-r" />
+							<arg value="http://download.eclipse.org/eclipse/updates/${eclipse}-I-builds" />
 							<arg value="-d" />
 							<arg value="${temp.products}/@{profile}-@{platform}" />
 							<arg value="-p" />
@@ -237,7 +239,7 @@
 				          suffix=".zip"
 				          property="director.zip"
 				          deleteonexit="true" />
-				<get src="${director}" dest="${director.zip}" />
+				<get src="http://download.eclipse.org/tools/buckminster/products/director_latest.zip" dest="${director.zip}" />
 				<mkdir dir="${tools}" />
 				<unzip src="${director.zip}" dest="${tools}" />
 				<delete file="${director.zip}" />
@@ -257,11 +259,11 @@
 					</properties>
 					<args>
 						<arg value="-r" />
-						<arg value="${buckminster.headless}" />
+						<arg value="http://download.eclipse.org/tools/buckminster/headless-4.3" />
 						<arg value="-r" />
 						<arg value="http://download.eclipse.org/eclipse/updates/3.8" />
 						<arg value="-r" />
-						<arg value="${cdo.releng.repo}" />
+						<arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
 						<arg value="-d" />
 						<arg value="${tools}/buckminster" />
 						<arg value="-p" />
@@ -689,6 +691,7 @@
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
 			</cmdargs>
 		</buckminster>
+		<echo message="Converting to HTML" />
 		<java classname="org.eclipse.emf.cdo.releng.Api2Html">
 			<classpath>
 				<pathelement location="${releng}/bin/" />

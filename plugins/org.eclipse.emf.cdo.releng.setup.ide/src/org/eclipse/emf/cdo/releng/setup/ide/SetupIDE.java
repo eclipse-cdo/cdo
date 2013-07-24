@@ -16,21 +16,23 @@ import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWindowListener;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
  */
 public final class SetupIDE
 {
+  private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
+
   private static final int INITIAL = 0;
 
   private static final int DONE = Integer.MAX_VALUE;
@@ -45,7 +47,42 @@ public final class SetupIDE
       return;
     }
 
-    final Shell shell = getShell();
+    IWorkbenchWindow window = WORKBENCH.getActiveWorkbenchWindow();
+    if (window != null)
+    {
+      run(window);
+    }
+    else
+    {
+      WORKBENCH.addWindowListener(new IWindowListener()
+      {
+        public void windowOpened(IWorkbenchWindow window)
+        {
+          // Do nothing
+        }
+
+        public void windowDeactivated(IWorkbenchWindow window)
+        {
+          // Do nothing
+        }
+
+        public void windowClosed(IWorkbenchWindow window)
+        {
+          // Do nothing
+        }
+
+        public void windowActivated(IWorkbenchWindow window)
+        {
+          WORKBENCH.removeWindowListener(this);
+          run(window);
+        }
+      });
+    }
+  }
+
+  private static void run(IWorkbenchWindow window)
+  {
+    final Shell shell = window.getShell();
     shell.getDisplay().asyncExec(new Runnable()
     {
       public void run()
@@ -118,26 +155,6 @@ public final class SetupIDE
     }
 
     return INITIAL;
-  }
-
-  private static Shell getShell()
-  {
-    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-    if (window != null)
-    {
-      return window.getShell();
-    }
-
-    final AtomicReference<Shell> shell = new AtomicReference<Shell>();
-    Display.getDefault().syncExec(new Runnable()
-    {
-      public void run()
-      {
-        shell.set(new Shell());
-      }
-    });
-
-    return shell.get();
   }
 
   private static boolean disableAutoBuilding()

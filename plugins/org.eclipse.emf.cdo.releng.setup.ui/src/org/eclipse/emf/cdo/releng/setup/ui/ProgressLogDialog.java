@@ -140,9 +140,13 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       throw new OperationCanceledException();
     }
 
-    if (line == null || line.length() == 0 || line.startsWith("Scanning Git") || line.startsWith("Re-indexing (fully)")
-        || line.endsWith(" remaining.") || line.startsWith("Calculating Decorations") || line.startsWith("Decorating ")
-        || line.startsWith("http://") || line.startsWith("The user operation is waiting"))
+    if (line == null || line.length() == 0 || Character.isLowerCase(line.charAt(0)) || line.startsWith("Scanning Git")
+        || line.startsWith("Re-indexing (fully)") || line.endsWith(" remaining.")
+        || line.startsWith("Calculating Decorations") || line.startsWith("Decorating ") || line.startsWith("http://")
+        || line.startsWith("The user operation is waiting") || line.startsWith("Git repository changed")
+        || line.startsWith("Refreshing ") || line.startsWith("Opening ") || line.startsWith("Connecting  project ")
+        || line.startsWith("Searching for associated repositories.") || line.startsWith("Preparing type ")
+        || line.startsWith("Loading project description") || line.startsWith("Generating cspec from PDE artifacts"))
     {
       return;
     }

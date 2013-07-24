@@ -99,10 +99,33 @@ public abstract class OS
 
   public File downloadURL(String url)
   {
+    if (url.endsWith("/"))
+    {
+      url = url.substring(0, url.length() - 1);
+    }
+
+    StringBuilder builder = new StringBuilder(url);
+    for (int i = 0; i < builder.length(); i++)
+    {
+      char c = builder.charAt(i);
+      if (!(Character.isLetter(c) || Character.isDigit(c)))
+      {
+        builder.setCharAt(i, '_');
+      }
+    }
+
+    String name = builder.toString();
+
     try
     {
-      File file = File.createTempFile("download-", ".bin");
-      downloadURL(url, file);
+      File tmp = File.createTempFile(name + "-", ".part");
+      File file = new File(tmp.getParentFile(), name);
+      if (!file.exists())
+      {
+        downloadURL(url, tmp);
+        tmp.renameTo(file);
+      }
+
       return file;
     }
     catch (IOException ex)

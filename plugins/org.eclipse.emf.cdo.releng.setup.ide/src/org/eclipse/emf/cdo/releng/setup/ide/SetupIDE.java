@@ -66,7 +66,7 @@ public final class SetupIDE
 
               if (state < 2)
               {
-                // GitClones.init();
+                GitClones.init();
                 saveState(2);
               }
 

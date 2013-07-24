@@ -57,7 +57,8 @@
 					<sysproperties />
 				</properties>
 				<args>
-					<jvmarg value="-Xmx4096m" />
+					<jvmarg value="-XX:MaxPermSize=256M" />
+					<jvmarg value="-Xmx4g" />
 					<jvmarg value="-Dsite.pack200=${site.signing}" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
@@ -719,7 +720,7 @@
 		                  platform="Windows"
 		                  os="win32"
 		                  ws="win32"
-		                  arch="x86"
+		                  arch="x86_64"
 		                  priority="450" />
 
 		<generate.product id="org.eclipse.emf.cdo.explorer.product"
@@ -727,7 +728,7 @@
 		                  platform="Windows"
 		                  os="win32"
 		                  ws="win32"
-		                  arch="x86"
+		                  arch="x86_64"
 		                  priority="350" />
 
 		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
@@ -735,7 +736,7 @@
 		                  platform="Windows"
 		                  os="win32"
 		                  ws="win32"
-		                  arch="x86"
+		                  arch="x86_64"
 		                  priority="250" />
 
 		<!-- Linux -->

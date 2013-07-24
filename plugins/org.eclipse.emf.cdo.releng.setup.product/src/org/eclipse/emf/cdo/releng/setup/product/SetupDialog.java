@@ -44,6 +44,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -93,8 +94,11 @@ import java.util.List;
  */
 public class SetupDialog extends TitleAreaDialog
 {
-  private static final String CONFIG = System.getProperty("setup.uri",
+  private static final String SETUP = System.getProperty("setup.uri",
       "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.xmi");
+
+  private static final String RELENG = System.getProperty("releng.uri",
+      "http://download.eclipse.org/modeling/emf/cdo/updates/integration");
 
   private static final String ECLIPSE_VERSION_COLUMN = "eclipseVersion";
 
@@ -149,9 +153,9 @@ public class SetupDialog extends TitleAreaDialog
   {
     getShell().setText(ProgressLogDialog.TITLE);
     setTitle(ProgressLogDialog.TITLE);
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.editor", "icons/install_wiz.gif"));
+    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.ui", "icons/install_wiz.gif"));
 
-    URI configurationURI = URI.createURI(CONFIG);
+    URI configurationURI = URI.createURI(SETUP);
     Resource resource = resourceSet.getResource(configurationURI, true);
     configuration = (Configuration)resource.getContents().get(0);
 
@@ -316,6 +320,8 @@ public class SetupDialog extends TitleAreaDialog
     userNameLabel.setText("User Name:");
 
     userNameText = new Text(grpPreferences, SWT.BORDER);
+    userNameText
+        .setToolTipText("Must match your account on Git/Gerrit.\nDon't forget to upload your public key to that account!");
     GridData gd_userNameText = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
     gd_userNameText.widthHint = 165;
     userNameText.setLayoutData(gd_userNameText);
@@ -337,6 +343,7 @@ public class SetupDialog extends TitleAreaDialog
     bundlePoolLabel.setText("Bundle Pool:");
 
     bundlePoolText = new Text(grpPreferences, SWT.BORDER);
+    bundlePoolText.setToolTipText("Points to your local bundle pool to speed up p2 installations.");
     bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
     Button bundlePoolButton = new Button(grpPreferences, SWT.NONE);
@@ -365,6 +372,7 @@ public class SetupDialog extends TitleAreaDialog
     installFolderLabel.setText("Install Folder:");
 
     installFolderText = new Text(grpPreferences, SWT.BORDER);
+    installFolderText.setToolTipText("Points to the folder where the setup tool will create the project folders.");
     installFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     installFolderText.addModifyListener(new ModifyListener()
     {
@@ -399,6 +407,7 @@ public class SetupDialog extends TitleAreaDialog
     gitPrefixLabel.setText("Git Prefix:");
 
     gitPrefixText = new Text(grpPreferences, SWT.BORDER);
+    gitPrefixText.setToolTipText("Points to your native Git installation in order to reuse the 'etc/gitconfig' file.");
     gitPrefixText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     gitPrefixText.addModifyListener(new ModifyListener()
     {
@@ -448,7 +457,7 @@ public class SetupDialog extends TitleAreaDialog
   @Override
   protected Point getInitialSize()
   {
-    return new Point(475, 550);
+    return new Point(500, 550);
   }
 
   @Override
@@ -565,16 +574,49 @@ public class SetupDialog extends TitleAreaDialog
       return;
     }
 
-    if (gitPrefixText.getText().length() == 0)
+    String gitPrefix = gitPrefixText.getText();
+    if (gitPrefix.length() == 0)
     {
       setErrorMessage("Enter the Git prefix folder (which contains 'etc/gitconfig').");
       installButton.setEnabled(false);
       return;
     }
 
+    File etc = new File(gitPrefix, "etc");
+    File gitconfig = new File(etc, "gitconfig");
+    if (!gitconfig.isFile())
+    {
+      setErrorMessage("The Git prefix folder does not contain 'etc/gitconfig'.");
+      installButton.setEnabled(false);
+      return;
+    }
+
+    if (Platform.OS_WIN32.equals(Platform.getOS()))
+    {
+      if (!containsAutoCRLF(gitconfig))
+      {
+        setErrorMessage("The gitconfig file must contain 'autocrlf = true' on Windows.\nWhen you've added this line modify the Git Prefix field to revalidate...");
+        installButton.setEnabled(false);
+        return;
+      }
+    }
+
     setErrorMessage(null);
     setMessage("Click the Install button to start the installation process.");
     installButton.setEnabled(true);
+  }
+
+  private boolean containsAutoCRLF(File file)
+  {
+    for (String line : OS.INSTANCE.readText(file))
+    {
+      if (line.contains("autocrlf") && line.contains("true"))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private String safe(String string)
@@ -673,8 +715,8 @@ public class SetupDialog extends TitleAreaDialog
         .feature("org.eclipse.buckminster.pde.feature")
         .repository("http://download.eclipse.org/tools/buckminster/updates-4.3")
         //
-        .bundle("org.eclipse.emf.cdo.releng.setup.ide")
-        .repository("file:/C:/develop/ws/cdo/org.eclipse.emf.cdo.releng.setup.updatesite")
+        .bundle("org.eclipse.emf.cdo.releng.setup.ide").repository(RELENG)
+        // .repository("file:/C:/develop/ws/cdo/org.eclipse.emf.cdo.releng.setup.updatesite")
         //
         .install(destination);
 

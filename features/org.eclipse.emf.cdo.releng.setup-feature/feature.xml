@@ -57,14 +57,14 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.setup.ide"
+         id="org.eclipse.emf.cdo.releng.setup.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.setup.product"
+         id="org.eclipse.emf.cdo.releng.setup.ide"
          download-size="0"
          install-size="0"
          version="0.0.0"

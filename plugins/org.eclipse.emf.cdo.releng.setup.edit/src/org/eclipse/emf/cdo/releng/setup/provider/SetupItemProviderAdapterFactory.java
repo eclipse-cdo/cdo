@@ -357,6 +357,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ToolPreference} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ToolPreferenceItemProvider toolPreferenceItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ToolPreference}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createToolPreferenceAdapter()
+  {
+    if (toolPreferenceItemProvider == null)
+    {
+      toolPreferenceItemProvider = new ToolPreferenceItemProvider(this);
+    }
+
+    return toolPreferenceItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Preferences} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -437,7 +462,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -493,53 +518,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   public void dispose()
   {
     if (preferencesItemProvider != null)
-    {
       preferencesItemProvider.dispose();
-    }
     if (eclipseVersionItemProvider != null)
-    {
       eclipseVersionItemProvider.dispose();
-    }
     if (directorCallItemProvider != null)
-    {
       directorCallItemProvider.dispose();
-    }
     if (installableUnitItemProvider != null)
-    {
       installableUnitItemProvider.dispose();
-    }
     if (p2RepositoryItemProvider != null)
-    {
       p2RepositoryItemProvider.dispose();
-    }
     if (configurationItemProvider != null)
-    {
       configurationItemProvider.dispose();
-    }
     if (toolInstallationItemProvider != null)
-    {
       toolInstallationItemProvider.dispose();
-    }
     if (projectItemProvider != null)
-    {
       projectItemProvider.dispose();
-    }
     if (branchItemProvider != null)
-    {
       branchItemProvider.dispose();
-    }
     if (apiBaselineItemProvider != null)
-    {
       apiBaselineItemProvider.dispose();
-    }
     if (gitCloneItemProvider != null)
-    {
       gitCloneItemProvider.dispose();
-    }
     if (setupItemProvider != null)
-    {
       setupItemProvider.dispose();
-    }
+    if (toolPreferenceItemProvider != null)
+      toolPreferenceItemProvider.dispose();
   }
 
 }

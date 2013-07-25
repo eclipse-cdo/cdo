@@ -102,6 +102,17 @@ public class ConfigurationItemProvider extends ItemProviderAdapter implements IE
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns Configuration.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -10,6 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.setup.ide;
 
+import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
+import org.eclipse.emf.cdo.releng.setup.ToolPreference;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 
 import org.eclipse.core.runtime.Platform;
@@ -20,35 +25,56 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
  */
 public final class Preferences
 {
+  private static final SetupContext CONTEXT = Activator.getDefault();
+
   private static final IEclipsePreferences ROOT = Platform.getPreferencesService().getRootNode();
 
-  public static void setRunInBackground() throws Exception
+  public static void init() throws Exception
   {
-    setBoolean(ROOT.node("instance").node("org.eclipse.ui.workbench"), "RUN_IN_BACKGROUND", true);
+    set("instance/org.eclipse.ui.workbench/RUN_IN_BACKGROUND", "true");
+
+    Setup setup = CONTEXT.getSetup();
+    init(setup.getPreferences());
+
+    Branch branch = setup.getBranch();
+    init(branch);
+
+    Project project = branch.getProject();
+    init(project);
   }
 
-  private static void setBoolean(org.osgi.service.prefs.Preferences node, String key, boolean value)
+  private static void init(ToolInstallation preferenceHolder)
   {
-    if (node.getBoolean(key, false) != value)
+    for (ToolPreference toolPreference : preferenceHolder.getToolPreferences())
     {
-      Progress.log().addLine("Setting " + key + " = " + value);
-      node.putBoolean(key, value);
+      init(toolPreference);
     }
   }
 
-  // private static void dump(Preferences node, String indent) throws Exception
-  // {
-  // System.out.println(indent + "NODE " + node.name());
-  // for (String key : node.keys())
-  // {
-  // String value = node.get(key, "<null>");
-  // System.out.println(indent + key + " = " + value);
-  // }
-  //
-  // for (String name : node.childrenNames())
-  // {
-  // Preferences child = node.node(name);
-  // dump(child, indent + "   ");
-  // }
-  // }
+  private static void init(ToolPreference toolPreference)
+  {
+    String key = toolPreference.getKey();
+    if (key.startsWith("/"))
+    {
+      key = key.substring(1);
+    }
+
+    String value = toolPreference.getValue();
+    set(key, value);
+  }
+
+  public static void set(String key, String value)
+  {
+    org.osgi.service.prefs.Preferences node = ROOT;
+
+    String[] segments = key.split("/");
+    for (int i = 0; i < segments.length - 1; i++)
+    {
+      String segment = segments[i];
+      node = node.node(segment);
+    }
+
+    Progress.log().addLine("Setting preference " + key + " = " + value);
+    node.put(segments[segments.length - 1], value);
+  }
 }

@@ -108,9 +108,7 @@ public class ApiBaselineImpl extends MinimalEObjectImpl.Container implements Api
   public Project getProject()
   {
     if (eContainerFeatureID() != SetupPackage.API_BASELINE__PROJECT)
-    {
       return null;
-    }
     return (Project)eInternalContainer();
   }
 
@@ -132,33 +130,23 @@ public class ApiBaselineImpl extends MinimalEObjectImpl.Container implements Api
    */
   public void setProject(Project newProject)
   {
-    if (newProject != eInternalContainer() || eContainerFeatureID() != SetupPackage.API_BASELINE__PROJECT
-        && newProject != null)
+    if (newProject != eInternalContainer()
+        || (eContainerFeatureID() != SetupPackage.API_BASELINE__PROJECT && newProject != null))
     {
       if (EcoreUtil.isAncestor(this, newProject))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newProject != null)
-      {
         msgs = ((InternalEObject)newProject)
             .eInverseAdd(this, SetupPackage.PROJECT__API_BASELINES, Project.class, msgs);
-      }
       msgs = basicSetProject(newProject, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.API_BASELINE__PROJECT, newProject, newProject));
-    }
   }
 
   /**
@@ -181,9 +169,7 @@ public class ApiBaselineImpl extends MinimalEObjectImpl.Container implements Api
     String oldVersion = version;
     version = newVersion;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.API_BASELINE__VERSION, oldVersion, version));
-    }
   }
 
   /**
@@ -206,10 +192,8 @@ public class ApiBaselineImpl extends MinimalEObjectImpl.Container implements Api
     String oldZipLocation = zipLocation;
     zipLocation = newZipLocation;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.API_BASELINE__ZIP_LOCATION, oldZipLocation,
           zipLocation));
-    }
   }
 
   /**
@@ -224,9 +208,7 @@ public class ApiBaselineImpl extends MinimalEObjectImpl.Container implements Api
     {
     case SetupPackage.API_BASELINE__PROJECT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetProject((Project)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -359,9 +341,7 @@ public class ApiBaselineImpl extends MinimalEObjectImpl.Container implements Api
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (version: ");

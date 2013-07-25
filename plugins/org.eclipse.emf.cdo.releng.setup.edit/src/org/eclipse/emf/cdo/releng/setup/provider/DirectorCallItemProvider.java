@@ -11,11 +11,13 @@
 package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.DirectorCall;
+import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -102,6 +104,17 @@ public class DirectorCallItemProvider extends ItemProviderAdapter implements IEd
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns DirectorCall.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -117,11 +130,29 @@ public class DirectorCallItemProvider extends ItemProviderAdapter implements IEd
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
+    DirectorCall directorCall = (DirectorCall)object;
+    EList<InstallableUnit> installableUnits = directorCall.getInstallableUnits();
+    if (!installableUnits.isEmpty())
+    {
+      StringBuilder builder = new StringBuilder();
+      for (InstallableUnit installableUnit : installableUnits)
+      {
+        if (builder.length() > 0)
+        {
+          builder.append(", ");
+        }
+
+        builder.append(installableUnit.getId());
+      }
+
+      return getString("_UI_DirectorCall_type") + " (" + builder + ")";
+    }
+
     return getString("_UI_DirectorCall_type");
   }
 

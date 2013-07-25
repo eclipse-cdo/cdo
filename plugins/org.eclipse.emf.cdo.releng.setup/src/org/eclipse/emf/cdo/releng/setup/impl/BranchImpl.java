@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.GitClone;
+import org.eclipse.emf.cdo.releng.setup.JRE;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -28,9 +28,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -46,6 +44,7 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getApiBaseline <em>Api Baseline</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getMspecFilePath <em>Mspec File Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getCloneVariableName <em>Clone Variable Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getJavaVersion <em>Java Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -134,6 +133,26 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
   protected String cloneVariableName = CLONE_VARIABLE_NAME_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getJavaVersion() <em>Java Version</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getJavaVersion()
+   * @generated
+   * @ordered
+   */
+  protected static final JRE JAVA_VERSION_EDEFAULT = JRE.JRE_13;
+
+  /**
+   * The cached value of the '{@link #getJavaVersion() <em>Java Version</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getJavaVersion()
+   * @generated
+   * @ordered
+   */
+  protected JRE javaVersion = JAVA_VERSION_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -162,9 +181,7 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
   public Project getProject()
   {
     if (eContainerFeatureID() != SetupPackage.BRANCH__PROJECT)
-    {
       return null;
-    }
     return (Project)eInternalContainer();
   }
 
@@ -186,32 +203,22 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
    */
   public void setProject(Project newProject)
   {
-    if (newProject != eInternalContainer() || eContainerFeatureID() != SetupPackage.BRANCH__PROJECT
-        && newProject != null)
+    if (newProject != eInternalContainer()
+        || (eContainerFeatureID() != SetupPackage.BRANCH__PROJECT && newProject != null))
     {
       if (EcoreUtil.isAncestor(this, newProject))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newProject != null)
-      {
         msgs = ((InternalEObject)newProject).eInverseAdd(this, SetupPackage.PROJECT__BRANCHES, Project.class, msgs);
-      }
       msgs = basicSetProject(newProject, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__PROJECT, newProject, newProject));
-    }
   }
 
   /**
@@ -234,9 +241,7 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__NAME, oldName, name));
-    }
   }
 
   /**
@@ -268,10 +273,8 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
       if (apiBaseline != oldApiBaseline)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, SetupPackage.BRANCH__API_BASELINE, oldApiBaseline,
               apiBaseline));
-        }
       }
     }
     return apiBaseline;
@@ -297,10 +300,8 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     ApiBaseline oldApiBaseline = apiBaseline;
     apiBaseline = newApiBaseline;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__API_BASELINE, oldApiBaseline,
           apiBaseline));
-    }
   }
 
   /**
@@ -323,10 +324,8 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     String oldMspecFilePath = mspecFilePath;
     mspecFilePath = newMspecFilePath;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__MSPEC_FILE_PATH, oldMspecFilePath,
           mspecFilePath));
-    }
   }
 
   /**
@@ -349,10 +348,32 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     String oldCloneVariableName = cloneVariableName;
     cloneVariableName = newCloneVariableName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__CLONE_VARIABLE_NAME,
           oldCloneVariableName, cloneVariableName));
-    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public JRE getJavaVersion()
+  {
+    return javaVersion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setJavaVersion(JRE newJavaVersion)
+  {
+    JRE oldJavaVersion = javaVersion;
+    javaVersion = newJavaVersion == null ? JAVA_VERSION_EDEFAULT : newJavaVersion;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__JAVA_VERSION, oldJavaVersion,
+          javaVersion));
   }
 
   /**
@@ -403,9 +424,7 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     {
     case SetupPackage.BRANCH__PROJECT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetProject((Project)otherEnd, msgs);
     case SetupPackage.BRANCH__GIT_CLONES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getGitClones()).basicAdd(otherEnd, msgs);
@@ -465,14 +484,14 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
       return getGitClones();
     case SetupPackage.BRANCH__API_BASELINE:
       if (resolve)
-      {
         return getApiBaseline();
-      }
       return basicGetApiBaseline();
     case SetupPackage.BRANCH__MSPEC_FILE_PATH:
       return getMspecFilePath();
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       return getCloneVariableName();
+    case SetupPackage.BRANCH__JAVA_VERSION:
+      return getJavaVersion();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -507,6 +526,9 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       setCloneVariableName((String)newValue);
       return;
+    case SetupPackage.BRANCH__JAVA_VERSION:
+      setJavaVersion((JRE)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -539,6 +561,9 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       setCloneVariableName(CLONE_VARIABLE_NAME_EDEFAULT);
       return;
+    case SetupPackage.BRANCH__JAVA_VERSION:
+      setJavaVersion(JAVA_VERSION_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -566,26 +591,10 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       return CLONE_VARIABLE_NAME_EDEFAULT == null ? cloneVariableName != null : !CLONE_VARIABLE_NAME_EDEFAULT
           .equals(cloneVariableName);
+    case SetupPackage.BRANCH__JAVA_VERSION:
+      return javaVersion != JAVA_VERSION_EDEFAULT;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case SetupPackage.BRANCH___IS_INSTALLED__STRING:
-      return isInstalled((String)arguments.get(0));
-    case SetupPackage.BRANCH___GET_URI__STRING:
-      return getURI((String)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
   /**
@@ -597,9 +606,7 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -608,6 +615,8 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     result.append(mspecFilePath);
     result.append(", cloneVariableName: ");
     result.append(cloneVariableName);
+    result.append(", javaVersion: ");
+    result.append(javaVersion);
     result.append(')');
     return result.toString();
   }

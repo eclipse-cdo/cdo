@@ -95,6 +95,8 @@ public abstract class OS
 
   public abstract String getGitPrefix();
 
+  public abstract String getJREsRoot();
+
   public static void close(Closeable closeable)
   {
     if (closeable != null)
@@ -148,6 +150,12 @@ public abstract class OS
     {
       return "C:\\Program Files (x86)\\Git";
     }
+
+    @Override
+    public String getJREsRoot()
+    {
+      return Platform.getOSArch().endsWith("_64") ? "C:\\Program Files\\Java" : "C:\\Program Files (x86)\\Java";
+    }
   }
 
   /**
@@ -164,7 +172,13 @@ public abstract class OS
     @Override
     public String getGitPrefix()
     {
-      return "C:\\Program Files (x86)\\Git";
+      return "/";
+    }
+
+    @Override
+    public String getJREsRoot()
+    {
+      return "/";
     }
   }
 
@@ -181,6 +195,12 @@ public abstract class OS
 
     @Override
     public String getGitPrefix()
+    {
+      return "";
+    }
+
+    @Override
+    public String getJREsRoot()
     {
       return "";
     }

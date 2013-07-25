@@ -102,6 +102,17 @@ public class ApiBaselineItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns ApiBaseline.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

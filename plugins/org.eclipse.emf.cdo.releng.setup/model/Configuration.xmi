@@ -1,122 +1,94 @@
 <?xml version="1.0" encoding="ASCII"?>
-<setup:Configuration
-    xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/CDO/releng/setup/1.0 setup.ecore">
-  <projects
-      name="EMF">
-    <branches
-        name="master"
-        mspecFilePath="git-emf/releng/org.eclipse.emf.releng.buckminster/releng/emf-all.mspec">
+<setup:Configuration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
+  <projects name="EMF">
+    <branches name="master" mspecFilePath="git-emf/releng/org.eclipse.emf.releng.buckminster/releng/emf-all.mspec" javaVersion="JRE_16">
       <directorCalls>
-        <installableUnits
-            id="org.eclipse.emf.sdk.feature.group"/>
-        <p2Repositories
-            url="http://download.eclipse.org/releases/kepler"/>
+        <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+        <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
       </directorCalls>
-      <gitClones
-          name="git-emf"
-          remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf"
-          checkoutBranch="master"/>
-      <gitClones
-          name="git-xsd"
-          remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git"
-          checkoutBranch="master"/>
+      <gitClones name="git-emf" remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf" checkoutBranch="master"/>
+      <gitClones name="git-xsd" remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git" checkoutBranch="master"/>
     </branches>
-    <branches
-        name="2.9"
-        mspecFilePath="git-emf/releng/org.eclipse.emf.releng.buckminster/releng/emf-all.mspec">
+    <branches name="2.9" mspecFilePath="git-emf/releng/org.eclipse.emf.releng.buckminster/releng/emf-all.mspec" javaVersion="JRE_16">
       <directorCalls>
-        <installableUnits
-            id="org.eclipse.emf.sdk.feature.group"/>
-        <p2Repositories
-            url="http://download.eclipse.org/releases/juno"/>
+        <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+        <p2Repositories url="http://download.eclipse.org/releases/juno"/>
       </directorCalls>
-      <gitClones
-          name="git-emf"
-          remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf"
-          checkoutBranch="R2_9_maintenance"/>
-      <gitClones
-          name="git-xsd"
-          remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git"
-          checkoutBranch="R2_9_maintenance"/>
+      <gitClones name="git-emf" remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf" checkoutBranch="R2_9_maintenance"/>
+      <gitClones name="git-xsd" remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git" checkoutBranch="R2_9_maintenance"/>
     </branches>
   </projects>
-  <projects
-      name="CDO">
-    <branches
-        name="master"
-        apiBaseline="//@projects.1/@apiBaselines.0"
-        mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"
-        cloneVariableName="git.clone">
+  <projects name="CDO">
+    <directorCalls>
+      <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.workingsets.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.manifests.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.tasks.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
+      <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.github.feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.hudson.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.ide_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.java_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.pde_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.team_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.gerrit.feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.git.feature.group"/>
+      <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
+      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+      <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
+      <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
+    </directorCalls>
+    <toolPreferences key="instance/org.eclipse.ui.ide/EXIT_PROMPT_ON_CLOSE_LAST_WINDOW" value="false"/>
+    <toolPreferences key="instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
+    <branches name="master" apiBaseline="//@projects.1/@apiBaselines.0" mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" cloneVariableName="git.clone" javaVersion="JRE_16">
       <directorCalls>
-        <installableUnits
-            id="org.eclipse.emf.sdk.feature.group"/>
-        <p2Repositories
-            url="http://download.eclipse.org/releases/kepler"/>
+        <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
+        <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
       </directorCalls>
-      <gitClones
-          name="cdo"
-          remoteURI="ssh://git.eclipse.org:29418/cdo/cdo"
-          checkoutBranch="master"/>
+      <gitClones name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
     </branches>
-    <branches
-        name="4.2"
-        apiBaseline="//@projects.1/@apiBaselines.0"
-        mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"
-        cloneVariableName="git.clone">
+    <branches name="4.2" apiBaseline="//@projects.1/@apiBaselines.0" mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" cloneVariableName="git.clone" javaVersion="JRE_16">
       <directorCalls>
-        <installableUnits
-            id="org.eclipse.emf.sdk.feature.group"/>
-        <p2Repositories
-            url="http://download.eclipse.org/releases/kepler"/>
+        <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
+        <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
       </directorCalls>
-      <gitClones
-          name="cdo"
-          remoteURI="ssh://git.eclipse.org:29418/cdo/cdo"
-          checkoutBranch="streams/4.2-maintenance"/>
+      <gitClones name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="streams/4.2-maintenance"/>
     </branches>
-    <branches
-        name="4.1"
-        apiBaseline="//@projects.1/@apiBaselines.1"
-        mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"
-        cloneVariableName="git.clone">
+    <branches name="4.1" apiBaseline="//@projects.1/@apiBaselines.1" mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" cloneVariableName="git.clone" javaVersion="JRE_16">
       <directorCalls>
-        <installableUnits
-            id="org.eclipse.emf.sdk.feature.group"/>
-        <p2Repositories
-            url="http://download.eclipse.org/releases/kepler"/>
+        <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
+        <p2Repositories url="http://download.eclipse.org/releases/juno"/>
       </directorCalls>
-      <gitClones
-          name="cdo"
-          remoteURI="ssh://git.eclipse.org:29418/cdo/cdo"
-          checkoutBranch="streams/4.1-maintenance"/>
+      <gitClones name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="streams/4.1-maintenance"/>
     </branches>
-    <apiBaselines
-        version="4.2"
-        zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
-    <apiBaselines
-        version="4.1"
-        zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.1-baseline.zip/download"/>
+    <apiBaselines version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
+    <apiBaselines version="4.1" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.1-baseline.zip/download"/>
   </projects>
-  <eclipseVersions
-      version="3.8">
+  <eclipseVersions version="3.8">
     <directorCall>
-      <installableUnits
-          id="org.eclipse.sdk.ide"/>
-      <p2Repositories
-          url="http://download.eclipse.org/eclipse/updates/3.8"/>
+      <installableUnits id="org.eclipse.sdk.ide"/>
+      <p2Repositories url="http://download.eclipse.org/eclipse/updates/3.8"/>
     </directorCall>
   </eclipseVersions>
-  <eclipseVersions
-      version="4.3">
+  <eclipseVersions version="4.3">
     <directorCall>
-      <installableUnits
-          id="org.eclipse.sdk.ide"/>
-      <p2Repositories
-          url="http://download.eclipse.org/releases/kepler"/>
+      <installableUnits id="org.eclipse.sdk.ide"/>
+      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
     </directorCall>
   </eclipseVersions>
 </setup:Configuration>

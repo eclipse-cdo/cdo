@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.ToolInstallation#getDirectorCalls <em>Director Calls</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.ToolInstallation#getToolPreferences <em>Tool Preferences</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,5 +47,21 @@ public interface ToolInstallation extends EObject
    * @generated
    */
   EList<DirectorCall> getDirectorCalls();
+
+  /**
+   * Returns the value of the '<em><b>Tool Preferences</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.ToolPreference}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tool Preferences</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tool Preferences</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getToolInstallation_ToolPreferences()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ToolPreference> getToolPreferences();
 
 } // ToolInstallation

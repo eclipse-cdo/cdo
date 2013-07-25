@@ -134,6 +134,17 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns Setup.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

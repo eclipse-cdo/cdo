@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -35,7 +34,7 @@ public final class SetupIDE
 
   private static final int INITIAL = 0;
 
-  private static final int DONE = Integer.MAX_VALUE;
+  private static final int DONE = 100;
 
   private static int state;
 
@@ -47,37 +46,8 @@ public final class SetupIDE
       return;
     }
 
-    IWorkbenchWindow window = WORKBENCH.getActiveWorkbenchWindow();
-    if (window != null)
-    {
-      run(window);
-    }
-    else
-    {
-      WORKBENCH.addWindowListener(new IWindowListener()
-      {
-        public void windowOpened(IWorkbenchWindow window)
-        {
-          // Do nothing
-        }
-
-        public void windowDeactivated(IWorkbenchWindow window)
-        {
-          // Do nothing
-        }
-
-        public void windowClosed(IWorkbenchWindow window)
-        {
-          // Do nothing
-        }
-
-        public void windowActivated(IWorkbenchWindow window)
-        {
-          WORKBENCH.removeWindowListener(this);
-          run(window);
-        }
-      });
-    }
+    IWorkbenchWindow window = WORKBENCH.getWorkbenchWindows()[0];
+    run(window);
   }
 
   private static void run(IWorkbenchWindow window)
@@ -95,35 +65,7 @@ public final class SetupIDE
 
             try
             {
-              if (state < 1)
-              {
-                Preferences.setRunInBackground();
-                saveState(1);
-              }
-
-              if (state < 2)
-              {
-                GitClones.init();
-                saveState(2);
-              }
-
-              if (state < 3)
-              {
-                Buckminster.importBaseline();
-                saveState(3);
-              }
-
-              if (state < 4)
-              {
-                Buckminster.importTarget();
-                saveState(4);
-              }
-
-              if (state < DONE)
-              {
-                Buckminster.importMSpec();
-                saveState(DONE);
-              }
+              SetupIDE.run(log);
             }
             finally
             {
@@ -133,6 +75,45 @@ public final class SetupIDE
         });
       }
     });
+  }
+
+  private static void run(ProgressLog log) throws Exception
+  {
+    if (state < 1)
+    {
+      Preferences.init();
+      saveState(1);
+    }
+
+    if (state < 2)
+    {
+      JREs.init();
+      saveState(2);
+    }
+
+    if (state < 3)
+    {
+      GitClones.init();
+      saveState(3);
+    }
+
+    if (state < 4)
+    {
+      Buckminster.importBaseline();
+      saveState(4);
+    }
+
+    if (state < 5)
+    {
+      Buckminster.importTarget();
+      saveState(5);
+    }
+
+    if (state < DONE)
+    {
+      Buckminster.importMSpec();
+      saveState(DONE);
+    }
   }
 
   private static void saveState(int state)

@@ -82,6 +82,7 @@ public class ToolInstallationItemProvider extends ItemProviderAdapter implements
     {
       super.getChildrenFeatures(object);
       childrenFeatures.add(SetupPackage.Literals.TOOL_INSTALLATION__DIRECTOR_CALLS);
+      childrenFeatures.add(SetupPackage.Literals.TOOL_INSTALLATION__TOOL_PREFERENCES);
     }
     return childrenFeatures;
   }
@@ -98,6 +99,17 @@ public class ToolInstallationItemProvider extends ItemProviderAdapter implements
     // adding (see {@link AddCommand}) it as a child.
 
     return super.getChildFeature(object, child);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
   }
 
   /**
@@ -139,6 +151,7 @@ public class ToolInstallationItemProvider extends ItemProviderAdapter implements
     switch (notification.getFeatureID(ToolInstallation.class))
     {
     case SetupPackage.TOOL_INSTALLATION__DIRECTOR_CALLS:
+    case SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -159,6 +172,9 @@ public class ToolInstallationItemProvider extends ItemProviderAdapter implements
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.TOOL_INSTALLATION__DIRECTOR_CALLS,
         SetupFactory.eINSTANCE.createDirectorCall()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.TOOL_INSTALLATION__TOOL_PREFERENCES,
+        SetupFactory.eINSTANCE.createToolPreference()));
   }
 
   /**

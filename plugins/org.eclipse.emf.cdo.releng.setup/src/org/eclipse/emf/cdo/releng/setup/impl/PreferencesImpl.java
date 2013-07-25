@@ -12,11 +12,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +32,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class PreferencesImpl extends MinimalEObjectImpl.Container implements Preferences
+public class PreferencesImpl extends ToolInstallationImpl implements Preferences
 {
   /**
    * The default value of the '{@link #getUserName() <em>User Name</em>}' attribute.
@@ -157,9 +155,7 @@ public class PreferencesImpl extends MinimalEObjectImpl.Container implements Pre
     String oldUserName = userName;
     userName = newUserName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__USER_NAME, oldUserName, userName));
-    }
   }
 
   /**
@@ -182,10 +178,8 @@ public class PreferencesImpl extends MinimalEObjectImpl.Container implements Pre
     String oldBundlePool = bundlePool;
     bundlePool = newBundlePool;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__BUNDLE_POOL, oldBundlePool,
           bundlePool));
-    }
   }
 
   /**
@@ -208,10 +202,8 @@ public class PreferencesImpl extends MinimalEObjectImpl.Container implements Pre
     String oldInstallFolder = installFolder;
     installFolder = newInstallFolder;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__INSTALL_FOLDER, oldInstallFolder,
           installFolder));
-    }
   }
 
   /**
@@ -234,10 +226,8 @@ public class PreferencesImpl extends MinimalEObjectImpl.Container implements Pre
     String oldGitPrefix = gitPrefix;
     gitPrefix = newGitPrefix;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__GIT_PREFIX, oldGitPrefix,
           gitPrefix));
-    }
   }
 
   /**
@@ -345,9 +335,7 @@ public class PreferencesImpl extends MinimalEObjectImpl.Container implements Pre
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userName: ");

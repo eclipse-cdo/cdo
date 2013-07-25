@@ -141,6 +141,9 @@
    <feature id="org.eclipse.emf.cdo.releng.apireports" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.releng.setup.editor" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.releng.manifests" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>

@@ -105,9 +105,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       if (branch != oldBranch)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, SetupPackage.SETUP__BRANCH, oldBranch, branch));
-        }
       }
     }
     return branch;
@@ -133,9 +131,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     Branch oldBranch = branch;
     branch = newBranch;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP__BRANCH, oldBranch, branch));
-    }
   }
 
   /**
@@ -152,10 +148,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       if (eclipseVersion != oldEclipseVersion)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, SetupPackage.SETUP__ECLIPSE_VERSION,
               oldEclipseVersion, eclipseVersion));
-        }
       }
     }
     return eclipseVersion;
@@ -181,10 +175,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     EclipseVersion oldEclipseVersion = eclipseVersion;
     eclipseVersion = newEclipseVersion;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP__ECLIPSE_VERSION, oldEclipseVersion,
           eclipseVersion));
-    }
   }
 
   /**
@@ -211,13 +203,9 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP__PREFERENCES,
           oldPreferences, newPreferences);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -233,26 +221,18 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     {
       NotificationChain msgs = null;
       if (preferences != null)
-      {
         msgs = ((InternalEObject)preferences).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - SetupPackage.SETUP__PREFERENCES, null, msgs);
-      }
       if (newPreferences != null)
-      {
         msgs = ((InternalEObject)newPreferences).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
             - SetupPackage.SETUP__PREFERENCES, null, msgs);
-      }
       msgs = basicSetPreferences(newPreferences, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP__PREFERENCES, newPreferences,
           newPreferences));
-    }
   }
 
   /**
@@ -283,15 +263,11 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     {
     case SetupPackage.SETUP__BRANCH:
       if (resolve)
-      {
         return getBranch();
-      }
       return basicGetBranch();
     case SetupPackage.SETUP__ECLIPSE_VERSION:
       if (resolve)
-      {
         return getEclipseVersion();
-      }
       return basicGetEclipseVersion();
     case SetupPackage.SETUP__PREFERENCES:
       return getPreferences();

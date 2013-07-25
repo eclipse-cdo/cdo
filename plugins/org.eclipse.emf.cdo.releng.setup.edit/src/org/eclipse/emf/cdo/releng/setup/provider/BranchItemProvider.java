@@ -67,6 +67,7 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
       addApiBaselinePropertyDescriptor(object);
       addMspecFilePathPropertyDescriptor(object);
       addCloneVariableNamePropertyDescriptor(object);
+      addJavaVersionPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -135,6 +136,22 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
   }
 
   /**
+   * This adds a property descriptor for the Java Version feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addJavaVersionPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Branch_javaVersion_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Branch_javaVersion_feature", "_UI_Branch_type"),
+        SetupPackage.Literals.BRANCH__JAVA_VERSION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
+  }
+
+  /**
    * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -183,14 +200,13 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((Branch)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Branch_type") : getString("_UI_Branch_type") + " "
-        + label;
+    return label == null || label.length() == 0 ? getString("_UI_Branch_type") : label;
   }
 
   /**
@@ -210,6 +226,7 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
     case SetupPackage.BRANCH__NAME:
     case SetupPackage.BRANCH__MSPEC_FILE_PATH:
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
+    case SetupPackage.BRANCH__JAVA_VERSION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.BRANCH__GIT_CLONES:

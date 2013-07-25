@@ -10,7 +10,7 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.releng.setup"
+      id="org.eclipse.emf.cdo.releng.setup.ide"
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"
@@ -36,6 +36,20 @@
    </url>
 
    <plugin
+         id="org.eclipse.emf.cdo.releng.setup.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.setup.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.emf.cdo.releng.setup"
          download-size="0"
          install-size="0"
@@ -51,20 +65,6 @@
 
    <plugin
          id="org.eclipse.emf.cdo.releng.setup.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.setup.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.setup.ide"
          download-size="0"
          install-size="0"
          version="0.0.0"

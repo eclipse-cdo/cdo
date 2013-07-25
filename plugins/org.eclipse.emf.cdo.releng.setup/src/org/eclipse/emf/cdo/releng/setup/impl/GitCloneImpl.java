@@ -129,9 +129,7 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
   public Branch getBranch()
   {
     if (eContainerFeatureID() != SetupPackage.GIT_CLONE__BRANCH)
-    {
       return null;
-    }
     return (Branch)eInternalContainer();
   }
 
@@ -153,32 +151,22 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
    */
   public void setBranch(Branch newBranch)
   {
-    if (newBranch != eInternalContainer() || eContainerFeatureID() != SetupPackage.GIT_CLONE__BRANCH
-        && newBranch != null)
+    if (newBranch != eInternalContainer()
+        || (eContainerFeatureID() != SetupPackage.GIT_CLONE__BRANCH && newBranch != null))
     {
       if (EcoreUtil.isAncestor(this, newBranch))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newBranch != null)
-      {
         msgs = ((InternalEObject)newBranch).eInverseAdd(this, SetupPackage.BRANCH__GIT_CLONES, Branch.class, msgs);
-      }
       msgs = basicSetBranch(newBranch, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE__BRANCH, newBranch, newBranch));
-    }
   }
 
   /**
@@ -201,9 +189,7 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE__NAME, oldName, name));
-    }
   }
 
   /**
@@ -226,9 +212,7 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
     String oldRemoteURI = remoteURI;
     remoteURI = newRemoteURI;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE__REMOTE_URI, oldRemoteURI, remoteURI));
-    }
   }
 
   /**
@@ -251,10 +235,8 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
     String oldCheckoutBranch = checkoutBranch;
     checkoutBranch = newCheckoutBranch;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE__CHECKOUT_BRANCH, oldCheckoutBranch,
           checkoutBranch));
-    }
   }
 
   /**
@@ -269,9 +251,7 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
     {
     case SetupPackage.GIT_CLONE__BRANCH:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetBranch((Branch)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -415,9 +395,7 @@ public class GitCloneImpl extends MinimalEObjectImpl.Container implements GitClo
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

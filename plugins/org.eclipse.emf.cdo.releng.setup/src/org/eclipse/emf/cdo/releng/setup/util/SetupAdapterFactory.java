@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
+import org.eclipse.emf.cdo.releng.setup.*;
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -161,6 +162,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseSetup(Setup object)
     {
       return createSetupAdapter();
+    }
+
+    @Override
+    public Adapter caseToolPreference(ToolPreference object)
+    {
+      return createToolPreferenceAdapter();
     }
 
     @Override
@@ -345,6 +352,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSetupAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ToolPreference <em>Tool Preference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ToolPreference
+   * @generated
+   */
+  public Adapter createToolPreferenceAdapter()
   {
     return null;
   }

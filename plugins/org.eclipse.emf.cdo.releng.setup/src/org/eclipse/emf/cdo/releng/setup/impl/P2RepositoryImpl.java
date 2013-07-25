@@ -87,9 +87,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
   public DirectorCall getDirectorCall()
   {
     if (eContainerFeatureID() != SetupPackage.P2_REPOSITORY__DIRECTOR_CALL)
-    {
       return null;
-    }
     return (DirectorCall)eInternalContainer();
   }
 
@@ -111,34 +109,24 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
    */
   public void setDirectorCall(DirectorCall newDirectorCall)
   {
-    if (newDirectorCall != eInternalContainer() || eContainerFeatureID() != SetupPackage.P2_REPOSITORY__DIRECTOR_CALL
-        && newDirectorCall != null)
+    if (newDirectorCall != eInternalContainer()
+        || (eContainerFeatureID() != SetupPackage.P2_REPOSITORY__DIRECTOR_CALL && newDirectorCall != null))
     {
       if (EcoreUtil.isAncestor(this, newDirectorCall))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newDirectorCall != null)
-      {
         msgs = ((InternalEObject)newDirectorCall).eInverseAdd(this, SetupPackage.DIRECTOR_CALL__P2_REPOSITORIES,
             DirectorCall.class, msgs);
-      }
       msgs = basicSetDirectorCall(newDirectorCall, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_REPOSITORY__DIRECTOR_CALL, newDirectorCall,
           newDirectorCall));
-    }
   }
 
   /**
@@ -161,9 +149,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     String oldUrl = url;
     url = newUrl;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_REPOSITORY__URL, oldUrl, url));
-    }
   }
 
   /**
@@ -178,9 +164,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     {
     case SetupPackage.P2_REPOSITORY__DIRECTOR_CALL:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetDirectorCall((DirectorCall)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -304,9 +288,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

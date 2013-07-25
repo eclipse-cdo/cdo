@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
 
+import org.eclipse.emf.cdo.releng.setup.ToolPreference;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -32,6 +33,7 @@ import java.util.Collection;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ToolInstallationImpl#getDirectorCalls <em>Director Calls</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ToolInstallationImpl#getToolPreferences <em>Tool Preferences</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,6 +50,16 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
    * @ordered
    */
   protected EList<DirectorCall> directorCalls;
+
+  /**
+   * The cached value of the '{@link #getToolPreferences() <em>Tool Preferences</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getToolPreferences()
+   * @generated
+   * @ordered
+   */
+  protected EList<ToolPreference> toolPreferences;
 
   /**
    * <!-- begin-user-doc -->
@@ -90,6 +102,21 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<ToolPreference> getToolPreferences()
+  {
+    if (toolPreferences == null)
+    {
+      toolPreferences = new EObjectContainmentEList<ToolPreference>(ToolPreference.class, this,
+          SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES);
+    }
+    return toolPreferences;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -97,6 +124,8 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
     {
     case SetupPackage.TOOL_INSTALLATION__DIRECTOR_CALLS:
       return ((InternalEList<?>)getDirectorCalls()).basicRemove(otherEnd, msgs);
+    case SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES:
+      return ((InternalEList<?>)getToolPreferences()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -113,6 +142,8 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
     {
     case SetupPackage.TOOL_INSTALLATION__DIRECTOR_CALLS:
       return getDirectorCalls();
+    case SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES:
+      return getToolPreferences();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -132,6 +163,10 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
       getDirectorCalls().clear();
       getDirectorCalls().addAll((Collection<? extends DirectorCall>)newValue);
       return;
+    case SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES:
+      getToolPreferences().clear();
+      getToolPreferences().addAll((Collection<? extends ToolPreference>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -149,6 +184,9 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
     case SetupPackage.TOOL_INSTALLATION__DIRECTOR_CALLS:
       getDirectorCalls().clear();
       return;
+    case SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES:
+      getToolPreferences().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -165,6 +203,8 @@ public class ToolInstallationImpl extends MinimalEObjectImpl.Container implement
     {
     case SetupPackage.TOOL_INSTALLATION__DIRECTOR_CALLS:
       return directorCalls != null && !directorCalls.isEmpty();
+    case SetupPackage.TOOL_INSTALLATION__TOOL_PREFERENCES:
+      return toolPreferences != null && !toolPreferences.isEmpty();
     }
     return super.eIsSet(featureID);
   }

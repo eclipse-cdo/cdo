@@ -12,6 +12,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.cdo.releng.setup;version="1.0.0",
- org.eclipse.emf.cdo.releng.setup.helper;version="1.0.0";x-friends:="org.eclipse.emf.cdo.releng.setup.ide,org.eclipse.emf.cdo.releng.setup.product,org.eclipse.emf.cdo.releng.setup.ui",
+ org.eclipse.emf.cdo.releng.setup.helper;x-friends:="org.eclipse.emf.cdo.releng.setup.ide,org.eclipse.emf.cdo.releng.setup.product,org.eclipse.emf.cdo.releng.setup.ui";version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.impl;version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.util;version="1.0.0"

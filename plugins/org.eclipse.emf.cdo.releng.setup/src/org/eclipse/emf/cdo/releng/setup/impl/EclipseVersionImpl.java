@@ -99,9 +99,7 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
   public Configuration getConfiguration()
   {
     if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
-    {
       return null;
-    }
     return (Configuration)eInternalContainer();
   }
 
@@ -124,33 +122,23 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
   public void setConfiguration(Configuration newConfiguration)
   {
     if (newConfiguration != eInternalContainer()
-        || eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION && newConfiguration != null)
+        || (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION && newConfiguration != null))
     {
       if (EcoreUtil.isAncestor(this, newConfiguration))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newConfiguration != null)
-      {
         msgs = ((InternalEObject)newConfiguration).eInverseAdd(this, SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS,
             Configuration.class, msgs);
-      }
       msgs = basicSetConfiguration(newConfiguration, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__CONFIGURATION,
           newConfiguration, newConfiguration));
-    }
   }
 
   /**
@@ -173,9 +161,7 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     String oldVersion = version;
     version = newVersion;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__VERSION, oldVersion, version));
-    }
   }
 
   /**
@@ -202,13 +188,9 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL, oldDirectorCall, newDirectorCall);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -224,26 +206,18 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     {
       NotificationChain msgs = null;
       if (directorCall != null)
-      {
         msgs = ((InternalEObject)directorCall).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL, null, msgs);
-      }
       if (newDirectorCall != null)
-      {
         msgs = ((InternalEObject)newDirectorCall).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
             - SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL, null, msgs);
-      }
       msgs = basicSetDirectorCall(newDirectorCall, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL,
           newDirectorCall, newDirectorCall));
-    }
   }
 
   /**
@@ -258,9 +232,7 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     {
     case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetConfiguration((Configuration)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -396,9 +368,7 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (version: ");

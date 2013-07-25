@@ -1,32 +1,13 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
-import org.eclipse.emf.cdo.releng.setup.Branch;
-import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
-import org.eclipse.emf.cdo.releng.setup.GitClone;
-import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
-import org.eclipse.emf.cdo.releng.setup.P2Repository;
-import org.eclipse.emf.cdo.releng.setup.Preferences;
-import org.eclipse.emf.cdo.releng.setup.Project;
-import org.eclipse.emf.cdo.releng.setup.Setup;
-import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
+import java.util.List;
 
+import org.eclipse.emf.cdo.releng.setup.*;
+
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Switch;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,7 +22,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage
  * @generated
  */
-public class SetupSwitch<T> extends Switch<T>
+public class SetupSwitch<T>
 {
   /**
    * The cached model package
@@ -66,17 +47,15 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Checks whether this is a switch for the given package.
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @parameter ePackage the package in question.
-   * @return whether this is a switch for the given package.
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
-  protected boolean isSwitchFor(EPackage ePackage)
+  public T doSwitch(EObject theEObject)
   {
-    return ePackage == modelPackage;
+    return doSwitch(theEObject.eClass(), theEObject);
   }
 
   /**
@@ -86,7 +65,23 @@ public class SetupSwitch<T> extends Switch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
+  protected T doSwitch(EClass theEClass, EObject theEObject)
+  {
+    if (theEClass.eContainer() == modelPackage)
+    {
+      return doSwitch(theEClass.getClassifierID(), theEObject);
+    }
+    List<EClass> eSuperTypes = theEClass.getESuperTypes();
+    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+  }
+
+  /**
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @generated
+   */
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -96,9 +91,9 @@ public class SetupSwitch<T> extends Switch<T>
       Preferences preferences = (Preferences)theEObject;
       T result = casePreferences(preferences);
       if (result == null)
-      {
+        result = caseToolInstallation(preferences);
+      if (result == null)
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.ECLIPSE_VERSION:
@@ -106,9 +101,7 @@ public class SetupSwitch<T> extends Switch<T>
       EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
       T result = caseEclipseVersion(eclipseVersion);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.DIRECTOR_CALL:
@@ -116,9 +109,7 @@ public class SetupSwitch<T> extends Switch<T>
       DirectorCall directorCall = (DirectorCall)theEObject;
       T result = caseDirectorCall(directorCall);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.INSTALLABLE_UNIT:
@@ -126,9 +117,7 @@ public class SetupSwitch<T> extends Switch<T>
       InstallableUnit installableUnit = (InstallableUnit)theEObject;
       T result = caseInstallableUnit(installableUnit);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.P2_REPOSITORY:
@@ -136,9 +125,7 @@ public class SetupSwitch<T> extends Switch<T>
       P2Repository p2Repository = (P2Repository)theEObject;
       T result = caseP2Repository(p2Repository);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.CONFIGURATION:
@@ -146,9 +133,7 @@ public class SetupSwitch<T> extends Switch<T>
       Configuration configuration = (Configuration)theEObject;
       T result = caseConfiguration(configuration);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.TOOL_INSTALLATION:
@@ -156,9 +141,7 @@ public class SetupSwitch<T> extends Switch<T>
       ToolInstallation toolInstallation = (ToolInstallation)theEObject;
       T result = caseToolInstallation(toolInstallation);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.PROJECT:
@@ -166,13 +149,9 @@ public class SetupSwitch<T> extends Switch<T>
       Project project = (Project)theEObject;
       T result = caseProject(project);
       if (result == null)
-      {
         result = caseToolInstallation(project);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.BRANCH:
@@ -180,13 +159,9 @@ public class SetupSwitch<T> extends Switch<T>
       Branch branch = (Branch)theEObject;
       T result = caseBranch(branch);
       if (result == null)
-      {
         result = caseToolInstallation(branch);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.API_BASELINE:
@@ -194,9 +169,7 @@ public class SetupSwitch<T> extends Switch<T>
       ApiBaseline apiBaseline = (ApiBaseline)theEObject;
       T result = caseApiBaseline(apiBaseline);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.GIT_CLONE:
@@ -204,9 +177,7 @@ public class SetupSwitch<T> extends Switch<T>
       GitClone gitClone = (GitClone)theEObject;
       T result = caseGitClone(gitClone);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.SETUP:
@@ -214,9 +185,15 @@ public class SetupSwitch<T> extends Switch<T>
       Setup setup = (Setup)theEObject;
       T result = caseSetup(setup);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
+      return result;
+    }
+    case SetupPackage.TOOL_PREFERENCE:
+    {
+      ToolPreference toolPreference = (ToolPreference)theEObject;
+      T result = caseToolPreference(toolPreference);
+      if (result == null)
+        result = defaultCase(theEObject);
       return result;
     }
     default:
@@ -225,65 +202,17 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Configuration</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Configuration</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Preferences</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConfiguration(Configuration object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Project</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Project</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseProject(Project object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Branch</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Branch</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBranch(Branch object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Tool Installation</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Tool Installation</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseToolInstallation(ToolInstallation object)
+  public T casePreferences(Preferences object)
   {
     return null;
   }
@@ -353,6 +282,70 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Configuration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Configuration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConfiguration(Configuration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Tool Installation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Tool Installation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseToolInstallation(ToolInstallation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Project</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Project</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseProject(Project object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Branch</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Branch</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBranch(Branch object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Api Baseline</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -401,17 +394,17 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Tool Preference</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Preferences</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Tool Preference</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePreferences(Preferences object)
+  public T caseToolPreference(ToolPreference object)
   {
     return null;
   }
@@ -427,10 +420,9 @@ public class SetupSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
-  @Override
   public T defaultCase(EObject object)
   {
     return null;
   }
 
-} // SetupSwitch
+} //SetupSwitch

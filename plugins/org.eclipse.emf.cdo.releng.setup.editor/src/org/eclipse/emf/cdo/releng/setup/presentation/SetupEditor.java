@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
-
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -19,7 +18,6 @@ import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.MarkerHelper;
-import org.eclipse.emf.common.ui.ViewerPane;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -47,7 +45,6 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -68,35 +65,25 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.util.LocalSelectionTransfer;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
-import org.eclipse.jface.viewers.TableLayout;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -112,10 +99,11 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.eclipse.ui.views.properties.IPropertySheetEntry;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
-
+import org.eclipse.ui.views.properties.PropertySheetSorter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -193,56 +181,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * @generated
    */
   protected TreeViewer selectionViewer;
-
-  /**
-   * This inverts the roll of parent and child in the content provider and show parents as a tree.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TreeViewer parentViewer;
-
-  /**
-   * This shows how a tree view works.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TreeViewer treeViewer;
-
-  /**
-   * This shows how a list view works.
-   * A list viewer doesn't support icons.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ListViewer listViewer;
-
-  /**
-   * This shows how a table view works.
-   * A table can be used as a list with icons.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TableViewer tableViewer;
-
-  /**
-   * This shows how a tree view with columns works.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TreeViewer treeViewerWithColumns;
-
-  /**
-   * This keeps track of the active viewer pane, in the book.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ViewerPane currentViewerPane;
 
   /**
    * This keeps track of the active content viewer, which may be either one of the viewers in the pages or the content outline viewer.
@@ -909,24 +847,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setCurrentViewerPane(ViewerPane viewerPane)
-  {
-    if (currentViewerPane != viewerPane)
-    {
-      if (currentViewerPane != null)
-      {
-        currentViewerPane.showFocus(false);
-      }
-      currentViewerPane = viewerPane;
-    }
-    setCurrentViewer(currentViewerPane.getViewer());
-  }
-
-  /**
    * This makes sure that one content viewer, either for the current page or the outline view, if it has focus,
    * is the current one.
    * <!-- begin-user-doc -->
@@ -1006,8 +926,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
 
     int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer(),
-        FileTransfer.getInstance() };
+    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
     viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
     viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer));
   }
@@ -1075,7 +994,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This is the method used by the framework to install your own controls.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void createPages()
@@ -1090,223 +1009,20 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     {
       // Create a page for the selection tree view.
       //
-      {
-        ViewerPane viewerPane = new ViewerPane(getSite().getPage(), SetupEditor.this)
-        {
-          @Override
-          public Viewer createViewer(Composite composite)
-          {
-            Tree tree = new Tree(composite, SWT.MULTI);
-            TreeViewer newTreeViewer = new TreeViewer(tree);
-            return newTreeViewer;
-          }
+      Tree tree = new Tree(getContainer(), SWT.MULTI);
+      selectionViewer = new TreeViewer(tree);
+      setCurrentViewer(selectionViewer);
 
-          @Override
-          public void requestActivation()
-          {
-            super.requestActivation();
-            setCurrentViewerPane(this);
-          }
-        };
-        viewerPane.createControl(getContainer());
+      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+      selectionViewer.setInput(editingDomain.getResourceSet().getResources().get(0));
+      selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 
-        selectionViewer = (TreeViewer)viewerPane.getViewer();
-        selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+      new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
-        selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-        selectionViewer.setInput(editingDomain.getResourceSet());
-        selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)),
-            true);
-        viewerPane.setTitle(editingDomain.getResourceSet());
-
-        new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
-
-        createContextMenuFor(selectionViewer);
-        int pageIndex = addPage(viewerPane.getControl());
-        setPageText(pageIndex, getString("_UI_SelectionPage_label"));
-      }
-
-      // Create a page for the parent tree view.
-      //
-      {
-        ViewerPane viewerPane = new ViewerPane(getSite().getPage(), SetupEditor.this)
-        {
-          @Override
-          public Viewer createViewer(Composite composite)
-          {
-            Tree tree = new Tree(composite, SWT.MULTI);
-            TreeViewer newTreeViewer = new TreeViewer(tree);
-            return newTreeViewer;
-          }
-
-          @Override
-          public void requestActivation()
-          {
-            super.requestActivation();
-            setCurrentViewerPane(this);
-          }
-        };
-        viewerPane.createControl(getContainer());
-
-        parentViewer = (TreeViewer)viewerPane.getViewer();
-        parentViewer.setAutoExpandLevel(30);
-        parentViewer.setContentProvider(new ReverseAdapterFactoryContentProvider(adapterFactory));
-        parentViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-
-        createContextMenuFor(parentViewer);
-        int pageIndex = addPage(viewerPane.getControl());
-        setPageText(pageIndex, getString("_UI_ParentPage_label"));
-      }
-
-      // This is the page for the list viewer
-      //
-      {
-        ViewerPane viewerPane = new ViewerPane(getSite().getPage(), SetupEditor.this)
-        {
-          @Override
-          public Viewer createViewer(Composite composite)
-          {
-            return new ListViewer(composite);
-          }
-
-          @Override
-          public void requestActivation()
-          {
-            super.requestActivation();
-            setCurrentViewerPane(this);
-          }
-        };
-        viewerPane.createControl(getContainer());
-        listViewer = (ListViewer)viewerPane.getViewer();
-        listViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-        listViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-
-        createContextMenuFor(listViewer);
-        int pageIndex = addPage(viewerPane.getControl());
-        setPageText(pageIndex, getString("_UI_ListPage_label"));
-      }
-
-      // This is the page for the tree viewer
-      //
-      {
-        ViewerPane viewerPane = new ViewerPane(getSite().getPage(), SetupEditor.this)
-        {
-          @Override
-          public Viewer createViewer(Composite composite)
-          {
-            return new TreeViewer(composite);
-          }
-
-          @Override
-          public void requestActivation()
-          {
-            super.requestActivation();
-            setCurrentViewerPane(this);
-          }
-        };
-        viewerPane.createControl(getContainer());
-        treeViewer = (TreeViewer)viewerPane.getViewer();
-        treeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-        treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-
-        new AdapterFactoryTreeEditor(treeViewer.getTree(), adapterFactory);
-
-        createContextMenuFor(treeViewer);
-        int pageIndex = addPage(viewerPane.getControl());
-        setPageText(pageIndex, getString("_UI_TreePage_label"));
-      }
-
-      // This is the page for the table viewer.
-      //
-      {
-        ViewerPane viewerPane = new ViewerPane(getSite().getPage(), SetupEditor.this)
-        {
-          @Override
-          public Viewer createViewer(Composite composite)
-          {
-            return new TableViewer(composite);
-          }
-
-          @Override
-          public void requestActivation()
-          {
-            super.requestActivation();
-            setCurrentViewerPane(this);
-          }
-        };
-        viewerPane.createControl(getContainer());
-        tableViewer = (TableViewer)viewerPane.getViewer();
-
-        Table table = tableViewer.getTable();
-        TableLayout layout = new TableLayout();
-        table.setLayout(layout);
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-
-        TableColumn objectColumn = new TableColumn(table, SWT.NONE);
-        layout.addColumnData(new ColumnWeightData(3, 100, true));
-        objectColumn.setText(getString("_UI_ObjectColumn_label"));
-        objectColumn.setResizable(true);
-
-        TableColumn selfColumn = new TableColumn(table, SWT.NONE);
-        layout.addColumnData(new ColumnWeightData(2, 100, true));
-        selfColumn.setText(getString("_UI_SelfColumn_label"));
-        selfColumn.setResizable(true);
-
-        tableViewer.setColumnProperties(new String[] { "a", "b" });
-        tableViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-        tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-
-        createContextMenuFor(tableViewer);
-        int pageIndex = addPage(viewerPane.getControl());
-        setPageText(pageIndex, getString("_UI_TablePage_label"));
-      }
-
-      // This is the page for the table tree viewer.
-      //
-      {
-        ViewerPane viewerPane = new ViewerPane(getSite().getPage(), SetupEditor.this)
-        {
-          @Override
-          public Viewer createViewer(Composite composite)
-          {
-            return new TreeViewer(composite);
-          }
-
-          @Override
-          public void requestActivation()
-          {
-            super.requestActivation();
-            setCurrentViewerPane(this);
-          }
-        };
-        viewerPane.createControl(getContainer());
-
-        treeViewerWithColumns = (TreeViewer)viewerPane.getViewer();
-
-        Tree tree = treeViewerWithColumns.getTree();
-        tree.setLayoutData(new FillLayout());
-        tree.setHeaderVisible(true);
-        tree.setLinesVisible(true);
-
-        TreeColumn objectColumn = new TreeColumn(tree, SWT.NONE);
-        objectColumn.setText(getString("_UI_ObjectColumn_label"));
-        objectColumn.setResizable(true);
-        objectColumn.setWidth(250);
-
-        TreeColumn selfColumn = new TreeColumn(tree, SWT.NONE);
-        selfColumn.setText(getString("_UI_SelfColumn_label"));
-        selfColumn.setResizable(true);
-        selfColumn.setWidth(200);
-
-        treeViewerWithColumns.setColumnProperties(new String[] { "a", "b" });
-        treeViewerWithColumns.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-        treeViewerWithColumns.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-
-        createContextMenuFor(treeViewerWithColumns);
-        int pageIndex = addPage(viewerPane.getControl());
-        setPageText(pageIndex, getString("_UI_TreeWithColumnsPage_label"));
-      }
+      createContextMenuFor(selectionViewer);
+      int pageIndex = addPage(tree);
+      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
@@ -1436,7 +1152,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This accesses a cached version of the content outliner.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public IContentOutlinePage getContentOutlinePage()
   {
@@ -1457,7 +1173,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
           //
           contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
           contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-          contentOutlineViewer.setInput(editingDomain.getResourceSet());
+          contentOutlineViewer.setInput(editingDomain.getResourceSet().getResources().get(0));
 
           // Make sure our popups work.
           //
@@ -1510,12 +1226,23 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This accesses a cached version of the property sheet.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public IPropertySheetPage getPropertySheetPage()
   {
     PropertySheetPage propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
     {
+      {
+        setSorter(new PropertySheetSorter()
+        {
+          @Override
+          public void sort(IPropertySheetEntry[] entries)
+          {
+            // Intentionally left empty
+          }
+        });
+      }
+
       @Override
       public void setSelectionToViewer(List<?> selection)
       {
@@ -1544,7 +1271,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    */
   public void handleContentOutlineSelection(ISelection selection)
   {
-    if (currentViewerPane != null && !selection.isEmpty() && selection instanceof IStructuredSelection)
+    if (selectionViewer != null && !selection.isEmpty() && selection instanceof IStructuredSelection)
     {
       Iterator<?> selectedElements = ((IStructuredSelection)selection).iterator();
       if (selectedElements.hasNext())
@@ -1553,31 +1280,16 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
         //
         Object selectedElement = selectedElements.next();
 
-        // If it's the selection viewer, then we want it to select the same selection as this selection.
-        //
-        if (currentViewerPane.getViewer() == selectionViewer)
+        ArrayList<Object> selectionList = new ArrayList<Object>();
+        selectionList.add(selectedElement);
+        while (selectedElements.hasNext())
         {
-          ArrayList<Object> selectionList = new ArrayList<Object>();
-          selectionList.add(selectedElement);
-          while (selectedElements.hasNext())
-          {
-            selectionList.add(selectedElements.next());
-          }
+          selectionList.add(selectedElements.next());
+        }
 
-          // Set the selection to the widget.
-          //
-          selectionViewer.setSelection(new StructuredSelection(selectionList));
-        }
-        else
-        {
-          // Set the input to the widget.
-          //
-          if (currentViewerPane.getViewer().getInput() != selectedElement)
-          {
-            currentViewerPane.getViewer().setInput(selectedElement);
-            currentViewerPane.setTitle(selectedElement);
-          }
-        }
+        // Set the selection to the widget.
+        //
+        selectionViewer.setSelection(new StructuredSelection(selectionList));
       }
     }
   }
@@ -1607,7 +1319,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     //
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-    saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
 
     // Do the work within an operation because this is a long running activity that modifies the workbench.
     //
@@ -1734,7 +1445,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
@@ -1781,14 +1492,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   @Override
   public void setFocus()
   {
-    if (currentViewerPane != null)
-    {
-      currentViewerPane.setFocus();
-    }
-    else
-    {
-      getControl(getActivePage()).setFocus();
-    }
+    getControl(getActivePage()).setFocus();
   }
 
   /**
@@ -1989,6 +1693,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    */
   protected boolean showOutlineView()
   {
-    return true;
+    return false;
   }
 }

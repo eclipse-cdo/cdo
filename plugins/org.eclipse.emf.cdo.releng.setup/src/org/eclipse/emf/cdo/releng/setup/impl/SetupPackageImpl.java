@@ -25,9 +25,11 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
 
+import org.eclipse.emf.cdo.releng.setup.ToolPreference;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -123,6 +125,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass toolPreferenceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum jreEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass preferencesEClass = null;
 
   /**
@@ -174,9 +190,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public static SetupPackage init()
   {
     if (isInited)
-    {
       return (SetupPackage)EPackage.Registry.INSTANCE.getEPackage(SetupPackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     SetupPackageImpl theSetupPackage = (SetupPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SetupPackageImpl ? EPackage.Registry.INSTANCE
@@ -353,19 +367,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getBranch__IsInstalled__String()
+  public EAttribute getBranch_JavaVersion()
   {
-    return branchEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getBranch__GetURI__String()
-  {
-    return branchEClass.getEOperations().get(1);
+    return (EAttribute)branchEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -386,6 +390,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public EReference getToolInstallation_DirectorCalls()
   {
     return (EReference)toolInstallationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getToolInstallation_ToolPreferences()
+  {
+    return (EReference)toolInstallationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -653,6 +667,46 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getToolPreference()
+  {
+    return toolPreferenceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getToolPreference_Key()
+  {
+    return (EAttribute)toolPreferenceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getToolPreference_Value()
+  {
+    return (EAttribute)toolPreferenceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getJRE()
+  {
+    return jreEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPreferences()
   {
     return preferencesEClass;
@@ -735,9 +789,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -770,6 +822,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     toolInstallationEClass = createEClass(TOOL_INSTALLATION);
     createEReference(toolInstallationEClass, TOOL_INSTALLATION__DIRECTOR_CALLS);
+    createEReference(toolInstallationEClass, TOOL_INSTALLATION__TOOL_PREFERENCES);
 
     projectEClass = createEClass(PROJECT);
     createEReference(projectEClass, PROJECT__CONFIGURATION);
@@ -784,8 +837,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(branchEClass, BRANCH__API_BASELINE);
     createEAttribute(branchEClass, BRANCH__MSPEC_FILE_PATH);
     createEAttribute(branchEClass, BRANCH__CLONE_VARIABLE_NAME);
-    createEOperation(branchEClass, BRANCH___IS_INSTALLED__STRING);
-    createEOperation(branchEClass, BRANCH___GET_URI__STRING);
+    createEAttribute(branchEClass, BRANCH__JAVA_VERSION);
 
     apiBaselineEClass = createEClass(API_BASELINE);
     createEReference(apiBaselineEClass, API_BASELINE__PROJECT);
@@ -802,6 +854,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(setupEClass, SETUP__BRANCH);
     createEReference(setupEClass, SETUP__ECLIPSE_VERSION);
     createEReference(setupEClass, SETUP__PREFERENCES);
+
+    toolPreferenceEClass = createEClass(TOOL_PREFERENCE);
+    createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__KEY);
+    createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__VALUE);
+
+    // Create enums
+    jreEEnum = createEEnum(JRE);
 
     // Create data types
     uriEDataType = createEDataType(URI);
@@ -824,9 +883,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -839,10 +896,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    projectEClass.getESuperTypes().add(getToolInstallation());
-    branchEClass.getESuperTypes().add(getToolInstallation());
+    preferencesEClass.getESuperTypes().add(this.getToolInstallation());
+    projectEClass.getESuperTypes().add(this.getToolInstallation());
+    branchEClass.getESuperTypes().add(this.getToolInstallation());
 
-    // Initialize classes, features, and operations; add parameters
+    // Initialize classes and features; add operations and parameters
     initEClass(preferencesEClass, Preferences.class, "Preferences", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPreferences_UserName(), ecorePackage.getEString(), "userName", null, 0, 1, Preferences.class,
@@ -857,27 +915,28 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEclipseVersion_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(),
+    initEReference(getEclipseVersion_Configuration(), this.getConfiguration(), this.getConfiguration_EclipseVersions(),
         "configuration", null, 0, 1, EclipseVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEclipseVersion_Version(), ecorePackage.getEString(), "version", null, 0, 1, EclipseVersion.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEclipseVersion_DirectorCall(), getDirectorCall(), null, "directorCall", null, 1, 1,
+    initEReference(getEclipseVersion_DirectorCall(), this.getDirectorCall(), null, "directorCall", null, 1, 1,
         EclipseVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(directorCallEClass, DirectorCall.class, "DirectorCall", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDirectorCall_InstallableUnits(), getInstallableUnit(), getInstallableUnit_DirectorCall(),
-        "installableUnits", null, 1, -1, DirectorCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDirectorCall_P2Repositories(), getP2Repository(), getP2Repository_DirectorCall(),
+    initEReference(getDirectorCall_InstallableUnits(), this.getInstallableUnit(),
+        this.getInstallableUnit_DirectorCall(), "installableUnits", null, 1, -1, DirectorCall.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getDirectorCall_P2Repositories(), this.getP2Repository(), this.getP2Repository_DirectorCall(),
         "p2Repositories", null, 1, -1, DirectorCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(installableUnitEClass, InstallableUnit.class, "InstallableUnit", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstallableUnit_DirectorCall(), getDirectorCall(), getDirectorCall_InstallableUnits(),
+    initEReference(getInstallableUnit_DirectorCall(), this.getDirectorCall(), this.getDirectorCall_InstallableUnits(),
         "directorCall", null, 0, 1, InstallableUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInstallableUnit_Id(), ecorePackage.getEString(), "id", null, 0, 1, InstallableUnit.class,
@@ -885,50 +944,54 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(p2RepositoryEClass, P2Repository.class, "P2Repository", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getP2Repository_DirectorCall(), getDirectorCall(), getDirectorCall_P2Repositories(), "directorCall",
-        null, 0, 1, P2Repository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getP2Repository_DirectorCall(), this.getDirectorCall(), this.getDirectorCall_P2Repositories(),
+        "directorCall", null, 0, 1, P2Repository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getP2Repository_Url(), ecorePackage.getEString(), "url", null, 0, 1, P2Repository.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 1, -1,
-        Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+    initEReference(getConfiguration_Projects(), this.getProject(), this.getProject_Configuration(), "projects", null,
+        1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConfiguration_EclipseVersions(), getEclipseVersion(), getEclipseVersion_Configuration(),
-        "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConfiguration_EclipseVersions(), this.getEclipseVersion(),
+        this.getEclipseVersion_Configuration(), "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(toolInstallationEClass, ToolInstallation.class, "ToolInstallation", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getToolInstallation_DirectorCalls(), getDirectorCall(), null, "directorCalls", null, 0, -1,
+    initEReference(getToolInstallation_DirectorCalls(), this.getDirectorCall(), null, "directorCalls", null, 0, -1,
         ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getToolInstallation_ToolPreferences(), this.getToolPreference(), null, "toolPreferences", null, 0,
+        -1, ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProject_Configuration(), getConfiguration(), getConfiguration_Projects(), "configuration", null,
-        0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProject_Branches(), getBranch(), getBranch_Project(), "branches", null, 1, -1, Project.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProject_Name(), ecorePackage.getEString(), "name", null, 0, 1, Project.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProject_ApiBaselines(), getApiBaseline(), getApiBaseline_Project(), "apiBaselines", null, 0, -1,
+    initEReference(getProject_Configuration(), this.getConfiguration(), this.getConfiguration_Projects(),
+        "configuration", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_Branches(), this.getBranch(), this.getBranch_Project(), "branches", null, 1, -1,
         Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProject_Name(), ecorePackage.getEString(), "name", null, 0, 1, Project.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_ApiBaselines(), this.getApiBaseline(), this.getApiBaseline_Project(), "apiBaselines",
+        null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(branchEClass, Branch.class, "Branch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBranch_Project(), getProject(), getProject_Branches(), "project", null, 0, 1, Branch.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getBranch_Project(), this.getProject(), this.getProject_Branches(), "project", null, 0, 1,
+        Branch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBranch_Name(), ecorePackage.getEString(), "name", null, 0, 1, Branch.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBranch_GitClones(), getGitClone(), getGitClone_Branch(), "gitClones", null, 1, -1, Branch.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getBranch_ApiBaseline(), getApiBaseline(), null, "apiBaseline", null, 0, 1, Branch.class,
+    initEReference(getBranch_GitClones(), this.getGitClone(), this.getGitClone_Branch(), "gitClones", null, 1, -1,
+        Branch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBranch_ApiBaseline(), this.getApiBaseline(), null, "apiBaseline", null, 0, 1, Branch.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBranch_MspecFilePath(), ecorePackage.getEString(), "mspecFilePath", null, 0, 1, Branch.class,
@@ -936,17 +999,18 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getBranch_CloneVariableName(), ecorePackage.getEString(), "cloneVariableName", null, 0, 1,
         Branch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+    initEAttribute(getBranch_JavaVersion(), this.getJRE(), "javaVersion", null, 0, 1, Branch.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    EOperation op = initEOperation(getBranch__IsInstalled__String(), ecorePackage.getEBoolean(), "isInstalled", 0, 1,
-        IS_UNIQUE, IS_ORDERED);
+    EOperation op = addEOperation(branchEClass, ecorePackage.getEBoolean(), "isInstalled", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "installFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    op = initEOperation(getBranch__GetURI__String(), getURI(), "getURI", 0, 1, IS_UNIQUE, IS_ORDERED);
+    op = addEOperation(branchEClass, this.getURI(), "getURI", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "installFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(apiBaselineEClass, ApiBaseline.class, "ApiBaseline", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getApiBaseline_Project(), getProject(), getProject_ApiBaselines(), "project", null, 0, 1,
+    initEReference(getApiBaseline_Project(), this.getProject(), this.getProject_ApiBaselines(), "project", null, 0, 1,
         ApiBaseline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getApiBaseline_Version(), ecorePackage.getEString(), "version", null, 0, 1, ApiBaseline.class,
@@ -956,9 +1020,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_ORDERED);
 
     initEClass(gitCloneEClass, GitClone.class, "GitClone", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getGitClone_Branch(), getBranch(), getBranch_GitClones(), "branch", null, 0, 1, GitClone.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getGitClone_Branch(), this.getBranch(), this.getBranch_GitClones(), "branch", null, 0, 1,
+        GitClone.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGitClone_Name(), ecorePackage.getEString(), "name", null, 0, 1, GitClone.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGitClone_RemoteURI(), ecorePackage.getEString(), "remoteURI", null, 0, 1, GitClone.class,
@@ -968,15 +1032,31 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_ORDERED);
 
     initEClass(setupEClass, Setup.class, "Setup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSetup_Branch(), getBranch(), null, "branch", null, 1, 1, Setup.class, !IS_TRANSIENT,
+    initEReference(getSetup_Branch(), this.getBranch(), null, "branch", null, 1, 1, Setup.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getSetup_EclipseVersion(), getEclipseVersion(), null, "eclipseVersion", null, 1, 1, Setup.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getSetup_Preferences(), getPreferences(), null, "preferences", null, 0, 1, Setup.class,
+    initEReference(getSetup_EclipseVersion(), this.getEclipseVersion(), null, "eclipseVersion", null, 1, 1,
+        Setup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSetup_Preferences(), this.getPreferences(), null, "preferences", null, 0, 1, Setup.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(toolPreferenceEClass, ToolPreference.class, "ToolPreference", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getToolPreference_Key(), ecorePackage.getEString(), "key", null, 0, 1, ToolPreference.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getToolPreference_Value(), ecorePackage.getEString(), "value", null, 0, 1, ToolPreference.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    // Initialize enums and add enum literals
+    initEEnum(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.class, "JRE");
+    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_13);
+    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_14);
+    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_15);
+    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_16);
+    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_17);
+    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_18);
 
     // Initialize data types
     initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,

@@ -704,17 +704,17 @@ public class SetupDialog extends TitleAreaDialog
 
     Director.install(bundlePool, setup.getEclipseVersion().getDirectorCall(), destination);
 
-    Director
-        .from(bundlePool)
+    Director.from(bundlePool) //
+        .feature("org.eclipse.egit") //
+        .repository("http://download.eclipse.org/releases/kepler") //
         //
-        .feature("org.eclipse.egit")
-        .repository("http://download.eclipse.org/releases/kepler")
+        .feature("org.eclipse.buckminster.core.feature") //
+        .feature("org.eclipse.buckminster.git.feature") //
+        .feature("org.eclipse.buckminster.pde.feature") //
+        .repository("http://download.eclipse.org/tools/buckminster/updates-4.3") //
         //
-        .feature("org.eclipse.buckminster.core.feature").feature("org.eclipse.buckminster.git.feature")
-        .feature("org.eclipse.buckminster.pde.feature")
-        .repository("http://download.eclipse.org/tools/buckminster/updates-4.3")
-        //
-        .bundle("org.eclipse.emf.cdo.releng.setup.ide").repository(RELENG)
+        .feature("org.eclipse.emf.cdo.releng.setup.ide") //
+        .repository(RELENG) //
         // .repository("file:/C:/develop/ws/cdo/org.eclipse.emf.cdo.releng.setup.updatesite")
         //
         .install(destination);
@@ -725,6 +725,11 @@ public class SetupDialog extends TitleAreaDialog
     }
 
     for (DirectorCall directorCall : branch.getDirectorCalls())
+    {
+      Director.install(bundlePool, directorCall, destination);
+    }
+
+    for (DirectorCall directorCall : preferences.getDirectorCalls())
     {
       Director.install(bundlePool, directorCall, destination);
     }

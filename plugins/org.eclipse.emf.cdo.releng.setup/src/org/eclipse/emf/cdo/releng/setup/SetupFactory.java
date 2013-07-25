@@ -130,6 +130,15 @@ public interface SetupFactory extends EFactory
   Setup createSetup();
 
   /**
+   * Returns a new object of class '<em>Tool Preference</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Tool Preference</em>'.
+   * @generated
+   */
+  ToolPreference createToolPreference();
+
+  /**
    * Returns a new object of class '<em>Preferences</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

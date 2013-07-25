@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Preferences</b></em>'.
@@ -31,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Preferences extends EObject
+public interface Preferences extends ToolInstallation
 {
   /**
    * Returns the value of the '<em><b>User Name</b></em>' attribute.

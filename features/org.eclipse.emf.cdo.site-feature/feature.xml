@@ -155,10 +155,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.setup"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.apireports"
          version="0.0.0"/>
 
@@ -210,6 +206,18 @@
          id="org.eclipse.emf.cdo.explorer.product"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.editor"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.ide"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.product"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.cdo.tests.objectivity"
          download-size="0"
@@ -223,9 +231,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.setup.product"
-         version="0.0.0"/>
 
 </feature>

@@ -85,6 +85,17 @@ public class P2RepositoryItemProvider extends ItemProviderAdapter implements IEd
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns P2Repository.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -100,14 +111,13 @@ public class P2RepositoryItemProvider extends ItemProviderAdapter implements IEd
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((P2Repository)object).getUrl();
-    return label == null || label.length() == 0 ? getString("_UI_P2Repository_type")
-        : getString("_UI_P2Repository_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_P2Repository_type") : label;
   }
 
   /**

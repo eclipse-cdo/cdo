@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.URI;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getApiBaseline <em>Api Baseline</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getMspecFilePath <em>Mspec File Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getCloneVariableName <em>Clone Variable Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getJavaVersion <em>Java Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -185,6 +186,35 @@ public interface Branch extends ToolInstallation
    * @generated
    */
   void setCloneVariableName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Java Version</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.releng.setup.JRE}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Java Version</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Java Version</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.setup.JRE
+   * @see #setJavaVersion(JRE)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBranch_JavaVersion()
+   * @model
+   * @generated
+   */
+  JRE getJavaVersion();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Branch#getJavaVersion <em>Java Version</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Java Version</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.setup.JRE
+   * @see #getJavaVersion()
+   * @generated
+   */
+  void setJavaVersion(JRE value);
 
   /**
    * <!-- begin-user-doc -->

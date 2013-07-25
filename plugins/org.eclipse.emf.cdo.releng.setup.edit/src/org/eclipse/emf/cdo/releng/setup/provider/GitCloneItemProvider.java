@@ -119,6 +119,17 @@ public class GitCloneItemProvider extends ItemProviderAdapter implements IEditin
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns GitClone.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -134,14 +145,19 @@ public class GitCloneItemProvider extends ItemProviderAdapter implements IEditin
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
-    String label = ((GitClone)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_GitClone_type") : getString("_UI_GitClone_type") + " "
-        + label;
+    String uri = ((GitClone)object).getRemoteURI();
+    String branch = ((GitClone)object).getCheckoutBranch();
+    if ((uri == null || uri.length() == 0) && (branch == null || branch.length() == 0))
+    {
+      return getString("_UI_GitClone_type");
+    }
+
+    return "" + uri + "  (" + branch + ")";
   }
 
   /**

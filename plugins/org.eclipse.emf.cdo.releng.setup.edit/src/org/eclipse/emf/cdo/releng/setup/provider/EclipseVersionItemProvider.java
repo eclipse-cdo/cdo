@@ -122,6 +122,17 @@ public class EclipseVersionItemProvider extends ItemProviderAdapter implements I
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns EclipseVersion.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

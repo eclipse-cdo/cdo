@@ -85,6 +85,17 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
    * This returns InstallableUnit.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -100,14 +111,13 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((InstallableUnit)object).getId();
-    return label == null || label.length() == 0 ? getString("_UI_InstallableUnit_type")
-        : getString("_UI_InstallableUnit_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_InstallableUnit_type") : label;
   }
 
   /**
@@ -115,7 +125,7 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void notifyChanged(Notification notification)
@@ -126,6 +136,11 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
     {
     case SetupPackage.INSTALLABLE_UNIT__ID:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      // EObject container = ((EObject)notification.getNotifier()).eContainer();
+      // if (container != null)
+      // {
+      // fireNotifyChanged(new ViewerNotification(notification, container, false, true));
+      // }
       return;
     }
     super.notifyChanged(notification);

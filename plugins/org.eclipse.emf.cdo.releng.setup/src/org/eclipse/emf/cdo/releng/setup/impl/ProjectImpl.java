@@ -115,9 +115,7 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
   public Configuration getConfiguration()
   {
     if (eContainerFeatureID() != SetupPackage.PROJECT__CONFIGURATION)
-    {
       return null;
-    }
     return (Configuration)eInternalContainer();
   }
 
@@ -139,34 +137,24 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
    */
   public void setConfiguration(Configuration newConfiguration)
   {
-    if (newConfiguration != eInternalContainer() || eContainerFeatureID() != SetupPackage.PROJECT__CONFIGURATION
-        && newConfiguration != null)
+    if (newConfiguration != eInternalContainer()
+        || (eContainerFeatureID() != SetupPackage.PROJECT__CONFIGURATION && newConfiguration != null))
     {
       if (EcoreUtil.isAncestor(this, newConfiguration))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newConfiguration != null)
-      {
         msgs = ((InternalEObject)newConfiguration).eInverseAdd(this, SetupPackage.CONFIGURATION__PROJECTS,
             Configuration.class, msgs);
-      }
       msgs = basicSetConfiguration(newConfiguration, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PROJECT__CONFIGURATION, newConfiguration,
           newConfiguration));
-    }
   }
 
   /**
@@ -204,9 +192,7 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PROJECT__NAME, oldName, name));
-    }
   }
 
   /**
@@ -237,9 +223,7 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     {
     case SetupPackage.PROJECT__CONFIGURATION:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetConfiguration((Configuration)otherEnd, msgs);
     case SetupPackage.PROJECT__BRANCHES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getBranches()).basicAdd(otherEnd, msgs);
@@ -393,9 +377,7 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

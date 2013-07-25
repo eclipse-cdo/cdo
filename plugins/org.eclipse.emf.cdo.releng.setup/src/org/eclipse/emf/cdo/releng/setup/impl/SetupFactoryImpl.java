@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.setup.*;
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -109,6 +110,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createGitClone();
     case SetupPackage.SETUP:
       return createSetup();
+    case SetupPackage.TOOL_PREFERENCE:
+      return createToolPreference();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -124,6 +127,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     switch (eDataType.getClassifierID())
     {
+    case SetupPackage.JRE:
+      return createJREFromString(eDataType, initialValue);
     case SetupPackage.URI:
       return createURIFromString(eDataType, initialValue);
     default:
@@ -141,6 +146,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     switch (eDataType.getClassifierID())
     {
+    case SetupPackage.JRE:
+      return convertJREToString(eDataType, instanceValue);
     case SetupPackage.URI:
       return convertURIToString(eDataType, instanceValue);
     default:
@@ -267,6 +274,41 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     SetupImpl setup = new SetupImpl();
     return setup;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ToolPreference createToolPreference()
+  {
+    ToolPreferenceImpl toolPreference = new ToolPreferenceImpl();
+    return toolPreference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public JRE createJREFromString(EDataType eDataType, String initialValue)
+  {
+    JRE result = JRE.get(initialValue);
+    if (result == null)
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
+          + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertJREToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

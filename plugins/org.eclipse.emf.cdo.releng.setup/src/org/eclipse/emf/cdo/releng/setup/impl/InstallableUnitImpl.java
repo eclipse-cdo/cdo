@@ -87,9 +87,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   public DirectorCall getDirectorCall()
   {
     if (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL)
-    {
       return null;
-    }
     return (DirectorCall)eInternalContainer();
   }
 
@@ -112,33 +110,23 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   public void setDirectorCall(DirectorCall newDirectorCall)
   {
     if (newDirectorCall != eInternalContainer()
-        || eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL && newDirectorCall != null)
+        || (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL && newDirectorCall != null))
     {
       if (EcoreUtil.isAncestor(this, newDirectorCall))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newDirectorCall != null)
-      {
         msgs = ((InternalEObject)newDirectorCall).eInverseAdd(this, SetupPackage.DIRECTOR_CALL__INSTALLABLE_UNITS,
             DirectorCall.class, msgs);
-      }
       msgs = basicSetDirectorCall(newDirectorCall, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL,
           newDirectorCall, newDirectorCall));
-    }
   }
 
   /**
@@ -161,9 +149,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__ID, oldId, id));
-    }
   }
 
   /**
@@ -178,9 +164,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     {
     case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetDirectorCall((DirectorCall)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -304,9 +288,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.releng.setup;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -178,13 +178,58 @@ public interface SetupPackage extends EPackage
   int PREFERENCES = 0;
 
   /**
+   * The feature id for the '<em><b>Director Calls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_INSTALLATION__DIRECTOR_CALLS = 0;
+
+  /**
+   * The feature id for the '<em><b>Tool Preferences</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_INSTALLATION__TOOL_PREFERENCES = 1;
+
+  /**
+   * The number of structural features of the '<em>Tool Installation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_INSTALLATION_FEATURE_COUNT = 2;
+
+  /**
+   * The feature id for the '<em><b>Director Calls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCES__DIRECTOR_CALLS = TOOL_INSTALLATION__DIRECTOR_CALLS;
+
+  /**
+   * The feature id for the '<em><b>Tool Preferences</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCES__TOOL_PREFERENCES = TOOL_INSTALLATION__TOOL_PREFERENCES;
+
+  /**
    * The feature id for the '<em><b>User Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES__USER_NAME = 0;
+  int PREFERENCES__USER_NAME = TOOL_INSTALLATION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Bundle Pool</b></em>' attribute.
@@ -193,7 +238,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__BUNDLE_POOL = 1;
+  int PREFERENCES__BUNDLE_POOL = TOOL_INSTALLATION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Install Folder</b></em>' attribute.
@@ -202,7 +247,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__INSTALL_FOLDER = 2;
+  int PREFERENCES__INSTALL_FOLDER = TOOL_INSTALLATION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Git Prefix</b></em>' attribute.
@@ -211,7 +256,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__GIT_PREFIX = 3;
+  int PREFERENCES__GIT_PREFIX = TOOL_INSTALLATION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Preferences</em>' class.
@@ -220,16 +265,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = 4;
-
-  /**
-   * The number of operations of the '<em>Preferences</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCES_OPERATION_COUNT = 0;
+  int PREFERENCES_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Configuration</b></em>' container reference.
@@ -268,15 +304,6 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_VERSION_FEATURE_COUNT = 3;
 
   /**
-   * The number of operations of the '<em>Eclipse Version</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_VERSION_OPERATION_COUNT = 0;
-
-  /**
    * The feature id for the '<em><b>Installable Units</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -302,15 +329,6 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int DIRECTOR_CALL_FEATURE_COUNT = 2;
-
-  /**
-   * The number of operations of the '<em>Director Call</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DIRECTOR_CALL_OPERATION_COUNT = 0;
 
   /**
    * The feature id for the '<em><b>Director Call</b></em>' container reference.
@@ -340,15 +358,6 @@ public interface SetupPackage extends EPackage
   int INSTALLABLE_UNIT_FEATURE_COUNT = 2;
 
   /**
-   * The number of operations of the '<em>Installable Unit</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTALLABLE_UNIT_OPERATION_COUNT = 0;
-
-  /**
    * The feature id for the '<em><b>Director Call</b></em>' container reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -374,15 +383,6 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int P2_REPOSITORY_FEATURE_COUNT = 2;
-
-  /**
-   * The number of operations of the '<em>P2 Repository</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int P2_REPOSITORY_OPERATION_COUNT = 0;
 
   /**
    * The feature id for the '<em><b>Projects</b></em>' containment reference list.
@@ -412,42 +412,6 @@ public interface SetupPackage extends EPackage
   int CONFIGURATION_FEATURE_COUNT = 2;
 
   /**
-   * The number of operations of the '<em>Configuration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONFIGURATION_OPERATION_COUNT = 0;
-
-  /**
-   * The feature id for the '<em><b>Director Calls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOOL_INSTALLATION__DIRECTOR_CALLS = 0;
-
-  /**
-   * The number of structural features of the '<em>Tool Installation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOOL_INSTALLATION_FEATURE_COUNT = 1;
-
-  /**
-   * The number of operations of the '<em>Tool Installation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOOL_INSTALLATION_OPERATION_COUNT = 0;
-
-  /**
    * The feature id for the '<em><b>Director Calls</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -455,6 +419,15 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int PROJECT__DIRECTOR_CALLS = TOOL_INSTALLATION__DIRECTOR_CALLS;
+
+  /**
+   * The feature id for the '<em><b>Tool Preferences</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROJECT__TOOL_PREFERENCES = TOOL_INSTALLATION__TOOL_PREFERENCES;
 
   /**
    * The feature id for the '<em><b>Configuration</b></em>' container reference.
@@ -502,15 +475,6 @@ public interface SetupPackage extends EPackage
   int PROJECT_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 4;
 
   /**
-   * The number of operations of the '<em>Project</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROJECT_OPERATION_COUNT = TOOL_INSTALLATION_OPERATION_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Director Calls</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -518,6 +482,15 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int BRANCH__DIRECTOR_CALLS = TOOL_INSTALLATION__DIRECTOR_CALLS;
+
+  /**
+   * The feature id for the '<em><b>Tool Preferences</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BRANCH__TOOL_PREFERENCES = TOOL_INSTALLATION__TOOL_PREFERENCES;
 
   /**
    * The feature id for the '<em><b>Project</b></em>' container reference.
@@ -574,40 +547,22 @@ public interface SetupPackage extends EPackage
   int BRANCH__CLONE_VARIABLE_NAME = TOOL_INSTALLATION_FEATURE_COUNT + 5;
 
   /**
+   * The feature id for the '<em><b>Java Version</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BRANCH__JAVA_VERSION = TOOL_INSTALLATION_FEATURE_COUNT + 6;
+
+  /**
    * The number of structural features of the '<em>Branch</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BRANCH_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 6;
-
-  /**
-   * The operation id for the '<em>Is Installed</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BRANCH___IS_INSTALLED__STRING = TOOL_INSTALLATION_OPERATION_COUNT + 0;
-
-  /**
-   * The operation id for the '<em>Get URI</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BRANCH___GET_URI__STRING = TOOL_INSTALLATION_OPERATION_COUNT + 1;
-
-  /**
-   * The number of operations of the '<em>Branch</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BRANCH_OPERATION_COUNT = TOOL_INSTALLATION_OPERATION_COUNT + 2;
+  int BRANCH_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Project</b></em>' container reference.
@@ -644,15 +599,6 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int API_BASELINE_FEATURE_COUNT = 3;
-
-  /**
-   * The number of operations of the '<em>Api Baseline</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_OPERATION_COUNT = 0;
 
   /**
    * The feature id for the '<em><b>Branch</b></em>' container reference.
@@ -698,15 +644,6 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int GIT_CLONE_FEATURE_COUNT = 4;
-
-  /**
-   * The number of operations of the '<em>Git Clone</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_OPERATION_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -755,13 +692,51 @@ public interface SetupPackage extends EPackage
   int SETUP_FEATURE_COUNT = 3;
 
   /**
-   * The number of operations of the '<em>Setup</em>' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl <em>Tool Preference</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getToolPreference()
+   * @generated
+   */
+  int TOOL_PREFERENCE = 12;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SETUP_OPERATION_COUNT = 0;
+  int TOOL_PREFERENCE__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_PREFERENCE__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Tool Preference</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_PREFERENCE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.JRE <em>JRE</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.JRE
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRE()
+   * @generated
+   */
+  int JRE = 13;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -771,7 +746,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 12;
+  int URI = 14;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -936,24 +911,15 @@ public interface SetupPackage extends EPackage
   EAttribute getBranch_CloneVariableName();
 
   /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.setup.Branch#isInstalled(java.lang.String) <em>Is Installed</em>}' operation.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Branch#getJavaVersion <em>Java Version</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Is Installed</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.setup.Branch#isInstalled(java.lang.String)
+   * @return the meta object for the attribute '<em>Java Version</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Branch#getJavaVersion()
+   * @see #getBranch()
    * @generated
    */
-  EOperation getBranch__IsInstalled__String();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.setup.Branch#getURI(java.lang.String) <em>Get URI</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get URI</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.setup.Branch#getURI(java.lang.String)
-   * @generated
-   */
-  EOperation getBranch__GetURI__String();
+  EAttribute getBranch_JavaVersion();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ToolInstallation <em>Tool Installation</em>}'.
@@ -975,6 +941,17 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EReference getToolInstallation_DirectorCalls();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.ToolInstallation#getToolPreferences <em>Tool Preferences</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Tool Preferences</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ToolInstallation#getToolPreferences()
+   * @see #getToolInstallation()
+   * @generated
+   */
+  EReference getToolInstallation_ToolPreferences();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion <em>Eclipse Version</em>}'.
@@ -1256,6 +1233,48 @@ public interface SetupPackage extends EPackage
   EReference getSetup_Preferences();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ToolPreference <em>Tool Preference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Tool Preference</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ToolPreference
+   * @generated
+   */
+  EClass getToolPreference();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ToolPreference#getKey <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ToolPreference#getKey()
+   * @see #getToolPreference()
+   * @generated
+   */
+  EAttribute getToolPreference_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ToolPreference#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ToolPreference#getValue()
+   * @see #getToolPreference()
+   * @generated
+   */
+  EAttribute getToolPreference_Value();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.releng.setup.JRE <em>JRE</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>JRE</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.JRE
+   * @generated
+   */
+  EEnum getJRE();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Preferences <em>Preferences</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1471,20 +1490,12 @@ public interface SetupPackage extends EPackage
     EAttribute BRANCH__CLONE_VARIABLE_NAME = eINSTANCE.getBranch_CloneVariableName();
 
     /**
-     * The meta object literal for the '<em><b>Is Installed</b></em>' operation.
+     * The meta object literal for the '<em><b>Java Version</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation BRANCH___IS_INSTALLED__STRING = eINSTANCE.getBranch__IsInstalled__String();
-
-    /**
-     * The meta object literal for the '<em><b>Get URI</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation BRANCH___GET_URI__STRING = eINSTANCE.getBranch__GetURI__String();
+    EAttribute BRANCH__JAVA_VERSION = eINSTANCE.getBranch_JavaVersion();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolInstallationImpl <em>Tool Installation</em>}' class.
@@ -1503,6 +1514,14 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EReference TOOL_INSTALLATION__DIRECTOR_CALLS = eINSTANCE.getToolInstallation_DirectorCalls();
+
+    /**
+     * The meta object literal for the '<em><b>Tool Preferences</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TOOL_INSTALLATION__TOOL_PREFERENCES = eINSTANCE.getToolInstallation_ToolPreferences();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl <em>Eclipse Version</em>}' class.
@@ -1725,6 +1744,42 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EReference SETUP__PREFERENCES = eINSTANCE.getSetup_Preferences();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl <em>Tool Preference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getToolPreference()
+     * @generated
+     */
+    EClass TOOL_PREFERENCE = eINSTANCE.getToolPreference();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TOOL_PREFERENCE__KEY = eINSTANCE.getToolPreference_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TOOL_PREFERENCE__VALUE = eINSTANCE.getToolPreference_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.JRE <em>JRE</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.JRE
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRE()
+     * @generated
+     */
+    EEnum JRE = eINSTANCE.getJRE();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.

@@ -22,6 +22,15 @@ import java.sql.SQLException;
  */
 public interface IDBPreparedStatement extends Comparable<IDBPreparedStatement>, PreparedStatement
 {
+  /**
+   * @since 4.3
+   */
+  public IDBConnection getConnection() throws SQLException;
+
+  /**
+   * @deprecated As of 4.3 use {@link #getConnection()}.  
+   */
+  @Deprecated
   public IDBConnection getTransaction();
 
   public String getSQL();

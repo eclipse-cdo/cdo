@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.net4j.db.jdbc;singleton:=true
+Bundle-Version: 4.3.0.qualifier
+Bundle-Vendor: %providerName
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.net4j.db.jdbc;version="4.3.0"
+Bundle-ActivationPolicy: lazy

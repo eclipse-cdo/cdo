@@ -66,7 +66,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="apiBaseline" eType="#//ApiBaseline"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mspecFilePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cloneVariableName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaVersion" eType="#//JRE"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ApiBaseline">
     <eStructuralFeatures xsi:type="ecore:EReference" name="project" eType="#//Project"
@@ -95,13 +94,5 @@
   <eClassifiers xsi:type="ecore:EClass" name="ToolPreference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="JRE">
-    <eLiterals name="JRE_13"/>
-    <eLiterals name="JRE_14" value="1"/>
-    <eLiterals name="JRE_15" value="2"/>
-    <eLiterals name="JRE_16" value="3"/>
-    <eLiterals name="JRE_17" value="4"/>
-    <eLiterals name="JRE_18" value="5"/>
   </eClassifiers>
 </ecore:EPackage>

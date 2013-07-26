@@ -24,12 +24,10 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
-
 import org.eclipse.emf.cdo.releng.setup.ToolPreference;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -126,13 +124,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass toolPreferenceEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EEnum jreEEnum = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -360,16 +351,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public EAttribute getBranch_CloneVariableName()
   {
     return (EAttribute)branchEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBranch_JavaVersion()
-  {
-    return (EAttribute)branchEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -707,16 +688,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EEnum getJRE()
-  {
-    return jreEEnum;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getPreferences()
   {
     return preferencesEClass;
@@ -847,7 +818,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(branchEClass, BRANCH__API_BASELINE);
     createEAttribute(branchEClass, BRANCH__MSPEC_FILE_PATH);
     createEAttribute(branchEClass, BRANCH__CLONE_VARIABLE_NAME);
-    createEAttribute(branchEClass, BRANCH__JAVA_VERSION);
 
     apiBaselineEClass = createEClass(API_BASELINE);
     createEReference(apiBaselineEClass, API_BASELINE__PROJECT);
@@ -869,9 +839,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     toolPreferenceEClass = createEClass(TOOL_PREFERENCE);
     createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__KEY);
     createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__VALUE);
-
-    // Create enums
-    jreEEnum = createEEnum(JRE);
 
     // Create data types
     uriEDataType = createEDataType(URI);
@@ -1010,8 +977,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getBranch_CloneVariableName(), ecorePackage.getEString(), "cloneVariableName", null, 0, 1,
         Branch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getBranch_JavaVersion(), this.getJRE(), "javaVersion", null, 0, 1, Branch.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     EOperation op = addEOperation(branchEClass, ecorePackage.getEBoolean(), "isInstalled", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "installFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1062,15 +1027,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getToolPreference_Value(), ecorePackage.getEString(), "value", null, 0, 1, ToolPreference.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    // Initialize enums and add enum literals
-    initEEnum(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.class, "JRE");
-    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_13);
-    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_14);
-    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_15);
-    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_16);
-    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_17);
-    addEEnumLiteral(jreEEnum, org.eclipse.emf.cdo.releng.setup.JRE.JRE_18);
 
     // Initialize data types
     initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,

@@ -110,8 +110,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case SetupPackage.JRE:
-      return createJREFromString(eDataType, initialValue);
     case SetupPackage.URI:
       return createURIFromString(eDataType, initialValue);
     default:
@@ -129,8 +127,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case SetupPackage.JRE:
-      return convertJREToString(eDataType, instanceValue);
     case SetupPackage.URI:
       return convertURIToString(eDataType, instanceValue);
     default:
@@ -257,30 +253,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     ToolPreferenceImpl toolPreference = new ToolPreferenceImpl();
     return toolPreference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public JRE createJREFromString(EDataType eDataType, String initialValue)
-  {
-    JRE result = JRE.get(initialValue);
-    if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertJREToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

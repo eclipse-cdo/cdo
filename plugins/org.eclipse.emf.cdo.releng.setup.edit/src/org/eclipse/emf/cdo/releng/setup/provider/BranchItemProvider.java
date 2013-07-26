@@ -67,7 +67,6 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
       addApiBaselinePropertyDescriptor(object);
       addMspecFilePathPropertyDescriptor(object);
       addCloneVariableNamePropertyDescriptor(object);
-      addJavaVersionPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -133,22 +132,6 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
         getString("_UI_PropertyDescriptor_description", "_UI_Branch_cloneVariableName_feature", "_UI_Branch_type"),
         SetupPackage.Literals.BRANCH__CLONE_VARIABLE_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Java Version feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addJavaVersionPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Branch_javaVersion_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Branch_javaVersion_feature", "_UI_Branch_type"),
-        SetupPackage.Literals.BRANCH__JAVA_VERSION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
   }
 
   /**
@@ -226,7 +209,6 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
     case SetupPackage.BRANCH__NAME:
     case SetupPackage.BRANCH__MSPEC_FILE_PATH:
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
-    case SetupPackage.BRANCH__JAVA_VERSION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.BRANCH__GIT_CLONES:

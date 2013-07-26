@@ -94,26 +94,20 @@ public final class SetupIDE
 
     if (state < 3)
     {
-      JREs.init();
+      GitClones.init();
       saveState(3);
     }
 
     if (state < 4)
     {
-      GitClones.init();
+      Buckminster.importBaseline();
       saveState(4);
     }
 
     if (state < 5)
     {
-      Buckminster.importBaseline();
-      saveState(5);
-    }
-
-    if (state < 6)
-    {
       Buckminster.importTarget();
-      saveState(6);
+      saveState(5);
     }
 
     if (state < DONE)

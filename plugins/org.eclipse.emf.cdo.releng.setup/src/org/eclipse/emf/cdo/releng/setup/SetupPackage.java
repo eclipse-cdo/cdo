@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.releng.setup;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -547,22 +546,13 @@ public interface SetupPackage extends EPackage
   int BRANCH__CLONE_VARIABLE_NAME = TOOL_INSTALLATION_FEATURE_COUNT + 5;
 
   /**
-   * The feature id for the '<em><b>Java Version</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BRANCH__JAVA_VERSION = TOOL_INSTALLATION_FEATURE_COUNT + 6;
-
-  /**
    * The number of structural features of the '<em>Branch</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BRANCH_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 7;
+  int BRANCH_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Project</b></em>' container reference.
@@ -738,16 +728,6 @@ public interface SetupPackage extends EPackage
   int TOOL_PREFERENCE_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.JRE <em>JRE</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.JRE
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRE()
-   * @generated
-   */
-  int JRE = 13;
-
-  /**
    * The meta object id for the '<em>URI</em>' data type.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -755,7 +735,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 14;
+  int URI = 13;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -918,17 +898,6 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getBranch_CloneVariableName();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Branch#getJavaVersion <em>Java Version</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Java Version</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Branch#getJavaVersion()
-   * @see #getBranch()
-   * @generated
-   */
-  EAttribute getBranch_JavaVersion();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ToolInstallation <em>Tool Installation</em>}'.
@@ -1285,16 +1254,6 @@ public interface SetupPackage extends EPackage
   EAttribute getToolPreference_Value();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.releng.setup.JRE <em>JRE</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>JRE</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.JRE
-   * @generated
-   */
-  EEnum getJRE();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Preferences <em>Preferences</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1508,14 +1467,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute BRANCH__CLONE_VARIABLE_NAME = eINSTANCE.getBranch_CloneVariableName();
-
-    /**
-     * The meta object literal for the '<em><b>Java Version</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BRANCH__JAVA_VERSION = eINSTANCE.getBranch_JavaVersion();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolInstallationImpl <em>Tool Installation</em>}' class.
@@ -1798,16 +1749,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute TOOL_PREFERENCE__VALUE = eINSTANCE.getToolPreference_Value();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.JRE <em>JRE</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.JRE
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRE()
-     * @generated
-     */
-    EEnum JRE = eINSTANCE.getJRE();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.

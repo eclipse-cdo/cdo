@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.GitClone;
-import org.eclipse.emf.cdo.releng.setup.JRE;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.common.notify.Notification;
@@ -44,7 +43,6 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getApiBaseline <em>Api Baseline</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getMspecFilePath <em>Mspec File Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getCloneVariableName <em>Clone Variable Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getJavaVersion <em>Java Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -131,26 +129,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
    * @ordered
    */
   protected String cloneVariableName = CLONE_VARIABLE_NAME_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getJavaVersion() <em>Java Version</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getJavaVersion()
-   * @generated
-   * @ordered
-   */
-  protected static final JRE JAVA_VERSION_EDEFAULT = JRE.JRE_13;
-
-  /**
-   * The cached value of the '{@link #getJavaVersion() <em>Java Version</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getJavaVersion()
-   * @generated
-   * @ordered
-   */
-  protected JRE javaVersion = JAVA_VERSION_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -355,30 +333,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
-  public JRE getJavaVersion()
-  {
-    return javaVersion;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setJavaVersion(JRE newJavaVersion)
-  {
-    JRE oldJavaVersion = javaVersion;
-    javaVersion = newJavaVersion == null ? JAVA_VERSION_EDEFAULT : newJavaVersion;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__JAVA_VERSION, oldJavaVersion,
-          javaVersion));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * @generated NOT
    */
   public boolean isInstalled(String installFolder)
@@ -490,8 +444,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
       return getMspecFilePath();
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       return getCloneVariableName();
-    case SetupPackage.BRANCH__JAVA_VERSION:
-      return getJavaVersion();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -526,9 +478,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       setCloneVariableName((String)newValue);
       return;
-    case SetupPackage.BRANCH__JAVA_VERSION:
-      setJavaVersion((JRE)newValue);
-      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -561,9 +510,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       setCloneVariableName(CLONE_VARIABLE_NAME_EDEFAULT);
       return;
-    case SetupPackage.BRANCH__JAVA_VERSION:
-      setJavaVersion(JAVA_VERSION_EDEFAULT);
-      return;
     }
     super.eUnset(featureID);
   }
@@ -591,8 +537,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       return CLONE_VARIABLE_NAME_EDEFAULT == null ? cloneVariableName != null : !CLONE_VARIABLE_NAME_EDEFAULT
           .equals(cloneVariableName);
-    case SetupPackage.BRANCH__JAVA_VERSION:
-      return javaVersion != JAVA_VERSION_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -615,8 +559,6 @@ public class BranchImpl extends ToolInstallationImpl implements Branch
     result.append(mspecFilePath);
     result.append(", cloneVariableName: ");
     result.append(cloneVariableName);
-    result.append(", javaVersion: ");
-    result.append(javaVersion);
     result.append(')');
     return result.toString();
   }

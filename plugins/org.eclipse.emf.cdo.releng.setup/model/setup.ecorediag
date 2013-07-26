@@ -51,10 +51,6 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//Branch/cloneVariableName"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_8ekP8fUJEeK09qwveWBYrQ"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_SvoeQPUKEeK09qwveWBYrQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="setup.ecore#//Branch/javaVersion"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_SvoeQfUKEeK09qwveWBYrQ"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_3TdoEuoIEeKpRf481yfX-g"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_3TdoE-oIEeKpRf481yfX-g"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_3TdoFOoIEeKpRf481yfX-g"/>
@@ -66,7 +62,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_3TdBAeoIEeKpRf481yfX-g" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//Branch"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3TdBAuoIEeKpRf481yfX-g" x="580" y="170"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3TdBAuoIEeKpRf481yfX-g" x="580" y="184"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_RhEkcOoJEeKpRf481yfX-g" type="1001">
     <children xmi:type="notation:Node" xmi:id="_RhFLgeoJEeKpRf481yfX-g" type="4001"/>
@@ -283,41 +279,6 @@
     <styles xmi:type="notation:ShapeStyle" xmi:id="_LJQ64fTrEeKROP7mUifaFQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//ToolPreference"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LJQ64vTrEeKROP7mUifaFQ" x="735" y="23"/>
-  </children>
-  <children xmi:type="notation:Node" xmi:id="_B8PZkPUKEeK09qwveWBYrQ" type="1005">
-    <children xmi:type="notation:Node" xmi:id="_B8PZk_UKEeK09qwveWBYrQ" type="4010"/>
-    <children xmi:type="notation:Node" xmi:id="_B8PZlPUKEeK09qwveWBYrQ" type="5008">
-      <children xmi:type="notation:Node" xmi:id="_D58cYPUKEeK09qwveWBYrQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//JRE/JRE_13"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_D58cYfUKEeK09qwveWBYrQ"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_JXaKoPUKEeK09qwveWBYrQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//JRE/JRE_14"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_JXaKofUKEeK09qwveWBYrQ"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_KsfHMPUKEeK09qwveWBYrQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//JRE/JRE_15"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_KsfHMfUKEeK09qwveWBYrQ"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_LVfn8PUKEeK09qwveWBYrQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//JRE/JRE_16"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_LVfn8fUKEeK09qwveWBYrQ"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_MAa0QPUKEeK09qwveWBYrQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//JRE/JRE_17"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_MAa0QfUKEeK09qwveWBYrQ"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_M64RYPUKEeK09qwveWBYrQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//JRE/JRE_18"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_M64RYfUKEeK09qwveWBYrQ"/>
-      </children>
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_B8PZlfUKEeK09qwveWBYrQ"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_B8PZlvUKEeK09qwveWBYrQ"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_B8PZl_UKEeK09qwveWBYrQ"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_B8PZkfUKEeK09qwveWBYrQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EEnum" href="setup.ecore#//JRE"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_B8PZkvUKEeK09qwveWBYrQ" x="936" y="360"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_u_e_seoIEeKpRf481yfX-g"/>
   <element xmi:type="ecore:EPackage" href="setup.ecore#/"/>

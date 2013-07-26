@@ -54,5 +54,8 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferenceTransfer">
+   </extension>
 
 </plugin>

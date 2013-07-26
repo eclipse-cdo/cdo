@@ -48,9 +48,10 @@ public class BuckyAction implements IWorkbenchWindowActionDelegate
   {
     ProgressLogDialog.run(window.getShell(), "Importing mspec", new ProgressLogRunnable()
     {
-      public void run(ProgressLog log) throws Exception
+      public boolean run(ProgressLog log) throws Exception
       {
         Buckminster.importMSpec();
+        return false;
       }
     });
   }

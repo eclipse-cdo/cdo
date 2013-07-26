@@ -11,21 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.*;
-import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
-import org.eclipse.emf.cdo.releng.setup.Branch;
-import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
-import org.eclipse.emf.cdo.releng.setup.GitClone;
-import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
-import org.eclipse.emf.cdo.releng.setup.P2Repository;
-import org.eclipse.emf.cdo.releng.setup.Preferences;
-import org.eclipse.emf.cdo.releng.setup.Project;
-import org.eclipse.emf.cdo.releng.setup.Setup;
-import org.eclipse.emf.cdo.releng.setup.SetupFactory;
-import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -98,8 +83,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createP2Repository();
     case SetupPackage.CONFIGURATION:
       return createConfiguration();
-    case SetupPackage.TOOL_INSTALLATION:
-      return createToolInstallation();
     case SetupPackage.PROJECT:
       return createProject();
     case SetupPackage.BRANCH:
@@ -186,17 +169,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     BranchImpl branch = new BranchImpl();
     return branch;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ToolInstallation createToolInstallation()
-  {
-    ToolInstallationImpl toolInstallation = new ToolInstallationImpl();
-    return toolInstallation;
   }
 
   /**

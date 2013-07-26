@@ -36,7 +36,7 @@ public final class Downloads
     {
       String name = encodeFilename(url);
       File tmp = File.createTempFile(name + "-", ".part");
-      File file = new File(tmp.getParentFile(), name);
+      File file = new File(tmp.getParentFile(), name + ".zip");
       if (!file.exists())
       {
         downloadURL(url, tmp);

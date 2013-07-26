@@ -39,7 +39,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class ToolInstallationImpl extends MinimalEObjectImpl.Container implements ToolInstallation
+public abstract class ToolInstallationImpl extends MinimalEObjectImpl.Container implements ToolInstallation
 {
   /**
    * The cached value of the '{@link #getDirectorCalls() <em>Director Calls</em>}' containment reference list.

@@ -667,6 +667,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getSetup_UpdateLocations()
+  {
+    return (EReference)setupEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getToolPreference()
   {
     return toolPreferenceEClass;
@@ -854,6 +864,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(setupEClass, SETUP__BRANCH);
     createEReference(setupEClass, SETUP__ECLIPSE_VERSION);
     createEReference(setupEClass, SETUP__PREFERENCES);
+    createEReference(setupEClass, SETUP__UPDATE_LOCATIONS);
 
     toolPreferenceEClass = createEClass(TOOL_PREFERENCE);
     createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__KEY);
@@ -960,7 +971,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
-    initEClass(toolInstallationEClass, ToolInstallation.class, "ToolInstallation", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(toolInstallationEClass, ToolInstallation.class, "ToolInstallation", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getToolInstallation_DirectorCalls(), this.getDirectorCall(), null, "directorCalls", null, 0, -1,
         ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
@@ -1041,6 +1052,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getSetup_Preferences(), this.getPreferences(), null, "preferences", null, 0, 1, Setup.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEReference(getSetup_UpdateLocations(), this.getP2Repository(), null, "updateLocations", null, 0, -1,
+        Setup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(toolPreferenceEClass, ToolPreference.class, "ToolPreference", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

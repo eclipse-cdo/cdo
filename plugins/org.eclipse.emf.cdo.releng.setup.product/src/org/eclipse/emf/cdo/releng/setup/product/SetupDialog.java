@@ -14,11 +14,13 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
 import org.eclipse.emf.cdo.releng.setup.helper.OS;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
@@ -86,20 +88,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class SetupDialog extends TitleAreaDialog
 {
-  private static final String SETUP = System.getProperty("setup.uri",
+  private static final String SETUP_URI = System.getProperty("setup.uri",
       "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.xmi");
 
-  private static final String RELENG = System.getProperty("releng.uri",
-      "http://download.eclipse.org/modeling/emf/cdo/updates/integration");
+  private static final String EGIT_URI = System.getProperty("egit.uri", "http://download.eclipse.org/releases/kepler");
 
-  private static final String ECLIPSE_VERSION_COLUMN = "eclipseVersion";
+  private static final String BUCKY_URI = System.getProperty("bucky.uri",
+      "http://download.eclipse.org/tools/buckminster/updates-4.3");
+
+  private static final String RELENG_URI = System.getProperty("releng.uri",
+      "http://download.eclipse.org/modeling/emf/cdo/updates/integration");
 
   private HashMap<Branch, Setup> setups;
 
@@ -154,7 +161,7 @@ public class SetupDialog extends TitleAreaDialog
     setTitle(ProgressLogDialog.TITLE);
     setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.ui", "icons/install_wiz.gif"));
 
-    URI configurationURI = URI.createURI(SETUP);
+    URI configurationURI = URI.createURI(SETUP_URI);
     Resource resource = resourceSet.getResource(configurationURI, true);
     configuration = (Configuration)resource.getContents().get(0);
 
@@ -165,6 +172,8 @@ public class SetupDialog extends TitleAreaDialog
     gl_container.marginHeight = 0;
     container.setLayout(gl_container);
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+    final String ECLIPSE_VERSION_COLUMN = "eclipseVersion";
 
     viewer = new CheckboxTreeViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
     Tree tree = viewer.getTree();
@@ -669,7 +678,7 @@ public class SetupDialog extends TitleAreaDialog
 
     ProgressLogDialog.run(getShell(), "Setting up IDE", new ProgressLogRunnable()
     {
-      public void run(ProgressLog log) throws Exception
+      public boolean run(ProgressLog log) throws Exception
       {
         for (Object checkedElement : checkedElements)
         {
@@ -690,11 +699,13 @@ public class SetupDialog extends TitleAreaDialog
             }
           }
         }
+
+        return false;
       }
     });
   }
 
-  private void install(Setup setup, String installFolder, String bundlePool, String gitPrefix) throws IOException
+  private void install(Setup setup, String installFolder, String bundlePool, String gitPrefix) throws Exception
   {
     Branch branch = setup.getBranch();
     Progress.log().addLine("Setting up " + branch.getProject().getName() + " " + branch.getName());
@@ -702,46 +713,66 @@ public class SetupDialog extends TitleAreaDialog
     URI branchURI = branch.getURI(installFolder).trimSegments(1);
     String destination = branchURI.appendSegment("eclipse").toFileString();
 
-    Director.install(bundlePool, setup.getEclipseVersion().getDirectorCall(), destination);
+    Set<String> updateLocations = new HashSet<String>();
+    updateLocations.add(EGIT_URI);
+    updateLocations.add(BUCKY_URI);
+    updateLocations.add(RELENG_URI);
+
+    install(bundlePool, destination, updateLocations, setup.getEclipseVersion().getDirectorCall());
 
     Director.from(bundlePool) //
         .feature("org.eclipse.egit") //
-        .repository("http://download.eclipse.org/releases/kepler") //
+        .repository(EGIT_URI) //
         //
         .feature("org.eclipse.buckminster.core.feature") //
         .feature("org.eclipse.buckminster.git.feature") //
         .feature("org.eclipse.buckminster.pde.feature") //
-        .repository("http://download.eclipse.org/tools/buckminster/updates-4.3") //
+        .repository(BUCKY_URI) //
         //
         .feature("org.eclipse.emf.cdo.releng.setup.ide") //
-        .repository(RELENG) //
-        // .repository("file:/C:/develop/ws/cdo/org.eclipse.emf.cdo.releng.setup.updatesite")
+        .repository(RELENG_URI) //
         //
         .install(destination);
 
-    for (DirectorCall directorCall : branch.getProject().getDirectorCalls())
-    {
-      Director.install(bundlePool, directorCall, destination);
-    }
-
-    for (DirectorCall directorCall : branch.getDirectorCalls())
-    {
-      Director.install(bundlePool, directorCall, destination);
-    }
-
-    for (DirectorCall directorCall : preferences.getDirectorCalls())
-    {
-      Director.install(bundlePool, directorCall, destination);
-    }
+    install(bundlePool, destination, updateLocations, branch.getProject());
+    install(bundlePool, destination, updateLocations, branch);
+    install(bundlePool, destination, updateLocations, preferences);
 
     File branchFolder = new File(branchURI.toFileString());
     mangleEclipseIni(destination, branchFolder, gitPrefix);
 
     setup.setPreferences(EcoreUtil.copy(preferences));
+    for (String updateLocation : updateLocations)
+    {
+      P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
+      p2Repository.setUrl(updateLocation);
+
+      setup.getUpdateLocations().add(p2Repository);
+    }
+
     setup.eResource().save(null);
 
     new File(branchFolder, "ws").mkdirs();
     launchIDE(setup, branchFolder);
+  }
+
+  private static void install(String bundlePool, String destination, Set<String> updateLocations,
+      ToolInstallation installation) throws Exception
+  {
+    for (DirectorCall directorCall : installation.getDirectorCalls())
+    {
+      install(bundlePool, destination, updateLocations, directorCall);
+    }
+  }
+
+  private static void install(String bundlePool, String destination, Set<String> updateLocations,
+      DirectorCall directorCall)
+  {
+    Director.install(bundlePool, directorCall, destination);
+    for (P2Repository p2Repository : directorCall.getP2Repositories())
+    {
+      updateLocations.add(p2Repository.getUrl());
+    }
   }
 
   private void mangleEclipseIni(String destination, File branchFolder, String gitPrefix)

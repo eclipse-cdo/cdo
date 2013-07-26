@@ -41,6 +41,10 @@ import java.util.List;
 public class DirectorCallItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
+  private static final String PREFIX = "org.eclipse.";
+
+  private static final String SUFFIX = ".feature.group";
+
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
@@ -147,7 +151,18 @@ public class DirectorCallItemProvider extends ItemProviderAdapter implements IEd
           builder.append(", ");
         }
 
-        builder.append(installableUnit.getId());
+        String id = installableUnit.getId();
+        if (id.startsWith(PREFIX))
+        {
+          id = id.substring(PREFIX.length());
+        }
+
+        if (id.endsWith(SUFFIX))
+        {
+          id = id.substring(0, id.length() - SUFFIX.length());
+        }
+
+        builder.append(id);
       }
 
       return getString("_UI_DirectorCall_type") + " (" + builder + ")";

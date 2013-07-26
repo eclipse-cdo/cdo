@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -140,13 +141,14 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       throw new OperationCanceledException();
     }
 
-    if (line == null || line.length() == 0 || Character.isLowerCase(line.charAt(0)) || line.startsWith("Scanning Git")
-        || line.startsWith("Re-indexing (fully)") || line.endsWith(" remaining.")
+    if (line == null || line.length() == 0 || Character.isLowerCase(line.charAt(0)) || line.equals("Updating")
+        || line.startsWith("Scanning Git") || line.startsWith("Re-indexing (fully)") || line.endsWith(" remaining.")
         || line.startsWith("Calculating Decorations") || line.startsWith("Decorating ") || line.startsWith("http://")
         || line.startsWith("The user operation is waiting") || line.startsWith("Git repository changed")
-        || line.startsWith("Refreshing ") || line.startsWith("Opening ") || line.startsWith("Connecting  project ")
+        || line.startsWith("Refreshing ") || line.startsWith("Opening ") || line.startsWith("Connecting project ")
         || line.startsWith("Searching for associated repositories.") || line.startsWith("Preparing type ")
-        || line.startsWith("Loading project description") || line.startsWith("Generating cspec from PDE artifacts"))
+        || line.startsWith("Loading project description") || line.startsWith("Generating cspec from PDE artifacts")
+        || line.startsWith("Reporting encoding changes"))
     {
       return;
     }
@@ -228,9 +230,8 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   {
     try
     {
+      final boolean[] restart = { false };
       final ProgressLogDialog dialog = new ProgressLogDialog(shell);
-      // dialog.setBlockOnOpen(false);
-
       shell.getDisplay().asyncExec(new Runnable()
       {
         public void run()
@@ -245,7 +246,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
               try
               {
                 dialog.addLine(jobName);
-                runnable.run(dialog);
+                restart[0] = runnable.run(dialog);
               }
               catch (Exception ex)
               {
@@ -269,7 +270,10 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
         }
       });
 
-      dialog.open();
+      if (dialog.open() == ProgressLogDialog.OK && restart[0])
+      {
+        PlatformUI.getWorkbench().restart();
+      }
     }
     catch (Exception ex)
     {

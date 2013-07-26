@@ -10,18 +10,23 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,6 +38,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getBranch <em>Branch</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getEclipseVersion <em>Eclipse Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getPreferences <em>Preferences</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getUpdateLocations <em>Update Locations</em>}</li>
  * </ul>
  * </p>
  *
@@ -69,6 +75,16 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * @ordered
    */
   protected Preferences preferences;
+
+  /**
+   * The cached value of the '{@link #getUpdateLocations() <em>Update Locations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUpdateLocations()
+   * @generated
+   * @ordered
+   */
+  protected EList<P2Repository> updateLocations;
 
   /**
    * <!-- begin-user-doc -->
@@ -240,6 +256,21 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<P2Repository> getUpdateLocations()
+  {
+    if (updateLocations == null)
+    {
+      updateLocations = new EObjectContainmentEList<P2Repository>(P2Repository.class, this,
+          SetupPackage.SETUP__UPDATE_LOCATIONS);
+    }
+    return updateLocations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -247,6 +278,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     {
     case SetupPackage.SETUP__PREFERENCES:
       return basicSetPreferences(null, msgs);
+    case SetupPackage.SETUP__UPDATE_LOCATIONS:
+      return ((InternalEList<?>)getUpdateLocations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -271,6 +304,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       return basicGetEclipseVersion();
     case SetupPackage.SETUP__PREFERENCES:
       return getPreferences();
+    case SetupPackage.SETUP__UPDATE_LOCATIONS:
+      return getUpdateLocations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -280,6 +315,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -293,6 +329,10 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       return;
     case SetupPackage.SETUP__PREFERENCES:
       setPreferences((Preferences)newValue);
+      return;
+    case SetupPackage.SETUP__UPDATE_LOCATIONS:
+      getUpdateLocations().clear();
+      getUpdateLocations().addAll((Collection<? extends P2Repository>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -317,6 +357,9 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     case SetupPackage.SETUP__PREFERENCES:
       setPreferences((Preferences)null);
       return;
+    case SetupPackage.SETUP__UPDATE_LOCATIONS:
+      getUpdateLocations().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -337,6 +380,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       return eclipseVersion != null;
     case SetupPackage.SETUP__PREFERENCES:
       return preferences != null;
+    case SetupPackage.SETUP__UPDATE_LOCATIONS:
+      return updateLocations != null && !updateLocations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

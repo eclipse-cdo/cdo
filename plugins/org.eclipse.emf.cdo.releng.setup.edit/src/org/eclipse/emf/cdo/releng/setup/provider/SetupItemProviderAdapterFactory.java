@@ -157,31 +157,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ToolInstallation} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ToolInstallationItemProvider toolInstallationItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ToolInstallation}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createToolInstallationAdapter()
-  {
-    if (toolInstallationItemProvider == null)
-    {
-      toolInstallationItemProvider = new ToolInstallationItemProvider(this);
-    }
-
-    return toolInstallationItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseVersion} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -529,8 +504,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       p2RepositoryItemProvider.dispose();
     if (configurationItemProvider != null)
       configurationItemProvider.dispose();
-    if (toolInstallationItemProvider != null)
-      toolInstallationItemProvider.dispose();
     if (projectItemProvider != null)
       projectItemProvider.dispose();
     if (branchItemProvider != null)

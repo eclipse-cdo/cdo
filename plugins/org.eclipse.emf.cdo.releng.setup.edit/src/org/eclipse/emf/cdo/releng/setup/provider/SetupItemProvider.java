@@ -115,6 +115,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
     {
       super.getChildrenFeatures(object);
       childrenFeatures.add(SetupPackage.Literals.SETUP__PREFERENCES);
+      childrenFeatures.add(SetupPackage.Literals.SETUP__UPDATE_LOCATIONS);
     }
     return childrenFeatures;
   }
@@ -183,6 +184,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
     switch (notification.getFeatureID(Setup.class))
     {
     case SetupPackage.SETUP__PREFERENCES:
+    case SetupPackage.SETUP__UPDATE_LOCATIONS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -203,6 +205,9 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP__PREFERENCES,
         SetupFactory.eINSTANCE.createPreferences()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP__UPDATE_LOCATIONS,
+        SetupFactory.eINSTANCE.createP2Repository()));
   }
 
   /**

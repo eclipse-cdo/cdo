@@ -58,15 +58,6 @@ public interface SetupFactory extends EFactory
   Branch createBranch();
 
   /**
-   * Returns a new object of class '<em>Tool Installation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Tool Installation</em>'.
-   * @generated
-   */
-  ToolInstallation createToolInstallation();
-
-  /**
    * Returns a new object of class '<em>Eclipse Version</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

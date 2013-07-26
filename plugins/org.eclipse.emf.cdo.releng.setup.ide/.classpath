@@ -6,6 +6,7 @@
 			<accessrule kind="accessible" pattern="org/eclipse/equinox/p2/publisher/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/equinox/p2/publisher/eclipse/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/equinox/internal/p2/director/app/**"/>
+			<accessrule kind="accessible" pattern="org/eclipse/equinox/internal/p2/console/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/egit/core/op/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/jgit/lib/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/ui/internal/progress/**"/>

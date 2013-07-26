@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getToolInstallation()
- * @model
+ * @model abstract="true"
  * @generated
  */
 public interface ToolInstallation extends EObject

@@ -683,13 +683,22 @@ public interface SetupPackage extends EPackage
   int SETUP__PREFERENCES = 2;
 
   /**
+   * The feature id for the '<em><b>Update Locations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETUP__UPDATE_LOCATIONS = 3;
+
+  /**
    * The number of structural features of the '<em>Setup</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SETUP_FEATURE_COUNT = 3;
+  int SETUP_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl <em>Tool Preference</em>}' class.
@@ -1233,6 +1242,17 @@ public interface SetupPackage extends EPackage
   EReference getSetup_Preferences();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.Setup#getUpdateLocations <em>Update Locations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Update Locations</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Setup#getUpdateLocations()
+   * @see #getSetup()
+   * @generated
+   */
+  EReference getSetup_UpdateLocations();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ToolPreference <em>Tool Preference</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1744,6 +1764,14 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EReference SETUP__PREFERENCES = eINSTANCE.getSetup_Preferences();
+
+    /**
+     * The meta object literal for the '<em><b>Update Locations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SETUP__UPDATE_LOCATIONS = eINSTANCE.getSetup_UpdateLocations();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl <em>Tool Preference</em>}' class.

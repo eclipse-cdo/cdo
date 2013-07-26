@@ -40,6 +40,8 @@ public final class SetupIDE
 
   public static void run() throws Exception
   {
+    P2.registerUpdateLocations();
+
     state = readState();
     if (state == DONE)
     {
@@ -59,13 +61,13 @@ public final class SetupIDE
       {
         ProgressLogDialog.run(shell, "Setting up IDE", new ProgressLogRunnable()
         {
-          public void run(ProgressLog log) throws Exception
+          public boolean run(ProgressLog log) throws Exception
           {
             boolean autoBuilding = disableAutoBuilding();
 
             try
             {
-              SetupIDE.run(log);
+              return SetupIDE.run(log);
             }
             finally
             {
@@ -77,43 +79,52 @@ public final class SetupIDE
     });
   }
 
-  private static void run(ProgressLog log) throws Exception
+  private static boolean run(ProgressLog log) throws Exception
   {
+    boolean restart = false;
     if (state < 1)
     {
-      Preferences.init();
       saveState(1);
     }
 
     if (state < 2)
     {
-      JREs.init();
+      Preferences.init();
       saveState(2);
     }
 
     if (state < 3)
     {
-      GitClones.init();
+      JREs.init();
       saveState(3);
     }
 
     if (state < 4)
     {
-      Buckminster.importBaseline();
+      GitClones.init();
       saveState(4);
     }
 
     if (state < 5)
     {
-      Buckminster.importTarget();
+      Buckminster.importBaseline();
       saveState(5);
+    }
+
+    if (state < 6)
+    {
+      Buckminster.importTarget();
+      saveState(6);
     }
 
     if (state < DONE)
     {
       Buckminster.importMSpec();
       saveState(DONE);
+      restart = true;
     }
+
+    return restart;
   }
 
   private static void saveState(int state)

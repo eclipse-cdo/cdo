@@ -41,6 +41,8 @@ public class Activator extends AbstractUIPlugin implements SetupContext
 
   private static Activator plugin;
 
+  static BundleContext bundleContext;
+
   private File branchDir;
 
   private Setup setup;
@@ -98,6 +100,7 @@ public class Activator extends AbstractUIPlugin implements SetupContext
   public void start(BundleContext context) throws Exception
   {
     super.start(context);
+    bundleContext = context;
     plugin = this;
 
     try

@@ -15,5 +15,8 @@ package org.eclipse.emf.cdo.releng.setup.helper;
  */
 public interface ProgressLogRunnable
 {
-  public void run(ProgressLog log) throws Exception;
+  /**
+   * @return <code>true</code> if a restart is needed, <code>false</code> otherwise.
+   */
+  public boolean run(ProgressLog log) throws Exception;
 }

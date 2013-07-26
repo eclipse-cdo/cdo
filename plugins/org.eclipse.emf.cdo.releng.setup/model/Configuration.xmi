@@ -20,7 +20,7 @@
   </projects>
   <projects name="CDO">
     <directorCalls>
-      <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+      <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.workingsets.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.manifests.feature.group"/>
@@ -28,6 +28,7 @@
       <installableUnits id="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.tasks.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
+      <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
       <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
       <installableUnits id="org.eclipse.mylyn.github.feature.feature.group"/>
       <installableUnits id="org.eclipse.mylyn.hudson.feature.group"/>

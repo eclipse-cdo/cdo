@@ -36,7 +36,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
         upperBound="-1" eType="#//EclipseVersion" containment="true" eOpposite="#//EclipseVersion/configuration"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ToolInstallation">
+  <eClassifiers xsi:type="ecore:EClass" name="ToolInstallation" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="directorCalls" upperBound="-1"
         eType="#//DirectorCall" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="toolPreferences" upperBound="-1"
@@ -88,6 +88,8 @@
         eType="#//EclipseVersion"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preferences" eType="#//Preferences"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="updateLocations" upperBound="-1"
+        eType="#//P2Repository" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
   <eClassifiers xsi:type="ecore:EClass" name="ToolPreference">

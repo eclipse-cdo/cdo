@@ -40,8 +40,6 @@ public final class SetupIDE
 
   public static void run() throws Exception
   {
-    P2.registerUpdateLocations();
-
     state = readState();
     if (state == DONE)
     {
@@ -84,6 +82,7 @@ public final class SetupIDE
     boolean restart = false;
     if (state < 1)
     {
+      P2.registerUpdateLocations();
       saveState(1);
     }
 

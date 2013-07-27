@@ -81,7 +81,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="generate.product">
+	<macrodef name="generate.product.platform">
 		<attribute name="id" />
 		<attribute name="profile" />
 		<attribute name="platform" />
@@ -160,6 +160,35 @@
 					      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="generate.product">
+		<attribute name="id" />
+		<attribute name="profile" />
+		<attribute name="priority" />
+		<sequential>
+			<generate.product.platform id="@{id}"
+			                           profile="@{profile}"
+			                           platform="Windows"
+			                           os="win32"
+			                           ws="win32"
+			                           arch="x86_64"
+			                           priority="@{priority}50" />
+			<generate.product.platform id="@{id}"
+			                           profile="@{profile}"
+			                           platform="Linux"
+			                           os="linux"
+			                           ws="gtk"
+			                           arch="x86_64"
+			                           priority="@{priority}40" />
+			<generate.product.platform id="@{id}"
+			                           profile="@{profile}"
+			                           platform="Mac"
+			                           os="macosx"
+			                           ws="cocoa"
+			                           arch="x86_64"
+			                           priority="@{priority}30" />
 		</sequential>
 	</macrodef>
 
@@ -451,11 +480,20 @@
 		<mkdir dir="${tp}" />
 		<move file="${releng}/hudson/target.xml" tofile="${releng}/hudson/cdo.target" />
 		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target" />
+		
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="maxParallelResolutions=1" />
 			</cmdargs>
 		</buckminster>
+		
+	  <buckminster command="installJRE">
+	    <cmdargs>
+	       <arg value="--location" />
+	       <arg value="/opt/public/common/jdk1.7.0-latest" />
+	    </cmdargs>
+	  </buckminster>
+
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-B" />
@@ -726,80 +764,9 @@
 		</delete>
 		<mkdir dir="${temp.products}" />
 
-		<!-- Windows -->
-		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
-		                  profile="CDOServer"
-		                  platform="Windows"
-		                  os="win32"
-		                  ws="win32"
-		                  arch="x86_64"
-		                  priority="450" />
-
-		<generate.product id="org.eclipse.emf.cdo.explorer.product"
-		                  profile="CDOExplorer"
-		                  platform="Windows"
-		                  os="win32"
-		                  ws="win32"
-		                  arch="x86_64"
-		                  priority="350" />
-
-		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
-		                  profile="Setup"
-		                  platform="Windows"
-		                  os="win32"
-		                  ws="win32"
-		                  arch="x86_64"
-		                  priority="250" />
-
-		<!-- Linux -->
-		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
-		                  profile="CDOServer"
-		                  platform="Linux"
-		                  os="linux"
-		                  ws="gtk"
-		                  arch="x86"
-		                  priority="440" />
-
-		<generate.product id="org.eclipse.emf.cdo.explorer.product"
-		                  profile="CDOExplorer"
-		                  platform="Linux"
-		                  os="linux"
-		                  ws="gtk"
-		                  arch="x86"
-		                  priority="340" />
-
-		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
-		                  profile="Setup"
-		                  platform="Linux"
-		                  os="linux"
-		                  ws="gtk"
-		                  arch="x86"
-		                  priority="240" />
-
-		<!-- Mac -->
-		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
-		                  profile="CDOServer"
-		                  platform="Mac"
-		                  os="macosx"
-		                  ws="cocoa"
-		                  arch="x86"
-		                  priority="430" />
-
-		<generate.product id="org.eclipse.emf.cdo.explorer.product"
-		                  profile="CDOExplorer"
-		                  platform="Mac"
-		                  os="macosx"
-		                  ws="cocoa"
-		                  arch="x86"
-		                  priority="330" />
-
-		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide"
-		                  profile="Setup"
-		                  platform="Mac"
-		                  os="macosx"
-		                  ws="cocoa"
-		                  arch="x86"
-		                  priority="230" />
+		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2" profile="CDOServer" priority="4" />
+		<generate.product id="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" priority="3" />
+		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide" profile="Setup" priority="2" />
 	</target>
 
 </project>

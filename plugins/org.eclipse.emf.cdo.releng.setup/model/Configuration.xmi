@@ -47,7 +47,6 @@
     </directorCalls>
     <toolPreferences key="instance/org.eclipse.ui.ide/EXIT_PROMPT_ON_CLOSE_LAST_WINDOW" value="false"/>
     <toolPreferences key="instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
-    <toolPreferences key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
     <toolPreferences key="instance/org.eclipse.pde/compilers.f.unresolved-features" value="2"/>
     <branches name="master" apiBaseline="//@projects.1/@apiBaselines.0" mspecFilePath="cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" cloneVariableName="git.clone">
       <directorCalls>

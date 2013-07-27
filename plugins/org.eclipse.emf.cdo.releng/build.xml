@@ -104,6 +104,7 @@
 					<eclipse.launch app="director">
 						<properties>
 							<sysproperty key="eclipse.p2.mirrors" value="false" />
+							<sysproperty key="eclipse.p2.MD5Check" value="false" />
 						</properties>
 						<args>
 							<arg value="-r" />

@@ -37,7 +37,7 @@ public class DanglingIntegrityException extends DataIntegrityException
   }
 
   @Override
-  public DanglingReferenceException getCause()
+  public synchronized DanglingReferenceException getCause()
   {
     return (DanglingReferenceException)super.getCause();
   }

@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db.verifier;
 
-import static junit.framework.Assert.assertEquals;
-
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
@@ -32,6 +30,8 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
+
+import org.junit.Assert;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -59,7 +59,7 @@ public abstract class DBStoreVerifier
     this.repository = repository;
     if (repository != null)
     {
-      assertEquals(true, repository.getStore() instanceof IDBStore);
+      Assert.assertEquals(true, repository.getStore() instanceof IDBStore);
     }
   }
 
@@ -254,7 +254,7 @@ public abstract class DBStoreVerifier
       super(repo);
 
       // this is a verifier for auditing mode
-      assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalAuditMappingStrategy);
+      Assert.assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalAuditMappingStrategy);
     }
 
     @Override
@@ -290,7 +290,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertEquals("Multiple unrevised rows for ID " + resultSet.getLong(1), true, resultSet.getInt(2) <= 1);
+          Assert.assertEquals("Multiple unrevised rows for ID " + resultSet.getLong(1), true, resultSet.getInt(2) <= 1);
         }
       }
       finally
@@ -318,7 +318,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertEquals("Multiple rows for ID " + resultSet.getLong(1) + "v" + resultSet.getInt(2), true,
+          Assert.assertEquals("Multiple rows for ID " + resultSet.getLong(1) + "v" + resultSet.getInt(2), true,
               resultSet.getInt(3) <= 1);
         }
       }
@@ -389,7 +389,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertEquals("Index " + indexShouldBe + " missing for ID" + id + "v" + version, indexShouldBe++,
+          Assert.assertEquals("Index " + indexShouldBe + " missing for ID" + id + "v" + version, indexShouldBe++,
               resultSet.getInt(1));
         }
       }
@@ -416,9 +416,9 @@ public abstract class DBStoreVerifier
       super(repo);
 
       // this is a verifier for non-auditing mode
-      assertEquals(true, getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
+      Assert.assertEquals(true, getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
       // ... and for horizontal class mapping
-      assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
+      Assert.assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
     }
 
     @Override
@@ -450,8 +450,8 @@ public abstract class DBStoreVerifier
       ResultSet resultSet = getStatement().executeQuery(sql);
       try
       {
-        assertEquals(true, resultSet.next());
-        assertEquals("Revised revision in table " + tableName, 0, resultSet.getInt(1));
+        Assert.assertEquals(true, resultSet.next());
+        Assert.assertEquals("Revised revision in table " + tableName, 0, resultSet.getInt(1));
       }
       finally
       {
@@ -474,7 +474,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertEquals("Multiple rows for ID " + resultSet.getLong(1), 1, resultSet.getInt(2));
+          Assert.assertEquals("Multiple rows for ID " + resultSet.getLong(1), 1, resultSet.getInt(2));
         }
       }
       finally
@@ -531,7 +531,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertEquals("Index " + indexShouldBe + " missing for ID" + id, indexShouldBe++, resultSet.getInt(1));
+          Assert.assertEquals("Index " + indexShouldBe + " missing for ID" + id, indexShouldBe++, resultSet.getInt(1));
         }
       }
       finally

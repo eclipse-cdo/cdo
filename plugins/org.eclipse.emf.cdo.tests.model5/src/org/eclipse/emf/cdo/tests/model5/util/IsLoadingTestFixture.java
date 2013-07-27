@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Test fixture for the CDO resource "is loading" tests. Bug 393164.

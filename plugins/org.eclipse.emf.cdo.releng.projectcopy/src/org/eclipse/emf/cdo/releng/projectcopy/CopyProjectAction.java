@@ -11,8 +11,15 @@
 package org.eclipse.emf.cdo.releng.projectcopy;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -97,6 +104,7 @@ public class CopyProjectAction implements IObjectActionDelegate
         String newName = dialog.getValue();
         File newFolder = new File(parentFolder, newName);
         copyTree(folder, source.getName(), newName, folder, newFolder);
+        importProject(newFolder, newName);
       }
     }
     catch (Exception ex)
@@ -201,6 +209,27 @@ public class CopyProjectAction implements IObjectActionDelegate
         throw new IOException("Unable to create directory " + folder.getAbsolutePath());
       }
     }
+  }
+
+  private static void importProject(final File folder, final String name) throws CoreException
+  {
+    final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+    workspace.run(new IWorkspaceRunnable()
+    {
+      public void run(IProgressMonitor monitor) throws CoreException
+      {
+        IProjectDescription description = workspace.newProjectDescription(name);
+        description.setLocation(new Path(folder.getAbsolutePath()));
+
+        IProject project = workspace.getRoot().getProject(name);
+        project.create(description, monitor);
+
+        if (!project.isOpen())
+        {
+          project.open(monitor);
+        }
+      }
+    }, new NullProgressMonitor());
   }
 
   private static void close(Closeable closeable, Object file)

@@ -8,14 +8,6 @@
   <foreignModel>setup.ecore</foreignModel>
   <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
       multipleEditorPages="false" ecorePackage="setup.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="setup.ecore#//JRE">
-      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//JRE/JRE_13"/>
-      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//JRE/JRE_14"/>
-      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//JRE/JRE_15"/>
-      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//JRE/JRE_16"/>
-      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//JRE/JRE_17"/>
-      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//JRE/JRE_18"/>
-    </genEnums>
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
     <genClasses ecoreClass="setup.ecore#//Preferences">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/userName"/>
@@ -61,7 +53,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Branch/apiBaseline"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/mspecFilePath"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/cloneVariableName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/javaVersion"/>
       <genOperations ecoreOperation="setup.ecore#//Branch/isInstalled">
         <genParameters ecoreParameter="setup.ecore#//Branch/isInstalled/installFolder"/>
       </genOperations>
@@ -81,9 +72,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitClone/checkoutBranch"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Setup">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Setup/branch"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Setup/eclipseVersion"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference setup.ecore#//Setup/branch"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference setup.ecore#//Setup/eclipseVersion"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Setup/preferences"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Setup/updateLocations"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ToolPreference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/key"/>

@@ -114,6 +114,8 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
+      childrenFeatures.add(SetupPackage.Literals.SETUP__BRANCH);
+      childrenFeatures.add(SetupPackage.Literals.SETUP__ECLIPSE_VERSION);
       childrenFeatures.add(SetupPackage.Literals.SETUP__PREFERENCES);
       childrenFeatures.add(SetupPackage.Literals.SETUP__UPDATE_LOCATIONS);
     }

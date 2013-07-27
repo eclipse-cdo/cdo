@@ -8,7 +8,7 @@ Bundle-Activator: org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugi
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.releng.setup.presentation;version="1.0.0";x-friends:="org.eclipse.emf.cdo.releng.setup.ide"
+Export-Package: org.eclipse.emf.cdo.releng.setup.presentation;x-friends:=org.eclipse.emf.cdo.releng.setup.ide;version="1.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.resources;visibility:=reexport;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.releng.setup.edit;visibility:=reexport;bundle-version="[1.0.0,2.0.0)",

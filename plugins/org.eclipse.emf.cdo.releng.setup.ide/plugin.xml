@@ -44,6 +44,15 @@
             </separator>
          </menu>
          <action
+               class="org.eclipse.emf.cdo.releng.setup.ide.actions.PreferencesAction"
+               icon="icons/prefs.gif"
+               id="org.eclipse.emf.cdo.releng.setup.ide.actions.PreferencesAction"
+               label="&amp;Preferences"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Opens an editor on the setup preferences">
+         </action>
+         <action
                class="org.eclipse.emf.cdo.releng.setup.ide.actions.BuckyAction"
                icon="icons/update.gif"
                id="org.eclipse.emf.cdo.releng.setup.ide.actions.BuckyAction"

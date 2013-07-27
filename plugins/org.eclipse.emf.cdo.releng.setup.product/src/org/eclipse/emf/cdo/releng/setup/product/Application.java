@@ -28,7 +28,7 @@ public class Application implements IApplication
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      Activator.log(ex);
       return 1;
     }
   }

@@ -486,12 +486,9 @@ public class SetupDialog extends TitleAreaDialog
 
   private void init()
   {
-    URI preferencesURI = URI.createFileURI(new File(System.getProperty("user.home", "."), "setup-eclipse.xmi")
-        .getAbsolutePath());
-
-    if (resourceSet.getURIConverter().exists(preferencesURI, null))
+    if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
     {
-      Resource resource = resourceSet.getResource(preferencesURI, true);
+      Resource resource = resourceSet.getResource(Preferences.PREFERENCES_URI, true);
       preferences = (Preferences)resource.getContents().get(0);
 
       userNameText.setText(safe(preferences.getUserName()));
@@ -501,7 +498,7 @@ public class SetupDialog extends TitleAreaDialog
     }
     else
     {
-      Resource resource = resourceSet.createResource(preferencesURI);
+      Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
       preferences = SetupFactory.eINSTANCE.createPreferences();
       resource.getContents().add(preferences);
 

@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.common.util.URI;
+
+import java.io.File;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Preferences</b></em>'.
@@ -31,6 +35,9 @@ package org.eclipse.emf.cdo.releng.setup;
  */
 public interface Preferences extends ToolInstallation
 {
+  public static final URI PREFERENCES_URI = URI.createFileURI(new File(System.getProperty("user.home", "."),
+      "setup-eclipse.xmi").getAbsolutePath());
+
   /**
    * Returns the value of the '<em><b>User Name</b></em>' attribute.
    * <!-- begin-user-doc -->

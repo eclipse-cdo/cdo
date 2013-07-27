@@ -64,6 +64,7 @@ public class GZIPStreamWrapper implements IStreamWrapper
   public static void main(String[] args) throws Exception
   {
     final PipedOutputStream pos = new PipedOutputStream();
+    @SuppressWarnings("resource")
     final PipedInputStream pis = new PipedInputStream(pos);
 
     final GZIPOutputStream gos = new GZIPOutputStream(pos);

@@ -166,6 +166,7 @@ public final class VersionUtil
     {
       inputStream = file.getContents();
       String encoding = file.getCharset();
+      @SuppressWarnings("resource")
       Reader reader = encoding == null ? new InputStreamReader(inputStream) : new InputStreamReader(inputStream,
           encoding);
       char[] text = new char[4048];

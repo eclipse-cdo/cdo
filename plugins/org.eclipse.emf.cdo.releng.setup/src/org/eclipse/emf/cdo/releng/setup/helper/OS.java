@@ -71,6 +71,7 @@ public abstract class OS
     {
       out = new FileOutputStream(file);
       Writer writer = new OutputStreamWriter(out);
+      @SuppressWarnings("resource")
       BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
       for (String line : lines)

@@ -30,6 +30,7 @@ public final class NIOUtil
   /**
    * TODO Look at {@link #copy(File, File, boolean)}
    */
+  @SuppressWarnings("resource")
   public static void copyFile(File source, File target)
   {
     // http://www.javalobby.org/java/forums/t17036.html

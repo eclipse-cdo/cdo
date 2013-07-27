@@ -97,6 +97,7 @@ public class HTTPTest extends AbstractTransportTest
 
     client.executeMethod(method);
     InputStream responseBody = method.getResponseBodyAsStream();
+    @SuppressWarnings("resource")
     ExtendedDataInputStream in = new ExtendedDataInputStream(responseBody);
     int count = in.readInt();
     for (int i = 0; i < count; i++)

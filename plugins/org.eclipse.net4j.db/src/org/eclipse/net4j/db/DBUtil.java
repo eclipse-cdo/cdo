@@ -940,6 +940,7 @@ public final class DBUtil
     return update(connection, sql);
   }
 
+  @SuppressWarnings("resource")
   public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields)
       throws DBException
   {

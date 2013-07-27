@@ -92,6 +92,7 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       }
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      @SuppressWarnings("resource")
       ExtendedDataOutputStream stream = new ExtendedDataOutputStream(baos);
       stream.writeString(userID);
       stream.writeString(password);

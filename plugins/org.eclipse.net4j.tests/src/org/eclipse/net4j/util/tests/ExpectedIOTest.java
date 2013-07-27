@@ -238,6 +238,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
     Thread consumer = new Thread("CONSUMER")
     {
+      @SuppressWarnings("resource")
       @Override
       public void run()
       {
@@ -334,6 +335,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
     Thread consumer = new Thread("CONSUMER")
     {
+      @SuppressWarnings("resource")
       @Override
       public void run()
       {

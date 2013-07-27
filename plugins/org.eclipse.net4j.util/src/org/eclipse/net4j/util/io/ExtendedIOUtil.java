@@ -91,14 +91,15 @@ public final class ExtendedIOUtil
 
   public static void writeObject(final DataOutput out, Object object) throws IOException
   {
-    ObjectOutput wrapper = null;
+    ObjectOutput objectOutput = null;
     if (out instanceof ObjectOutput)
     {
-      wrapper = (ObjectOutput)out;
+      objectOutput = (ObjectOutput)out;
     }
     else
     {
-      wrapper = new ObjectOutputStream(new OutputStream()
+      @SuppressWarnings("resource")
+      ObjectOutputStream wrapper = new ObjectOutputStream(new OutputStream()
       {
         @Override
         public void write(int b) throws IOException
@@ -106,9 +107,11 @@ public final class ExtendedIOUtil
           out.writeByte((b & 0xff) + Byte.MIN_VALUE);
         }
       });
+
+      objectOutput = wrapper;
     }
 
-    wrapper.writeObject(object);
+    objectOutput.writeObject(object);
   }
 
   public static Object readObject(final DataInput in) throws IOException
@@ -123,14 +126,15 @@ public final class ExtendedIOUtil
 
   public static Object readObject(final DataInput in, final ClassResolver classResolver) throws IOException
   {
-    ObjectInput wrapper = null;
+    ObjectInput objectInput = null;
     if (in instanceof ObjectInput)
     {
-      wrapper = (ObjectInput)in;
+      objectInput = (ObjectInput)in;
     }
     else
     {
-      wrapper = new ObjectInputStream(new InputStream()
+      @SuppressWarnings("resource")
+      ObjectInputStream wrapper = new ObjectInputStream(new InputStream()
       {
         @Override
         public int read() throws IOException
@@ -159,11 +163,13 @@ public final class ExtendedIOUtil
           return super.resolveClass(desc);
         }
       };
+
+      objectInput = wrapper;
     }
 
     try
     {
-      return wrapper.readObject();
+      return objectInput.readObject();
     }
     catch (ClassNotFoundException ex)
     {

@@ -179,6 +179,7 @@ public class GenerateExampleBuilders
     try
     {
       out = new FileWriter(file);
+      @SuppressWarnings("resource")
       BufferedWriter writer = new BufferedWriter(out);
 
       writer.write(content);

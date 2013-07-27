@@ -403,6 +403,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       }
 
       ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
+      @SuppressWarnings("resource")
       ExtendedDataInputStream stream = new ExtendedDataInputStream(baos);
       String userID = stream.readString();
       char[] password = stream.readString().toCharArray();

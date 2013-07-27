@@ -100,6 +100,7 @@ public class MovePackageDescriptions
       try
       {
         out = new FileWriter(file);
+        @SuppressWarnings("resource")
         BufferedWriter writer = new BufferedWriter(out);
         writer.write(keepProlog);
         writer.write("<A NAME=\"package_description\"><!-- --></A>" + NL);

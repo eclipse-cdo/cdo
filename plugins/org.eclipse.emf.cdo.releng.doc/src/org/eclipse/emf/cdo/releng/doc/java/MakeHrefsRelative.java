@@ -66,6 +66,7 @@ public class MakeHrefsRelative
     try
     {
       in = new FileReader(file);
+      @SuppressWarnings("resource")
       BufferedReader reader = new BufferedReader(in);
 
       String line;
@@ -98,6 +99,7 @@ public class MakeHrefsRelative
     try
     {
       out = new FileWriter(file);
+      @SuppressWarnings("resource")
       BufferedWriter writer = new BufferedWriter(out);
 
       for (String line : lines)

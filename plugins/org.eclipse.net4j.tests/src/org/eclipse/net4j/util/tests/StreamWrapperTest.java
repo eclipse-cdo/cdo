@@ -24,6 +24,7 @@ import java.io.PrintStream;
  */
 public class StreamWrapperTest extends AbstractOMTest
 {
+  @SuppressWarnings("resource")
   public void testXORStreams() throws Exception
   {
     int[] key = { 1, 2, 3, 4 };

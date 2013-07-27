@@ -519,6 +519,7 @@ public class AssembleScripts
         System.out.println("Generating " + target.getCanonicalPath());
 
         out = new FileWriter(target);
+        @SuppressWarnings("resource")
         BufferedWriter writer = new BufferedWriter(out);
 
         List<JavaDoc> javaDocs = (List<JavaDoc>)getJavaDocsSortedByDependencies();
@@ -553,6 +554,7 @@ public class AssembleScripts
         System.out.println("Generating " + target.getCanonicalPath());
 
         out = new FileWriter(target);
+        @SuppressWarnings("resource")
         BufferedWriter writer = new BufferedWriter(out);
 
         List<JavaDoc> javaDocs = new ArrayList<JavaDoc>(getJavaDocsSortedByDependencies());
@@ -726,6 +728,7 @@ public class AssembleScripts
       try
       {
         out = new FileWriter(packageInfo);
+        @SuppressWarnings("resource")
         BufferedWriter writer = new BufferedWriter(out);
 
         writer.write("/*" + NL);
@@ -883,6 +886,7 @@ public class AssembleScripts
         try
         {
           in = new FileReader(new File(releng, "buildTemplate.ant"));
+          @SuppressWarnings("resource")
           BufferedReader reader = new BufferedReader(in);
 
           String line;

@@ -35,8 +35,10 @@ import java.io.File;
  */
 public interface Preferences extends ToolInstallation
 {
+  public static final String PREFERENCES_NAME = "setup-eclipse.xmi";
+
   public static final URI PREFERENCES_URI = URI.createFileURI(new File(System.getProperty("user.home", "."),
-      "setup-eclipse.xmi").getAbsolutePath());
+      PREFERENCES_NAME).getAbsolutePath());
 
   /**
    * Returns the value of the '<em><b>User Name</b></em>' attribute.

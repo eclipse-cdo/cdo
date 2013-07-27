@@ -46,6 +46,7 @@ public class Net4jEchoTestServlet extends HttpServlet
     doRequest(req, resp);
   }
 
+  @SuppressWarnings("resource")
   protected void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
   {
     ServletInputStream servletInputStream = req.getInputStream();

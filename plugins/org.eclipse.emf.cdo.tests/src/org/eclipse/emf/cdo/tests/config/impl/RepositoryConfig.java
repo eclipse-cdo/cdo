@@ -642,6 +642,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     try
     {
       out = new FileOutputStream("multi-view-commit.log", true);
+      @SuppressWarnings("resource")
       PrintStream stream = new PrintStream(out);
       stream.println(getCurrentTest().getCodeLink());
       stream.flush();

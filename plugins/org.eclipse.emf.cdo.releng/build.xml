@@ -60,6 +60,7 @@
 					<jvmarg value="-XX:MaxPermSize=256M" />
 					<jvmarg value="-Xmx4g" />
 					<jvmarg value="-Dsite.pack200=${site.signing}" />
+					<jvmarg value="-Dsite.retain.unpacked=true" />
 					<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk-1.5.0-22.x86_64/bin" />
 					<jvmarg value="-Declipse.p2.MD5Check=false" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
@@ -487,13 +488,6 @@
 			</cmdargs>
 		</buckminster>
 		
-	  <buckminster command="installJRE">
-	    <cmdargs>
-	       <arg value="--location" />
-	       <arg value="/opt/public/common/jdk1.7.0-latest" />
-	    </cmdargs>
-	  </buckminster>
-
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-B" />

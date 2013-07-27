@@ -103,6 +103,7 @@
 
 					<eclipse.launch app="director">
 						<properties>
+							<sysproperty key="org.eclipse.update.jarprocessor.pack200" value="/shared/common/jdk-1.5.0-22.x86_64/bin" />
 							<sysproperty key="eclipse.p2.mirrors" value="false" />
 							<sysproperty key="eclipse.p2.MD5Check" value="false" />
 						</properties>
@@ -257,6 +258,7 @@
 				<echo message="Installing buckminster" />
 				<eclipse.launch app="director">
 					<properties>
+						<sysproperty key="org.eclipse.update.jarprocessor.pack200" value="/shared/common/jdk-1.5.0-22.x86_64/bin" />
 						<sysproperty key="eclipse.p2.mirrors" value="false" />
 						<sysproperty key="eclipse.p2.MD5Check" value="false" />
 					</properties>

@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -61,7 +60,7 @@ public final class SetupIDE
         {
           public boolean run(ProgressLog log) throws Exception
           {
-            boolean autoBuilding = disableAutoBuilding();
+            boolean autoBuilding = Buckminster.disableAutoBuilding();
 
             try
             {
@@ -69,7 +68,7 @@ public final class SetupIDE
             }
             finally
             {
-              restoreAutoBuilding(autoBuilding);
+              Buckminster.restoreAutoBuilding(autoBuilding);
             }
           }
         });
@@ -117,6 +116,7 @@ public final class SetupIDE
       restart = true;
     }
 
+    Buckminster.restoreAutoBuilding(true);
     return restart;
   }
 
@@ -140,24 +140,5 @@ public final class SetupIDE
     }
 
     return INITIAL;
-  }
-
-  private static boolean disableAutoBuilding()
-  {
-    boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
-    if (autoBuilding)
-    {
-      ResourcesPlugin.getWorkspace().getDescription().setAutoBuilding(false);
-    }
-
-    return autoBuilding;
-  }
-
-  private static void restoreAutoBuilding(boolean autoBuilding)
-  {
-    if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
-    {
-      ResourcesPlugin.getWorkspace().getDescription().setAutoBuilding(autoBuilding);
-    }
   }
 }

@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.io.ZIPUtil.FileSystemUnzipHandler;
 
 import org.eclipse.buckminster.cmdline.Headless;
 import org.eclipse.buckminster.core.commands.Import;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -72,41 +73,50 @@ public final class Buckminster
       return;
     }
 
-    String version = apiBaseline.getVersion();
-    Progress.log().addLine("Setting baseline " + version);
+    boolean autoBuilding = disableAutoBuilding();
 
-    final File baselineDir = CONTEXT.getBaselineDir();
-    File target = new File(baselineDir, version);
-    if (!target.exists())
+    try
     {
-      String url = apiBaseline.getZipLocation();
-      File file = Downloads.downloadURL(url);
-      baselineDir.mkdirs();
+      String version = apiBaseline.getVersion();
+      Progress.log().addLine("Setting baseline " + version);
 
-      final File[] rootDir = { null };
-      ZIPUtil.unzip(file, new FileSystemUnzipHandler(baselineDir, ZIPUtil.DEFALULT_BUFFER_SIZE)
+      final File baselineDir = CONTEXT.getBaselineDir();
+      File target = new File(baselineDir, version);
+      if (!target.exists())
       {
-        @Override
-        public void unzipFile(String name, InputStream zipStream)
+        String url = apiBaseline.getZipLocation();
+        File file = Downloads.downloadURL(url);
+        baselineDir.mkdirs();
+
+        final File[] rootDir = { null };
+        ZIPUtil.unzip(file, new FileSystemUnzipHandler(baselineDir, ZIPUtil.DEFALULT_BUFFER_SIZE)
         {
-          if (rootDir[0] == null)
+          @Override
+          public void unzipFile(String name, InputStream zipStream)
           {
-            rootDir[0] = new File(baselineDir, new Path(name).segment(0));
+            if (rootDir[0] == null)
+            {
+              rootDir[0] = new File(baselineDir, new Path(name).segment(0));
+            }
+
+            Progress.log().addLine("Unzipping " + name);
+            super.unzipFile(name, zipStream);
           }
+        });
 
-          Progress.log().addLine("Unzipping " + name);
-          super.unzipFile(name, zipStream);
-        }
-      });
+        rootDir[0].renameTo(target);
+      }
 
-      rootDir[0].renameTo(target);
+      String name = apiBaseline.getProject().getName() + " Baseline";
+      importTarget(target, name, false);
+
+      Progress.log().addLine("Setting baseline: " + name);
+      run("addbaseline", "-A", name);
     }
-
-    String name = apiBaseline.getProject().getName() + " Baseline";
-    importTarget(target, name, false);
-
-    Progress.log().addLine("Setting baseline: " + name);
-    run("addbaseline", "-A", name);
+    finally
+    {
+      restoreAutoBuilding(autoBuilding);
+    }
   }
 
   private static void importTarget(File folder, String name, boolean activate) throws Exception
@@ -144,7 +154,16 @@ public final class Buckminster
     File targetPlatformDir = CONTEXT.getTargetPlatformDir();
     String name = setup.getBranch().getProject().getName() + " Target";
 
-    importTarget(targetPlatformDir, name, true);
+    boolean autoBuilding = disableAutoBuilding();
+
+    try
+    {
+      importTarget(targetPlatformDir, name, true);
+    }
+    finally
+    {
+      restoreAutoBuilding(autoBuilding);
+    }
   }
 
   public static void importMSpec() throws Exception
@@ -155,6 +174,8 @@ public final class Buckminster
     {
       Files.rename(tp, tpOld);
     }
+
+    boolean autoBuilding = disableAutoBuilding();
 
     try
     {
@@ -196,6 +217,10 @@ public final class Buckminster
 
       Files.delete(tpBroken);
       throw ex;
+    }
+    finally
+    {
+      restoreAutoBuilding(autoBuilding);
     }
 
     if (tpOld != null)
@@ -255,6 +280,25 @@ public final class Buckminster
         }
       }
     }.schedule();
+  }
+
+  public static boolean disableAutoBuilding()
+  {
+    boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
+    if (autoBuilding)
+    {
+      ResourcesPlugin.getWorkspace().getDescription().setAutoBuilding(false);
+    }
+
+    return autoBuilding;
+  }
+
+  public static void restoreAutoBuilding(boolean autoBuilding)
+  {
+    if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
+    {
+      ResourcesPlugin.getWorkspace().getDescription().setAutoBuilding(autoBuilding);
+    }
   }
 
   /**

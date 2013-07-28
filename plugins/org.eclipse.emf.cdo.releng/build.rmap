@@ -4,8 +4,8 @@
 
 	<!-- Properties -->
 
-	<rm:property mutable="true" key="platform.version" value="3.8"/>
-	<rm:property mutable="true" key="emf.version" value="2.9-I-builds"/>
+	<rm:property mutable="true" key="platform.version" value="4.3"/>
+	<rm:property mutable="true" key="emf.version" value="2.9"/>
 	<rm:property mutable="true" key="orbit.version" value="R20130517111416"/>
 
 	<!-- Locators -->

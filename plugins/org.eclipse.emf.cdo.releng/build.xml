@@ -760,7 +760,6 @@
 
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2" profile="CDOServer" priority="4" />
 		<generate.product id="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" priority="3" />
-		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide" profile="Setup" priority="2" />
 	</target>
 
 </project>

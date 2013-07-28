@@ -13,7 +13,6 @@
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.net4j(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.gastro(?:\..+)?$"/>
-	<rm:locator searchPathRef="p2pool" failOnError="false"/>
 	<rm:locator searchPathRef="p2"/>
 
 	<!-- Search Paths -->
@@ -35,14 +34,6 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="p2pool">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="file:/{0}">
-				<bc:propertyRef key="p2.pool"/>
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-		
 	<rm:searchPath name="p2">
 
 		<!-- PLATFORM -->

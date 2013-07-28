@@ -152,7 +152,7 @@
 
 		<!-- EGIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/egit/updates-3.0"/>
+			<rm:uri format="http://download.eclipse.org/egit/updates-2.3"/>
 		</rm:provider>
 
 		<!-- BUCKMINSTER -->

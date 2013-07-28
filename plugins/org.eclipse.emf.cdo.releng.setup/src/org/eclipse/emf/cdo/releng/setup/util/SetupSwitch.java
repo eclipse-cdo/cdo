@@ -96,6 +96,30 @@ public class SetupSwitch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case SetupPackage.LINK_LOCATION:
+    {
+      LinkLocation linkLocation = (LinkLocation)theEObject;
+      T result = caseLinkLocation(linkLocation);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.TOOL_INSTALLATION:
+    {
+      ToolInstallation toolInstallation = (ToolInstallation)theEObject;
+      T result = caseToolInstallation(toolInstallation);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.TOOL_PREFERENCE:
+    {
+      ToolPreference toolPreference = (ToolPreference)theEObject;
+      T result = caseToolPreference(toolPreference);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     case SetupPackage.ECLIPSE_VERSION:
     {
       EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
@@ -132,14 +156,6 @@ public class SetupSwitch<T>
     {
       Configuration configuration = (Configuration)theEObject;
       T result = caseConfiguration(configuration);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case SetupPackage.TOOL_INSTALLATION:
-    {
-      ToolInstallation toolInstallation = (ToolInstallation)theEObject;
-      T result = caseToolInstallation(toolInstallation);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -184,14 +200,6 @@ public class SetupSwitch<T>
     {
       Setup setup = (Setup)theEObject;
       T result = caseSetup(setup);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case SetupPackage.TOOL_PREFERENCE:
-    {
-      ToolPreference toolPreference = (ToolPreference)theEObject;
-      T result = caseToolPreference(toolPreference);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -405,6 +413,22 @@ public class SetupSwitch<T>
    * @generated
    */
   public T caseToolPreference(ToolPreference object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Link Location</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Link Location</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLinkLocation(LinkLocation object)
   {
     return null;
   }

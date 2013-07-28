@@ -99,6 +99,24 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseLinkLocation(LinkLocation object)
+    {
+      return createLinkLocationAdapter();
+    }
+
+    @Override
+    public Adapter caseToolInstallation(ToolInstallation object)
+    {
+      return createToolInstallationAdapter();
+    }
+
+    @Override
+    public Adapter caseToolPreference(ToolPreference object)
+    {
+      return createToolPreferenceAdapter();
+    }
+
+    @Override
     public Adapter caseEclipseVersion(EclipseVersion object)
     {
       return createEclipseVersionAdapter();
@@ -129,12 +147,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseToolInstallation(ToolInstallation object)
-    {
-      return createToolInstallationAdapter();
-    }
-
-    @Override
     public Adapter caseProject(Project object)
     {
       return createProjectAdapter();
@@ -162,12 +174,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseSetup(Setup object)
     {
       return createSetupAdapter();
-    }
-
-    @Override
-    public Adapter caseToolPreference(ToolPreference object)
-    {
-      return createToolPreferenceAdapter();
     }
 
     @Override
@@ -367,6 +373,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createToolPreferenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocation <em>Link Location</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.LinkLocation
+   * @generated
+   */
+  public Adapter createLinkLocationAdapter()
   {
     return null;
   }

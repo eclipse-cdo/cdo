@@ -130,6 +130,15 @@ public interface SetupFactory extends EFactory
   ToolPreference createToolPreference();
 
   /**
+   * Returns a new object of class '<em>Link Location</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Link Location</em>'.
+   * @generated
+   */
+  LinkLocation createLinkLocation();
+
+  /**
    * Returns a new object of class '<em>Preferences</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

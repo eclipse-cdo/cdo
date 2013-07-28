@@ -53,16 +53,15 @@ public final class GitClones
       {
         if (workDir.isDirectory())
         {
-          Activator.log("Git init: " + workDir);
+          Progress.log().addLine("Opening Git clone " + workDir);
           git = Git.open(workDir);
         }
         else
         {
-          Activator.log("Git clone: " + workDir);
-
           URI baseURI = URI.createURI(gitClone.getRemoteURI());
           String remote = URI.createHierarchicalURI(baseURI.scheme(), userName + "@" + baseURI.authority(),
               baseURI.device(), baseURI.segments(), baseURI.query(), baseURI.fragment()).toString();
+          Progress.log().addLine("Cloning Git repo " + remote + " to " + workDir);
 
           CloneCommand command = Git.cloneRepository();
           command.setURI(remote);

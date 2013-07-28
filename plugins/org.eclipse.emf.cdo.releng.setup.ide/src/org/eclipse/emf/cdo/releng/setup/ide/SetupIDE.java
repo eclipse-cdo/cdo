@@ -88,7 +88,7 @@ public final class SetupIDE
 
     if (state < 2)
     {
-      Preferences.init();
+      Prefs.init();
       saveState(2);
     }
 

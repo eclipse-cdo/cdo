@@ -73,6 +73,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
     {
     case SetupPackage.PREFERENCES:
       return createPreferences();
+    case SetupPackage.LINK_LOCATION:
+      return createLinkLocation();
+    case SetupPackage.TOOL_PREFERENCE:
+      return createToolPreference();
     case SetupPackage.ECLIPSE_VERSION:
       return createEclipseVersion();
     case SetupPackage.DIRECTOR_CALL:
@@ -93,8 +97,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createGitClone();
     case SetupPackage.SETUP:
       return createSetup();
-    case SetupPackage.TOOL_PREFERENCE:
-      return createToolPreference();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -253,6 +255,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     ToolPreferenceImpl toolPreference = new ToolPreferenceImpl();
     return toolPreference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LinkLocation createLinkLocation()
+  {
+    LinkLocationImpl linkLocation = new LinkLocationImpl();
+    return linkLocation;
   }
 
   /**

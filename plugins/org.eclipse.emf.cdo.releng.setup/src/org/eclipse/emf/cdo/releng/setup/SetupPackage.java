@@ -74,7 +74,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfiguration()
    * @generated
    */
-  int CONFIGURATION = 5;
+  int CONFIGURATION = 8;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolInstallationImpl <em>Tool Installation</em>}' class.
@@ -84,7 +84,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getToolInstallation()
    * @generated
    */
-  int TOOL_INSTALLATION = 6;
+  int TOOL_INSTALLATION = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl <em>Project</em>}' class.
@@ -94,7 +94,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProject()
    * @generated
    */
-  int PROJECT = 7;
+  int PROJECT = 9;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
@@ -104,7 +104,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
    * @generated
    */
-  int BRANCH = 8;
+  int BRANCH = 10;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl <em>Eclipse Version</em>}' class.
@@ -114,7 +114,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseVersion()
    * @generated
    */
-  int ECLIPSE_VERSION = 1;
+  int ECLIPSE_VERSION = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.DirectorCallImpl <em>Director Call</em>}' class.
@@ -124,7 +124,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getDirectorCall()
    * @generated
    */
-  int DIRECTOR_CALL = 2;
+  int DIRECTOR_CALL = 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl <em>Installable Unit</em>}' class.
@@ -134,7 +134,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getInstallableUnit()
    * @generated
    */
-  int INSTALLABLE_UNIT = 3;
+  int INSTALLABLE_UNIT = 6;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
@@ -144,7 +144,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
    * @generated
    */
-  int P2_REPOSITORY = 4;
+  int P2_REPOSITORY = 7;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineImpl <em>Api Baseline</em>}' class.
@@ -154,7 +154,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaseline()
    * @generated
    */
-  int API_BASELINE = 9;
+  int API_BASELINE = 11;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneImpl <em>Git Clone</em>}' class.
@@ -164,7 +164,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getGitClone()
    * @generated
    */
-  int GIT_CLONE = 10;
+  int GIT_CLONE = 12;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.
@@ -258,13 +258,106 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__GIT_PREFIX = TOOL_INSTALLATION_FEATURE_COUNT + 3;
 
   /**
+   * The feature id for the '<em><b>Link Locations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCES__LINK_LOCATIONS = TOOL_INSTALLATION_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>Preferences</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 4;
+  int PREFERENCES_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 5;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetup()
+   * @generated
+   */
+  int SETUP = 13;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl <em>Tool Preference</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getToolPreference()
+   * @generated
+   */
+  int TOOL_PREFERENCE = 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationImpl <em>Link Location</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocation()
+   * @generated
+   */
+  int LINK_LOCATION = 1;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINK_LOCATION__PATH = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINK_LOCATION__NAME = 1;
+
+  /**
+   * The number of structural features of the '<em>Link Location</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINK_LOCATION_FEATURE_COUNT = 2;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_PREFERENCE__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_PREFERENCE__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Tool Preference</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOOL_PREFERENCE_FEATURE_COUNT = 2;
 
   /**
    * The feature id for the '<em><b>Configuration</b></em>' container reference.
@@ -636,16 +729,6 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_FEATURE_COUNT = 4;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetup()
-   * @generated
-   */
-  int SETUP = 11;
-
-  /**
    * The feature id for the '<em><b>Branch</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -691,43 +774,6 @@ public interface SetupPackage extends EPackage
   int SETUP_FEATURE_COUNT = 4;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl <em>Tool Preference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.ToolPreferenceImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getToolPreference()
-   * @generated
-   */
-  int TOOL_PREFERENCE = 12;
-
-  /**
-   * The feature id for the '<em><b>Key</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOOL_PREFERENCE__KEY = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOOL_PREFERENCE__VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Tool Preference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOOL_PREFERENCE_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '<em>URI</em>' data type.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -735,7 +781,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 13;
+  int URI = 14;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -1254,6 +1300,38 @@ public interface SetupPackage extends EPackage
   EAttribute getToolPreference_Value();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocation <em>Link Location</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Link Location</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.LinkLocation
+   * @generated
+   */
+  EClass getLinkLocation();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.LinkLocation#getPath <em>Path</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Path</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.LinkLocation#getPath()
+   * @see #getLinkLocation()
+   * @generated
+   */
+  EAttribute getLinkLocation_Path();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.LinkLocation#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.LinkLocation#getName()
+   * @see #getLinkLocation()
+   * @generated
+   */
+  EAttribute getLinkLocation_Name();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Preferences <em>Preferences</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1306,6 +1384,17 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getPreferences_GitPrefix();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getLinkLocations <em>Link Locations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Link Locations</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getLinkLocations()
+   * @see #getPreferences()
+   * @generated
+   */
+  EReference getPreferences_LinkLocations();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
@@ -1751,6 +1840,32 @@ public interface SetupPackage extends EPackage
     EAttribute TOOL_PREFERENCE__VALUE = eINSTANCE.getToolPreference_Value();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationImpl <em>Link Location</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocation()
+     * @generated
+     */
+    EClass LINK_LOCATION = eINSTANCE.getLinkLocation();
+
+    /**
+     * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LINK_LOCATION__PATH = eINSTANCE.getLinkLocation_Path();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LINK_LOCATION__NAME = eINSTANCE.getLinkLocation_Name();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1791,6 +1906,14 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute PREFERENCES__GIT_PREFIX = eINSTANCE.getPreferences_GitPrefix();
+
+    /**
+     * The meta object literal for the '<em><b>Link Locations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PREFERENCES__LINK_LOCATIONS = eINSTANCE.getPreferences_LinkLocations();
 
     /**
      * The meta object literal for the '<em>URI</em>' data type.

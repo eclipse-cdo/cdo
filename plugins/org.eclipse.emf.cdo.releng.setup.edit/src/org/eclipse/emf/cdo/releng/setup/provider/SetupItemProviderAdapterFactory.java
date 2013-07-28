@@ -357,6 +357,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.LinkLocation} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected LinkLocationItemProvider linkLocationItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.LinkLocation}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createLinkLocationAdapter()
+  {
+    if (linkLocationItemProvider == null)
+    {
+      linkLocationItemProvider = new LinkLocationItemProvider(this);
+    }
+
+    return linkLocationItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Preferences} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -494,6 +519,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   {
     if (preferencesItemProvider != null)
       preferencesItemProvider.dispose();
+    if (linkLocationItemProvider != null)
+      linkLocationItemProvider.dispose();
+    if (toolPreferenceItemProvider != null)
+      toolPreferenceItemProvider.dispose();
     if (eclipseVersionItemProvider != null)
       eclipseVersionItemProvider.dispose();
     if (directorCallItemProvider != null)
@@ -514,8 +543,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       gitCloneItemProvider.dispose();
     if (setupItemProvider != null)
       setupItemProvider.dispose();
-    if (toolPreferenceItemProvider != null)
-      toolPreferenceItemProvider.dispose();
   }
 
 }

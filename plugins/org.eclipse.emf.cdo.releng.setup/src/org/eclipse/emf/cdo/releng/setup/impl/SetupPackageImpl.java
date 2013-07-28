@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitClone;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.LinkLocation;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -124,6 +125,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass toolPreferenceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass linkLocationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -688,6 +696,36 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getLinkLocation()
+  {
+    return linkLocationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLinkLocation_Path()
+  {
+    return (EAttribute)linkLocationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLinkLocation_Name()
+  {
+    return (EAttribute)linkLocationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPreferences()
   {
     return preferencesEClass;
@@ -738,6 +776,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPreferences_LinkLocations()
+  {
+    return (EReference)preferencesEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EDataType getURI()
   {
     return uriEDataType;
@@ -779,6 +827,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(preferencesEClass, PREFERENCES__BUNDLE_POOL);
     createEAttribute(preferencesEClass, PREFERENCES__INSTALL_FOLDER);
     createEAttribute(preferencesEClass, PREFERENCES__GIT_PREFIX);
+    createEReference(preferencesEClass, PREFERENCES__LINK_LOCATIONS);
+
+    linkLocationEClass = createEClass(LINK_LOCATION);
+    createEAttribute(linkLocationEClass, LINK_LOCATION__PATH);
+    createEAttribute(linkLocationEClass, LINK_LOCATION__NAME);
+
+    toolInstallationEClass = createEClass(TOOL_INSTALLATION);
+    createEReference(toolInstallationEClass, TOOL_INSTALLATION__DIRECTOR_CALLS);
+    createEReference(toolInstallationEClass, TOOL_INSTALLATION__TOOL_PREFERENCES);
+
+    toolPreferenceEClass = createEClass(TOOL_PREFERENCE);
+    createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__KEY);
+    createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__VALUE);
 
     eclipseVersionEClass = createEClass(ECLIPSE_VERSION);
     createEReference(eclipseVersionEClass, ECLIPSE_VERSION__CONFIGURATION);
@@ -800,10 +861,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     configurationEClass = createEClass(CONFIGURATION);
     createEReference(configurationEClass, CONFIGURATION__PROJECTS);
     createEReference(configurationEClass, CONFIGURATION__ECLIPSE_VERSIONS);
-
-    toolInstallationEClass = createEClass(TOOL_INSTALLATION);
-    createEReference(toolInstallationEClass, TOOL_INSTALLATION__DIRECTOR_CALLS);
-    createEReference(toolInstallationEClass, TOOL_INSTALLATION__TOOL_PREFERENCES);
 
     projectEClass = createEClass(PROJECT);
     createEReference(projectEClass, PROJECT__CONFIGURATION);
@@ -835,10 +892,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(setupEClass, SETUP__ECLIPSE_VERSION);
     createEReference(setupEClass, SETUP__PREFERENCES);
     createEReference(setupEClass, SETUP__UPDATE_LOCATIONS);
-
-    toolPreferenceEClass = createEClass(TOOL_PREFERENCE);
-    createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__KEY);
-    createEAttribute(toolPreferenceEClass, TOOL_PREFERENCE__VALUE);
 
     // Create data types
     uriEDataType = createEDataType(URI);
@@ -890,6 +943,32 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_ORDERED);
     initEAttribute(getPreferences_GitPrefix(), ecorePackage.getEString(), "gitPrefix", null, 0, 1, Preferences.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPreferences_LinkLocations(), this.getLinkLocation(), null, "linkLocations", null, 0, -1,
+        Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(linkLocationEClass, LinkLocation.class, "LinkLocation", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLinkLocation_Path(), ecorePackage.getEString(), "path", null, 0, 1, LinkLocation.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLinkLocation_Name(), ecorePackage.getEString(), "name", null, 0, 1, LinkLocation.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(toolInstallationEClass, ToolInstallation.class, "ToolInstallation", IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getToolInstallation_DirectorCalls(), this.getDirectorCall(), null, "directorCalls", null, 0, -1,
+        ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getToolInstallation_ToolPreferences(), this.getToolPreference(), null, "toolPreferences", null, 0,
+        -1, ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(toolPreferenceEClass, ToolPreference.class, "ToolPreference", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getToolPreference_Key(), ecorePackage.getEString(), "key", null, 0, 1, ToolPreference.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getToolPreference_Value(), ecorePackage.getEString(), "value", null, 0, 1, ToolPreference.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -937,15 +1016,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         this.getEclipseVersion_Configuration(), "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-
-    initEClass(toolInstallationEClass, ToolInstallation.class, "ToolInstallation", IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getToolInstallation_DirectorCalls(), this.getDirectorCall(), null, "directorCalls", null, 0, -1,
-        ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getToolInstallation_ToolPreferences(), this.getToolPreference(), null, "toolPreferences", null, 0,
-        -1, ToolInstallation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProject_Configuration(), this.getConfiguration(), this.getConfiguration_Projects(),
@@ -1020,13 +1090,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getSetup_UpdateLocations(), this.getP2Repository(), null, "updateLocations", null, 0, -1,
         Setup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(toolPreferenceEClass, ToolPreference.class, "ToolPreference", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getToolPreference_Key(), ecorePackage.getEString(), "key", null, 0, 1, ToolPreference.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getToolPreference_Value(), ecorePackage.getEString(), "value", null, 0, 1, ToolPreference.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,

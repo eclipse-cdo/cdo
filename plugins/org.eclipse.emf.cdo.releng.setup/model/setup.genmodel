@@ -14,6 +14,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/bundlePool"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/gitPrefix"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Preferences/linkLocations"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//EclipseVersion">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//EclipseVersion/configuration"/>
@@ -82,6 +83,10 @@
     <genClasses ecoreClass="setup.ecore#//ToolPreference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/value"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//LinkLocation" labelFeature="#//setup/LinkLocation/path">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocation/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocation/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

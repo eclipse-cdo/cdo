@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.LinkLocation;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -87,6 +88,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -735,6 +737,8 @@ public class SetupDialog extends TitleAreaDialog
     install(bundlePool, destination, updateLocations, branch);
     install(bundlePool, destination, updateLocations, preferences);
 
+    install(preferences.getLinkLocations(), destination);
+
     File branchFolder = new File(branchURI.toFileString());
     mangleEclipseIni(destination, branchFolder, gitPrefix);
 
@@ -753,8 +757,8 @@ public class SetupDialog extends TitleAreaDialog
     launchIDE(setup, branchFolder);
   }
 
-  private static void install(String bundlePool, String destination, Set<String> updateLocations,
-      ToolInstallation installation) throws Exception
+  private void install(String bundlePool, String destination, Set<String> updateLocations, ToolInstallation installation)
+      throws Exception
   {
     for (DirectorCall directorCall : installation.getDirectorCalls())
     {
@@ -762,13 +766,37 @@ public class SetupDialog extends TitleAreaDialog
     }
   }
 
-  private static void install(String bundlePool, String destination, Set<String> updateLocations,
-      DirectorCall directorCall)
+  private void install(String bundlePool, String destination, Set<String> updateLocations, DirectorCall directorCall)
   {
     Director.install(bundlePool, directorCall, destination);
     for (P2Repository p2Repository : directorCall.getP2Repositories())
     {
       updateLocations.add(p2Repository.getUrl());
+    }
+  }
+
+  private void install(EList<LinkLocation> linkLocations, String destination) throws Exception
+  {
+    if (!linkLocations.isEmpty())
+    {
+      File links = new File(destination, "links");
+      links.mkdirs();
+
+      for (LinkLocation linkLocation : linkLocations)
+      {
+        File path = new File(linkLocation.getPath()).getCanonicalFile();
+
+        String name = linkLocation.getName();
+        if (name == null || name.length() == 0)
+        {
+          name = path.getName();
+        }
+
+        File link = new File(links, name + ".link");
+
+        List<String> lines = Collections.singletonList("path=" + path.toString().replace("\\", "\\\\"));
+        OS.INSTANCE.writeText(link, lines);
+      }
     }
   }
 

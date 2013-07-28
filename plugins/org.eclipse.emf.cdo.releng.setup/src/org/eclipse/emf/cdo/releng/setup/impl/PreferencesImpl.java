@@ -10,11 +10,18 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import java.util.Collection;
+import org.eclipse.emf.cdo.releng.setup.LinkLocation;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getBundlePool <em>Bundle Pool</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getGitPrefix <em>Git Prefix</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getLinkLocations <em>Link Locations</em>}</li>
  * </ul>
  * </p>
  *
@@ -113,6 +121,16 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
    * @ordered
    */
   protected String gitPrefix = GIT_PREFIX_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getLinkLocations() <em>Link Locations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLinkLocations()
+   * @generated
+   * @ordered
+   */
+  protected EList<LinkLocation> linkLocations;
 
   /**
    * <!-- begin-user-doc -->
@@ -235,6 +253,37 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<LinkLocation> getLinkLocations()
+  {
+    if (linkLocations == null)
+    {
+      linkLocations = new EObjectContainmentEList<LinkLocation>(LinkLocation.class, this,
+          SetupPackage.PREFERENCES__LINK_LOCATIONS);
+    }
+    return linkLocations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case SetupPackage.PREFERENCES__LINK_LOCATIONS:
+      return ((InternalEList<?>)getLinkLocations()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -248,6 +297,8 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
       return getInstallFolder();
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       return getGitPrefix();
+    case SetupPackage.PREFERENCES__LINK_LOCATIONS:
+      return getLinkLocations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -257,6 +308,7 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -273,6 +325,10 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
       return;
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       setGitPrefix((String)newValue);
+      return;
+    case SetupPackage.PREFERENCES__LINK_LOCATIONS:
+      getLinkLocations().clear();
+      getLinkLocations().addAll((Collection<? extends LinkLocation>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -300,6 +356,9 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       setGitPrefix(GIT_PREFIX_EDEFAULT);
       return;
+    case SetupPackage.PREFERENCES__LINK_LOCATIONS:
+      getLinkLocations().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -322,6 +381,8 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
       return INSTALL_FOLDER_EDEFAULT == null ? installFolder != null : !INSTALL_FOLDER_EDEFAULT.equals(installFolder);
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       return GIT_PREFIX_EDEFAULT == null ? gitPrefix != null : !GIT_PREFIX_EDEFAULT.equals(gitPrefix);
+    case SetupPackage.PREFERENCES__LINK_LOCATIONS:
+      return linkLocations != null && !linkLocations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

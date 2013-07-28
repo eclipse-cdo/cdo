@@ -146,7 +146,7 @@
       <decorator
             class="org.eclipse.emf.cdo.releng.gitbash.decorators.BranchDecorator"
             id="org.eclipse.emf.cdo.releng.gitbash.BranchDecorator"
-            label="Branch Upstream Infos"
+            label="Git Upstream Infos"
             lightweight="false"
             state="true">
         <enablement>

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.ide;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
@@ -23,7 +24,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 /**
  * @author Eike Stepper
  */
-public final class Preferences
+public final class Prefs
 {
   private static final SetupContext CONTEXT = Activator.getDefault();
 
@@ -31,15 +32,22 @@ public final class Preferences
 
   public static void init() throws Exception
   {
+    Setup setup = CONTEXT.getSetup();
+    Branch branch = setup.getBranch();
+    Project project = branch.getProject();
+
+    String name = project.getName();
+    if (!"master".equals(branch.getName()))
+    {
+      name += " " + branch.getName();
+    }
+
+    set("instance/org.eclipse.ui.ide/WORKSPACE_NAME", name);
     set("instance/org.eclipse.ui.workbench/RUN_IN_BACKGROUND", "true");
 
-    Setup setup = CONTEXT.getSetup();
-    init(setup.getPreferences());
-
-    Branch branch = setup.getBranch();
+    Preferences preferences = setup.getPreferences();
+    init(preferences);
     init(branch);
-
-    Project project = branch.getProject();
     init(project);
   }
 

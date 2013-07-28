@@ -157,7 +157,7 @@
 
 		<!-- BUCKMINSTER -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
+			<rm:uri format="http://download.eclipse.org/tools/buckminster/headless-4.2"/>
 		</rm:provider>
 
 		<!-- NEBULA -->

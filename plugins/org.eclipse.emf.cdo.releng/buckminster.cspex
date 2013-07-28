@@ -36,7 +36,7 @@
 		<cs:dependency name="org.dom4j" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.persistence" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.annotation" componentType="osgi.bundle"/>
-		<cs:dependency name="oracle.database.driver.jdk50" componentType="osgi.bundle"/>
+		<cs:dependency name="oracle.database.driver" componentType="osgi.bundle"/>
 	</cs:dependencies>
 
 	<cs:actions>

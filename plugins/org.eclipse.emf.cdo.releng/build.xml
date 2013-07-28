@@ -57,11 +57,16 @@
 					<sysproperties />
 				</properties>
 				<args>
-					<jvmarg value="-Xmx4096m" />
+					<jvmarg value="-XX:MaxPermSize=256M" />
+					<jvmarg value="-Xmx4g" />
 					<jvmarg value="-Dsite.pack200=${site.signing}" />
+					<jvmarg value="-Dsite.retain.unpacked=true" />
+					<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk-1.5.0-22.x86_64/bin" />
+					<jvmarg value="-Declipse.p2.MD5Check=false" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
 					<jvmarg value="-Dgit.clone=${git.clone}" />
+					<jvmarg value="-Dp2.pool=none" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -77,7 +82,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="generate.product">
+	<macrodef name="generate.product.platform">
 		<attribute name="id" />
 		<attribute name="profile" />
 		<attribute name="platform" />
@@ -100,17 +105,22 @@
 
 					<eclipse.launch app="director">
 						<properties>
+							<sysproperty key="org.eclipse.update.jarprocessor.pack200"
+							             value="/shared/common/jdk-1.5.0-22.x86_64/bin" />
 							<sysproperty key="eclipse.p2.mirrors" value="false" />
+							<sysproperty key="eclipse.p2.MD5Check" value="false" />
 						</properties>
 						<args>
 							<arg value="-r" />
 							<arg value="file:${hudson.WORKSPACE}" />
 							<arg value="-r" />
-							<arg value="${train.releases}" />
+							<arg value="http://download.eclipse.org/releases/${train}" />
 							<arg value="-r" />
-							<arg value="${eclipse.updates}" />
+							<arg value="http://download.eclipse.org/releases/${train.previous}" />
 							<arg value="-r" />
-							<arg value="${eclipse.milestones}" />
+							<arg value="http://download.eclipse.org/eclipse/updates/${eclipse}" />
+							<arg value="-r" />
+							<arg value="http://download.eclipse.org/eclipse/updates/${eclipse}-I-builds" />
 							<arg value="-d" />
 							<arg value="${temp.products}/@{profile}-@{platform}" />
 							<arg value="-p" />
@@ -151,6 +161,35 @@
 					      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="generate.product">
+		<attribute name="id" />
+		<attribute name="profile" />
+		<attribute name="priority" />
+		<sequential>
+			<generate.product.platform id="@{id}"
+			                           profile="@{profile}"
+			                           platform="Windows"
+			                           os="win32"
+			                           ws="win32"
+			                           arch="x86_64"
+			                           priority="@{priority}50" />
+			<generate.product.platform id="@{id}"
+			                           profile="@{profile}"
+			                           platform="Linux"
+			                           os="linux"
+			                           ws="gtk"
+			                           arch="x86_64"
+			                           priority="@{priority}40" />
+			<generate.product.platform id="@{id}"
+			                           profile="@{profile}"
+			                           platform="Mac"
+			                           os="macosx"
+			                           ws="cocoa"
+			                           arch="x86_64"
+			                           priority="@{priority}30" />
 		</sequential>
 	</macrodef>
 
@@ -235,7 +274,8 @@
 				          suffix=".zip"
 				          property="director.zip"
 				          deleteonexit="true" />
-				<get src="${director}" dest="${director.zip}" />
+				<get src="http://download.eclipse.org/tools/buckminster/products/director_latest.zip"
+				     dest="${director.zip}" />
 				<mkdir dir="${tools}" />
 				<unzip src="${director.zip}" dest="${tools}" />
 				<delete file="${director.zip}" />
@@ -251,11 +291,14 @@
 				<echo message="Installing buckminster" />
 				<eclipse.launch app="director">
 					<properties>
+						<sysproperty key="org.eclipse.update.jarprocessor.pack200"
+						             value="/shared/common/jdk-1.5.0-22.x86_64/bin" />
 						<sysproperty key="eclipse.p2.mirrors" value="false" />
+						<sysproperty key="eclipse.p2.MD5Check" value="false" />
 					</properties>
 					<args>
 						<arg value="-r" />
-						<arg value="${buckminster.headless}" />
+						<arg value="http://download.eclipse.org/tools/buckminster/headless-4.3" />
 						<arg value="-r" />
 						<arg value="http://download.eclipse.org/eclipse/updates/3.8" />
 						<arg value="-r" />
@@ -307,6 +350,8 @@
 				<loadresource property="build.trigger">
 					<propertyresource name="action.cause.shortDescription" />
 					<filterchain>
+						<replaceregex pattern="^Triggered by " replace="" />
+						<replaceregex pattern="^Gerrit: .*" replace="gerrit" />
 						<replaceregex pattern="^Started by " replace="" />
 						<replaceregex pattern="^Gestartet durch " replace="" />
 						<replaceregex pattern="Benutzer" replace="user" />
@@ -314,6 +359,9 @@
 				</loadresource>
 			</then>
 		</if>
+		<condition property="gerrit.trigger" value="true">
+			<equals arg1="${build.trigger}" arg2="gerrit" />
+		</condition>
 		<echo message="build.trigger = ${build.trigger}" />
 
 		<if>
@@ -431,11 +479,15 @@
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
 		<mkdir dir="${tp}" />
+		<move file="${releng}/hudson/target.xml" tofile="${releng}/hudson/cdo.target" />
+		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target" />
+		
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="maxParallelResolutions=1" />
 			</cmdargs>
 		</buckminster>
+		
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-B" />
@@ -484,31 +536,39 @@
 	<!-- ======= -->
 
 	<target name="site.p2" depends="build" description="Generates the site and depending artifacts">
-		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
-		<buckminster command="perform">
-			<cmdargs>
-				<arg value="org.eclipse.emf.cdo.site#site.p2" />
-			</cmdargs>
-		</buckminster>
+		<if>
+			<isset property="gerrit.trigger" />
+			<then>
+				<echo message="Skipping org.eclipse.emf.cdo.site#site.p2" />
+			</then>
+			<else>
+				<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
+				<buckminster command="perform">
+					<cmdargs>
+						<arg value="org.eclipse.emf.cdo.site#site.p2" />
+					</cmdargs>
+				</buckminster>
 
-		<pathconvert property="site.p2.dir">
-			<dirset dir="${buckminster.output.root}">
-				<filename name="org.eclipse.emf.cdo.site_*-eclipse.feature/site.p2" />
-			</dirset>
-		</pathconvert>
-		<echoproperties destfile="${result}/all.properties" />
+				<pathconvert property="site.p2.dir">
+					<dirset dir="${buckminster.output.root}">
+						<filename name="org.eclipse.emf.cdo.site_*-eclipse.feature/site.p2" />
+					</dirset>
+				</pathconvert>
+				<echoproperties destfile="${result}/all.properties" />
 
-		<copy todir="${hudson.WORKSPACE}"
-		      overwrite="true"
-		      includeemptydirs="true"
-		      preservelastmodified="true"
-		      failonerror="true">
-			<fileset dir="${site.p2.dir}">
-				<include name="**" />
-			</fileset>
-		</copy>
+				<copy todir="${hudson.WORKSPACE}"
+				      overwrite="true"
+				      includeemptydirs="true"
+				      preservelastmodified="true"
+				      failonerror="true">
+					<fileset dir="${site.p2.dir}">
+						<include name="**" />
+					</fileset>
+				</copy>
 
-		<antcall target="-generate.all" />
+				<antcall target="-generate.all" />
+			</else>
+		</if>
 	</target>
 
 	<!-- ==== -->
@@ -516,27 +576,22 @@
 	<!-- ==== -->
 
 	<target name="test" depends="site.p2" description="Runs the tests">
-		<echo message="Running JUnit tests" />
+		<condition property="launch.config"
+		           value="org.eclipse.emf.cdo.tests.all/CDO GerritTests"
+		           else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
+			<isset property="gerrit.trigger" />
+		</condition>
+		<echo message="Running ${launch.config}" />
 		<buckminster command="junit">
 			<cmdargs>
 				<arg value="-l" />
-				<arg value="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL).launch" />
+				<arg value="${launch.config}.launch" />
 				<arg value="-o" />
 				<arg value="${test.report}" />
 				<arg value="--terseXML" />
 				<arg value="--flatXML" />
 			</cmdargs>
 		</buckminster>
-	</target>
-
-	<!-- ============= -->
-	<!-- Generate Only -->
-	<!-- ============= -->
-
-	<target name="generate.only" depends="-init.properties" description="Runs the post-site.p2 generators">
-		<echo message="Loading build-info.xml" />
-		<xmlproperty file="${hudson.WORKSPACE}/build-info.xml" collapseAttributes="true" />
-		<antcall target="-generate.all" />
 	</target>
 
 	<!-- ============ -->
@@ -677,6 +732,7 @@
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
 			</cmdargs>
 		</buckminster>
+		<echo message="Converting to HTML" />
 		<java classname="org.eclipse.emf.cdo.releng.Api2Html">
 			<classpath>
 				<pathelement location="${releng}/bin/" />
@@ -702,53 +758,9 @@
 		</delete>
 		<mkdir dir="${temp.products}" />
 
-		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
-		                  profile="CDOServer"
-		                  platform="Windows"
-		                  os="win32"
-		                  ws="win32"
-		                  arch="x86"
-		                  priority="450" />
-
-		<generate.product id="org.eclipse.emf.cdo.explorer.product"
-		                  profile="CDOExplorer"
-		                  platform="Windows"
-		                  os="win32"
-		                  ws="win32"
-		                  arch="x86"
-		                  priority="350" />
-
-		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
-		                  profile="CDOServer"
-		                  platform="Linux"
-		                  os="linux"
-		                  ws="gtk"
-		                  arch="x86"
-		                  priority="440" />
-
-		<generate.product id="org.eclipse.emf.cdo.explorer.product"
-		                  profile="CDOExplorer"
-		                  platform="Linux"
-		                  os="linux"
-		                  ws="gtk"
-		                  arch="x86"
-		                  priority="340" />
-
-		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
-		                  profile="CDOServer"
-		                  platform="Mac"
-		                  os="macosx"
-		                  ws="cocoa"
-		                  arch="x86"
-		                  priority="430" />
-
-		<generate.product id="org.eclipse.emf.cdo.explorer.product"
-		                  profile="CDOExplorer"
-		                  platform="Mac"
-		                  os="macosx"
-		                  ws="cocoa"
-		                  arch="x86"
-		                  priority="330" />
+		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2" profile="CDOServer" priority="4" />
+		<generate.product id="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" priority="3" />
+		<generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide" profile="Setup" priority="2" />
 	</target>
 
 </project>

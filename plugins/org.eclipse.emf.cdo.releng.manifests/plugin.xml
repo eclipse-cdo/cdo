@@ -29,6 +29,12 @@
             categoryId="org.eclipse.emf.cdo.releng"
             id="org.eclipse.emf.cdo.releng.OpenProperties">
       </command>
+      <command
+            categoryId="org.eclipse.ui.category.project"
+            description="Clean and build the selected project"
+            id="org.eclipse.emf.cdo.releng.buildClean"
+            name="Build Clean">
+      </command>
    </extension>
 
    <extension
@@ -38,8 +44,21 @@
             class="org.eclipse.emf.cdo.releng.manifests.OpenManifestHandler">
       </handler>
       <handler
-            commandId="org.eclipse.emf.cdo.releng.OpenProperties"
-            class="org.eclipse.emf.cdo.releng.manifests.OpenPropertiesHandler">
+            class="org.eclipse.emf.cdo.releng.manifests.handlers.CleanBuildHandler"
+            commandId="org.eclipse.emf.cdo.releng.buildClean">
+         <enabledWhen>
+            <iterate
+                  ifEmpty="false"
+                  operator="or">
+               <instanceof
+                     value="org.eclipse.core.resources.IResource">
+               </instanceof>
+            </iterate>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.cdo.releng.manifests.OpenPropertiesHandler"
+            commandId="org.eclipse.emf.cdo.releng.OpenProperties">
       </handler>
    </extension>
 
@@ -118,6 +137,26 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M2+F6">
       </key>
+      <key
+            commandId="org.eclipse.emf.cdo.releng.buildClean"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+F5">
+      </key>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <command
+               commandId="org.eclipse.emf.cdo.releng.buildClean"
+               icon="icons/build.gif"
+               label="Build Clean"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

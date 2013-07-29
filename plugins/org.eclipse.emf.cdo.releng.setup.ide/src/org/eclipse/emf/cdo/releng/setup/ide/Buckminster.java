@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.ide;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.helper.Downloads;
 import org.eclipse.emf.cdo.releng.setup.helper.OS;
@@ -23,7 +24,9 @@ import org.eclipse.net4j.util.io.ZIPUtil.FileSystemUnzipHandler;
 
 import org.eclipse.buckminster.cmdline.Headless;
 import org.eclipse.buckminster.core.commands.Import;
+import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -35,6 +38,7 @@ import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherAppli
 import org.eclipse.ui.internal.progress.ProgressManager;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -119,7 +123,15 @@ public final class Buckminster
     }
   }
 
-  private static void importTarget(File folder, String name, boolean activate) throws Exception
+  private static String getTargetName()
+  {
+    Setup setup = CONTEXT.getSetup();
+    Branch branch = setup.getBranch();
+    Project project = branch.getProject();
+    return project.getName() + " Target";
+  }
+
+  private static String createTargetDefinition(File folder, String name) throws IOException
   {
     File xml = getTargetXML(folder);
     String xmlPath = xml.getAbsolutePath();
@@ -136,8 +148,14 @@ public final class Buckminster
 
     folder.mkdirs();
     OS.INSTANCE.writeText(xml, lines);
+    return xmlPath;
+  }
 
+  private static void importTarget(File folder, String name, boolean activate) throws Exception
+  {
+    String xmlPath = createTargetDefinition(folder, name);
     Progress.log().addLine("Loading target definition: " + xmlPath);
+
     if (activate)
     {
       run("importtarget", "--active", xmlPath);
@@ -150,9 +168,8 @@ public final class Buckminster
 
   public static void importTarget() throws Exception
   {
-    Setup setup = CONTEXT.getSetup();
     File targetPlatformDir = CONTEXT.getTargetPlatformDir();
-    String name = setup.getBranch().getProject().getName() + " Target";
+    String name = getTargetName();
 
     boolean autoBuilding = disableAutoBuilding();
 
@@ -182,12 +199,7 @@ public final class Buckminster
       File gitDir = CONTEXT.getGitDir();
       Setup setup = CONTEXT.getSetup();
 
-      tp.mkdirs();
-      if (tpOld != null)
-      {
-        List<String> lines = OS.INSTANCE.readText(getTargetXML(tpOld));
-        OS.INSTANCE.writeText(getTargetXML(tp), lines);
-      }
+      createTargetDefinition(tp, getTargetName());
 
       String bundlePool = getBundlePool();
       Variables.set("p2.pool", "Location of p2 bundle pool", bundlePool);
@@ -282,22 +294,25 @@ public final class Buckminster
     }.schedule();
   }
 
-  public static boolean disableAutoBuilding()
+  public static boolean disableAutoBuilding() throws CoreException
   {
     boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
     if (autoBuilding)
     {
-      ResourcesPlugin.getWorkspace().getDescription().setAutoBuilding(false);
+      restoreAutoBuilding(false);
     }
 
     return autoBuilding;
   }
 
-  public static void restoreAutoBuilding(boolean autoBuilding)
+  public static void restoreAutoBuilding(boolean autoBuilding) throws CoreException
   {
     if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
     {
-      ResourcesPlugin.getWorkspace().getDescription().setAutoBuilding(autoBuilding);
+      IWorkspaceDescription description = ResourcesPlugin.getWorkspace().getDescription();
+      description.setAutoBuilding(autoBuilding);
+
+      ResourcesPlugin.getWorkspace().setDescription(description);
     }
   }
 

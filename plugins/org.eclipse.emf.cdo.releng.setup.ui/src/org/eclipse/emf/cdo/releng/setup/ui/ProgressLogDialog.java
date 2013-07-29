@@ -258,7 +258,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
               {
                 long seconds = (System.currentTimeMillis() - start) / 1000;
                 dialog.addLine("Took " + seconds + " seconds.");
-                dialog.addLine("Press OK to close the dialog...");
+                dialog.addLine("Press OK to close the dialog" + (restart[0] ? " and restart Eclipse" : "") + "...");
                 dialog.setFinished();
               }
 

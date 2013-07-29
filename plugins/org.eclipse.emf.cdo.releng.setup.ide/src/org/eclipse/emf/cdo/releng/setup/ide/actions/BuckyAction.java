@@ -50,8 +50,17 @@ public class BuckyAction implements IWorkbenchWindowActionDelegate
     {
       public boolean run(ProgressLog log) throws Exception
       {
-        Buckminster.importMSpec();
-        return false;
+        boolean autoBuilding = Buckminster.disableAutoBuilding();
+
+        try
+        {
+          Buckminster.importMSpec();
+          return true;
+        }
+        finally
+        {
+          Buckminster.restoreAutoBuilding(autoBuilding);
+        }
       }
     });
   }

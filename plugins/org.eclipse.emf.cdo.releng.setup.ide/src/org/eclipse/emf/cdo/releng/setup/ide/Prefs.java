@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -36,13 +37,15 @@ public final class Prefs
     Branch branch = setup.getBranch();
     Project project = branch.getProject();
 
-    String name = project.getName();
-    if (!"master".equals(branch.getName()))
+    final String name = project.getName() + ("master".equals(branch.getName()) ? "" : " " + branch.getName());
+    PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay().syncExec(new Runnable()
     {
-      name += " " + branch.getName();
-    }
+      public void run()
+      {
+        set("instance/org.eclipse.ui.ide/WORKSPACE_NAME", name);
+      }
+    });
 
-    set("instance/org.eclipse.ui.ide/WORKSPACE_NAME", name);
     set("instance/org.eclipse.ui.workbench/RUN_IN_BACKGROUND", "true");
 
     Preferences preferences = setup.getPreferences();

@@ -66,7 +66,6 @@
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
 					<jvmarg value="-Dgit.clone=${git.clone}" />
-					<jvmarg value="-Dp2.pool=none" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -479,8 +478,16 @@
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
 		<mkdir dir="${tp}" />
-		<move file="${releng}/hudson/target.xml" tofile="${releng}/hudson/cdo.target" />
+
+		<echo message="" />
+		<echo message="Setting API baseline to /opt/public/modeling/emf/cdo/api_baseline" />
 		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target" />
+		<buckminster command="addbaseline">
+			<cmdargs>
+				<arg value="-A" />
+				<arg value="CDO Baseline" />
+			</cmdargs>
+		</buckminster>
 		
 		<buckminster command="setpref">
 			<cmdargs>
@@ -498,15 +505,6 @@
 
 				<!-- Last argument: -->
 				<arg value="${basedir}/build.mspec" />
-			</cmdargs>
-		</buckminster>
-
-		<echo message="" />
-		<echo message="Setting API baseline to /opt/public/modeling/emf/cdo/api_baseline" />
-		<buckminster command="addbaseline">
-			<cmdargs>
-				<arg value="-A" />
-				<arg value="CDO Baseline" />
 			</cmdargs>
 		</buckminster>
 	</target>

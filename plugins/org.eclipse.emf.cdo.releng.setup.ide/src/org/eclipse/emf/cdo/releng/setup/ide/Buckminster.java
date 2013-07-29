@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.helper.OS;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogProvider;
 
+import org.eclipse.net4j.util.io.FileLock;
 import org.eclipse.net4j.util.io.ZIPUtil;
 import org.eclipse.net4j.util.io.ZIPUtil.FileSystemUnzipHandler;
 
@@ -191,6 +192,9 @@ public final class Buckminster
       Files.rename(tp, tpOld);
     }
 
+    String bundlePool = CONTEXT.getSetup().getPreferences().getBundlePool();
+    FileLock lock = bundlePool != null && bundlePool.length() != 0 ? FileLock.forWrite(new File(bundlePool)) : null;
+
     boolean autoBuilding = disableAutoBuilding();
 
     try
@@ -223,7 +227,17 @@ public final class Buckminster
     }
     finally
     {
-      restoreAutoBuilding(autoBuilding);
+      try
+      {
+        restoreAutoBuilding(autoBuilding);
+      }
+      finally
+      {
+        if (lock != null)
+        {
+          lock.release();
+        }
+      }
     }
 
     updateBundlePool();
@@ -249,6 +263,8 @@ public final class Buckminster
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
+          FileLock lock = FileLock.forWrite(new File(bundlePool));
+
           try
           {
             String bundlePoolURL = "file:/" + bundlePool.replace('\\', '/');
@@ -267,6 +283,10 @@ public final class Buckminster
           {
             Activator.log(ex);
             return Activator.getStatus(ex);
+          }
+          finally
+          {
+            lock.release();
           }
         }
       }.schedule();

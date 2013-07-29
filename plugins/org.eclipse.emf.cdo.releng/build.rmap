@@ -13,7 +13,6 @@
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.net4j(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.gastro(?:\..+)?$"/>
-	<rm:locator searchPathRef="p2pool" failOnError="false"/>
 	<rm:locator searchPathRef="junit4" pattern="^org\.junit4$"/>
 	<rm:locator searchPathRef="p2"/>
 
@@ -36,14 +35,6 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="p2pool">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="file:/{0}">
-				<bc:propertyRef key="p2.pool"/>
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-		
 	<rm:searchPath name="junit4">
 		<rm:provider componentTypes="osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/eclipse/updates/3.8">

@@ -49,10 +49,9 @@ import java.util.List;
  */
 public final class Buckminster
 {
-  private static final String NO_POOL = "none";
-
   private static final SetupContext CONTEXT = Activator.getDefault();
 
+  // TODO Don't use Headless because if cancels important jobs! Use e.g. ImportAction code instead...
   public static void run(String... args) throws Exception
   {
     Activator.log("Buckminster command: " + Arrays.asList(args));
@@ -201,9 +200,6 @@ public final class Buckminster
 
       createTargetDefinition(tp, getTargetName());
 
-      String bundlePool = getBundlePool();
-      Variables.set("p2.pool", "Location of p2 bundle pool", bundlePool);
-
       String bomPath = new File(CONTEXT.getBranchDir(), "bom.xml").getAbsolutePath();
       String mspecPath = new File(gitDir, setup.getBranch().getMspecFilePath()).getAbsolutePath();
       run("--displaystacktrace", "import2", "-B", bomPath, mspecPath);
@@ -211,11 +207,6 @@ public final class Buckminster
       if (Progress.log().isCancelled())
       {
         throw new InterruptedException();
-      }
-
-      if (bundlePool != NO_POOL)
-      {
-        updateBundlePool(bundlePool);
       }
     }
     catch (Exception ex)
@@ -235,6 +226,8 @@ public final class Buckminster
       restoreAutoBuilding(autoBuilding);
     }
 
+    updateBundlePool();
+
     if (tpOld != null)
     {
       Files.delete(tpOld);
@@ -246,52 +239,38 @@ public final class Buckminster
     return new File(folder, "target.xml");
   }
 
-  private static String getBundlePool() throws Exception
+  private static void updateBundlePool() throws Exception
   {
-    String bundlePool = CONTEXT.getSetup().getPreferences().getBundlePool();
+    final String bundlePool = CONTEXT.getSetup().getPreferences().getBundlePool();
     if (bundlePool != null && bundlePool.length() != 0)
     {
-      bundlePool = bundlePool.replace('\\', '/');
-
-      if (!new File(bundlePool, "content.xml").exists())
+      new Job("Update bundle pool")
       {
-        updateBundlePool(bundlePool);
-      }
+        @Override
+        protected IStatus run(IProgressMonitor monitor)
+        {
+          try
+          {
+            String bundlePoolURL = "file:/" + bundlePool.replace('\\', '/');
+            String targetPlatform = CONTEXT.getTargetPlatformDir().getAbsolutePath();
+            String[] args = { "-source", targetPlatform, "-metadataRepository", bundlePoolURL, "-artifactRepository",
+                bundlePoolURL, "-append", "-publishArtifacts" };
 
-      return bundlePool;
+            Activator.log("Publisher command: " + Arrays.asList(args));
+
+            AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
+            publisher.run(args);
+
+            return Status.OK_STATUS;
+          }
+          catch (Exception ex)
+          {
+            Activator.log(ex);
+            return Activator.getStatus(ex);
+          }
+        }
+      }.schedule();
     }
-
-    return NO_POOL;
-  }
-
-  private static void updateBundlePool(final String bundlePool) throws Exception
-  {
-    new Job("Update bundle pool")
-    {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
-      {
-        try
-        {
-          String bundlePoolURL = "file:/" + bundlePool;
-          String targetPlatform = CONTEXT.getTargetPlatformDir().getAbsolutePath();
-          String[] args = { "-source", targetPlatform, "-metadataRepository", bundlePoolURL, "-artifactRepository",
-              bundlePoolURL, "-append", "-publishArtifacts" };
-
-          Activator.log("Publisher command: " + Arrays.asList(args));
-
-          AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
-          publisher.run(args);
-
-          return Status.OK_STATUS;
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-          return Activator.getStatus(ex);
-        }
-      }
-    }.schedule();
   }
 
   public static boolean disableAutoBuilding() throws CoreException

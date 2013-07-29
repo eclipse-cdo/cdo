@@ -302,6 +302,8 @@
 						<arg value="-r" />
 						<arg value="http://download.eclipse.org/releases/kepler" />
 						<arg value="-r" />
+						<arg value="http://download.eclipse.org/eclipse/updates/4.3" />
+						<arg value="-r" />
 						<arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
 						<arg value="-d" />
 						<arg value="${tools}/buckminster" />

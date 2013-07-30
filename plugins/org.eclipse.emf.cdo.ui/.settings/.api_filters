@@ -7,6 +7,12 @@
                 <message_argument value="4.1.0"/>
             </message_arguments>
         </filter>
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.2.0"/>
+                <message_argument value="4.2.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IContributorResourceAdapter">
         <filter id="305422471">
@@ -797,6 +803,86 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ui.ide.undo.WorkspaceUndoUtil"/>
                 <message_argument value="org.eclipse.emf.cdo.ui_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.AbstractWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.AbstractWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.ArrangeWindowsHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.ArrangeWindowsHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CloseDialogHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CloseDialogHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaUIEnhancer">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaUIEnhancer"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.FullscreenWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.FullscreenWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.MinimizeWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.MinimizeWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.SWTCocoaEnhancerDelegate">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.SWTCocoaEnhancerDelegate"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.ZoomWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.ZoomWindowHandler"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.2.0"/>
             </message_arguments>
         </filter>
     </resource>

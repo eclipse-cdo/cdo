@@ -15,5 +15,11 @@
                 <message_argument value="ReplicateRepositoryIndication"/>
             </message_arguments>
         </filter>
+        <filter id="574664731">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.internal.net4j.protocol.ReplicateRepositoryIndication.responding(CDODataOutput)"/>
+                <message_argument value="CDOReplicationContext"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

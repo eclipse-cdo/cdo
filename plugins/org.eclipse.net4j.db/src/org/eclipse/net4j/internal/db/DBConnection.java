@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.Executor;
 
 /**
  * @author Eike Stepper
@@ -388,6 +389,31 @@ public final class DBConnection implements IDBConnection
   public Struct createStruct(String typeName, Object[] attributes) throws SQLException
   {
     return delegate.createStruct(typeName, attributes);
+  }
+
+  public void abort(Executor arg0) throws SQLException
+  {
+    delegate.abort(arg0);
+  }
+
+  public int getNetworkTimeout() throws SQLException
+  {
+    return delegate.getNetworkTimeout();
+  }
+
+  public String getSchema() throws SQLException
+  {
+    return delegate.getSchema();
+  }
+
+  public void setNetworkTimeout(Executor arg0, int arg1) throws SQLException
+  {
+    delegate.setNetworkTimeout(arg0, arg1);
+  }
+
+  public void setSchema(String arg0) throws SQLException
+  {
+    delegate.setSchema(arg0);
   }
 
   @Deprecated

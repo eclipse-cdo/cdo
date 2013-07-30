@@ -16,6 +16,13 @@
                 <message_argument value="CDOSessionRecoveryEventImpl"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOSessionRecoveryEvent"/>
+                <message_argument value="CDOSessionRecoveryEventImpl"/>
+                <message_argument value="CDOSessionEvent"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/CDOClientProtocol.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol">
         <filter id="574619656">

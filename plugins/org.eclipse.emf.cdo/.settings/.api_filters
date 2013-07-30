@@ -117,6 +117,13 @@
                 <message_argument value="CDOPushTransaction"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOTransaction"/>
+                <message_argument value="CDOPushTransaction"/>
+                <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/transaction/CDOSavepoint.java" type="org.eclipse.emf.cdo.transaction.CDOSavepoint">
         <filter id="571473929">
@@ -518,6 +525,13 @@
                 <message_argument value="CDOObjectReferenceImpl"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOObjectReference"/>
+                <message_argument value="CDOObjectReferenceImpl"/>
+                <message_argument value="CDOReference&lt;OBJECT&gt;"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl">
         <filter id="574660632">
@@ -525,6 +539,13 @@
                 <message_argument value="InternalCDOSession"/>
                 <message_argument value="CDOCommonSession"/>
                 <message_argument value="CDOSessionImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalCDOSession"/>
+                <message_argument value="CDOSessionImpl"/>
+                <message_argument value="CDOCommonSession"/>
             </message_arguments>
         </filter>
     </resource>
@@ -536,6 +557,13 @@
                 <message_argument value="OptionsImpl"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="OptionsImpl"/>
+                <message_argument value="Options"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/DelegatingSessionProtocol.java" type="org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol">
         <filter id="574660632">
@@ -543,6 +571,13 @@
                 <message_argument value="CDOSessionProtocol"/>
                 <message_argument value="CDOProtocol"/>
                 <message_argument value="DelegatingSessionProtocol"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOSessionProtocol"/>
+                <message_argument value="DelegatingSessionProtocol"/>
+                <message_argument value="CDOProtocol"/>
             </message_arguments>
         </filter>
     </resource>
@@ -570,6 +605,13 @@
                 <message_argument value="AbstractCDOView"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalCDOView"/>
+                <message_argument value="AbstractCDOView"/>
+                <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/view/CDOViewImpl.java" type="org.eclipse.emf.internal.cdo.view.CDOViewImpl$OptionsImpl">
         <filter id="574660632">
@@ -577,6 +619,13 @@
                 <message_argument value="Options"/>
                 <message_argument value="Options"/>
                 <message_argument value="OptionsImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="OptionsImpl"/>
+                <message_argument value="Options"/>
             </message_arguments>
         </filter>
     </resource>

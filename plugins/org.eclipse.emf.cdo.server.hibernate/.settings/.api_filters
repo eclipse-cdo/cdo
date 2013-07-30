@@ -24,5 +24,12 @@
                 <message_argument value="WrappedHibernateList"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalCDOList"/>
+                <message_argument value="WrappedHibernateList"/>
+                <message_argument value="CDOList"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

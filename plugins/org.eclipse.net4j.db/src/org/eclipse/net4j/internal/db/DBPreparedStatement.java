@@ -587,6 +587,16 @@ public final class DBPreparedStatement implements IDBPreparedStatement
     delegate.setNClob(parameterIndex, reader);
   }
 
+  public void closeOnCompletion() throws SQLException
+  {
+    delegate.closeOnCompletion();
+  }
+
+  public boolean isCloseOnCompletion() throws SQLException
+  {
+    return delegate.isCloseOnCompletion();
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -1546,6 +1556,16 @@ public final class DBPreparedStatement implements IDBPreparedStatement
     public void updateNClob(String columnLabel, Reader reader) throws SQLException
     {
       delegate.updateNClob(columnLabel, reader);
+    }
+
+    public <T> T getObject(int arg0, Class<T> arg1) throws SQLException
+    {
+      return delegate.getObject(arg0, arg1);
+    }
+
+    public <T> T getObject(String arg0, Class<T> arg1) throws SQLException
+    {
+      return delegate.getObject(arg0, arg1);
     }
 
   }

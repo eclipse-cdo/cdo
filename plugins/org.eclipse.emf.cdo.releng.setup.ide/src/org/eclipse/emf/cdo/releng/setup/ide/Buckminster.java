@@ -202,10 +202,13 @@ public final class Buckminster
       File gitDir = CONTEXT.getGitDir();
       Setup setup = CONTEXT.getSetup();
 
+      Progress.log().addLine("Creating new target platform folder");
       createTargetDefinition(tp, getTargetName());
 
       String bomPath = new File(CONTEXT.getBranchDir(), "bom.xml").getAbsolutePath();
       String mspecPath = new File(gitDir, setup.getBranch().getMspecFilePath()).getAbsolutePath();
+      Progress.log().addLine("Importing MSpec " + mspecPath);
+
       run("--displaystacktrace", "import2", "-B", bomPath, mspecPath);
 
       if (Progress.log().isCancelled())

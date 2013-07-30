@@ -61,7 +61,11 @@ public class CleanBuildHandler extends AbstractHandler
       for (Iterator<?> it = ((IStructuredSelection)selection).iterator(); it.hasNext();)
       {
         Object element = it.next();
-        if (element instanceof IResource)
+        if (element instanceof IProject)
+        {
+          projects.add((IProject)element);
+        }
+        else if (element instanceof IResource)
         {
           IResource resource = (IResource)element;
           IProject project = resource.getProject();

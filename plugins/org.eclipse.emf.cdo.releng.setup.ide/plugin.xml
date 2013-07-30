@@ -63,8 +63,23 @@
          </action>
       </actionSet>
    </extension>
+
    <extension
-         point="org.eclipse.ui.preferenceTransfer">
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.releng.setup.ide.contribution1"
+            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.ide.actions.PushDirectAction"
+               enablesFor="1"
+               icon="icons/push_directly.gif"
+               id="org.eclipse.emf.cdo.releng.setup.ide.PushDirectAction"
+               label="Push Directly"
+               menubarPath="additions"
+               state="true"
+               style="push"/>
+      </objectContribution>
    </extension>
 
 </plugin>

@@ -479,22 +479,14 @@
 		<echo message="Importing binaries into ${tp}" />
 		<mkdir dir="${tp}" />
 
-		<echo message="" />
-		<echo message="Setting API baseline to /opt/public/modeling/emf/cdo/api_baseline" />
 		<move file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target" />
-		<buckminster command="addbaseline">
-			<cmdargs>
-				<arg value="-A" />
-				<arg value="CDO Baseline" />
-			</cmdargs>
-		</buckminster>
-		
+
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="maxParallelResolutions=1" />
 			</cmdargs>
 		</buckminster>
-		
+
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-B" />
@@ -505,6 +497,14 @@
 
 				<!-- Last argument: -->
 				<arg value="${basedir}/build.mspec" />
+			</cmdargs>
+		</buckminster>
+		<echo message="" />
+		<echo message="Setting API baseline to /opt/public/modeling/emf/cdo/api_baseline" />
+		<buckminster command="addbaseline">
+			<cmdargs>
+				<arg value="-A" />
+				<arg value="CDO Baseline" />
 			</cmdargs>
 		</buckminster>
 	</target>

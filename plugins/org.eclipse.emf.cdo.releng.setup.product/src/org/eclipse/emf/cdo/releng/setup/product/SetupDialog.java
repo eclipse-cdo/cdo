@@ -675,7 +675,7 @@ public class SetupDialog extends TitleAreaDialog
     final String bundlePool = bundlePoolText.getText();
     final String gitPrefix = safe(gitPrefixText.getText());
 
-    ProgressLogDialog.run(getShell(), "Setting up IDE", new ProgressLogRunnable()
+    ProgressLogDialog.run(getShell(), null, "Setting up IDE", new ProgressLogRunnable()
     {
       public boolean run(ProgressLog log) throws Exception
       {

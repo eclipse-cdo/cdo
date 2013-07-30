@@ -51,6 +51,11 @@ public class Activator extends AbstractUIPlugin implements SetupContext
   {
   }
 
+  public File getLogFile()
+  {
+    return new File(branchDir, "setup.log");
+  }
+
   public File getProjectDir()
   {
     return branchDir.getParentFile();

@@ -29,6 +29,8 @@ import java.util.List;
  */
 public final class SetupIDE
 {
+  private static final SetupContext CONTEXT = Activator.getDefault();
+
   private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 
   private static final int INITIAL = 0;
@@ -56,7 +58,7 @@ public final class SetupIDE
     {
       public void run()
       {
-        ProgressLogDialog.run(shell, "Setting up IDE", new ProgressLogRunnable()
+        ProgressLogDialog.run(shell, CONTEXT.getLogFile(), "Setting up IDE", new ProgressLogRunnable()
         {
           public boolean run(ProgressLog log) throws Exception
           {

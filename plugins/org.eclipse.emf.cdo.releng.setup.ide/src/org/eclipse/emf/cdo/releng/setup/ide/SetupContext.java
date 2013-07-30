@@ -20,6 +20,8 @@ import java.io.File;
  */
 public interface SetupContext
 {
+  public File getLogFile();
+
   public File getProjectDir();
 
   public File getBaselineDir();

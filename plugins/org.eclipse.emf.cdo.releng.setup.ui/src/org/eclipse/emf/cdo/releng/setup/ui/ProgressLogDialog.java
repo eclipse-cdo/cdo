@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -37,6 +39,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,6 +50,8 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   public static final String TITLE = "Setup Development Environment";
 
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+
+  private PrintStream logStream;
 
   private Text text;
 
@@ -56,9 +63,21 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
   private String lastLine;
 
-  public ProgressLogDialog(Shell parentShell)
+  private ProgressLogDialog(Shell parentShell, File logFile)
   {
     super(parentShell);
+    if (logFile != null)
+    {
+      try
+      {
+        logStream = new PrintStream(logFile);
+      }
+      catch (FileNotFoundException ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    }
+
     setHelpAvailable(false);
     setShellStyle(SWT.BORDER | SWT.MAX | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
   }
@@ -117,6 +136,13 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   public boolean close()
   {
     Progress.set(null);
+
+    logStream.println();
+    logStream.println();
+    logStream.println();
+    logStream.println();
+    IOUtil.closeSilent(logStream);
+
     return super.close();
   }
 
@@ -142,13 +168,13 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     }
 
     if (line == null || line.length() == 0 || Character.isLowerCase(line.charAt(0)) || line.equals("Updating")
-        || line.startsWith("Scanning Git") || line.startsWith("Re-indexing (fully)") || line.endsWith(" remaining.")
-        || line.startsWith("Calculating Decorations") || line.startsWith("Decorating ") || line.startsWith("http://")
+        || line.startsWith("Scanning Git") || line.startsWith("Re-indexing") || line.endsWith(" remaining.")
+        || line.startsWith("Calculating Decorations") || line.startsWith("Decorating") || line.startsWith("http://")
         || line.startsWith("The user operation is waiting") || line.startsWith("Git repository changed")
         || line.startsWith("Refreshing ") || line.startsWith("Opening ") || line.startsWith("Connecting project ")
         || line.startsWith("Searching for associated repositories.") || line.startsWith("Preparing type ")
         || line.startsWith("Loading project description") || line.startsWith("Generating cspec from PDE artifacts")
-        || line.startsWith("Reporting encoding changes"))
+        || line.startsWith("Reporting encoding changes") || line.startsWith("Saving"))
     {
       return;
     }
@@ -167,8 +193,21 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       return;
     }
 
-    final String message = line;
-    lastLine = message;
+    lastLine = line;
+
+    final String message = "[" + DATE_FORMAT.format(new Date()) + "] " + line + "\n";
+    if (logStream != null)
+    {
+      try
+      {
+        logStream.print(message);
+        logStream.flush();
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+    }
 
     asyncExec(new Runnable()
     {
@@ -176,7 +215,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       {
         try
         {
-          text.append("[" + DATE_FORMAT.format(new Date()) + "] " + message + "\n");
+          text.append(message);
         }
         catch (Exception ex)
         {
@@ -226,12 +265,12 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     }
   }
 
-  public static void run(Shell shell, final String jobName, final ProgressLogRunnable runnable)
+  public static void run(Shell shell, File logFile, final String jobName, final ProgressLogRunnable runnable)
   {
     try
     {
       final boolean[] restart = { false };
-      final ProgressLogDialog dialog = new ProgressLogDialog(shell);
+      final ProgressLogDialog dialog = new ProgressLogDialog(shell, logFile);
       shell.getDisplay().asyncExec(new Runnable()
       {
         public void run()

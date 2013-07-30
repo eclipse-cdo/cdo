@@ -284,7 +284,7 @@ public final class Buckminster
     final String bundlePool = CONTEXT.getSetup().getPreferences().getBundlePool();
     if (bundlePool != null && bundlePool.length() != 0)
     {
-      new Job("Update bundle pool")
+      new Job("Updating bundle pool")
       {
         @Override
         protected IStatus run(IProgressMonitor monitor)

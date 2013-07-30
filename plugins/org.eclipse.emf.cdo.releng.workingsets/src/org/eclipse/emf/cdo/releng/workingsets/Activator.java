@@ -77,6 +77,8 @@ public class Activator extends AbstractUIPlugin implements IResourceChangeListen
     plugin = this;
 
     featureWorkingSet = createWorkingSet("Features");
+    addWorkingSetDefinition("Infrastructure", "org.eclipse.emf.cdo.releng.promotion",
+        "org.eclipse.emf.cdo.releng.doc.supplemental", "cdo.www", "simrel.build");
     addWorkingSetDefinition("Releng", "org.eclipse.emf.cdo.releng");
     addWorkingSetDefinition("CDO Dawn", "org.eclipse.emf.cdo.dawn");
     addWorkingSetDefinition("CDO Tests", "org.eclipse.emf.cdo.tests");

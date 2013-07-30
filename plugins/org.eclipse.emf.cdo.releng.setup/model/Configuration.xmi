@@ -20,7 +20,7 @@
   </projects>
   <projects name="CDO">
     <directorCalls>
-      <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
+      <installableUnits id="org.eclipse.pde.api.tools.ee.j2se15.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.manifests.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.ide;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.GitClone;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.helper.Downloads;
@@ -185,6 +186,8 @@ public final class Buckminster
 
   public static void importMSpec() throws Exception
   {
+    initVars();
+
     File tp = CONTEXT.getTargetPlatformDir();
     File tpOld = tp.exists() ? new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis()) : null;
     if (tpOld != null)
@@ -254,6 +257,26 @@ public final class Buckminster
   private static File getTargetXML(File folder)
   {
     return new File(folder, "target.xml");
+  }
+
+  private static void initVars() throws Exception
+  {
+    Setup setup = CONTEXT.getSetup();
+    Branch branch = setup.getBranch();
+
+    for (GitClone gitClone : branch.getGitClones())
+    {
+      File workDir = CONTEXT.getWorkDir(gitClone);
+      String cloneName = workDir.getName();
+      String variableName = branch.getCloneVariableName();
+      if (variableName == null)
+      {
+        variableName = "git.clone." + cloneName;
+      }
+
+      String description = "Location of " + cloneName + " git clone";
+      Variables.set(variableName, description, workDir.getAbsolutePath().replace('\\', '/'));
+    }
   }
 
   private static void updateBundlePool() throws Exception

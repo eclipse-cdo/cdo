@@ -105,16 +105,6 @@ public final class GitClones
           repository.close();
         }
       }
-
-      String cloneName = workDir.getName();
-      String variableName = branch.getCloneVariableName();
-      if (variableName == null)
-      {
-        variableName = "git.clone." + cloneName;
-      }
-
-      String description = "Location of " + cloneName + " git clone";
-      Variables.set(variableName, description, workDir.getAbsolutePath().replace('\\', '/'));
     }
   }
 

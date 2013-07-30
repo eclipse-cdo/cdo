@@ -16,6 +16,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -61,6 +62,11 @@ public class CleanBuildHandler extends AbstractHandler
       for (Iterator<?> it = ((IStructuredSelection)selection).iterator(); it.hasNext();)
       {
         Object element = it.next();
+        if (element instanceof IAdaptable)
+        {
+          element = ((IAdaptable)element).getAdapter(IResource.class);
+        }
+
         if (element instanceof IProject)
         {
           projects.add((IProject)element);

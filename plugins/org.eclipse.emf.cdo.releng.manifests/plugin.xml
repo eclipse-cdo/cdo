@@ -50,9 +50,9 @@
             <iterate
                   ifEmpty="false"
                   operator="or">
-               <instanceof
-                     value="org.eclipse.core.resources.IResource">
-               </instanceof>
+               <adapt
+                     type="org.eclipse.core.resources.IResource">
+               </adapt>
             </iterate>
          </enabledWhen>
       </handler>

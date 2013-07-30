@@ -22,7 +22,7 @@
 <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/CDOOfflineExample"/>
 <booleanAttribute key="default" value="true"/>
 <booleanAttribute key="includeOptional" value="false"/>
-<stringAttribute key="location" value="${workspace_loc}/../CDOOfflineExample.rt"/>
+<stringAttribute key="location" value="${workspace_loc}/../ws-CDOOfflineExample"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms1024m -Xmx1024m&#13;&#10;-Dnode.manager.root=${resource_loc:/org.eclipse.emf.cdo.examples.client.offline}/nodes"/>

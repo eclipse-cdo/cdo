@@ -863,6 +863,12 @@ public class SetupDialog extends TitleAreaDialog
         lines.add(gitPrefix);
       }
     }
+
+    String setupIDE = "-Dorg.eclipse.emf.cdo.releng.setup.ide=true";
+    if (!lines.contains(setupIDE))
+    {
+      lines.add(setupIDE);
+    }
   }
 
   private int findLine(List<String> lines, String search)

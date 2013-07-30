@@ -105,17 +105,20 @@ public class Activator extends AbstractUIPlugin implements SetupContext
 
     try
     {
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+      if ("true".equals(System.getProperty("org.eclipse.emf.cdo.releng.setup.ide", "false")))
+      {
+        ResourceSet resourceSet = new ResourceSetImpl();
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
 
-      IPath branchDirPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1);
-      branchDir = new File(branchDirPath.toOSString());
+        IPath branchDirPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1);
+        branchDir = new File(branchDirPath.toOSString());
 
-      URI uri = URI.createFileURI(branchDirPath.append("setup.xmi").toOSString());
-      Resource resource = resourceSet.getResource(uri, true);
+        URI uri = URI.createFileURI(branchDirPath.append("setup.xmi").toOSString());
+        Resource resource = resourceSet.getResource(uri, true);
 
-      setup = (Setup)resource.getContents().get(0);
-      SetupIDE.run();
+        setup = (Setup)resource.getContents().get(0);
+        SetupIDE.run();
+      }
     }
     catch (Exception ex)
     {

@@ -29,10 +29,7 @@ import org.eclipse.buckminster.core.commands.Import;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
@@ -214,6 +211,11 @@ public final class Buckminster
 
       run("--displaystacktrace", "import2", "-B", bomPath, mspecPath);
 
+      if (lock != null)
+      {
+        updateBundlePool(bundlePool);
+      }
+
       if (Progress.log().isCancelled())
       {
         throw new InterruptedException();
@@ -246,8 +248,6 @@ public final class Buckminster
       }
     }
 
-    updateBundlePool();
-
     if (tpOld != null)
     {
       Files.delete(tpOld);
@@ -279,44 +279,17 @@ public final class Buckminster
     }
   }
 
-  private static void updateBundlePool() throws Exception
+  private static void updateBundlePool(String bundlePool) throws Exception
   {
-    final String bundlePool = CONTEXT.getSetup().getPreferences().getBundlePool();
-    if (bundlePool != null && bundlePool.length() != 0)
-    {
-      new Job("Updating bundle pool")
-      {
-        @Override
-        protected IStatus run(IProgressMonitor monitor)
-        {
-          FileLock lock = FileLock.forWrite(new File(bundlePool));
+    Progress.log().addLine("Updating bundle pool: " + bundlePool);
 
-          try
-          {
-            String bundlePoolURL = "file:/" + bundlePool.replace('\\', '/');
-            String targetPlatform = CONTEXT.getTargetPlatformDir().getAbsolutePath();
-            String[] args = { "-source", targetPlatform, "-metadataRepository", bundlePoolURL, "-artifactRepository",
-                bundlePoolURL, "-append", "-publishArtifacts" };
+    String bundlePoolURL = "file:/" + bundlePool.replace('\\', '/');
+    String targetPlatform = CONTEXT.getTargetPlatformDir().getAbsolutePath();
+    String[] args = { "-source", targetPlatform, "-metadataRepository", bundlePoolURL, "-artifactRepository",
+        bundlePoolURL, "-append", "-publishArtifacts" };
 
-            Activator.log("Publisher command: " + Arrays.asList(args));
-
-            AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
-            publisher.run(args);
-
-            return Status.OK_STATUS;
-          }
-          catch (Exception ex)
-          {
-            Activator.log(ex);
-            return Activator.getStatus(ex);
-          }
-          finally
-          {
-            lock.release();
-          }
-        }
-      }.schedule();
-    }
+    AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
+    publisher.run(args);
   }
 
   public static boolean disableAutoBuilding() throws CoreException

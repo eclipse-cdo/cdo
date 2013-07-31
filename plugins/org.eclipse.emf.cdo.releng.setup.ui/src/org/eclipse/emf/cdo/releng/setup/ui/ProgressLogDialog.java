@@ -49,7 +49,9 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 {
   public static final String TITLE = "Setup Development Environment";
 
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+  private static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
+
+  private static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   private PrintStream logStream;
 
@@ -137,11 +139,14 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   {
     Progress.set(null);
 
-    logStream.println();
-    logStream.println();
-    logStream.println();
-    logStream.println();
-    IOUtil.closeSilent(logStream);
+    if (logStream != null)
+    {
+      logStream.println();
+      logStream.println();
+      logStream.println();
+      logStream.println();
+      IOUtil.closeSilent(logStream);
+    }
 
     return super.close();
   }
@@ -174,7 +179,8 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
         || line.startsWith("Refreshing ") || line.startsWith("Opening ") || line.startsWith("Connecting project ")
         || line.startsWith("Searching for associated repositories.") || line.startsWith("Preparing type ")
         || line.startsWith("Loading project description") || line.startsWith("Generating cspec from PDE artifacts")
-        || line.startsWith("Reporting encoding changes") || line.startsWith("Saving"))
+        || line.startsWith("Reporting encoding changes") || line.startsWith("Saving")
+        || line.startsWith("Downloading software"))
     {
       return;
     }
@@ -195,12 +201,14 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
     lastLine = line;
 
-    final String message = "[" + DATE_FORMAT.format(new Date()) + "] " + line + "\n";
+    final String message = line + "\n";
+    final Date date = new Date();
+
     if (logStream != null)
     {
       try
       {
-        logStream.print(message);
+        logStream.print("[" + DATE_TIME.format(date) + "] " + message);
         logStream.flush();
       }
       catch (Exception ex)
@@ -215,7 +223,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       {
         try
         {
-          text.append(message);
+          text.append("[" + TIME.format(date) + "] " + message);
         }
         catch (Exception ex)
         {

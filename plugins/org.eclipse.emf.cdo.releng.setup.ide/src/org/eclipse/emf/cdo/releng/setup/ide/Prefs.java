@@ -31,7 +31,7 @@ public final class Prefs
 
   private static final IEclipsePreferences ROOT = Platform.getPreferencesService().getRootNode();
 
-  public static void init() throws Exception
+  public static void initEarly() throws Exception
   {
     Setup setup = CONTEXT.getSetup();
     Branch branch = setup.getBranch();
@@ -47,6 +47,13 @@ public final class Prefs
     });
 
     set("instance/org.eclipse.ui.workbench/RUN_IN_BACKGROUND", "true");
+  }
+
+  public static void initLate() throws Exception
+  {
+    Setup setup = CONTEXT.getSetup();
+    Branch branch = setup.getBranch();
+    Project project = branch.getProject();
 
     Preferences preferences = setup.getPreferences();
     init(preferences);

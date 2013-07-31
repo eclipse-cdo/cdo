@@ -76,8 +76,15 @@ public final class Director
 
   public void install(String destination)
   {
-    String repositories = makeList(directorCall.getP2Repositories(), SetupPackage.Literals.P2_REPOSITORY__URL);
-    String ius = makeList(directorCall.getInstallableUnits(), SetupPackage.Literals.INSTALLABLE_UNIT__ID);
+    EList<P2Repository> p2Repositories = directorCall.getP2Repositories();
+    EList<InstallableUnit> installableUnits = directorCall.getInstallableUnits();
+
+    Progress.log().addLine(
+        "Calling director to install " + installableUnits.size() + (installableUnits.size() == 1 ? " unit" : " units")
+            + " from " + p2Repositories.size() + (p2Repositories.size() == 1 ? " repository" : "repositories"));
+
+    String repositories = makeList(p2Repositories, SetupPackage.Literals.P2_REPOSITORY__URL);
+    String ius = makeList(installableUnits, SetupPackage.Literals.INSTALLABLE_UNIT__ID);
 
     String os = Platform.getOS();
     String ws = Platform.getWS();

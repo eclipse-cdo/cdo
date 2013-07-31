@@ -89,7 +89,7 @@ public final class SetupIDE
 
     if (state < 2)
     {
-      Prefs.init();
+      Prefs.initEarly();
       saveState(2);
     }
 
@@ -111,11 +111,17 @@ public final class SetupIDE
       saveState(5);
     }
 
-    if (state < DONE)
+    if (state < 6)
     {
       Buckminster.importMSpec();
-      saveState(DONE);
+      saveState(6);
       restart = true;
+    }
+
+    if (state < DONE)
+    {
+      Prefs.initLate();
+      saveState(DONE);
     }
 
     Buckminster.restoreAutoBuilding(true);

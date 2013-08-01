@@ -78,7 +78,16 @@ public final class Director
 
   public void install(String destination)
   {
-    new File(destination).mkdirs();
+    File eclipseFolder = new File(destination);
+    eclipseFolder.mkdirs();
+
+    File branchFolder = eclipseFolder.getParentFile();
+    File projectFolder = branchFolder.getParentFile();
+    String profileName = projectFolder.getName() + "_" + branchFolder.getName() + "_Profile";
+    profileName = profileName.replace('.', '_');
+    profileName = profileName.replace('-', '_');
+    profileName = profileName.replace('/', '_');
+    profileName = profileName.replace('\\', '_');
 
     EList<P2Repository> p2Repositories = directorCall.getP2Repositories();
     EList<InstallableUnit> installableUnits = directorCall.getInstallableUnits();
@@ -98,7 +107,7 @@ public final class Director
     String bundleAgent = new File(bundlePool, "p2").getAbsolutePath();
 
     String[] args = { "-destination", destination, "-repository", repositories, "-installIU", ius, "-profile",
-        "SDKProfile", "-profileProperties", "org.eclipse.update.install.features=true", "-bundlepool", bundlePool,
+        profileName, "-profileProperties", "org.eclipse.update.install.features=true", "-bundlepool", bundlePool,
         "-shared", bundleAgent, "-p2.os", os, "-p2.ws", ws, "-p2.arch", arch };
 
     DirectorApplication app = new DirectorApplication();

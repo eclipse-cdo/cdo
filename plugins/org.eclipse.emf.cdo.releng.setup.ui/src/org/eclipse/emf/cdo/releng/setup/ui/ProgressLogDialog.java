@@ -73,6 +73,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     {
       try
       {
+        logFile.getParentFile().mkdirs();
         logStream = new PrintStream(new FileOutputStream(logFile, true));
       }
       catch (FileNotFoundException ex)

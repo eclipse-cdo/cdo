@@ -83,7 +83,7 @@ public final class Director
 
     File branchFolder = eclipseFolder.getParentFile();
     File projectFolder = branchFolder.getParentFile();
-    String profileName = projectFolder.getName() + "_" + branchFolder.getName() + "_Profile";
+    String profileName = projectFolder.getName() + "_" + branchFolder.getName();
     profileName = profileName.replace('.', '_');
     profileName = profileName.replace('-', '_');
     profileName = profileName.replace('/', '_');

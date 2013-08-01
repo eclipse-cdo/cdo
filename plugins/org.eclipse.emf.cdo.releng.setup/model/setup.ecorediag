@@ -215,10 +215,6 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//Preferences/userName"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_eISl0eoYEeKpRf481yfX-g"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_fqKBMOoYEeKpRf481yfX-g" type="2001">
-        <element xmi:type="ecore:EAttribute" href="setup.ecore#//Preferences/bundlePool"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_fqKoQOoYEeKpRf481yfX-g"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_cVkD8OoYEeKpRf481yfX-g" type="2001">
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//Preferences/installFolder"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_cVkD8eoYEeKpRf481yfX-g"/>

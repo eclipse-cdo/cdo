@@ -746,7 +746,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferences_BundlePool()
+  public EAttribute getPreferences_InstallFolder()
   {
     return (EAttribute)preferencesEClass.getEStructuralFeatures().get(1);
   }
@@ -756,7 +756,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferences_InstallFolder()
+  public EAttribute getPreferences_GitPrefix()
   {
     return (EAttribute)preferencesEClass.getEStructuralFeatures().get(2);
   }
@@ -766,19 +766,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferences_GitPrefix()
-  {
-    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getPreferences_LinkLocations()
   {
-    return (EReference)preferencesEClass.getEStructuralFeatures().get(4);
+    return (EReference)preferencesEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -824,7 +814,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Create classes and their features
     preferencesEClass = createEClass(PREFERENCES);
     createEAttribute(preferencesEClass, PREFERENCES__USER_NAME);
-    createEAttribute(preferencesEClass, PREFERENCES__BUNDLE_POOL);
     createEAttribute(preferencesEClass, PREFERENCES__INSTALL_FOLDER);
     createEAttribute(preferencesEClass, PREFERENCES__GIT_PREFIX);
     createEReference(preferencesEClass, PREFERENCES__LINK_LOCATIONS);
@@ -935,8 +924,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEClass(preferencesEClass, Preferences.class, "Preferences", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPreferences_UserName(), ecorePackage.getEString(), "userName", null, 0, 1, Preferences.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPreferences_BundlePool(), ecorePackage.getEString(), "bundlePool", null, 0, 1, Preferences.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPreferences_InstallFolder(), ecorePackage.getEString(), "installFolder", null, 0, 1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,

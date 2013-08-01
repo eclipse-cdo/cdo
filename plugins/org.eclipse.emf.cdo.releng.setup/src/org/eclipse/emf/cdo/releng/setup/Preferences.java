@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getUserName <em>User Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePool <em>Bundle Pool</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix <em>Git Prefix</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getLinkLocations <em>Link Locations</em>}</li>
@@ -67,32 +66,6 @@ public interface Preferences extends ToolInstallation
    * @generated
    */
   void setUserName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Bundle Pool</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Bundle Pool</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Bundle Pool</em>' attribute.
-   * @see #setBundlePool(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_BundlePool()
-   * @model
-   * @generated
-   */
-  String getBundlePool();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePool <em>Bundle Pool</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Bundle Pool</em>' attribute.
-   * @see #getBundlePool()
-   * @generated
-   */
-  void setBundlePool(String value);
 
   /**
    * Returns the value of the '<em><b>Install Folder</b></em>' attribute.

@@ -124,8 +124,6 @@ public class SetupDialog extends TitleAreaDialog
 
   private Text userNameText;
 
-  private Text bundlePoolText;
-
   private Text installFolderText;
 
   private Text gitPrefixText;
@@ -347,35 +345,6 @@ public class SetupDialog extends TitleAreaDialog
     Label empty = new Label(grpPreferences, SWT.NONE);
     empty.setBounds(0, 0, 55, 15);
 
-    Label bundlePoolLabel = new Label(grpPreferences, SWT.NONE);
-    bundlePoolLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    bundlePoolLabel.setBounds(0, 0, 55, 15);
-    bundlePoolLabel.setText("Bundle Pool:");
-
-    bundlePoolText = new Text(grpPreferences, SWT.BORDER);
-    bundlePoolText.setToolTipText("Points to your local bundle pool to speed up p2 installations.");
-    bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-    Button bundlePoolButton = new Button(grpPreferences, SWT.NONE);
-    bundlePoolButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    bundlePoolButton.setBounds(0, 0, 75, 25);
-    bundlePoolButton.setText("Browse...");
-    bundlePoolButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        DirectoryDialog dlg = new DirectoryDialog(getShell());
-        dlg.setText("Select Bundle Pool Folder");
-        dlg.setMessage("Select a folder");
-        String dir = dlg.open();
-        if (dir != null)
-        {
-          bundlePoolText.setText(dir);
-        }
-      }
-    });
-
     Label installFolderLabel = new Label(grpPreferences, SWT.NONE);
     installFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     installFolderLabel.setBounds(0, 0, 55, 15);
@@ -494,7 +463,6 @@ public class SetupDialog extends TitleAreaDialog
       preferences = (Preferences)resource.getContents().get(0);
 
       userNameText.setText(safe(preferences.getUserName()));
-      bundlePoolText.setText(safe(preferences.getBundlePool()));
       installFolderText.setText(safe(preferences.getInstallFolder()));
       gitPrefixText.setText(safe(preferences.getGitPrefix()));
     }
@@ -507,7 +475,6 @@ public class SetupDialog extends TitleAreaDialog
       File rootFolder = new File(System.getProperty("user.home", "."));
 
       userNameText.setText(safe(System.getProperty("user.name", "<username>")).toLowerCase());
-      bundlePoolText.setText(safe(getAbsolutePath(new File(rootFolder, "p2pool"))));
       installFolderText.setText(safe(getAbsolutePath(rootFolder)));
       gitPrefixText.setText(safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix()))));
     }
@@ -672,7 +639,6 @@ public class SetupDialog extends TitleAreaDialog
   {
     final Object[] checkedElements = viewer.getCheckedElements();
     final String installFolder = installFolderText.getText();
-    final String bundlePool = bundlePoolText.getText();
     final String gitPrefix = safe(gitPrefixText.getText());
 
     File folder = new File(installFolder);
@@ -693,7 +659,7 @@ public class SetupDialog extends TitleAreaDialog
             {
               try
               {
-                install(setup, installFolder, bundlePool, gitPrefix);
+                install(setup, installFolder, gitPrefix);
               }
               catch (IOException ex)
               {
@@ -708,7 +674,7 @@ public class SetupDialog extends TitleAreaDialog
     });
   }
 
-  private void install(Setup setup, String installFolder, String bundlePool, String gitPrefix) throws Exception
+  private void install(Setup setup, String installFolder, String gitPrefix) throws Exception
   {
     Branch branch = setup.getBranch();
     Progress.log().addLine("Setting up " + branch.getProject().getName() + " " + branch.getName());
@@ -720,6 +686,8 @@ public class SetupDialog extends TitleAreaDialog
     updateLocations.add(EGIT_URI);
     updateLocations.add(BUCKY_URI);
     updateLocations.add(RELENG_URI);
+
+    String bundlePool = new File(installFolder, ".p2pool-ide").getAbsolutePath();
 
     install(bundlePool, destination, updateLocations, setup.getEclipseVersion().getDirectorCall());
 
@@ -907,7 +875,6 @@ public class SetupDialog extends TitleAreaDialog
   private void savePreferences()
   {
     preferences.setUserName(userNameText.getText());
-    preferences.setBundlePool(bundlePoolText.getText());
     preferences.setInstallFolder(installFolderText.getText());
     preferences.setGitPrefix(gitPrefixText.getText());
 

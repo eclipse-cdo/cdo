@@ -62,7 +62,6 @@ public class PreferencesItemProvider extends ToolInstallationItemProvider implem
       super.getPropertyDescriptors(object);
 
       addUserNamePropertyDescriptor(object);
-      addBundlePoolPropertyDescriptor(object);
       addInstallFolderPropertyDescriptor(object);
       addGitPrefixPropertyDescriptor(object);
     }
@@ -82,22 +81,6 @@ public class PreferencesItemProvider extends ToolInstallationItemProvider implem
         getString("_UI_Preferences_userName_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Preferences_userName_feature", "_UI_Preferences_type"),
         SetupPackage.Literals.PREFERENCES__USER_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Bundle Pool feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addBundlePoolPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Preferences_bundlePool_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePool_feature", "_UI_Preferences_type"),
-        SetupPackage.Literals.PREFERENCES__BUNDLE_POOL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
 
@@ -209,7 +192,6 @@ public class PreferencesItemProvider extends ToolInstallationItemProvider implem
     switch (notification.getFeatureID(Preferences.class))
     {
     case SetupPackage.PREFERENCES__USER_NAME:
-    case SetupPackage.PREFERENCES__BUNDLE_POOL:
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

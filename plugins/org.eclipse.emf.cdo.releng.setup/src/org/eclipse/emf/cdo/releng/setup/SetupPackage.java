@@ -231,22 +231,13 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__USER_NAME = TOOL_INSTALLATION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Bundle Pool</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCES__BUNDLE_POOL = TOOL_INSTALLATION_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Install Folder</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES__INSTALL_FOLDER = TOOL_INSTALLATION_FEATURE_COUNT + 2;
+  int PREFERENCES__INSTALL_FOLDER = TOOL_INSTALLATION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Git Prefix</b></em>' attribute.
@@ -255,7 +246,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__GIT_PREFIX = TOOL_INSTALLATION_FEATURE_COUNT + 3;
+  int PREFERENCES__GIT_PREFIX = TOOL_INSTALLATION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Link Locations</b></em>' containment reference list.
@@ -264,7 +255,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__LINK_LOCATIONS = TOOL_INSTALLATION_FEATURE_COUNT + 4;
+  int PREFERENCES__LINK_LOCATIONS = TOOL_INSTALLATION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Preferences</em>' class.
@@ -273,7 +264,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 5;
+  int PREFERENCES_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -1353,17 +1344,6 @@ public interface SetupPackage extends EPackage
   EAttribute getPreferences_UserName();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePool <em>Bundle Pool</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Bundle Pool</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePool()
-   * @see #getPreferences()
-   * @generated
-   */
-  EAttribute getPreferences_BundlePool();
-
-  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getInstallFolder <em>Install Folder</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1882,14 +1862,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute PREFERENCES__USER_NAME = eINSTANCE.getPreferences_UserName();
-
-    /**
-     * The meta object literal for the '<em><b>Bundle Pool</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PREFERENCES__BUNDLE_POOL = eINSTANCE.getPreferences_BundlePool();
 
     /**
      * The meta object literal for the '<em><b>Install Folder</b></em>' attribute feature.

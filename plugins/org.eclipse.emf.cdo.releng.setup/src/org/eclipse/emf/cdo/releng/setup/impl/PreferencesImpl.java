@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getUserName <em>User Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getBundlePool <em>Bundle Pool</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getGitPrefix <em>Git Prefix</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getLinkLocations <em>Link Locations</em>}</li>
@@ -61,26 +60,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
    * @ordered
    */
   protected String userName = USER_NAME_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getBundlePool() <em>Bundle Pool</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePool()
-   * @generated
-   * @ordered
-   */
-  protected static final String BUNDLE_POOL_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getBundlePool() <em>Bundle Pool</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePool()
-   * @generated
-   * @ordered
-   */
-  protected String bundlePool = BUNDLE_POOL_EDEFAULT;
 
   /**
    * The default value of the '{@link #getInstallFolder() <em>Install Folder</em>}' attribute.
@@ -181,30 +160,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getBundlePool()
-  {
-    return bundlePool;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBundlePool(String newBundlePool)
-  {
-    String oldBundlePool = bundlePool;
-    bundlePool = newBundlePool;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__BUNDLE_POOL, oldBundlePool,
-          bundlePool));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getInstallFolder()
   {
     return installFolder;
@@ -291,8 +246,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
     {
     case SetupPackage.PREFERENCES__USER_NAME:
       return getUserName();
-    case SetupPackage.PREFERENCES__BUNDLE_POOL:
-      return getBundlePool();
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       return getInstallFolder();
     case SetupPackage.PREFERENCES__GIT_PREFIX:
@@ -316,9 +269,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
     {
     case SetupPackage.PREFERENCES__USER_NAME:
       setUserName((String)newValue);
-      return;
-    case SetupPackage.PREFERENCES__BUNDLE_POOL:
-      setBundlePool((String)newValue);
       return;
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       setInstallFolder((String)newValue);
@@ -347,9 +297,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
     case SetupPackage.PREFERENCES__USER_NAME:
       setUserName(USER_NAME_EDEFAULT);
       return;
-    case SetupPackage.PREFERENCES__BUNDLE_POOL:
-      setBundlePool(BUNDLE_POOL_EDEFAULT);
-      return;
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       setInstallFolder(INSTALL_FOLDER_EDEFAULT);
       return;
@@ -375,8 +322,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
     {
     case SetupPackage.PREFERENCES__USER_NAME:
       return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
-    case SetupPackage.PREFERENCES__BUNDLE_POOL:
-      return BUNDLE_POOL_EDEFAULT == null ? bundlePool != null : !BUNDLE_POOL_EDEFAULT.equals(bundlePool);
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       return INSTALL_FOLDER_EDEFAULT == null ? installFolder != null : !INSTALL_FOLDER_EDEFAULT.equals(installFolder);
     case SetupPackage.PREFERENCES__GIT_PREFIX:
@@ -401,8 +346,6 @@ public class PreferencesImpl extends ToolInstallationImpl implements Preferences
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userName: ");
     result.append(userName);
-    result.append(", bundlePool: ");
-    result.append(bundlePool);
     result.append(", installFolder: ");
     result.append(installFolder);
     result.append(", gitPrefix: ");

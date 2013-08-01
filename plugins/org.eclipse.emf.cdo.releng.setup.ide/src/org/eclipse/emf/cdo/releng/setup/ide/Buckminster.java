@@ -192,9 +192,10 @@ public final class Buckminster
       Files.rename(tp, tpOld);
     }
 
-    String bundlePool = CONTEXT.getSetup().getPreferences().getBundlePool();
-    FileLock lock = bundlePool != null && bundlePool.length() != 0 ? FileLock.forWrite(new File(bundlePool)) : null;
+    File bundlePool = new File(CONTEXT.getSetup().getPreferences().getInstallFolder(), ".p2pool-tp");
+    bundlePool.mkdirs();
 
+    FileLock lock = FileLock.forWrite(bundlePool);
     boolean autoBuilding = disableAutoBuilding();
 
     try
@@ -213,7 +214,7 @@ public final class Buckminster
 
       if (lock != null)
       {
-        updateBundlePool(bundlePool);
+        updateBundlePool(bundlePool.getAbsolutePath());
       }
 
       if (Progress.log().isCancelled())

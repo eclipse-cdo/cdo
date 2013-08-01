@@ -28,6 +28,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
 
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
@@ -90,9 +92,11 @@ public final class Director
     String ws = Platform.getWS();
     String arch = Platform.getOSArch();
 
+    String bundleAgent = new File(bundlePool, "p2").getAbsolutePath();
+
     String[] args = { "-destination", destination, "-repository", repositories, "-installIU", ius, "-profile",
         "SDKProfile", "-profileProperties", "org.eclipse.update.install.features=true", "-bundlepool", bundlePool,
-        "-p2.os", os, "-p2.ws", ws, "-p2.arch", arch };
+        "-shared", bundleAgent, "-p2.os", os, "-p2.ws", ws, "-p2.arch", arch };
 
     DirectorApplication app = new DirectorApplication();
     app.setLog(new ILog()

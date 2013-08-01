@@ -185,21 +185,22 @@ public final class Buckminster
   {
     initVars();
 
+    File tpOld = null;
     File tp = CONTEXT.getTargetPlatformDir();
-    File tpOld = tp.exists() ? new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis()) : null;
-    if (tpOld != null)
+    if (tp.exists())
     {
+      tpOld = new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis());
       Files.rename(tp, tpOld);
     }
 
-    File bundlePool = new File(CONTEXT.getSetup().getPreferences().getInstallFolder(), ".p2pool-tp");
-    bundlePool.mkdirs();
-
-    FileLock lock = FileLock.forWrite(bundlePool);
+    FileLock tpPoolLock = null;
     boolean autoBuilding = disableAutoBuilding();
 
     try
     {
+      File tpPool = updateTargetPlatformPool();
+      tpPoolLock = FileLock.forWrite(tpPool);
+
       File gitDir = CONTEXT.getGitDir();
       Setup setup = CONTEXT.getSetup();
 
@@ -212,9 +213,9 @@ public final class Buckminster
 
       run("--displaystacktrace", "import2", "-B", bomPath, mspecPath);
 
-      if (lock != null)
+      if (tpPoolLock != null)
       {
-        updateBundlePool(bundlePool.getAbsolutePath());
+        updateBundlePool(tp.getAbsolutePath(), tpPool.getAbsolutePath());
       }
 
       if (Progress.log().isCancelled())
@@ -238,14 +239,14 @@ public final class Buckminster
     {
       try
       {
-        restoreAutoBuilding(autoBuilding);
+        if (tpPoolLock != null)
+        {
+          tpPoolLock.release();
+        }
       }
       finally
       {
-        if (lock != null)
-        {
-          lock.release();
-        }
+        restoreAutoBuilding(autoBuilding);
       }
     }
 
@@ -253,6 +254,30 @@ public final class Buckminster
     {
       Files.delete(tpOld);
     }
+  }
+
+  private static File updateTargetPlatformPool() throws Exception
+  {
+    File installFolder = new File(CONTEXT.getSetup().getPreferences().getInstallFolder());
+
+    File idePool = new File(installFolder, ".p2pool-ide");
+    idePool.mkdirs();
+
+    File tpPool = new File(installFolder, ".p2pool-tp");
+    tpPool.mkdirs();
+
+    FileLock idePoolLock = FileLock.forWrite(idePool);
+
+    try
+    {
+      updateBundlePool(idePool.getAbsolutePath(), tpPool.getAbsolutePath());
+    }
+    finally
+    {
+      idePoolLock.release();
+    }
+
+    return tpPool;
   }
 
   private static File getTargetXML(File folder)
@@ -280,14 +305,13 @@ public final class Buckminster
     }
   }
 
-  private static void updateBundlePool(String bundlePool) throws Exception
+  private static void updateBundlePool(String source, String bundlePool) throws Exception
   {
     Progress.log().addLine("Updating bundle pool: " + bundlePool);
 
     String bundlePoolURL = "file:/" + bundlePool.replace('\\', '/');
-    String targetPlatform = CONTEXT.getTargetPlatformDir().getAbsolutePath();
-    String[] args = { "-source", targetPlatform, "-metadataRepository", bundlePoolURL, "-artifactRepository",
-        bundlePoolURL, "-append", "-publishArtifacts" };
+    String[] args = { "-source", source, "-metadataRepository", bundlePoolURL, "-artifactRepository", bundlePoolURL,
+        "-append", "-publishArtifacts" };
 
     AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
     publisher.run(args);

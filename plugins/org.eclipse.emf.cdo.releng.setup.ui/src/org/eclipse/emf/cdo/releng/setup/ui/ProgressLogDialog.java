@@ -41,6 +41,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -72,7 +73,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     {
       try
       {
-        logStream = new PrintStream(logFile);
+        logStream = new PrintStream(new FileOutputStream(logFile, true));
       }
       catch (FileNotFoundException ex)
       {

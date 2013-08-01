@@ -841,6 +841,14 @@ public class SetupDialog extends TitleAreaDialog
     {
       lines.add(setupIDE);
     }
+
+    File projectFolder = branchFolder.getParentFile();
+    String poolPath = new File(projectFolder.getParentFile(), ".p2pool-tp").getAbsolutePath();
+    String bundlePool = "-Dorg.eclipse.buckminster.core.bundle.pool=" + poolPath;
+    if (!lines.contains(bundlePool))
+    {
+      lines.add(bundlePool);
+    }
   }
 
   private int findLine(List<String> lines, String search)

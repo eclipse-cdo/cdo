@@ -85,7 +85,8 @@ public final class Director
 
     Progress.log().addLine(
         "Calling director to install " + installableUnits.size() + (installableUnits.size() == 1 ? " unit" : " units")
-            + " from " + p2Repositories.size() + (p2Repositories.size() == 1 ? " repository" : " repositories"));
+            + " from " + p2Repositories.size() + (p2Repositories.size() == 1 ? " repository" : " repositories")
+            + " to " + destination);
 
     String repositories = makeList(p2Repositories, SetupPackage.Literals.P2_REPOSITORY__URL);
     String ius = makeList(installableUnits, SetupPackage.Literals.INSTALLABLE_UNIT__ID);

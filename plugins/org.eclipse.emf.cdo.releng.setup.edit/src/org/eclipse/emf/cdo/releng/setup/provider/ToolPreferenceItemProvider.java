@@ -19,6 +19,8 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.eclipse.core.runtime.Path;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -127,7 +129,12 @@ public class ToolPreferenceItemProvider extends ItemProviderAdapter implements I
   {
     String key = ((ToolPreference)object).getKey();
     String value = ((ToolPreference)object).getValue();
-    if ((key == null || key.length() == 0) && (value == null || value.length() == 0))
+
+    if (key != null && key.length() != 0)
+    {
+      key = new Path(key).lastSegment();
+    }
+    else if (value == null || value.length() == 0)
     {
       return getString("_UI_ToolPreference_type");
     }

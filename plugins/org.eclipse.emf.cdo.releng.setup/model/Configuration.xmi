@@ -40,6 +40,7 @@
       <installableUnits id="org.eclipse.mylyn_feature.feature.group"/>
       <installableUnits id="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
       <installableUnits id="org.eclipse.mylyn.git.feature.group"/>
+      <installableUnits id="org.eclipse.egit.mylyn.feature.group"/>
       <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
       <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
       <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>

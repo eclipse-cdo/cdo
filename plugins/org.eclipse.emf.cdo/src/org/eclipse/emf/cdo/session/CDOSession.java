@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.options.IOptionsEvent;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -123,9 +124,18 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   public CDORevisionManager getRevisionManager();
 
   /**
+   * Returns the CDO {@link CDOFetchRuleManager fetch rule manager} of this session.
+   * 
    * @since 3.0
    */
   public CDOFetchRuleManager getFetchRuleManager();
+
+  /**
+   * Returns the {@link IPasswordCredentialsProvider credentials provider} of this session.
+   * 
+   * @since 4.3
+   */
+  public IPasswordCredentialsProvider getCredentialsProvider();
 
   /**
    * Returns the CDO {@link CDORemoteSessionManager remote session manager} that keeps track of the other remote
@@ -140,9 +150,14 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    */
   public CDOCommitInfoManager getCommitInfoManager();
 
-  public CDOSession.ExceptionHandler getExceptionHandler();
+  /**
+   * Returns the {@link ExceptionHandler exception handler} of this session.
+   */
+  public ExceptionHandler getExceptionHandler();
 
   /**
+   * Returns the CDO {@link CDOIDGenerator ID generator} of this session.
+   * 
    * @since 4.1
    */
   public CDOIDGenerator getIDGenerator();

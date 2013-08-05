@@ -78,11 +78,6 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 4.2
    */
-  public IPasswordCredentialsProvider getCredentialsProvider();
-
-  /**
-   * @since 4.2
-   */
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   public InternalCDOPackageRegistry getPackageRegistry();

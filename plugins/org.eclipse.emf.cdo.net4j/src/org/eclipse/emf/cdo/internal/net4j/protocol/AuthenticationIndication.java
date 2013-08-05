@@ -103,34 +103,6 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       Response response = client.handleChallenge(challenge, clearText);
       out.writeBoolean(true);
       response.write(out);
-
-      // CDOAuthenticator authenticator = getSession().getAuthenticator();
-      // if (authenticator == null)
-      // {
-      //        throw new IllegalStateException("No authenticator configured"); //$NON-NLS-1$
-      // }
-      //
-      // CDOAuthenticationResult result = authenticator.authenticate(challenge);
-      // if (result == null)
-      // {
-      // out.writeBoolean(false);
-      // return;
-      // }
-      //
-      // String userID = result.getUserID();
-      // if (userID == null)
-      // {
-      //        throw new SecurityException("No user ID"); //$NON-NLS-1$
-      // }
-      //
-      // byte[] cryptedToken = result.getCryptedToken();
-      // if (cryptedToken == null)
-      // {
-      //        throw new SecurityException("No crypted token"); //$NON-NLS-1$
-      // }
-      //
-      // out.writeBoolean(true);
-      // result.write(out);
     }
     catch (Throwable ex)
     {

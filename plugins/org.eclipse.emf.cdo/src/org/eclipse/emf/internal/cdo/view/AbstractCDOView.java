@@ -1495,7 +1495,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public synchronized int reload(CDOObject... objects)
   {
     Collection<InternalCDOObject> internalObjects;
-    // TODO Should objects.length == 0 reload *all* objects, too?
     if (objects != null && objects.length != 0)
     {
       internalObjects = new ArrayList<InternalCDOObject>(objects.length);

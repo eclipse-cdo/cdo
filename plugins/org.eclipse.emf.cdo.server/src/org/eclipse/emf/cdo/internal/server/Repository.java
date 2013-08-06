@@ -974,7 +974,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
-    if (!commitInfo.isEmpty())
+    boolean isFailureCommitInfo = commitInfo.getBranch() == null;
+    if (isFailureCommitInfo || !commitInfo.isEmpty())
     {
       sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
       commitInfoManager.notifyCommitInfoHandlers(commitInfo);

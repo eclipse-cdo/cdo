@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.manifests.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -64,7 +65,17 @@ public class CleanBuildHandler extends AbstractHandler
         Object element = it.next();
         if (element instanceof IAdaptable)
         {
-          element = ((IAdaptable)element).getAdapter(IResource.class);
+          IAdaptable adaptable = (IAdaptable)element;
+          element = adaptable.getAdapter(IResource.class);
+
+          if (element == null)
+          {
+            IMarker marker = (IMarker)adaptable.getAdapter(IMarker.class);
+            if (marker != null)
+            {
+              element = marker.getResource();
+            }
+          }
         }
 
         if (element instanceof IProject)

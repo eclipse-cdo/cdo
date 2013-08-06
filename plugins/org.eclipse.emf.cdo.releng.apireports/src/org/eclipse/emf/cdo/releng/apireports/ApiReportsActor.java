@@ -117,7 +117,7 @@ public class ApiReportsActor extends AbstractActor
             return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Baseline not found: " + baselineName);
           }
 
-          IDelta delta = ApiComparator.compare(scope, baseline, VisibilityModifiers.API, false, monitor);
+          IDelta delta = ApiComparator.compare(scope, baseline, VisibilityModifiers.API, false, true, monitor);
           if (delta != null)
           {
             progress.worked(25);

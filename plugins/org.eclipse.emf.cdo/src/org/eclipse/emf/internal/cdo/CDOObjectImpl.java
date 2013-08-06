@@ -195,6 +195,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     viewAndState.view.prefetchRevisions(id, depth);
   }
 
+  @Deprecated
   public final void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);

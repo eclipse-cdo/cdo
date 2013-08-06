@@ -168,8 +168,9 @@ public interface CDOObject extends EObject, CDOWithID
   public void cdoPrefetch(int depth);
 
   /**
-   * TODO: JavaDoc
+   * @deprecated As of 4.3 no longer supported because it is unsafe to reload single objects.
    */
+  @Deprecated
   public void cdoReload();
 
   /**

@@ -691,6 +691,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.queryXRefsAsync(targetObjects, sourceReferences);
   }
 
+  @Deprecated
   public int reload(CDOObject... objects)
   {
     return delegate.reload(objects);

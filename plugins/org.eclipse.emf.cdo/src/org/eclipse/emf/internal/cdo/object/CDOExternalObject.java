@@ -82,6 +82,7 @@ public class CDOExternalObject extends CDOObjectWrapperBase
     return null;
   }
 
+  @Deprecated
   public void cdoReload()
   {
     // Do nothing

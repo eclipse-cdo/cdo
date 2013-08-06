@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.internal.ui.actions.OpenDurableViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
-import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.SwitchTargetAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -577,7 +576,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       manager.add(new SwitchTargetAction(page, view));
     }
 
-    manager.add(new ReloadViewAction(page, view));
     if (view.getDurableLockingID() == null)
     {
       manager.add(new EnableViewDurabilityAction(page, view));

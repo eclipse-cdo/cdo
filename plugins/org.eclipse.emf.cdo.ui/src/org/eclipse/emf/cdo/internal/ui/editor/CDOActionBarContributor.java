@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.ChangePassiveUpdateAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReadLockObjectsAction;
-import org.eclipse.emf.cdo.internal.ui.actions.ReloadObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.WriteLockObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -73,11 +72,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * @ADDED
    */
   protected ImportRootsAction importRootsAction;
-
-  /**
-   * @ADDED
-   */
-  protected ReloadObjectsAction reloadObjectsAction;
 
   /**
    * @ADDED
@@ -204,7 +198,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     importRootsAction = new ImportRootsAction();
     importRootsAction.setId(ImportRootsAction.ID);
 
-    reloadObjectsAction = new ReloadObjectsAction();
     changePassiveUpdateAction = new ChangePassiveUpdateAction();
 
     readLockObjectsAction = new ReadLockObjectsAction();
@@ -382,11 +375,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     ISelection selection = event.getSelection();
     if (selection instanceof IStructuredSelection)
     {
-      if (reloadObjectsAction != null)
-      {
-        reloadObjectsAction.selectionChanged((IStructuredSelection)selection);
-      }
-
       if (readLockObjectsAction != null)
       {
         readLockObjectsAction.selectionChanged((IStructuredSelection)selection);
@@ -589,7 +577,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
     refreshViewerAction.setId(REFRESH_VIEWER_ID);
     menuManager.insertAfter("ui-actions", refreshViewerAction); //$NON-NLS-1$
-    menuManager.insertBefore(refreshViewerAction.getId(), reloadObjectsAction);
 
     MenuManager lockingSubMenu = new MenuManager(Messages.getString("CDOActionBarContributor_0")); //$NON-NLS-1$
     lockingSubMenu.add(new Separator("ui-actions")); //$NON-NLS-1$
@@ -658,11 +645,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
       }
     }
 
-    if (reloadObjectsAction != null)
-    {
-      reloadObjectsAction.setActiveWorkbenchPart(activeEditor);
-    }
-
     if (changePassiveUpdateAction != null)
     {
       Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
@@ -688,11 +670,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
       importRootsAction.setTargetResource(null);
     }
 
-    if (reloadObjectsAction != null)
-    {
-      reloadObjectsAction.setActiveWorkbenchPart(null);
-    }
-
     super.deactivate();
   }
 
@@ -706,11 +683,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     if (importRootsAction != null)
     {
       importRootsAction.update();
-    }
-
-    if (reloadObjectsAction != null)
-    {
-      reloadObjectsAction.update();
     }
   }
 }

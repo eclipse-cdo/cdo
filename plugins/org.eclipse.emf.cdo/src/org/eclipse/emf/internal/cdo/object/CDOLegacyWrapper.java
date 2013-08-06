@@ -196,6 +196,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return super.cdoResource();
   }
 
+  @Deprecated
   public void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);

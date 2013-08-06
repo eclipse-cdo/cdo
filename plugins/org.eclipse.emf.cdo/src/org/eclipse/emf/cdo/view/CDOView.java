@@ -378,7 +378,10 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
 
   /**
    * Reloads the given {@link CDOObject objects} from the repository.
+   * 
+   * @deprecated As of 4.3 no longer supported because it is unsafe to reload single objects.
    */
+  @Deprecated
   public int reload(CDOObject... objects);
 
   /**

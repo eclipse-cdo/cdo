@@ -1492,6 +1492,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return false;
   }
 
+  @Deprecated
   public synchronized int reload(CDOObject... objects)
   {
     Collection<InternalCDOObject> internalObjects;

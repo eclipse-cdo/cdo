@@ -911,6 +911,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    public Object startLocalCommit()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void endLocalCommit(Object token)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     @Deprecated
     public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
     {

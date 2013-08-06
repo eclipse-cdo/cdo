@@ -206,6 +206,16 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender);
 
   /**
+   * @since 4.3
+   */
+  public Object startLocalCommit();
+
+  /**
+   * @since 4.3
+   */
+  public void endLocalCommit(Object token);
+
+  /**
    * @since 3.0
    * @deprecated As of 4.2 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)}
    */

@@ -21,5 +21,5 @@
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.db.offline.AllTestsDBH2Offline"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests.db"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx1024m&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=true"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx1024m&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=true&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true"/>
 </launchConfiguration>

@@ -196,8 +196,9 @@ class TimeStampAuthority
   {
     synchronized (lastFinishedTimeStampLock)
     {
-      if (lastFinishedTimeStamp < lastCommitTimeStamp)
+      if (lastCommitTimeStamp > lastFinishedTimeStamp)
       {
+        lastIssuedTimeStamp = lastCommitTimeStamp;
         setLastFinishedTimeStampUnsynced(lastCommitTimeStamp);
         lastFinishedTimeStampLock.notifyAll();
       }

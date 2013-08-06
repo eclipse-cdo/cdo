@@ -1169,11 +1169,31 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOCommitContextImpl(this);
   }
 
+  public/* synchronized */CDOCommitInfo commit() throws CommitException
+  {
+    return commit(null);
+  }
+
   /**
    * @since 2.0
    */
-  public synchronized CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
+  public/* synchronized */CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
+    CDOCommitInfo info = commitSynced(progressMonitor);
+    if (info != null)
+    {
+      long timeStamp = info.getTimeStamp();
+      waitForUpdate(timeStamp, 10000);
+    }
+
+    return info;
+  }
+
+  private synchronized CDOCommitInfo commitSynced(IProgressMonitor progressMonitor) throws DanglingIntegrityException,
+      CommitException
+  {
+    Object token = null;
+
     try
     {
       checkActive();
@@ -1181,6 +1201,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
       }
+
+      token = getSession().startLocalCommit();
 
       if (progressMonitor == null)
       {
@@ -1210,13 +1232,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     finally
     {
+      getSession().endLocalCommit(token);
       clearResourcePathCacheIfNecessary(null);
     }
-  }
-
-  public synchronized CDOCommitInfo commit() throws CommitException
-  {
-    return commit(null);
   }
 
   /**
@@ -3013,7 +3031,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         getAdapterManager().committedTransaction(transaction, this);
 
         cleanUp(this);
-        Map<CDOID, CDOID> idMappings = result.getIDMappings();
+
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
@@ -3022,6 +3040,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
           }
 
+          Map<CDOID, CDOID> idMappings = result.getIDMappings();
           fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);
         }
 

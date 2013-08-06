@@ -366,6 +366,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     try
     {
+      long previousCommitTime = getLastCommitTimeStamp();
+
       int fromBranchID = lastReplicatedBranchID + 1;
       int toBranchID = in.readInt();
       long fromCommitTime = lastReplicatedCommitTime + 1L;
@@ -377,7 +379,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       replicateRawReviseRevisions();
       replicateRawReloadLocks();
-      replicateRawNotifyClients(lastReplicatedCommitTime, toCommitTime);
+      replicateRawNotifyClients(lastReplicatedCommitTime, toCommitTime, previousCommitTime);
 
       setLastReplicatedBranchID(toBranchID);
       setLastReplicatedCommitTime(toCommitTime);
@@ -422,7 +424,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     getLockingManager().reloadLocks();
   }
 
-  private void replicateRawNotifyClients(long fromCommitTime, long toCommitTime)
+  private void replicateRawNotifyClients(long fromCommitTime, long toCommitTime, long previousCommitTime)
   {
     InternalCDOCommitInfoManager manager = getCommitInfoManager();
     InternalSessionManager sessionManager = getSessionManager();
@@ -447,7 +449,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       CDOCommitData data = CDOCommitInfoUtil.createCommitData(newPackages, newObjects, changedObjects, detachedObjects);
 
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
-      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, fromCommitTime, SYSTEM_USER_ID,
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, previousCommitTime, SYSTEM_USER_ID,
           comment, data);
       sessionManager.sendCommitNotification(replicatorSession, commitInfo, true);
     }
@@ -909,6 +911,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     private static final int ARTIFICIAL_VIEW_ID = 0;
 
+    private CommitTransactionResult result;
+
     public WriteThroughCommitContext(InternalTransaction transaction)
     {
       super(transaction);
@@ -1024,7 +1028,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       // Delegate commit to the master
       CDOSessionProtocol sessionProtocol = getSynchronizer().getRemoteSession().getSessionProtocol();
-      CommitTransactionResult result = sessionProtocol.commitDelegation(ctx, monitor);
+      result = sessionProtocol.commitDelegation(ctx, monitor);
 
       // Stop if commit to master failed
       String rollbackMessage = result.getRollbackMessage();
@@ -1034,8 +1038,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       }
 
       // Prepare data needed for commit result and commit notifications
-      long timeStamp = result.getTimeStamp();
-      setTimeStamp(timeStamp);
+      long timeStamp = result.getTimeStamp(); // result is set to null later!
       addIDMappings(result.getIDMappings());
       applyIDMappings(new Monitor());
 
@@ -1064,10 +1067,14 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     @Override
     protected long[] createTimeStamp(OMMonitor monitor)
     {
-      // Already set after commit to the master.
-      // Do not call getTimeStamp() of the enclosing Repo class!!!
+      long timeStamp = result.getTimeStamp();
+      long previousTimeStamp = result.getPreviousTimeStamp();
+      result = null;
+
       InternalRepository repository = getTransaction().getSession().getManager().getRepository();
-      return repository.forceCommitTimeStamp(WriteThroughCommitContext.this.getTimeStamp(), monitor);
+      repository.forceCommitTimeStamp(timeStamp, monitor);
+
+      return new long[] { timeStamp, previousTimeStamp };
     }
 
     @Override

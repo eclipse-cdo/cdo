@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -25,8 +25,8 @@ import org.eclipse.emf.cdo.util.CommitException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * See bug 341995.
- * 
+ * Bug 341995:
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_341995_Test extends AbstractCDOTest
@@ -34,16 +34,16 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
   public void test() throws Exception
   {
     CDOSession session = openSession();
-    CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.createResource(getResourcePath("test"));
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
 
     Model1Factory factory = getModel1Factory();
-    Category cat = factory.createCategory();
-    resource.getContents().add(cat);
-    tx.commit();
+    Category category = factory.createCategory();
+    resource.getContents().add(category);
+    transaction.commit();
 
-    CDOObject cdoCat = CDOUtil.getCDOObject(cat);
-    msg(cdoCat.cdoRevision().getVersion());
+    CDOObject cdoCategory = CDOUtil.getCDOObject(category);
+    msg(cdoCategory.cdoRevision().getVersion());
 
     long delay = 2000L;
 
@@ -60,14 +60,14 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
       // Attempt the lock; this must block for a while, because it needs to receive
       // the commitNotification from the commit in the other session, which we are
       // artificially delaying
-      cdoCat.cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      cdoCategory.cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
 
       long timeTaken = System.currentTimeMillis() - time1;
 
       // We verify that there really was a delay
-      assertEquals("timeTaken == " + timeTaken, true, timeTaken >= delay);
+      assertEquals("timeTaken == " + timeTaken, true, timeTaken >= delay - 10);
 
-      tx.close();
+      transaction.close();
       session.close();
     }
     finally
@@ -83,17 +83,17 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
       public void run()
       {
         CDOSession session = openSession();
-        CDOTransaction tx = session.openTransaction();
-        CDOResource resource = tx.getResource(getResourcePath("test"));
+        CDOTransaction transaction = session.openTransaction();
+        CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-        Category cat = (Category)resource.getContents().get(0);
-        cat.setName("dirty");
+        Category category = (Category)resource.getContents().get(0);
+        category.setName("dirty");
 
         CDOCommitInfo info;
 
         try
         {
-          info = tx.commit();
+          info = transaction.commit();
         }
         catch (CommitException ex)
         {
@@ -102,7 +102,7 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
 
         msg(info.getTimeStamp());
 
-        tx.close();
+        transaction.close();
         session.close();
       }
     };

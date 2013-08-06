@@ -15,7 +15,9 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.CommitConflictException;
+
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +26,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Bug 390185.
+ * Bug 390185: Deadlock on multiple concurrent transactions.
  *
  * @author Eike Stepper
  */
 public class Bugzilla_390185_Test extends AbstractCDOTest
 {
-  private static final int THREADS = 5;
+  private static final int THREADS = 4;
 
-  private static final int TRANSACTIONS_PER_THREAD = 100;
+  private static final int TRANSACTIONS_PER_THREAD = 40;
 
-  public void testIvalidationDeadlock() throws Exception
+  public void testInvalidationDeadlock() throws Exception
   {
     CDOSession session = openSession();
 
@@ -48,7 +50,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
 
     if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
     {
-      throw new TimeoutException();
+      throw new TimeoutException("Not all actory finished in time");
     }
   }
 
@@ -80,6 +82,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
         CDOTransaction transaction = session.openTransaction();
         attemptCommit(transaction);
         transaction.close();
+        ConcurrencyUtil.sleep(2);
       }
 
       latch.countDown();
@@ -102,7 +105,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
             break;
           }
         }
-        catch (CommitException ex)
+        catch (CommitConflictException ex)
         {
           transaction.rollback();
         }

@@ -78,6 +78,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -101,6 +102,8 @@ import java.util.Set;
  */
 public class TransactionCommitContext implements InternalCommitContext
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, TransactionCommitContext.class);
+
   private static final InternalCDORevision DETACHED = new StubCDORevision(null);
 
   private final InternalTransaction transaction;
@@ -664,7 +667,11 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      OM.LOG.error(ex);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
+
       String storeClass = repository.getStore().getClass().getSimpleName();
       rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -677,7 +684,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
       try
       {
-        OM.LOG.error(ex1);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex1);
+        }
       }
       catch (Exception ignore)
       {
@@ -741,10 +751,14 @@ public class TransactionCommitContext implements InternalCommitContext
 
     try
     {
-      InternalSession sender = transaction.getSession();
-      CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
+      // Send notifications (in particular FailureCommitInfos) only if timeStamp had been allocated
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        InternalSession sender = transaction.getSession();
+        CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
 
-      repository.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
+        repository.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
+      }
     }
     catch (Exception ex)
     {
@@ -1456,7 +1470,7 @@ public class TransactionCommitContext implements InternalCommitContext
   /**
    * @author Eike Stepper
    */
-  private static final class RollbackException extends RuntimeException
+  protected static final class RollbackException extends RuntimeException
   {
     private static final long serialVersionUID = 1L;
 

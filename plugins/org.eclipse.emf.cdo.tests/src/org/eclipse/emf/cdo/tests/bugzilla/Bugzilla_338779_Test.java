@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -31,10 +31,30 @@ import java.util.Date;
  */
 public class Bugzilla_338779_Test extends AbstractCDOTest
 {
-  private void test(PassiveUpdateMode passiveUpdateMode) throws CommitException
+  public void test_refresh() throws CommitException
+  {
+    runTest(null);
+  }
+
+  public void test_passiveUpdate_invalidations() throws CommitException
+  {
+    runTest(PassiveUpdateMode.INVALIDATIONS);
+  }
+
+  public void test_passiveUpdate_changes() throws CommitException
+  {
+    runTest(PassiveUpdateMode.CHANGES);
+  }
+
+  public void test_passiveUpdate_additions() throws CommitException
+  {
+    runTest(PassiveUpdateMode.ADDITIONS);
+  }
+
+  private void runTest(PassiveUpdateMode passiveUpdateMode) throws CommitException
   {
     final CDOSession session = openSession();
-    CDOTransaction tx = session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     if (passiveUpdateMode != null)
     {
       session.options().setPassiveUpdateEnabled(true);
@@ -44,15 +64,16 @@ public class Bugzilla_338779_Test extends AbstractCDOTest
     {
       session.options().setPassiveUpdateEnabled(false);
     }
-    CDOResource r1 = tx.createResource(getResourcePath("/r1")); //$NON-NLS-1$
 
-    PurchaseOrder po1 = getModel1Factory().createPurchaseOrder();
-    po1.setDate(new Date());
-    r1.getContents().add(po1);
+    CDOResource resource1 = transaction.createResource(getResourcePath("/r1")); //$NON-NLS-1$
 
-    tx.commit();
+    PurchaseOrder purchaseOrder1 = getModel1Factory().createPurchaseOrder();
+    purchaseOrder1.setDate(new Date());
+    resource1.getContents().add(purchaseOrder1);
 
-    check(po1, session);
+    transaction.commit();
+
+    check(purchaseOrder1, session);
 
     long timestamp = doSecondSession();
     if (passiveUpdateMode != null)
@@ -62,7 +83,7 @@ public class Bugzilla_338779_Test extends AbstractCDOTest
       if (passiveUpdateMode == PassiveUpdateMode.INVALIDATIONS)
       {
         // Read something on the object to force load
-        po1.getDate();
+        purchaseOrder1.getDate();
       }
     }
     else
@@ -70,30 +91,10 @@ public class Bugzilla_338779_Test extends AbstractCDOTest
       session.refresh();
     }
 
-    check(po1, session);
+    check(purchaseOrder1, session);
 
-    tx.close();
+    transaction.close();
     session.close();
-  }
-
-  public void test_refresh() throws CommitException
-  {
-    test(null);
-  }
-
-  public void test_passiveUpdate_invalidations() throws CommitException
-  {
-    test(PassiveUpdateMode.INVALIDATIONS);
-  }
-
-  public void test_passiveUpdate_changes() throws CommitException
-  {
-    test(PassiveUpdateMode.CHANGES);
-  }
-
-  public void test_passiveUpdate_additions() throws CommitException
-  {
-    test(PassiveUpdateMode.ADDITIONS);
   }
 
   private void check(EObject eObject, CDOSession session)
@@ -109,15 +110,15 @@ public class Bugzilla_338779_Test extends AbstractCDOTest
   private long doSecondSession() throws CommitException
   {
     CDOSession session = openSession();
-    CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getResource(getResourcePath("/r1")); //$NON-NLS-1$
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource1 = transaction.getResource(getResourcePath("/r1")); //$NON-NLS-1$
 
     // Change the purchaseOrder
-    PurchaseOrder po1 = (PurchaseOrder)r1.getContents().get(0);
-    po1.setDate(new Date());
+    PurchaseOrder purchaseOrder1 = (PurchaseOrder)resource1.getContents().get(0);
+    purchaseOrder1.setDate(new Date());
 
-    CDOCommitInfo commitInfo = tx.commit();
-    tx.close();
+    CDOCommitInfo commitInfo = transaction.commit();
+    transaction.close();
     session.close();
 
     return commitInfo.getTimeStamp();

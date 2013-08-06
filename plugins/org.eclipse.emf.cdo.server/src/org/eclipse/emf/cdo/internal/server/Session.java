@@ -225,6 +225,7 @@ public class Session extends Container<IView> implements InternalSession
     this.lockNotificationMode = lockNotificationMode;
   }
 
+  @Deprecated
   public long getLastUpdateTime()
   {
     synchronized (lastUpdateTimeLock)

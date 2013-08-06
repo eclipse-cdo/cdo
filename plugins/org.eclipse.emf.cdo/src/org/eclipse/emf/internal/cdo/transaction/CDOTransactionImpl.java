@@ -112,6 +112,7 @@ import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -1169,17 +1170,43 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOCommitContextImpl(this);
   }
 
+  public/* synchronized */CDOCommitInfo commit() throws CommitException
+  {
+    return commit(null);
+  }
+
   /**
    * @since 2.0
    */
-  public synchronized CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
+  public/* synchronized */CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
+    CDOCommitInfo info = commitSynced(progressMonitor);
+    if (info != null)
+    {
+      long timeStamp = info.getTimeStamp();
+      waitForUpdate(timeStamp, 10000);
+    }
+
+    return info;
+  }
+
+  private synchronized CDOCommitInfo commitSynced(IProgressMonitor progressMonitor) throws DanglingIntegrityException,
+      CommitException
+  {
+    InternalCDOSession session = getSession();
+    Object token = null;
+
     try
     {
       checkActive();
       if (hasConflict())
       {
         throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+      }
+
+      if (session instanceof CDOSessionImpl)
+      {
+        token = ((CDOSessionImpl)session).startLocalCommit();
       }
 
       if (progressMonitor == null)
@@ -1210,13 +1237,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     finally
     {
+      if (session instanceof CDOSessionImpl)
+      {
+        ((CDOSessionImpl)session).endLocalCommit(token);
+      }
+
       clearResourcePathCacheIfNecessary(null);
     }
-  }
-
-  public synchronized CDOCommitInfo commit() throws CommitException
-  {
-    return commit(null);
   }
 
   /**
@@ -3013,7 +3040,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         getAdapterManager().committedTransaction(transaction, this);
 
         cleanUp(this);
-        Map<CDOID, CDOID> idMappings = result.getIDMappings();
+
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
@@ -3022,6 +3049,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
           }
 
+          Map<CDOID, CDOID> idMappings = result.getIDMappings();
           fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);
         }
 

@@ -667,7 +667,7 @@ public class OfflineTest extends AbstractSyncingTest
     InternalRepository clone = getRepository();
     waitForOnline(clone);
 
-    CDOSession session = openSession();
+    CDOSession session = openSession(); // Session2 [repo1]
     session.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
@@ -686,7 +686,7 @@ public class OfflineTest extends AbstractSyncingTest
     transaction.addListener(transactionListener);
 
     {
-      CDOSession masterSession = openSession("master");
+      CDOSession masterSession = openSession("master"); // Session3 [master]
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.getResource(getResourcePath("/my/resource"));
 

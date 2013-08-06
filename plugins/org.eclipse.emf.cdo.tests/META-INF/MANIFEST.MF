@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests;singleton:=true
-Bundle-Version: 4.0.200.qualifier
+Bundle-Version: 4.0.201.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -36,28 +36,28 @@ Require-Bundle: org.eclipse.net4j.tests;bundle-version="[4.0.0,5.0.0)";visibilit
  org.eclipse.emf.cdo.server.admin;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
  org.eclipse.gmf.runtime.notation;bundle-version="[1.5.0,2.0.0)";visibility:=reexport,
  org.eclipse.ocl.ecore;bundle-version="[3.0.0,4.0.0)"
-Export-Package: base;version="4.0.200",
- base.impl;version="4.0.200",
- base.util;version="4.0.200",
- derived;version="4.0.200",
- derived.impl;version="4.0.200",
- derived.util;version="4.0.200",
- interface_;version="4.0.200",
- interface_.impl;version="4.0.200",
- interface_.util;version="4.0.200",
- org.eclipse.emf.cdo.tests;version="4.0.200",
- org.eclipse.emf.cdo.tests.bugzilla;version="4.0.200",
- org.eclipse.emf.cdo.tests.bundle;version="4.0.200";x-internal:=true,
- org.eclipse.emf.cdo.tests.config;version="4.0.200",
- org.eclipse.emf.cdo.tests.config.impl;version="4.0.200",
- org.eclipse.emf.cdo.tests.defs;version="4.0.200",
- org.eclipse.emf.cdo.tests.offline;version="4.0.200",
- org.eclipse.emf.cdo.tests.performance;version="4.0.200",
- org.eclipse.emf.cdo.tests.performance.framework;version="4.0.200",
- org.eclipse.emf.cdo.tests.revisioncache;version="4.0.200",
- org.eclipse.emf.cdo.tests.util;version="4.0.200",
- reference;version="4.0.200",
- reference.impl;version="4.0.200";
+Export-Package: base;version="4.0.201",
+ base.impl;version="4.0.201",
+ base.util;version="4.0.201",
+ derived;version="4.0.201",
+ derived.impl;version="4.0.201",
+ derived.util;version="4.0.201",
+ interface_;version="4.0.201",
+ interface_.impl;version="4.0.201",
+ interface_.util;version="4.0.201",
+ org.eclipse.emf.cdo.tests;version="4.0.201",
+ org.eclipse.emf.cdo.tests.bugzilla;version="4.0.201",
+ org.eclipse.emf.cdo.tests.bundle;version="4.0.201";x-internal:=true,
+ org.eclipse.emf.cdo.tests.config;version="4.0.201",
+ org.eclipse.emf.cdo.tests.config.impl;version="4.0.201",
+ org.eclipse.emf.cdo.tests.defs;version="4.0.201",
+ org.eclipse.emf.cdo.tests.offline;version="4.0.201",
+ org.eclipse.emf.cdo.tests.performance;version="4.0.201",
+ org.eclipse.emf.cdo.tests.performance.framework;version="4.0.201",
+ org.eclipse.emf.cdo.tests.revisioncache;version="4.0.201",
+ org.eclipse.emf.cdo.tests.util;version="4.0.201",
+ reference;version="4.0.201",
+ reference.impl;version="4.0.201";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -66,5 +66,5 @@ Export-Package: base;version="4.0.200",
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- reference.util;version="4.0.200"
+ reference.util;version="4.0.201"
 Eclipse-BuddyPolicy: dependent

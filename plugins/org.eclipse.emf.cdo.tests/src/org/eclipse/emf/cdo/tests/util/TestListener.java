@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.AssertionFailedError;
+
 /**
  * @author Eike Stepper
  */
@@ -24,58 +26,47 @@ public class TestListener implements IListener
 {
   private List<IEvent> events = new ArrayList<IEvent>();
 
+  private int nextAssertion;
+
   public TestListener()
   {
   }
 
-  public <T extends IEvent> void assertEvent(final EventAssertion<T> assertion) throws Exception
+  public <T extends IEvent> void assertEvent(final Class<?> eventType, final EventAssertion<T> assertion)
+      throws Exception
   {
-    final Exception[] exception = { null };
-    final Error[] error = { null };
-
     new AbstractOMTest.PollingTimeOuter()
     {
       @SuppressWarnings("unchecked")
       @Override
       protected boolean successful()
       {
-        T event;
         synchronized (events)
         {
-          if (events.size() != 1)
+          for (int i = nextAssertion; i < events.size(); i++)
           {
-            return false;
+            IEvent event = events.get(i);
+            System.out.println(event);
+            ++nextAssertion;
+
+            if (eventType.isAssignableFrom(event.getClass()))
+            {
+              try
+              {
+                assertion.execute((T)event);
+                return true;
+              }
+              catch (AssertionFailedError ignore)
+              {
+                // This is not the expected event. Either it'll come later or we'll time out below.
+              }
+            }
           }
-
-          event = (T)events.get(0);
         }
 
-        try
-        {
-          assertion.execute(event);
-        }
-        catch (Exception ex)
-        {
-          exception[0] = ex;
-        }
-        catch (Error err)
-        {
-          error[0] = err;
-        }
-
-        return true;
+        return false;
       }
     }.assertNoTimeOut();
-
-    if (exception[0] != null)
-    {
-      throw exception[0];
-    }
-
-    if (error[0] != null)
-    {
-      throw error[0];
-    }
   }
 
   public IEvent[] getEvents()
@@ -91,6 +82,7 @@ public class TestListener implements IListener
     synchronized (events)
     {
       events.clear();
+      nextAssertion = 0;
     }
   }
 
@@ -107,6 +99,6 @@ public class TestListener implements IListener
    */
   public interface EventAssertion<T extends IEvent>
   {
-    public void execute(T event) throws Exception;
+    public void execute(T event);
   }
 }

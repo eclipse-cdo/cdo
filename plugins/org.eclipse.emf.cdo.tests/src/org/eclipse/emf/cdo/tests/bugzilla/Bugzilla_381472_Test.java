@@ -321,9 +321,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       getRepository("repo2");
       admin.waitForRepository("repo2");
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
           assertEquals("repo2", event.getDeltaElement().getName());
@@ -358,9 +358,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
         }
       }.assertNoTimeOut();
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
           assertEquals("repo1", event.getDeltaElement().getName());
@@ -386,9 +386,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       getRepository().setType(Type.BACKUP);
 
-      listener.assertEvent(new EventAssertion<RepositoryTypeChangedEvent>()
+      listener.assertEvent(RepositoryTypeChangedEvent.class, new EventAssertion<RepositoryTypeChangedEvent>()
       {
-        public void execute(RepositoryTypeChangedEvent event) throws Exception
+        public void execute(RepositoryTypeChangedEvent event)
         {
           assertEquals(Type.MASTER, event.getOldType());
           assertEquals(Type.BACKUP, event.getNewType());
@@ -414,9 +414,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       getRepository().setState(State.OFFLINE);
 
-      listener.assertEvent(new EventAssertion<RepositoryStateChangedEvent>()
+      listener.assertEvent(RepositoryStateChangedEvent.class, new EventAssertion<RepositoryStateChangedEvent>()
       {
-        public void execute(RepositoryStateChangedEvent event) throws Exception
+        public void execute(RepositoryStateChangedEvent event)
         {
           assertEquals(State.ONLINE, event.getOldState());
           assertEquals(State.OFFLINE, event.getNewState());
@@ -446,9 +446,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
           assertEquals("repo2", event.getDeltaElement().getName());
@@ -479,9 +479,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
           assertEquals("repo2", event.getDeltaElement().getName());
@@ -514,9 +514,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
           assertEquals("repo2", event.getDeltaElement().getName());
@@ -549,9 +549,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
           assertEquals("repo2", event.getDeltaElement().getName());
@@ -596,9 +596,9 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       repo1.delete(ADMIN_HANDLER_TYPE);
       assertEquals(null, admin.getRepository("repo1"));
 
-      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
-        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
           assertEquals("repo1", event.getDeltaElement().getName());

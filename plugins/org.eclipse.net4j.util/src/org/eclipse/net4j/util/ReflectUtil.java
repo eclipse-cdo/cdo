@@ -230,6 +230,14 @@ public final class ReflectUtil
     printStackTrace(System.err, stackTrace);
   }
 
+  /**
+   * @since 3.4
+   */
+  public static void printStackTrace()
+  {
+    printStackTrace(Thread.currentThread().getStackTrace());
+  }
+
   public static Integer getHashCode(Object object)
   {
     try

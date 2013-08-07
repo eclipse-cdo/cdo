@@ -112,6 +112,11 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
       return mainBranch;
     }
 
+    if (!repository.isSupportingBranches())
+    {
+      return null;
+    }
+
     InternalCDOBranch branch;
     synchronized (branches)
     {
@@ -171,6 +176,11 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
       return null;
     }
 
+    if (!repository.isSupportingBranches())
+    {
+      return null;
+    }
+
     String name = path.substring(0, sep);
     if (CDOBranch.MAIN_BRANCH_NAME.equals(name))
     {
@@ -184,6 +194,17 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   public int getBranches(int startID, int endID, CDOBranchHandler handler)
   {
     checkActive();
+    if (!repository.isSupportingBranches())
+    {
+      if (startID <= CDOBranch.MAIN_BRANCH_ID && CDOBranch.MAIN_BRANCH_ID <= endID)
+      {
+        handler.handleBranch(mainBranch);
+        return 1;
+      }
+
+      return 0;
+    }
+
     return branchLoader.loadBranches(startID, endID, handler);
   }
 

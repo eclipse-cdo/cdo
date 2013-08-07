@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Erdal Karaca - bug 414270: check if repository supports branching when querying sub branches
  */
 package org.eclipse.emf.cdo.internal.common.branch;
 
@@ -30,7 +31,7 @@ import java.util.List;
  */
 public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch
 {
-  public static final int ILLEGAL_BRANCH_ID = Integer.MIN_VALUE;
+  private static final InternalCDOBranch[] NO_BRANCHES = new InternalCDOBranch[0];
 
   private InternalCDOBranchManager branchManager;
 
@@ -154,7 +155,12 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public InternalCDOBranch createBranch(String name, long timeStamp)
   {
-    return getBranchManager().createBranch(BranchLoader.NEW_BRANCH, name, this, timeStamp);
+    if (!branchManager.getRepository().isSupportingBranches())
+    {
+      throw new IllegalStateException("Branching is not supported");
+    }
+
+    return branchManager.createBranch(BranchLoader.NEW_BRANCH, name, this, timeStamp);
   }
 
   public InternalCDOBranch createBranch(String name)
@@ -169,9 +175,13 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public InternalCDOBranch[] getBranches(boolean loadOnDemand)
   {
+    if (!branchManager.getRepository().isSupportingBranches())
+    {
+      return NO_BRANCHES;
+    }
+
     if (branches == null && loadOnDemand)
     {
-      InternalCDOBranchManager branchManager = getBranchManager();
       SubBranchInfo[] infos = branchManager.getBranchLoader().loadSubBranches(id);
       branches = new InternalCDOBranch[infos.length];
       for (int i = 0; i < infos.length; i++)
@@ -191,6 +201,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public InternalCDOBranch getBranch(String path)
   {
+    if (!branchManager.getRepository().isSupportingBranches())
+    {
+      return null;
+    }
+
     while (path.startsWith(PATH_SEPARATOR))
     {
       path = path.substring(1);

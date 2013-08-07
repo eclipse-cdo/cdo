@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -172,6 +173,12 @@ public abstract class CDOServerIndicationWithMonitoring extends IndicationWithMo
       public CDOPackageRegistry getPackageRegistry()
       {
         return CDOServerIndicationWithMonitoring.this.getPackageRegistry();
+      }
+
+      @Override
+      public CDORevisionUnchunker getRevisionUnchunker()
+      {
+        return CDOServerIndicationWithMonitoring.this.getRepository();
       }
 
       @Override

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -110,9 +111,20 @@ public final class CDOCommonUtil
 
   /**
    * @since 4.0
+   * @deprecated As of 4.3 use {@link #createCDODataOutput(ExtendedDataOutput, CDOPackageRegistry, CDOIDProvider, CDORevisionUnchunker)}.
    */
+  @Deprecated
   public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream,
       final CDOPackageRegistry packageRegistry, final CDOIDProvider idProvider)
+  {
+    return createCDODataOutput(extendedDataOutputStream, packageRegistry, idProvider, null);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream,
+      final CDOPackageRegistry packageRegistry, final CDOIDProvider idProvider, final CDORevisionUnchunker unchunker)
   {
     return new CDODataOutputImpl(extendedDataOutputStream)
     {
@@ -126,6 +138,12 @@ public final class CDOCommonUtil
       public CDOIDProvider getIDProvider()
       {
         return idProvider;
+      }
+
+      @Override
+      public CDORevisionUnchunker getRevisionUnchunker()
+      {
+        return unchunker;
       }
     };
   }

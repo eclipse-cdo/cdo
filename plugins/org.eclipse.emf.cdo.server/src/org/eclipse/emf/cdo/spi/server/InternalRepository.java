@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.Commit
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
@@ -62,7 +63,7 @@ import java.util.concurrent.Semaphore;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalRepository extends IRepository, PackageProcessor, PackageLoader, BranchLoader, RevisionLoader,
-    CommitInfoLoader
+    CommitInfoLoader, CDORevisionUnchunker
 {
   public void setName(String name);
 

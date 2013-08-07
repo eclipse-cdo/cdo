@@ -506,7 +506,7 @@ public abstract class CDOServerExporter<OUT>
       out.push();
 
       InternalRepository repository = (InternalRepository)getRepository();
-      repository.ensureChunks(rev);
+      repository.ensureChunks(rev, CDORevision.UNCHUNKED);
 
       CDOClassInfo classInfo = rev.getClassInfo();
       for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())

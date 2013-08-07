@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -107,6 +108,11 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
   public CDOCommitInfoManager getCommitInfoManager()
   {
     return getStore().getRepository().getCommitInfoManager();
+  }
+
+  public CDORevisionUnchunker getRevisionUnchunker()
+  {
+    return null;
   }
 
   public CDORevisionFactory getRevisionFactory()

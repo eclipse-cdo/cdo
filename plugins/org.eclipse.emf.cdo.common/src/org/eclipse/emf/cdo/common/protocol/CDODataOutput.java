@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -66,6 +67,11 @@ public interface CDODataOutput extends ExtendedDataOutput
    * @since 4.1
    */
   public CDOPermissionProvider getPermissionProvider();
+
+  /**
+   * @since 4.3
+   */
+  public CDORevisionUnchunker getRevisionUnchunker();
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -35,6 +35,8 @@ import java.util.List;
  */
 public class ChunkingTest extends AbstractCDOTest
 {
+  private static final String RESOURCE_PATH = "/test";
+
   public void testReadNative() throws Exception
   {
     {
@@ -137,8 +139,6 @@ public class ChunkingTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
 
-    // ************************************************************* //
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
@@ -174,7 +174,6 @@ public class ChunkingTest extends AbstractCDOTest
     }
 
     clearCache(getRepository().getRevisionManager());
-    // ************************************************************* //
 
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
@@ -217,7 +216,6 @@ public class ChunkingTest extends AbstractCDOTest
     }
 
     clearCache(getRepository().getRevisionManager());
-    // ************************************************************* //
 
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
@@ -242,8 +240,6 @@ public class ChunkingTest extends AbstractCDOTest
     }
   }
 
-  private static final String RESOURCE_PATH = "/test";
-
   public void testPartiallyLoadedAdd() throws CommitException
   {
     createInitialList();
@@ -257,7 +253,6 @@ public class ChunkingTest extends AbstractCDOTest
     list.getElements().add(9);
 
     tx.commit();
-    tx.close();
     session.close();
     clearCache(getRepository().getRevisionManager());
 
@@ -326,20 +321,16 @@ public class ChunkingTest extends AbstractCDOTest
 
   private void createInitialList() throws CommitException
   {
+    GenListOfInt list = Model5Factory.eINSTANCE.createGenListOfInt();
+    list.getElements().addAll(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource resource = tx.createResource(getResourcePath(RESOURCE_PATH));
-
-    GenListOfInt list = Model5Factory.eINSTANCE.createGenListOfInt();
-
-    list.getElements().addAll(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-
     resource.getContents().add(list);
 
     tx.commit();
-    tx.close();
     session.close();
-
     clearCache(getRepository().getRevisionManager());
   }
 

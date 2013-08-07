@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -562,6 +563,14 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public CDOPermissionProvider getPermissionProvider()
   {
     return CDORevision.PERMISSION_PROVIDER;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public CDORevisionUnchunker getRevisionUnchunker()
+  {
+    return null;
   }
 
   protected StringIO getPackageURICompressor()

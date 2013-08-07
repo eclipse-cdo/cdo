@@ -1042,7 +1042,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
 
       // Make sure all chunks are loaded
-      repository.ensureChunks(oldRevision);
+      repository.ensureChunks(oldRevision, CDORevision.UNCHUNKED);
 
       InternalCDORevision newRevision = oldRevision.copy();
       newRevision.adjustForCommit(accessor.getTransaction().getBranch(), created);

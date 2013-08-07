@@ -41,6 +41,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -139,6 +141,7 @@ public class SetupDialog extends TitleAreaDialog
 
     resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+    resourceSet.getLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
 
     adapterFactory = new SetupDialogAdapterFactory();
   }
@@ -888,7 +891,9 @@ public class SetupDialog extends TitleAreaDialog
 
     try
     {
-      preferences.eResource().save(null);
+      XMLResource xmlResource = (XMLResource)preferences.eResource();
+      xmlResource.getEObjectToExtensionMap().clear();
+      xmlResource.save(null);
     }
     catch (IOException ex)
     {

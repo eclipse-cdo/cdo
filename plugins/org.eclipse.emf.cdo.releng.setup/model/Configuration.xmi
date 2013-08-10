@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="ASCII"?>
 <setup:Configuration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
   <projects name="EMF">
-    <branches name="master" mspecFilePath="git-emf/releng/org.eclipse.emf.releng.buckminster/releng/emf-all.mspec">
+    <branches name="master" mspecFilePath="emf/releng/org.eclipse.emf.releng.setup.core/buckminster.mspec">
       <directorCalls>
         <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.xsd.sdk.feature.group"/>
+        <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
+        <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
         <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+        <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
       </directorCalls>
-      <gitClones name="git-emf" remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf" checkoutBranch="master"/>
-      <gitClones name="git-xsd" remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git" checkoutBranch="master"/>
-    </branches>
-    <branches name="2.9" mspecFilePath="git-emf/releng/org.eclipse.emf.releng.buckminster/releng/emf-all.mspec">
-      <directorCalls>
-        <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
-        <p2Repositories url="http://download.eclipse.org/releases/juno"/>
-      </directorCalls>
-      <gitClones name="git-emf" remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf" checkoutBranch="R2_9_maintenance"/>
-      <gitClones name="git-xsd" remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git" checkoutBranch="R2_9_maintenance"/>
+      <gitClones name="emf" remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf" checkoutBranch="master"/>
+      <gitClones name="xsd" remoteURI="ssh://git.eclipse.org/gitroot/xsd/org.eclipse.xsd.git" checkoutBranch="master"/>
     </branches>
   </projects>
   <projects name="CDO">

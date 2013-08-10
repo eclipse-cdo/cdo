@@ -15,3 +15,4 @@ Export-Package: org.eclipse.emf.cdo.releng.setup;version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.helper;x-friends:="org.eclipse.emf.cdo.releng.setup.ide,org.eclipse.emf.cdo.releng.setup.product,org.eclipse.emf.cdo.releng.setup.ui";version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.impl;version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.util;version="1.0.0"
+Bundle-Activator: org.eclipse.emf.cdo.releng.setup.helper.Activator

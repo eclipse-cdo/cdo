@@ -692,7 +692,7 @@ public class SetupDialog extends TitleAreaDialog
 
     String bundlePool = new File(installFolder, ".p2pool-ide").getAbsolutePath();
 
-    install(bundlePool, destination, updateLocations, setup.getEclipseVersion().getDirectorCall());
+    install(bundlePool, destination, updateLocations, setup.getEclipseVersion().getDirectorCall(), true);
 
     Director.from(bundlePool) //
         .feature("org.eclipse.egit") //
@@ -737,13 +737,14 @@ public class SetupDialog extends TitleAreaDialog
   {
     for (DirectorCall directorCall : installation.getDirectorCalls())
     {
-      install(bundlePool, destination, updateLocations, directorCall);
+      install(bundlePool, destination, updateLocations, directorCall, false);
     }
   }
 
-  private void install(String bundlePool, String destination, Set<String> updateLocations, DirectorCall directorCall)
+  private void install(String bundlePool, String destination, Set<String> updateLocations, DirectorCall directorCall,
+      boolean resetProfile) throws Exception
   {
-    Director.install(bundlePool, directorCall, destination);
+    Director.install(bundlePool, directorCall, destination, resetProfile);
     for (P2Repository p2Repository : directorCall.getP2Repositories())
     {
       updateLocations.add(p2Repository.getUrl());

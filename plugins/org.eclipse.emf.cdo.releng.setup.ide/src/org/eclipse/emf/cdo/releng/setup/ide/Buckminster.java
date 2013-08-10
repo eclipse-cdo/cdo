@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.GitClone;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.helper.Downloads;
+import org.eclipse.emf.cdo.releng.setup.helper.Files;
 import org.eclipse.emf.cdo.releng.setup.helper.OS;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogProvider;
@@ -232,7 +233,7 @@ public final class Buckminster
         Files.rename(tpOld, tp);
       }
 
-      Files.delete(tpBroken);
+      Files.deleteAsync(tpBroken);
       throw ex;
     }
     finally
@@ -252,7 +253,7 @@ public final class Buckminster
 
     if (tpOld != null)
     {
-      Files.delete(tpOld);
+      Files.deleteAsync(tpOld);
     }
   }
 

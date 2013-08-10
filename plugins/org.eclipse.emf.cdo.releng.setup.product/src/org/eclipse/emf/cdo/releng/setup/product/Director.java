@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.helper.Files;
 import org.eclipse.emf.cdo.releng.setup.helper.Progress;
 import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
 
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
@@ -38,6 +40,8 @@ public final class Director
   private DirectorCall directorCall;
 
   private String bundlePool;
+
+  private boolean resetProfile;
 
   private Director(DirectorCall directorCall, String bundlePool)
   {
@@ -68,6 +72,12 @@ public final class Director
     return iu(id + ".feature.group");
   }
 
+  public Director resetProfile()
+  {
+    resetProfile = true;
+    return this;
+  }
+
   public Director repository(String url)
   {
     P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
@@ -76,7 +86,7 @@ public final class Director
     return this;
   }
 
-  public void install(String destination)
+  public void install(String destination) throws Exception
   {
     File eclipseFolder = new File(destination);
     eclipseFolder.mkdirs();
@@ -105,6 +115,11 @@ public final class Director
     String arch = Platform.getOSArch();
 
     String bundleAgent = new File(bundlePool, "p2").getAbsolutePath();
+    if (resetProfile)
+    {
+      Files.delete(new File(bundleAgent, "org.eclipse.equinox.p2.engine/profileRegistry/" + profileName + ".profile"),
+          new NullProgressMonitor());
+    }
 
     String[] args = { "-destination", destination, "-repository", repositories, "-installIU", ius, "-profile",
         profileName, "-profileProperties", "org.eclipse.update.install.features=true", "-bundlepool", bundlePool,
@@ -159,9 +174,15 @@ public final class Director
     return new Director(bundlePool);
   }
 
-  public static void install(String bundlePool, DirectorCall directorCall, String destination)
+  public static void install(String bundlePool, DirectorCall directorCall, String destination, boolean resetProfile)
+      throws Exception
   {
     Director director = new Director(directorCall, bundlePool);
+    if (resetProfile)
+    {
+      director.resetProfile();
+    }
+
     director.install(destination);
   }
 }

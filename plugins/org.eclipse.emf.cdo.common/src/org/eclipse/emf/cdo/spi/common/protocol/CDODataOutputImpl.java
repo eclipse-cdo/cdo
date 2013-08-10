@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -562,6 +563,16 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public CDOPermissionProvider getPermissionProvider()
   {
     return CDORevision.PERMISSION_PROVIDER;
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   * @nooverride This method is not intended to be re-implemented or extended by clients.
+   * @since 4.2
+   */
+  public CDORevisionUnchunker getRevisionUnchunker()
+  {
+    return null;
   }
 
   protected StringIO getPackageURICompressor()

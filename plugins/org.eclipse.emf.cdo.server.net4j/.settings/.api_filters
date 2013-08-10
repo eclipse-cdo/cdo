@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.net4j" version="2">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/CDOServerIndication.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerIndication">
+        <filter id="642777099">
+            <message_arguments>
+                <message_argument value="CDODataOutputImpl"/>
+                <message_argument value="CDOServerIndication"/>
+                <message_argument value="getRevisionUnchunker()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/CDOServerIndicationWithMonitoring.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerIndicationWithMonitoring">
+        <filter id="642777099">
+            <message_arguments>
+                <message_argument value="CDODataOutputImpl"/>
+                <message_argument value="CDOServerIndicationWithMonitoring"/>
+                <message_argument value="getRevisionUnchunker()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/CDOServerProtocol.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocol">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="ISessionProtocol"/>
                 <message_argument value="CDOServerProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/CDOServerRequest.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerRequest">
+        <filter id="642777099">
+            <message_arguments>
+                <message_argument value="CDODataOutputImpl"/>
+                <message_argument value="CDOServerRequest"/>
+                <message_argument value="getRevisionUnchunker()"/>
             </message_arguments>
         </filter>
     </resource>

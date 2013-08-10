@@ -597,16 +597,48 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void ensureChunks(InternalCDORevision revision)
   {
-    if (!revision.isUnchunked())
+    ensureChunks(revision, CDORevision.UNCHUNKED);
+  }
+
+  public void ensureChunks(InternalCDORevision revision, int chunkSize)
+  {
+    if (revision.isUnchunked())
     {
-      for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+      return;
+    }
+
+    IStoreAccessor accessor = null;
+    boolean unchunked = true;
+    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+    {
+      if (feature.isMany())
       {
-        if (feature.isMany())
+        MoveableList<Object> list = revision.getList(feature);
+        int size = list.size();
+        if (chunkSize == CDORevision.UNCHUNKED)
         {
-          ensureChunk(revision, feature, 0, revision.getList(feature).size());
+          chunkSize = size;
+        }
+
+        int chunkEnd = Math.min(chunkSize, size);
+        accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
+
+        if (unchunked)
+        {
+          for (int i = chunkEnd + 1; i < size; i++)
+          {
+            if (list.get(i) == InternalCDOList.UNINITIALIZED)
+            {
+              unchunked = false;
+              break;
+            }
+          }
         }
       }
+    }
 
+    if (unchunked)
+    {
       revision.setUnchunked();
     }
   }
@@ -618,10 +650,40 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       MoveableList<Object> list = revision.getList(feature);
       chunkEnd = Math.min(chunkEnd, list.size());
-      return ensureChunk(revision, feature, StoreThreadLocal.getAccessor(), list, chunkStart, chunkEnd);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      ensureChunk(revision, feature, accessor, list, chunkStart, chunkEnd);
+
+      // TODO Expensive: if the revision is unchunked all lists/elements must be visited
+      if (isUnchunked(revision))
+      {
+        revision.setUnchunked();
+      }
+
+      return accessor;
     }
 
     return null;
+  }
+
+  private boolean isUnchunked(InternalCDORevision revision)
+  {
+    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+    {
+      if (feature.isMany())
+      {
+        MoveableList<Object> list = revision.getList(feature);
+        int size = list.size();
+        for (int i = 0; i < size; i++)
+        {
+          if (list.get(i) == InternalCDOList.UNINITIALIZED)
+          {
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
   }
 
   protected IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature,

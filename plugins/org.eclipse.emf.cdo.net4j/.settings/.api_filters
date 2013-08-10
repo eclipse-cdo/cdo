@@ -32,6 +32,24 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/CDOClientRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientRequest">
+        <filter id="642777099">
+            <message_arguments>
+                <message_argument value="CDODataOutputImpl"/>
+                <message_argument value="CDOClientRequest&lt;RESULT&gt;"/>
+                <message_argument value="getRevisionUnchunker()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/CDOClientRequestWithMonitoring.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientRequestWithMonitoring">
+        <filter id="642777099">
+            <message_arguments>
+                <message_argument value="CDODataOutputImpl"/>
+                <message_argument value="CDOClientRequestWithMonitoring&lt;RESULT&gt;"/>
+                <message_argument value="getRevisionUnchunker()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/OpenSessionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.OpenSessionRequest">
         <filter id="572522506">
             <message_arguments>

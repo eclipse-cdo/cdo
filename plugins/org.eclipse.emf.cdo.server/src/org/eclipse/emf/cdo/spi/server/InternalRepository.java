@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -62,7 +63,7 @@ import java.util.concurrent.Semaphore;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalRepository extends IRepository, PackageProcessor, PackageLoader, BranchLoader, RevisionLoader,
-    CommitInfoLoader
+    CommitInfoLoader, CDORevisionUnchunker
 {
   public void setName(String name);
 

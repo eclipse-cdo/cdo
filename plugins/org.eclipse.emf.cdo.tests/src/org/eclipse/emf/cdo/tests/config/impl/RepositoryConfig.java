@@ -82,6 +82,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -231,6 +232,17 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return repositoryProperties;
   }
 
+  public synchronized InternalRepository[] getRepositories()
+  {
+    if (repositories == null)
+    {
+      return new InternalRepository[0];
+    }
+
+    Collection<InternalRepository> values = repositories.values();
+    return values.toArray(new InternalRepository[values.size()]);
+  }
+
   public synchronized InternalRepository getRepository(String name)
   {
     return getRepository(name, true);
@@ -310,7 +322,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       protected void onDeactivated(ILifecycle lifecycle)
       {
         IRepository repository = (IRepository)lifecycle;
-        synchronized (repositories)
+        synchronized (RepositoryConfig.this)
         {
           repositories.remove(repository.getName());
         }
@@ -355,6 +367,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     if (isOptimizing() && needsCleanRepos() && repositories != null && !repositories.isEmpty())
     {
       deactivateRepositories();
+    }
+    else
+    {
+      resetRepositories();
     }
 
     if (repositories == null)
@@ -417,13 +433,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected void deactivateRepositories()
   {
-    Object[] array;
-    synchronized (repositories)
-    {
-      array = repositories.values().toArray();
-    }
-
-    for (Object repository : array)
+    for (InternalRepository repository : getRepositories())
     {
       LifecycleUtil.deactivate(repository);
     }
@@ -432,6 +442,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     repositories = null;
 
     StoreThreadLocal.release();
+  }
+
+  protected void resetRepositories()
+  {
+    for (InternalRepository repository : getRepositories())
+    {
+      repository.getRevisionManager().getCache().clear();
+    }
   }
 
   protected void addResourcePathChecker(InternalRepository repository)
@@ -473,13 +491,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected void removeResourcePathChecker()
   {
-    InternalRepository[] array;
-    synchronized (repositories)
-    {
-      array = repositories.values().toArray(new InternalRepository[repositories.size()]);
-    }
-
-    for (InternalRepository repository : array)
+    for (InternalRepository repository : getRepositories())
     {
       for (Handler handler : repository.getHandlers())
       {
@@ -734,7 +746,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
       final String masterName = "master";
       InternalRepository master;
-      synchronized (repositories)
+      synchronized (OfflineConfig.this)
       {
         master = repositories.get(masterName);
         if (master == null)

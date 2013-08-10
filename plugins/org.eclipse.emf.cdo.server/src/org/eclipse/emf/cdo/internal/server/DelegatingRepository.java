@@ -471,9 +471,9 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().setLastCommitTimeStamp(commitTimeStamp);
   }
 
-  public void ensureChunks(InternalCDORevision revision)
+  public void ensureChunk(InternalCDORevision revision, int chunkSize)
   {
-    getDelegate().ensureChunks(revision);
+    getDelegate().ensureChunks(revision, chunkSize);
   }
 
   public void replicate(CDOReplicationContext context)

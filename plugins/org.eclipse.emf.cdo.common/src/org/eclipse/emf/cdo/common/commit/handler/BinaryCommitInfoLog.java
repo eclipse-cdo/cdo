@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.common.CDODataUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -37,7 +37,7 @@ public class BinaryCommitInfoLog implements CDOCommitInfoHandler
   public BinaryCommitInfoLog(OutputStream stream, CDOPackageRegistry packageRegistry)
   {
     ExtendedDataOutput eod = ExtendedDataOutputStream.wrap(stream);
-    out = CDOCommonUtil.createCDODataOutput(eod, packageRegistry, CDOIDProvider.NOOP);
+    out = CDODataUtil.createCDODataOutput(eod, packageRegistry, CDOIDProvider.NOOP, null);
   }
 
   public void handleCommitInfo(CDOCommitInfo commitInfo)

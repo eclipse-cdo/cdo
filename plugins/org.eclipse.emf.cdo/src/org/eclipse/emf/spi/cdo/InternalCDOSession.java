@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -52,7 +53,8 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOSession extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, ILifecycle
+public interface InternalCDOSession extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker,
+    CDORevisionUnchunker, ILifecycle
 {
   public CDOSessionProtocol getSessionProtocol();
 

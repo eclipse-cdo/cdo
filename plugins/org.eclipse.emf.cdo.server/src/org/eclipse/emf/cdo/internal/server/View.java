@@ -145,8 +145,8 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
       else if (newRevision != oldRevision)
       {
         // Fix for Bug 369646: ensure that revisions are fully loaded
-        repository.ensureChunks((InternalCDORevision)newRevision);
-        repository.ensureChunks((InternalCDORevision)oldRevision);
+        repository.ensureChunks((InternalCDORevision)newRevision, CDORevision.UNCHUNKED);
+        repository.ensureChunks((InternalCDORevision)oldRevision, CDORevision.UNCHUNKED);
 
         CDORevisionDelta delta = newRevision.compare(oldRevision);
         allChangedObjects.add(delta);

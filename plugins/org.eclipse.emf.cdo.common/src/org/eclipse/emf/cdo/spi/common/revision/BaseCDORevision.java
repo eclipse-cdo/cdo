@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -36,9 +37,11 @@ import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -89,8 +92,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte PERMISSION_MASK = 0x03;
 
-  private static final byte TRANSFER_MASK = PERMISSION_MASK | UNCHUNKED_FLAG;
-
   private CDOID id;
 
   private CDOBranchPoint branchPoint;
@@ -139,7 +140,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     resourceID = source.resourceID;
     containerID = source.containerID;
     containingFeatureID = source.containingFeatureID;
-    flags = (byte)(source.flags & TRANSFER_MASK);
+    flags = (byte)(source.flags & ~FROZEN_FLAG);
   }
 
   /**
@@ -154,10 +155,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     readSystemValues(in);
 
-    byte flagBits = (byte)(in.readByte() & TRANSFER_MASK);
+    byte flagBits = in.readByte(); // Don't set permissions into this.falgs before readValues()
+    flagBits |= UNCHUNKED_FLAG; // First assume all lists are unchunked; may be revised below
+
     if ((flagBits & PERMISSION_MASK) != CDOPermission.NONE.ordinal())
     {
-      readValues(in);
+      if (!readValues(in))
+      {
+        flagBits &= ~UNCHUNKED_FLAG;
+      }
     }
 
     flags = flagBits;
@@ -219,23 +225,19 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     CDOPermissionProvider permissionProvider = out.getPermissionProvider();
     CDOPermission permission = permissionProvider.getPermission(this, securityContext);
-
-    int bits = flags & TRANSFER_MASK & ~PERMISSION_MASK;
-    bits |= permission.getBits();
-
-    if (referenceChunk == CDORevision.UNCHUNKED)
-    {
-      bits |= UNCHUNKED_FLAG;
-    }
-    else
-    {
-      bits &= ~UNCHUNKED_FLAG;
-    }
-
-    out.writeByte(bits);
+    out.writeByte(permission.getBits());
 
     if (permission != CDOPermission.NONE)
     {
+      if (!isUnchunked() && referenceChunk != 0 && out instanceof CDODataOutputImpl)
+      {
+        CDORevisionUnchunker unchunker = ((CDODataOutputImpl)out).getRevisionUnchunker();
+        if (unchunker != null)
+        {
+          unchunker.ensureChunks(this, referenceChunk);
+        }
+      }
+
       writeValues(out, referenceChunk);
     }
 
@@ -920,11 +922,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
-  private void readValues(CDODataInput in) throws IOException
+  private boolean readValues(CDODataInput in) throws IOException
   {
     EClass owner = getEClass();
     EStructuralFeature[] features = getAllPersistentFeatures();
     initValues(features);
+
+    boolean unchunked = true;
     for (int i = 0; i < features.length; i++)
     {
       Object value;
@@ -942,7 +946,21 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
       if (feature.isMany())
       {
-        value = in.readCDOList(owner, feature);
+        CDOList list = in.readCDOList(owner, feature);
+        if (unchunked)
+        {
+          int size = list.size();
+          if (size != 0)
+          {
+            Object lastElement = list.get(size - 1);
+            if (lastElement == InternalCDOList.UNINITIALIZED || lastElement instanceof CDOElementProxy)
+            {
+              unchunked = false;
+            }
+          }
+        }
+
+        value = list;
       }
       else
       {
@@ -955,6 +973,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
       setValue(i, value);
     }
+
+    return unchunked;
   }
 
   public static void checkNoFeatureMap(EStructuralFeature feature)

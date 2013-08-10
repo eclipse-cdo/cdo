@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
@@ -68,6 +69,12 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
+      }
+
+      @Override
+      public CDORevisionUnchunker getRevisionUnchunker()
+      {
+        return getSession();
       }
 
       @Override

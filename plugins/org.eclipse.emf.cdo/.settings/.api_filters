@@ -589,6 +589,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/transaction/CDOTransactionImpl.java" type="org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl">
+        <filter id="642777099">
+            <message_arguments>
+                <message_argument value="CDODataOutputImpl"/>
+                <message_argument value="CDOTransactionImpl"/>
+                <message_argument value="getRevisionUnchunker()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/util/DefaultLocksChangedEvent.java" type="org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent">
         <filter id="574619656">
             <message_arguments>
@@ -658,6 +667,14 @@
             <message_arguments>
                 <message_argument value="CDOObjectMarker"/>
                 <message_argument value="InternalCDOObject"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOSession.java" type="org.eclipse.emf.spi.cdo.InternalCDOSession">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDORevisionUnchunker"/>
+                <message_argument value="InternalCDOSession"/>
             </message_arguments>
         </filter>
     </resource>

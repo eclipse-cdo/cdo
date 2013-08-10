@@ -68,6 +68,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -2006,6 +2007,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
+      }
+
+      @Override
+      public CDORevisionUnchunker getRevisionUnchunker()
+      {
+        return getSession();
       }
     };
 

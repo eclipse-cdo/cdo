@@ -23,8 +23,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.internal.common.CDODataUtil;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
-import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -109,25 +110,13 @@ public final class CDOCommonUtil
   }
 
   /**
+   * @see CDODataUtil#createCDODataOutput(ExtendedDataOutput, CDOPackageRegistry, CDOIDProvider, CDORevisionUnchunker)
    * @since 4.0
    */
   public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream,
       final CDOPackageRegistry packageRegistry, final CDOIDProvider idProvider)
   {
-    return new CDODataOutputImpl(extendedDataOutputStream)
-    {
-      @Override
-      public CDOPackageRegistry getPackageRegistry()
-      {
-        return packageRegistry;
-      }
-
-      @Override
-      public CDOIDProvider getIDProvider()
-      {
-        return idProvider;
-      }
-    };
+    return CDODataUtil.createCDODataOutput(extendedDataOutputStream, packageRegistry, idProvider, null);
   }
 
   public static boolean isValidTimeStamp(long timeStamp, long startTime, long endTime)

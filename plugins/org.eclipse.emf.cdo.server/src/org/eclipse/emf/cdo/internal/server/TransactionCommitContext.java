@@ -1098,7 +1098,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     // Make sure all chunks are loaded
-    repository.ensureChunks(oldRevision);
+    repository.ensureChunks(oldRevision, CDORevision.UNCHUNKED);
 
     InternalCDORevision newRevision = oldRevision.copy();
     newRevision.adjustForCommit(branch, timeStamp);

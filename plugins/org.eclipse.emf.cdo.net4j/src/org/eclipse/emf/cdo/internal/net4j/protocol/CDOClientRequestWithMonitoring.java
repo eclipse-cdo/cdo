@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -100,6 +101,12 @@ public abstract class CDOClientRequestWithMonitoring<RESULT> extends RequestWith
       public CDOIDProvider getIDProvider()
       {
         return CDOClientRequestWithMonitoring.this.getIDProvider();
+      }
+
+      @Override
+      public CDORevisionUnchunker getRevisionUnchunker()
+      {
+        return getSession();
       }
 
       @Override

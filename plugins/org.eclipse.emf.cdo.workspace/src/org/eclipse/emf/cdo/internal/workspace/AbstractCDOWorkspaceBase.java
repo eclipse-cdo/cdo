@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -121,10 +122,11 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
 
   protected CDODataOutput createCDODataOutput(ExtendedDataOutputStream edos)
   {
-    InternalCDOPackageRegistry packageRegistry = workspace.getLocalRepository().getPackageRegistry(false);
+    InternalRepository localRepository = workspace.getLocalRepository();
+    InternalCDOPackageRegistry packageRegistry = localRepository.getPackageRegistry(false);
     CDOIDProvider idProvider = CDOIDProvider.NOOP;
 
-    return CDOCommonUtil.createCDODataOutput(edos, packageRegistry, idProvider);
+    return CDOCommonUtil.createCDODataOutput(edos, packageRegistry, idProvider, localRepository);
   }
 
   protected abstract void doClear();

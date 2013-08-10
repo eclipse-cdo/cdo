@@ -28,7 +28,7 @@ public interface CDOProtocolConstants
   /**
    * @since 4.2
    */
-  public static final int PROTOCOL_VERSION = 13;
+  public static final int PROTOCOL_VERSION = 14;
 
   // //////////////////////////////////////////////////////////////////////
   // Signal IDs

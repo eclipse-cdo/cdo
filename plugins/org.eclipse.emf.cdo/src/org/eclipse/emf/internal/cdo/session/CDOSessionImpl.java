@@ -839,6 +839,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  public void ensureChunks(InternalCDORevision revision, int chunkSize)
+  {
+    resolveAllElementProxies(revision);
+  }
+
   public void handleRepositoryTypeChanged(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
   {
     fireEvent(new RepositoryTypeChangedEvent(this, oldType, newType));

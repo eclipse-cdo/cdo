@@ -48,7 +48,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
-import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -125,6 +124,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   private Session hibernateSession;
 
   private boolean errorOccured;
+
+  private int currentListChunk = -1;
 
   private HibernateRawCommitContext rawCommitContext = new HibernateRawCommitContext();
 
@@ -326,9 +327,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * Note: the Hibernate store does not support the {@link StoreChunkReader} concept!.
-   *
-   * @return a {@link HibernateStoreChunkReader} (which throws UnsupportedOperationExceptions for most methods
+   * @return a {@link HibernateStoreChunkReader}
    */
   public HibernateStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
@@ -376,47 +375,54 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       return null;
     }
-
-    if (getStore().isAuditing() && getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
+    currentListChunk = listChunk;
+    try
     {
-      InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id,
-          branchPoint.getTimeStamp());
-      // found one, use it
-      if (revision != null)
+      if (getStore().isAuditing() && getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
       {
-
-        if (cache != null)
+        InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id,
+            branchPoint.getTimeStamp());
+        // found one, use it
+        if (revision != null)
         {
-          cache.addRevision(revision);
+
+          if (cache != null)
+          {
+            cache.addRevision(revision);
+          }
+          revision.freeze();
+
+          return revision;
         }
-        revision.freeze();
-
-        return revision;
       }
-    }
 
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
-    if (revision == null)
-    {
-      final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(id);
-      if (classifierRef == null)
+      final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
+      if (revision == null)
       {
-        throw new IllegalArgumentException("This CDOID type of " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+        final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(id);
+        if (classifierRef == null)
+        {
+          throw new IllegalArgumentException("This CDOID type of " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
+        final EClass eClass = HibernateUtil.getInstance().getEClass(classifierRef);
+        return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), 0, 0);
       }
 
-      final EClass eClass = HibernateUtil.getInstance().getEClass(classifierRef);
-      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), 0, 0);
+      revision.setBranchPoint(getStore().getMainBranchHead());
+      revision.freeze();
+
+      if (cache != null)
+      {
+        cache.addRevision(revision);
+      }
+
+      return revision;
     }
-
-    revision.setBranchPoint(getStore().getMainBranchHead());
-    revision.freeze();
-
-    if (cache != null)
+    finally
     {
-      cache.addRevision(revision);
+      currentListChunk = -1;
     }
-
-    return revision;
   }
 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
@@ -895,6 +901,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
       // order is 1) insert, 2) update and then delete
       // this order is the most stable! Do not change it without testing
+
+      // System.err.println(getStore().getMappingXml());
 
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
       final List<InternalCDORevision> repairResourceIDs = new ArrayList<InternalCDORevision>();
@@ -1414,5 +1422,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void doUnpassivate() throws Exception
   {
+  }
+
+  public int getCurrentListChunk()
+  {
+    return currentListChunk;
   }
 }

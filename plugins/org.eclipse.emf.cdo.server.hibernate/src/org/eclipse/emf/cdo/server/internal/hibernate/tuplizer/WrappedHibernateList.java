@@ -16,15 +16,26 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreChunkReader;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.hibernate.collection.internal.AbstractPersistentCollection;
+import org.hibernate.engine.spi.CollectionEntry;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.persister.collection.CollectionPersister;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.ArrayList;
@@ -46,8 +57,25 @@ public class WrappedHibernateList implements InternalCDOList
 
   private boolean frozen;
 
-  public WrappedHibernateList()
+  private int cachedSize = -1;
+
+  private final EStructuralFeature eFeature;
+
+  private final InternalCDORevision owner;
+
+  private Chunk cachedChunk;
+
+  private int currentListChunk = -1;
+
+  public WrappedHibernateList(InternalCDORevision owner, EStructuralFeature eFeature)
   {
+    this.owner = owner;
+    this.eFeature = eFeature;
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
+    if (accessor != null)
+    {
+      currentListChunk = accessor.getCurrentListChunk();
+    }
   }
 
   public void move(int newPosition, Object object)
@@ -140,7 +168,7 @@ public class WrappedHibernateList implements InternalCDOList
 
     if (classifier instanceof EClass)
     {
-      WrappedHibernateList wrapped = new WrappedHibernateList();
+      WrappedHibernateList wrapped = new WrappedHibernateList(owner, eFeature);
       wrapped.setDelegate(list);
       return wrapped;
     }
@@ -152,7 +180,55 @@ public class WrappedHibernateList implements InternalCDOList
    */
   public List<Object> getDelegate()
   {
+    if (delegate instanceof AbstractPersistentCollection && !((AbstractPersistentCollection)delegate).wasInitialized()
+        && !hasOpenSession())
+    {
+      // use a dummy auto-expanding list
+      setDelegate(new ArrayList<Object>()
+      {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public Object set(int index, Object element)
+        {
+          ensureSize(index);
+          return super.set(index, element);
+        }
+
+        @Override
+        public Object get(int index)
+        {
+          ensureSize(index);
+          final Object o = super.get(index);
+          if (o == null)
+          {
+            return CDORevisionUtil.UNINITIALIZED;
+          }
+          return o;
+        }
+
+        private void ensureSize(int index)
+        {
+          if (index >= size())
+          {
+            for (int i = size() - 1; i <= index; i++)
+            {
+              add(null);
+            }
+          }
+        }
+
+      });
+    }
+
     return delegate;
+  }
+
+  protected boolean hasOpenSession()
+  {
+    final AbstractPersistentCollection persistentCollection = (AbstractPersistentCollection)delegate;
+    final SessionImplementor session = persistentCollection.getSession();
+    return session != null && session.isOpen();
   }
 
   /**
@@ -201,22 +277,28 @@ public class WrappedHibernateList implements InternalCDOList
     return result;
   }
 
-  protected CDOID getCDOID(Object o)
+  protected Object getCDOValue(Object o)
   {
     if (o instanceof CDOID)
     {
-      return (CDOID)o;
+      return o;
     }
 
-    return HibernateUtil.getInstance().getCDOID(o);
+    if (o instanceof HibernateProxy || o instanceof CDORevision)
+    {
+      return HibernateUtil.getInstance().getCDOID(o);
+    }
+
+    // primitive type
+    return o;
   }
 
-  protected List<CDOID> getCDOIDs(Collection<?> c)
+  protected List<Object> getCDOValues(Collection<?> c)
   {
-    List<CDOID> newC = new ArrayList<CDOID>();
+    List<Object> newC = new ArrayList<Object>();
     for (Object o : c)
     {
-      newC.add(getCDOID(o));
+      newC.add(getCDOValue(o));
     }
 
     return newC;
@@ -225,25 +307,25 @@ public class WrappedHibernateList implements InternalCDOList
   public void add(int index, Object element)
   {
     checkFrozen();
-    getDelegate().add(index, getCDOID(element));
+    getDelegate().add(index, getCDOValue(element));
   }
 
   public boolean add(Object o)
   {
     checkFrozen();
-    return getDelegate().add(getCDOID(o));
+    return getDelegate().add(getCDOValue(o));
   }
 
   public boolean addAll(Collection<? extends Object> c)
   {
     checkFrozen();
-    return getDelegate().addAll(getCDOIDs(c));
+    return getDelegate().addAll(getCDOValues(c));
   }
 
   public boolean addAll(int index, Collection<? extends Object> c)
   {
     checkFrozen();
-    return getDelegate().addAll(index, getCDOIDs(c));
+    return getDelegate().addAll(index, getCDOValues(c));
   }
 
   public void clear()
@@ -254,12 +336,12 @@ public class WrappedHibernateList implements InternalCDOList
 
   public boolean contains(Object o)
   {
-    return getDelegate().contains(getCDOID(o));
+    return getDelegate().contains(getCDOValue(o));
   }
 
   public boolean containsAll(Collection<?> c)
   {
-    return getDelegate().containsAll(getCDOIDs(c));
+    return getDelegate().containsAll(getCDOValues(c));
   }
 
   public Object get(int index)
@@ -275,14 +357,72 @@ public class WrappedHibernateList implements InternalCDOList
 
   public Object get(int index, boolean resolve)
   {
-    // Since delegate is a hibernate list, it is never a CDOElementProxy
-    // so the parameter resolve can be ignored
+    // if the collection is not initialized then always return
+    // uninitialized to prevent loading it aggresively
+    if (!resolve && currentListChunk > -1 && eFeature instanceof EReference
+        && getDelegate() instanceof AbstractPersistentCollection)
+    {
+      final AbstractPersistentCollection collection = (AbstractPersistentCollection)getDelegate();
+      if (!collection.wasInitialized())
+      {
+        final Object chunkedValue = getChunkedValue(index);
+        if (chunkedValue != null)
+        {
+          return chunkedValue;
+        }
+        return CDORevisionUtil.UNINITIALIZED;
+      }
+    }
+
     return get(index);
+  }
+
+  private Object getChunkedValue(int index)
+  {
+    if (index >= currentListChunk)
+    {
+      return null;
+    }
+    readInitialChunk(index);
+    if (cachedChunk != null)
+    {
+      // note index must be within the range as the chunk
+      // is read again if index is too large.
+      return cachedChunk.get(index);
+    }
+    return null;
+  }
+
+  private void readInitialChunk(int index)
+  {
+
+    if (cachedChunk != null)
+    {
+      if (index < cachedChunk.size())
+      {
+        // a valid chunk
+        return;
+      }
+      // a not valid chunk
+      // reread it
+      cachedChunk = null;
+    }
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
+    if (accessor == null)
+    {
+      return;
+    }
+    if (currentListChunk > -1)
+    {
+      final HibernateStoreChunkReader chunkReader = accessor.createChunkReader(owner, eFeature);
+      chunkReader.addRangedChunk(0, currentListChunk);
+      cachedChunk = chunkReader.executeRead().get(0);
+    }
   }
 
   public int indexOf(Object o)
   {
-    return getDelegate().indexOf(getCDOID(o));
+    return getDelegate().indexOf(getCDOValue(o));
   }
 
   public boolean isEmpty()
@@ -297,7 +437,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public int lastIndexOf(Object o)
   {
-    return getDelegate().lastIndexOf(getCDOID(o));
+    return getDelegate().lastIndexOf(getCDOValue(o));
   }
 
   public ListIterator<Object> listIterator()
@@ -319,33 +459,62 @@ public class WrappedHibernateList implements InternalCDOList
   public boolean remove(Object o)
   {
     checkFrozen();
-    return getDelegate().remove(getCDOID(o));
+    return getDelegate().remove(getCDOValue(o));
   }
 
   public boolean removeAll(Collection<?> c)
   {
     checkFrozen();
-    return getDelegate().removeAll(getCDOIDs(c));
+    return getDelegate().removeAll(getCDOValues(c));
   }
 
   public boolean retainAll(Collection<?> c)
   {
-    return getDelegate().retainAll(getCDOIDs(c));
+    return getDelegate().retainAll(getCDOValues(c));
   }
 
   public Object set(int index, Object element)
   {
     checkFrozen();
+
+    if (element == CDORevisionUtil.UNINITIALIZED)
+    {
+      return null;
+    }
+
     if (element instanceof CDOID)
     {
       return getDelegate().set(index, element);
     }
 
-    return getDelegate().set(index, getCDOID(element));
+    return getDelegate().set(index, getCDOValue(element));
   }
 
   public int size()
   {
+    if (cachedSize != -1)
+    {
+      return cachedSize;
+    }
+    if (getDelegate() instanceof AbstractPersistentCollection)
+    {
+      final AbstractPersistentCollection collection = (AbstractPersistentCollection)getDelegate();
+      if (collection.wasInitialized())
+      {
+        cachedSize = -1;
+        return getDelegate().size();
+      }
+      final SessionImplementor session = collection.getSession();
+      CollectionEntry entry = session.getPersistenceContext().getCollectionEntry(collection);
+      CollectionPersister persister = entry.getLoadedPersister();
+      if (collection.hasQueuedOperations())
+      {
+        session.flush();
+      }
+      cachedSize = persister.getSize(entry.getLoadedKey(), session);
+      return cachedSize;
+    }
+
     return getDelegate().size();
   }
 
@@ -475,6 +644,8 @@ public class WrappedHibernateList implements InternalCDOList
 
   private void checkFrozen()
   {
+    // a frozen check always implies a modification
+    cachedSize = -1;
     if (frozen)
     {
       throw new IllegalStateException("Cannot modify a frozen list");
@@ -484,5 +655,10 @@ public class WrappedHibernateList implements InternalCDOList
   public void setWithoutFrozenCheck(int i, Object value)
   {
     getDelegate().set(i, value);
+  }
+
+  CDORevision getOwner()
+  {
+    return owner;
   }
 }

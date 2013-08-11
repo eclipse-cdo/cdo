@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDString;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -658,6 +659,10 @@ public class HibernateUtil
    */
   public Serializable getIdValue(CDOID id)
   {
+    if (id instanceof CDOIDString)
+    {
+      return ((CDOIDString)id).getStringValue();
+    }
     return CDOIDUtil.getLong(id);
   }
 

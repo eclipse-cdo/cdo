@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AttributeTest;
 import org.eclipse.emf.cdo.tests.BackupTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
+import org.eclipse.emf.cdo.tests.CrossReferenceTest;
 import org.eclipse.emf.cdo.tests.DynamicXSDTest;
 import org.eclipse.emf.cdo.tests.EMFCompareTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
@@ -44,9 +45,13 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_351393_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_352204_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_359966_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_362270_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_362270b_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_362270c_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_365832_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_381472_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_390185_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_400236_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_405191_Test;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -78,12 +83,13 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateBugzilla_380987_Test.class);
+    // testClasses.add(HibernateQueryTest.class);
     // if (true)
     // {
     // return;
     // }
 
+    testClasses.add(HibernateChunkingTest.class);
     testClasses.add(Hibernate_Failure_Test.class);
     testClasses.add(Hibernate_Export_Test.class);
     testClasses.add(HibernateBugzilla_381013_Test.class);
@@ -91,8 +97,6 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateBugzilla_392653_Test.class);
     testClasses.add(HibernateBugzilla_387752_Test.class);
     testClasses.add(HibernateBugzilla_387752_True_Test.class);
-
-    // testClasses.add(HibernateBugzilla_387752_Test.class);
 
     testClasses.add(HibernateBugzilla_333473_Test.class);
 
@@ -104,13 +108,26 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateQueryNoCachingTest.class);
     testClasses.add(HibernateBugzilla_301104_Test.class);
 
-    testClasses.add(HibernateBugzilla_362270_Test.class);
-
     super.initTestClasses(testClasses, scenario);
+
+    // remove as it tries to persist an eannotation
+    testClasses.remove(Bugzilla_400236_Test.class);
+
+    testClasses.add(HibernateBugzilla_362270b_Test.class);
+    testClasses.remove(Bugzilla_362270b_Test.class);
+
+    testClasses.add(HibernateBugzilla_362270c_Test.class);
+    testClasses.remove(Bugzilla_362270c_Test.class);
+
+    testClasses.add(HibernateBugzilla_405191_Test.class);
+    testClasses.remove(Bugzilla_405191_Test.class);
 
     // for some reason this test needs to be done first...
     testClasses.remove(Bugzilla_306998_Test.class);
     testClasses.add(0, Bugzilla_306998_Test.class);
+
+    testClasses.remove(CrossReferenceTest.class);
+    testClasses.add(HibernateCrossReferenceTest.class);
 
     testClasses.add(HibernateBugzilla_356181_Test.class);
 
@@ -123,6 +140,9 @@ public class AllTestsHibernate extends AllConfigs
 
     if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
     {
+      // need to add additional auditing annotations
+      testClasses.remove(HibernateBugzilla_405191_Test.class);
+
       testClasses.add(HibernateBugzilla_395684_Test.class);
 
       testClasses.add(CDOObjectHistoryTest.class);
@@ -313,7 +333,7 @@ public class AllTestsHibernate extends AllConfigs
     {
       final IRepositoryConfig repConfig = getRepositoryConfig();
       final HibernateConfig hbConfig = (HibernateConfig)repConfig;
-      final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
+      final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/cdo_hibernate.persistence.xml";
       hbConfig.getAdditionalProperties().put(HibernateStore.PERSISTENCE_XML, persistenceXML);
 
       super.doSetUp();

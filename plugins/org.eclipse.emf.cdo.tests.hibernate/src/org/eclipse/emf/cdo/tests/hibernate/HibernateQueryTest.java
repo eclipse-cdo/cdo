@@ -265,6 +265,7 @@ public class HibernateQueryTest extends AbstractCDOTest
         orderQuery.setParameter("od", orderDetail);
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
         assertEquals(1, sos.size());
+        assertNotNull(sos.get(0).getCustomer().getName());
         assertEquals(orderDetail.getOrder(), sos.get(0));
       }
     }

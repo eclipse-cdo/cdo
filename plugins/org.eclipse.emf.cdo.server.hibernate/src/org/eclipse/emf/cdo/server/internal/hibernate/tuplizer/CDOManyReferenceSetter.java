@@ -64,7 +64,7 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
       @SuppressWarnings("unchecked")
       List<Object> valueList = (List<Object>)value;
 
-      final WrappedHibernateList whl = new WrappedHibernateList();
+      final WrappedHibernateList whl = new WrappedHibernateList(revision, getEStructuralFeature());
       whl.setDelegate(valueList);
       super.set(target, whl, factory);
     }

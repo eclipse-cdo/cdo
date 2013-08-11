@@ -11,16 +11,17 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
-import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.CrossReferenceTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 /**
- * Override {@link XATransactionTest} to do mapping of external references.
- * 
+ * Tests with a separate annotations.xml.
+ *
  * @author Martin Taal
  */
-public class HibernateXATransactionTest extends XATransactionTest
+public class HibernateCrossReferenceTest extends CrossReferenceTest
 {
+
   @Override
   protected void doSetUp() throws Exception
   {

@@ -11,42 +11,21 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
-import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_405191_Test;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 /**
- * Read external reference annotation.
- * 
  * @author Martin Taal
  */
-public class HibernateBugzilla_362270_Test extends ExternalReferenceTest
+public class HibernateBugzilla_405191_Test extends Bugzilla_405191_Test
 {
-  @Override
-  public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
-  {
-  }
-
-  @Override
-  public void testUsingObjectsBetweenSameTransaction() throws Exception
-  {
-  }
-
-  @Override
-  public void testManyViewsOnOneResourceSet() throws Exception
-  {
-  }
-
-  @Override
-  public void testXRefExternalObject() throws Exception
-  {
-  }
 
   @Override
   protected void doSetUp() throws Exception
   {
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
-    final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
+    final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/cdo_hibernate.persistence.xml";
     hbConfig.getAdditionalProperties().put(HibernateStore.PERSISTENCE_XML, persistenceXML);
 
     super.doSetUp();

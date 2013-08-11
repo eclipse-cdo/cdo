@@ -27,6 +27,22 @@ import java.util.List;
  */
 public final class Files
 {
+  public static void rename(File from) throws IOException, InterruptedException
+  {
+    File to = new File(from.getParentFile(), from.getName() + "." + System.currentTimeMillis());
+    for (int i = 0; i < 1000; i++)
+    {
+      if (from.renameTo(to))
+      {
+        return;
+      }
+
+      Thread.sleep(5);
+    }
+
+    throw new IOException("Could not rename '" + from.getAbsolutePath() + "' to '" + to.getAbsolutePath() + "'");
+  }
+
   public static void rename(File from, File to) throws IOException, InterruptedException
   {
     for (int i = 0; i < 1000; i++)

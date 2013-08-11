@@ -50,6 +50,7 @@ import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.CellEditor;
@@ -341,6 +342,7 @@ public class SetupDialog extends TitleAreaDialog
     {
       public void modifyText(ModifyEvent e)
       {
+        preferences.setUserName(userNameText.getText());
         validate();
       }
     });
@@ -360,6 +362,7 @@ public class SetupDialog extends TitleAreaDialog
     {
       public void modifyText(ModifyEvent e)
       {
+        preferences.setInstallFolder(installFolderText.getText());
         validate();
       }
     });
@@ -395,6 +398,7 @@ public class SetupDialog extends TitleAreaDialog
     {
       public void modifyText(ModifyEvent e)
       {
+        preferences.setGitPrefix(gitPrefixText.getText());
         validate();
       }
     });
@@ -524,6 +528,11 @@ public class SetupDialog extends TitleAreaDialog
 
   private void validate()
   {
+    if (viewer != null)
+    {
+      viewer.refresh(true);
+    }
+
     Button installButton = getButton(IDialogConstants.OK_ID);
     if (installButton == null)
     {
@@ -532,68 +541,48 @@ public class SetupDialog extends TitleAreaDialog
 
     if (viewer.getCheckedElements().length == 0)
     {
-      setErrorMessage("Select one or more project branches to install.");
+      setMessage("Select one or more project branches to install.", IMessageProvider.ERROR);
       installButton.setEnabled(false);
       return;
     }
 
     if (userNameText.getText().length() == 0)
     {
-      setErrorMessage("Enter your user name.");
+      setMessage("Enter your user name.", IMessageProvider.WARNING);
       installButton.setEnabled(false);
       return;
     }
 
     if (installFolderText.getText().length() == 0)
     {
-      setErrorMessage("Enter the install folder.");
-      installButton.setEnabled(false);
-      return;
-    }
-
-    String gitPrefix = gitPrefixText.getText();
-    if (gitPrefix.length() == 0)
-    {
-      setErrorMessage("Enter the Git prefix folder (which contains 'etc/gitconfig').");
-      installButton.setEnabled(false);
-      return;
-    }
-
-    File etc = new File(gitPrefix, "etc");
-    File gitconfig = new File(etc, "gitconfig");
-    if (!gitconfig.isFile())
-    {
-      setErrorMessage("The Git prefix folder does not contain 'etc/gitconfig'.");
+      setMessage("Enter the install folder.", IMessageProvider.WARNING);
       installButton.setEnabled(false);
       return;
     }
 
     if (Platform.OS_WIN32.equals(Platform.getOS()))
     {
-      if (!containsAutoCRLF(gitconfig))
+      String gitPrefix = gitPrefixText.getText();
+      if (gitPrefix.length() == 0)
       {
-        setErrorMessage("The gitconfig file must contain 'autocrlf = true' on Windows.\nWhen you've added this line modify the Git Prefix field to revalidate...");
-        installButton.setEnabled(false);
+        setMessage("Enter the Git installation folder to use its 'etc/gitconfig' in the installed IDE.",
+            IMessageProvider.WARNING);
+        installButton.setEnabled(true);
+        return;
+      }
+
+      File etc = new File(gitPrefix, "etc");
+      File gitconfig = new File(etc, "gitconfig");
+      if (!gitconfig.isFile())
+      {
+        setMessage("The Git prefix folder does not contain 'etc/gitconfig'.", IMessageProvider.WARNING);
+        installButton.setEnabled(true);
         return;
       }
     }
 
-    setErrorMessage(null);
-    setMessage("Click the Install button to start the installation process.");
+    setMessage("Click the Install button to start the installation process.", IMessageProvider.NONE);
     installButton.setEnabled(true);
-  }
-
-  private boolean containsAutoCRLF(File file)
-  {
-    for (String line : OS.INSTANCE.readText(file))
-    {
-      if (line.contains("autocrlf") && line.contains("true"))
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   private String safe(String string)
@@ -620,8 +609,12 @@ public class SetupDialog extends TitleAreaDialog
 
   private URI getSetupURI(Branch branch)
   {
-    File installFolder = new File(installFolderText.getText());
-    File projectFolder = new File(installFolder, branch.getProject().getName());
+    return getSetupURI(branch, installFolderText.getText());
+  }
+
+  private URI getSetupURI(Branch branch, String installFolder)
+  {
+    File projectFolder = new File(installFolder, branch.getProject().getName().toLowerCase());
     File branchFolder = new File(projectFolder, branch.getName());
     File setupFile = new File(branchFolder, "setup.xmi");
     return URI.createFileURI(setupFile.getAbsolutePath());
@@ -726,7 +719,9 @@ public class SetupDialog extends TitleAreaDialog
       setup.getUpdateLocations().add(p2Repository);
     }
 
-    setup.eResource().save(null);
+    Resource setupResource = setup.eResource();
+    setupResource.setURI(getSetupURI(branch, installFolder));
+    setupResource.save(null);
 
     new File(branchFolder, "ws").mkdirs();
     launchIDE(setup, branchFolder);
@@ -886,10 +881,6 @@ public class SetupDialog extends TitleAreaDialog
 
   private void savePreferences()
   {
-    preferences.setUserName(userNameText.getText());
-    preferences.setInstallFolder(installFolderText.getText());
-    preferences.setGitPrefix(gitPrefixText.getText());
-
     try
     {
       XMLResource xmlResource = (XMLResource)preferences.eResource();

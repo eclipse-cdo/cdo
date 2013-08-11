@@ -33,6 +33,11 @@ public abstract class OS
 {
   public static final OS INSTANCE = create();
 
+  public boolean isLineEndingConversionNeeded()
+  {
+    return false;
+  }
+
   public List<String> readText(File file)
   {
     FileInputStream in = null;
@@ -140,6 +145,12 @@ public abstract class OS
    */
   private static final class Win extends OS
   {
+    @Override
+    public boolean isLineEndingConversionNeeded()
+    {
+      return true;
+    }
+
     @Override
     public String getEclipseExecutable()
     {

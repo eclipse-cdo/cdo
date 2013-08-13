@@ -31,6 +31,8 @@ import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
+import org.junit.Assert;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -45,7 +47,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-import org.junit.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
@@ -298,6 +299,12 @@ public abstract class AbstractOMTest extends TestCase
         }
         catch (Throwable t)
         {
+          AssertionFailedError assertionFailedError = getAssertionFailedError(t);
+          if (assertionFailedError != null)
+          {
+            t = assertionFailedError;
+          }
+
           if (!SUPPRESS_OUTPUT)
           {
             t.printStackTrace(IOUtil.OUT());
@@ -331,6 +338,12 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (Error err)
     {
+      AssertionFailedError assertionFailedError = getAssertionFailedError(err);
+      if (assertionFailedError != null)
+      {
+        err = assertionFailedError;
+      }
+
       if (!SUPPRESS_OUTPUT)
       {
         err.printStackTrace(IOUtil.OUT());
@@ -338,6 +351,24 @@ public abstract class AbstractOMTest extends TestCase
 
       throw err;
     }
+  }
+
+  private AssertionFailedError getAssertionFailedError(Throwable err)
+  {
+    if (err.getClass() == AssertionError.class)
+    {
+      // JUnit4 seems to throw java.lang.AssertionError, which the JUNit view displays as error rather than failure
+      AssertionFailedError replacementError = new AssertionFailedError(err.getMessage());
+      replacementError.initCause(err.getCause());
+      return replacementError;
+    }
+
+    if (err instanceof AssertionFailedError)
+    {
+      return (AssertionFailedError)err;
+    }
+
+    return null;
   }
 
   protected void enableConsole()

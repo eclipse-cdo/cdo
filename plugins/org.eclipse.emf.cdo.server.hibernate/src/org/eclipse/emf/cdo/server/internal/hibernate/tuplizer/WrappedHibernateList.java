@@ -181,7 +181,7 @@ public class WrappedHibernateList implements InternalCDOList
   public List<Object> getDelegate()
   {
     if (delegate instanceof AbstractPersistentCollection && !((AbstractPersistentCollection)delegate).wasInitialized()
-        && !hasOpenSession())
+        && !isConnectedToSession())
     {
       // use a dummy auto-expanding list
       setDelegate(new ArrayList<Object>()
@@ -224,11 +224,12 @@ public class WrappedHibernateList implements InternalCDOList
     return delegate;
   }
 
-  protected boolean hasOpenSession()
+  protected boolean isConnectedToSession()
   {
     final AbstractPersistentCollection persistentCollection = (AbstractPersistentCollection)delegate;
     final SessionImplementor session = persistentCollection.getSession();
-    return session != null && session.isOpen();
+    return session != null && session.isOpen()
+        && session.getPersistenceContext().containsCollection(persistentCollection);
   }
 
   /**

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.NodeE;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -106,6 +107,15 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   NodeD createNodeD();
+
+  /**
+   * Returns a new object of class '<em>Node E</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node E</em>'.
+   * @generated
+   */
+  NodeE createNodeE();
 
   /**
    * Returns a new object of class '<em>Image</em>'.

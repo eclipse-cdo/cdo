@@ -1207,14 +1207,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         InternalCDOObject object = (InternalCDOObject)idOrObject;
         if (object.cdoView() != null && FSMUtil.isNew(object))
         {
-          String uri = EcoreUtil.getURI(eObject).toString();
+          String uri = EcoreUtil.getURI(object.cdoInternalInstance()).toString();
           if (object.cdoID().isTemporary())
           {
             return CDOIDUtil.createTempObjectExternal(uri);
           }
-
-          // New objects with non-temporary IDs are possible. Likely UUIDs
-          return CDOIDUtil.createExternal(uri);
         }
       }
 
@@ -1224,7 +1221,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         // Check if eObject is contained by a deleted resource
         if (!(eResource instanceof CDOResource) || ((CDOResource)eResource).cdoState() != CDOState.TRANSIENT)
         {
-          String uri = EcoreUtil.getURI(eObject).toString();
+          String uri = EcoreUtil.getURI(CDOUtil.getEObject(eObject)).toString();
           return CDOIDUtil.createExternal(uri);
         }
       }

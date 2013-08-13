@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.NodeE;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -107,7 +108,9 @@ public class Model3Switch<T>
       Class1 class1 = (Class1)theEObject;
       T result = caseClass1(class1);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.META_REF:
@@ -115,7 +118,9 @@ public class Model3Switch<T>
       MetaRef metaRef = (MetaRef)theEObject;
       T result = caseMetaRef(metaRef);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.POLYGON:
@@ -123,7 +128,9 @@ public class Model3Switch<T>
       Polygon polygon = (Polygon)theEObject;
       T result = casePolygon(polygon);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.POLYGON_WITH_DUPLICATES:
@@ -131,7 +138,9 @@ public class Model3Switch<T>
       PolygonWithDuplicates polygonWithDuplicates = (PolygonWithDuplicates)theEObject;
       T result = casePolygonWithDuplicates(polygonWithDuplicates);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_A:
@@ -139,7 +148,9 @@ public class Model3Switch<T>
       NodeA nodeA = (NodeA)theEObject;
       T result = caseNodeA(nodeA);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_B:
@@ -147,7 +158,9 @@ public class Model3Switch<T>
       NodeB nodeB = (NodeB)theEObject;
       T result = caseNodeB(nodeB);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_C:
@@ -155,7 +168,9 @@ public class Model3Switch<T>
       NodeC nodeC = (NodeC)theEObject;
       T result = caseNodeC(nodeC);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_D:
@@ -163,7 +178,19 @@ public class Model3Switch<T>
       NodeD nodeD = (NodeD)theEObject;
       T result = caseNodeD(nodeD);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model3Package.NODE_E:
+    {
+      NodeE nodeE = (NodeE)theEObject;
+      T result = caseNodeE(nodeE);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.IMAGE:
@@ -171,7 +198,9 @@ public class Model3Switch<T>
       Image image = (Image)theEObject;
       T result = caseImage(image);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.FILE:
@@ -179,7 +208,9 @@ public class Model3Switch<T>
       File file = (File)theEObject;
       T result = caseFile(file);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.CLASS_WITH_ID_ATTRIBUTE:
@@ -187,7 +218,9 @@ public class Model3Switch<T>
       ClassWithIDAttribute classWithIDAttribute = (ClassWithIDAttribute)theEObject;
       T result = caseClassWithIDAttribute(classWithIDAttribute);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.CLASS_WITH_JAVA_CLASS_ATTRIBUTE:
@@ -195,7 +228,9 @@ public class Model3Switch<T>
       ClassWithJavaClassAttribute classWithJavaClassAttribute = (ClassWithJavaClassAttribute)theEObject;
       T result = caseClassWithJavaClassAttribute(classWithJavaClassAttribute);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE:
@@ -203,7 +238,9 @@ public class Model3Switch<T>
       ClassWithJavaObjectAttribute classWithJavaObjectAttribute = (ClassWithJavaObjectAttribute)theEObject;
       T result = caseClassWithJavaObjectAttribute(classWithJavaObjectAttribute);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -321,6 +358,22 @@ public class Model3Switch<T>
    * @generated
    */
   public T caseNodeD(NodeD object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Node E</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Node E</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNodeE(NodeE object)
   {
     return null;
   }

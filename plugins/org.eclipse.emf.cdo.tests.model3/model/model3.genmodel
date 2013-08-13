@@ -49,6 +49,11 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//NodeD/otherNodes"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//NodeD/oppositeNode"/>
     </genClasses>
+    <genClasses ecoreClass="model3.ecore#//NodeE">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//NodeE/mainNode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//NodeE/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//NodeE/otherNodes"/>
+    </genClasses>
     <genClasses ecoreClass="model3.ecore#//Image">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//Image/width"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//Image/height"/>

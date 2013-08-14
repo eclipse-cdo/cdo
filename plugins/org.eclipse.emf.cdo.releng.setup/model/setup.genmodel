@@ -4,6 +4,7 @@
     modelPluginID="org.eclipse.emf.cdo.releng.setup" modelName="Setup" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true" runtimeVersion="2.5"
+    usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets"
     importOrganizing="true">
   <foreignModel>setup.ecore</foreignModel>
   <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
@@ -11,10 +12,21 @@
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
     <genClasses ecoreClass="setup.ecore#//Preferences">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/userName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/bundlePool"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/gitPrefix"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Preferences/linkLocations"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//LinkLocation" labelFeature="#//setup/LinkLocation/path">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocation/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocation/name"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ToolInstallation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ToolInstallation/directorCalls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ToolInstallation/toolPreferences"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ToolPreference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/value"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//EclipseVersion">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//EclipseVersion/configuration"/>
@@ -37,15 +49,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/projects"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/eclipseVersions"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//ToolInstallation">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ToolInstallation/directorCalls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ToolInstallation/toolPreferences"/>
-    </genClasses>
     <genClasses ecoreClass="setup.ecore#//Project">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Project/configuration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/branches"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Project/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/apiBaselines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/workingSetGroup"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Branch">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Branch/project"/>
@@ -79,14 +88,6 @@
           ecoreFeature="ecore:EReference setup.ecore#//Setup/eclipseVersion"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Setup/preferences"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Setup/updateLocations"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//ToolPreference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/key"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ToolPreference/value"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//LinkLocation" labelFeature="#//setup/LinkLocation/path">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocation/path"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocation/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

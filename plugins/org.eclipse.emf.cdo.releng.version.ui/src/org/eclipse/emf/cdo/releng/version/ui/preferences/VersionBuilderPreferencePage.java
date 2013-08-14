@@ -36,7 +36,7 @@ public class VersionBuilderPreferencePage extends PreferencePage implements IWor
 {
   public VersionBuilderPreferencePage()
   {
-    super("XXX");
+    super("<taken from plugin.xml>");
     setDescription("Manage ignored releases:");
   }
 

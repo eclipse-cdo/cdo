@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
 import org.eclipse.emf.cdo.releng.setup.ToolPreference;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -197,6 +198,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     isInited = true;
 
+    // Initialize simple dependencies
+    WorkingSetsPackage.eINSTANCE.eClass();
+
     // Create package meta-data objects
     theSetupPackage.createPackageContents();
 
@@ -296,6 +300,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getProject_WorkingSetGroup()
+  {
+    return (EReference)projectEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getBranch()
   {
     return branchEClass;
@@ -856,6 +870,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(projectEClass, PROJECT__BRANCHES);
     createEAttribute(projectEClass, PROJECT__NAME);
     createEReference(projectEClass, PROJECT__API_BASELINES);
+    createEReference(projectEClass, PROJECT__WORKING_SET_GROUP);
 
     branchEClass = createEClass(BRANCH);
     createEReference(branchEClass, BRANCH__PROJECT);
@@ -910,6 +925,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     setName(eNAME);
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
+
+    // Obtain other dependent packages
+    WorkingSetsPackage theWorkingSetsPackage = (WorkingSetsPackage)EPackage.Registry.INSTANCE
+        .getEPackage(WorkingSetsPackage.eNS_URI);
 
     // Create type parameters
 
@@ -1015,6 +1034,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProject_ApiBaselines(), this.getApiBaseline(), this.getApiBaseline_Project(), "apiBaselines",
         null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_WorkingSetGroup(), theWorkingSetsPackage.getWorkingSetGroup(), null, "workingSetGroup",
+        null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(branchEClass, Branch.class, "Branch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

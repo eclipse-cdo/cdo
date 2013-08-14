@@ -549,13 +549,22 @@ public interface SetupPackage extends EPackage
   int PROJECT__API_BASELINES = TOOL_INSTALLATION_FEATURE_COUNT + 3;
 
   /**
-   * The number of structural features of the '<em>Project</em>' class.
+   * The feature id for the '<em><b>Working Set Group</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROJECT_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 4;
+  int PROJECT__WORKING_SET_GROUP = TOOL_INSTALLATION_FEATURE_COUNT + 4;
+
+  /**
+  	 * The number of structural features of the '<em>Project</em>' class.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int PROJECT_FEATURE_COUNT = TOOL_INSTALLATION_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Director Calls</b></em>' containment reference list.
@@ -861,13 +870,24 @@ public interface SetupPackage extends EPackage
   EReference getProject_ApiBaselines();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.releng.setup.Project#getWorkingSetGroup <em>Working Set Group</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Branch</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Branch
+   * @return the meta object for the containment reference '<em>Working Set Group</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Project#getWorkingSetGroup()
+   * @see #getProject()
    * @generated
    */
+  EReference getProject_WorkingSetGroup();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Branch</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Branch
+  	 * @generated
+  	 */
   EClass getBranch();
 
   /**
@@ -1480,13 +1500,21 @@ public interface SetupPackage extends EPackage
     EReference PROJECT__API_BASELINES = eINSTANCE.getProject_ApiBaselines();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
+     * The meta object literal for the '<em><b>Working Set Group</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
      * @generated
      */
+    EReference PROJECT__WORKING_SET_GROUP = eINSTANCE.getProject_WorkingSetGroup();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
+    	 * @generated
+    	 */
     EClass BRANCH = eINSTANCE.getBranch();
 
     /**

@@ -118,6 +118,12 @@ public final class SetupIDE
       restart = true;
     }
 
+    if (state < 7)
+    {
+      WorkingSets.init();
+      saveState(7);
+    }
+
     if (state < DONE)
     {
       Prefs.initLate();

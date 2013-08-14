@@ -59,6 +59,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="apiBaselines" upperBound="-1"
         eType="#//ApiBaseline" containment="true" eOpposite="#//ApiBaseline/project"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="workingSetGroup" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.ecore#//WorkingSetGroup"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Branch" eSuperTypes="#//ToolInstallation">
     <eOperations name="isInstalled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getApiBaselines <em>Api Baselines</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getWorkingSetGroup <em>Working Set Group</em>}</li>
  * </ul>
  * </p>
  *
@@ -122,5 +124,31 @@ public interface Project extends ToolInstallation
    * @generated
    */
   EList<ApiBaseline> getApiBaselines();
+
+  /**
+  	 * Returns the value of the '<em><b>Working Set Group</b></em>' containment reference.
+  	 * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Working Set Group</em>' containment reference isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Working Set Group</em>' containment reference.
+  	 * @see #setWorkingSetGroup(WorkingSetGroup)
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_WorkingSetGroup()
+  	 * @model containment="true"
+  	 * @generated
+  	 */
+  WorkingSetGroup getWorkingSetGroup();
+
+  /**
+  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Project#getWorkingSetGroup <em>Working Set Group</em>}' containment reference.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @param value the new value of the '<em>Working Set Group</em>' containment reference.
+  	 * @see #getWorkingSetGroup()
+  	 * @generated
+  	 */
+  void setWorkingSetGroup(WorkingSetGroup value);
 
 } // Project

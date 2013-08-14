@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -39,6 +40,7 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getApiBaselines <em>Api Baselines</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getWorkingSetGroup <em>Working Set Group</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,10 +89,20 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
   protected EList<ApiBaseline> apiBaselines;
 
   /**
+   * The cached value of the '{@link #getWorkingSetGroup() <em>Working Set Group</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getWorkingSetGroup()
    * @generated
+   * @ordered
    */
+  protected WorkingSetGroup workingSetGroup;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ProjectImpl()
   {
     super();
@@ -215,6 +227,62 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
    * <!-- end-user-doc -->
    * @generated
    */
+  public WorkingSetGroup getWorkingSetGroup()
+  {
+    return workingSetGroup;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public NotificationChain basicSetWorkingSetGroup(WorkingSetGroup newWorkingSetGroup, NotificationChain msgs)
+  {
+    WorkingSetGroup oldWorkingSetGroup = workingSetGroup;
+    workingSetGroup = newWorkingSetGroup;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+          SetupPackage.PROJECT__WORKING_SET_GROUP, oldWorkingSetGroup, newWorkingSetGroup);
+      if (msgs == null)
+        msgs = notification;
+      else
+        msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setWorkingSetGroup(WorkingSetGroup newWorkingSetGroup)
+  {
+    if (newWorkingSetGroup != workingSetGroup)
+    {
+      NotificationChain msgs = null;
+      if (workingSetGroup != null)
+        msgs = ((InternalEObject)workingSetGroup).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - SetupPackage.PROJECT__WORKING_SET_GROUP, null, msgs);
+      if (newWorkingSetGroup != null)
+        msgs = ((InternalEObject)newWorkingSetGroup).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+            - SetupPackage.PROJECT__WORKING_SET_GROUP, null, msgs);
+      msgs = basicSetWorkingSetGroup(newWorkingSetGroup, msgs);
+      if (msgs != null)
+        msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PROJECT__WORKING_SET_GROUP,
+          newWorkingSetGroup, newWorkingSetGroup));
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -249,6 +317,8 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
       return ((InternalEList<?>)getBranches()).basicRemove(otherEnd, msgs);
     case SetupPackage.PROJECT__API_BASELINES:
       return ((InternalEList<?>)getApiBaselines()).basicRemove(otherEnd, msgs);
+    case SetupPackage.PROJECT__WORKING_SET_GROUP:
+      return basicSetWorkingSetGroup(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -287,6 +357,8 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
       return getName();
     case SetupPackage.PROJECT__API_BASELINES:
       return getApiBaselines();
+    case SetupPackage.PROJECT__WORKING_SET_GROUP:
+      return getWorkingSetGroup();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -316,6 +388,9 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
       getApiBaselines().clear();
       getApiBaselines().addAll((Collection<? extends ApiBaseline>)newValue);
       return;
+    case SetupPackage.PROJECT__WORKING_SET_GROUP:
+      setWorkingSetGroup((WorkingSetGroup)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -342,6 +417,9 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     case SetupPackage.PROJECT__API_BASELINES:
       getApiBaselines().clear();
       return;
+    case SetupPackage.PROJECT__WORKING_SET_GROUP:
+      setWorkingSetGroup((WorkingSetGroup)null);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -364,6 +442,8 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case SetupPackage.PROJECT__API_BASELINES:
       return apiBaselines != null && !apiBaselines.isEmpty();
+    case SetupPackage.PROJECT__WORKING_SET_GROUP:
+      return workingSetGroup != null;
     }
     return super.eIsSet(featureID);
   }

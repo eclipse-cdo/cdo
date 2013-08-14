@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.eclipse.emf.cdo.releng.workingsets.presentation.EarlyStartup">
+      </startup>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsPreferencePage"
+            id="org.eclipse.emf.cdo.releng.workingsets.presentation.VersionBuilderPreferencePage"
+            name="Dynamic Working Sets">
+      </page>
+   </extension>
+   
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated workingsets -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsModelWizardID"
+            name="%_UI_WorkingSetsModelWizard_label"
+            class="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/WorkingSetsModelFile.gif">
+         <description>%_UI_WorkingSetsModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated workingsets -->
+      <editor
+            id="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsEditorID"
+            name="%_UI_WorkingSetsEditor_label"
+            icon="icons/full/obj16/WorkingSetsModelFile.gif"
+            extensions="workingsets"
+            class="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsEditor"
+            contributorClass="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

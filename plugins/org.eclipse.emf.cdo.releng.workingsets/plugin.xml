@@ -13,11 +13,12 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="org.eclipse.emf.cdo.releng.workingsets.EarlyStartup">
-      </startup>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated workingsets -->
+      <package
+            uri="http://www.eclipse.org/CDO/releng/workingsets/1.0"
+            class="org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage"
+            genModel="model/workingsets.genmodel"/>
    </extension>
 
 </plugin>

@@ -713,8 +713,7 @@ public class DefaultCDOMerger implements CDOMerger
 
           // Apply list changes to source and target work lists
           PerSide<List<CDOFeatureDelta>> changesPerSide = new PerSide<List<CDOFeatureDelta>>(
-              ((CDOListFeatureDelta)sourceFeatureDelta.copy()).getListChanges(),
-              ((CDOListFeatureDelta)targetFeatureDelta.copy()).getListChanges());
+              copyListChanges(sourceFeatureDelta), copyListChanges(targetFeatureDelta));
           Map<Object, List<Element>> additions = new HashMap<Object, List<Element>>();
           Map<CDOFeatureDelta, Element> allElements = new HashMap<CDOFeatureDelta, Element>();
 
@@ -729,21 +728,6 @@ public class DefaultCDOMerger implements CDOMerger
               resultChanges);
           pickChangesIntoResult(Side.TARGET, feature, ancestorList, changesPerSide, allElements, additions,
               resultChanges);
-
-          // if (!targetChanges.isEmpty() && !sourceChanges.isEmpty())
-          // {
-          // CDOFeatureDelta targetDelta = targetChanges.get(0);
-          // if (targetDelta instanceof CDOClearFeatureDelta)
-          // {
-          // CDOClearFeatureDelta clearFeatureDelta = (CDOClearFeatureDelta)targetDelta;
-          // if (sourceChanges.get(0) instanceof CDOClearFeatureDelta)
-          // {
-          // resultChanges.add(clearFeatureDelta.copy());
-          // targetChanges.remove(0);
-          // sourceChanges.remove(0);
-          // }
-          // }
-          // }
 
           return result;
         }
@@ -767,6 +751,40 @@ public class DefaultCDOMerger implements CDOMerger
 
         listPerSide.set(Side.SOURCE, sourceList);
         listPerSide.set(Side.TARGET, targetList);
+      }
+
+      private List<CDOFeatureDelta> copyListChanges(CDOFeatureDelta featureDelta)
+      {
+        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta.copy();
+        List<CDOFeatureDelta> copy = listFeatureDelta.getListChanges();
+
+        if (!copy.isEmpty())
+        {
+          CDOFeatureDelta.Type firstType = copy.get(0).getType();
+          if (firstType == Type.CLEAR || firstType == Type.UNSET)
+          {
+            copy.remove(0);
+
+            List<CDOFeatureDelta> expandedDeltas = expandClearDelta(listFeatureDelta);
+            copy.addAll(0, expandedDeltas);
+          }
+        }
+
+        return copy;
+      }
+
+      private List<CDOFeatureDelta> expandClearDelta(CDOListFeatureDelta listFeatureDelta)
+      {
+        EStructuralFeature feature = listFeatureDelta.getFeature();
+        int originSize = listFeatureDelta.getOriginSize();
+        List<CDOFeatureDelta> expandedDeltas = new ArrayList<CDOFeatureDelta>(originSize);
+
+        for (int i = 0; i < originSize; i++)
+        {
+          expandedDeltas.add(new CDORemoveFeatureDeltaImpl(feature, 0));
+        }
+
+        return expandedDeltas;
       }
 
       private void applyChangesToWorkList(Side side, PerSide<BasicEList<Element>> listPerSide,
@@ -829,6 +847,7 @@ public class DefaultCDOMerger implements CDOMerger
 
           case CLEAR:
           case UNSET:
+            // These deltas should have been replaced by multiple REMOVE deltas in copyListChanges()
             throw new IllegalStateException("Unhandled change type: " + changeType);
 
           default:

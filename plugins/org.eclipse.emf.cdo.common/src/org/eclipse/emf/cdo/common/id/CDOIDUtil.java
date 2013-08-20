@@ -113,6 +113,12 @@ public final class CDOIDUtil
       return id == null ? CDOID.NULL : id;
     }
 
+    if (object instanceof CDOIdentifiable)
+    {
+      CDOID id = ((CDOIdentifiable)object).getID();
+      return id == null ? CDOID.NULL : id;
+    }
+
     return null;
   }
 

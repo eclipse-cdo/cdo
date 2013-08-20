@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
 
 /**
  * An {@link CDOID ID} / {@link CDOBranch branch} pair.
@@ -22,9 +23,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.exclude
  */
-public interface CDOIDAndBranch
+public interface CDOIDAndBranch extends CDOIdentifiable
 {
-  public CDOID getID();
-
   public CDOBranch getBranch();
 }

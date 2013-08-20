@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -1130,9 +1131,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * @author Eike Stepper
    */
-  private static interface LegacyProxy
+  private static interface LegacyProxy extends CDOIdentifiable
   {
-    public CDOID getID();
   }
 
   /**

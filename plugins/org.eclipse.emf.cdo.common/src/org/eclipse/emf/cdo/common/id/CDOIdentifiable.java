@@ -8,20 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.revision;
-
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
+package org.eclipse.emf.cdo.common.id;
 
 /**
- * An {@link CDOID ID} / version number pair.
+ * An identifiable object.
  *
  * @author Eike Stepper
- * @since 4.0
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
+ * @see CDOIDUtil#getCDOID(Object)
+ * @since 4.3
+ * @apiviz.has {@link CDOID}
  */
-public interface CDOIDAndVersion extends CDOIdentifiable
+public interface CDOIdentifiable
 {
-  public int getVersion();
+  public CDOID getID();
 }

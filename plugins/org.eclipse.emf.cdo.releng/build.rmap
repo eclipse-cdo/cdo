@@ -80,7 +80,7 @@
 
 		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/amalgam/temp/ecoretools-1.0.0"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emft/ecoretools/updates/1.2/201306071421"/>
 		</rm:provider>
 
 		<!-- GEF -->

@@ -884,6 +884,7 @@
           </cmdargs>
         </buckminster>
 
+        <!--
         <echo message="" />
         <echo message="Setting API baseline" />
         <buckminster command="addbaseline">
@@ -892,6 +893,7 @@
             <arg value="CDO Baseline" />
           </cmdargs>
         </buckminster>
+        -->
       </then>
     </if>
   </target>

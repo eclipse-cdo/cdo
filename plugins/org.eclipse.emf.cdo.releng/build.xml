@@ -38,6 +38,13 @@
   <!-- Ant Contrib -->
   <!-- =========== -->
 
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="${ant.contrib}" />
+    </classpath>
+  </taskdef>
+
+  <!--
   <property name="antcontrib.version" value="1.0b3" />
   <property name="antcontrib.dir" location="${build.root}/tools/ant-contrib-${antcontrib.version}" />
   <property name="antcontrib.zip" location="${java.io.tmpdir}/ant-contrib-${antcontrib.version}.zip" />
@@ -55,6 +62,7 @@
       <pathelement location="${antcontrib.jar}" />
     </classpath>
   </taskdef>
+  -->
 
   <!-- ============== -->
   <!-- Eclipse Launch -->

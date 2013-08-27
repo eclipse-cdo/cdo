@@ -19,9 +19,9 @@ p2.mirrors = true
 loglevel = INFO
 
 # Set the following properties to true to speed up repeated builds 
-keep.tools = true
-keep.git = true
-keep.tp = true
+keep.tools = false
+keep.git = false
+keep.tp = false
 
 skip.provision = false
 skip.build = false

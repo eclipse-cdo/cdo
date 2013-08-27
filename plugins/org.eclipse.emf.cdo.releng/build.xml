@@ -509,8 +509,13 @@
           <echo message="Generating @{profile} for @{platform}" />
           <mkdir dir="${temp.products}/@{profile}-@{platform}" />
 
-          <director>
-            <arguments>
+          <eclipse.launch app="director">
+            <properties>
+              <sysproperty key="org.eclipse.update.jarprocessor.pack200" value="/shared/common/jdk1.6.0-latest/bin" />
+              <sysproperty key="eclipse.p2.mirrors" value="false" />
+              <sysproperty key="eclipse.p2.MD5Check" value="false" />
+            </properties>
+            <args>
               <arg value="-r" />
               <arg value="file:${build.root}" />
               <arg value="-r" />
@@ -533,8 +538,8 @@
               <arg value="@{ws}" />
               <arg value="-p2.arch" />
               <arg value="@{arch}" />
-            </arguments>
-          </director>
+            </args>
+          </eclipse.launch>
 
           <delete includeemptydirs="true" quiet="true">
             <fileset dir="${temp.products}/@{profile}-@{platform}">
@@ -781,8 +786,13 @@
         <!-- Install buckminster -->
         <echo message="" />
         <echo message="Installing buckminster" />
-        <director>
-          <arguments>
+        <eclipse.launch app="director">
+          <properties>
+            <sysproperty key="org.eclipse.update.jarprocessor.pack200" value="/shared/common/jdk1.6.0-latest/bin" />
+            <sysproperty key="eclipse.p2.mirrors" value="false" />
+            <sysproperty key="eclipse.p2.MD5Check" value="false" />
+          </properties>
+          <args>
             <arg value="-r" />
             <arg value="http://download.eclipse.org/tools/buckminster/headless-4.3" />
             <arg value="-r" />
@@ -809,8 +819,8 @@
             <arg value="org.eclipse.emf.cdo.releng.version.headless.feature.group" />
             <arg value="-i" />
             <arg value="org.eclipse.emf.cdo.releng.apireports.feature.group" />
-          </arguments>
-        </director>
+          </args>
+        </eclipse.launch>
 
         <!-- See http://wiki.eclipse.org/Hudson#Configuring_a_proxy_for_the_p2_director -->
         <copy file="${releng}/${build.location}/org.eclipse.core.net.prefs"

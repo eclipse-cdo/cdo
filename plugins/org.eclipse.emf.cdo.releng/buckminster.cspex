@@ -3,9 +3,6 @@
 
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
-		<cs:dependency name="org.eclipse.emf.cdo.releng.setup.product" componentType="eclipse.feature"/>
-		<cs:dependency name="org.eclipse.emf.cdo.server.product" componentType="eclipse.feature"/>
-		<cs:dependency name="org.eclipse.emf.cdo.explorer.product" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.releng.release" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.client" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.client.offline" componentType="osgi.bundle"/>

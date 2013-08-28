@@ -69,7 +69,6 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.cdo.server.product"/>
    </features>
 
 

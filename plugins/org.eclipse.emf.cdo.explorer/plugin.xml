@@ -21,11 +21,10 @@
    
    	<extension id="product" point="org.eclipse.core.runtime.products">
       	<product
-        	name="%product.name"
+        	name="CDO Explorer"
           description="%product.description"
           application="org.eclipse.emf.cdo.explorer.app">
         		<property name="appName" value="CDO Explorer"/>
-         		<property name="windowImages" value="icons/alt_window_16.gif,icons/alt_window_32.gif"/>
       	</product>
    	</extension>
 

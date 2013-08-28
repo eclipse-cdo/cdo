@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="CDO Server" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.server.app" useFeatures="false" includeLaunchers="true">
+<product name="CDO Server" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
    </configIni>
@@ -32,6 +32,7 @@
    </vm>
 
    <plugins>
+<!--
       <plugin id="org.apache.felix.gogo.command"/>
       <plugin id="org.apache.felix.gogo.runtime"/>
       <plugin id="org.apache.felix.gogo.shell"/>
@@ -66,10 +67,14 @@
       <plugin id="org.eclipse.net4j.util"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.h2"/>
+-->
    </plugins>
 
-   <features>
-   </features>
-
+  <features>
+		<feature id="org.eclipse.emf.cdo.server.product"/>    
+		<feature id="org.eclipse.equinox.core.feature"/>    
+		<feature id="org.eclipse.emf.common"/>    
+		<feature id="org.eclipse.emf.ecore"/>    
+  </features>
 
 </product>

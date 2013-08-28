@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.explorer;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
@@ -34,17 +35,25 @@ public class CDOExplorerActionBarAdvisor extends ActionBarAdvisor
   @Override
   protected void makeActions(IWorkbenchWindow window)
   {
-    introAction = ActionFactory.INTRO.create(window);
-    register(introAction);
+    if (window.getWorkbench().getIntroManager().hasIntro())
+    {
+      introAction = ActionFactory.INTRO.create(window);
+      register(introAction);
+    }
   }
 
   @Override
   protected void fillMenuBar(IMenuManager menuBar)
   {
+    menuBar.add(new Separator("additions"));
+
+    // Help
     MenuManager helpMenu = new MenuManager("&Help", IWorkbenchActionConstants.M_HELP);
     menuBar.add(helpMenu);
 
-    // Help
-    helpMenu.add(introAction);
+    if (introAction != null)
+    {
+      helpMenu.add(introAction);
+    }
   }
 }

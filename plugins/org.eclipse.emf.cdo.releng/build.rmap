@@ -4,9 +4,10 @@
 
 	<!-- Properties -->
 
+	<rm:property mutable="true" key="train" value="luna"/>
 	<rm:property mutable="true" key="platform.version" value="4.4milestones"/>
 	<rm:property mutable="true" key="emf.version" value="2.10milestones"/>
-	<rm:property mutable="true" key="orbit.version" value="I20130816141634"/>
+	<rm:property mutable="true" key="orbit.version" value="I20130827062727"/>
 
 	<!-- Locators -->
 
@@ -43,6 +44,13 @@
 	</rm:searchPath>
 	
 	<rm:searchPath name="p2">
+
+		<!-- RELEASE TRAIN -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/releases/{0}">
+				<bc:propertyRef key="train"/>
+			</rm:uri>
+		</rm:provider>
 
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">

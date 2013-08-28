@@ -95,6 +95,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.explorer.product"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.tests.hibernate"
          version="0.0.0"/>
 
@@ -108,6 +112,10 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.lissome"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.product"
          version="0.0.0"/>
 
    <includes
@@ -204,6 +212,10 @@
 
    <includes
          id="org.eclipse.emf.cdo.releng.setup.ide"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.product"
          version="0.0.0"/>
 
    <plugin

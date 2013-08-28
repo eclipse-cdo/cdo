@@ -103,6 +103,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.server.product"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.tests.hibernate"
          version="0.0.0"/>
 

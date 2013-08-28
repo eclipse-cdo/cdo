@@ -205,7 +205,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
    */
   public synchronized boolean hasSubscription(CDOID id)
   {
-    checkOpen();
+    if (isClosed())
+    {
+      return false;
+    }
+
     return changeSubscriptionIDs.contains(id);
   }
 

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.dawn.tests.ui.util;
 
 import static org.eclipse.swtbot.eclipse.finder.matchers.WidgetMatcherFactory.withPartName;
 import static org.eclipse.swtbot.eclipse.finder.waits.Conditions.waitForEditor;
-import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.core.AllOf.allOf;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.waits.WaitForEditor;
@@ -32,7 +32,6 @@ public class DawnEMFEditorBot extends SWTWorkbenchBot
     return emfEditor(fileName, 0);
   }
 
-  @SuppressWarnings("unchecked")
   public DawnSWTBotEMFEditor emfEditor(String fileName, int index) throws WidgetNotFoundException
   {
     Matcher<IEditorReference> withPartName = withPartName(fileName);

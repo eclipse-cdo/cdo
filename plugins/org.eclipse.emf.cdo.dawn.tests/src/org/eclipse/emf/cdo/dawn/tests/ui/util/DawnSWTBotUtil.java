@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.dawn.tests.ui.util;
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withMnemonic;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart;
@@ -313,7 +313,6 @@ public class DawnSWTBotUtil
     return bot.activeView();
   }
 
-  @SuppressWarnings("unchecked")
   public static SWTBotMenu findContextMenu(final AbstractSWTBot<?> bot, final String... texts)
   {
     final Matcher<?>[] matchers = new Matcher<?>[texts.length];

@@ -15,11 +15,10 @@
 
    	<extension id="tcp_h2" point="org.eclipse.core.runtime.products">
       	<product
-        	name="%product.name"
+        	name="CDO Server"
           description="%product.description"
           application="org.eclipse.emf.cdo.server.app">
         		<property name="appName" value="CDO Server"/>
-         		<property name="windowImages" value="icons/alt_window_16.gif,icons/alt_window_32.gif"/>
       	</product>
    	</extension>
 

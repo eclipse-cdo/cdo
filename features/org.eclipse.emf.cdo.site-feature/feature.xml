@@ -83,6 +83,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.server"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.server.objectivity"
          version="0.0.0"/>
 
@@ -112,10 +116,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.lissome"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.product"
          version="0.0.0"/>
 
    <includes

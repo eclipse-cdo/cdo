@@ -13,11 +13,13 @@
 	<cq:advisorNode namePattern="org\.gastro.*\.source" skipComponent="true"/>
 	<cq:advisorNode namePattern="com\.mongodb.*\.source" skipComponent="true"/>
 
-	<!-- For unknown reasons source 1.0.4 gets included for 1.1.1 -->
+	<!-- For unknown reasons source 1.0.4 gets included for 1.1.1 
 	<cq:advisorNode namePattern="org\.apache\.commons\.logging\.source" skipComponent="true"/>
+	-->
 
-	<!-- For unknown reasons source 1.4.0 gets included for 1.3.0 -->
+	<!-- For unknown reasons source 1.4.0 gets included for 1.3.0 
 	<cq:advisorNode namePattern="org\.apache\.commons\.codec\.source" skipComponent="true"/>
+	-->
 
 	<cq:advisorNode namePattern=".*" useMaterialization="false" useTargetPlatform="false"/>
 </cq:componentQuery>

@@ -15,54 +15,11 @@
   <property file="build.properties" />
   <property environment="env" />
 
-  <!-- ========== -->
-  <!-- Build Root -->
-  <!-- ========== -->
-
-  <condition property="build.root" value="${env.WORKSPACE}">
-    <isset property="env.HUDSON_URL" />
-  </condition>
-  <fail unless="build.root" message="The property 'build.root' must be defined in a 'local.properties' file" />
-
-  <!--
-	<echo message="Deleting contents of ${build.root}" />
-	<delete includeemptydirs="true" failonerror="false" verbose="false">
-		<fileset dir="${build.root}">
-			<include name="**" />
-		</fileset>
-	</delete>
-	<mkdir dir="${build.root}" />
-	-->
-
-  <!-- =========== -->
-  <!-- Ant Contrib -->
-  <!-- =========== -->
-
   <taskdef resource="net/sf/antcontrib/antlib.xml">
     <classpath>
       <pathelement location="${ant.contrib}" />
     </classpath>
   </taskdef>
-
-  <!--
-  <property name="antcontrib.version" value="1.0b3" />
-  <property name="antcontrib.dir" location="${build.root}/tools/ant-contrib-${antcontrib.version}" />
-  <property name="antcontrib.zip" location="${java.io.tmpdir}/ant-contrib-${antcontrib.version}.zip" />
-  <property name="antcontrib.jar" location="${antcontrib.dir}/ant-contrib-${antcontrib.version}.jar" />
-
-  <mkdir dir="${antcontrib.dir}" />
-  <get src="http://www.java2s.com/Code/JarDownload/ant-contrib/ant-contrib-${antcontrib.version}.jar.zip"
-       dest="${antcontrib.zip}"
-       skipexisting="true" />
-
-  <unzip dest="${antcontrib.dir}" src="${antcontrib.zip}" />
-
-  <taskdef resource="net/sf/antcontrib/antlib.xml">
-    <classpath>
-      <pathelement location="${antcontrib.jar}" />
-    </classpath>
-  </taskdef>
-  -->
 
   <!-- ============== -->
   <!-- Eclipse Launch -->
@@ -555,6 +512,7 @@
   <!-- =========== -->
 
   <target name="-init.hudson" if="env.HUDSON_URL">
+    <property name="build.root" value="${env.WORKSPACE}" />
     <property name="build.location" value="hudson" />
     <property name="build.timestamp" value="${env.BUILD_ID}" />
     <property name="loglevel" value="${env.LOG_LEVEL}" />
@@ -612,7 +570,7 @@
       </and>
     </condition>
 
-    <!-- site.signing -->
+    <!-- eclipse.staging.area -->
     <if>
       <equals arg1="${site.signing}" arg2="true" />
       <then>
@@ -626,15 +584,19 @@
   <!-- ========== -->
 
   <target name="-init.local" unless="env.HUDSON_URL">
+    <fail unless="build.root" message="The property 'build.root' must be defined in a 'local.properties' file" />
+
     <property name="build.location" value="local" />
     <property name="build.trigger" value="manual" />
     <property name="site.signing" value="false" />
     <property name="git.clone" value="${build.root}/git" />
 
+    <!-- build.timestamp -->
     <tstamp>
       <format property="build.timestamp" pattern="yyyy-MM-dd_HH-mm-ss" />
     </tstamp>
 
+    <!-- git.clone -->
     <if>
       <and>
         <equals arg1="${keep.git}" arg2="true" />
@@ -828,9 +790,12 @@
           </fileset>
         </delete>
 
+
+        <!-- Workspace.zip -->
         <mkdir dir="${result}" />
         <unzip dest="${ws}" src="${releng}/hudson/workspace.zip" />
 
+        <!-- API Baseline -->
         <if>
           <equals arg1="${build.location}" arg2="local" />
           <then>
@@ -840,16 +805,12 @@
                            replace="path=&quot;${baseline.dir}&quot;" />
           </then>
         </if>
-
         <copy file="${releng}/hudson/api_baseline.xml" tofile="${releng}/hudson/api_baseline.target" verbose="true" />
-        <copy file="${releng}/hudson/test-report-empty.xml" tofile="${test.report}" verbose="true" />
 
-        <buckminster command="setpref">
-          <cmdargs>
-            <arg value="maxParallelResolutions=1" />
-          </cmdargs>
-        </buckminster>
+        <!-- Test Report -->
+        <copy file="${releng}/hudson/test-report-empty.xml" tofile="${test.report}" overwrite="true" verbose="true" />
 
+        <!-- Target Platform -->
         <if>
           <and>
             <equals arg1="${keep.tp}" arg2="true" />
@@ -867,10 +828,16 @@
             </delete>
           </else>
         </if>
-
         <echo message="Importing binaries into ${tp}" />
-        <echo message="Importing projects into ${ws}" />
         <mkdir dir="${tp}" />
+
+        <!-- Import MSpec -->
+        <echo message="Importing projects into ${ws}" />
+        <buckminster command="setpref">
+          <cmdargs>
+            <arg value="maxParallelResolutions=1" />
+          </cmdargs>
+        </buckminster>
         <buckminster command="import">
           <cmdargs>
             <arg value="-B" />

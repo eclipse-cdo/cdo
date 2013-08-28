@@ -37,6 +37,7 @@ import org.eclipse.emf.compare.diff.DefaultDiffEngine;
 import org.eclipse.emf.compare.diff.DiffBuilder;
 import org.eclipse.emf.compare.diff.FeatureFilter;
 import org.eclipse.emf.compare.diff.IDiffEngine;
+import org.eclipse.emf.compare.scope.DefaultComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -170,7 +171,7 @@ public class EMFCompareTest extends AbstractCDOTest
     Product1 product0 = populate(resourceSetB).getProducts().get(0);
     product0.setName("ProductB");
 
-    IComparisonScope scope = EMFCompare.createDefaultScope(resourceSetA, resourceSetB);
+    IComparisonScope scope = new DefaultComparisonScope(resourceSetA, resourceSetB, null);
 
     // Configure EMF Compare
     // IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);

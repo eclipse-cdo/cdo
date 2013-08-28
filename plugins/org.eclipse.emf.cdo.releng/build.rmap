@@ -133,7 +133,7 @@
 			<!-- ################################################################ -->
 			<!-- ## Do not forget to adjust dawn tests feature.properties (1x) ## -->
 			<!-- ################################################################ -->
-			<rm:uri format="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site"/>
+			<rm:uri format="http://download.eclipse.org/technology/swtbot/releases/2.1.1"/>
 		</rm:provider>
 
 		<!-- MYLYN -->

@@ -140,7 +140,7 @@
   <extension
         point="org.eclipse.ui.perspectives">
      <perspective
-           class="org.eclipse.emf.cdo.internal.ui.perspectives.CDOExplorerPerspective"
+           class="org.eclipse.emf.cdo.internal.ui.perspectives.CDOPerspective"
            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_sessions.gif"
            id="org.eclipse.emf.cdo.ui.CDOExplorerPerspective"
            name="%perspective.name">
@@ -178,6 +178,80 @@
             inputTypes="org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput"
             id="org.eclipse.emf.cdo.ui.CDOLobStorage">
       </provider>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.CDOResourceNodeContributions"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResourceNode">
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.RemoveResourceActionDelegate"
+               icon="icons/full/elcl16/delete_edit.gif"
+               id="org.eclipse.emf.cdo.ui.RemoveResource"
+               label="%action.label.2"
+               tooltip="%action.tooltip.1">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.RenameResourceActionDelegate"
+               id="org.eclipse.emf.cdo.ui.RenameResource"
+               label="%action.label.13"
+               tooltip="%action.tooltip.11">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.CDOResourceFolderContributions"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.ImportResourceActionDelegate"
+               icon="icons/full/elcl16/import_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ImportResource"
+               label="%action.label.9"
+               tooltip="%action.tooltip.8">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.NewBinaryResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOBinaryResource.gif"
+               id="org.eclipse.emf.cdo.ui.NewBinaryResource"
+               label="%action.label.16"
+               tooltip="%action.tooltip.13">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.NewTextResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOTextResource.gif"
+               id="org.eclipse.emf.cdo.ui.NewTextResource"
+               label="%action.label.15"
+               tooltip="%action.tooltip.12">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.NewResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOResource.gif"
+               id="org.eclipse.emf.cdo.ui.NewResource"
+               label="%action.label.3"
+               tooltip="%action.tooltip.2">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.NewResourceFolderActionDelegate"
+               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
+               id="org.eclipse.emf.cdo.ui.NewResourceFolder"
+               label="%action.label.4"
+               tooltip="%action.tooltip.3">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.ui.CDOResourceActionContribution"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResource">
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.ExportResourceActionDelegate"
+               icon="icons/full/elcl16/export_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ExportResource"
+               label="%action.label.10"
+               tooltip="%action.tooltip.14">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>

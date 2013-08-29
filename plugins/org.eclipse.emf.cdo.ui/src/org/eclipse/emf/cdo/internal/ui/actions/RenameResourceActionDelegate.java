@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,29 +9,27 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.ui.internal.ide.actions;
+package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.internal.ui.actions.ResourceNodeNameInputValidator;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
 
 /**
- * @author Eike Stepper
+ * @author Victor Roldan Betancort
  */
-public abstract class NewResourceNodeActionDelegate extends TransactionalBackgroundActionDelegate
+public class RenameResourceActionDelegate extends TransactionalBackgroundActionDelegate
 {
-  private CDOResourceNode newResourceNode;
+  private String newResourceName;
 
-  public NewResourceNodeActionDelegate(String text)
+  public RenameResourceActionDelegate()
   {
-    super(text);
+    super(Messages.getString("RenameResourceActionDelegate.0")); //$NON-NLS-1$
   }
 
   @Override
@@ -43,37 +41,37 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
         Messages.getString("NewResourceNodeAction_0"), null, new ResourceNodeNameInputValidator((CDOResourceNode)object)); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
-      setNewResourceNode(createNewResourceNode());
-      getNewResourceNode().setName(dialog.getValue());
+      setNewResourceName(dialog.getValue());
       return super.preRun(object);
     }
 
+    cancel();
+
     return null;
+  }
+
+  private void setNewResourceName(String newName)
+  {
+    newResourceName = newName;
+  }
+
+  private String getNewResourceName()
+  {
+    return newResourceName;
   }
 
   @Override
   protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
       throws Exception
   {
-    if (object instanceof CDOResourceFolder)
+    if (object instanceof CDOResourceNode)
     {
-      ((CDOResourceFolder)object).getNodes().add(getNewResourceNode());
+      ((CDOResourceNode)object).setName(getNewResourceName());
     }
     else
     {
-      transaction.getRootResource().getContents().add(getNewResourceNode());
+      throw new IllegalArgumentException("object is not a CDOResourceNode"); //$NON-NLS-1$
     }
   }
 
-  protected void setNewResourceNode(CDOResourceNode newResourceNode)
-  {
-    this.newResourceNode = newResourceNode;
-  }
-
-  protected CDOResourceNode getNewResourceNode()
-  {
-    return newResourceNode;
-  }
-
-  protected abstract CDOResourceNode createNewResourceNode();
 }

@@ -33,6 +33,7 @@ public class ChangeViewTargetActionDelegate extends ViewAwareActionDelegate
     {
       action = new SwitchTargetAction(getPage(), getView());
     }
+
     action.run();
   }
 }

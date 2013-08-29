@@ -23,13 +23,13 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Victor Roldan Betancort
  */
-public class CDOExplorerPerspective implements IPerspectiveFactory
+public class CDOPerspective implements IPerspectiveFactory
 {
   public static final String ID = "org.eclipse.emf.cdo.ui.CDOExplorerPerspective"; //$NON-NLS-1$
 
   private IPageLayout pageLayout;
 
-  public CDOExplorerPerspective()
+  public CDOPerspective()
   {
   }
 
@@ -85,6 +85,6 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
   static public boolean isCurrent()
   {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId()
-        .equals(CDOExplorerPerspective.ID);
+        .equals(CDOPerspective.ID);
   }
 }

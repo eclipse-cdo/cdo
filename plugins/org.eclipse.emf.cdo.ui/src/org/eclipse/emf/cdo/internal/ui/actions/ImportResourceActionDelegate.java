@@ -9,59 +9,55 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.ui.internal.ide.actions;
+package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
-import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
-import org.eclipse.net4j.util.io.IORuntimeException;
-
-import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * @author Victor Roldan Betancort
  */
-public class ExportResourceActionDelegate extends TransactionalBackgroundActionDelegate
+public class ImportResourceActionDelegate extends NewResourceActionDelegate
 {
-  private URI targetURI;
+  private URI sourceURI;
 
-  public ExportResourceActionDelegate()
+  public ImportResourceActionDelegate()
   {
-    super(Messages.getString("ExportSelectedResourceAction_0")); //$NON-NLS-1$
   }
 
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    ResourceDialog dialog = new ResourceDialog(new Shell(),
-        Messages.getString("ExportSelectedResourceAction_1"), SWT.SAVE); //$NON-NLS-1$
+    ImportResourceDialog dialog = new ImportResourceDialog(new Shell(),
+        Messages.getString("ImportResourceToFolderAction_0"), SWT.OPEN); //$NON-NLS-1$
     if (dialog.open() == ImportResourceDialog.OK)
     {
       List<URI> uris = dialog.getURIs();
       if (uris.size() == 1)
       {
-        targetURI = uris.get(0);
+        sourceURI = uris.get(0);
+        setNewResourceNode(createNewResourceNode());
+        getNewResourceNode().setName(dialog.getTargetPath());
+
         CDOTransaction transaction = object.cdoView().getSession().openTransaction();
         new CDOTransactionCommentator(transaction);
 
@@ -69,8 +65,8 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
         return transactionalObject;
       }
 
-      MessageDialog.openError(new Shell(), Messages.getString("ExportResourceActionDelegate.0"), //$NON-NLS-1$
-          Messages.getString("ExportSelectedResourceAction_2")); //$NON-NLS-1$
+      MessageDialog.openError(new Shell(), Messages.getString("ImportResourceActionDelegate.0"), //$NON-NLS-1$
+          Messages.getString("ImportResourceToFolderAction_1")); //$NON-NLS-1$
       cancel();
     }
     else
@@ -82,32 +78,27 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
   }
 
   @Override
-  protected void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
+  protected CDOResourceNode createNewResourceNode()
   {
+    CDOResource resource = (CDOResource)super.createNewResourceNode();
+
+    // Source ResourceSet
+    ResourceSet sourceSet = new ResourceSetImpl();
+    // sourceSet.setPackageRegistry(transaction.getSession().getPackageRegistry());
+
     // Source Resource
-    Resource source = object instanceof CDOResource ? (CDOResource)object : object.cdoResource();
+    Resource source = sourceSet.getResource(sourceURI, true);
     List<EObject> sourceContents = new ArrayList<EObject>(source.getContents());
-    exportObjects(sourceContents);
-  }
 
-  private void exportObjects(List<EObject> sourceContents)
-  {
     // Target Resource
-    ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-    Resource resource = resourceSet.createResource(targetURI);
+    EList<EObject> targetContents = resource.getContents();
 
-    Collection<EObject> copiedRoots = EcoreUtil.copyAll(sourceContents);
-    resource.getContents().addAll(copiedRoots);
+    // Move contents over
+    for (EObject root : sourceContents)
+    {
+      targetContents.add(root);
+    }
 
-    try
-    {
-      resource.save(null);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    return resource;
   }
 }

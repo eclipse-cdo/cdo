@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.wizards;
 
 import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
-import org.eclipse.emf.cdo.internal.ui.perspectives.CDOExplorerPerspective;
+import org.eclipse.emf.cdo.internal.ui.perspectives.CDOPerspective;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
@@ -85,7 +85,7 @@ public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
     }
 
     RepositoryManager.INSTANCE.addElement(newProject);
-    if (!CDOExplorerPerspective.isCurrent())
+    if (!CDOPerspective.isCurrent())
     {
       openCDOExplorerPerspective(workbench);
     }
@@ -219,7 +219,7 @@ public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
               Messages.getString("CDOProjectCreationWizard.6")); //$NON-NLS-1$
           if (result)
           {
-            workbench.showPerspective(CDOExplorerPerspective.ID, workbench.getActiveWorkbenchWindow());
+            workbench.showPerspective(CDOPerspective.ID, workbench.getActiveWorkbenchWindow());
           }
         }
         catch (WorkbenchException ex)

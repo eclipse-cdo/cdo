@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer;
 
-import org.eclipse.emf.cdo.internal.ui.perspectives.CDOExplorerPerspective;
+import org.eclipse.emf.cdo.internal.ui.perspectives.CDOPerspective;
 
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
@@ -38,6 +38,6 @@ public class CDOExplorerWorkbenchAdvisor extends WorkbenchAdvisor
   @Override
   public String getInitialWindowPerspectiveId()
   {
-    return CDOExplorerPerspective.ID;
+    return CDOPerspective.ID;
   }
 }

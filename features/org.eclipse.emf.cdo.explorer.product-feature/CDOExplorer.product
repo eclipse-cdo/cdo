@@ -33,7 +33,9 @@
    <features>
       <feature id="org.eclipse.emf.cdo.explorer.product"/>
       <feature id="org.eclipse.rcp"/>
+      <!--
       <feature id="org.eclipse.platform"/>
+      -->
       <feature id="org.eclipse.emf.ecore"/>
       <feature id="org.eclipse.emf.edit"/>
       <feature id="org.eclipse.emf.edit.ui"/>

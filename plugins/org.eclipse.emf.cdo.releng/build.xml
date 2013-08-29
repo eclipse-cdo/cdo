@@ -21,9 +21,31 @@
     </classpath>
   </taskdef>
 
-  <!-- ============== -->
-  <!-- Eclipse Launch -->
-  <!-- ============== -->
+  <!-- ======= -->
+  <!-- Eclipse -->
+  <!-- ======= -->
+
+  <macrodef name="cleandir">
+    <attribute name="dir" />
+    <attribute name="mkdir" default="true" />
+    <sequential>
+      <delete includeemptydirs="true" failonerror="false" verbose="false">
+        <fileset dir="@{dir}" defaultexcludes="false">
+          <include name="**" />
+        </fileset>
+      </delete>
+      <if>
+        <equals arg1="@{mkdir}" arg2="true" />
+      </if>
+      <then>
+        <mkdir dir="@{dir}" />
+      </then>
+    </sequential>
+  </macrodef>
+
+  <!-- ======= -->
+  <!-- Eclipse -->
+  <!-- ======= -->
 
   <macrodef name="eclipse">
     <attribute name="app" />
@@ -131,21 +153,9 @@
         </fileset>
       </delete>
 
-      <!-- Prepare buckminster.output.root -->
-      <delete includeemptydirs="true" failonerror="false">
-        <fileset dir="${buckminster.output.root}" defaultexcludes="false">
-          <include name="**" />
-        </fileset>
-      </delete>
-      <mkdir dir="${buckminster.output.root}" />
-
-      <!-- Prepare buckminster.temp.root -->
-      <delete includeemptydirs="true" failonerror="false" verbose="false">
-        <fileset dir="${buckminster.temp.root}" defaultexcludes="false">
-          <include name="**" />
-        </fileset>
-      </delete>
-      <mkdir dir="${buckminster.temp.root}" />
+      <!-- Prepare Buckminster -->
+      <cleandir dir="${buckminster.output.root}" />
+      <cleandir dir="${buckminster.temp.root}" />
 
       <!-- Perform Buckminster -->
       <buckminster command="perform">
@@ -153,13 +163,7 @@
           <arg value="@{feature}#site.p2" />
         </cmdargs>
       </buckminster>
-
-      <!-- Cleanup buckminster.temp.root -->
-      <delete includeemptydirs="true" failonerror="false" verbose="false">
-        <fileset dir="${buckminster.temp.root}" defaultexcludes="false">
-          <include name="**" />
-        </fileset>
-      </delete>
+      <cleandir dir="${buckminster.temp.root}" mkdir="false" />
 
       <!-- Determine site.p2 directory -->
       <pathconvert property="@{feature}.dir">
@@ -185,6 +189,7 @@
     <sequential>
       <echo message="" />
       <echo message="Generating help center" />
+      <cleandir dir="${build.root}/help" mkdir="false" />
       <copy todir="${build.root}">
         <fileset dir="${releng}">
           <include name="help/**" />
@@ -255,12 +260,7 @@
       <echo message="" />
       <echo message="Generating dropin archives" />
       <property name="temp.dropins" location="${result}/temp.dropins" />
-      <delete failonerror="false" includeemptydirs="true" quiet="true">
-        <fileset dir="${temp.dropins}" defaultexcludes="false">
-          <include name="**/*" />
-        </fileset>
-      </delete>
-      <mkdir dir="${temp.dropins}" />
+      <cleandir dir="${temp.dropins}" />
 
       <copy todir="${temp.dropins}" failonerror="true">
         <fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
@@ -334,12 +334,7 @@
   <macrodef name="generate.products">
     <sequential>
       <property name="temp.products" location="${result}/temp.products" />
-      <delete includeemptydirs="true" failonerror="false">
-        <fileset dir="${temp.products}">
-          <include name="**" />
-        </fileset>
-      </delete>
-      <mkdir dir="${temp.products}" />
+      <cleandir dir="${temp.products}" />
 
       <if>
         <not>
@@ -613,11 +608,7 @@
       </then>
       <else>
         <echo message="Copying Git clone from ${original.git.dir}" />
-        <delete includeemptydirs="true" failonerror="false">
-          <fileset dir="${git.clone}" defaultexcludes="false">
-            <include name="**" />
-          </fileset>
-        </delete>
+        <cleandir dir="${git.clone}" />
         <copy todir="${git.clone}">
           <fileset dir="${original.git.dir}" defaultexcludes="false">
             <exclude name="**/*.class" />
@@ -791,6 +782,7 @@
         <!-- Cleanup build.root -->
         <delete failonerror="false" includeemptydirs="true">
           <fileset dir="${build.root}" defaultexcludes="false">
+            <include name="zips" />
             <include name="*.css" />
             <include name="*.html" />
             <include name="*.xml" />

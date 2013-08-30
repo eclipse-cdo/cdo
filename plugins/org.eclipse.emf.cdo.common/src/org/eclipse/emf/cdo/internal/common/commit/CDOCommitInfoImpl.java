@@ -198,16 +198,23 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   @Override
   public String toString()
   {
+    return toString(this);
+  }
+
+  public static String toString(CDOCommitInfo commitInfo)
+  {
     String data = null;
-    if (commitData != null)
+    if (commitInfo.isCommitDataLoaded())
     {
-      data = commitData.toString();
+      data = CDOCommitDataImpl.toString(commitInfo);
     }
 
-    String timeStamp = CDOCommonUtil.formatTimeStamp(getTimeStamp());
+    long t = commitInfo.getTimeStamp();
+    String timeStamp = CDOCommonUtil.formatTimeStamp(t) + " (" + t + ")";
+
     return MessageFormat
         .format(
-            "CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", getPreviousTimeStamp(), getBranch(), timeStamp, getUserID(), getComment(), data); //$NON-NLS-1$
+            "CommitInfo[{0}, {1}, {2}, {3}, {4}]", timeStamp, commitInfo.getBranch(), commitInfo.getUserID(), commitInfo.getComment(), data); //$NON-NLS-1$
   }
 
   public synchronized boolean isCommitDataLoaded()

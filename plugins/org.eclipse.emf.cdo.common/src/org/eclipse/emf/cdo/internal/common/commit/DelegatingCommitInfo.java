@@ -118,4 +118,10 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
   {
     getDelegate().merge(changeSetData);
   }
+
+  @Override
+  public String toString()
+  {
+    return getDelegate().toString();
+  }
 }

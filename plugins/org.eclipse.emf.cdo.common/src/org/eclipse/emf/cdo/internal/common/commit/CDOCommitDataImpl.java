@@ -40,8 +40,14 @@ public class CDOCommitDataImpl extends CDOChangeSetDataImpl implements CDOCommit
   @Override
   public String toString()
   {
+    return toString(this);
+  }
+
+  public static String toString(CDOCommitData commitData)
+  {
     return MessageFormat.format(
         "CommitData[newPackageUnits={0}, newObjects={1}, changedObjects={2}, detachedObjects={3}]", //$NON-NLS-1$
-        newPackageUnits.size(), getNewObjects().size(), getChangedObjects().size(), getDetachedObjects().size());
+        commitData.getNewPackageUnits().size(), commitData.getNewObjects().size(), commitData.getChangedObjects()
+            .size(), commitData.getDetachedObjects().size());
   }
 }

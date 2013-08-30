@@ -30,7 +30,16 @@ import java.util.zip.ZipOutputStream;
  */
 public final class ZIPUtil
 {
+  /**
+   * @deprecated As of 3.4 use {@link #DEFAULT_BUFFER_SIZE}.
+   */
+  @Deprecated
   public static final int DEFALULT_BUFFER_SIZE = 4096;
+
+  /**
+   * @since 3.4
+   */
+  public static final int DEFAULT_BUFFER_SIZE = DEFALULT_BUFFER_SIZE;
 
   private static final int ORDER_KEEP = -1;
 
@@ -42,7 +51,7 @@ public final class ZIPUtil
 
   public static void zip(ZipEntryHandler handler, File zipFile) throws IORuntimeException
   {
-    final byte[] buffer = new byte[DEFALULT_BUFFER_SIZE];
+    final byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
     final EntryContext context = new EntryContext();
 
     FileOutputStream fos = IOUtil.openOutputStream(zipFile);
@@ -52,7 +61,7 @@ public final class ZIPUtil
 
     try
     {
-      zos = new ZipOutputStream(new BufferedOutputStream(fos, DEFALULT_BUFFER_SIZE));
+      zos = new ZipOutputStream(new BufferedOutputStream(fos, DEFAULT_BUFFER_SIZE));
       for (;;)
       {
         handler.handleEntry(context);
@@ -113,7 +122,7 @@ public final class ZIPUtil
 
     try
     {
-      zis = new ZipInputStream(new BufferedInputStream(fis, DEFALULT_BUFFER_SIZE));
+      zis = new ZipInputStream(new BufferedInputStream(fis, DEFAULT_BUFFER_SIZE));
 
       ZipEntry entry;
       while ((entry = zis.getNextEntry()) != null)
@@ -142,7 +151,7 @@ public final class ZIPUtil
 
   public static void unzip(File zipFile, File targetFolder) throws IORuntimeException
   {
-    unzip(zipFile, new FileSystemUnzipHandler(targetFolder, DEFALULT_BUFFER_SIZE));
+    unzip(zipFile, new FileSystemUnzipHandler(targetFolder, DEFAULT_BUFFER_SIZE));
   }
 
   /**
@@ -376,7 +385,7 @@ public final class ZIPUtil
      */
     public FileSystemUnzipHandler(File targetFolder)
     {
-      this(targetFolder, DEFALULT_BUFFER_SIZE);
+      this(targetFolder, DEFAULT_BUFFER_SIZE);
     }
 
     public File getTargetFolder()

@@ -92,7 +92,7 @@ public final class Buckminster
         baselineDir.mkdirs();
 
         final File[] rootDir = { null };
-        ZIPUtil.unzip(file, new FileSystemUnzipHandler(baselineDir, ZIPUtil.DEFALULT_BUFFER_SIZE)
+        ZIPUtil.unzip(file, new FileSystemUnzipHandler(baselineDir, ZIPUtil.DEFAULT_BUFFER_SIZE)
         {
           @Override
           public void unzipFile(String name, InputStream zipStream)

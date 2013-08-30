@@ -36,10 +36,10 @@
       </delete>
       <if>
         <equals arg1="@{mkdir}" arg2="true" />
+        <then>
+          <mkdir dir="@{dir}" />
+        </then>
       </if>
-      <then>
-        <mkdir dir="@{dir}" />
-      </then>
     </sequential>
   </macrodef>
 

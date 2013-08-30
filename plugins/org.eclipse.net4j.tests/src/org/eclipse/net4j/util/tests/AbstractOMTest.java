@@ -299,11 +299,11 @@ public abstract class AbstractOMTest extends TestCase
         }
         catch (Throwable t)
         {
-          AssertionFailedError assertionFailedError = getAssertionFailedError(t);
-          if (assertionFailedError != null)
-          {
-            t = assertionFailedError;
-          }
+          // AssertionFailedError assertionFailedError = getAssertionFailedError(t);
+          // if (assertionFailedError != null)
+          // {
+          // t = assertionFailedError;
+          // }
 
           if (!SUPPRESS_OUTPUT)
           {
@@ -338,11 +338,11 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (Error err)
     {
-      AssertionFailedError assertionFailedError = getAssertionFailedError(err);
-      if (assertionFailedError != null)
-      {
-        err = assertionFailedError;
-      }
+      // AssertionFailedError assertionFailedError = getAssertionFailedError(err);
+      // if (assertionFailedError != null)
+      // {
+      // err = assertionFailedError;
+      // }
 
       if (!SUPPRESS_OUTPUT)
       {
@@ -353,23 +353,23 @@ public abstract class AbstractOMTest extends TestCase
     }
   }
 
-  private AssertionFailedError getAssertionFailedError(Throwable err)
-  {
-    if (err.getClass() == AssertionError.class)
-    {
-      // JUnit4 seems to throw java.lang.AssertionError, which the JUNit view displays as error rather than failure
-      AssertionFailedError replacementError = new AssertionFailedError(err.getMessage());
-      replacementError.initCause(err.getCause());
-      return replacementError;
-    }
-
-    if (err instanceof AssertionFailedError)
-    {
-      return (AssertionFailedError)err;
-    }
-
-    return null;
-  }
+  // private AssertionFailedError getAssertionFailedError(Throwable err)
+  // {
+  // if (err.getClass() == AssertionError.class)
+  // {
+  // // JUnit4 seems to throw java.lang.AssertionError, which the JUNit view displays as error rather than failure
+  // AssertionFailedError replacementError = new AssertionFailedError(err.getMessage());
+  // replacementError.initCause(err);
+  // return replacementError;
+  // }
+  //
+  // if (err instanceof AssertionFailedError)
+  // {
+  // return (AssertionFailedError)err;
+  // }
+  //
+  // return null;
+  // }
 
   protected void enableConsole()
   {

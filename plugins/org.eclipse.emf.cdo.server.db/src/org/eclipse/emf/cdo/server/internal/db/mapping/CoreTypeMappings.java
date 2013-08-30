@@ -31,7 +31,10 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 
@@ -75,7 +78,20 @@ public class CoreTypeMappings
     @Override
     protected Object getDefaultValue()
     {
-      return getFeature().getDefaultValue();
+      // return getFeature().getDefaultValue();
+
+      EEnum eenum = (EEnum)getFeature().getEType();
+
+      String defaultValueLiteral = getFeature().getDefaultValueLiteral();
+      if (defaultValueLiteral != null)
+      {
+        EEnumLiteral literal = eenum.getEEnumLiteralByLiteral(defaultValueLiteral);
+        return literal.getValue();
+      }
+
+      Enumerator enumerator = (Enumerator)eenum.getDefaultValue();
+      return enumerator.getValue();
+
     }
 
     /**

@@ -157,8 +157,9 @@ public class OCLQueryHandler implements IQueryHandler
 
       helper.setContext(classifier);
 
+      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment = ocl.getEnvironment();
       Map<String, Object> parameters = new HashMap<String, Object>(queryParameters);
-      initEnvironment(ocl.getEnvironment(), packageRegistry, parameters);
+      initEnvironment(environment, packageRegistry, parameters);
 
       OCLExpression<EClassifier> expr = helper.createQuery(queryString);
       Query<EClassifier, EClass, EObject> query = ocl.createQuery(expr);
@@ -182,6 +183,12 @@ public class OCLQueryHandler implements IQueryHandler
       }
 
       Object result = evaluate(query, object);
+      if (result == environment.getOCLStandardLibrary().getInvalid())
+      {
+        throw new Exception(
+            "OCL query evaluated to 'invalid'. Run with '-Dorg.eclipse.ocl.debug=true' and visit the log for failure details.");
+      }
+
       if (result instanceof Collection<?>)
       {
         for (Object element : (Collection<?>)result)

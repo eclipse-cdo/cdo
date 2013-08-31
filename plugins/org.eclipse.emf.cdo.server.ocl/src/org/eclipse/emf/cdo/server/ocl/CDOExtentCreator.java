@@ -144,10 +144,7 @@ public class CDOExtentCreator implements OCLExtentCreator
   protected void createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp,
       final AtomicBoolean canceled, CDORevisionHandler revisionHandler)
   {
-    if (!eClass.isAbstract() && !eClass.isInterface())
-    {
-      accessor.handleRevisions(eClass, branch, timeStamp, false, revisionHandler);
-    }
+    handleRevisions(eClass, accessor, branch, timeStamp, revisionHandler);
 
     CDOPackageRegistry packageRegistry = accessor.getStore().getRepository().getPackageRegistry();
     List<EClass> subTypes = packageRegistry.getSubTypes().get(eClass);
@@ -160,8 +157,20 @@ public class CDOExtentCreator implements OCLExtentCreator
           break;
         }
 
-        accessor.handleRevisions(subType, branch, timeStamp, false, revisionHandler);
+        handleRevisions(subType, accessor, branch, timeStamp, revisionHandler);
       }
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void handleRevisions(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp,
+      CDORevisionHandler revisionHandler)
+  {
+    if (!eClass.isAbstract() && !eClass.isInterface())
+    {
+      accessor.handleRevisions(eClass, branch, timeStamp, false, revisionHandler);
     }
   }
 

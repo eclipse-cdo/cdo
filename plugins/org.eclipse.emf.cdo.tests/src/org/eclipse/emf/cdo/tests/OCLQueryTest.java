@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   private List<SalesOrder> salesOrders = new ArrayList<SalesOrder>();
 
+  private int objectCount;
+
   @Override
   protected void doSetUp() throws Exception
   {
@@ -81,6 +84,13 @@ public class OCLQueryTest extends AbstractCDOTest
     resource = null;
     transaction = null;
     super.doTearDown();
+  }
+
+  public void testAllEObjects() throws Exception
+  {
+    CDOQuery query = createQuery("EObject.allInstances()", EcorePackage.eINSTANCE.getEObject());
+    List<EObject> eObjects = query.getResult();
+    assertEquals(objectCount, eObjects.size());
   }
 
   public void testAllProducts() throws Exception
@@ -286,9 +296,13 @@ public class OCLQueryTest extends AbstractCDOTest
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException
   {
     disableConsole();
+
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     fillResource(resource);
+
+    objectCount = 1 + transaction.getNewObjects().size(); // Root resource + new objects
     transaction.commit();
+
     enableConsole();
     return resource;
   }

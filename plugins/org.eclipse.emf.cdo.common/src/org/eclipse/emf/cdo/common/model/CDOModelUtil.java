@@ -67,6 +67,8 @@ import java.util.Set;
  */
 public final class CDOModelUtil implements CDOModelConstants
 {
+  private static final EClass ROOT_TYPE = EcorePackage.eINSTANCE.getEObject();
+
   private static CDOType[] coreTypes;
 
   static
@@ -705,24 +707,31 @@ public final class CDOModelUtil implements CDOModelConstants
       if (classifier instanceof EClass)
       {
         EClass eClass = (EClass)classifier;
+        getSubType(eClass, ROOT_TYPE, result);
+
         for (EClass eSuperType : eClass.getEAllSuperTypes())
         {
-          if (eSuperType.eIsProxy())
-          {
-            OM.LOG.warn("getSubTypes encountered a proxy EClass which will be ignored: " + eSuperType);
-            continue;
-          }
-
-          List<EClass> list = result.get(eSuperType);
-          if (list == null)
-          {
-            list = new ArrayList<EClass>();
-            result.put(eSuperType, list);
-          }
-
-          list.add(eClass);
+          getSubType(eClass, eSuperType, result);
         }
       }
     }
+  }
+
+  private static void getSubType(EClass eClass, EClass eSuperType, Map<EClass, List<EClass>> result)
+  {
+    if (eSuperType.eIsProxy())
+    {
+      OM.LOG.warn("getSubTypes encountered a proxy EClass which will be ignored: " + eSuperType);
+      return;
+    }
+
+    List<EClass> list = result.get(eSuperType);
+    if (list == null)
+    {
+      list = new ArrayList<EClass>();
+      result.put(eSuperType, list);
+    }
+
+    list.add(eClass);
   }
 }

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -204,6 +205,17 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
     else
     {
+      EPackage ePackage = eClass.getEPackage();
+      if (CDOModelUtil.isCorePackage(ePackage) && !systemPackageMappingInfo.ecoreMapped)
+      {
+        return;
+      }
+
+      if (CDOModelUtil.isTypesPackage(ePackage) && !systemPackageMappingInfo.etypesMapped)
+      {
+        return;
+      }
+
       IClassMapping classMapping = getClassMapping(eClass);
       classMapping.handleRevisions(accessor, branch, timeStamp, exactTime, handler);
     }

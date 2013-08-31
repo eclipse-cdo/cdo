@@ -2387,7 +2387,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     if (!allDetachedObjects.isEmpty())
     {
-      // Remove possible stale references between remotely detached objects and locally changed or new objects
+      // Remove stale references from locally changed or new objects to remotely detached objects
       Set<CDOObject> remotelyDetachedObjects = getObjects(allDetachedObjects);
       removeCrossReferences(remotelyDetachedObjects, getDirtyObjects().values());
       removeCrossReferences(remotelyDetachedObjects, getNewObjects().values());
@@ -2405,7 +2405,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (!allChangedObjects.isEmpty())
     {
-      // Remove possible stale references between locally detached objects and remotely changed objects
+      // Remove stale references from remotely changed objects to locally detached objects
       Set<CDOObject> remotelyChangedObjects = getObjects(allChangedObjects);
       removeCrossReferences(getDetachedObjects().values(), remotelyChangedObjects);
     }

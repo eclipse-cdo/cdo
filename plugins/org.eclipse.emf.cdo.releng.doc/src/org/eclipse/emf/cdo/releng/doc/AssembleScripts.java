@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -732,7 +732,7 @@ public class AssembleScripts
         BufferedWriter writer = new BufferedWriter(out);
 
         writer.write("/*" + NL);
-        writer.write(" * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others." + NL);
+        writer.write(" * Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others." + NL);
         writer.write(" * All rights reserved. This program and the accompanying materials" + NL);
         writer.write(" * are made available under the terms of the Eclipse Public License v1.0" + NL);
         writer.write(" * which accompanies this distribution, and is available at" + NL);

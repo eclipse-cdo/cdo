@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.NodeE;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -99,6 +100,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createNodeC();
     case Model3Package.NODE_D:
       return createNodeD();
+    case Model3Package.NODE_E:
+      return createNodeE();
     case Model3Package.IMAGE:
       return createImage();
     case Model3Package.FILE:
@@ -224,6 +227,17 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     NodeDImpl nodeD = new NodeDImpl();
     return nodeD;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NodeE createNodeE()
+  {
+    NodeEImpl nodeE = new NodeEImpl();
+    return nodeE;
   }
 
   /**

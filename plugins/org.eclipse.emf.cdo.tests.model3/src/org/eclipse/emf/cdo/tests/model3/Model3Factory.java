@@ -92,6 +92,15 @@ public interface Model3Factory extends EFactory
   NodeD createNodeD();
 
   /**
+   * Returns a new object of class '<em>Node E</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node E</em>'.
+   * @generated
+   */
+  NodeE createNodeE();
+
+  /**
    * Returns a new object of class '<em>Image</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Image</em>'.

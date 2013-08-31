@@ -379,13 +379,59 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int NODE_D_FEATURE_COUNT = 5;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeEImpl <em>Node E</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeEImpl
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getNodeE()
+   * @generated
+   */
+  int NODE_E = 8;
+
+  /**
+   * The feature id for the '<em><b>Main Node</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_E__MAIN_NODE = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_E__NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_E__OTHER_NODES = 2;
+
+  /**
+   * The number of structural features of the '<em>Node E</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_E_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl <em>Image</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getImage()
    * @generated
    */
-  int IMAGE = 8;
+  int IMAGE = 9;
 
   /**
    * The feature id for the '<em><b>Width</b></em>' attribute.
@@ -426,7 +472,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getFile()
    * @generated
    */
-  int FILE = 9;
+  int FILE = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -459,7 +505,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getClassWithIDAttribute()
    * @generated
    */
-  int CLASS_WITH_ID_ATTRIBUTE = 10;
+  int CLASS_WITH_ID_ATTRIBUTE = 11;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -486,7 +532,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getClassWithJavaClassAttribute()
    * @generated
    */
-  int CLASS_WITH_JAVA_CLASS_ATTRIBUTE = 11;
+  int CLASS_WITH_JAVA_CLASS_ATTRIBUTE = 12;
 
   /**
    * The feature id for the '<em><b>Java Class</b></em>' attribute.
@@ -514,7 +560,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getClassWithJavaObjectAttribute()
    * @generated
    */
-  int CLASS_WITH_JAVA_OBJECT_ATTRIBUTE = 12;
+  int CLASS_WITH_JAVA_OBJECT_ATTRIBUTE = 13;
 
   /**
    * The feature id for the '<em><b>Java Object</b></em>' attribute.
@@ -541,7 +587,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 13;
+  int POINT = 14;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1 <em>Class1</em>}'. <!--
@@ -852,6 +898,49 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   EReference getNodeD_OppositeNode();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeE <em>Node E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Node E</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeE
+   * @generated
+   */
+  EClass getNodeE();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.NodeE#getMainNode <em>Main Node</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Main Node</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeE#getMainNode()
+   * @see #getNodeE()
+   * @generated
+   */
+  EReference getNodeE_MainNode();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeE#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeE#getName()
+   * @see #getNodeE()
+   * @generated
+   */
+  EAttribute getNodeE_Name();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeE#getOtherNodes <em>Other Nodes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Other Nodes</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeE#getOtherNodes()
+   * @see #getNodeE()
+   * @generated
+   */
+  EReference getNodeE_OtherNodes();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image <em>Image</em>}'. <!--

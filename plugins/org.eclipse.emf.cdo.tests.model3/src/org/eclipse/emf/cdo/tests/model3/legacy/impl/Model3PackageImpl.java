@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.NodeE;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -92,6 +93,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass nodeDEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass nodeEEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -473,6 +481,46 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getNodeE()
+  {
+    return nodeEEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNodeE_MainNode()
+  {
+    return (EReference)nodeEEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getNodeE_Name()
+  {
+    return (EAttribute)nodeEEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNodeE_OtherNodes()
+  {
+    return (EReference)nodeEEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -668,6 +716,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     createEReference(nodeDEClass, NODE_D__OTHER_NODES);
     createEReference(nodeDEClass, NODE_D__OPPOSITE_NODE);
 
+    nodeEEClass = createEClass(NODE_E);
+    createEReference(nodeEEClass, NODE_E__MAIN_NODE);
+    createEAttribute(nodeEEClass, NODE_E__NAME);
+    createEReference(nodeEEClass, NODE_E__OTHER_NODES);
+
     imageEClass = createEClass(IMAGE);
     createEAttribute(imageEClass, IMAGE__WIDTH);
     createEAttribute(imageEClass, IMAGE__HEIGHT);
@@ -806,6 +859,16 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     initEReference(getNodeD_OppositeNode(), this.getNodeD(), this.getNodeD_OtherNodes(), "oppositeNode", null, 0, 1,
         NodeD.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeEEClass, NodeE.class, "NodeE", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNodeE_MainNode(), this.getNodeA(), null, "mainNode", null, 0, 1, NodeE.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEAttribute(getNodeE_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeE.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeE_OtherNodes(), this.getNodeA(), null, "otherNodes", null, 0, -1, NodeE.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(imageEClass, Image.class, "Image", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getImage_Width(), theEcorePackage.getEInt(), "width", null, 0, 1, Image.class, !IS_TRANSIENT,

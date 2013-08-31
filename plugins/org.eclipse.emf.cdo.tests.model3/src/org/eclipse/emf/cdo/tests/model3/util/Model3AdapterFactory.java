@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.NodeE;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -134,6 +135,12 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     public Adapter caseNodeD(NodeD object)
     {
       return createNodeDAdapter();
+    }
+
+    @Override
+    public Adapter caseNodeE(NodeE object)
+    {
+      return createNodeEAdapter();
     }
 
     @Override
@@ -291,6 +298,21 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNodeDAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.NodeE <em>Node E</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeE
+   * @generated
+   */
+  public Adapter createNodeEAdapter()
   {
     return null;
   }

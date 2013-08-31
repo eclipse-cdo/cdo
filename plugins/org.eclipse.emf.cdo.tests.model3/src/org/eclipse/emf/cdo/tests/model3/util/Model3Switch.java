@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.NodeE;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -162,6 +163,14 @@ public class Model3Switch<T>
     {
       NodeD nodeD = (NodeD)theEObject;
       T result = caseNodeD(nodeD);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model3Package.NODE_E:
+    {
+      NodeE nodeE = (NodeE)theEObject;
+      T result = caseNodeE(nodeE);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -321,6 +330,22 @@ public class Model3Switch<T>
    * @generated
    */
   public T caseNodeD(NodeD object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Node E</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Node E</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNodeE(NodeE object)
   {
     return null;
   }

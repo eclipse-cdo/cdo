@@ -12,10 +12,12 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList.UninitializedCollection;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.collection.spi.PersistentCollection;
+import org.hibernate.type.CollectionType;
 
 /**
  * @author Martin Taal
@@ -61,6 +63,10 @@ public class CDOManyAttributeGetter extends CDOPropertyGetter
     if (list instanceof WrappedHibernateList)
     {
       final Object delegate = ((WrappedHibernateList)list).getDelegate();
+      if (delegate instanceof UninitializedCollection)
+      {
+        return CollectionType.UNFETCHED_COLLECTION;
+      }
       if (delegate instanceof PersistentCollection)
       {
         return delegate;

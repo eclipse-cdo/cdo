@@ -184,7 +184,7 @@ public class WrappedHibernateList implements InternalCDOList
         && !isConnectedToSession())
     {
       // use a dummy auto-expanding list
-      setDelegate(new ArrayList<Object>()
+      setDelegate(new UninitializedCollection<Object>()
       {
         private static final long serialVersionUID = 1L;
 
@@ -661,5 +661,11 @@ public class WrappedHibernateList implements InternalCDOList
   CDORevision getOwner()
   {
     return owner;
+  }
+
+  // tagging interface
+  class UninitializedCollection<E> extends ArrayList<E>
+  {
+    private static final long serialVersionUID = 1L;
   }
 }

@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 416298: reflective access to 'path' attribute
+ *    Christian W. Damus (CEA LIST) - bug 416298: CDOResourceNodes do not support reflective access to derived path attribute
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -264,6 +264,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     {
     case EresourcePackage.CDO_RESOURCE_NODE__PATH:
       return getPath();
+      
     default:
       return super.eGet(featureID, resolve, coreType);
     }
@@ -277,9 +278,9 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     case EresourcePackage.CDO_RESOURCE_NODE__PATH:
       setPath((String)newValue);
       break;
+      
     default:
       super.eSet(featureID, newValue);
-      break;
     }
   }
 } // CDOResourceNodeImpl

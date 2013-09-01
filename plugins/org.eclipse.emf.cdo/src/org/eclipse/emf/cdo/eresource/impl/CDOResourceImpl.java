@@ -347,6 +347,34 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     setPath(newPath);
   }
 
+
+  @Override
+  public Object eGet(int featureID, boolean resolve, boolean coreType)
+  {
+    switch (featureID)
+    {
+    case EresourcePackage.CDO_RESOURCE__URI:
+      return getURI();
+      
+    default:
+      return super.eGet(featureID, resolve, coreType);
+    }
+  }
+
+  @Override
+  public void eSet(int featureID, Object newValue)
+  {
+    switch (featureID)
+    {
+    case EresourcePackage.CDO_RESOURCE__URI:
+      setURI((URI)newValue);
+      break;
+      
+    default:
+      super.eSet(featureID, newValue);
+    }
+  }
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    *

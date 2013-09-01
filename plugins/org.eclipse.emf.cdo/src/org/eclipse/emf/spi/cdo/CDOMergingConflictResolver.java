@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -134,7 +135,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
           // Compute new clean revision
           CDORevisionDelta remoteDelta = remoteDeltas.get(id);
-          InternalCDORevision newCleanRevision = cleanRevision.copy();
+          final InternalCDORevision newCleanRevision = cleanRevision.copy();
           newCleanRevision.setVersion(newVersion);
           remoteDelta.apply(newCleanRevision);
 
@@ -166,12 +167,18 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
               @Override
               public void visit(CDOClearFeatureDelta delta)
               {
-                // TODO: implement CDOMergingConflictResolver.resolveConflicts(...).new CDOFeatureDeltaVisitorImpl()
+                // TODO Only for reference features?
+                CDOList list = newCleanRevision.getList(delta.getFeature());
+                for (Object id : list)
+                {
+                  recurse(detachedObjectsUpdater, (CDOID)id);
+                }
               }
 
               @Override
               public void visit(CDORemoveFeatureDelta delta)
               {
+                // TODO Only for reference features?
                 recurse(detachedObjectsUpdater, (CDOID)delta.getValue());
               }
 

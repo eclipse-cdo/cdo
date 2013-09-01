@@ -1285,32 +1285,36 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    // Access lists.
+    EList<BaseObject> thisListA = thisRoot.getListA();
+    EList<BaseObject> thatListA = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Create objects.
     BaseObject thisObject = createBaseObject("ThisBaseObject 0");
-    thisRoot.getListA().add(0, thisObject);
+    thisListA.add(0, thisObject);
 
     // Clear list.
-    thatRoot.getListA().clear();
+    thatListA.clear();
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisListA);
+    printList("That ", thatListA);
 
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
     assertEquals(false, thisTransaction.hasConflict());
     assertEquals(false, thatTransaction.hasConflict());
-    assertEquals(0, thisRoot.getListA().size());
-    assertEquals(0, thatRoot.getListA().size());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisObject).cdoState());
+    assertEquals(1, thisListA.size()); // CLEAR means remove all *originally existing* elements
+    assertEquals(1, thatListA.size()); // CLEAR means remove all *originally existing* elements
+    assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(thisObject).cdoState());
   }
 
   public void testAddTailClearTest() throws Exception
@@ -1326,32 +1330,36 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    // Access lists.
+    EList<BaseObject> thisListA = thisRoot.getListA();
+    EList<BaseObject> thatListA = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Create objects.
     BaseObject thisObject = createBaseObject("ThisBaseObject 0");
-    thisRoot.getListA().add(thisObject);
+    thisListA.add(thisObject);
 
     // Clear list.
-    thatRoot.getListA().clear();
+    thatListA.clear();
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisListA);
+    printList("That ", thatListA);
 
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
     assertEquals(false, thisTransaction.hasConflict());
     assertEquals(false, thatTransaction.hasConflict());
-    assertEquals(0, thisRoot.getListA().size());
-    assertEquals(0, thatRoot.getListA().size());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisObject).cdoState());
+    assertEquals(1, thisListA.size()); // CLEAR means remove all *originally existing* elements
+    assertEquals(1, thatListA.size()); // CLEAR means remove all *originally existing* elements
+    assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(thisObject).cdoState());
   }
 
   public void testRemoveHeadAddHeadTest() throws Exception
@@ -1958,32 +1966,36 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    // Access lists.
+    EList<BaseObject> thisListA = thisRoot.getListA();
+    EList<BaseObject> thatListA = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Remove object (get it before deletion).
-    BaseObject thisRemoveObject = thisRoot.getListA().get(0);
+    BaseObject thisRemoveObject = thisListA.get(0);
     BaseObject thatRemoveObject = thatTransaction.getObject(thisRemoveObject);
 
-    thisRoot.getListA().remove(0);
-    BaseObject thisAfterRemoveObject = thisRoot.getListA().get(0);
+    thisListA.remove(0);
+    BaseObject thisAfterRemoveObject = thisListA.get(0);
 
     // Clear.
-    thatRoot.getListA().clear();
+    thatListA.clear();
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisListA);
+    printList("That ", thatListA);
 
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(0, thisRoot.getListA().size());
-    assertEquals(0, thatRoot.getListA().size());
+    assertEquals(0, thisListA.size());
+    assertEquals(0, thatListA.size());
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisAfterRemoveObject).cdoState());
@@ -3241,8 +3253,6 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Remove containment.
-    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisRoot.getListB().get(0);
-    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisRoot.getListB().get(1);
     thisRoot.getListB().remove(0);
 
     // Add child to containment.
@@ -3260,22 +3270,10 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatParent.setContainmentOptional(thatAddContainment);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    // Print contents of lists
-    printList("This ", thisRoot.getListB());
-    printList("That ", thatRoot.getListB());
-
-    // Check indices.
     assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveContainment, thisRoot.getListB().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatRoot.getListB().get(0));
-
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisToRemoveContainment).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatParent).cdoState());
-    // AssertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatUnsetContainment).cdoState()); <-- NPE
-    assertEquals(CDOState.NEW, CDOUtil.getCDOObject(thatAddContainment).cdoState());
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testRemoveHeadRemoveChildHead() throws Exception
@@ -3296,32 +3294,16 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Remove containment.
-    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisRoot.getListB().get(0);
-    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisRoot.getListB().get(1);
     thisRoot.getListB().remove(0);
 
-    // Get parent object.
-    ContainmentObject thatParent = (ContainmentObject)thatRoot.getListB().get(0);
-
     // Remove child from containment.
-    ContainmentObject thatDetachContainment = (ContainmentObject)thatParent.getContainmentList().remove(0);
+    ((ContainmentObject)thatRoot.getListB().get(0)).getContainmentList().remove(0);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    // Print contents of lists
-    printList("This ", thisRoot.getListB());
-    printList("That ", thatRoot.getListB());
-
-    // Check indices.
     assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveContainment, thisRoot.getListB().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatRoot.getListB().get(0));
-
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisToRemoveContainment).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatParent).cdoState());
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatDetachContainment).cdoState());
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testRemoveHeadRemoveChildChildHead() throws Exception

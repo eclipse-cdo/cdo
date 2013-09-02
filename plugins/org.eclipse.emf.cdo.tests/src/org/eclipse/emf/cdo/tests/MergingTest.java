@@ -679,6 +679,7 @@ public class MergingTest extends AbstractCDOTest
   /**
    * Bug 309467.
    */
+  @Skips(IConfig.EFFORT_MERGING)
   @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
   public void test_Bugzilla_309467_ServerRestart() throws Exception
   {

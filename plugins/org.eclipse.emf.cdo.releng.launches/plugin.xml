@@ -30,6 +30,19 @@
             </objectClass>
          </enablement>
       </decorator>
+      <decorator
+            adaptable="true"
+            class="org.eclipse.emf.cdo.releng.launches.TestElementLabelDecorator"
+            id="org.eclipse.emf.cdo.releng.TestElementLabelDecorator"
+            label="JUnit Average Times"
+            lightweight="false"
+            state="true">
+         <enablement>
+            <objectClass
+                  name="org.eclipse.jdt.junit.model.ITestElementContainer">
+            </objectClass>
+         </enablement>
+      </decorator>
    </extension>
 
 </plugin>

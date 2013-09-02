@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetDataRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -44,6 +43,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.OCL;
+import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.Query;
 import org.eclipse.ocl.ecore.BooleanLiteralExp;
 import org.eclipse.ocl.ecore.Constraint;
@@ -56,10 +56,13 @@ import org.eclipse.ocl.ecore.StringLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.OCLHelper;
+import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.ProblemAware;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -79,9 +82,22 @@ public class OCLQueryHandler implements IQueryHandler
    */
   public static final String LAZY_EXTENTS_PARAMETER = "cdoLazyExtents";
 
+  /**
+   * Query parameter indicating the {@link EClass} to set as the implicit root class of the type
+   * hierarchy.  The default is {@code null}.
+   * 
+   * @since 4.2
+   */
+  public static final String IMPLICIT_ROOT_CLASS_PARAMETER = "cdoImplicitRootClass";
+
+  private static final Set<String> SERVER_QUERY_PARAMETERS = Collections.unmodifiableSet(new java.util.HashSet<String>(
+      Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
+
   private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
 
   private boolean lazyExtents = true;
+
+  private EClass implicitRootClass;
 
   public OCLQueryHandler()
   {
@@ -89,25 +105,11 @@ public class OCLQueryHandler implements IQueryHandler
 
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
-    String queryString = info.getQueryString();
     CDOExtentMap extentMap = null;
 
     try
     {
-      Map<String, Object> queryParameters = info.getParameters();
-      Object o = queryParameters.get(LAZY_EXTENTS_PARAMETER);
-      if (o != null)
-      {
-        try
-        {
-          lazyExtents = (Boolean)o;
-        }
-        catch (ClassCastException ex)
-        {
-          throw new IllegalArgumentException("Parameter " + LAZY_EXTENTS_PARAMETER + " must be a boolean but it is a "
-              + o + " class " + o.getClass().getName(), ex);
-        }
-      }
+      readParameters(info.getParameters());
 
       CDORevisionProvider revisionProvider = context.getView();
       CDOChangeSetData changeSetData = info.getChangeSetData();
@@ -116,74 +118,15 @@ public class OCLQueryHandler implements IQueryHandler
         revisionProvider = new CDOChangeSetDataRevisionProvider(revisionProvider, changeSetData);
       }
 
-      ISession session = context.getView().getSession();
-      CDOView view = CDOServerUtil.openView(session, context, revisionProvider);
-      CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
-
-      EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(packageRegistry);
-      OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
-
+      CDOView view = CDOServerUtil.openView(context.getView().getSession(), context, revisionProvider);
       extentMap = createExtentMap(view, changeSetData, context);
-      ocl.setExtentMap(extentMap);
+      OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = createOCL(view, extentMap);
 
-      OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
+      ContextParameter contextParameter = new ContextParameter(view, info);
+      Query<EClassifier, EClass, EObject> query = createQuery(view, info, contextParameter, ocl);
 
-      EClassifier classifier;
-      EObject object = null;
-
-      Object contextParameter = info.getContext();
-      if (contextParameter instanceof CDOID)
-      {
-        CDOID id = (CDOID)contextParameter;
-        if (id.isNull())
-        {
-          classifier = getArbitraryContextClassifier(packageRegistry);
-        }
-        else
-        {
-          InternalCDOObject cdoObject = (InternalCDOObject)view.getObject(id);
-          object = cdoObject.cdoInternalInstance();
-          classifier = object.eClass();
-        }
-      }
-      else if (contextParameter instanceof EClassifier)
-      {
-        classifier = (EClassifier)contextParameter;
-      }
-      else
-      {
-        classifier = getArbitraryContextClassifier(packageRegistry);
-      }
-
-      helper.setContext(classifier);
-
-      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment = ocl.getEnvironment();
-      Map<String, Object> parameters = new HashMap<String, Object>(queryParameters);
-      initEnvironment(environment, packageRegistry, parameters);
-
-      OCLExpression<EClassifier> expr = helper.createQuery(queryString);
-      Query<EClassifier, EClass, EObject> query = ocl.createQuery(expr);
-      if (query instanceof ProblemAware)
-      {
-        ProblemAware problemAware = (ProblemAware)query;
-        Diagnostic problems = problemAware.getProblems();
-        if (problems != null)
-        {
-          throw new DiagnosticException(problems);
-        }
-      }
-
-      EvaluationEnvironment<EClassifier, ?, ?, EClass, EObject> evalEnv = query.getEvaluationEnvironment();
-      Set<Entry<String, Object>> entrySet = parameters.entrySet();
-      for (Entry<String, Object> parameter : entrySet)
-      {
-        String key = parameter.getKey();
-        Object value = parameter.getValue();
-        evalEnv.add(key, value);
-      }
-
-      Object result = evaluate(query, object);
-      if (result == environment.getOCLStandardLibrary().getInvalid())
+      Object result = evaluate(query, contextParameter.getObject());
+      if (result == ocl.getEnvironment().getOCLStandardLibrary().getInvalid())
       {
         throw new Exception(
             "OCL query evaluated to 'invalid'. Run with '-Dorg.eclipse.ocl.debug=true' and visit the log for failure details.");
@@ -206,7 +149,7 @@ public class OCLQueryHandler implements IQueryHandler
     }
     catch (Exception ex)
     {
-      throw WrappedException.wrap(ex, "Problem executing OCL query: " + queryString);
+      throw WrappedException.wrap(ex, "Problem executing OCL query: " + info.getQueryString());
     }
     finally
     {
@@ -256,44 +199,96 @@ public class OCLQueryHandler implements IQueryHandler
     return lazyExtents;
   }
 
-  protected EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
+  /**
+   * @since 4.2
+   */
+  protected OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> createOCL(CDOView view,
+      CDOExtentMap extentMap)
   {
-    for (CDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
+    EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(view.getSession().getPackageRegistry());
+
+    OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
+    ocl.setExtentMap(extentMap);
+    return ocl;
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected Query<EClassifier, EClass, EObject> createQuery(CDOView view, CDOQueryInfo info,
+      ContextParameter contextParameter, OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl)
+      throws ParserException, DiagnosticException
+  {
+    Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
+    initEnvironment(ocl.getEnvironment(), view.getSession().getPackageRegistry(), parameters);
+
+    OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
+    helper.setContext(contextParameter.getClassifier());
+
+    OCLExpression<EClassifier> expr = helper.createQuery(info.getQueryString());
+    Query<EClassifier, EClass, EObject> query = ocl.createQuery(expr);
+    if (query instanceof ProblemAware)
     {
-      for (CDOPackageInfo packageInfo : packageUnit.getPackageInfos())
+      ProblemAware problemAware = (ProblemAware)query;
+      Diagnostic problems = problemAware.getProblems();
+      if (problems != null)
       {
-        if (!packageUnit.isSystem())
-        {
-          for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
-          {
-            return classifier;
-          }
-        }
+        throw new DiagnosticException(problems);
       }
     }
 
-    throw new IllegalStateException("Context missing");
+    setOCLQueryParameters(parameters, query);
+    return query;
+  }
+
+  /**
+   * @deprecated As of 4.2 no longer supported.
+   */
+  @Deprecated
+  protected EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
+  {
+    return ContextParameter.getArbitraryContextClassifier(packageRegistry);
   }
 
   protected void initEnvironment(
       Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
       CDOPackageRegistry packageRegistry, Map<String, Object> parameters)
   {
+
+    // initialize parsing options
+    EClass implicitRootClass = getImplicitRootClass();
+    if (implicitRootClass != null)
+    {
+      ParsingOptions.setOption(environment, ParsingOptions.implicitRootClass(environment), implicitRootClass);
+    }
+
+    // create variables for query parameters that should be passed through to the OCL query expression
     OCLStandardLibrary<EClassifier> stdLib = environment.getOCLStandardLibrary();
     for (Entry<String, Object> parameter : parameters.entrySet())
     {
       String name = parameter.getKey();
-      Object value = parameter.getValue();
+      if (isOCLQueryParameter(name))
+      {
+        Object value = parameter.getValue();
 
-      OCLExpression<EClassifier> initExpression = createInitExpression(stdLib, packageRegistry, value);
+        OCLExpression<EClassifier> initExpression = createInitExpression(stdLib, packageRegistry, value);
 
-      Variable<EClassifier, ?> variable = FACTORY.createVariable();
-      variable.setName(name);
-      variable.setType(initExpression.getType());
-      variable.setInitExpression(initExpression);
+        Variable<EClassifier, ?> variable = FACTORY.createVariable();
+        variable.setName(name);
+        variable.setType(initExpression.getType());
+        variable.setInitExpression(initExpression);
 
-      addEnvironmentVariable(environment, variable);
+        addEnvironmentVariable(environment, variable);
+      }
     }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected EClass getImplicitRootClass()
+  {
+    return implicitRootClass;
   }
 
   protected OCLExpression<EClassifier> createInitExpression(OCLStandardLibrary<EClassifier> stdLib,
@@ -355,6 +350,81 @@ public class OCLQueryHandler implements IQueryHandler
     throw new IllegalArgumentException("Unrecognized parameter type: " + value.getClass().getName());
   }
 
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  protected void addEnvironmentVariable(
+      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
+      Variable<EClassifier, ?> variable)
+  {
+    environment.addElement(variable.getName(), (Variable)variable, true);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void readParameters(Map<String, ?> queryParameters)
+  {
+    lazyExtents = readParameter(queryParameters, LAZY_EXTENTS_PARAMETER, lazyExtents);
+    implicitRootClass = readParameter(queryParameters, IMPLICIT_ROOT_CLASS_PARAMETER, EClass.class, implicitRootClass);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected boolean readParameter(Map<String, ?> queryParameters, String name, boolean defaultValue)
+  {
+    return readParameter(queryParameters, name, Boolean.class, defaultValue);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected <T> T readParameter(Map<String, ?> queryParameters, String name, Class<T> type, T defaultValue)
+  {
+    T result = defaultValue;
+
+    Object o = queryParameters.get(name);
+    if (o != null)
+    {
+      try
+      {
+        result = type.cast(o);
+      }
+      catch (ClassCastException ex)
+      {
+        throw new IllegalArgumentException("Parameter " + name + " must be a " + type.getSimpleName() + " but it is a "
+            + o + " class " + o.getClass().getName(), ex);
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void setOCLQueryParameters(Map<String, Object> parameters, Query<EClassifier, EClass, EObject> query)
+  {
+    EvaluationEnvironment<EClassifier, ?, ?, EClass, EObject> evalEnv = query.getEvaluationEnvironment();
+    for (Entry<String, Object> parameter : parameters.entrySet())
+    {
+      String key = parameter.getKey();
+
+      if (isOCLQueryParameter(key))
+      {
+        Object value = parameter.getValue();
+        evalEnv.add(key, value);
+      }
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected boolean isOCLQueryParameter(String name)
+  {
+    return !SERVER_QUERY_PARAMETERS.contains(name);
+  }
+
   private Integer getInteger(Object value)
   {
     if (value instanceof Integer)
@@ -390,14 +460,6 @@ public class OCLQueryHandler implements IQueryHandler
     return null;
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  protected void addEnvironmentVariable(
-      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
-      Variable<EClassifier, ?> variable)
-  {
-    environment.addElement(variable.getName(), (Variable)variable, true);
-  }
-
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new Factory());
@@ -419,6 +481,78 @@ public class OCLQueryHandler implements IQueryHandler
     public OCLQueryHandler create(String description) throws ProductCreationException
     {
       return new OCLQueryHandler();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  private static final class ContextParameter
+  {
+    private final EClassifier classifier;
+
+    private final EObject object;
+
+    public ContextParameter(CDOView view, CDOQueryInfo info)
+    {
+      Object contextParameter = info.getContext();
+      if (contextParameter instanceof CDOID)
+      {
+        CDOID id = (CDOID)contextParameter;
+        if (id.isNull())
+        {
+          CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
+          classifier = getArbitraryContextClassifier(packageRegistry);
+          object = null;
+        }
+        else
+        {
+          InternalCDOObject cdoObject = (InternalCDOObject)view.getObject(id);
+          classifier = cdoObject.eClass();
+          object = cdoObject.cdoInternalInstance();
+        }
+      }
+      else if (contextParameter instanceof EClassifier)
+      {
+        classifier = (EClassifier)contextParameter;
+        object = null;
+      }
+      else
+      {
+        CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
+        classifier = getArbitraryContextClassifier(packageRegistry);
+        object = null;
+      }
+    }
+
+    public EClassifier getClassifier()
+    {
+      return classifier;
+    }
+
+    public EObject getObject()
+    {
+      return object;
+    }
+
+    private static EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
+    {
+      for (CDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
+      {
+        for (CDOPackageInfo packageInfo : packageUnit.getPackageInfos())
+        {
+          if (!packageUnit.isSystem())
+          {
+            for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+            {
+              return classifier;
+            }
+          }
+        }
+      }
+
+      throw new IllegalStateException("Context missing");
     }
   }
 }

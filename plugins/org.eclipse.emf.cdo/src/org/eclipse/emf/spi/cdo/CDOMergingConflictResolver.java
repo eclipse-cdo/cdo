@@ -80,147 +80,148 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
+    CDOChangeSet remoteChangeSet = getRemoteChangeSet();
+    while (remoteChangeSet != null)
+    {
+      resolveConflicts(remoteChangeSet);
+      remoteChangeSet = getRemoteChangeSet();
+    }
+  }
+
+  private void resolveConflicts(CDOChangeSet remoteChangeSet)
+  {
+    CDOChangeSet localChangeSet = getLocalChangeSet();
+    CDOChangeSetData result;
+
     try
     {
-      CDOChangeSet localChangeSet = getLocalChangeSet();
-      CDOChangeSet remoteChangeSet = getRemoteChangeSet();
-      CDOChangeSetData result;
+      result = merger.merge(localChangeSet, remoteChangeSet);
+    }
+    catch (ConflictException ex)
+    {
+      return;
+    }
 
-      try
+    InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
+    InternalCDOSavepoint savepoint = transaction.getLastSavepoint();
+
+    Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
+    Map<CDOID, CDOObject> dirtyObjects = savepoint.getDirtyObjects();
+    // final ObjectsMapUpdater newObjectsUpdater = new ObjectsMapUpdater(savepoint.getNewObjects());
+    final ObjectsMapUpdater detachedObjectsUpdater = new ObjectsMapUpdater(savepoint.getDetachedObjects());
+
+    Map<CDOID, CDORevisionDelta> localDeltas = savepoint.getRevisionDeltas2();
+    Map<CDOID, CDORevisionDelta> remoteDeltas = getRemoteDeltas(remoteChangeSet);
+
+    for (CDORevisionKey key : result.getChangedObjects())
+    {
+      InternalCDORevisionDelta resultDelta = (InternalCDORevisionDelta)key;
+      CDOID id = resultDelta.getID();
+      InternalCDOObject object = (InternalCDOObject)transaction.getObject(id, false);
+      if (object != null)
       {
-        result = merger.merge(localChangeSet, remoteChangeSet);
-      }
-      catch (ConflictException ex)
-      {
-        return;
-        // result = ex.getResult();
-      }
+        // Compute new version
+        InternalCDORevision localRevision = object.cdoRevision();
+        int newVersion = localRevision.getVersion() + 1;
 
-      InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
-      InternalCDOSavepoint savepoint = transaction.getLastSavepoint();
-
-      Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
-      Map<CDOID, CDOObject> dirtyObjects = savepoint.getDirtyObjects();
-      // final ObjectsMapUpdater newObjectsUpdater = new ObjectsMapUpdater(savepoint.getNewObjects());
-      final ObjectsMapUpdater detachedObjectsUpdater = new ObjectsMapUpdater(savepoint.getDetachedObjects());
-
-      Map<CDOID, CDORevisionDelta> localDeltas = savepoint.getRevisionDeltas2();
-      Map<CDOID, CDORevisionDelta> remoteDeltas = getRemoteDeltas(remoteChangeSet);
-
-      for (CDORevisionKey key : result.getChangedObjects())
-      {
-        InternalCDORevisionDelta resultDelta = (InternalCDORevisionDelta)key;
-        CDOID id = resultDelta.getID();
-        InternalCDOObject object = (InternalCDOObject)transaction.getObject(id, false);
-        if (object != null)
+        // Compute new local revision
+        InternalCDORevision cleanRevision = cleanRevisions.get(object);
+        if (cleanRevision == null)
         {
-          // Compute new version
-          InternalCDORevision localRevision = object.cdoRevision();
-          int newVersion = localRevision.getVersion() + 1;
+          // In this case the object revision *is clean*
+          cleanRevision = object.cdoRevision();
+        }
 
-          // Compute new local revision
-          InternalCDORevision cleanRevision = cleanRevisions.get(object);
-          if (cleanRevision == null)
+        InternalCDORevision newLocalRevision = cleanRevision.copy();
+        newLocalRevision.setVersion(newVersion);
+        resultDelta.apply(newLocalRevision);
+
+        // Adjust local object
+        object.cdoInternalSetRevision(newLocalRevision);
+
+        // Compute new clean revision
+        CDORevisionDelta remoteDelta = remoteDeltas.get(id);
+        final InternalCDORevision newCleanRevision = cleanRevision.copy();
+        newCleanRevision.setVersion(newVersion);
+        remoteDelta.apply(newCleanRevision);
+
+        // Compute new local delta
+        InternalCDORevisionDelta newLocalDelta = newLocalRevision.compare(newCleanRevision);
+        if (newLocalDelta.isEmpty())
+        {
+          localDeltas.remove(id);
+          object.cdoInternalSetState(CDOState.CLEAN);
+          dirtyObjects.remove(id);
+        }
+        else
+        {
+          newLocalDelta.setTarget(null);
+          localDeltas.put(id, newLocalDelta);
+          object.cdoInternalSetState(CDOState.DIRTY);
+
+          cleanRevisions.put(object, newCleanRevision);
+          dirtyObjects.put(id, object);
+
+          newLocalDelta.accept(new CDOFeatureDeltaVisitorImpl()
           {
-            // In this case the object revision *is clean*
-            cleanRevision = object.cdoRevision();
-          }
-
-          InternalCDORevision newLocalRevision = cleanRevision.copy();
-          newLocalRevision.setVersion(newVersion);
-          resultDelta.apply(newLocalRevision);
-
-          // Adjust local object
-          object.cdoInternalSetRevision(newLocalRevision);
-
-          // Compute new clean revision
-          CDORevisionDelta remoteDelta = remoteDeltas.get(id);
-          final InternalCDORevision newCleanRevision = cleanRevision.copy();
-          newCleanRevision.setVersion(newVersion);
-          remoteDelta.apply(newCleanRevision);
-
-          // Compute new local delta
-          InternalCDORevisionDelta newLocalDelta = newLocalRevision.compare(newCleanRevision);
-          if (newLocalDelta.isEmpty())
-          {
-            localDeltas.remove(id);
-            object.cdoInternalSetState(CDOState.CLEAN);
-            dirtyObjects.remove(id);
-          }
-          else
-          {
-            newLocalDelta.setTarget(null);
-            localDeltas.put(id, newLocalDelta);
-            object.cdoInternalSetState(CDOState.DIRTY);
-
-            cleanRevisions.put(object, newCleanRevision);
-            dirtyObjects.put(id, object);
-
-            newLocalDelta.accept(new CDOFeatureDeltaVisitorImpl()
+            @Override
+            public void visit(CDOAddFeatureDelta delta)
             {
-              @Override
-              public void visit(CDOAddFeatureDelta delta)
-              {
-                // recurse(newObjectsUpdater, (CDOID)delta.getValue());
-              }
+              // recurse(newObjectsUpdater, (CDOID)delta.getValue());
+            }
 
-              @Override
-              public void visit(CDOClearFeatureDelta delta)
+            @Override
+            public void visit(CDOClearFeatureDelta delta)
+            {
+              // TODO Only for reference features?
+              CDOList list = newCleanRevision.getList(delta.getFeature());
+              for (Object id : list)
               {
-                // TODO Only for reference features?
-                CDOList list = newCleanRevision.getList(delta.getFeature());
-                for (Object id : list)
+                recurse(detachedObjectsUpdater, (CDOID)id);
+              }
+            }
+
+            @Override
+            public void visit(CDORemoveFeatureDelta delta)
+            {
+              // TODO Only for reference features?
+              recurse(detachedObjectsUpdater, (CDOID)delta.getValue());
+            }
+
+            @Override
+            public void visit(CDOSetFeatureDelta delta)
+            {
+              // recurse(detachedObjectsUpdater, (CDOID)delta.getOldValue());
+              // recurse(newObjectsUpdater, (CDOID)delta.getValue());
+            }
+
+            @Override
+            public void visit(CDOUnsetFeatureDelta delta)
+            {
+              // TODO: implement CDOMergingConflictResolver.resolveConflicts(...).new CDOFeatureDeltaVisitorImpl()
+            }
+
+            private void recurse(final ObjectsMapUpdater objectsUpdater, CDOID id)
+            {
+              CDOObject object = objectsUpdater.update(id);
+              if (object != null)
+              {
+                InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+                if (revision != null)
                 {
-                  recurse(detachedObjectsUpdater, (CDOID)id);
-                }
-              }
-
-              @Override
-              public void visit(CDORemoveFeatureDelta delta)
-              {
-                // TODO Only for reference features?
-                recurse(detachedObjectsUpdater, (CDOID)delta.getValue());
-              }
-
-              @Override
-              public void visit(CDOSetFeatureDelta delta)
-              {
-                // recurse(detachedObjectsUpdater, (CDOID)delta.getOldValue());
-                // recurse(newObjectsUpdater, (CDOID)delta.getValue());
-              }
-
-              @Override
-              public void visit(CDOUnsetFeatureDelta delta)
-              {
-                // TODO: implement CDOMergingConflictResolver.resolveConflicts(...).new CDOFeatureDeltaVisitorImpl()
-              }
-
-              private void recurse(final ObjectsMapUpdater objectsUpdater, CDOID id)
-              {
-                CDOObject object = objectsUpdater.update(id);
-                if (object != null)
-                {
-                  InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-                  if (revision != null)
+                  revision.accept(new CDORevisionValueVisitor()
                   {
-                    revision.accept(new CDORevisionValueVisitor()
+                    public void visit(EStructuralFeature feature, Object value, int index)
                     {
-                      public void visit(EStructuralFeature feature, Object value, int index)
-                      {
-                        recurse(objectsUpdater, (CDOID)value);
-                      }
-                    }, EMFUtil.CONTAINMENT_REFERENCES);
-                  }
+                      recurse(objectsUpdater, (CDOID)value);
+                    }
+                  }, EMFUtil.CONTAINMENT_REFERENCES);
                 }
               }
-            }, EMFUtil.CONTAINMENT_REFERENCES);
-          }
+            }
+          }, EMFUtil.CONTAINMENT_REFERENCES);
         }
       }
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
     }
   }
 

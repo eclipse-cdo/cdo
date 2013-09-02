@@ -19,8 +19,9 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -53,7 +54,7 @@ public class CDOSessionInvalidationEventQueue
     }
   };
 
-  private Queue<CDOChangeSetData> queue = new ConcurrentLinkedQueue<CDOChangeSetData>();
+  private Queue<CDOSessionInvalidationEvent> queue = new LinkedList<CDOSessionInvalidationEvent>();
 
   public CDOSessionInvalidationEventQueue(CDOSession session)
   {
@@ -75,19 +76,60 @@ public class CDOSessionInvalidationEventQueue
 
   /**
    * Removes and returns the first event from this queue.
+   * @deprecated As of 4.3 use {@link #poll()}.
    */
+  @Deprecated
   public CDOChangeSetData getChangeSetData()
   {
-    return queue.poll();
+    return poll();
+  }
+
+  /**
+   * Removes and returns the first event from this queue.
+   * @since 4.3
+   */
+  public CDOSessionInvalidationEvent poll()
+  {
+    synchronized (queue)
+    {
+      return queue.poll();
+    }
+  }
+
+  /**
+   * @since 4.3
+   */
+  public CDOSessionInvalidationEvent remove(long timestamp)
+  {
+    synchronized (queue)
+    {
+      for (Iterator<CDOSessionInvalidationEvent> it = queue.iterator(); it.hasNext();)
+      {
+        CDOSessionInvalidationEvent event = it.next();
+        if (event.getTimeStamp() == timestamp)
+        {
+          it.remove();
+          return event;
+        }
+      }
+
+      return null;
+    }
   }
 
   public void reset()
   {
-    queue.clear();
+    synchronized (queue)
+    {
+      queue.clear();
+    }
   }
 
   protected void handleEvent(CDOSessionInvalidationEvent event) throws Exception
   {
-    queue.offer(event);
+    synchronized (queue)
+    {
+      queue.offer(event);
+    }
   }
 }

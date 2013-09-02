@@ -20,6 +20,10 @@ import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
+import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
+
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -62,6 +66,18 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     }
   };
 
+  private IListener listener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOViewInvalidationEvent)
+      {
+        long timeStamp = ((CDOViewInvalidationEvent)event).getTimeStamp();
+        remoteInvalidationEvents.remove(timeStamp);
+      }
+    }
+  };
+
   private CDOChangeSubscriptionAdapter adapter;
 
   private RemoteInvalidationEventQueue remoteInvalidationEvents;
@@ -83,12 +99,12 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
 
   public CDOChangeSetData getRemoteChangeSetData()
   {
-    return remoteInvalidationEvents.getChangeSetData();
+    return remoteInvalidationEvents.poll();
   }
 
   public CDOChangeSet getRemoteChangeSet()
   {
-    CDOChangeSetData changeSetData = remoteInvalidationEvents.getChangeSetData();
+    CDOChangeSetData changeSetData = getRemoteChangeSetData();
     if (changeSetData == null)
     {
       return null;
@@ -100,21 +116,24 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   @Override
   protected void hookTransaction(CDOTransaction transaction)
   {
-    transaction.addTransactionHandler(handler);
     adapter = new CDOChangeSubscriptionAdapter(getTransaction());
     remoteInvalidationEvents = new RemoteInvalidationEventQueue();
+
+    transaction.addTransactionHandler(handler);
+    transaction.addListener(listener);
   }
 
   @Override
   protected void unhookTransaction(CDOTransaction transaction)
   {
+    transaction.removeListener(listener);
+    transaction.removeTransactionHandler(handler);
+
     remoteInvalidationEvents.dispose();
     remoteInvalidationEvents = null;
 
     adapter.dispose();
     adapter = null;
-
-    transaction.removeTransactionHandler(handler);
   }
 
   private CDOChangeSet createChangeSet(CDOChangeSetData changeSetData)

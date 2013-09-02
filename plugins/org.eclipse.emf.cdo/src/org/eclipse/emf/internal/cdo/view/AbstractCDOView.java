@@ -67,6 +67,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyAdapter;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
@@ -1534,6 +1535,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return conflicts;
   }
 
+  /**
+   * Overridden by {@link CDOTransactionImpl#handleConflicts(Map, List)}.
+   */
   protected synchronized void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
       List<CDORevisionDelta> deltas)
   {

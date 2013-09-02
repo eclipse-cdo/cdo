@@ -488,7 +488,7 @@ public class OCLQueryHandler implements IQueryHandler
    * @author Eike Stepper
    * @since 4.2
    */
-  private static final class ContextParameter
+  protected static final class ContextParameter
   {
     private final EClassifier classifier;
 

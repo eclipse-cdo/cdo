@@ -863,22 +863,21 @@ public class CDOViewImpl extends AbstractCDOView
           clearResourcePathCacheIfNecessary(null);
         }
 
-        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
         List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
         Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
         Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
 
+        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> //
         conflicts = invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+        if (conflicts != null)
+        {
+          // First handle the conflicts, if any.
+          handleConflicts(conflicts, deltas);
+        }
 
         sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
         fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas),
             Collections.unmodifiableSet(detachedObjects));
-
-        // First handle the conflicts, if any.
-        if (conflicts != null)
-        {
-          handleConflicts(conflicts, deltas);
-        }
 
         // Then send the notifications. The deltas could have been modified by the conflict resolvers.
         if (!deltas.isEmpty() || !detachedObjects.isEmpty())

@@ -713,12 +713,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * Synchronized through InvalidationRunnable.run()
    */
   @Override
-  protected synchronized void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> deltas)
+  protected synchronized void handleConflicts(long lastUpdateTime,
+      Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> deltas)
   {
     CDOConflictResolver[] resolvers = options().getConflictResolvers();
     if (resolvers.length == 0)
     {
+      return;
+    }
+
+    if (conflicts == null)
+    {
+      for (CDOConflictResolver resolver : resolvers)
+      {
+        if (resolver instanceof CDOConflictResolver.NonConflictAware)
+        {
+          ((CDOConflictResolver.NonConflictAware)resolver).handleNonConflict(lastUpdateTime);
+        }
+      }
+
       return;
     }
 

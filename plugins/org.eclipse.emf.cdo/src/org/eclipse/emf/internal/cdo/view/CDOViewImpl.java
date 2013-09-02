@@ -867,13 +867,9 @@ public class CDOViewImpl extends AbstractCDOView
         Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
         Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
 
-        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> //
-        conflicts = invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
-        if (conflicts != null)
-        {
-          // First handle the conflicts, if any.
-          handleConflicts(conflicts, deltas);
-        }
+        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate(allChangedObjects,
+            allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+        handleConflicts(lastUpdateTime, conflicts, deltas);
 
         sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
         fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas),

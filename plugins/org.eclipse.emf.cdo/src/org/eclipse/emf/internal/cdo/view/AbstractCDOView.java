@@ -1536,10 +1536,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   }
 
   /**
-   * Overridden by {@link CDOTransactionImpl#handleConflicts(Map, List)}.
+   * Overridden by {@link CDOTransactionImpl#handleConflicts(long, Map, List)}.
    */
-  protected synchronized void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> deltas)
+  protected synchronized void handleConflicts(long lastUpdateTime,
+      Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> deltas)
   {
     // Do nothing
   }

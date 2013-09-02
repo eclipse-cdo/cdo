@@ -37,4 +37,15 @@ public interface CDOConflictResolver
    * Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.
    */
   public void resolveConflicts(Set<CDOObject> conflicts);
+
+  /**
+   * A mix-in interface for {@link CDOConflictResolver conflict resolvers} that need to know about non-conflicting invalidations.
+   * 
+   * @author Eike Stepper
+   * @since 4.3
+   */
+  public interface NonConflictAware extends CDOConflictResolver
+  {
+    public void handleNonConflict(long updateTime);
+  }
 }

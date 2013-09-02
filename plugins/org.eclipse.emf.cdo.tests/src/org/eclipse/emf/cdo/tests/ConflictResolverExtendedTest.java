@@ -14,10 +14,8 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
@@ -41,8 +39,6 @@ import java.util.List;
 /**
  * @author Pascal Lehmann
  */
-// TODO Remove Me
-@Requires(IConfig.CAPABILITY_UNAVAILABLE)
 @Skips(IModelConfig.CAPABILITY_LEGACY)
 @CleanRepositoriesBefore
 public class ConflictResolverExtendedTest extends AbstractCDOTest
@@ -3186,10 +3182,12 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     CDOTransaction thatTransaction = session.openTransaction();
     addConflictResolver(thatTransaction);
 
+    // Access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    EList<BaseObject> thisList = thisRoot.getListB();
-
     Root thatRoot = thatTransaction.getObject(thisRoot);
+
+    // Access lists.
+    EList<BaseObject> thisList = thisRoot.getListB();
     EList<BaseObject> thatList = thatRoot.getListB();
 
     // Attach adapters
@@ -3197,9 +3195,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Remove containment
-    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisList.get(0);
     thisList.remove(0);
-    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisList.get(0);
 
     ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0");
     thatAddContainment.setAttributeRequired("AddContainmentObject 0");
@@ -3218,21 +3214,10 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatParentList.add(thatReattachContainment);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    // Print contents of lists
-    printList("This ", thisList);
-    printList("That ", thatList);
-
-    // Check indices
     assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveContainment, thisList.get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatList.get(0));
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisToRemoveContainment).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatParent).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatReattachContainment).cdoState());
-    assertEquals(CDOState.NEW, CDOUtil.getCDOObject(thatAddContainment).cdoState());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testRemoveHeadSetChildHead() throws Exception
@@ -3324,8 +3309,6 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Remove containment.
-    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisRoot.getListB().get(0);
-    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisRoot.getListB().get(1);
     thisRoot.getListB().remove(0);
 
     // Get parent object.
@@ -3335,24 +3318,13 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     ContainmentObject thatChildContainment = (ContainmentObject)thatParent.getContainmentList().get(0);
 
     // Remove child from containment child.
-    BaseObject thatDetachContainment = thatChildContainment.getContainmentList().remove(0);
+    thatChildContainment.getContainmentList().remove(0);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    // Print contents of lists
-    printList("This ", thisRoot.getListB());
-    printList("That ", thatRoot.getListB());
-
-    // Check indices.
     assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveContainment, thisRoot.getListB().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatRoot.getListB().get(0));
-
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisToRemoveContainment).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatParent).cdoState());
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatDetachContainment).cdoState());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testRemoveHeadMoveChildHead() throws Exception
@@ -3373,8 +3345,6 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Remove containment.
-    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisRoot.getListB().get(0);
-    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisRoot.getListB().get(1);
     thisRoot.getListB().remove(0);
 
     // Add child to containment.
@@ -3394,22 +3364,10 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatParent.getContainmentList().add(thatReattachContainment);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    // Print contents of lists
-    printList("This ", thisRoot.getListB());
-    printList("That ", thatRoot.getListB());
-
-    // Check indices.
     assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveContainment, thisRoot.getListB().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatRoot.getListB().get(0));
-
-    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisToRemoveContainment).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatParent).cdoState());
-    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatReattachContainment).cdoState());
-    assertEquals(CDOState.NEW, CDOUtil.getCDOObject(thatAddContainment).cdoState());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testRemoveHeadReAttachHead() throws Exception
@@ -3466,74 +3424,51 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     addConflictResolver(thatTransaction);
 
     // Create initial model.
-    Root root = getTestModelRoot(thisTransaction);
-    ContainmentObject group1 = createContainmentObject("Group 1");
-    group1.setAttributeRequired("Group 1");
+    Root thisRoot = getTestModelRoot(thisTransaction);
+    EList<BaseObject> thisListC = thisRoot.getListC();
 
-    ContainmentObject group2 = createContainmentObject("Group 2");
-    group2.setAttributeRequired("Group 2");
+    ContainmentObject thisGroup1 = createContainmentObject("Group 1");
+    thisGroup1.setAttributeRequired("Group 1");
 
-    BaseObject element0 = createBaseObject("Element 0");
-    element0.setAttributeRequired("Element 0");
+    ContainmentObject thisGroup2 = createContainmentObject("Group 2");
+    thisGroup2.setAttributeRequired("Group 2");
 
-    BaseObject element1 = createBaseObject("Element 1");
-    element1.setAttributeRequired("Element 1");
+    BaseObject thisElement0 = createBaseObject("Element 0");
+    thisElement0.setAttributeRequired("Element 0");
 
-    BaseObject element2 = createBaseObject("Element 2");
-    element2.setAttributeRequired("Element 2");
+    BaseObject thisElement1 = createBaseObject("Element 1");
+    thisElement1.setAttributeRequired("Element 1");
 
-    root.getListC().add(group1);
-    root.getListC().add(group2);
-    root.getListC().add(element0);
-    root.getListC().add(element1);
-    root.getListC().add(element2);
+    BaseObject thisElement2 = createBaseObject("Element 2");
+    thisElement2.setAttributeRequired("Element 2");
+
+    thisListC.add(thisGroup1);
+    thisListC.add(thisGroup2);
+    thisListC.add(thisElement0);
+    thisListC.add(thisElement1);
+    thisListC.add(thisElement2);
 
     commitAndSync(thisTransaction, thatTransaction);
 
     // Get objects from that transaction.
-    ContainmentObject thatGroup1 = thatTransaction.getObject(group1);
-    ContainmentObject thatGroup2 = thatTransaction.getObject(group2);
-    BaseObject thatElement0 = thatTransaction.getObject(element0);
-    BaseObject thatElement1 = thatTransaction.getObject(element1);
-    BaseObject thatElement2 = thatTransaction.getObject(element2);
-    Root thatRoot = thatTransaction.getObject(root);
+    ContainmentObject thatGroup2 = thatTransaction.getObject(thisGroup2);
+    BaseObject thatElement1 = thatTransaction.getObject(thisElement1);
+    BaseObject thatElement2 = thatTransaction.getObject(thisElement2);
 
-    // Create group 1 (element 0 & 1).
-    root.getListC().remove(element0);
-    group1.getContainmentList().add(element0);
-    root.getListC().remove(element1);
-    group1.getContainmentList().add(element1);
+    // THIS: Create group 1 (element 0 & 1).
+    thisGroup1.getContainmentList().add(thisElement0); // Move element0 from listC to group1
+    thisGroup1.getContainmentList().add(thisElement1); // Move element1 from listC to group1
 
-    // Create group 2 (element 1 & 2).
-    thatRoot.getListC().remove(thatElement1);
-    thatGroup2.getContainmentList().add(thatElement1);
-    thatRoot.getListC().remove(thatElement2);
-    thatGroup2.getContainmentList().add(thatElement2);
+    // THAT: Create group 2 (element 1 & 2).
+    thatGroup2.getContainmentList().add(thatElement1); // Move element1 from listC to group2 (CONFLICT)
+    thatGroup2.getContainmentList().add(thatElement2); // Move element2 from listC to group2
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    // -- Check:
-    assertEquals(2, root.getListC().size()); // 2 groups.
-    assertEquals(group1, element0.eContainer());
-    assertEquals(group2, element1.eContainer());
-    assertEquals(group2, element2.eContainer());
-    assertEquals(1, group1.getContainmentList().size()); // 1 element.
-    assertEquals(2, group2.getContainmentList().size()); // 2 elements.
-
-    assertEquals(2, thatRoot.getListC().size()); // 2 groups.
-    assertEquals(thatGroup1, thatElement0.eContainer());
-    assertEquals(thatGroup2, thatElement1.eContainer());
-    assertEquals(thatGroup2, thatElement2.eContainer());
-    assertEquals(1, thatGroup1.getContainmentList().size()); // 1 element.
-    assertEquals(2, thatGroup2.getContainmentList().size()); // 2 elements.
+    assertEquals(false, thisTransaction.isDirty());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(true, thatTransaction.hasConflict());
   }
-
-  // --- container conflict resolver tests -----------------------------------
-  // TODO: convert them into CDOTests
-
-  // --- random conflict resolver tests --------------------------------------
-  // TODO: convert them into CDOTests
 
   // ========== HELPERS ======================================================
 

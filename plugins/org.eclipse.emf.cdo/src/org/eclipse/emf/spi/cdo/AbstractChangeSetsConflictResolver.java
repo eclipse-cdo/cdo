@@ -17,13 +17,10 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver.NonConflictAware;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
-import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
-
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -31,7 +28,7 @@ import org.eclipse.net4j.util.event.IListener;
  * @author Eike Stepper
  * @since 4.0
  */
-public abstract class AbstractChangeSetsConflictResolver extends AbstractConflictResolver
+public abstract class AbstractChangeSetsConflictResolver extends AbstractConflictResolver implements NonConflictAware
 {
   private CDOTransactionHandler handler = new CDODefaultTransactionHandler()
   {
@@ -62,18 +59,6 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
       {
         adapter.reset();
         remoteInvalidationEvents.reset();
-      }
-    }
-  };
-
-  private IListener listener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOViewInvalidationEvent)
-      {
-        long timeStamp = ((CDOViewInvalidationEvent)event).getTimeStamp();
-        remoteInvalidationEvents.remove(timeStamp);
       }
     }
   };
@@ -113,6 +98,14 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     return createChangeSet(changeSetData);
   }
 
+  /**
+   * @since 4.3
+   */
+  public void handleNonConflict(long updateTime)
+  {
+    remoteInvalidationEvents.remove(updateTime);
+  }
+
   @Override
   protected void hookTransaction(CDOTransaction transaction)
   {
@@ -120,13 +113,11 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     remoteInvalidationEvents = new RemoteInvalidationEventQueue();
 
     transaction.addTransactionHandler(handler);
-    transaction.addListener(listener);
   }
 
   @Override
   protected void unhookTransaction(CDOTransaction transaction)
   {
-    transaction.removeListener(listener);
     transaction.removeTransactionHandler(handler);
 
     remoteInvalidationEvents.dispose();

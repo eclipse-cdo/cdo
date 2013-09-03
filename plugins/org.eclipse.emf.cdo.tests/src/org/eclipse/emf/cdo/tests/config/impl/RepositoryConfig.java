@@ -52,6 +52,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -82,8 +83,12 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -117,6 +122,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected static Map<String, InternalRepository> repositories;
 
   private static String lastRepoProps;
+
+  private static IScenario lastScenario;
 
   private boolean supportingAudits;
 
@@ -230,6 +237,30 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     return repositoryProperties;
+  }
+
+  public String getRepositoryPropertiesDigest()
+  {
+    Map<String, String> repositoryProperties = getRepositoryProperties();
+    List<Map.Entry<String, String>> list = new ArrayList<Map.Entry<String, String>>(repositoryProperties.entrySet());
+    Collections.sort(list, new Comparator<Map.Entry<String, String>>()
+    {
+      public int compare(Entry<String, String> o1, Entry<String, String> o2)
+      {
+        return o1.getKey().compareTo(o2.getKey());
+      }
+    });
+
+    StringBuilder builder = new StringBuilder();
+    for (Map.Entry<String, String> entry : list)
+    {
+      builder.append(entry.getKey());
+      builder.append("=");
+      builder.append(entry.getValue());
+      builder.append("\n");
+    }
+
+    return builder.toString();
   }
 
   public synchronized InternalRepository[] getRepositories()
@@ -596,7 +627,17 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected boolean needsCleanRepos()
   {
-    String repoProps = getRepositoryProperties().toString();
+    IScenario scenario = getCurrentTest().getScenario();
+    boolean sameScenario = scenario == lastScenario;
+    lastScenario = scenario;
+    if (!sameScenario)
+    {
+      // New scenario is an indication for a new TestSuite with a similar set of test cases.
+      // Same test cases would probably use duplicate resource paths, so start with fresh repos.
+      return true;
+    }
+
+    String repoProps = getRepositoryPropertiesDigest();
     boolean sameProps = repoProps.equals(lastRepoProps);
     lastRepoProps = repoProps;
     if (!sameProps)

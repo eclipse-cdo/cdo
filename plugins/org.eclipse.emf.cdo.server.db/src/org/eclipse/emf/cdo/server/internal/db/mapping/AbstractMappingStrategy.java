@@ -206,14 +206,22 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     else
     {
       EPackage ePackage = eClass.getEPackage();
-      if (CDOModelUtil.isCorePackage(ePackage) && !systemPackageMappingInfo.ecoreMapped)
+      if (CDOModelUtil.isCorePackage(ePackage))
       {
-        return;
+        initSystemPackageMappingInfo();
+        if (!systemPackageMappingInfo.ecoreMapped)
+        {
+          return;
+        }
       }
 
-      if (CDOModelUtil.isTypesPackage(ePackage) && !systemPackageMappingInfo.etypesMapped)
+      if (CDOModelUtil.isTypesPackage(ePackage))
       {
-        return;
+        initSystemPackageMappingInfo();
+        if (!systemPackageMappingInfo.etypesMapped)
+        {
+          return;
+        }
       }
 
       IClassMapping classMapping = getClassMapping(eClass);
@@ -490,12 +498,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
             }
           }
 
-          if (systemPackageMappingInfo == null)
-          {
-            systemPackageMappingInfo = new SystemPackageMappingInfo();
-            systemPackageMappingInfo.ecoreMapped = hasTableFor(EcorePackage.eINSTANCE.getEPackage());
-            systemPackageMappingInfo.etypesMapped = hasTableFor(EtypesPackage.eINSTANCE.getAnnotation());
-          }
+          initSystemPackageMappingInfo();
 
           if (!systemPackageMappingInfo.ecoreMapped || !systemPackageMappingInfo.etypesMapped)
           {
@@ -558,6 +561,16 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       }
 
       monitor.done();
+    }
+  }
+
+  private void initSystemPackageMappingInfo()
+  {
+    if (systemPackageMappingInfo == null)
+    {
+      systemPackageMappingInfo = new SystemPackageMappingInfo();
+      systemPackageMappingInfo.ecoreMapped = hasTableFor(EcorePackage.eINSTANCE.getEPackage());
+      systemPackageMappingInfo.etypesMapped = hasTableFor(EtypesPackage.eINSTANCE.getAnnotation());
     }
   }
 

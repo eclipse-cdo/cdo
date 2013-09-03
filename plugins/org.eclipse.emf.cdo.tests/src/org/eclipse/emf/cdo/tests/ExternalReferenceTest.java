@@ -489,6 +489,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
   }
 
+  @CleanRepositoriesBefore(reason = "Ref counting")
   public void testXRefExternalObject() throws Exception
   {
     skipStoreWithoutExternalReferences();

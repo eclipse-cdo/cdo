@@ -148,7 +148,6 @@ public class WorkspaceTest extends AbstractCDOTest
     return map;
   }
 
-  @CleanRepositoriesBefore
   public void testCheckout() throws Exception
   {
     checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);

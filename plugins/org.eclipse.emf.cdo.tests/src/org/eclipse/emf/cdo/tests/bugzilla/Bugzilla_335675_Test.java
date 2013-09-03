@@ -39,7 +39,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_335675_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void test0() throws Exception
   {
     EPackage pkg = null;

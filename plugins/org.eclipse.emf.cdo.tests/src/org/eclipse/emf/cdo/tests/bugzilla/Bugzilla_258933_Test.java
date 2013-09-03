@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -36,7 +35,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * 
  * @author Simon McDuff
  */
-@CleanRepositoriesBefore
 public class Bugzilla_258933_Test extends AbstractCDOTest
 {
   private static final String TOP_PACKAGE_URI = "http:///www.elver.org/toppackage";
@@ -45,51 +43,59 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   private static final Object NIL = new Object();
 
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933() throws Exception
   {
     // Do not set any value to level. Because 'level' is NOT unsettable we expect isSet==false
     testWithValue("level", NIL, false);
   }
 
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_SetToDefaultValue() throws Exception
   {
     // Set level to it's default (10). Because 'level' is NOT unsettable we expect isSet==false
     testWithValue("level", new Integer(10), false);
   }
 
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_String_SetToDefaultValue() throws Exception
   {
     // Set level to it's default (Simon). Because 'settable' is NOT unsettable we expect isSet==false
     testWithValue("settable", "Simon", false);
   }
 
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_String_SetToNull() throws Exception
   {
     // Set level to null. Because 'settable' is NOT unsettable and null is not the default we expect isSet==true
     testWithValue("settable", null, true);
   }
 
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_String_unsettable() throws Exception
   {
     // Do not set any value to settable. Because 'settable' is NOT unsettable we expect isSet==false
     testWithValue("settable", NIL, false);
   }
 
-  // Set level to it's default (Simon). Because 'unsettable' is unsettable we expect isSet==true
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_String_SetToDefaultValue_unsettable() throws Exception
   {
+    // Set level to it's default (Simon). Because 'unsettable' is unsettable we expect isSet==true
     testWithValue("unsettable", "Simon", true);
   }
 
-  // Set level to null. Because 'unsettable' is unsettable we expect isSet==true
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_String_SetToNull_unsettable() throws Exception
   {
+    // Set level to null. Because 'unsettable' is unsettable we expect isSet==true
     testWithValue("unsettable", null, true);
   }
 
-  // Do not set any value to unsettable. Because 'unsettable' is unsettable we expect isSet==false
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBugzilla_258933_String() throws Exception
   {
+    // Do not set any value to unsettable. Because 'unsettable' is unsettable we expect isSet==false
     testWithValue("unsettable", NIL, false);
   }
 

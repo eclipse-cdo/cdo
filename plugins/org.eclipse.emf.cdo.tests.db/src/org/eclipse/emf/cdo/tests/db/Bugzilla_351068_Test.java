@@ -43,7 +43,7 @@ import java.sql.Statement;
 @Skips(IRepositoryConfig.CAPABILITY_AUDITING)
 public class Bugzilla_351068_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Row counting")
   public void testDelete() throws Exception
   {
     CDOSession session = openSession();
@@ -84,7 +84,7 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     assertEquals(4, countRows("CDO_OBJECTS"));
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Row counting")
   public void testDeleteWithChildren() throws Exception
   {
     CDOSession session = openSession();
@@ -132,7 +132,7 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     assertEquals(4, countRows("CDO_OBJECTS"));
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Row counting")
   public void testDeleteWithReferences() throws Exception
   {
     CDOSession session = openSession();

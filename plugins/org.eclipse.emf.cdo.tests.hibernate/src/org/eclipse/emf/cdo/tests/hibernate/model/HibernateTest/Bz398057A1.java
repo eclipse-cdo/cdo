@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Bz398057 A1</b></em>'.
@@ -21,5 +20,6 @@ package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;
  * @model
  * @generated
  */
-public interface Bz398057A1 extends Bz398057A {
+public interface Bz398057A1 extends Bz398057A
+{
 } // Bz398057A1

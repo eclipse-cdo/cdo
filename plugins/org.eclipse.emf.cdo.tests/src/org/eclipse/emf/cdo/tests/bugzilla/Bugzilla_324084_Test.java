@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -34,7 +33,6 @@ import java.util.Map;
  *
  * @author Pascal Lehmann
  */
-@CleanRepositoriesBefore
 public class Bugzilla_324084_Test extends AbstractCDOTest
 {
   @Override

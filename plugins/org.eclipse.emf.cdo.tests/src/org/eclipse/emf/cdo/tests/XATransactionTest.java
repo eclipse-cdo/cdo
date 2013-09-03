@@ -80,7 +80,6 @@ public class XATransactionTest extends AbstractCDOTest
     xaTransaction.commit();
   }
 
-  @CleanRepositoriesBefore
   public void testRollback_AfterSetpoint() throws Exception
   {
     skipStoreWithoutExternalReferences();
@@ -237,7 +236,6 @@ public class XATransactionTest extends AbstractCDOTest
 
   // XXX disabled because of Bug 290097
   @Skips("Postgresql")
-  @CleanRepositoriesBefore
   public void test_ExceptionInReadingStream() throws Exception
   {
     skipStoreWithoutExternalReferences();

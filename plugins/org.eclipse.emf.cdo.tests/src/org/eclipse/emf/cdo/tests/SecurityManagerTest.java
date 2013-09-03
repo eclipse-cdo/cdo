@@ -28,8 +28,8 @@ import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 /**
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
-@CleanRepositoriesAfter
+@CleanRepositoriesBefore(reason = "TEST_SECURITY_MANAGER")
+@CleanRepositoriesAfter(reason = "TEST_SECURITY_MANAGER")
 public class SecurityManagerTest extends AbstractCDOTest
 {
   private static final String USER_ID = "Stepper";

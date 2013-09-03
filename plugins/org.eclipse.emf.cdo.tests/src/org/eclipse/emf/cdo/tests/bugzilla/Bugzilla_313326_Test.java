@@ -30,7 +30,6 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 public class Bugzilla_313326_Test extends AbstractCDOTest
 {
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  @CleanRepositoriesBefore
   public void testNotificationBuilderBranch() throws Exception
   {
     skipStoreWithoutChangeSets();

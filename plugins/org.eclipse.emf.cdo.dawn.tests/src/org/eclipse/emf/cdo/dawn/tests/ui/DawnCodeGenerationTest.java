@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.dawn.tests.ui;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnCodeGenerationTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -31,7 +30,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnCodeGenerationTest extends AbstractDawnUITest<SWTWorkbenchBot>
 {

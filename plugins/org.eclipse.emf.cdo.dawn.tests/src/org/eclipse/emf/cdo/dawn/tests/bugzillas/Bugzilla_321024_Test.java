@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.dawn.tests.bugzillas;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -23,7 +22,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class Bugzilla_321024_Test extends AbstractDawnGEFTest
 {

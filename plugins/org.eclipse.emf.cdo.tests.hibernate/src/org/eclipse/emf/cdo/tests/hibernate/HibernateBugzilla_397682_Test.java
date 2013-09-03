@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * @author Martin Taal
  */
-@CleanRepositoriesBefore
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class HibernateBugzilla_397682_Test extends AbstractCDOTest
 {

@@ -46,8 +46,8 @@ import java.util.List;
 /**
  * @author Egidijus Vaisnora
  */
-@CleanRepositoriesBefore
-@CleanRepositoriesAfter
+@CleanRepositoriesBefore(reason = "TEST_REVISION_MANAGER")
+@CleanRepositoriesAfter(reason = "TEST_REVISION_MANAGER")
 public class Bugzilla_340961_Test extends AbstractCDOTest
 {
   private PartialReadAccessHandler handler = new PartialReadAccessHandler();
@@ -95,7 +95,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
    * Create object structure of 3 in a containment, where middle object is "protected" Tests if custom revision was
    * successfully delivered to client. Tests if editing non-protected child elements is allowed
    */
-  public void testObjectChilds() throws CommitException, IOException
+  public void testObjectChildren() throws CommitException, IOException
   {
     CDOID closedCdoID = null;
     CDOID rootObjectID = null;

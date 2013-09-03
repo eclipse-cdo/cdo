@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.io.ByteArrayOutputStream;
@@ -23,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 /**
  * @author Martin Taal
  */
-@CleanRepositoriesBefore
 public class HibernateBugzilla_381013_Test extends AbstractCDOTest
 {
   public void testExport() throws Exception

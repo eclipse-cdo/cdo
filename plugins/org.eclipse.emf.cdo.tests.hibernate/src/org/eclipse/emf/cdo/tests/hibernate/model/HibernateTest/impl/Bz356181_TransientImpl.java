@@ -25,24 +25,27 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class Bz356181_TransientImpl extends EObjectImpl implements Bz356181_Transient {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Bz356181_TransientImpl() {
-		super();
-	}
+public class Bz356181_TransientImpl extends EObjectImpl implements Bz356181_Transient
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected Bz356181_TransientImpl()
+  {
+    super();
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return HibernateTestPackage.Literals.BZ356181_TRANSIENT;
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return HibernateTestPackage.Literals.BZ356181_TRANSIENT;
+  }
 
-} //Bz356181_TransientImpl
+} // Bz356181_TransientImpl

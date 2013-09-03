@@ -32,7 +32,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 public class Bugzilla_377727_Test extends AbstractSyncingTest
 {
   @Requires(RepositoryConfig.CAPABILITY_OFFLINE)
-  @CleanRepositoriesBefore
   public void testAsyncPackages() throws Exception
   {
     CDOID id1;

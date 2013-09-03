@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -39,7 +38,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class Bugzilla_333291_Test extends AbstractDawnEMFTest
 {

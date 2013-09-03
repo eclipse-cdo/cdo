@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_306998_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
   public void testValidEENumLiteral() throws CommitException
   {
     EPackage pkg = EMFUtil.createEPackage("pkg", "pkg", "http://cdo.eclipse.org/Bugzilla_306998_Test_1.ecore");
@@ -72,7 +71,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
 
   // does not affect MemStore!
   @Skips("MEM")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testInalidEENumLiteral() throws CommitException
   {
     EPackage pkg = EMFUtil.createEPackage("pkg", "pkg", "http://cdo.eclipse.org/Bugzilla_306998_Test_1.ecore");

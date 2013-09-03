@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.dawn.tests.ui;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
 import org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -26,7 +25,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnProjectExplorerTest extends AbstractDawnUITest<SWTWorkbenchBot>
 {

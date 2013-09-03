@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotEMFEditor;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class EMFLockingTest extends AbstractDawnEMFTest
 {

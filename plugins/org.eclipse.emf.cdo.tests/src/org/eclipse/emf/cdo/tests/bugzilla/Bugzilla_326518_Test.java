@@ -48,7 +48,6 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  @CleanRepositoriesBefore
   public void testIndexBranchMerge() throws Exception
   {
     skipStoreWithoutQueryXRefs();

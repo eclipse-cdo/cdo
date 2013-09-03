@@ -363,7 +363,6 @@ public class PushTransactionTest extends AbstractCDOTest
     assertEquals(orderDetailPrice, detail.getPrice());
   }
 
-  @CleanRepositoriesBefore
   public void testMoveObject() throws Exception
   {
     {
@@ -400,7 +399,6 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    assertEquals(1, view.getRootResource().getContents().size());
     CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
   }

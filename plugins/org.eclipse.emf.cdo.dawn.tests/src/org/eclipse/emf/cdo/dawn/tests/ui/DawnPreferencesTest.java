@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.dawn.tests.ui;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -24,7 +23,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnPreferencesTest extends AbstractDawnUITest<SWTWorkbenchBot>
 {

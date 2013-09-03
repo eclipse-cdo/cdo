@@ -53,7 +53,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
   private static final int NUM_OF_SALES_ORDERS = 5;
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testSimpleQueries() throws Exception
   {
     msg("Opening session");
@@ -101,7 +101,7 @@ public class SQLQueryTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testFunctions() throws Exception
   {
     msg("Opening session");
@@ -140,7 +140,7 @@ public class SQLQueryTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testComplexQuerySalesOrderJoinCustomerProduct() throws Exception
   {
     msg("Opening session");
@@ -166,7 +166,7 @@ public class SQLQueryTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testDateParameter() throws Exception
   {
     Date aDate = new Date();
@@ -190,6 +190,7 @@ public class SQLQueryTest extends AbstractCDOTest
     assertEquals(1, orders.size());
   }
 
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testPaging() throws Exception
   {
     msg("Opening session");
@@ -227,6 +228,7 @@ public class SQLQueryTest extends AbstractCDOTest
     transaction.commit();
   }
 
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testIterator() throws Exception
   {
     msg("Opening session");
@@ -304,7 +306,7 @@ public class SQLQueryTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testNonCDOObjectQueries_Complex() throws Exception
   {
     msg("Opening session");
@@ -339,7 +341,7 @@ public class SQLQueryTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Query result counting")
   public void testNonCDOObjectQueries_Complex_MAP() throws Exception
   {
     msg("Opening session");

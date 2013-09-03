@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * @author Stefan Winkler
  */
+@CleanRepositoriesBefore(reason = "Dynamic package")
 public class Bugzilla_351921_Test extends AbstractCDOTest
 {
   private EPackage pkg;

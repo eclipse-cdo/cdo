@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnTest;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -30,7 +29,6 @@ import org.eclipse.gmf.runtime.notation.Diagram;
  * 
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 public class TestFrameworkTest extends AbstractDawnTest
 {
   public void testResourceCreation() throws CommitException

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -25,7 +24,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  *
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
 public class Bugzilla_376470_Test extends AbstractSyncingTest
 {
   public void testRollbackWhileOnline() throws Exception

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model annotation="teneo.jpa value='@Transient'"
  * @generated
  */
-public interface Bz356181_Transient extends EObject {
+public interface Bz356181_Transient extends EObject
+{
 
 } // Bz356181_Transient

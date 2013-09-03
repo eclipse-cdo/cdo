@@ -130,7 +130,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerTimestamp() throws Exception
   {
     CDOSession session = openSession();
@@ -153,7 +153,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -176,7 +176,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerSubBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -199,7 +199,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerUser() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -231,7 +231,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerComment() throws Exception
   {
     CDOSession session = openSession();
@@ -256,7 +256,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerTimestampWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -279,7 +279,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerBranchWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -325,7 +325,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerUserWithBranch() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -358,7 +358,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Skips("MongoDB")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testServerCommentWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -502,7 +502,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientTimestamp() throws Exception
   {
     CDOSession session = openSession();
@@ -521,7 +521,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -541,7 +541,7 @@ public class CommitInfoTest extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientSubBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -561,7 +561,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientUser() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -590,7 +590,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientComment() throws Exception
   {
     CDOSession session = openSession();
@@ -612,7 +612,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(0).getComment());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientTimestampWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -631,7 +631,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientBranchWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -670,7 +670,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientUserWithBranch() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -699,7 +699,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testClientCommentWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -830,7 +830,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testMultipleEntries() throws Exception
   {
     CDOSession session = openSession();
@@ -859,7 +859,7 @@ public class CommitInfoTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testMultipleEntriesByCountDown() throws Exception
   {
     CDOSession session = openSession();
@@ -889,7 +889,7 @@ public class CommitInfoTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Commit info counting")
   public void testMultipleEntriesByCountUp() throws Exception
   {
     CDOSession session = openSession();

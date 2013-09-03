@@ -35,7 +35,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
  */
 public class Bugzilla_334608_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testOpposites() throws Exception
   {
     EPackage pkg1 = null;

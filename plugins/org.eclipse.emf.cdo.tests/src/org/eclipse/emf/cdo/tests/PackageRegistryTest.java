@@ -129,26 +129,24 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testCommitNestedPackages() throws Exception
   {
     CDOSession session = openSession();
-    assertEquals(3, session.getPackageRegistry().size());
+    int oldSize = session.getPackageRegistry().size();
 
     session.getPackageRegistry().putEPackage(getModel3SubpackagePackage());
-    assertEquals(5, session.getPackageRegistry().size());
+    assertEquals(oldSize + 2, session.getPackageRegistry().size());
 
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testCommitTopLevelPackages() throws Exception
   {
     CDOSession session = openSession();
-    assertEquals(3, session.getPackageRegistry().size());
+    int oldSize = session.getPackageRegistry().size();
 
     session.getPackageRegistry().putEPackage(getModel3Package());
-    assertEquals(5, session.getPackageRegistry().size());
+    assertEquals(oldSize + 2, session.getPackageRegistry().size());
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource(getResourcePath("/res"));
@@ -349,7 +347,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  @CleanRepositoriesBefore
   public void testDynamicPackageFactory() throws Exception
   {
     // -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.CDOPackageRegistryImpl
@@ -389,7 +386,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testDynamicPackageNewInstance() throws Exception
   {
     {
@@ -423,7 +419,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testDuplicatePackageRegistration() throws Exception
   {
     CDOSession session1 = openSession();
@@ -466,7 +461,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void testReuseCommittedPackage() throws Exception
   {
     final long timeStamp;
@@ -511,7 +505,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void testConcurrentPackageRegistration() throws Exception
   {
     CDOSession session1 = openSession();
@@ -561,7 +554,6 @@ public class PackageRegistryTest extends AbstractCDOTest
    * <p>
    * Cannot reproduce the problem with MEMStore because MEMStoreAccessor.writePackageUnits() is empty.
    */
-  @CleanRepositoriesBefore
   public void testConcurrentPackageRegistration2() throws Exception
   {
     CDOSession session1 = openSession();
@@ -583,7 +575,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     transaction2.commit();
   }
 
-  @CleanRepositoriesBefore
   public void testPopulator() throws Exception
   {
     String nsURI = "http://dynamic";
@@ -622,7 +613,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     assertEquals("Eike", company.getName());
   }
 
-  @CleanRepositoriesBefore
   public void testPopulatorGlobal() throws Exception
   {
     String nsURI = "http://dynamic";
@@ -668,7 +658,6 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void testLaziness() throws Exception
   {
     {

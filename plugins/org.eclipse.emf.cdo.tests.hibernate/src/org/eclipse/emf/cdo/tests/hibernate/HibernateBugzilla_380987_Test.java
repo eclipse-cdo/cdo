@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
@@ -40,7 +39,6 @@ import java.util.List;
 /**
  * @author Martin Taal
  */
-@CleanRepositoriesBefore
 public class HibernateBugzilla_380987_Test extends AbstractCDOTest
 {
   // in hsqldb several eclasses do not work, they work fine in mysql

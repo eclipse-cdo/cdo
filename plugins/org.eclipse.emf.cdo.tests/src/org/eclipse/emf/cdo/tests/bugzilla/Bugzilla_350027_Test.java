@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 
 /**
  * Fix index for moves from left to right.
@@ -21,7 +20,6 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
  * 
  * @author Cyril Jaquier
  */
-@CleanRepositoriesBefore
 public class Bugzilla_350027_Test extends AbstractCDOTest
 {
   public void testMoveFromLeftToRight() throws Exception

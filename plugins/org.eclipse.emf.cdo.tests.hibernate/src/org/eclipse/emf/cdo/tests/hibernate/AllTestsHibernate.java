@@ -261,13 +261,11 @@ public class AllTestsHibernate extends AllConfigs
   {
 
     @Override
-    @CleanRepositoriesBefore
     public void testCommitNestedPackages() throws Exception
     {
     }
 
     @Override
-    @CleanRepositoriesBefore
     public void testCommitTopLevelPackages() throws Exception
     {
     }
@@ -333,7 +331,6 @@ public class AllTestsHibernate extends AllConfigs
   {
 
     @Override
-    @CleanRepositoriesBefore
     public void test_missingDependency() throws Exception
     {
     }

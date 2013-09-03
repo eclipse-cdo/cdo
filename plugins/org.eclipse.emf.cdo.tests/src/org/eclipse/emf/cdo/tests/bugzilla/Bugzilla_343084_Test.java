@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
@@ -39,7 +40,8 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-@CleanRepositoriesAfter
+@CleanRepositoriesBefore(reason = "TEST_AUTHENTICATOR")
+@CleanRepositoriesAfter(reason = "TEST_AUTHENTICATOR")
 public class Bugzilla_343084_Test extends AbstractCDOTest
 {
   private static final String REPO_NAME = "protectedrepo";

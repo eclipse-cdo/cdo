@@ -45,7 +45,6 @@ public class Bugzilla_376620_Test extends AbstractCDOTest
   }
 
   @Requires(IModelConfig.CAPABILITY_LEGACY)
-  @CleanRepositoriesBefore
   public void testDeltaNotification() throws Exception
   {
     CDOSession session = openSession();

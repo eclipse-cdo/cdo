@@ -75,41 +75,15 @@ import junit.framework.TestResult;
  */
 public abstract class ConfigTest extends AbstractOMTest implements IConstants
 {
-  @Inherited
-  @Retention(RetentionPolicy.RUNTIME)
-  @Target({ ElementType.TYPE, ElementType.METHOD })
-  public @interface CleanRepositoriesBefore
-  {
-  }
+  private IScenario scenario;
 
-  @Inherited
-  @Retention(RetentionPolicy.RUNTIME)
-  @Target({ ElementType.TYPE, ElementType.METHOD })
-  public @interface CleanRepositoriesAfter
-  {
-  }
+  private Properties homeProperties;
 
-  @Inherited
-  @Retention(RetentionPolicy.RUNTIME)
-  @Target({ ElementType.TYPE, ElementType.METHOD })
-  public @interface Requires
-  {
-    String[] value();
-  }
-
-  @Inherited
-  @Retention(RetentionPolicy.RUNTIME)
-  @Target({ ElementType.TYPE, ElementType.METHOD })
-  public @interface Skips
-  {
-    String[] value();
-  }
+  private Map<String, Object> testProperties;
 
   public ConfigTest()
   {
   }
-
-  private IScenario scenario;
 
   public synchronized IScenario getScenario()
   {
@@ -129,10 +103,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
       scenario.setCurrentTest(this);
     }
   }
-
-  private Properties homeProperties;
-
-  private Map<String, Object> testProperties;
 
   public synchronized Properties getHomeProperties()
   {
@@ -171,6 +141,16 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     this.homeProperties = homeProperties;
   }
 
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    if (testProperties == null)
+    {
+      testProperties = new HashMap<String, Object>();
+    }
+
+    return testProperties;
+  }
+
   // /////////////////////////////////////////////////////////////////////////
   // //////////////////////// Repository /////////////////////////////////////
 
@@ -193,7 +173,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * @category repositoryConfig
+   * @category Repository
    */
   public boolean hasServerContainer()
   {
@@ -202,7 +182,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * @category repositoryConfig
+   * @category Repository
    */
   public IManagedContainer getServerContainer()
   {
@@ -237,17 +217,26 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     return repositoryConfig.getRepository(IRepositoryConfig.REPOSITORY_NAME);
   }
 
+  /**
+   * @category Repository
+   */
   public void registerRepository(IRepository repository)
   {
     IRepositoryConfig repositoryConfig = getRepositoryConfig();
     repositoryConfig.registerRepository((InternalRepository)repository);
   }
 
+  /**
+   * @category Repository
+   */
   public InternalRepository restartRepository()
   {
     return restartRepository(IRepositoryConfig.REPOSITORY_NAME);
   }
 
+  /**
+   * @category Repository
+   */
   public InternalRepository restartRepository(String name)
   {
     IRepositoryConfig repositoryConfig = getRepositoryConfig();
@@ -534,16 +523,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   // /////////////////////////////////////////////////////////////////////////
   // /////////////////////////////////////////////////////////////////////////
 
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    if (testProperties == null)
-    {
-      testProperties = new HashMap<String, Object>();
-    }
-
-    return testProperties;
-  }
-
   public boolean isValid()
   {
     return true;
@@ -758,5 +737,37 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     {
       IOUtil.print(ex);
     }
+  }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface CleanRepositoriesBefore
+  {
+    String reason();
+  }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface CleanRepositoriesAfter
+  {
+    String reason();
+  }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface Requires
+  {
+    String[] value();
+  }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface Skips
+  {
+    String[] value();
   }
 }

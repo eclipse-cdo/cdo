@@ -27,7 +27,6 @@ import java.io.InputStream;
  */
 public class Bugzilla_352303_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
   public void testReadBlob() throws Exception
   {
     commitBlob();

@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -26,7 +25,6 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * 
  * @author Esteban Dugueperoux
  */
-@CleanRepositoriesBefore
 public class Bugzilla_381395_Test extends AbstractCDOTest
 {
   public void testAdapterRemoveAfterCDOServerShutdown() throws Exception

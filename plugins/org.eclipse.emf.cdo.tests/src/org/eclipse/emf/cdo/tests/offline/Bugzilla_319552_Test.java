@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -28,7 +27,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * @author Pascal Lehmann
  * @since 4.0
  */
-@CleanRepositoriesBefore
 public class Bugzilla_319552_Test extends AbstractSyncingTest
 {
   public void test() throws Exception

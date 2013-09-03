@@ -167,7 +167,6 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   /**
    * Not needed anymore because of {@link Bugzilla_409284_Test}.
    */
-  @CleanRepositoriesBefore
   public void _testMovingSubtree() throws Exception
   {
     exceptions.clear();

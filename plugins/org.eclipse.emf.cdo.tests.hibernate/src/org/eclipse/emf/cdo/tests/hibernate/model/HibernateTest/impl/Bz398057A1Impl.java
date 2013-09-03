@@ -24,24 +24,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class Bz398057A1Impl extends Bz398057AImpl implements Bz398057A1 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Bz398057A1Impl() {
-		super();
-	}
+public class Bz398057A1Impl extends Bz398057AImpl implements Bz398057A1
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected Bz398057A1Impl()
+  {
+    super();
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return HibernateTestPackage.Literals.BZ398057_A1;
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return HibernateTestPackage.Literals.BZ398057_A1;
+  }
 
-} //Bz398057A1Impl
+} // Bz398057A1Impl

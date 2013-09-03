@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Bz398057 B1</b></em>'.
@@ -27,31 +26,32 @@ package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;
  * @model
  * @generated
  */
-public interface Bz398057B1 extends Bz398057B {
+public interface Bz398057B1 extends Bz398057B
+{
 
-	/**
-	 * Returns the value of the '<em><b>Value Str</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value Str</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value Str</em>' attribute.
-	 * @see #setValueStr(String)
-	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage#getBz398057B1_ValueStr()
-	 * @model
-	 * @generated
-	 */
-	String getValueStr();
+  /**
+   * Returns the value of the '<em><b>Value Str</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Value Str</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Value Str</em>' attribute.
+   * @see #setValueStr(String)
+   * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage#getBz398057B1_ValueStr()
+   * @model
+   * @generated
+   */
+  String getValueStr();
 
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1#getValueStr <em>Value Str</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value Str</em>' attribute.
-	 * @see #getValueStr()
-	 * @generated
-	 */
-	void setValueStr(String value);
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1#getValueStr <em>Value Str</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Value Str</em>' attribute.
+   * @see #getValueStr()
+   * @generated
+   */
+  void setValueStr(String value);
 } // Bz398057B1

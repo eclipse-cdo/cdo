@@ -53,7 +53,7 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-@CleanRepositoriesBefore
+@CleanRepositoriesBefore(reason = "Branch creation")
 public class BranchingTest extends AbstractCDOTest
 {
   protected CDOSession session1;
@@ -93,7 +93,6 @@ public class BranchingTest extends AbstractCDOTest
     return openSession();
   }
 
-  @CleanRepositoriesBefore
   public void testMainBranch() throws Exception
   {
     CDOSession session = openSession1();
@@ -113,7 +112,6 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testCreateBranch() throws Exception
   {
     CDOSession session = openSession1();
@@ -142,6 +140,7 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  @CleanRepositoriesBefore(reason = "Branch counting")
   public void testGetSubBranches() throws Exception
   {
     CDOSession session = openSession1();
@@ -870,7 +869,6 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testhandleRevisionsAfterDetachInSubBranch() throws Exception
   {
     CDOSession session = openSession1();

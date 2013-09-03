@@ -54,7 +54,6 @@ public class DeletePerformanceTest extends PerformanceTest
     return company;
   }
 
-  @CleanRepositoriesBefore
   public void _testDeleteRandom() throws Exception
   {
     Company company = initModel();
@@ -75,7 +74,6 @@ public class DeletePerformanceTest extends PerformanceTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void testDeleteEveryOther() throws Exception
   {
     Company company = initModel();
@@ -95,7 +93,6 @@ public class DeletePerformanceTest extends PerformanceTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void _testDeleteAtBeginning() throws Exception
   {
     Company company = initModel();

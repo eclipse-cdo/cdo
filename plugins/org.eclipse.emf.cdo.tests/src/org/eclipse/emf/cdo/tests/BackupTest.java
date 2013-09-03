@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.bundle.OM;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -50,7 +49,6 @@ import java.util.Date;
 /**
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
 public class BackupTest extends AbstractCDOTest
 {
   @Override
@@ -255,6 +253,7 @@ public class BackupTest extends AbstractCDOTest
    * rawStore()} is not adequate with range-based list mappings because they need deltas!
    */
   @Skips("DB.ranges")
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImport() throws Exception
   {
     CDOSession session = openSession();
@@ -287,6 +286,7 @@ public class BackupTest extends AbstractCDOTest
     useAfterImport("repo2");
   }
 
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportDate() throws Exception
   {
     CDOSession session = openSession();
@@ -312,6 +312,7 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
   }
 
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportBlob() throws Exception
   {
     InputStream blobStream = null;
@@ -351,6 +352,7 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
   }
 
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportClob() throws Exception
   {
     InputStream clobStream = null;
@@ -389,6 +391,7 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
   }
 
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportCustomDataType() throws Exception
   {
     CDOSession session = openSession();
@@ -412,6 +415,7 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
   }
 
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportFeatureMap() throws Exception
   {
     CDOSession session = openSession();
@@ -437,6 +441,7 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
   }
 
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportExternalReference() throws Exception
   {
     CDOSession session = openSession();

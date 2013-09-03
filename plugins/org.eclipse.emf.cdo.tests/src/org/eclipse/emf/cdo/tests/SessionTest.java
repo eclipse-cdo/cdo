@@ -264,7 +264,6 @@ public class SessionTest extends AbstractCDOTest
     session.close();
   }
 
-  @CleanRepositoriesBefore
   public void testWithAuthentication() throws Exception
   {
     UserManager userManager = new UserManager();

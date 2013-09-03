@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -42,7 +41,6 @@ import java.util.List;
 /**
  * @author Martin Fluegge
  */
-@CleanRepositoriesBefore
 public class GMFTest extends AbstractCDOTest
 {
   public void testDiagram() throws Exception

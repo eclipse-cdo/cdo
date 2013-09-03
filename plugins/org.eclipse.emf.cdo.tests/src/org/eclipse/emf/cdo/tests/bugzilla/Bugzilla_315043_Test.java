@@ -42,7 +42,6 @@ import java.util.Set;
 public class Bugzilla_315043_Test extends AbstractCDOTest
 {
   @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
-  @CleanRepositoriesBefore
   public void testReloadingRevisions() throws Exception
   {
     final String RESOURCE_NAME = "resource";

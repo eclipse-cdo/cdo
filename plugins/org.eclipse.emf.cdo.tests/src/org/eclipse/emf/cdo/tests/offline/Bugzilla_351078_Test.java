@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -38,7 +37,6 @@ import org.eclipse.emf.common.util.EList;
  * @author Eike Stepper
  */
 @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
-@CleanRepositoriesBefore
 public class Bugzilla_351078_Test extends AbstractSyncingTest
 {
   @Override

@@ -45,6 +45,7 @@ public class Bugzilla_321986_Test extends AbstractCDOTest
     CDOTransaction tx2 = session2.openTransaction();
     CDOResource resource2 = tx2.getResource(getResourcePath("test"));
     resource2.getContents().clear();
+
     try
     {
       // We must fail here, because object was locked

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeE;
@@ -37,7 +36,6 @@ import java.util.Collections;
  * 
  * @author Esteban Dugueperoux
  */
-@CleanRepositoriesBefore
 @Requires(IModelConfig.CAPABILITY_LEGACY)
 public class Bugzilla_414949_Test extends AbstractCDOTest
 {

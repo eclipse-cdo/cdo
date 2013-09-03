@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
+@CleanRepositoriesBefore(reason = "Query result counting")
 public class OCLQueryTest extends AbstractCDOTest
 {
   private static final int NUM_OF_PRODUCTS = 20;

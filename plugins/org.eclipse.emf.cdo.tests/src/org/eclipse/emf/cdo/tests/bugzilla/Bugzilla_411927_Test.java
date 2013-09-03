@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -37,8 +35,6 @@ import java.util.Map;
  *
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
-@CleanRepositoriesAfter
 public class Bugzilla_411927_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_NAME = "res1";

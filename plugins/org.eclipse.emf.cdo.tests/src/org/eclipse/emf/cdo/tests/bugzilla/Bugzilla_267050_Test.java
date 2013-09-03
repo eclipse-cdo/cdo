@@ -32,10 +32,10 @@ import java.util.Collection;
  */
 public class Bugzilla_267050_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
-  @SuppressWarnings("unchecked")
+  @CleanRepositoriesBefore(reason = "Package registration")
   public void testBugzilla_267050() throws Exception
   {
+    @SuppressWarnings("unchecked")
     final Collection<CDOPackageUnit> newPackagesUnits[] = new Collection[1];
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

@@ -16,13 +16,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
-import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
-import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -31,8 +26,6 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -45,30 +38,8 @@ import java.util.Random;
  * 
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
 public class Bugzilla_310574_Test extends AbstractCDOTest
 {
-  @SuppressWarnings("unused")
-  private final WriteAccessHandler printHandler = new WriteAccessHandler()
-  {
-    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException
-    {
-      InternalCDORevisionDelta[] deltas = commitContext.getDirtyObjectDeltas();
-      for (InternalCDORevisionDelta delta : deltas)
-      {
-        if (delta.getEClass() == getModel1Package().getCustomer())
-        {
-          System.out.println(delta);
-        }
-      }
-    }
-
-    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-    {
-    }
-  };
-
   private SalesOrder[] createSalesOrders(int number)
   {
     SalesOrder orders[] = new SalesOrder[number];
@@ -79,15 +50,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     }
 
     return orders;
-  }
-
-  @Override
-  public void setUp() throws Exception
-  {
-    super.setUp();
-
-    // Adds our handler.
-    // getRepository().addHandler(printHandler);
   }
 
   public void testRemoveFromContainerThenFromReferenceList() throws Exception

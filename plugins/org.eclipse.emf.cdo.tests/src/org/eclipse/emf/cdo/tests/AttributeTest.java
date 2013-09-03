@@ -106,9 +106,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  // XXX disabled because of Bug 289445
-  // @Skips("Postgresql")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testByteArray() throws Exception
   {
     byte saveByteArray[] = new byte[] { 0, 1, 2, 3, 0, 1, 0, 100 };
@@ -150,9 +148,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  // XXX disabled because of Bug 289445
-  // @Skips("Postgresql")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testByteArrayEmpty() throws Exception
   {
     byte saveByteArray[] = new byte[0];
@@ -188,9 +184,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  // XXX disabled because of Bug 289445
-  // @Skips("Postgresql")
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testByteArrayNull() throws Exception
   {
     byte saveByteArray[] = null;
@@ -226,7 +220,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testBigDecimalAndBigInteger() throws Exception
   {
     BigDecimal bigDecimal = new BigDecimal(10);
@@ -274,7 +268,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBigDecimalAndBigIntegerNull() throws Exception
   {
     BigDecimal bigDecimal = null;

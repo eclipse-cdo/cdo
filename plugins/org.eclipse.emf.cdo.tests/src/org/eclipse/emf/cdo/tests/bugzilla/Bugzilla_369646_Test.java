@@ -31,8 +31,8 @@ import org.eclipse.net4j.util.io.IOUtil;
  *
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+@CleanRepositoriesBefore(reason = "Branch creation")
 public class Bugzilla_369646_Test extends AbstractCDOTest
 {
   public void testSetBranchWithSubBranches() throws Exception

@@ -40,202 +40,224 @@ import java.util.Collection;
  *
  * @generated
  */
-public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
-	/**
-	 * The cached value of the '{@link #getListOfB() <em>List Of B</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListOfB()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Bz398057B> listOfB;
+public class Bz398057AImpl extends EObjectImpl implements Bz398057A
+{
+  /**
+   * The cached value of the '{@link #getListOfB() <em>List Of B</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getListOfB()
+   * @generated
+   * @ordered
+   */
+  protected EList<Bz398057B> listOfB;
 
-	/**
-	 * The default value of the '{@link #getDbId() <em>Db Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDbId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String DB_ID_EDEFAULT = null;
+  /**
+   * The default value of the '{@link #getDbId() <em>Db Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDbId()
+   * @generated
+   * @ordered
+   */
+  protected static final String DB_ID_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getDbId() <em>Db Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDbId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String dbId = DB_ID_EDEFAULT;
+  /**
+   * The cached value of the '{@link #getDbId() <em>Db Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDbId()
+   * @generated
+   * @ordered
+   */
+  protected String dbId = DB_ID_EDEFAULT;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Bz398057AImpl() {
-		super();
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected Bz398057AImpl()
+  {
+    super();
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return HibernateTestPackage.Literals.BZ398057_A;
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return HibernateTestPackage.Literals.BZ398057_A;
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Bz398057B> getListOfB() {
-		if (listOfB == null) {
-			listOfB = new EObjectContainmentWithInverseEList<Bz398057B>(Bz398057B.class, this, HibernateTestPackage.BZ398057_A__LIST_OF_B, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A);
-		}
-		return listOfB;
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Bz398057B> getListOfB()
+  {
+    if (listOfB == null)
+    {
+      listOfB = new EObjectContainmentWithInverseEList<Bz398057B>(Bz398057B.class, this,
+          HibernateTestPackage.BZ398057_A__LIST_OF_B, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A);
+    }
+    return listOfB;
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getDbId() {
-		return dbId;
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getDbId()
+  {
+    return dbId;
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDbId(String newDbId) {
-		String oldDbId = dbId;
-		dbId = newDbId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_A__DB_ID, oldDbId, dbId));
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDbId(String newDbId)
+  {
+    String oldDbId = dbId;
+    dbId = newDbId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_A__DB_ID, oldDbId, dbId));
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getListOfB()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case HibernateTestPackage.BZ398057_A__LIST_OF_B:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getListOfB()).basicAdd(otherEnd, msgs);
+    }
+    return super.eInverseAdd(otherEnd, featureID, msgs);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return ((InternalEList<?>)getListOfB()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case HibernateTestPackage.BZ398057_A__LIST_OF_B:
+      return ((InternalEList<?>)getListOfB()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return getListOfB();
-			case HibernateTestPackage.BZ398057_A__DB_ID:
-				return getDbId();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eGet(int featureID, boolean resolve, boolean coreType)
+  {
+    switch (featureID)
+    {
+    case HibernateTestPackage.BZ398057_A__LIST_OF_B:
+      return getListOfB();
+    case HibernateTestPackage.BZ398057_A__DB_ID:
+      return getDbId();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				getListOfB().clear();
-				getListOfB().addAll((Collection<? extends Bz398057B>)newValue);
-				return;
-			case HibernateTestPackage.BZ398057_A__DB_ID:
-				setDbId((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public void eSet(int featureID, Object newValue)
+  {
+    switch (featureID)
+    {
+    case HibernateTestPackage.BZ398057_A__LIST_OF_B:
+      getListOfB().clear();
+      getListOfB().addAll((Collection<? extends Bz398057B>)newValue);
+      return;
+    case HibernateTestPackage.BZ398057_A__DB_ID:
+      setDbId((String)newValue);
+      return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				getListOfB().clear();
-				return;
-			case HibernateTestPackage.BZ398057_A__DB_ID:
-				setDbId(DB_ID_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void eUnset(int featureID)
+  {
+    switch (featureID)
+    {
+    case HibernateTestPackage.BZ398057_A__LIST_OF_B:
+      getListOfB().clear();
+      return;
+    case HibernateTestPackage.BZ398057_A__DB_ID:
+      setDbId(DB_ID_EDEFAULT);
+      return;
+    }
+    super.eUnset(featureID);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return listOfB != null && !listOfB.isEmpty();
-			case HibernateTestPackage.BZ398057_A__DB_ID:
-				return DB_ID_EDEFAULT == null ? dbId != null : !DB_ID_EDEFAULT.equals(dbId);
-		}
-		return super.eIsSet(featureID);
-	}
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean eIsSet(int featureID)
+  {
+    switch (featureID)
+    {
+    case HibernateTestPackage.BZ398057_A__LIST_OF_B:
+      return listOfB != null && !listOfB.isEmpty();
+    case HibernateTestPackage.BZ398057_A__DB_ID:
+      return DB_ID_EDEFAULT == null ? dbId != null : !DB_ID_EDEFAULT.equals(dbId);
+    }
+    return super.eIsSet(featureID);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+      return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (dbId: ");
-		result.append(dbId);
-		result.append(')');
-		return result.toString();
-	}
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (dbId: ");
+    result.append(dbId);
+    result.append(')');
+    return result.toString();
+  }
 
-} //Bz398057AImpl
+} // Bz398057AImpl

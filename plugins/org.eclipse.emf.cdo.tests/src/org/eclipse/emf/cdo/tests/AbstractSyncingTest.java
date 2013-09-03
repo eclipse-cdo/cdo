@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.util.TestListener;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -44,7 +43,6 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
 public abstract class AbstractSyncingTest extends AbstractCDOTest
 {
   protected static final long SLEEP_MILLIS = 100;

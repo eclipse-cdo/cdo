@@ -24,13 +24,11 @@ import java.util.Collections;
  */
 public class HibernateBugzilla_333473_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore
   public void testRemovalFirstAttempt() throws Exception
   {
     testRemoval(false);
   }
 
-  @CleanRepositoriesBefore
   public void testRemovalSecondAttempt() throws Exception
   {
     testRemoval(true);

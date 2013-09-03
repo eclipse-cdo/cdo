@@ -17,19 +17,15 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
-import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
-import org.eclipse.emf.cdo.tests.model4.model4Factory;
-import org.eclipse.emf.cdo.tests.model4.legacy.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.CommitIntegrityException;
@@ -132,7 +128,7 @@ public class PartialCommitTest extends AbstractCDOTest
     super.doTearDown();
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Root resource access")
   public void testNewTopLevelResource() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -144,7 +140,7 @@ public class PartialCommitTest extends AbstractCDOTest
     goodAll();
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Root resource access")
   public void testNewTopLevelResource_rootResourceNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -156,7 +152,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(tx.getRootResource()));
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Root resource access")
   public void testNewNestedResource() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -168,7 +164,7 @@ public class PartialCommitTest extends AbstractCDOTest
     goodAll();
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Root resource access")
   public void testNewNestedResource_rootResourceNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -180,7 +176,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(tx.getRootResource()));
   }
 
-  @CleanRepositoriesBefore
+  @CleanRepositoriesBefore(reason = "Root resource access")
   public void testNewNestedResource_resourceFolderNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -228,18 +224,18 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testPartialCleanUp_newObjects() throws CommitException
   {
     simpleModel1Setup();
-    Category cat = Model1Factory.eINSTANCE.createCategory();
+    Category cat = getModel1Factory().createCategory();
     resource1.getContents().add(cat);
     tx.commit();
 
     company1.setName("Zzz"); // Make dirty but don't include; so as to force partial commit
 
     // Make some new objects; but with different containers
-    Company company4 = Model1Factory.eINSTANCE.createCompany();
+    Company company4 = getModel1Factory().createCompany();
     resource1.getContents().add(company4);
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
-    Product1 product = Model1Factory.eINSTANCE.createProduct1();
+    Product1 product = getModel1Factory().createProduct1();
     product.setName("product1");
     cat.getProducts().add(product);
 
@@ -277,15 +273,15 @@ public class PartialCommitTest extends AbstractCDOTest
     skipStoreWithoutQueryXRefs();
 
     simpleModel1Setup();
-    Category cat = Model1Factory.eINSTANCE.createCategory();
+    Category cat = getModel1Factory().createCategory();
     resource1.getContents().add(cat);
 
     // Make some new objects; but with different containers
-    Company company4 = Model1Factory.eINSTANCE.createCompany();
+    Company company4 = getModel1Factory().createCompany();
     resource1.getContents().add(company4);
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
-    Product1 product = Model1Factory.eINSTANCE.createProduct1();
+    Product1 product = getModel1Factory().createProduct1();
     product.setName("product1");
     cat.getProducts().add(product);
     tx.commit();
@@ -361,7 +357,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNew() throws CommitException
   {
     simpleModel1Setup();
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
 
     // Include both the new object and its container
@@ -372,7 +368,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNew_containerOfNewObjectNotIncluded() throws CommitException
   {
     simpleModel1Setup();
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
 
     // Include only the new object
@@ -383,7 +379,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNew_newObjectNotIncluded() throws CommitException
   {
     simpleModel1Setup();
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
 
     // Include only the new object's container
@@ -391,7 +387,6 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(po));
   }
 
-  @CleanRepositoriesBefore
   public void testDetach() throws CommitException
   {
     skipStoreWithoutQueryXRefs();
@@ -532,7 +527,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNewSingle() throws CommitException
   {
     simpleModel4ContainmentSetup();
-    ContainedElementNoOpposite singleContainedElement = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite singleContainedElement = getModel4Factory().createContainedElementNoOpposite();
     refSingleContained2.setElement(singleContainedElement);
 
     // Include both the new object and its container
@@ -543,7 +538,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNewSingle_containerOfNewObjectNotIncluded() throws CommitException
   {
     simpleModel4ContainmentSetup();
-    ContainedElementNoOpposite singleContainedElement = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite singleContainedElement = getModel4Factory().createContainedElementNoOpposite();
     refSingleContained2.setElement(singleContainedElement);
 
     // Include only the new object
@@ -554,7 +549,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNewSingle_newObjectNotIncluded() throws CommitException
   {
     simpleModel4ContainmentSetup();
-    ContainedElementNoOpposite singleContainedElement = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite singleContainedElement = getModel4Factory().createContainedElementNoOpposite();
     refSingleContained2.setElement(singleContainedElement);
 
     // Include only the new object's container
@@ -667,7 +662,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNewTopLevel() throws CommitException
   {
     simpleModel1Setup();
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
     resource1.getContents().add(company);
 
     // Include both the resource and the new object
@@ -678,7 +673,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNewTopLevel_newObjectNotIncluded() throws CommitException
   {
     simpleModel1Setup();
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
     resource1.getContents().add(company);
 
     // Include only the resource
@@ -689,7 +684,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testNewTopLevel_resourceNotIncluded() throws CommitException
   {
     simpleModel1Setup();
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
     resource1.getContents().add(company);
 
     // Include only the new object
@@ -703,7 +698,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
     CDOID companyID = null;
     {
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       resource1.getContents().add(company);
 
       // Include only the new object
@@ -838,7 +833,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testSingleBidiOnNewObject() throws CommitException
   {
     simpleModel4SingleBidiSetup();
-    SingleNonContainedElement newNonContainedElement = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    SingleNonContainedElement newNonContainedElement = getModel4Factory().createSingleNonContainedElement();
     resource1.getContents().add(newNonContainedElement);
     newNonContainedElement.setParent(refSingleNonContained2);
 
@@ -849,7 +844,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testSingleBidiOnNewObject_targetNotIncluded() throws CommitException
   {
     simpleModel4SingleBidiSetup();
-    SingleNonContainedElement newNonContainedElement = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    SingleNonContainedElement newNonContainedElement = getModel4Factory().createSingleNonContainedElement();
     resource1.getContents().add(newNonContainedElement);
     newNonContainedElement.setParent(refSingleNonContained2);
 
@@ -946,7 +941,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testMultiBidiOnNewObject() throws CommitException
   {
     simpleModel4MultiBidiSetup();
-    MultiNonContainedElement newNonContainedElement = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    MultiNonContainedElement newNonContainedElement = getModel4Factory().createMultiNonContainedElement();
     resource1.getContents().add(newNonContainedElement);
     newNonContainedElement.setParent(refMultiNonContained2);
 
@@ -957,7 +952,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testMultiBidiOnNewObject_targetNotIncluded() throws CommitException
   {
     simpleModel4MultiBidiSetup();
-    MultiNonContainedElement newNonContainedElement = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    MultiNonContainedElement newNonContainedElement = getModel4Factory().createMultiNonContainedElement();
     resource1.getContents().add(newNonContainedElement);
     newNonContainedElement.setParent(refMultiNonContained2);
 
@@ -991,7 +986,7 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4SingleBidiSetup();
 
-    RefSingleNonContained refSingleNonContained3 = model4Factory.eINSTANCE.createRefSingleNonContained();
+    RefSingleNonContained refSingleNonContained3 = getModel4Factory().createRefSingleNonContained();
     resource1.getContents().add(refSingleNonContained3);
 
     EcoreUtil.delete(singleNonContainedElement2);
@@ -1005,10 +1000,10 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4SingleBidiSetup();
 
-    RefSingleNonContained refSingleNonContained3 = model4Factory.eINSTANCE.createRefSingleNonContained();
+    RefSingleNonContained refSingleNonContained3 = getModel4Factory().createRefSingleNonContained();
     resource1.getContents().add(refSingleNonContained3);
 
-    SingleNonContainedElement singleNonContainedElement3 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    SingleNonContainedElement singleNonContainedElement3 = getModel4Factory().createSingleNonContainedElement();
     refSingleNonContained3.setElement(singleNonContainedElement3);
 
     tx.setCommittables(createSet(refSingleNonContained3, singleNonContainedElement3, resource1));
@@ -1030,7 +1025,7 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4SingleBidiSetup();
 
-    SingleNonContainedElement singleNonContainedElement3 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    SingleNonContainedElement singleNonContainedElement3 = getModel4Factory().createSingleNonContainedElement();
     refSingleNonContained2.setElement(singleNonContainedElement3);
 
     tx.setCommittables(createSet(refSingleNonContained2));
@@ -1041,7 +1036,7 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4SingleBidiSetup();
 
-    SingleNonContainedElement singleNonContainedElement3 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    SingleNonContainedElement singleNonContainedElement3 = getModel4Factory().createSingleNonContainedElement();
     refSingleNonContained1.setElement(singleNonContainedElement3);
 
     tx.setCommittables(createSet(refSingleNonContained1, singleNonContainedElement1));
@@ -1054,7 +1049,7 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4MultiBidiSetup();
 
-    RefMultiNonContained refMultiNonContained3 = model4Factory.eINSTANCE.createRefMultiNonContained();
+    RefMultiNonContained refMultiNonContained3 = getModel4Factory().createRefMultiNonContained();
     resource1.getContents().add(refMultiNonContained3);
 
     EcoreUtil.delete(multiNonContainedElement2);
@@ -1068,10 +1063,10 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4SingleBidiSetup();
 
-    RefMultiNonContained refMultiNonContained3 = model4Factory.eINSTANCE.createRefMultiNonContained();
+    RefMultiNonContained refMultiNonContained3 = getModel4Factory().createRefMultiNonContained();
     resource1.getContents().add(refMultiNonContained3);
 
-    MultiNonContainedElement multiNonContainedElement3 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    MultiNonContainedElement multiNonContainedElement3 = getModel4Factory().createMultiNonContainedElement();
     refMultiNonContained3.getElements().add(multiNonContainedElement3);
 
     tx.setCommittables(createSet(refMultiNonContained3, multiNonContainedElement3, resource1));
@@ -1093,7 +1088,7 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4MultiBidiSetup();
 
-    MultiNonContainedElement multiNonContainedElement3 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    MultiNonContainedElement multiNonContainedElement3 = getModel4Factory().createMultiNonContainedElement();
     refMultiNonContained2.getElements().add(multiNonContainedElement3);
 
     tx.setCommittables(createSet(refMultiNonContained2, resource1));
@@ -1104,7 +1099,7 @@ public class PartialCommitTest extends AbstractCDOTest
   {
     simpleModel4MultiBidiSetup();
 
-    MultiNonContainedElement multiNonContainedElement3 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    MultiNonContainedElement multiNonContainedElement3 = getModel4Factory().createMultiNonContainedElement();
     refMultiNonContained1.getElements().add(multiNonContainedElement3);
 
     tx.setCommittables(createSet(refMultiNonContained1, multiNonContainedElement1));
@@ -1116,7 +1111,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testCheckWithoutCommit_exceptionFast() throws CommitException
   {
     simpleModel1Setup();
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
 
     // Include only the new object
@@ -1135,7 +1130,7 @@ public class PartialCommitTest extends AbstractCDOTest
   public void testCheckWithoutCommit_exception() throws CommitException
   {
     simpleModel1Setup();
-    PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po = getModel1Factory().createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
 
     // Include only the new object
@@ -1327,7 +1322,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
   private void simpleModel1Setup() throws CommitException
   {
-    EReference ref = Model1Package.eINSTANCE.getCompany_PurchaseOrders();
+    EReference ref = getModel1Package().getCompany_PurchaseOrders();
     boolean preconditions = ref.isContainment() && ref.getEOpposite() == null && ref.isMany();
     if (!preconditions)
     {
@@ -1335,12 +1330,12 @@ public class PartialCommitTest extends AbstractCDOTest
     }
 
     resource1 = tx.createResource(getResourcePath(RESOURCENAME));
-    company1 = Model1Factory.eINSTANCE.createCompany();
-    company2 = Model1Factory.eINSTANCE.createCompany();
-    company3 = Model1Factory.eINSTANCE.createCompany();
-    company99 = Model1Factory.eINSTANCE.createCompany();
-    supplier1 = Model1Factory.eINSTANCE.createSupplier();
-    purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+    company1 = getModel1Factory().createCompany();
+    company2 = getModel1Factory().createCompany();
+    company3 = getModel1Factory().createCompany();
+    company99 = getModel1Factory().createCompany();
+    supplier1 = getModel1Factory().createSupplier();
+    purchaseOrder = getModel1Factory().createPurchaseOrder();
     company1.getPurchaseOrders().add(purchaseOrder);
     resource1.getContents().add(company1);
     resource1.getContents().add(company2);
@@ -1352,7 +1347,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
   private void simpleModel4ContainmentSetup() throws CommitException
   {
-    EReference ref = model4Package.eINSTANCE.getRefSingleContainedNPL_Element();
+    EReference ref = getModel4Package().getRefSingleContainedNPL_Element();
     boolean preconditions = ref.isContainment() && ref.getEOpposite() == null && !ref.isMany();
     if (!preconditions)
     {
@@ -1361,9 +1356,9 @@ public class PartialCommitTest extends AbstractCDOTest
 
     resource1 = tx.createResource(getResourcePath(RESOURCENAME));
 
-    refSingleContained1 = model4Factory.eINSTANCE.createRefSingleContainedNPL();
-    refSingleContained2 = model4Factory.eINSTANCE.createRefSingleContainedNPL();
-    singleContainedElement1 = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    refSingleContained1 = getModel4Factory().createRefSingleContainedNPL();
+    refSingleContained2 = getModel4Factory().createRefSingleContainedNPL();
+    singleContainedElement1 = getModel4Factory().createContainedElementNoOpposite();
     refSingleContained1.setElement(singleContainedElement1);
     resource1.getContents().add(refSingleContained1);
     resource1.getContents().add(refSingleContained2);
@@ -1373,7 +1368,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
   private void simpleModel4SingleBidiSetup() throws CommitException
   {
-    EReference ref = model4Package.eINSTANCE.getRefSingleNonContained_Element();
+    EReference ref = getModel4Package().getRefSingleNonContained_Element();
     boolean preconditions = !ref.isContainment() && ref.getEOpposite() != null && !ref.isMany();
     if (!preconditions)
     {
@@ -1382,10 +1377,10 @@ public class PartialCommitTest extends AbstractCDOTest
 
     resource1 = tx.createResource(getResourcePath(RESOURCENAME));
 
-    refSingleNonContained1 = model4Factory.eINSTANCE.createRefSingleNonContained();
-    refSingleNonContained2 = model4Factory.eINSTANCE.createRefSingleNonContained();
-    singleNonContainedElement1 = model4Factory.eINSTANCE.createSingleNonContainedElement();
-    singleNonContainedElement2 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    refSingleNonContained1 = getModel4Factory().createRefSingleNonContained();
+    refSingleNonContained2 = getModel4Factory().createRefSingleNonContained();
+    singleNonContainedElement1 = getModel4Factory().createSingleNonContainedElement();
+    singleNonContainedElement2 = getModel4Factory().createSingleNonContainedElement();
     refSingleNonContained1.setElement(singleNonContainedElement1);
     resource1.getContents().add(refSingleNonContained1);
     resource1.getContents().add(refSingleNonContained2);
@@ -1397,7 +1392,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
   private void simpleModel4MultiBidiSetup() throws CommitException
   {
-    EReference ref = model4Package.eINSTANCE.getRefMultiNonContained_Elements();
+    EReference ref = getModel4Package().getRefMultiNonContained_Elements();
     boolean preconditions = !ref.isContainment() && ref.getEOpposite() != null && ref.isMany();
     if (!preconditions)
     {
@@ -1406,10 +1401,10 @@ public class PartialCommitTest extends AbstractCDOTest
 
     resource1 = tx.createResource(getResourcePath(RESOURCENAME));
 
-    refMultiNonContained1 = model4Factory.eINSTANCE.createRefMultiNonContained();
-    refMultiNonContained2 = model4Factory.eINSTANCE.createRefMultiNonContained();
-    multiNonContainedElement1 = model4Factory.eINSTANCE.createMultiNonContainedElement();
-    multiNonContainedElement2 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    refMultiNonContained1 = getModel4Factory().createRefMultiNonContained();
+    refMultiNonContained2 = getModel4Factory().createRefMultiNonContained();
+    multiNonContainedElement1 = getModel4Factory().createMultiNonContainedElement();
+    multiNonContainedElement2 = getModel4Factory().createMultiNonContainedElement();
     refMultiNonContained1.getElements().add(multiNonContainedElement1);
     resource1.getContents().add(refMultiNonContained1);
     resource1.getContents().add(refMultiNonContained2);
@@ -1430,6 +1425,7 @@ public class PartialCommitTest extends AbstractCDOTest
       }
       committables.add(o);
     }
+
     return committables;
   }
 }

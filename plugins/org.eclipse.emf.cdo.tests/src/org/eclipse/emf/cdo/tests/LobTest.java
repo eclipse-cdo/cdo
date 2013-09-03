@@ -73,7 +73,6 @@ public class LobTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void testReadBlob() throws Exception
   {
     testCommitBlob();
@@ -128,7 +127,6 @@ public class LobTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore
   public void testReadClob() throws Exception
   {
     testCommitClob();

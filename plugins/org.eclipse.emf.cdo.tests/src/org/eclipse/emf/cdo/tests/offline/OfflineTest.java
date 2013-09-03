@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
 import org.eclipse.emf.cdo.tests.bundle.OM;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
@@ -50,7 +49,6 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-@CleanRepositoriesBefore
 public class OfflineTest extends AbstractSyncingTest
 {
   public void testMasterCommits_ArrivalInClone() throws Exception

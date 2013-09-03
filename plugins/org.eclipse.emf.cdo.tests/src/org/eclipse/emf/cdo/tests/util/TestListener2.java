@@ -14,10 +14,10 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import org.junit.Assert;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.junit.Assert;
 
 /**
  * @author Caspar De Groot
@@ -106,7 +106,7 @@ public class TestListener2 implements IListener
       builder.append(name);
       builder.append('\"');
     }
-    
+
     if (eventClass != null)
     {
       if (builder.charAt(builder.length() - 1) != '[')
@@ -116,7 +116,7 @@ public class TestListener2 implements IListener
       builder.append("eventClass=");
       builder.append(eventClass.getSimpleName());
     }
-    
+
     builder.append(']');
     return builder.toString();
   }

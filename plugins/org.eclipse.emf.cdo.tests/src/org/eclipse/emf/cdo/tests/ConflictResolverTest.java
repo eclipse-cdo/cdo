@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -28,7 +27,6 @@ import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 /**
  * @author Simon McDuff
  */
-@CleanRepositoriesBefore
 public class ConflictResolverTest extends AbstractCDOTest
 {
   @Skips(IModelConfig.CAPABILITY_LEGACY)

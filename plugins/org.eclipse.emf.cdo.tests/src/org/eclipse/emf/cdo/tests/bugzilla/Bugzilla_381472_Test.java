@@ -52,8 +52,8 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @Requires(ISessionConfig.CAPABILITY_NET4J)
-@CleanRepositoriesBefore
-@CleanRepositoriesAfter
+@CleanRepositoriesBefore(reason = "Repository and property counting")
+@CleanRepositoriesAfter(reason = "Repository and property counting")
 @CallAddRepository
 public class Bugzilla_381472_Test extends AbstractCDOTest
 {

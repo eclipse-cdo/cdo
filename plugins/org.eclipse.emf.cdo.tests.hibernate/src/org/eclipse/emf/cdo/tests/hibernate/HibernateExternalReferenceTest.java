@@ -23,7 +23,6 @@ public class HibernateExternalReferenceTest extends ExternalReferenceTest
 {
 
   @Override
-  @CleanRepositoriesBefore
   public void testXRefExternalObject() throws Exception
   {
     // xreffing an external object is not possible as the

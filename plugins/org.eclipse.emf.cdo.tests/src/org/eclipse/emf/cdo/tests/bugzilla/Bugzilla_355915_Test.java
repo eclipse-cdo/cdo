@@ -44,7 +44,6 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
   }
 
   @Requires(IModelConfig.CAPABILITY_LEGACY)
-  @CleanRepositoriesBefore
   public void testInvalidationNotification() throws Exception
   {
     CDOSession session = openSession();
@@ -96,7 +95,6 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
   }
 
   @Requires(IModelConfig.CAPABILITY_LEGACY)
-  @CleanRepositoriesBefore
   public void testDeltaNotification() throws Exception
   {
     CDOSession session = openSession();

@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
@@ -31,7 +30,6 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  * <p>
  * See bug 314264
  */
-@CleanRepositoriesBefore
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {

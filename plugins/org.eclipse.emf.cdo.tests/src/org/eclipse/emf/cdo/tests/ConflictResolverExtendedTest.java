@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
@@ -40,7 +39,6 @@ import java.util.List;
  * @author Pascal Lehmann
  */
 @Skips(IModelConfig.CAPABILITY_LEGACY)
-@CleanRepositoriesBefore
 public class ConflictResolverExtendedTest extends AbstractCDOTest
 {
   private static final String TEST_RESOURCE_NAME = "/test1";

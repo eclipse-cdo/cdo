@@ -51,7 +51,6 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -125,7 +124,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static String lastRepoProps;
 
-  private static IScenario lastScenario;
+  private static String lastScenario;
 
   private boolean supportingAudits;
 
@@ -658,9 +657,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected boolean needsCleanRepos()
   {
-    IScenario scenario = getCurrentTest().getScenario();
-    boolean sameScenario = scenario == lastScenario;
+    String scenario = getCurrentTest().getScenario().toString();
+    boolean sameScenario = scenario.equals(lastScenario);
     lastScenario = scenario;
+
+    String repoProps = getRepositoryPropertiesDigest();
+    boolean sameProps = repoProps.equals(lastRepoProps);
+    lastRepoProps = repoProps;
+
     if (!sameScenario)
     {
       // New scenario is an indication for a new TestSuite with a similar set of test cases.
@@ -668,9 +672,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return true;
     }
 
-    String repoProps = getRepositoryPropertiesDigest();
-    boolean sameProps = repoProps.equals(lastRepoProps);
-    lastRepoProps = repoProps;
     if (!sameProps)
     {
       // If the props have changed (or if there are no lastRepoProps, which means

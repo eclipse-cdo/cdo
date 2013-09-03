@@ -148,6 +148,7 @@ public class WorkspaceTest extends AbstractCDOTest
     return map;
   }
 
+  @CleanRepositoriesBefore(reason = "Object counting")
   public void testCheckout() throws Exception
   {
     checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);

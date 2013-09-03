@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.StringIO;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -61,7 +62,14 @@ public abstract class CDOClientIndication extends Indication
       LifecycleUtil.waitForActive(session, 10000L);
     }
 
-    LifecycleUtil.checkActive(session);
+    try
+    {
+      LifecycleUtil.checkActive(session);
+    }
+    catch (LifecycleException ex)
+    {
+      throw new LifecycleException(session + " is inactive in " + getClass().getName(), ex);
+    }
 
     indicating(new CDODataInputImpl(in)
     {

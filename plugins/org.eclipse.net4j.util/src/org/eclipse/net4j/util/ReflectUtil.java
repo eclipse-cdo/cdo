@@ -231,6 +231,8 @@ public final class ReflectUtil
   }
 
   /**
+   * Prints the stack trace of the current thread to {@link System#err}.
+   * 
    * @since 3.4
    */
   public static void printStackTrace()

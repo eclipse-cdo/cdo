@@ -36,6 +36,12 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
   }
 
   @Override
+  public String toString()
+  {
+    return "PluginContainer"; //$NON-NLS-1$
+  }
+
+  @Override
   protected IRegistry<IFactoryKey, IFactory> createFactoryRegistry()
   {
     return new PluginFactoryRegistry(this);

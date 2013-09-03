@@ -70,6 +70,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.event.ThrowableEvent;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
@@ -905,7 +906,19 @@ public class CDOViewImpl extends AbstractCDOView
       if (invalidationRunner == null)
       {
         invalidationRunner = createInvalidationRunner();
-        invalidationRunner.activate();
+
+        try
+        {
+          invalidationRunner.activate();
+        }
+        catch (LifecycleException ex)
+        {
+          // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
+          if (!(ex.getCause() instanceof InterruptedException))
+          {
+            throw ex;
+          }
+        }
       }
     }
 

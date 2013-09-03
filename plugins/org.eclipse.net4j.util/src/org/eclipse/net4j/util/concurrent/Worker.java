@@ -137,16 +137,19 @@ public abstract class Worker extends Lifecycle
    */
   protected void handleError(Exception ex)
   {
-    try
+    if (isActive())
     {
-      if (globalErrorHandler != null)
+      try
       {
-        globalErrorHandler.handleError(ex);
+        if (globalErrorHandler != null)
+        {
+          globalErrorHandler.handleError(ex);
+        }
       }
-    }
-    catch (Exception ex1)
-    {
-      OM.LOG.error(ex1);
+      catch (Exception exFromErrorHandler)
+      {
+        OM.LOG.error(exFromErrorHandler);
+      }
     }
   }
 

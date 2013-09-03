@@ -70,8 +70,8 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, HibernateConfig.INSTANCE, JVM, NATIVE);
-    addScenario(parent, COMBINED, HibernateConfig.AUDIT_INSTANCE, JVM, NATIVE);
+    addScenario(parent, HibernateConfig.INSTANCE, JVM, NATIVE);
+    addScenario(parent, HibernateConfig.AUDIT_INSTANCE, JVM, NATIVE);
   }
 
   @Override

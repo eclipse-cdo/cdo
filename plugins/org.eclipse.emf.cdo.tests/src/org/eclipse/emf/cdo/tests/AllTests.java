@@ -26,15 +26,15 @@ public class AllTests extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, JVM, NATIVE);
-    addScenario(parent, COMBINED, MEM_AUDITS, JVM, NATIVE);
-    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
-    addScenario(parent, COMBINED, MEM_BRANCHES_UUIDS, JVM, NATIVE);
+    addScenario(parent, MEM, JVM, NATIVE);
+    addScenario(parent, MEM_AUDITS, JVM, NATIVE);
+    addScenario(parent, MEM_BRANCHES, JVM, NATIVE);
+    addScenario(parent, MEM_BRANCHES_UUIDS, JVM, NATIVE);
 
-    addScenario(parent, COMBINED, MEM, JVM, LEGACY);
-    addScenario(parent, COMBINED, MEM_AUDITS, JVM, LEGACY);
-    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, LEGACY);
+    addScenario(parent, MEM, JVM, LEGACY);
+    addScenario(parent, MEM_AUDITS, JVM, LEGACY);
+    addScenario(parent, MEM_BRANCHES, JVM, LEGACY);
 
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
+    addScenario(parent, MEM_BRANCHES, TCP, NATIVE);
   }
 }

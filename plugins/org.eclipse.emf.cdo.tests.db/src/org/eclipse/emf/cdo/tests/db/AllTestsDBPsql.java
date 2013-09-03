@@ -37,8 +37,8 @@ public class AllTestsDBPsql extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new PostgresqlConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new PostgresqlConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new PostgresqlConfig(true, true, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig(true, true, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 }

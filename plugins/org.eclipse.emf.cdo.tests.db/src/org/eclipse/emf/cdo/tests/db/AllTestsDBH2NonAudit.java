@@ -28,7 +28,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
-    suite.addScenario(parent, COMBINED, new H2Config(false, false, false, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, new H2Config(false, false, false, false, idGenerationLocation), JVM, NATIVE);
   }
 
   @Override

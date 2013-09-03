@@ -37,7 +37,7 @@ public class AllTestsDB4O extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new DB4OConfig(false), JVM, NATIVE);
+    addScenario(parent, new DB4OConfig(false), JVM, NATIVE);
   }
 
   @Override

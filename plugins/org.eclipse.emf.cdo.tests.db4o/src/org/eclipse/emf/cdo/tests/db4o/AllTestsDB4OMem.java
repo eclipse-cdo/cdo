@@ -26,6 +26,6 @@ public class AllTestsDB4OMem extends AllTestsDB4O
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new DB4OConfig(true), JVM, NATIVE);
+    addScenario(parent, new DB4OConfig(true), JVM, NATIVE);
   }
 }

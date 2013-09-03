@@ -103,6 +103,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -186,6 +187,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private InternalLockManager lockingManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
+
+  private IManagedContainer container;
 
   private List<ReadAccessHandler> readAccessHandlers = new ArrayList<ReadAccessHandler>();
 
@@ -1088,7 +1091,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (queryHandlerProvider == null)
     {
-      queryHandlerProvider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
+      queryHandlerProvider = new ContainerQueryHandlerProvider(getContainer());
     }
 
     IQueryHandler handler = queryHandlerProvider.getQueryHandler(info);
@@ -1098,6 +1101,21 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return null;
+  }
+
+  public IManagedContainer getContainer()
+  {
+    if (container == null)
+    {
+      return IPluginContainer.INSTANCE;
+    }
+
+    return container;
+  }
+
+  public void setContainer(IManagedContainer container)
+  {
+    this.container = container;
   }
 
   public Object[] getElements()

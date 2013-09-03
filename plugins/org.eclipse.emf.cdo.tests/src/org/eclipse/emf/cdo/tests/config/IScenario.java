@@ -18,10 +18,6 @@ import java.util.Set;
  */
 public interface IScenario extends ITestLifecycle, Serializable
 {
-  public IContainerConfig getContainerConfig();
-
-  public IScenario setContainerConfig(IContainerConfig containerConfig);
-
   public IRepositoryConfig getRepositoryConfig();
 
   public IScenario setRepositoryConfig(IRepositoryConfig repositoryConfig);

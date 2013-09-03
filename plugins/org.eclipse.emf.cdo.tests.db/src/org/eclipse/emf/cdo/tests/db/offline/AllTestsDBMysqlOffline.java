@@ -45,9 +45,9 @@ public class AllTestsDBMysqlOffline extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, COMBINED, new MysqlOfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new MysqlOfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
-    // addScenario(parent, COMBINED, new MysqlOfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    // addScenario(parent, new MysqlOfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new MysqlOfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
+    // addScenario(parent, new MysqlOfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 
   @Override

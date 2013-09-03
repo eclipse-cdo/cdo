@@ -26,6 +26,6 @@ public class AllTestsMEMBranchesUUIDs extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM_BRANCHES_UUIDS, JVM, NATIVE);
+    addScenario(parent, MEM_BRANCHES_UUIDS, JVM, NATIVE);
   }
 }

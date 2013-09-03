@@ -26,8 +26,8 @@ public class AllTestsMEMLegacy extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, JVM, LEGACY);
-    addScenario(parent, COMBINED, MEM_AUDITS, JVM, LEGACY);
-    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, LEGACY);
+    addScenario(parent, MEM, JVM, LEGACY);
+    addScenario(parent, MEM_AUDITS, JVM, LEGACY);
+    addScenario(parent, MEM_BRANCHES, JVM, LEGACY);
   }
 }

@@ -28,6 +28,6 @@ public class AllTestsLissome extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, LissomeConfig.INSTANCE, JVM, NATIVE);
+    addScenario(parent, LissomeConfig.INSTANCE, JVM, NATIVE);
   }
 }

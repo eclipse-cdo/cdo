@@ -52,11 +52,10 @@ public abstract class ConfigTestSuite implements IConstants
     return suite;
   }
 
-  public void addScenario(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
-      SessionConfig sessionConfig, ModelConfig modelConfig)
+  public void addScenario(TestSuite parent, RepositoryConfig repositoryConfig, SessionConfig sessionConfig,
+      ModelConfig modelConfig)
   {
     IScenario scenario = new Scenario();
-    scenario.setContainerConfig(containerConfig);
     scenario.setRepositoryConfig(repositoryConfig);
     scenario.setSessionConfig(sessionConfig);
     scenario.setModelConfig(modelConfig);

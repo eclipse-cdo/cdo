@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig;
@@ -24,10 +23,6 @@ import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
  */
 public interface IConstants
 {
-  public static final ContainerConfig COMBINED = ContainerConfig.Combined.INSTANCE;
-
-  public static final ContainerConfig SEPARATED = ContainerConfig.Separated.INSTANCE;
-
   public static final RepositoryConfig MEM = new MEMConfig(false, false, IDGenerationLocation.STORE);
 
   public static final RepositoryConfig MEM_AUDITS = new MEMConfig(true, false, IDGenerationLocation.STORE);

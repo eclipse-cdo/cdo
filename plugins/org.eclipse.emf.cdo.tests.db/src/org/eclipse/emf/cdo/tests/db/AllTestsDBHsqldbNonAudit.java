@@ -33,7 +33,7 @@ public class AllTestsDBHsqldbNonAudit extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new HsqldbConfig(false, false, IDGenerationLocation.STORE), TCP, NATIVE);
+    addScenario(parent, new HsqldbConfig(false, false, IDGenerationLocation.STORE), TCP, NATIVE);
   }
 
   @Override

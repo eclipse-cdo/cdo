@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
-import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -27,11 +26,13 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -64,6 +65,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   private static final long serialVersionUID = 1L;
 
+  private transient IManagedContainer clientContainer;
+
   private transient Set<CDOSession> sessions;
 
   private transient IListener sessionListener;
@@ -73,6 +76,53 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   public SessionConfig(String name)
   {
     super(name);
+  }
+
+  public IManagedContainer getServerContainer()
+  {
+    return getCurrentTest().getServerContainer();
+  }
+
+  public boolean hasServerContainer()
+  {
+    return getCurrentTest().hasServerContainer();
+  }
+
+  protected boolean usesServerContainer()
+  {
+    return false;
+  }
+
+  public boolean hasClientContainer()
+  {
+    if (usesServerContainer())
+    {
+      return hasServerContainer();
+    }
+
+    return clientContainer != null;
+  }
+
+  public IManagedContainer getClientContainer()
+  {
+    if (usesServerContainer())
+    {
+      return getServerContainer();
+    }
+
+    if (clientContainer == null)
+    {
+      clientContainer = createClientContainer();
+    }
+
+    return clientContainer;
+  }
+
+  protected IManagedContainer createClientContainer()
+  {
+    IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    return container;
   }
 
   public void startTransport() throws Exception
@@ -124,6 +174,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   public void setUp() throws Exception
   {
     super.setUp();
+
     sessions = new HashSet<CDOSession>();
     sessionListener = new LifecycleEventAdapter()
     {
@@ -167,7 +218,15 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
       sessions = null;
       sessionListener = null;
+
       stopTransport();
+
+      if (clientContainer != null)
+      {
+        LifecycleUtil.deactivate(clientContainer);
+        clientContainer = null;
+      }
+
       super.tearDown();
     }
     finally
@@ -276,6 +335,12 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       configuration.setRepository(repository);
       return configuration;
     }
+
+    @Override
+    protected boolean usesServerContainer()
+    {
+      return true;
+    }
   }
 
   /**
@@ -315,11 +380,9 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     public void stopTransport() throws Exception
     {
-      ConfigTest currentTest = getCurrentTest();
-
       try
       {
-        if (currentTest.hasClientContainer())
+        if (hasClientContainer())
         {
           IConnector connector = getConnector();
           connector.close();
@@ -332,7 +395,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
       try
       {
-        if (currentTest.hasServerContainer())
+        if (hasServerContainer())
         {
           IAcceptor acceptor = getAcceptor();
           acceptor.close();
@@ -373,7 +436,10 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     {
       super.setUp();
 
-      viewProvider = createViewProvider(getCurrentTest().getClientContainer());
+      IManagedContainer clientContainer = getClientContainer();
+      CDONet4jUtil.prepareContainer(clientContainer);
+
+      viewProvider = createViewProvider(clientContainer);
       if (viewProvider != null)
       {
         CDOViewProviderRegistry.INSTANCE.addViewProvider(viewProvider);
@@ -428,27 +494,24 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       @Override
       public IAcceptor getAcceptor()
       {
-        return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
+        return TCPUtil.getAcceptor(getServerContainer(), null);
       }
 
       @Override
       public IConnector getConnector()
       {
-        return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
+        return TCPUtil.getConnector(getClientContainer(), CONNECTOR_HOST);
       }
 
       @Override
       public void setUp() throws Exception
       {
         super.setUp();
+        TCPUtil.prepareContainer(getClientContainer());
 
-        IManagedContainer clientContainer = getCurrentTest().getClientContainer();
-        TCPUtil.prepareContainer(clientContainer);
-
-        IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-        if (serverContainer != clientContainer)
+        if (!usesServerContainer())
         {
-          TCPUtil.prepareContainer(serverContainer);
+          TCPUtil.prepareContainer(getServerContainer());
         }
       }
 
@@ -499,27 +562,24 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       @Override
       public IAcceptor getAcceptor()
       {
-        return SSLUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
+        return SSLUtil.getAcceptor(getServerContainer(), null);
       }
 
       @Override
       public IConnector getConnector()
       {
-        return SSLUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
+        return SSLUtil.getConnector(getClientContainer(), CONNECTOR_HOST);
       }
 
       @Override
       public void setUp() throws Exception
       {
         super.setUp();
+        SSLUtil.prepareContainer(getClientContainer());
 
-        IManagedContainer clientContainer = getCurrentTest().getClientContainer();
-        SSLUtil.prepareContainer(clientContainer);
-
-        IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-        if (serverContainer != clientContainer)
+        if (!usesServerContainer())
         {
-          SSLUtil.prepareContainer(serverContainer);
+          SSLUtil.prepareContainer(getServerContainer());
         }
       }
 
@@ -570,27 +630,26 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       @Override
       public IAcceptor getAcceptor()
       {
-        return JVMUtil.getAcceptor(getCurrentTest().getServerContainer(), ACCEPTOR_NAME);
+        return JVMUtil.getAcceptor(getServerContainer(), ACCEPTOR_NAME);
       }
 
       @Override
       public IConnector getConnector()
       {
-        return JVMUtil.getConnector(getCurrentTest().getClientContainer(), ACCEPTOR_NAME);
+        return JVMUtil.getConnector(getClientContainer(), ACCEPTOR_NAME);
       }
 
       @Override
       public void setUp() throws Exception
       {
         super.setUp();
-        JVMUtil.prepareContainer(getCurrentTest().getClientContainer());
-        JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
+        JVMUtil.prepareContainer(getClientContainer());
       }
 
       @Override
-      public boolean isValid(Set<IConfig> configs)
+      protected boolean usesServerContainer()
       {
-        return !configs.contains(ContainerConfig.Separated.INSTANCE);
+        return true;
       }
 
       @Override

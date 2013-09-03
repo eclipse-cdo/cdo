@@ -30,6 +30,6 @@ public class AllPerformanceTestsH2NonAudit extends AllPerformanceTests
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new H2Config(false, false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new H2Config(false, false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 }

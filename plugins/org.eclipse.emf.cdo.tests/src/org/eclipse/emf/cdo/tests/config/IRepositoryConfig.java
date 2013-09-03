@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -38,6 +40,10 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
   public static final String CAPABILITY_OFFLINE = "repository.offline";
 
   public static final String CAPABILITY_RESTARTABLE = "repository.restartable";
+
+  public IManagedContainer getServerContainer();
+
+  public boolean hasServerContainer();
 
   public boolean isSupportingAudits();
 

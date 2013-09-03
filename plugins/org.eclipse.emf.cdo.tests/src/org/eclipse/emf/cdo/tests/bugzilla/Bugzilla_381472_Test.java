@@ -63,7 +63,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
   {
     getRepository();
 
-    IManagedContainer serverContainer = getContainerConfig().getServerContainer();
+    IManagedContainer serverContainer = getServerContainer();
     serverContainer.registerFactory(new CDOAdminHandler.Factory(ADMIN_HANDLER_TYPE)
     {
       @Override

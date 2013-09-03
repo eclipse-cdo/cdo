@@ -33,7 +33,7 @@ public class AllTestsDBHsqldb extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new HsqldbConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new HsqldbConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 
   @Override

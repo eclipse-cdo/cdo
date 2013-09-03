@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.spi.server.InternalStore.NoLargeObjects;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoQueryXRefs;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoRawAccess;
 import org.eclipse.emf.cdo.tests.config.IConstants;
-import org.eclipse.emf.cdo.tests.config.IContainerConfig;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
@@ -173,58 +172,10 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   // /////////////////////////////////////////////////////////////////////////
-  // //////////////////////// Container //////////////////////////////////////
+  // //////////////////////// Repository /////////////////////////////////////
 
   /**
-   * @category Container
-   */
-  public IContainerConfig getContainerConfig()
-  {
-    IScenario scenario = getScenario();
-    return scenario.getContainerConfig();
-  }
-
-  /**
-   * @category Container
-   */
-  public boolean hasClientContainer()
-  {
-    IContainerConfig containerConfig = getContainerConfig();
-    return containerConfig.hasClientContainer();
-  }
-
-  /**
-   * @category Container
-   */
-  public boolean hasServerContainer()
-  {
-    IContainerConfig containerConfig = getContainerConfig();
-    return containerConfig.hasServerContainer();
-  }
-
-  /**
-   * @category Container
-   */
-  public IManagedContainer getClientContainer()
-  {
-    IContainerConfig containerConfig = getContainerConfig();
-    return containerConfig.getClientContainer();
-  }
-
-  /**
-   * @category Container
-   */
-  public IManagedContainer getServerContainer()
-  {
-    IContainerConfig containerConfig = getContainerConfig();
-    return containerConfig.getServerContainer();
-  }
-
-  // /////////////////////////////////////////////////////////////////////////
-  // //////////////////////// CDORepositoryInfo /////////////////////////////////////
-
-  /**
-   * @category CDORepositoryInfo
+   * @category Repository
    */
   public IRepositoryConfig getRepositoryConfig()
   {
@@ -233,7 +184,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * @category CDORepositoryInfo
+   * @category Repository
    */
   public Map<String, String> getRepositoryProperties()
   {
@@ -242,7 +193,25 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * @category CDORepositoryInfo
+   * @category repositoryConfig
+   */
+  public boolean hasServerContainer()
+  {
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.hasServerContainer();
+  }
+
+  /**
+   * @category repositoryConfig
+   */
+  public IManagedContainer getServerContainer()
+  {
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.getServerContainer();
+  }
+
+  /**
+   * @category Repository
    */
   public InternalRepository getRepository(String name, boolean activate)
   {
@@ -251,7 +220,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * @category CDORepositoryInfo
+   * @category Repository
    */
   public InternalRepository getRepository(String name)
   {
@@ -260,7 +229,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * @category CDORepositoryInfo
+   * @category Repository
    */
   public InternalRepository getRepository()
   {
@@ -306,6 +275,24 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   {
     IScenario scenario = getScenario();
     return scenario.getSessionConfig();
+  }
+
+  /**
+   * @category Session
+   */
+  public boolean hasClientContainer()
+  {
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.hasClientContainer();
+  }
+
+  /**
+   * @category Session
+   */
+  public IManagedContainer getClientContainer()
+  {
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.getClientContainer();
   }
 
   /**
@@ -565,8 +552,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}, {5}]", getClass().getSimpleName(), getName(),
-        getContainerConfig(), getRepositoryConfig(), getSessionConfig(), getModelConfig());
+    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(),
+        getRepositoryConfig(), getSessionConfig(), getModelConfig());
   }
 
   @Override
@@ -637,8 +624,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   protected boolean isConfig(Config config)
   {
-    return ObjectUtil.equals(getContainerConfig(), config) //
-        || ObjectUtil.equals(getRepositoryConfig(), config) //
+    return ObjectUtil.equals(getRepositoryConfig(), config) //
         || ObjectUtil.equals(getSessionConfig(), config) //
         || ObjectUtil.equals(getModelConfig(), config);
   }

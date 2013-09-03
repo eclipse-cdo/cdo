@@ -26,6 +26,6 @@ public class AllTestsMEMNonAudit extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, JVM, NATIVE);
+    addScenario(parent, MEM, JVM, NATIVE);
   }
 }

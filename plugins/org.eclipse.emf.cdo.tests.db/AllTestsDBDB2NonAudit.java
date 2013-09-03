@@ -49,7 +49,7 @@ public class AllTestsDBDB2NonAudit extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBDB2NonAudit.DB2NonAudit.INSTANCE, JVM, NATIVE);
+    addScenario(parent, AllTestsDBDB2NonAudit.DB2NonAudit.INSTANCE, JVM, NATIVE);
   }
 
   @Override

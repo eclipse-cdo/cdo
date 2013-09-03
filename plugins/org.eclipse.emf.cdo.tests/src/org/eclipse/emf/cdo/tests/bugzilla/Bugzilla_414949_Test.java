@@ -41,7 +41,6 @@ import java.util.Collections;
 @Requires(IModelConfig.CAPABILITY_LEGACY)
 public class Bugzilla_414949_Test extends AbstractCDOTest
 {
-
   private static final String SHARED_RESOURCE_NAME = "sharedResource.aird";
 
   private static final String LOCAL_RESOURCE_NAME = "localResource.xmi";

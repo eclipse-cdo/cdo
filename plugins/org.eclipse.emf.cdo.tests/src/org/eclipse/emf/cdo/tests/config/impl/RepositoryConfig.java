@@ -45,7 +45,6 @@ import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
-import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -65,6 +64,7 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -118,6 +118,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       "org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser", "false"));
 
   private static final long serialVersionUID = 1L;
+
+  protected static IManagedContainer serverContainer;
 
   protected static Map<String, InternalRepository> repositories;
 
@@ -219,6 +221,30 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return restarting;
   }
 
+  public boolean hasServerContainer()
+  {
+    return serverContainer != null;
+  }
+
+  public IManagedContainer getServerContainer()
+  {
+    if (serverContainer == null)
+    {
+      serverContainer = createServerContainer();
+      LifecycleUtil.activate(serverContainer);
+    }
+
+    return serverContainer;
+  }
+
+  protected IManagedContainer createServerContainer()
+  {
+    IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    CDONet4jServerUtil.prepareContainer(container);
+    return container;
+  }
+
   public Map<String, String> getRepositoryProperties()
   {
     Map<String, String> repositoryProperties = new HashMap<String, String>();
@@ -309,8 +335,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       }
 
-      IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-      repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(serverContainer));
+      IManagedContainer serverContainer = getServerContainer();
+      repository.setContainer(serverContainer);
       registerRepository(repository);
 
       if (activate)
@@ -333,7 +359,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     addResourcePathChecker(repository);
-
     return repository;
   }
 
@@ -473,6 +498,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     repositories = null;
 
     StoreThreadLocal.release();
+
+    if (serverContainer != null)
+    {
+      LifecycleUtil.deactivate(serverContainer);
+      serverContainer = null;
+    }
   }
 
   protected void resetRepositories()

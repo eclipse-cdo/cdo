@@ -33,7 +33,7 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new ObjyConfig(false, false), JVM, NATIVE);
+    addScenario(parent, new ObjyConfig(false, false), JVM, NATIVE);
   }
 
   @Override

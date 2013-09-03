@@ -126,6 +126,6 @@ public class AllConfigs extends ConfigTestSuite
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
+    addScenario(parent, MEM_BRANCHES, JVM, NATIVE);
   }
 }

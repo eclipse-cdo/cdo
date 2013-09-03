@@ -33,7 +33,7 @@ public class AllTestsCDODefs extends ConfigTestSuite
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
+    addScenario(parent, MEM, TCP, NATIVE);
   }
 
   @Override

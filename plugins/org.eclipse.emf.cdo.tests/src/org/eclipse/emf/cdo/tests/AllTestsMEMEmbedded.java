@@ -28,6 +28,6 @@ public class AllTestsMEMEmbedded extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, EMBEDDED, NATIVE);
+    addScenario(parent, MEM, EMBEDDED, NATIVE);
   }
 }

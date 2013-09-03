@@ -48,8 +48,8 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
+    addScenario(parent, MEM, TCP, NATIVE);
+    addScenario(parent, MEM_BRANCHES, TCP, NATIVE);
   }
 
   @Override

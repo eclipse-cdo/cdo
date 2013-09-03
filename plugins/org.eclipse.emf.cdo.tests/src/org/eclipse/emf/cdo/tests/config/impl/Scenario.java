@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IConstants;
-import org.eclipse.emf.cdo.tests.config.IContainerConfig;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
@@ -40,8 +39,6 @@ public class Scenario implements IScenario
 
   private static final long serialVersionUID = 1L;
 
-  private IContainerConfig containerConfig;
-
   private IRepositoryConfig repositoryConfig;
 
   private ISessionConfig sessionConfig;
@@ -56,30 +53,11 @@ public class Scenario implements IScenario
   {
   }
 
-  public Scenario(IContainerConfig containerConfig, IRepositoryConfig repositoryConfig, ISessionConfig sessionConfig,
-      IModelConfig modelConfig)
+  public Scenario(IRepositoryConfig repositoryConfig, ISessionConfig sessionConfig, IModelConfig modelConfig)
   {
-    this.containerConfig = containerConfig;
     this.repositoryConfig = repositoryConfig;
     this.sessionConfig = sessionConfig;
     this.modelConfig = modelConfig;
-  }
-
-  public IContainerConfig getContainerConfig()
-  {
-    return containerConfig;
-  }
-
-  public Scenario setContainerConfig(IContainerConfig containerConfig)
-  {
-    configs = null;
-    this.containerConfig = containerConfig;
-    if (containerConfig != null)
-    {
-      containerConfig.setCurrentTest(currentTest);
-    }
-
-    return this;
   }
 
   public IRepositoryConfig getRepositoryConfig()
@@ -136,8 +114,8 @@ public class Scenario implements IScenario
   @Override
   public String toString()
   {
-    return MessageFormat.format("Scenario[{0}, {1}, {2}, {3}]", //
-        getContainerConfig(), getRepositoryConfig(), getSessionConfig(), getModelConfig());
+    return MessageFormat.format("Scenario[{0}, {1}, {2}]", //
+        getRepositoryConfig(), getSessionConfig(), getModelConfig());
   }
 
   public Set<IConfig> getConfigs()
@@ -145,7 +123,6 @@ public class Scenario implements IScenario
     if (configs == null)
     {
       configs = new HashSet<IConfig>();
-      configs.add(getContainerConfig());
       configs.add(getRepositoryConfig());
       configs.add(getSessionConfig());
       configs.add(getModelConfig());
@@ -160,7 +137,6 @@ public class Scenario implements IScenario
     capabilities.add(IConfig.CAPABILITY_ALL);
     capabilities.add(IConfig.EFFORT_MERGING); // TODO Remove when effort merging done!
 
-    containerConfig.initCapabilities(capabilities);
     repositoryConfig.initCapabilities(capabilities);
     sessionConfig.initCapabilities(capabilities);
     modelConfig.initCapabilities(capabilities);
@@ -190,11 +166,6 @@ public class Scenario implements IScenario
   public void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
-    if (containerConfig != null)
-    {
-      containerConfig.setCurrentTest(currentTest);
-    }
-
     if (repositoryConfig != null)
     {
       repositoryConfig.setCurrentTest(currentTest);
@@ -215,24 +186,17 @@ public class Scenario implements IScenario
   {
     try
     {
-      getContainerConfig().setUp();
+      getRepositoryConfig().setUp();
     }
     finally
     {
       try
       {
-        getRepositoryConfig().setUp();
+        getSessionConfig().setUp();
       }
       finally
       {
-        try
-        {
-          getSessionConfig().setUp();
-        }
-        finally
-        {
-          getModelConfig().setUp();
-        }
+        getModelConfig().setUp();
       }
     }
   }
@@ -260,15 +224,6 @@ public class Scenario implements IScenario
     try
     {
       getRepositoryConfig().tearDown();
-    }
-    catch (Exception ex)
-    {
-      IOUtil.print(ex);
-    }
-
-    try
-    {
-      getContainerConfig().tearDown();
     }
     catch (Exception ex)
     {
@@ -347,7 +302,6 @@ public class Scenario implements IScenario
 
     private Default()
     {
-      setContainerConfig(IConstants.COMBINED);
       setRepositoryConfig(IConstants.MEM_BRANCHES);
       setSessionConfig(IConstants.JVM);
       setModelConfig(IConstants.NATIVE);

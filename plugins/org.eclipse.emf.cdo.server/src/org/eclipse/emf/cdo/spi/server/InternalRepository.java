@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -117,6 +118,16 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   public InternalQueryManager getQueryManager();
 
   public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider);
+
+  /**
+   * @since 4.3
+   */
+  public IManagedContainer getContainer();
+
+  /**
+   * @since 4.3
+   */
+  public void setContainer(IManagedContainer container);
 
   public InternalCommitManager getCommitManager();
 

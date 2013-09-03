@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+
 /**
  * @author Eike Stepper
  */
@@ -26,6 +28,10 @@ public interface ISessionConfig extends IConfig
   public static final String CAPABILITY_NET4J_TCP = "session.net4j.tcp";
 
   public static final String CAPABILITY_NET4J_SSL = "session.net4j.ssl";
+
+  public IManagedContainer getClientContainer();
+
+  public boolean hasClientContainer();
 
   public void startTransport() throws Exception;
 

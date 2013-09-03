@@ -34,10 +34,10 @@ public class AllTestsCDOUISWTBot extends ConfigTestSuite
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
+    addScenario(parent, MEM, TCP, NATIVE);
+    addScenario(parent, MEM_BRANCHES, TCP, NATIVE);
+    addScenario(parent, MEM_BRANCHES, TCP, LEGACY);
+    addScenario(parent, MEM_BRANCHES, TCP, LEGACY);
   }
 
   @Override

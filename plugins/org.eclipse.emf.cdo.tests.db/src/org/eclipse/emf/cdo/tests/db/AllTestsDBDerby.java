@@ -28,7 +28,7 @@ public class AllTestsDBDerby extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new DerbyConfig(true, true, IDGenerationLocation.STORE), JVM, NATIVE);
-    // addScenario(parent, COMBINED, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
+    addScenario(parent, new DerbyConfig(true, true, IDGenerationLocation.STORE), JVM, NATIVE);
+    // addScenario(parent, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
   }
 }

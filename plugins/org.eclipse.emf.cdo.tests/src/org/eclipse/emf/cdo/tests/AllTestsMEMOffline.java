@@ -36,7 +36,7 @@ public class AllTestsMEMOffline extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM_OFFLINE, JVM, NATIVE);
+    addScenario(parent, MEM_OFFLINE, JVM, NATIVE);
   }
 
   @Override

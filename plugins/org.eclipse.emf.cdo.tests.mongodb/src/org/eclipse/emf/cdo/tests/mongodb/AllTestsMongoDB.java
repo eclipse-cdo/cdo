@@ -35,9 +35,9 @@ public class AllTestsMongoDB extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new MongoDBConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new MongoDBConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    // addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.BRANCHING, JVM, NATIVE);
+    addScenario(parent, new MongoDBConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new MongoDBConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    // addScenario(parent, MongoDBStoreRepositoryConfig.BRANCHING, JVM, NATIVE);
   }
 
   @Override

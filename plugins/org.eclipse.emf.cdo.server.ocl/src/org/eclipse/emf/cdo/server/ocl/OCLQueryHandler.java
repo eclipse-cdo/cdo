@@ -122,7 +122,7 @@ public class OCLQueryHandler implements IQueryHandler
       extentMap = createExtentMap(view, changeSetData, context);
       OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = createOCL(view, extentMap);
 
-      ContextParameter contextParameter = new ContextParameter(view, info);
+      ContextParameter contextParameter = getContextParameter(info, view);
       Query<EClassifier, EClass, EObject> query = createQuery(view, info, contextParameter, ocl);
 
       Object result = evaluate(query, contextParameter.getObject());
@@ -361,6 +361,14 @@ public class OCLQueryHandler implements IQueryHandler
   /**
    * @since 4.2
    */
+  protected ContextParameter getContextParameter(CDOQueryInfo info, CDOView view)
+  {
+    return new ContextParameter(view, info);
+  }
+
+  /**
+   * @since 4.2
+   */
   protected void readParameters(Map<String, ?> queryParameters)
   {
     lazyExtents = readParameter(queryParameters, LAZY_EXTENTS_PARAMETER, lazyExtents);
@@ -526,6 +534,12 @@ public class OCLQueryHandler implements IQueryHandler
       }
     }
 
+    public ContextParameter(EClassifier classifier, EObject object)
+    {
+      this.classifier = classifier;
+      this.object = object;
+    }
+
     public EClassifier getClassifier()
     {
       return classifier;
@@ -536,7 +550,7 @@ public class OCLQueryHandler implements IQueryHandler
       return object;
     }
 
-    private static EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
+    protected static EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
     {
       for (CDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
       {

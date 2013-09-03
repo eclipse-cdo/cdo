@@ -357,6 +357,11 @@ public class Repository extends Container<Object> implements InternalRepository
     return optimisticLockingTimeout;
   }
 
+  public void setOptimisticLockingTimeout(long optimisticLockingTimeout)
+  {
+    this.optimisticLockingTimeout = optimisticLockingTimeout;
+  }
+
   public String getStoreType()
   {
     return store.getType();

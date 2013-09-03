@@ -274,4 +274,8 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    */
   public long getOptimisticLockingTimeout();
 
+  /**
+   * @since 4.3
+   */
+  public void setOptimisticLockingTimeout(long optimisticLockingTimeout);
 }

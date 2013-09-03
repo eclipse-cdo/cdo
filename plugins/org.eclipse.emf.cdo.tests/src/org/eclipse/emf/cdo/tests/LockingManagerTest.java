@@ -35,7 +35,6 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
-import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -289,8 +288,8 @@ public class LockingManagerTest extends AbstractLockingTest
     assertEquals(true, System.currentTimeMillis() - start < 300);
 
     start = System.currentTimeMillis();
-    assertEquals(false, CDOUtil.getCDOObject(company2).cdoWriteLock().tryLock(2, TimeUnit.SECONDS));
-    assertEquals(true, System.currentTimeMillis() - start >= 2000);
+    assertEquals(false, CDOUtil.getCDOObject(company2).cdoWriteLock().tryLock(1000, TimeUnit.MILLISECONDS));
+    assertEquals(true, System.currentTimeMillis() - start >= 1000);
   }
 
   public void testReadLockByOthers() throws Exception
@@ -383,22 +382,14 @@ public class LockingManagerTest extends AbstractLockingTest
     try
     {
       transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
-      fail("Should have thrown an exception");
+      fail("LockTimeoutException expected");
     }
-    catch (LockTimeoutException ex)
+    catch (LockTimeoutException expected)
     {
     }
 
     company2.setCity("Ottawa");
-
-    try
-    {
-      transaction2.commit();
-      fail("CommitException expected");
-    }
-    catch (CommitException exception)
-    {
-    }
+    commitAndTimeout(transaction2);
   }
 
   public void testWriteLockViaObject() throws Exception
@@ -418,15 +409,7 @@ public class LockingManagerTest extends AbstractLockingTest
     assertWriteLock(false, company2);
 
     company2.setCity("Ottawa");
-
-    try
-    {
-      transaction2.commit();
-      fail("CommitException expected");
-    }
-    catch (CommitException expected)
-    {
-    }
+    commitAndTimeout(transaction2);
   }
 
   public void testWriteLockFromDifferenceTransaction() throws Exception
@@ -450,9 +433,9 @@ public class LockingManagerTest extends AbstractLockingTest
     try
     {
       transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
-      fail("Should have an exception");
+      fail("LockTimeoutException expected");
     }
-    catch (LockTimeoutException ex)
+    catch (LockTimeoutException expected)
     {
     }
   }
@@ -621,15 +604,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.READ, DEFAULT_TIMEOUT);
     company2.setCity("Ottawa");
-
-    try
-    {
-      transaction2.commit();
-      fail("CommitException expected");
-    }
-    catch (CommitException expected)
-    {
-    }
+    commitAndTimeout(transaction2);
   }
 
   public void testWriteLockAndCommitFromDifferentTransaction() throws Exception
@@ -648,16 +623,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, DEFAULT_TIMEOUT);
     company2.setCity("Ottawa");
-
-    try
-    {
-      transaction2.commit();
-      fail("CommitException expected");
-    }
-    catch (CommitException expected)
-    {
-      IOUtil.print(expected);
-    }
+    commitAndTimeout(transaction2);
   }
 
   public void testReadLockAndCommitSameTransaction() throws Exception
@@ -817,16 +783,7 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOResource res2 = transaction2.getResource(getResourcePath("/res1"));
     Company company2 = (Company)res2.getContents().get(0);
     company2.setName("NewName");
-
-    try
-    {
-      transaction2.commit();
-      fail("CommitException expected");
-    }
-    catch (CommitException expected)
-    {
-      // SUCCESS
-    }
+    commitAndTimeout(transaction2);
   }
 
   public void testTransactionClose() throws Exception
@@ -1258,5 +1215,26 @@ public class LockingManagerTest extends AbstractLockingTest
     category1.setName("NewName2");
     transaction.commit();
     assertEquals(false, writeLock.isLocked());
+  }
+
+  private void commitAndTimeout(CDOTransaction transaction)
+  {
+    InternalRepository repository = getRepository();
+    long oldTimeout = repository.getOptimisticLockingTimeout();
+    repository.setOptimisticLockingTimeout(1000);
+
+    try
+    {
+      transaction.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+      // SUCCESS
+    }
+    finally
+    {
+      repository.setOptimisticLockingTimeout(oldTimeout);
+    }
   }
 }

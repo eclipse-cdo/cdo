@@ -59,7 +59,7 @@
 				<args>
 					<jvmarg value="-XX:MaxPermSize=256M" />
 					<jvmarg value="-Xmx4g" />
-					<jvmarg value="-Dsite.pack200=${site.signing}" />
+					<jvmarg value="-Dsite.pack200=false" />
 					<jvmarg value="-Dsite.retain.unpacked=true" />
 					<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk1.6.0-latest/bin" />
 					<jvmarg value="-Declipse.p2.MD5Check=false" />

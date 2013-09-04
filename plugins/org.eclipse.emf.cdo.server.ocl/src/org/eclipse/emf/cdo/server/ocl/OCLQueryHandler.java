@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - Additional OCL operations for efficient queries
  */
 package org.eclipse.emf.cdo.server.ocl;
 
@@ -205,9 +206,10 @@ public class OCLQueryHandler implements IQueryHandler
   protected OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> createOCL(CDOView view,
       CDOExtentMap extentMap)
   {
-    EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(view.getSession().getPackageRegistry());
+    EcoreEnvironmentFactory envFactory = new CDOEnvironmentFactory(view.getSession().getPackageRegistry());
 
     OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
+    CDOAdditionalOperation.registerOperations((CDOEnvironment)ocl.getEnvironment());
     ocl.setExtentMap(extentMap);
     return ocl;
   }

@@ -21,9 +21,9 @@
     </classpath>
   </taskdef>
 
-  <!-- ======= -->
-  <!-- Eclipse -->
-  <!-- ======= -->
+  <!-- ========= -->
+  <!-- Clean Dir -->
+  <!-- ========= -->
 
   <macrodef name="cleandir">
     <attribute name="dir" />
@@ -1009,6 +1009,6 @@
   <!-- All -->
   <!-- === -->
 
-  <target name="all" depends="test,generate" description="Runs the tests and generates the site and other artifacts"/>
+  <target name="all" depends="test,generate" description="Runs the tests and generates the site and other artifacts" />
 
 </project>

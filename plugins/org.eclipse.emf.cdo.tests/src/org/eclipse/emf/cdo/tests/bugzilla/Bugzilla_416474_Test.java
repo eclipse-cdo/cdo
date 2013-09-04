@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 
+import org.eclipse.core.runtime.Path;
+
 import java.util.List;
 
 /**
@@ -33,30 +35,31 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
 {
   public void testAllProperContentsNoTypeFilter() throws Exception
   {
-    EPackage root = createPackage("root_416474_1", "root_416474_1",
-        "http://www.eclipse.org/CDO/test/bug416474/Root_416474_1");
-    EClass a = createClass(root, "RootA_416474_1");
-    EClass b = createClass(root, "RootB_416474_1");
+    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test/bug416474/Root");
+    EClass a = createClass(root, "RootA");
+    EClass b = createClass(root, "RootB");
 
-    EPackage nested = createPackage("nested_416474_1", "nested_416474_1",
-        "http://www.eclipse.org/CDO/test/bug416474/Nested_416474_1");
-    createClass(nested, "NestedA_416474_1");
-    createClass(nested, "NestedB_416474_1");
+    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test/bug416474/Nested");
+    createClass(nested, "NestedA");
+    createClass(nested, "NestedB");
     root.getESubpackages().add(nested);
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource(getResourcePath("root_416474_1.ecore"));
+    String rootPath = getResourcePath("root.ecore");
+    CDOResource resource1 = transaction.createResource(rootPath);
     resource1.getContents().add(root);
-    CDOResource resource2 = transaction.createResource(getResourcePath("nested_416474_1.ecore"));
+    String nestedPath = getResourcePath("nested.ecore");
+    CDOResource resource2 = transaction.createResource(nestedPath);
     resource2.getContents().add(nested);
 
     transaction.commit();
 
     CDOView newView = session.openView();
     CDOQuery ocl = newView.createQuery("ocl",
-        "eresource::CDOResource.allInstances()->any(name='root_416474_1.ecore').cdoAllProperContents()",
+        "eresource::CDOResource.allInstances()->any(path=rootPath).cdoAllProperContents()",
         EcorePackage.Literals.EPACKAGE);
+    ocl.setParameter("rootPath", rootPath);
 
     List<?> results = ocl.getResult();
     assertEquals(true, results.contains(newView.getObject(root)));
@@ -67,73 +70,82 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
 
   public void testAllProperContentsTypeFilter() throws Exception
   {
-    EPackage root = createPackage("root_416474_2", "root_416474_2",
-        "http://www.eclipse.org/CDO/test/bug416474/Root_416474_2");
-    createClass(root, "RootA_416474_2");
-    createClass(root, "RootB_416474_2");
+    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test/bug416474/Root");
+    createClass(root, "RootA");
+    createClass(root, "RootB");
 
-    EPackage nested = createPackage("nested_416474_2", "nested_416474_2",
-        "http://www.eclipse.org/CDO/test/bug416474/Nested_416474_2");
-    createClass(nested, "NestedA_416474_2");
-    createClass(nested, "NestedB_416474_2");
+    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test/bug416474/Nested");
+    createClass(nested, "NestedA");
+    createClass(nested, "NestedB");
     root.getESubpackages().add(nested);
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource(getResourcePath("root_416474_2.ecore"));
+    String rootPath = getResourcePath("root.ecore");
+    CDOResource resource1 = transaction.createResource(rootPath);
     resource1.getContents().add(root);
-    CDOResource resource2 = transaction.createResource(getResourcePath("nested_416474_2.ecore"));
-    resource2.getContents().add(nested);
-
-    transaction.commit();
-
-    CDOView newView = session.openView();
-    CDOQuery ocl = newView
-        .createQuery(
-            "ocl",
-            "eresource::CDOResource.allInstances()->any(name='root_416474_2.ecore').cdoAllProperContents(EClass).name->asSet()",
-            EcorePackage.Literals.EPACKAGE);
-
-    List<?> results = ocl.getResult();
-    assertEquals(true, results.contains("RootA_416474_2"));
-    assertEquals(true, results.contains("RootB_416474_2"));
-    assertEquals(2, results.size());
-  }
-
-  public void testMatchesAnyStringAttribute() throws Exception
-  {
-    EPackage root = createPackage("root_416474_3", "root_416474_3",
-        "http://www.eclipse.org/CDO/test/bug416474/Root_416474_3");
-    createClass(root, "RootA_416474_3");
-    createClass(root, "RootB_416474_3");
-
-    EPackage nested = createPackage("nested_416474_3", "nested_416474_3",
-        "http://www.eclipse.org/CDO/test/bug416474/Nested_416474_3");
-    EClass a1 = createClass(nested, "NestedA_416474_3");
-    EClass b1 = createClass(nested, "NestedB_416474_3");
-    root.getESubpackages().add(nested);
-
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource(getResourcePath("root_416474_3.ecore"));
-    resource1.getContents().add(root);
-    CDOResource resource2 = transaction.createResource(getResourcePath("nested_416474_3.ecore"));
+    String nestedPath = getResourcePath("nested.ecore");
+    CDOResource resource2 = transaction.createResource(nestedPath);
     resource2.getContents().add(nested);
 
     transaction.commit();
 
     CDOView newView = session.openView();
     CDOQuery ocl = newView.createQuery("ocl",
-        "EModelElement.allInstances()->select(e | e.cdoMatches('http://www.eclipse.org/CDO/test/.*_416474_3'))",
+        "eresource::CDOResource.allInstances()->any(path=rootPath).cdoAllProperContents(EClass).name->asSet()",
         EcorePackage.Literals.EPACKAGE);
+    ocl.setParameter("rootPath", rootPath);
+
+    List<?> results = ocl.getResult();
+    assertEquals(true, results.contains("RootA"));
+    assertEquals(true, results.contains("RootB"));
+    assertEquals(2, results.size());
+  }
+
+  public void testMatchesAnyStringAttribute() throws Exception
+  {
+    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test/bug416474/Root");
+    createClass(root, "RootA");
+    createClass(root, "RootB");
+
+    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test/bug416474/Nested");
+    EClass a1 = createClass(nested, "NestedA");
+    EClass b1 = createClass(nested, "NestedB");
+    root.getESubpackages().add(nested);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    String rootPath = getResourcePath("root.ecore");
+    CDOResource resource1 = transaction.createResource(rootPath);
+    resource1.getContents().add(root);
+    String nestedPath = getResourcePath("nested.ecore");
+    CDOResource resource2 = transaction.createResource(nestedPath);
+    resource2.getContents().add(nested);
+
+    transaction.commit();
+
+    // Ensure a trailing separator without adding an extra one if already present
+    String folderPath = new Path(resource2.getFolder().getPath()).addTrailingSeparator().toString();
+
+    // Scope the query to resources in this test's unique folder *without* relying on the
+    // cdoAllProperContents() operation tested by other methods in this class
+    String scopeClause = "e.eResource().oclAsType(eresource::CDOResource).path.startsWith(folderPath) and ";
+
+    CDOView newView = session.openView();
+    CDOQuery ocl = newView.createQuery("ocl", "EModelElement.allInstances()->select(e | " + scopeClause
+        + "e.cdoMatches('.*bug416474.*'))", EcorePackage.Literals.EPACKAGE);
+    ocl.setParameter("cdoImplicitRootClass", EcorePackage.Literals.EOBJECT);
+    ocl.setParameter("folderPath", folderPath);
 
     List<?> results = ocl.getResult();
     assertEquals(true, results.contains(newView.getObject(root)));
     assertEquals(true, results.contains(newView.getObject(nested)));
     assertEquals(2, results.size());
 
-    ocl = newView.createQuery("ocl", "EModelElement.allInstances()->select(e | e.cdoMatches('.*Nested.?_416474_3'))",
-        EcorePackage.Literals.EPACKAGE);
+    ocl = newView.createQuery("ocl", "EModelElement.allInstances()->select(e | " + scopeClause
+        + "e.cdoMatches('.*Nested.?'))", EcorePackage.Literals.EPACKAGE);
+    ocl.setParameter("cdoImplicitRootClass", EcorePackage.Literals.EOBJECT);
+    ocl.setParameter("folderPath", folderPath);
 
     results = ocl.getResult();
     assertEquals(true, results.contains(newView.getObject(nested)));

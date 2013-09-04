@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -53,7 +52,6 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-@CleanRepositoriesBefore(reason = "Branch creation")
 public class BranchingTest extends AbstractCDOTest
 {
   protected CDOSession session1;
@@ -93,6 +91,12 @@ public class BranchingTest extends AbstractCDOTest
     return openSession();
   }
 
+  protected String getBranchName(String name)
+  {
+    // New scenarios get clean repositories, no need to disambiguate them.
+    return getClass().getSimpleName() + "_" + getName() + "_" + name;
+  }
+
   public void testMainBranch() throws Exception
   {
     CDOSession session = openSession1();
@@ -100,7 +104,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(CDOBranch.MAIN_BRANCH_ID, mainBranch.getID());
     assertEquals(CDOBranch.MAIN_BRANCH_NAME, mainBranch.getName());
     assertEquals(null, mainBranch.getBase().getBranch());
-    assertEquals(0, mainBranch.getBranches().length);
+    int branches = mainBranch.getBranches().length;
     closeSession1();
 
     session = openSession2();
@@ -108,17 +112,19 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(CDOBranch.MAIN_BRANCH_ID, mainBranch.getID());
     assertEquals(CDOBranch.MAIN_BRANCH_NAME, mainBranch.getName());
     assertEquals(null, mainBranch.getBase().getBranch());
-    assertEquals(0, mainBranch.getBranches().length);
+    assertEquals(branches, mainBranch.getBranches().length);
     session.close();
   }
 
   public void testCreateBranch() throws Exception
   {
+    String name = getBranchName("testing");
+
     CDOSession session = openSession1();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch branch = mainBranch.createBranch("testing");
-    assertEquals(CDOBranch.MAIN_BRANCH_ID + 1, branch.getID());
-    assertEquals("testing", branch.getName());
+    CDOBranch branch = mainBranch.createBranch(name);
+    assertNotSame(CDOBranch.MAIN_BRANCH_ID, branch.getID());
+    assertEquals(name, branch.getName());
     assertEquals(CDOBranch.MAIN_BRANCH_ID, branch.getBase().getBranch().getID());
     assertEquals(0, branch.getBranches().length);
     session.close();
@@ -126,37 +132,44 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testGetBranch() throws Exception
   {
+    String name = getBranchName("testing");
+
     CDOSession session = openSession1();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch branch = mainBranch.createBranch("testing");
+    CDOBranch branch = mainBranch.createBranch(name);
+    int id = branch.getID();
     closeSession1();
 
     session = openSession2();
-    branch = session.getBranchManager().getBranch(CDOBranch.MAIN_BRANCH_ID + 1);
-    assertEquals(CDOBranch.MAIN_BRANCH_ID + 1, branch.getID());
-    assertEquals("testing", branch.getName());
+    branch = session.getBranchManager().getBranch(id);
+    assertEquals(id, branch.getID());
+    assertEquals(name, branch.getName());
     assertEquals(CDOBranch.MAIN_BRANCH_ID, branch.getBase().getBranch().getID());
     assertEquals(0, branch.getBranches().length);
     session.close();
   }
 
-  @CleanRepositoriesBefore(reason = "Branch counting")
   public void testGetSubBranches() throws Exception
   {
+    String name1 = getBranchName("testing1");
+    String name2 = getBranchName("testing2");
+
     CDOSession session = openSession1();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    mainBranch.createBranch("testing1");
-    mainBranch.createBranch("testing2");
+    int count = mainBranch.getBranches().length;
+
+    mainBranch.createBranch(name1);
+    mainBranch.createBranch(name2);
     closeSession1();
 
     session = openSession2();
     mainBranch = session.getBranchManager().getMainBranch();
     CDOBranch[] branches = mainBranch.getBranches();
-    assertEquals(2, branches.length);
-    assertEquals("testing1", branches[0].getName());
-    assertEquals(CDOBranch.MAIN_BRANCH_ID, branches[0].getBase().getBranch().getID());
-    assertEquals("testing2", branches[1].getName());
-    assertEquals(CDOBranch.MAIN_BRANCH_ID, branches[1].getBase().getBranch().getID());
+    assertEquals(count + 2, branches.length);
+    assertEquals(name1, branches[count + 0].getName());
+    assertEquals(CDOBranch.MAIN_BRANCH_ID, branches[count + 0].getBase().getBranch().getID());
+    assertEquals(name2, branches[count + 1].getName());
+    assertEquals(CDOBranch.MAIN_BRANCH_ID, branches[count + 1].getBase().getBranch().getID());
     session.close();
   }
 
@@ -179,7 +192,7 @@ public class BranchingTest extends AbstractCDOTest
     });
 
     CDOBranch mainBranch = session1.getBranchManager().getMainBranch();
-    CDOBranch branch = mainBranch.createBranch("testing");
+    CDOBranch branch = mainBranch.createBranch(getBranchName("testing"));
     CDOBranch resultBranch = result.getValue();
     assertEquals(branch, resultBranch);
 
@@ -189,11 +202,14 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testGetPath() throws Exception
   {
+    String name1 = getBranchName("testing1");
+    String name2 = getBranchName("testing2");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch mainBranch = branchManager.getMainBranch();
-    CDOBranch testing1 = mainBranch.createBranch("testing1");
-    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch testing1 = mainBranch.createBranch(name1);
+    CDOBranch testing2 = mainBranch.createBranch(name2);
     CDOBranch subsub = testing1.createBranch("subsub");
     closeSession1();
 
@@ -201,23 +217,26 @@ public class BranchingTest extends AbstractCDOTest
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
     assertEquals(mainBranch, branchManager.getBranch("MAIN"));
-    assertEquals(testing1, branchManager.getBranch("MAIN/testing1"));
-    assertEquals(testing2, branchManager.getBranch("MAIN/testing2"));
-    assertEquals(subsub, branchManager.getBranch("MAIN/testing1/subsub"));
-    assertEquals(testing1, mainBranch.getBranch("testing1"));
-    assertEquals(testing2, mainBranch.getBranch("testing2"));
-    assertEquals(subsub, mainBranch.getBranch("testing1/subsub"));
+    assertEquals(testing1, branchManager.getBranch("MAIN/" + name1));
+    assertEquals(testing2, branchManager.getBranch("MAIN/" + name2));
+    assertEquals(subsub, branchManager.getBranch("MAIN/" + name1 + "/subsub"));
+    assertEquals(testing1, mainBranch.getBranch(name1));
+    assertEquals(testing2, mainBranch.getBranch(name2));
+    assertEquals(subsub, mainBranch.getBranch(name1 + "/subsub"));
     assertEquals(subsub, testing1.getBranch("subsub"));
     session.close();
   }
 
   public void testGetPathName() throws Exception
   {
+    String name1 = getBranchName("testing1");
+    String name2 = getBranchName("testing2");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch mainBranch = branchManager.getMainBranch();
-    CDOBranch testing1 = mainBranch.createBranch("testing1");
-    mainBranch.createBranch("testing2");
+    CDOBranch testing1 = mainBranch.createBranch(name1);
+    mainBranch.createBranch(name2);
     testing1.createBranch("subsub");
     closeSession1();
 
@@ -225,23 +244,26 @@ public class BranchingTest extends AbstractCDOTest
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
     assertEquals("MAIN", branchManager.getBranch("MAIN").getPathName());
-    assertEquals("MAIN/testing1", branchManager.getBranch("MAIN/testing1").getPathName());
-    assertEquals("MAIN/testing2", branchManager.getBranch("MAIN/testing2").getPathName());
-    assertEquals("MAIN/testing1/subsub", branchManager.getBranch("MAIN/testing1/subsub").getPathName());
-    assertEquals("MAIN/testing1", mainBranch.getBranch("testing1").getPathName());
-    assertEquals("MAIN/testing2", mainBranch.getBranch("testing2").getPathName());
-    assertEquals("MAIN/testing1/subsub", mainBranch.getBranch("testing1/subsub").getPathName());
-    assertEquals("MAIN/testing1/subsub", testing1.getBranch("subsub").getPathName());
+    assertEquals("MAIN/" + name1, branchManager.getBranch("MAIN/" + name1).getPathName());
+    assertEquals("MAIN/" + name2, branchManager.getBranch("MAIN/" + name2).getPathName());
+    assertEquals("MAIN/" + name1 + "/subsub", branchManager.getBranch("MAIN/" + name1 + "/subsub").getPathName());
+    assertEquals("MAIN/" + name1, mainBranch.getBranch(name1).getPathName());
+    assertEquals("MAIN/" + name2, mainBranch.getBranch(name2).getPathName());
+    assertEquals("MAIN/" + name1 + "/subsub", mainBranch.getBranch(name1 + "/subsub").getPathName());
+    assertEquals("MAIN/" + name1 + "/subsub", testing1.getBranch("subsub").getPathName());
     session.close();
   }
 
   public void testBasePath() throws Exception
   {
+    String name1 = getBranchName("testing1");
+    String name2 = getBranchName("testing2");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch mainBranch = branchManager.getMainBranch();
-    CDOBranch testing1 = mainBranch.createBranch("testing1");
-    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch testing1 = mainBranch.createBranch(name1);
+    CDOBranch testing2 = mainBranch.createBranch(name2);
     CDOBranch subsub = testing1.createBranch("subsub");
     closeSession1();
 
@@ -258,14 +280,17 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testAncestor() throws Exception
   {
+    String name1 = getBranchName("testing1");
+    String name2 = getBranchName("testing2");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch mainBranch = branchManager.getMainBranch();
 
-    CDOBranch testing1 = mainBranch.createBranch("testing1");
+    CDOBranch testing1 = mainBranch.createBranch(name1);
     CDOBranch subsub1 = testing1.createBranch("subsub1");
 
-    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch testing2 = mainBranch.createBranch(name2);
     CDOBranch subsub2 = testing2.createBranch("subsub2");
 
     closeSession1();
@@ -302,14 +327,17 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testContainment() throws Exception
   {
+    String name1 = getBranchName("testing1");
+    String name2 = getBranchName("testing2");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch mainBranch = branchManager.getMainBranch();
 
-    CDOBranch testing1 = mainBranch.createBranch("testing1");
+    CDOBranch testing1 = mainBranch.createBranch(name1);
     CDOBranch subsub1 = testing1.createBranch("subsub1");
 
-    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch testing2 = mainBranch.createBranch(name2);
     CDOBranch subsub2 = testing2.createBranch("subsub2");
 
     closeSession1();
@@ -333,6 +361,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testCommit() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -360,7 +390,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -384,7 +414,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     check(session, mainBranch, commitTime1, 5, "CDO");
     check(session, mainBranch, commitTime2, 5, "CDO");
@@ -399,6 +429,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testCommitAddOrderDetail() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -426,7 +458,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -454,7 +486,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     check(session, mainBranch, commitTime1, 5, "CDO");
     check(session, mainBranch, commitTime2, 5, "CDO");
@@ -469,6 +501,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testCommitRemoveOrderDetail() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -501,7 +535,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -526,7 +560,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     check(session, mainBranch, commitTime1, 5, 10, "CDO");
     check(session, mainBranch, commitTime2, 5, 10, "CDO");
@@ -541,6 +575,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testDetachExisting() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -567,7 +603,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -642,7 +678,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     check(session, mainBranch, commitTime1, 5, "CDO");
     check(session, mainBranch, commitTime2, 5, "CDO");
@@ -723,6 +759,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testDetachWithoutRevision() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -744,7 +782,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -766,7 +804,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     check(session, subBranch, commitTime1, "CDO");
 
@@ -795,6 +833,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testDetachWithoutRevision_CheckMainBranch() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -816,7 +856,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -838,7 +878,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     check(session, mainBranch, commitTime1, "CDO");
     check(session, mainBranch, commitTime2, "CDO");
@@ -869,8 +909,11 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  @CleanRepositoriesBefore(reason = "Revision counting")
   public void testhandleRevisionsAfterDetachInSubBranch() throws Exception
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -892,7 +935,7 @@ public class BranchingTest extends AbstractCDOTest
     transaction.close();
 
     // Commit to sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
@@ -915,7 +958,7 @@ public class BranchingTest extends AbstractCDOTest
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
-    subBranch = mainBranch.getBranch("subBranch");
+    subBranch = mainBranch.getBranch(name);
 
     final List<CDORevision> revisions = new ArrayList<CDORevision>();
 
@@ -940,6 +983,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testSwitchViewTarget() throws CommitException
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -960,7 +1005,7 @@ public class BranchingTest extends AbstractCDOTest
     long commitTime1 = commitInfo.getTimeStamp();
     transaction.close();
 
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
 
     CDOID id = CDOUtil.getCDOObject(product).cdoID();
     CDOView view = session.openView();
@@ -974,6 +1019,8 @@ public class BranchingTest extends AbstractCDOTest
 
   public void testSwitchTransactionTarget() throws CommitException
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
 
@@ -990,7 +1037,7 @@ public class BranchingTest extends AbstractCDOTest
     long commitTime1 = transaction.commit().getTimeStamp();
 
     // Create sub branch
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    CDOBranch subBranch = mainBranch.createBranch(name, commitTime1);
 
     // Switch to sub branch
     transaction.setBranch(subBranch);
@@ -1014,12 +1061,14 @@ public class BranchingTest extends AbstractCDOTest
    */
   public void testFutureBaseTime() throws CommitException
   {
+    String name = getBranchName("subBranch");
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch mainBranch = branchManager.getMainBranch();
 
     long future = System.currentTimeMillis() + 1000000L;
-    CDOBranch subBranch = mainBranch.createBranch("subBranch", future);
+    CDOBranch subBranch = mainBranch.createBranch(name, future);
     assertEquals(true, subBranch.getBase().getTimeStamp() < future);
   }
 

@@ -301,7 +301,7 @@
   <!-- Generate API -->
   <!-- ============ -->
 
-  <macrodef name="generate.api">
+  <macrodef name="generate.apireports">
     <sequential>
       <echo message="" />
       <echo message="Generating API reports" />
@@ -309,7 +309,7 @@
         <cmdargs>
           <arg value="-D" />
           <arg value="api.report=${build.root}/api.xml" />
-          <arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
+          <arg value="org.eclipse.emf.cdo.releng#generate.apireports" />
         </cmdargs>
       </buckminster>
       <echo message="Converting to HTML" />
@@ -512,7 +512,7 @@
   <!-- Init Hudson -->
   <!-- =========== -->
 
-  <target name="-init.hudson" if="env.HUDSON_URL">
+  <target name="init.hudson" if="env.HUDSON_URL">
     <property name="build.root" value="${env.WORKSPACE}" />
     <property name="build.location" value="hudson" />
     <property name="build.timestamp" value="${env.BUILD_ID}" />
@@ -584,7 +584,7 @@
   <!-- Init Local -->
   <!-- ========== -->
 
-  <target name="-init.local" unless="env.HUDSON_URL">
+  <target name="init.local" unless="env.HUDSON_URL">
     <fail unless="build.root" message="The property 'build.root' must be defined in a 'local.properties' file" />
 
     <property name="build.location" value="local" />
@@ -622,11 +622,7 @@
   <!-- Init Properties -->
   <!-- =============== -->
 
-  <target name="-init.properties" depends="-init.hudson,-init.local">
-    <condition property="gerrit.trigger" value="true">
-      <equals arg1="${build.trigger}" arg2="gerrit" />
-    </condition>
-
+  <target name="init.properties" depends="init.hudson,init.local">
     <condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
       <isset property="env.no_proxy" />
     </condition>
@@ -690,7 +686,7 @@
   <!-- Init Tools -->
   <!-- ========== -->
 
-  <target name="-init.tools" depends="-init.properties">
+  <target name="init.tools" depends="init.properties">
     <if>
       <and>
         <equals arg1="${keep.tools}" arg2="true" />
@@ -773,7 +769,7 @@
   <!-- Provision -->
   <!-- ========= -->
 
-  <target name="provision" depends="-init.tools" description="Imports projects and binaries">
+  <target name="provision" depends="init.tools" description="Imports projects and binaries">
     <if>
       <not>
         <equals arg1="${skip.provision}" arg2="true" />
@@ -898,14 +894,45 @@
     </if>
   </target>
 
-  <!-- ======= -->
-  <!-- Site.p2 -->
-  <!-- ======= -->
+  <!-- ==== -->
+  <!-- Test -->
+  <!-- ==== -->
 
-  <target name="generate" depends="build" description="Generates the site and depending artifacts">
+  <target name="test" depends="build" description="Runs the tests">
+    <if>
+      <equals arg1="${skip.test}" arg2="true" />
+      <then>
+        <echo message="Skipping test" />
+      </then>
+      <else>
+        <condition property="launch.config"
+                   value="org.eclipse.emf.cdo.tests.all/CDO GerritTests"
+                   else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
+          <isset property="GERRIT_CHANGE_ID" />
+        </condition>
+        <echo message="Running ${launch.config}" />
+        <buckminster command="junit">
+          <cmdargs>
+            <arg value="-l" />
+            <arg value="${launch.config}.launch" />
+            <arg value="-o" />
+            <arg value="${test.report}" />
+            <arg value="--terseXML" />
+            <arg value="--flatXML" />
+          </cmdargs>
+        </buckminster>
+      </else>
+    </if>
+  </target>
+
+  <!-- ======== -->
+  <!-- Generate -->
+  <!-- ======== -->
+
+  <target name="generate" depends="test" description="Generates the site and other artifacts">
     <if>
       <or>
-        <isset property="gerrit.trigger" />
+        <isset property="GERRIT_CHANGE_ID" />
         <equals arg1="${skip.generate}" arg2="true" />
       </or>
       <then>
@@ -959,10 +986,10 @@
 
         <if>
           <not>
-            <equals arg1="${skip.generate.api}" arg2="true" />
+            <equals arg1="${skip.generate.apireports}" arg2="true" />
           </not>
           <then>
-            <generate.api />
+            <generate.apireports />
           </then>
         </if>
 
@@ -976,29 +1003,6 @@
         </if>
       </else>
     </if>
-  </target>
-
-  <!-- ==== -->
-  <!-- Test -->
-  <!-- ==== -->
-
-  <target name="test" depends="generate" description="Runs the tests">
-    <condition property="launch.config"
-               value="org.eclipse.emf.cdo.tests.all/CDO GerritTests"
-               else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
-      <isset property="gerrit.trigger" />
-    </condition>
-    <echo message="Running ${launch.config}" />
-    <buckminster command="junit">
-      <cmdargs>
-        <arg value="-l" />
-        <arg value="${launch.config}.launch" />
-        <arg value="-o" />
-        <arg value="${test.report}" />
-        <arg value="--terseXML" />
-        <arg value="--flatXML" />
-      </cmdargs>
-    </buckminster>
   </target>
 
 </project>

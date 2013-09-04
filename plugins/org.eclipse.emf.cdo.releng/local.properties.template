@@ -25,6 +25,7 @@ keep.tp = false
 
 skip.provision = false
 skip.build = false
+skip.test = false
 
 skip.generate = false
 skip.generate.site = false
@@ -32,7 +33,7 @@ skip.generate.help = false
 skip.generate.index = false
 skip.generate.bookmarks = false
 skip.generate.dropins = false
-skip.generate.api = false
+skip.generate.apireports = false
 
 skip.generate.products = false
 skip.generate.products.server = false

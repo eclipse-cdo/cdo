@@ -168,4 +168,10 @@ public interface CDORevisionManager
    */
   public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
       boolean loadOnDemand);
+
+  /**
+   * @since 4.3
+   */
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler);
 }

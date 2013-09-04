@@ -18,9 +18,12 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
 
@@ -89,6 +92,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    *
    * @author Eike Stepper
    * @since 3.0
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface RevisionLoader
   {
@@ -96,6 +101,12 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
         int referenceChunk, int prefetchDepth);
 
     public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);
+
+    /**
+     * @since 4.3
+     */
+    public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp,
+        boolean exactTime, CDORevisionHandler handler);
   }
 
   /**

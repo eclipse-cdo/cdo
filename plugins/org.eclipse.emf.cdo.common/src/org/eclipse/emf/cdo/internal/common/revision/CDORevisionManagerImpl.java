@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -293,6 +294,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
 
     return getResultsAndSynthetics(infos, synthetics);
+  }
+
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
+  {
+    revisionLoader.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
   }
 
   @Override

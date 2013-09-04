@@ -9,7 +9,7 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-<project name="CDO" default="generate">
+<project name="CDO" default="all">
 
   <property file="local.properties" />
   <property file="build.properties" />
@@ -929,7 +929,7 @@
   <!-- Generate -->
   <!-- ======== -->
 
-  <target name="generate" depends="test" description="Generates the site and other artifacts">
+  <target name="generate" depends="build" description="Generates the site and other artifacts">
     <if>
       <or>
         <isset property="GERRIT_CHANGE_ID" />
@@ -1004,5 +1004,11 @@
       </else>
     </if>
   </target>
+
+  <!-- === -->
+  <!-- All -->
+  <!-- === -->
+
+  <target name="all" depends="test,generate" description="Runs the tests and generates the site and other artifacts"/>
 
 </project>

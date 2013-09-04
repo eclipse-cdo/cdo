@@ -237,6 +237,9 @@ abstract class CDOAdditionalOperation extends AdapterImpl
   }
 
   /**
+   * The <tt>cdoMatches</tt> operation queries whether a regular expression matches aany string-valued  
+   * attribute of an {@link EObject}.
+   * 
    * @author Christian W. Damus
    */
   private static class MatchesAnyStringAttribute extends CDOAdditionalOperation

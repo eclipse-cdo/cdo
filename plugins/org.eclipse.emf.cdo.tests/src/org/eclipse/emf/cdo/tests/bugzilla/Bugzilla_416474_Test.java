@@ -124,7 +124,7 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
 
     CDOView newView = session.openView();
     CDOQuery ocl = newView.createQuery("ocl",
-        "EModelElement.allInstances()->select(e | e.cdoMatches('.*http://www.eclipse.org/CDO/test/bug416474.*'))",
+        "EModelElement.allInstances()->select(e | e.cdoMatches('http://www.eclipse.org/CDO/test/.*_416474_3'))",
         EcorePackage.Literals.EPACKAGE);
 
     List<?> results = ocl.getResult();

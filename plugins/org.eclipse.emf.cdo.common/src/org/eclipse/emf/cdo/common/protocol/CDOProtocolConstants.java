@@ -285,6 +285,21 @@ public interface CDOProtocolConstants
   public static final String QUERY_LANGUAGE_RESOURCES_EXACT_MATCH = "exactMatch"; //$NON-NLS-1$
 
   /**
+   * @since 4.3
+   */
+  public static final String QUERY_LANGUAGE_INSTANCES = "instances"; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String QUERY_LANGUAGE_INSTANCES_TYPE = "type"; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String QUERY_LANGUAGE_INSTANCES_EXACT = "exact"; //$NON-NLS-1$
+
+  /**
    * @since 3.0
    */
   public static final String QUERY_LANGUAGE_XREFS = "xrefs"; //$NON-NLS-1$

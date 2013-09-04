@@ -822,6 +822,25 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return query;
   }
 
+  public <T extends EObject> List<T> queryInstances(EClass type)
+  {
+    CDOQuery query = createInstancesQuery(type);
+    return query.getResult();
+  }
+
+  public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type)
+  {
+    CDOQuery query = createInstancesQuery(type);
+    return query.getResultAsync();
+  }
+
+  private CDOQuery createInstancesQuery(EClass type)
+  {
+    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES, null);
+    query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE, type);
+    return query;
+  }
+
   public synchronized List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)
   {
     return queryXRefs(Collections.singleton(targetObject), sourceReferences);

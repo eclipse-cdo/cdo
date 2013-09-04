@@ -43,6 +43,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -670,6 +671,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
       boolean exactMatch)
   {
     return delegate.queryResourcesAsync(folder, name, exactMatch);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public <T extends EObject> List<T> queryInstances(EClass type)
+  {
+    return delegate.queryInstances(type);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type)
+  {
+    return delegate.queryInstancesAsync(type);
   }
 
   /**

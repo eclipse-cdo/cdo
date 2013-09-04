@@ -1079,6 +1079,11 @@ public class Repository extends Container<Object> implements InternalRepository
       return new ResourcesQueryHandler();
     }
 
+    if (CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES.equals(language))
+    {
+      return new InstancesQueryHandler();
+    }
+
     if (CDOProtocolConstants.QUERY_LANGUAGE_XREFS.equals(language))
     {
       return new XRefsQueryHandler();

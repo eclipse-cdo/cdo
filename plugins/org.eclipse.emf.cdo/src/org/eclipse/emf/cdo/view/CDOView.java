@@ -45,6 +45,7 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -288,6 +289,20 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
       boolean exactMatch);
 
   /**
+   * Returns a list of the instances of the given type.
+   * 
+   * @since 4.3
+   */
+  public <T extends EObject> List<T> queryInstances(EClass type);
+
+  /**
+   * Returns an iterator over the instances of the given type. The underlying query will be executed asynchronously.
+   * 
+   * @since 4.3
+   */
+  public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type);
+
+  /**
    * Returns a list of {@link CDOObjectReference object references} that represent the cross references to the specified
    * target object.
    *
@@ -297,6 +312,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @param sourceReferences
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
+   *          
    * @since 4.0
    * @see CDOView#queryXRefs(Set, EReference...)
    * @see CDOView#queryXRefsAsync(Set, EReference...)

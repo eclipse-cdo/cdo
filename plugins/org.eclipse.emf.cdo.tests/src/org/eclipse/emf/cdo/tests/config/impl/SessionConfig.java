@@ -113,6 +113,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     if (clientContainer == null)
     {
       clientContainer = createClientContainer();
+      LifecycleUtil.activate(clientContainer);
     }
 
     return clientContainer;

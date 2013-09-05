@@ -355,7 +355,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
                     try
                     {
-                      mutex.wait();
+                      mutex.wait(500L);
                     }
                     catch (InterruptedException ex)
                     {

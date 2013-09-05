@@ -122,21 +122,26 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
   {
     database.beginSchemaAccess(false);
 
-    DBPreparedStatement preparedStatement = cache.remove(sql);
-    if (preparedStatement == null)
+    DBPreparedStatement preparedStatement;
+    synchronized (this)
     {
-      try
+      preparedStatement = cache.remove(sql);
+      if (preparedStatement == null)
       {
-        PreparedStatement delegate = getDelegate().prepareStatement(sql, resultSetType, resultSetConcurrency);
-        preparedStatement = new DBPreparedStatement(this, sql, reuseProbability, delegate);
+        try
+        {
+          PreparedStatement delegate = getDelegate().prepareStatement(sql, resultSetType, resultSetConcurrency);
+          preparedStatement = new DBPreparedStatement(this, sql, reuseProbability, delegate);
+        }
+        catch (SQLException ex)
+        {
+          throw new DBException(ex);
+        }
       }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
+
+      checkOuts.add(preparedStatement);
     }
 
-    checkOuts.add(preparedStatement);
     return preparedStatement;
   }
 
@@ -163,19 +168,22 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
         return;
       }
 
-      checkOuts.remove(preparedStatement);
-      preparedStatement.setTouch(++lastTouch);
-
-      String sql = preparedStatement.getSQL();
-      if (cache.put(sql, preparedStatement) != null)
+      synchronized (this)
       {
-        throw new IllegalStateException(sql + " already in cache"); //$NON-NLS-1$
-      }
+        checkOuts.remove(preparedStatement);
+        preparedStatement.setTouch(++lastTouch);
 
-      if (cache.size() > database.getStatementCacheCapacity())
-      {
-        DBPreparedStatement old = cache.remove(cache.firstKey());
-        DBUtil.close(old.getDelegate());
+        String sql = preparedStatement.getSQL();
+        if (cache.put(sql, preparedStatement) != null)
+        {
+          throw new IllegalStateException(sql + " already in cache"); //$NON-NLS-1$
+        }
+
+        if (cache.size() > database.getStatementCacheCapacity())
+        {
+          DBPreparedStatement old = cache.remove(cache.firstKey());
+          DBUtil.close(old.getDelegate());
+        }
       }
     }
     finally
@@ -186,15 +194,18 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
   public void invalidateStatementCache()
   {
-    CheckUtil.checkState(checkOuts.isEmpty(), "Statements are checked out: " + checkOuts);
-
-    // Close all statements in the cache, then clear the cache.
-    for (DBPreparedStatement preparedStatement : cache.values())
+    synchronized (this)
     {
-      PreparedStatement delegate = preparedStatement.getDelegate();
-      DBUtil.close(delegate);
-    }
+      CheckUtil.checkState(checkOuts.isEmpty(), "Statements are checked out: " + checkOuts);
 
-    cache.clear();
+      // Close all statements in the cache, then clear the cache.
+      for (DBPreparedStatement preparedStatement : cache.values())
+      {
+        PreparedStatement delegate = preparedStatement.getDelegate();
+        DBUtil.close(delegate);
+      }
+
+      cache.clear();
+    }
   }
 }

@@ -2395,10 +2395,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     if (!allDetachedObjects.isEmpty())
     {
-      // Remove stale references from locally changed or new objects to remotely detached objects
-      Set<CDOObject> remotelyDetachedObjects = getObjects(allDetachedObjects);
-      removeCrossReferences(remotelyDetachedObjects, getDirtyObjects().values());
-      removeCrossReferences(remotelyDetachedObjects, getNewObjects().values());
+      Set<CDOID> referencedOIDs = new HashSet<CDOID>();
+      for (CDOIDAndVersion key : allDetachedObjects)
+      {
+        referencedOIDs.add(key.getID());
+      }
+
+      Collection<CDOObject> cachedDirtyObjects = getDirtyObjects().values();
+      removeCrossReferences(cachedDirtyObjects, referencedOIDs);
+
+      Collection<CDOObject> cachedNewObjects = getNewObjects().values();
+      removeCrossReferences(cachedNewObjects, referencedOIDs);
     }
 
     // Bug 290032 - Sticky views
@@ -2408,36 +2415,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       session.clearCommittedSinceLastRefresh();
     }
 
-    Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = //
-    super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
-
-    if (!allChangedObjects.isEmpty())
-    {
-      // Remove stale references from remotely changed objects to locally detached objects
-      Set<CDOObject> remotelyChangedObjects = getObjects(allChangedObjects);
-      removeCrossReferences(getDetachedObjects().values(), remotelyChangedObjects);
-    }
-
-    return conflicts;
+    return super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
   }
 
-  private Set<CDOObject> getObjects(Collection<? extends CDOIDAndVersion> identifiables)
-  {
-    Set<CDOObject> result = new HashSet<CDOObject>();
-    for (CDOIDAndVersion identifiable : identifiables)
-    {
-      CDOID id = identifiable.getID();
-      InternalCDOObject object = getObject(id, false);
-      if (object != null)
-      {
-        result.add(object);
-      }
-    }
-
-    return result;
-  }
-
-  private void removeCrossReferences(Collection<CDOObject> possibleTargets, Collection<CDOObject> referencers)
+  private void removeCrossReferences(Collection<CDOObject> referencers, Set<CDOID> referencedOIDs)
   {
     List<Pair<Setting, EObject>> objectsToBeRemoved = new LinkedList<Pair<Setting, EObject>>();
     for (CDOObject referencer : referencers)
@@ -2449,9 +2430,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       while (it.hasNext())
       {
         EObject referencedObject = it.next();
-        CDOObject referencedCDOObject = CDOUtil.getCDOObject(referencedObject);
+        CDOID referencedOID = CDOUtil.getCDOObject(referencedObject).cdoID();
 
-        if (possibleTargets.contains(referencedCDOObject))
+        if (referencedOIDs.contains(referencedOID))
         {
           EReference reference = (EReference)it.feature();
 
@@ -2471,7 +2452,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               {
                 for (Object value : list)
                 {
-                  if (value == referencedCDOObject.cdoID() || value == referencedObject)
+                  if (value == referencedOID || value == referencedObject)
                   {
                     continue;
                   }
@@ -2481,7 +2462,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             else
             {
               Object value = cleanRevision.getValue(reference);
-              if (value == referencedCDOObject.cdoID() || value == referencedObject)
+              if (value == referencedOID || value == referencedObject)
               {
                 continue;
               }

@@ -782,6 +782,7 @@
             <include name="*.css" />
             <include name="*.html" />
             <include name="*.xml" />
+            <include name="build-info.xml" />
           </fileset>
         </delete>
 

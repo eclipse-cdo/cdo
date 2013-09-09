@@ -36,7 +36,7 @@ public class CDOExampleUUIDHexGenerator extends UUIDHexGenerator
     {
       return id;
     }
-    
+
     return super.generate(session, obj);
   }
 }

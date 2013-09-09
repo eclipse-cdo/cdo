@@ -61,7 +61,7 @@ public class HibernateBugzilla_392653_Test extends AbstractCDOTest
     CDOTransaction transaction2 = session2.openTransaction();
 
     // Read all repo contents
-    TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
+    TreeIterator<EObject> iter = transaction2.getResource(getResourcePath("/")).getAllContents();
     while (iter.hasNext())
     {
       iter.next();

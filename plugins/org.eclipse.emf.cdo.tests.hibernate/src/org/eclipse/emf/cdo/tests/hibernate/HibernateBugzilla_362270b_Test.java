@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,16 +11,17 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
-import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_362270b_Test;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 /**
- * Override {@link XATransactionTest} to do mapping of external references.
+ * Read external reference annotation.
  * 
  * @author Martin Taal
  */
-public class HibernateXATransactionTest extends XATransactionTest
+public class HibernateBugzilla_362270b_Test extends Bugzilla_362270b_Test
 {
+
   @Override
   protected void doSetUp() throws Exception
   {

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.examples.hibernate.client;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDString;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
@@ -24,9 +25,7 @@ import org.eclipse.emf.cdo.examples.company.VAT;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOQuery;
-
 import org.eclipse.net4j.util.collection.CloseableIterator;
-
 import org.junit.Before;
 
 import java.io.Serializable;
@@ -36,9 +35,10 @@ import java.util.List;
 /**
  * Test different aspects of HQL querying using the CDO query api.
  * <p/>
- * The queries are done on a test set which is created automatically. The size of the testdata is controlled by the
- * static final int's in the top of this class.
- *
+ * The queries are done on a test set which is created automatically. The size
+ * of the testdata is controlled by the static final int's in the top of this
+ * class.
+ * 
  * @author Martin Taal
  */
 public class HibernateQueryTest extends BaseTest
@@ -102,7 +102,8 @@ public class HibernateQueryTest extends BaseTest
       assertEquals(NUM_OF_PRODUCTS, products.size());
     }
 
-    // MT: re-enable after https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
+    // MT: re-enable after
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
     // gets resolved
     // {
     //      CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where name=:name"); //$NON-NLS-1$  //$NON-NLS-2$
@@ -121,7 +122,8 @@ public class HibernateQueryTest extends BaseTest
       CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where vat=:vat"); //$NON-NLS-1$  //$NON-NLS-2$
       cdoQuery.setParameter("vat", VAT.VAT15); //$NON-NLS-1$
       final List<Product> products = cdoQuery.getResult(Product.class);
-      // MT: re-enable after https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
+      // MT: re-enable after
+      // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
       // gets resolved
       // assertEquals(10, products.size());
       assertEquals(5, products.size());
@@ -214,10 +216,13 @@ public class HibernateQueryTest extends BaseTest
           }
           else
           {
-            // MT: re-enable after https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
+            // MT: re-enable after
+            // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
             // gets resolved
-            // assertEquals(5, orderQuery.getResult(SalesOrder.class).size());
-            // assertEquals(0, orderQuery.getResult(SalesOrder.class).size());
+            // assertEquals(5,
+            // orderQuery.getResult(SalesOrder.class).size());
+            // assertEquals(0,
+            // orderQuery.getResult(SalesOrder.class).size());
           }
         }
       }
@@ -318,7 +323,8 @@ public class HibernateQueryTest extends BaseTest
       {
         CDOQuery productQuery = transaction.createQuery("hql", "from Product"); //$NON-NLS-1$ //$NON-NLS-2$
         productQuery.setMaxResults(pageSize);
-        // NOTE: firstResult is a special parameter for the hql query language
+        // NOTE: firstResult is a special parameter for the hql query
+        // language
         productQuery.setParameter("firstResult", page * pageSize); //$NON-NLS-1$
         final List<Product> queriedProducts = productQuery.getResult(Product.class);
         assertEquals(true, queriedProducts.size() <= pageSize);
@@ -368,7 +374,8 @@ public class HibernateQueryTest extends BaseTest
     final List<Product> products = new ArrayList<Product>();
     for (int i = 0; i < NUM_OF_PRODUCTS; i++)
     {
-      // MT: re-enable after https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
+      // MT: re-enable after
+      // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
       // gets resolved
       products.add(createProduct((index++) + i));
     }
@@ -399,7 +406,8 @@ public class HibernateQueryTest extends BaseTest
   {
     SalesOrder salesOrder = CompanyFactory.eINSTANCE.createSalesOrder();
     salesOrder.setCustomer(customer);
-    // MT: re-enable after https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
+    // MT: re-enable after
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
     // gets resolved
     // salesOrder.setId(num);
     salesOrder.setId((index++ + num));
@@ -441,6 +449,10 @@ public class HibernateQueryTest extends BaseTest
 
   public Serializable getIdValue(CDOID id)
   {
-    return CDOIDUtil.getString(id);
+    if (id instanceof CDOIDString)
+    {
+      return CDOIDUtil.getString(id);
+    }
+    return CDOIDUtil.getLong(id);
   }
 }

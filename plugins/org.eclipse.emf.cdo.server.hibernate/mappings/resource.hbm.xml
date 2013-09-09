@@ -63,10 +63,10 @@
 				<column name="`cdoresource_e_id`" not-null="true" unique="false"/>
 			</key>
 			<list-index column="`cdoresourcecontents_idx`"/>
-			<many-to-any id-type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDAnyUserType" meta-type="string">
+			<element type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDAnyUserType">
 				<column not-null="false" unique="false" name="`contents_type`"/>
 				<column not-null="false" unique="false" name="`contents_id`"/>
-			</many-to-any>
+			</element>
 		</list>
 	</subclass>
 	<subclass entity-name="CDOTextResource" abstract="false" lazy="false" extends="CDOResourceNode" discriminator-value="CDOTextResource">

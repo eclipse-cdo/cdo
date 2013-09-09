@@ -83,17 +83,24 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateQueryTest.class);
+    // testClasses.add(HibernateBugzilla_380987_Test.class);
+    // testClasses.add(HibernateBugzilla_362270c_Test.class);
     // if (true)
     // {
     // return;
     // }
 
+    // TODO: find out why this does not work for non-auditing
+    if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
+    {
+      testClasses.add(HibernateBugzilla_380987_Test.class);
+    }
+
     testClasses.add(HibernateChunkingTest.class);
     testClasses.add(Hibernate_Failure_Test.class);
     testClasses.add(Hibernate_Export_Test.class);
     testClasses.add(HibernateBugzilla_381013_Test.class);
-    testClasses.add(HibernateBugzilla_380987_Test.class);
+
     testClasses.add(HibernateBugzilla_392653_Test.class);
     testClasses.add(HibernateBugzilla_387752_Test.class);
     testClasses.add(HibernateBugzilla_387752_True_Test.class);
@@ -137,6 +144,8 @@ public class AllTestsHibernate extends AllConfigs
 
     testClasses.add(HibernateBugzilla_398057_Test.class);
     testClasses.add(HibernateBugzilla_397682_Test.class);
+
+    testClasses.add(HibernateBugzilla_416530_Test.class);
 
     if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
     {

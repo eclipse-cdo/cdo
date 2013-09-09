@@ -56,6 +56,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
+import java.awt.List;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
@@ -81,16 +82,19 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte SET_NOT_NULL_OPCODE = 2;
 
+  private static final byte PERMISSION_MASK = 0x03;
+
   /**
    * private static final byte READ_PERMISSION_FLAG = 0x01;
    *
    * private static final byte WRITE_PERMISSION_FLAG = 0x02;
    */
+
   private static final byte FROZEN_FLAG = 0x04;
 
   private static final byte UNCHUNKED_FLAG = 0x08;
 
-  private static final byte PERMISSION_MASK = 0x03;
+  private static final byte LIST_PRESERVING_FLAG = 0x10;
 
   private CDOID id;
 
@@ -565,7 +569,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void clear(EStructuralFeature feature)
   {
-    setValue(feature, null);
+    if (feature.isMany() && (flags & LIST_PRESERVING_FLAG) != 0)
+    {
+      getList(feature).clear();
+    }
+    else
+    {
+      setValue(feature, null);
+    }
   }
 
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
@@ -593,7 +604,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void unset(EStructuralFeature feature)
   {
-    setValue(feature, null);
+    if (feature.isMany() && (flags & LIST_PRESERVING_FLAG) != 0)
+    {
+      getList(feature).clear();
+    }
+    else
+    {
+      setValue(feature, null);
+    }
   }
 
   /**
@@ -750,6 +768,19 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public void setPermission(CDOPermission permission)
   {
     flags = (byte)(flags & ~PERMISSION_MASK | permission.getBits() & PERMISSION_MASK);
+  }
+
+  /**
+   * The default behavior of a {@link BaseCDORevision} on a {@link #clear(EStructuralFeature)} and {@link #unset(EStructuralFeature)} methods is to set the efeature's value to null (discarding the value itself, a List). By calling this {@link #setListPreservingFlag()} method the default behavior is changed, instead of setting the efeature's value to null, the {@link List#clear()} method is called on the efeature's list instance.
+   * 
+   * On purpose private to prevent api changes.
+   * 
+   * @since 4.2
+   */
+  @SuppressWarnings("unused")
+  private void setListPreservingFlag()
+  {
+    flags |= LIST_PRESERVING_FLAG;
   }
 
   /**

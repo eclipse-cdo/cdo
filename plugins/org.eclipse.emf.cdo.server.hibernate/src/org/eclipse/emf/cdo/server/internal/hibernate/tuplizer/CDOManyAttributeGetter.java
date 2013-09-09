@@ -75,6 +75,7 @@ public class CDOManyAttributeGetter extends CDOPropertyGetter
 
     // Wrap the moveablearraylist
     HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();
+    wrapper.setEFeature(getEStructuralFeature());
     wrapper.setDelegate(list);
 
     // And return it

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -45,6 +46,11 @@ public class CDORevisionProxyHibernate extends DelegatingCDORevision implements 
   public LazyInitializer getHibernateLazyInitializer()
   {
     return li;
+  }
+
+  public void setListPreservingFlag()
+  {
+    HibernateUtil.getInstance().callSetListPreservingMethod(getDelegate());
   }
 
   public Object writeReplace()

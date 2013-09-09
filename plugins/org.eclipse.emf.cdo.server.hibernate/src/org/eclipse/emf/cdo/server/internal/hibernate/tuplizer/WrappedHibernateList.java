@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -26,7 +27,6 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EReference;
@@ -67,6 +67,8 @@ public class WrappedHibernateList implements InternalCDOList
 
   private int currentListChunk = -1;
 
+  private boolean resolveCDOID;
+
   public WrappedHibernateList(InternalCDORevision owner, EStructuralFeature eFeature)
   {
     this.owner = owner;
@@ -76,6 +78,7 @@ public class WrappedHibernateList implements InternalCDOList
     {
       currentListChunk = accessor.getCurrentListChunk();
     }
+    resolveCDOID = !HibernateUtil.getInstance().isCDOResourceContents(eFeature) && eFeature instanceof EReference;
   }
 
   public void move(int newPosition, Object object)
@@ -164,13 +167,6 @@ public class WrappedHibernateList implements InternalCDOList
     for (int i = 0; i < size; i++)
     {
       list.add(type.copyValue(get(i)));
-    }
-
-    if (classifier instanceof EClass)
-    {
-      WrappedHibernateList wrapped = new WrappedHibernateList(owner, eFeature);
-      wrapped.setDelegate(list);
-      return wrapped;
     }
     return list;
   }
@@ -278,7 +274,7 @@ public class WrappedHibernateList implements InternalCDOList
     return result;
   }
 
-  protected Object getCDOValue(Object o)
+  protected Object xgetCDOValue(Object o)
   {
     if (o instanceof CDOID)
     {
@@ -294,12 +290,27 @@ public class WrappedHibernateList implements InternalCDOList
     return o;
   }
 
-  protected List<Object> getCDOValues(Collection<?> c)
+  protected Object getHibernateValue(Object o)
+  {
+    if (o instanceof CDOIDExternal)
+    {
+      return o;
+    }
+
+    if (o instanceof CDOID && resolveCDOID)
+    {
+      return HibernateUtil.getInstance().getCDORevision((CDOID)o);
+    }
+
+    return o;
+  }
+
+  protected List<Object> getHibernateValues(Collection<?> c)
   {
     List<Object> newC = new ArrayList<Object>();
     for (Object o : c)
     {
-      newC.add(getCDOValue(o));
+      newC.add(getHibernateValue(o));
     }
 
     return newC;
@@ -308,25 +319,25 @@ public class WrappedHibernateList implements InternalCDOList
   public void add(int index, Object element)
   {
     checkFrozen();
-    getDelegate().add(index, getCDOValue(element));
+    getDelegate().add(index, getHibernateValue(element));
   }
 
   public boolean add(Object o)
   {
     checkFrozen();
-    return getDelegate().add(getCDOValue(o));
+    return getDelegate().add(getHibernateValue(o));
   }
 
   public boolean addAll(Collection<? extends Object> c)
   {
     checkFrozen();
-    return getDelegate().addAll(getCDOValues(c));
+    return getDelegate().addAll(getHibernateValues(c));
   }
 
   public boolean addAll(int index, Collection<? extends Object> c)
   {
     checkFrozen();
-    return getDelegate().addAll(index, getCDOValues(c));
+    return getDelegate().addAll(index, getHibernateValues(c));
   }
 
   public void clear()
@@ -337,12 +348,12 @@ public class WrappedHibernateList implements InternalCDOList
 
   public boolean contains(Object o)
   {
-    return getDelegate().contains(getCDOValue(o));
+    return getDelegate().contains(getHibernateValue(o));
   }
 
   public boolean containsAll(Collection<?> c)
   {
-    return getDelegate().containsAll(getCDOValues(c));
+    return getDelegate().containsAll(getHibernateValues(c));
   }
 
   public Object get(int index)
@@ -423,7 +434,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public int indexOf(Object o)
   {
-    return getDelegate().indexOf(getCDOValue(o));
+    return getDelegate().indexOf(getHibernateValue(o));
   }
 
   public boolean isEmpty()
@@ -438,7 +449,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public int lastIndexOf(Object o)
   {
-    return getDelegate().lastIndexOf(getCDOValue(o));
+    return getDelegate().lastIndexOf(getHibernateValue(o));
   }
 
   public ListIterator<Object> listIterator()
@@ -460,18 +471,18 @@ public class WrappedHibernateList implements InternalCDOList
   public boolean remove(Object o)
   {
     checkFrozen();
-    return getDelegate().remove(getCDOValue(o));
+    return getDelegate().remove(getHibernateValue(o));
   }
 
   public boolean removeAll(Collection<?> c)
   {
     checkFrozen();
-    return getDelegate().removeAll(getCDOValues(c));
+    return getDelegate().removeAll(getHibernateValues(c));
   }
 
   public boolean retainAll(Collection<?> c)
   {
-    return getDelegate().retainAll(getCDOValues(c));
+    return getDelegate().retainAll(getHibernateValues(c));
   }
 
   public Object set(int index, Object element)
@@ -483,12 +494,7 @@ public class WrappedHibernateList implements InternalCDOList
       return null;
     }
 
-    if (element instanceof CDOID)
-    {
-      return getDelegate().set(index, element);
-    }
-
-    return getDelegate().set(index, getCDOValue(element));
+    return getDelegate().set(index, getHibernateValue(element));
   }
 
   public int size()
@@ -655,7 +661,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public void setWithoutFrozenCheck(int i, Object value)
   {
-    getDelegate().set(i, value);
+    getDelegate().set(i, getHibernateValue(value));
   }
 
   CDORevision getOwner()

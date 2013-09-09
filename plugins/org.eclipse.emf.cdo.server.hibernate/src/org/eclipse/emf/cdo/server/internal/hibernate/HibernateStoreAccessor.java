@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionProxyHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -879,26 +880,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // decrement version, hibernate will increment it
       decrementVersions(context);
 
-      // now check the versions and store the hibernate revision to repair
-      // versions later on. The versions can be updated when inserting new objects
-      // this will result in a version difference when the object gets merged
-      // this repair is done just before the merge
-      final Map<CDOID, InternalCDORevision> existingRevisions = CDOIDUtil.createMap();
-      for (InternalCDORevision revision : context.getDirtyObjects())
-      {
-        final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
-        final Serializable idValue = HibernateUtil.getInstance().getIdValue(revision.getID());
-        final InternalCDORevision cdoRevision = (InternalCDORevision)session.get(entityName, idValue);
-        if (cdoRevision != null)
-        {
-          if (cdoRevision.getVersion() != revision.getVersion())
-          {
-            throw new IllegalStateException("Revision " + cdoRevision + " was already updated by another transaction");
-          }
-          existingRevisions.put(revision.getID(), cdoRevision);
-        }
-      }
-
       // order is 1) insert, 2) update and then delete
       // this order is the most stable! Do not change it without testing
 
@@ -908,6 +889,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final List<InternalCDORevision> repairResourceIDs = new ArrayList<InternalCDORevision>();
       for (InternalCDORevision revision : context.getNewObjects())
       {
+        if (revision instanceof CDORevisionProxyHibernate)
+        {
+          ((CDORevisionProxyHibernate)revision).setListPreservingFlag();
+        }
+        else
+        {
+          HibernateUtil.getInstance().callSetListPreservingMethod(revision);
+        }
         // keep track for which cdoRevisions the container id needs to be repaired afterwards
         final CDOID containerID = (CDOID)revision.getContainerID();
         if (containerID instanceof CDOIDTemp && !containerID.isNull())
@@ -925,33 +914,78 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.saveOrUpdate(entityName, revision);
       }
 
-      for (InternalCDORevision revision : context.getDirtyObjects())
+      // now apply all the changes
+      if (context.getDirtyObjectDeltas() != null)
       {
-        final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
-        final InternalCDORevision existingRevision = existingRevisions.get(revision.getID());
-        if (existingRevision != null)
+        for (InternalCDORevisionDelta delta : context.getDirtyObjectDeltas())
         {
-          revision.setVersion(existingRevision.getVersion());
-        }
-
-        final InternalCDORevision cdoRevision = (InternalCDORevision)session.merge(entityName, revision);
-        if (getStore().isAuditing() && cdoRevision.getVersion() == revision.getVersion())
-        {
-          // do a direct update of the version in the db to get it in sync with
-          // hibernate, a special case, hibernate does not send the change back, do it ourselves
-          // only needs to be done in case of auditing
-          cdoRevision.setVersion(cdoRevision.getVersion() + 1);
-        }
-
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
+          final String entityName = HibernateUtil.getInstance().getEntityName(delta.getID());
+          final Serializable idValue = HibernateUtil.getInstance().getIdValue(delta.getID());
+          final InternalCDORevision cdoRevision = (InternalCDORevision)session.get(entityName, idValue);
+          if (cdoRevision instanceof CDORevisionProxyHibernate)
+          {
+            ((CDORevisionProxyHibernate)cdoRevision).setListPreservingFlag();
+          }
+          else
+          {
+            HibernateUtil.getInstance().callSetListPreservingMethod(cdoRevision);
+          }
+          delta.apply(cdoRevision);
         }
       }
 
-      // and increment the versions again so that the objects are cached correctly
-      // note that this is needed because above a merge is done and not a
-      // saveupdate, so hibernate does not update the version back in the revision
+      // preserve old behavior for the hibernate raw commit
+      if (context instanceof HibernateRawCommitContext)
+      {
+        // now check the versions and store the hibernate revision to repair
+        // versions later on. The versions can be updated when inserting new objects
+        // this will result in a version difference when the object gets merged
+        // this repair is done just before the merge
+        final Map<CDOID, InternalCDORevision> existingRevisions = CDOIDUtil.createMap();
+        for (InternalCDORevision revision : context.getDirtyObjects())
+        {
+          final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
+          final Serializable idValue = HibernateUtil.getInstance().getIdValue(revision.getID());
+          final InternalCDORevision cdoRevision = (InternalCDORevision)session.get(entityName, idValue);
+          if (cdoRevision != null)
+          {
+            if (cdoRevision.getVersion() != revision.getVersion())
+            {
+              throw new IllegalStateException("Revision " + cdoRevision + " was already updated by another transaction");
+            }
+            existingRevisions.put(revision.getID(), cdoRevision);
+          }
+        }
+
+        for (InternalCDORevision revision : context.getDirtyObjects())
+        {
+          final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
+          final InternalCDORevision existingRevision = existingRevisions.get(revision.getID());
+          if (existingRevision != null)
+          {
+            revision.setVersion(existingRevision.getVersion());
+          }
+
+          final InternalCDORevision cdoRevision = (InternalCDORevision)session.merge(entityName, revision);
+          if (getStore().isAuditing() && cdoRevision.getVersion() == revision.getVersion())
+          {
+            // do a direct update of the version in the db to get it in sync with
+            // hibernate, a special case, hibernate does not send the change back, do it ourselves
+            // only needs to be done in case of auditing
+            cdoRevision.setVersion(cdoRevision.getVersion() + 1);
+          }
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
+          }
+        }
+      }
+
+      // and increment the versions stored in the context
+      // note that this is needed because above the cdorevision read from the db
+      // is updated and its version gets incremented, and not the revision currently
+      // in the cache
       incrementVersions(context);
 
       session.flush();

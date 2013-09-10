@@ -40,7 +40,7 @@
 	</cs:dependencies>
 
 	<cs:actions>
-		<cs:public name="generate.api.reports" actor="apireports" always="true">
+		<cs:public name="generate.apireports" actor="apireports" always="true">
 			<cs:actorProperties>
 				<cs:property key="baseline" value="CDO Baseline"/>
 				<cs:property key="exclude" value=".*\.doc.*,.*\.tests.*,.*\.releng.*,.*\.examples.*,.*\.jms.*,.*\.buddies.*,.*\.gastro.*"/>

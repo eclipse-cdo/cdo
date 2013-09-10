@@ -784,6 +784,7 @@
             <include name="*.xml" />
             <include name="*.log" />
             <include name="*.txt" />
+            <exclude name="build-info.xml" />
           </fileset>
         </delete>
 

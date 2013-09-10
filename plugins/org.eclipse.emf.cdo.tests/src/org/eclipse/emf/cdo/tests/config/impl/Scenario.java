@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public class Scenario implements IScenario
 {
-  public static final String STATE_FILE = "cdo_config_test.state";
+  public static final String STATE_FILE = "cdo_config_test_4_2.state";
 
   private static final long serialVersionUID = 1L;
 

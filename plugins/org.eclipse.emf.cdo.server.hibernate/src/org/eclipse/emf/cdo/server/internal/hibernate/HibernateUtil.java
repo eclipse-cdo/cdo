@@ -124,7 +124,7 @@ public class HibernateUtil
   {
     try
     {
-      setListPreservingFlag_Method = BaseCDORevision.class.getDeclaredMethod("setListPreservingFlag");
+      setListPreservingFlag_Method = BaseCDORevision.class.getDeclaredMethod("setListPreserving");
       setListPreservingFlag_Method.setAccessible(true);
       dataTypeFactory = DatatypeFactory.newInstance();
     }

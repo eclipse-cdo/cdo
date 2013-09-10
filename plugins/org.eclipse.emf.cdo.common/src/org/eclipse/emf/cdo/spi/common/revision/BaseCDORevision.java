@@ -56,9 +56,9 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
-import java.awt.List;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -569,7 +569,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void clear(EStructuralFeature feature)
   {
-    if (feature.isMany() && (flags & LIST_PRESERVING_FLAG) != 0)
+    if (feature.isMany() && isListPreserving())
     {
       getList(feature).clear();
     }
@@ -604,7 +604,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void unset(EStructuralFeature feature)
   {
-    if (feature.isMany() && (flags & LIST_PRESERVING_FLAG) != 0)
+    if (feature.isMany() && isListPreserving())
     {
       getList(feature).clear();
     }
@@ -771,16 +771,25 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
-   * The default behavior of a {@link BaseCDORevision} on a {@link #clear(EStructuralFeature)} and {@link #unset(EStructuralFeature)} methods is to set the efeature's value to null (discarding the value itself, a List). By calling this {@link #setListPreservingFlag()} method the default behavior is changed, instead of setting the efeature's value to null, the {@link List#clear()} method is called on the efeature's list instance.
-   * 
+   * The default behavior of a {@link BaseCDORevision} on a {@link #clear(EStructuralFeature)} and 
+   * {@link #unset(EStructuralFeature)} methods is to set the efeature's value to null (discarding the 
+   * value itself, a List). By calling this {@link #setListPreservingFlag()} method the default behavior 
+   * is changed, instead of setting the efeature's value to null, the {@link List#clear()} method is 
+   * called on the efeature's list instance.
+   *
    * On purpose private to prevent api changes.
-   * 
+   *
    * @since 4.2
    */
   @SuppressWarnings("unused")
-  private void setListPreservingFlag()
+  private void setListPreserving()
   {
     flags |= LIST_PRESERVING_FLAG;
+  }
+
+  private boolean isListPreserving()
+  {
+    return (flags & LIST_PRESERVING_FLAG) != 0;
   }
 
   /**

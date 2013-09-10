@@ -854,7 +854,6 @@
           </cmdargs>
         </buckminster>
 
-        <!--
         <echo message="" />
         <echo message="Setting API baseline" />
         <buckminster command="addbaseline">
@@ -863,7 +862,6 @@
             <arg value="CDO Baseline" />
           </cmdargs>
         </buckminster>
-        -->
       </then>
     </if>
   </target>
@@ -933,7 +931,7 @@
   <!-- Generate -->
   <!-- ======== -->
 
-  <target name="generate" depends="test" description="Generates the site and other artifacts">
+  <target name="generate" depends="build" description="Generates the site and other artifacts">
     <if>
       <or>
         <isset property="GERRIT_CHANGE_ID" />

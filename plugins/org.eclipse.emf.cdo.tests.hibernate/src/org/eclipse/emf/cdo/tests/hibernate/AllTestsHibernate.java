@@ -83,8 +83,9 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateBugzilla_380987_Test.class);
-    // testClasses.add(HibernateBugzilla_362270c_Test.class);
+
+    // testClasses.add(HibernateBugzilla_416530_Test.class);
+    // testClasses.add(ChunkingTest.class);
     // if (true)
     // {
     // return;

@@ -159,6 +159,26 @@ public class WrappedHibernateList implements InternalCDOList
     return changed;
   }
 
+  /**
+   * Not loaded and not loadable anymore because the collection is disconnected
+   */
+  public boolean isUninitializedCollection()
+  {
+    // note the getDelegate checks if the underlying persistentcollection
+    // is loaded or connected
+    final Object theDelegate = getDelegate();
+    if (theDelegate instanceof UninitializedCollection)
+    {
+      return true;
+    }
+
+    if (theDelegate instanceof WrappedHibernateList)
+    {
+      return ((WrappedHibernateList)theDelegate).isUninitializedCollection();
+    }
+    return false;
+  }
+
   public InternalCDOList clone(EClassifier classifier)
   {
     CDOType type = CDOModelUtil.getType(classifier);
@@ -176,11 +196,11 @@ public class WrappedHibernateList implements InternalCDOList
    */
   public List<Object> getDelegate()
   {
+    // if we got disconnected then internally use a new autoexpanding list
     if (delegate instanceof AbstractPersistentCollection && !((AbstractPersistentCollection)delegate).wasInitialized()
         && !isConnectedToSession())
     {
-      // use a dummy auto-expanding list
-      setDelegate(new UninitializedCollection<Object>()
+      delegate = new UninitializedCollection<Object>()
       {
         private static final long serialVersionUID = 1L;
 
@@ -214,7 +234,7 @@ public class WrappedHibernateList implements InternalCDOList
           }
         }
 
-      });
+      };
     }
 
     return delegate;
@@ -244,12 +264,6 @@ public class WrappedHibernateList implements InternalCDOList
       return null;
     }
 
-    // Eike: This seems wrong to me:
-    // if (value instanceof CDOID)
-    // {
-    // return HibernateUtil.getInstance().getCDORevision((CDOID)value);
-    // }
-
     if (value instanceof CDORevision || value instanceof HibernateProxy)
     {
       return HibernateUtil.getInstance().getCDOID(value);
@@ -272,22 +286,6 @@ public class WrappedHibernateList implements InternalCDOList
     }
 
     return result;
-  }
-
-  protected Object xgetCDOValue(Object o)
-  {
-    if (o instanceof CDOID)
-    {
-      return o;
-    }
-
-    if (o instanceof HibernateProxy || o instanceof CDORevision)
-    {
-      return HibernateUtil.getInstance().getCDOID(o);
-    }
-
-    // primitive type
-    return o;
   }
 
   protected Object getHibernateValue(Object o)
@@ -358,7 +356,14 @@ public class WrappedHibernateList implements InternalCDOList
 
   public Object get(int index)
   {
-    final Object delegateValue = getDelegate().get(index);
+    Object delegateValue = getDelegate().get(index);
+
+    // not loaded, force the load
+    if (delegateValue == CDORevisionUtil.UNINITIALIZED)
+    {
+      delegateValue = getChunkedValue(index);
+    }
+
     if (delegateValue instanceof CDOID)
     {
       return delegateValue;
@@ -369,54 +374,41 @@ public class WrappedHibernateList implements InternalCDOList
 
   public Object get(int index, boolean resolve)
   {
-    // if the collection is not initialized then always return
-    // uninitialized to prevent loading it aggresively
-    if (!resolve && currentListChunk > -1 && eFeature instanceof EReference
-        && getDelegate() instanceof AbstractPersistentCollection)
+    Object delegateValue = getDelegate().get(index);
+
+    // if resolve==false then the caller can handle uninitialized objects.
+    if (!resolve && delegateValue == CDORevisionUtil.UNINITIALIZED)
     {
-      final AbstractPersistentCollection collection = (AbstractPersistentCollection)getDelegate();
-      if (!collection.wasInitialized())
-      {
-        final Object chunkedValue = getChunkedValue(index);
-        if (chunkedValue != null)
-        {
-          return chunkedValue;
-        }
-        return CDORevisionUtil.UNINITIALIZED;
-      }
+      return CDORevisionUtil.UNINITIALIZED;
     }
 
+    // else force the load
     return get(index);
   }
 
   private Object getChunkedValue(int index)
   {
-    if (index >= currentListChunk)
-    {
-      return null;
-    }
-    readInitialChunk(index);
+    readChunk(index);
     if (cachedChunk != null)
     {
       // note index must be within the range as the chunk
       // is read again if index is too large.
-      return cachedChunk.get(index);
+      return cachedChunk.get(index - cachedChunk.getStartIndex());
     }
     return null;
   }
 
-  private void readInitialChunk(int index)
+  private void readChunk(int index)
   {
-
     if (cachedChunk != null)
     {
-      if (index < cachedChunk.size())
+      if (cachedChunk.getStartIndex() <= index && index < cachedChunk.getStartIndex() + cachedChunk.size())
       {
         // a valid chunk
         return;
       }
-      // a not valid chunk
-      // reread it
+      // a not valid chunk reread it
+      // TODO: cache chunks also
       cachedChunk = null;
     }
     final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
@@ -424,12 +416,13 @@ public class WrappedHibernateList implements InternalCDOList
     {
       return;
     }
-    if (currentListChunk > -1)
-    {
-      final HibernateStoreChunkReader chunkReader = accessor.createChunkReader(owner, eFeature);
-      chunkReader.addRangedChunk(0, currentListChunk);
-      cachedChunk = chunkReader.executeRead().get(0);
-    }
+
+    // read in batches always
+    // if the currentListChunk is not set then read a sizeable chunk
+    int chunkSize = Math.max(100, currentListChunk);
+    final HibernateStoreChunkReader chunkReader = accessor.createChunkReader(owner, eFeature);
+    chunkReader.addRangedChunk(index, index + chunkSize);
+    cachedChunk = chunkReader.executeRead().get(0);
   }
 
   public int indexOf(Object o)
@@ -670,7 +663,7 @@ public class WrappedHibernateList implements InternalCDOList
   }
 
   // tagging interface
-  class UninitializedCollection<E> extends ArrayList<E>
+  private class UninitializedCollection<E> extends ArrayList<E>
   {
     private static final long serialVersionUID = 1L;
   }

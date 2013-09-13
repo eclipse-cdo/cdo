@@ -105,7 +105,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
@@ -128,7 +127,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   private long lastUpdateTime;
 
-  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
+  private Map<CDOID, CDOLockState> lockStates = new HashMap<CDOID, CDOLockState>();
 
   private QueueRunner invalidationRunner;
 
@@ -404,7 +403,7 @@ public class CDOViewImpl extends AbstractCDOView
       InternalCDOObject object = getObject(id, false);
       if (object != null)
       {
-        InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
+        InternalCDOLockState existingLockState = (InternalCDOLockState)getLockState(object);
         if (existingLockState != null)
         {
           Object lockTarget = getLockTarget(object);
@@ -412,7 +411,7 @@ public class CDOViewImpl extends AbstractCDOView
         }
         else
         {
-          lockStates.put(object, lockState);
+          lockStates.put(object.cdoID(), lockState);
         }
       }
     }
@@ -745,7 +744,7 @@ public class CDOViewImpl extends AbstractCDOView
       InternalCDOObject obj = getObject(id, false);
       if (obj != null)
       {
-        lockState = this.lockStates.get(obj);
+        lockState = getLockState(obj);
       }
 
       if (lockState != null)
@@ -762,6 +761,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
       CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing);
+      updateLockStates(loadedLockStates);
       for (CDOLockState loadedLockState : loadedLockStates)
       {
         lockStates.add(loadedLockState);
@@ -773,12 +773,12 @@ public class CDOViewImpl extends AbstractCDOView
 
   protected CDOLockState removeLockState(CDOObject object)
   {
-    return lockStates.remove(object);
+    return lockStates.remove(object.cdoID());
   }
 
   protected CDOLockState getLockState(CDOObject object)
   {
-    return lockStates.get(object);
+    return lockStates.get(object.cdoID());
   }
 
   private CDOBranchPoint getBranchPointForID(CDOID id)

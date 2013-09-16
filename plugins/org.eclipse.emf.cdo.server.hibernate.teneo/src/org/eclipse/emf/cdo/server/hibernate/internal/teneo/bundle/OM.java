@@ -41,12 +41,5 @@ public abstract class OM
     {
       super(BUNDLE);
     }
-
-    @Override
-    protected void doStart() throws Exception
-    {
-      new HibernateCommandProvider(bundleContext);
-    }
   }
-
 }

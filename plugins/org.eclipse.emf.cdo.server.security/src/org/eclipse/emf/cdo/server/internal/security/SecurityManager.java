@@ -79,7 +79,9 @@ import java.util.Map;
  */
 public class SecurityManager extends Lifecycle implements InternalSecurityManager
 {
-  private IListener repositoryListener = new LifecycleEventAdapter()
+  private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = new HashMap<IRepository, InternalSecurityManager>();
+
+  private final IListener repositoryListener = new LifecycleEventAdapter()
   {
     @Override
     protected void onActivated(ILifecycle lifecycle)
@@ -90,6 +92,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
+      SECURITY_MANAGERS.remove(getRepository());
       SecurityManager.this.deactivate();
     }
   };
@@ -462,6 +465,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     sessionManager.setAuthenticator(authenticator);
     sessionManager.setPermissionManager(permissionManager);
     repository.addHandler(writeAccessHandler);
+
+    SECURITY_MANAGERS.put(repository, this);
   }
 
   protected Realm createRealm()
@@ -596,6 +601,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     super.doDeactivate();
   }
 
+  public static InternalSecurityManager get(IRepository repository)
+  {
+    return SECURITY_MANAGERS.get(repository);
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -606,10 +616,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       User user = getUser(userID);
       UserPassword userPassword = user.getPassword();
 
-      String encrypted = userPassword.getEncrypted();
-      if (!Arrays.equals(password, encrypted == null ? null : encrypted.toCharArray()))
+      if (userPassword != null)
       {
-        throw new SecurityException("Access denied"); //$NON-NLS-1$
+        String encrypted = userPassword.getEncrypted();
+        if (!Arrays.equals(password, encrypted == null ? null : encrypted.toCharArray()))
+        {
+          throw new SecurityException("Access denied"); //$NON-NLS-1$
+        }
       }
     }
   }

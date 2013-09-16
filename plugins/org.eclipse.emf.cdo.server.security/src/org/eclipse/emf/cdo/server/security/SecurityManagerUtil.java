@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.security;
 
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.internal.security.SecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -24,6 +26,14 @@ public final class SecurityManagerUtil
 {
   private SecurityManagerUtil()
   {
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static ISecurityManager getSecurityManager(IRepository repository)
+  {
+    return SecurityManager.get(repository);
   }
 
   public static ISecurityManager createSecurityManager(String realmPath)

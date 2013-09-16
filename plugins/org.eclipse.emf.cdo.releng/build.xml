@@ -700,8 +700,8 @@
         <!-- Delete existing tool installations -->
         <delete includeemptydirs="true" failonerror="false">
           <fileset dir="${tools}" defaultexcludes="false">
-            <include name="director" />
-            <include name="buckminster" />
+            <include name="director/**" />
+            <include name="buckminster/**" />
           </fileset>
         </delete>
 
@@ -778,10 +778,12 @@
         <!-- Cleanup build.root -->
         <delete failonerror="false" includeemptydirs="true">
           <fileset dir="${build.root}" defaultexcludes="false">
-            <include name="zips" />
+            <include name="zips/**" />
             <include name="*.css" />
             <include name="*.html" />
             <include name="*.xml" />
+            <include name="*.log" />
+            <include name="*.txt" />
             <exclude name="build-info.xml" />
           </fileset>
         </delete>
@@ -793,7 +795,7 @@
         <echo message="Initializing workspace" />
         <delete includeemptydirs="true" failonerror="false">
           <fileset dir="${result}" defaultexcludes="false">
-            <include name="ws" />
+            <include name="ws/**" />
             <include name="*.properties" />
           </fileset>
         </delete>
@@ -825,7 +827,7 @@
             <echo message="Purging target platform ${tp}" />
             <delete failonerror="false" includeemptydirs="true">
               <fileset dir="${result}" defaultexcludes="false">
-                <include name="tp" />
+                <include name="tp/**" />
               </fileset>
             </delete>
           </else>
@@ -881,6 +883,8 @@
         <buckminster command="build">
           <cmdargs>
             <arg value="--thorough" />
+            <arg value="--logfile" />
+            <arg value="${build.root}/build-log.txt" />
           </cmdargs>
         </buckminster>
 

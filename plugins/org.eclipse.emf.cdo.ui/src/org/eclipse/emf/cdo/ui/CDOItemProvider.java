@@ -58,6 +58,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -176,7 +177,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOResourceFolder)
     {
-      return ((CDOResourceFolder)element).getNodes().toArray();
+      EList<CDOResourceNode> result = CDOUtil.filterReadables(((CDOResourceFolder)element).getNodes());
+      return result.toArray();
     }
 
     return super.getChildren(element);

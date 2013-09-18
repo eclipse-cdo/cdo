@@ -146,6 +146,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public EStructuralFeature[] clearValues();
 
   /**
+   * @since 4.3
+   */
+  public String getResourceNodeName();
+
+  /**
    * @since 4.1
    */
   public void setPermission(CDOPermission permission);

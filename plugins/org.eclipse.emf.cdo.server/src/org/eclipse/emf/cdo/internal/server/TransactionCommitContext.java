@@ -1055,7 +1055,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
         if (!dirtyObjects[i].isWritable())
         {
-          throw new NoPermissionException(dirtyObjects[i]);
+          throw new NoPermissionException(dirtyObjects[i], this);
         }
 
         monitor.worked();

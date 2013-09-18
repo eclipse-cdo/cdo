@@ -447,11 +447,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       CDOResource resource = transaction.createResource(realmPath);
       realm = createRealm();
       resource.getContents().add(realm);
+      OM.LOG.info("Security realm created in " + realmPath);
     }
     else
     {
       CDOResource resource = transaction.getResource(realmPath);
       realm = (Realm)resource.getContents().get(0);
+      OM.LOG.info("Security realm loaded from " + realmPath);
     }
 
     initCommitHandlers(firstTime);
@@ -527,7 +529,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     User adminUser = realm.addUser("Administrator", "0000");
     adminUser.getGroups().add(adminsGroup);
 
-    OM.LOG.info("Security realm " + realmPath + " created");
     return realm;
   }
 

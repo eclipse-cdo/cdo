@@ -360,6 +360,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public String getResourceNodeName()
+  {
+    return getDelegate().getResourceNodeName();
+  }
+
+  /**
    * @since 4.1
    */
   public CDOPermission getPermission()

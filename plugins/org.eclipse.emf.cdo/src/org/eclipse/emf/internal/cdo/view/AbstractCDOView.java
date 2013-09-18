@@ -343,7 +343,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public synchronized CDOResourceNode[] getElements()
   {
     CDOResource rootResource = getRootResource();
-    EList<EObject> contents = rootResource.getContents();
+    EList<EObject> contents = CDOUtil.filterReadables(rootResource.getContents());
 
     List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>(contents.size());
     for (EObject object : contents)

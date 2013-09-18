@@ -906,7 +906,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDORevision cleanRevision = object.cdoRevision();
       if (!cleanRevision.isWritable())
       {
-        throw new NoPermissionException(cleanRevision);
+        throw new NoPermissionException(cleanRevision, transaction);
       }
 
       transaction.getCleanRevisions().put(object, cleanRevision);
@@ -927,13 +927,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
+
       InternalCDORevision revision = object.cdoRevision();
       if (!revision.isWritable())
       {
-        throw new NoPermissionException(revision);
+        throw new NoPermissionException(revision, transaction);
       }
 
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -945,13 +946,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
+
       InternalCDORevision revision = object.cdoRevision();
       if (!revision.isWritable())
       {
-        throw new NoPermissionException(revision);
+        throw new NoPermissionException(revision, transaction);
       }
 
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -1114,7 +1116,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       if (forWrite && !revision.isWritable())
       {
-        throw new NoPermissionException(revision);
+        throw new NoPermissionException(revision, view);
       }
 
       object.cdoInternalSetRevision(revision);

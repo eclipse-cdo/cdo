@@ -73,6 +73,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -91,6 +92,8 @@ public final class CDOUtil
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[2] = EresourcePackage.eINSTANCE;
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[3] = EresourcePackage.eINSTANCE.getCDOResource();
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[4] = EresourcePackage.eINSTANCE.getCDOResourceFolder();
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[8] = EresourcePackage.eINSTANCE.getCDOResourceNode_Folder();
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[9] = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
 
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[5] = EtypesPackage.eINSTANCE;
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[6] = EtypesPackage.eINSTANCE.getBlob();
@@ -467,6 +470,24 @@ public final class CDOUtil
     }
 
     return FSMUtil.adaptLegacy((InternalEObject)object);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static <T extends EObject> EList<T> filterReadables(Collection<T> collection)
+  {
+    EList<T> result = new BasicEList<T>();
+    for (T element : collection)
+    {
+      CDOObject object = getCDOObject(element);
+      if (object.cdoRevision().isReadable())
+      {
+        result.add(element);
+      }
+    }
+
+    return result;
   }
 
   /**

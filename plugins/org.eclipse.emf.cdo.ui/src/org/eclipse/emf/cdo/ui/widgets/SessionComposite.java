@@ -176,16 +176,20 @@ public class SessionComposite extends Composite
   {
     StringBuilder builder = new StringBuilder();
     builder.append(connectorDescription);
-    builder.append("?repositoryName="); //$NON-NLS-1$
+    if (connectorDescription.contains("?")) //$NON-NLS-1$
+    {
+      builder.append("&"); //$NON-NLS-1$
+    }
+    else
+    {
+      builder.append("?"); //$NON-NLS-1$
+    }
+
+    builder.append("repositoryName="); //$NON-NLS-1$
     builder.append(repositoryName);
     if (automaticRegistry)
     {
       builder.append("&automaticPackageRegistry=true"); //$NON-NLS-1$
-    }
-
-    if (automaticRegistry)
-    {
-      builder.append("&legacyModeDefault=true"); //$NON-NLS-1$
     }
 
     return builder.toString();

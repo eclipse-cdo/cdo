@@ -209,6 +209,33 @@ public final class CDOModelUtil implements CDOModelConstants
   }
 
   /**
+   * @since 4.3
+   */
+  public static boolean isResourcePathFeature(EStructuralFeature eStructuralFeature)
+  {
+    if (CDOPackageRegistryImpl.SYSTEM_ELEMENTS[8] == eStructuralFeature)
+    {
+      return true;
+    }
+
+    if (CDOPackageRegistryImpl.SYSTEM_ELEMENTS[9] == eStructuralFeature)
+    {
+      return true;
+    }
+
+    if (isResourceNode(eStructuralFeature.eClass()))
+    {
+      String name = eStructuralFeature.getName();
+      if (RESOURCE_NODE_FOLDER_REFERENCE.equals(name) || RESOURCE_NODE_NAME_ATTRIBUTE.equals(name))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * @since 4.0
    */
   public static boolean isTypesPackage(EPackage ePackage)

@@ -73,6 +73,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final PerfTracer WRITING = new PerfTracer(OM.PERF_REVISION_WRITING, BaseCDORevision.class);
 
+  private static final int RESOURCE_NODE_NAME_INDEX = 1;
+
   private static final byte UNSET_OPCODE = 0;
 
   private static final byte SET_NULL_OPCODE = 1;
@@ -156,7 +158,17 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     byte flagBits = in.readByte(); // Don't set permissions into this.falgs before readValues()
     flagBits |= UNCHUNKED_FLAG; // First assume all lists are unchunked; may be revised below
 
-    if ((flagBits & PERMISSION_MASK) != CDOPermission.NONE.ordinal())
+    if ((flagBits & PERMISSION_MASK) == CDOPermission.NONE.ordinal())
+    {
+      if (getClassInfo().isResourceNode())
+      {
+        clearValues();
+
+        String name = in.readString();
+        doSetValue(RESOURCE_NODE_NAME_INDEX, name);
+      }
+    }
+    else
     {
       if (!readValues(in))
       {
@@ -225,7 +237,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     CDOPermission permission = permissionProvider.getPermission(this, securityContext);
     out.writeByte(permission.getBits());
 
-    if (permission != CDOPermission.NONE)
+    if (permission == CDOPermission.NONE)
+    {
+      if (getClassInfo().isResourceNode())
+      {
+        String name = getResourceNodeName();
+        out.writeString(name);
+      }
+    }
+    else
     {
       if (!isUnchunked() && referenceChunk != 0)
       {
@@ -655,6 +675,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public Object getValue(EStructuralFeature feature)
   {
+    checkReadable(feature);
+
     int featureIndex = getFeatureIndex(feature);
     return getValue(featureIndex);
   }
@@ -683,6 +705,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public CDOList getList(EStructuralFeature feature, int size)
   {
+    checkReadable(feature);
+
     int featureIndex = getFeatureIndex(feature);
     InternalCDOList list = (InternalCDOList)getValue(featureIndex);
     if (list == null && size != -1)
@@ -732,6 +756,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
     initValues(features);
     return features;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public String getResourceNodeName()
+  {
+    return (String)doGetValue(RESOURCE_NODE_NAME_INDEX);
   }
 
   /**
@@ -801,7 +833,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   protected Object getValue(int featureIndex)
   {
-    checkReadable();
     return doGetValue(featureIndex);
   }
 
@@ -856,8 +887,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
-  private void checkReadable()
+  private void checkReadable(EStructuralFeature feature)
   {
+    if (CDOModelUtil.isResourcePathFeature(feature))
+    {
+      return;
+    }
+
     if (!isReadable())
     {
       throw new NoPermissionException(this);

@@ -163,14 +163,14 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
     String path = getPath();
 
-    int length = revisionPath.length();
-    if (length < path.length())
+    int length = path.length();
+    if (length > revisionPath.length())
     {
       return false;
     }
 
     revisionPath = revisionPath.substring(0, length);
-    return revisionPath.equals(path);
+    return path.equals(revisionPath);
   }
 
   private boolean includesRegex(CDORevision revision, CDORevisionProvider revisionProvider)

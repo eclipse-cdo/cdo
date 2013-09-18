@@ -286,6 +286,14 @@ public class StubCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public String getResourceNodeName()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
    * @since 4.1
    */
   public CDOPermission getPermission()

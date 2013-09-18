@@ -1082,6 +1082,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public String toString()
   {
     String name = repositoryInfo == null ? "?" : repositoryInfo.getName(); //$NON-NLS-1$
+    if (userID != null && userID.length() != 0)
+    {
+      name = userID + "@" + name;
+    }
+
     return MessageFormat.format("Session{0} [{1}]", sessionID, name); //$NON-NLS-1$
   }
 

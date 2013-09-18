@@ -1,0 +1,92 @@
+/**
+ */
+package org.eclipse.emf.cdo.security.impl;
+
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.expressions.EvaluationContext;
+import org.eclipse.emf.cdo.expressions.Expression;
+import org.eclipse.emf.cdo.expressions.impl.EvaluationContextImpl;
+import org.eclipse.emf.cdo.security.ExpressionFilter;
+import org.eclipse.emf.cdo.security.SecurityPackage;
+
+import org.eclipse.emf.ecore.EClass;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Expression Filter</b></em>'.
+ * @since 4.3
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ExpressionFilterImpl#getExpression <em>Expression</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @generated
+ */
+public class ExpressionFilterImpl extends ObjectFilterImpl implements ExpressionFilter
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ExpressionFilterImpl()
+  {
+    super();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return SecurityPackage.Literals.EXPRESSION_FILTER;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression getExpression()
+  {
+    return (Expression)eGet(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExpression(Expression newExpression)
+  {
+    eSet(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, newExpression);
+  }
+
+  @Override
+  protected boolean isApplicable(CDOObject object, CDOBranchPoint securityContext)
+  {
+    EvaluationContext evaluationContext = new EvaluationContextImpl(object);
+
+    Expression expression = getExpression();
+    return (Boolean)expression.evaluate(evaluationContext);
+  }
+
+  public String format()
+  {
+    Expression expression = getExpression();
+    if (expression == null)
+    {
+      return "[?]";
+    }
+
+    return "[" + expression + "]";
+  }
+
+} // ExpressionFilterImpl

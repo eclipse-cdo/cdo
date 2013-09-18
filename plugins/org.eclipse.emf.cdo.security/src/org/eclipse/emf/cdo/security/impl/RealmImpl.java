@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
+import org.eclipse.emf.cdo.security.UserPassword;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -417,6 +418,23 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   {
     EList<SecurityItem> items = getUserItems();
     items.add(user);
+    return user;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public User setPassword(String id, String password)
+  {
+    UserPassword userPassword = null;
+    if (password != null && password.length() != 0)
+    {
+      userPassword = SecurityFactory.eINSTANCE.createUserPassword();
+      userPassword.setEncrypted(password);
+    }
+
+    User user = getUser(id);
+    user.setPassword(userPassword);
     return user;
   }
 

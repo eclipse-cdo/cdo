@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EPackage;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Package Permission</b></em>'.
+ * @deprecated As of 4.3 use {@link FilterPermission} and {@link PackageFilter}.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
  * @model
  * @generated
  */
+@Deprecated
 public interface PackagePermission extends Permission
 {
   /**

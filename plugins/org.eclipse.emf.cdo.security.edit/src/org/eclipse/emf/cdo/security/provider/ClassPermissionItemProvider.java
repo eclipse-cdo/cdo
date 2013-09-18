@@ -46,6 +46,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
+@Deprecated
 public class ClassPermissionItemProvider extends PermissionItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider

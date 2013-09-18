@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.security.presentation;
 
 import org.eclipse.emf.cdo.etypes.provider.EtypesItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.expressions.provider.ExpressionsItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.security.provider.SecurityItemProviderAdapterFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -25,8 +26,6 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -176,7 +175,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PropertySheetPage propertySheetPage;
+  protected List<PropertySheetPage> propertySheetPages = new ArrayList<PropertySheetPage>();
 
   /**
    * This is the viewer that shadows the selection in the content outline.
@@ -249,7 +248,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
       }
       else if (p instanceof PropertySheet)
       {
-        if (((PropertySheet)p).getCurrentPage() == propertySheetPage)
+        if (propertySheetPages.contains(((PropertySheet)p).getCurrentPage()))
         {
           getActionBarContributor().setActiveEditor(SecurityEditor.this);
           handleActivate();
@@ -382,6 +381,17 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
     protected void unsetTarget(Resource target)
     {
       basicUnsetTarget(target);
+      resourceToDiagnosticMap.remove(target);
+      if (updateProblemIndication)
+      {
+        getSite().getShell().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            updateProblemIndication();
+          }
+        });
+      }
     }
   };
 
@@ -427,6 +437,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
                   }
                 }
               }
+              return false;
             }
 
             return true;
@@ -675,6 +686,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
     adapterFactory.addAdapterFactory(new SecurityItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new EtypesItemProviderAdapterFactory());
+    adapterFactory.addAdapterFactory(new ExpressionsItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
     // Create the command stack that will notify this editor as commands are executed.
@@ -700,9 +712,17 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
             {
               setSelectionToViewer(mostRecentCommand.getAffectedObjects());
             }
-            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+            for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext();)
             {
-              propertySheetPage.refresh();
+              PropertySheetPage propertySheetPage = i.next();
+              if (propertySheetPage.getControl().isDisposed())
+              {
+                i.remove();
+              }
+              else
+              {
+                propertySheetPage.refresh();
+              }
             }
           }
         });
@@ -1220,26 +1240,24 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    */
   public IPropertySheetPage getPropertySheetPage()
   {
-    if (propertySheetPage == null)
+    PropertySheetPage propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
     {
-      propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
+      @Override
+      public void setSelectionToViewer(List<?> selection)
       {
-        @Override
-        public void setSelectionToViewer(List<?> selection)
-        {
-          SecurityEditor.this.setSelectionToViewer(selection);
-          SecurityEditor.this.setFocus();
-        }
+        SecurityEditor.this.setSelectionToViewer(selection);
+        SecurityEditor.this.setFocus();
+      }
 
-        @Override
-        public void setActionBars(IActionBars actionBars)
-        {
-          super.setActionBars(actionBars);
-          getActionBarContributor().shareGlobalActions(this, actionBars);
-        }
-      };
-      propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
-    }
+      @Override
+      public void setActionBars(IActionBars actionBars)
+      {
+        super.setActionBars(actionBars);
+        getActionBarContributor().shareGlobalActions(this, actionBars);
+      }
+    };
+    propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
+    propertySheetPages.add(propertySheetPage);
 
     return propertySheetPage;
   }
@@ -1361,7 +1379,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
 
   /**
    * This returns whether something has been persisted to the URI of the specified resource.
-   * The implementation uses the URI converter from the editor's resource set to try to open an input stream. 
+   * The implementation uses the URI converter from the editor's resource set to try to open an input stream.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1441,25 +1459,10 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    */
   public void gotoMarker(IMarker marker)
   {
-    try
+    List<?> targetObjects = markerHelper.getTargetObjects(editingDomain, marker);
+    if (!targetObjects.isEmpty())
     {
-      if (marker.getType().equals(EValidator.MARKER))
-      {
-        String uriAttribute = marker.getAttribute(EValidator.URI_ATTRIBUTE, null);
-        if (uriAttribute != null)
-        {
-          URI uri = URI.createURI(uriAttribute);
-          EObject eObject = editingDomain.getResourceSet().getEObject(uri, true);
-          if (eObject != null)
-          {
-            setSelectionToViewer(Collections.singleton(editingDomain.getWrapper(eObject)));
-          }
-        }
-      }
-    }
-    catch (CoreException exception)
-    {
-      SecurityEditorPlugin.INSTANCE.log(exception);
+      setSelectionToViewer(targetObjects);
     }
   }
 
@@ -1668,7 +1671,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
       getActionBarContributor().setActiveEditor(null);
     }
 
-    if (propertySheetPage != null)
+    for (PropertySheetPage propertySheetPage : propertySheetPages)
     {
       propertySheetPage.dispose();
     }

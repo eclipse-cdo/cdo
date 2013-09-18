@@ -36,16 +36,11 @@ import java.util.regex.PatternSyntaxException;
  *
  * @generated
  */
+@Deprecated
 public class ResourcePermissionImpl extends PermissionImpl implements ResourcePermission
 {
-  /**
-   * @ADDED
-   */
   private static final Pattern OMNI_PATTERN = Pattern.compile(".*");
 
-  /**
-   * @ADDED
-   */
   private Pattern pattern;
 
   /**
@@ -89,9 +84,6 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
     eSet(SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, newPattern);
   }
 
-  /**
-   * @ADDED
-   */
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     if (pattern == null)
@@ -121,9 +113,6 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
     return matcher.matches();
   }
 
-  /**
-   * @ADDED
-   */
   private Pattern compilePattern(String value)
   {
     if (value == null)

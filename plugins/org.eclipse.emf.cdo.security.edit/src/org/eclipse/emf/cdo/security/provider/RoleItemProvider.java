@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -33,6 +34,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -203,11 +205,12 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
    * that can be created under this object.
    * <!-- begin-user-doc -->
+   * @since 4.3
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+  @SuppressWarnings("deprecation")
+  protected void collectNewChildDescriptorsGen(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
@@ -219,6 +222,31 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__PERMISSIONS,
         SecurityFactory.eINSTANCE.createResourcePermission()));
+
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__PERMISSIONS,
+        SecurityFactory.eINSTANCE.createFilterPermission()));
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
+  protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+  {
+    collectNewChildDescriptorsGen(newChildDescriptors, object);
+
+    for (Iterator<Object> it = newChildDescriptors.iterator(); it.hasNext();)
+    {
+      Object newChildDescriptor = it.next();
+      if (newChildDescriptor instanceof CommandParameter)
+      {
+        Object value = ((CommandParameter)newChildDescriptor).getValue();
+        if (value instanceof org.eclipse.emf.cdo.security.ClassPermission
+            || value instanceof org.eclipse.emf.cdo.security.PackagePermission
+            || value instanceof org.eclipse.emf.cdo.security.ResourcePermission)
+        {
+          it.remove();
+        }
+      }
+    }
   }
 
 }

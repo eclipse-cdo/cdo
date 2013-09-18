@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Class Permissionermission</b></em>'.
+ * @deprecated As of 4.3 use {@link FilterPermission} and {@link ClassFilter}.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EClass;
  * @model
  * @generated
  */
+@Deprecated
 public interface ClassPermission extends Permission
 {
   /**

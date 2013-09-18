@@ -11,7 +11,11 @@
 package org.eclipse.emf.cdo.security;
 
 /**
- * A {@link SecurityItemProvider security item provider} that {@link SecurityItem items} such as {@link User users} or {@link Role roles} can be added to or removed from.
+ * A {@link SecurityItemProvider security item provider} that {@link SecurityItem items} 
+ * such as {@link User users} or {@link Role roles} can be added to or removed from.
+ * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  * @author Eike Stepper
  * @since 4.2
  */
@@ -24,6 +28,11 @@ public interface SecurityItemContainer extends SecurityItemProvider
   public User addUser(String id);
 
   public User addUser(String id, String password);
+
+  /**
+   * @since 4.3
+   */
+  public User setPassword(String id, String password);
 
   public Role removeRole(String id);
 

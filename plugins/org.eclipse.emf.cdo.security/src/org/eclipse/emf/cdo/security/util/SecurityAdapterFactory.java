@@ -11,14 +11,26 @@
 package org.eclipse.emf.cdo.security.util;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
+import org.eclipse.emf.cdo.security.AndFilter;
 import org.eclipse.emf.cdo.security.Assignee;
+import org.eclipse.emf.cdo.security.ClassFilter;
 import org.eclipse.emf.cdo.security.ClassPermission;
+import org.eclipse.emf.cdo.security.CombinedFilter;
 import org.eclipse.emf.cdo.security.Directory;
+import org.eclipse.emf.cdo.security.ExpressionFilter;
+import org.eclipse.emf.cdo.security.FilterPermission;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.LinkedFilter;
+import org.eclipse.emf.cdo.security.NotFilter;
+import org.eclipse.emf.cdo.security.ObjectFilter;
 import org.eclipse.emf.cdo.security.ObjectPermission;
+import org.eclipse.emf.cdo.security.OrFilter;
+import org.eclipse.emf.cdo.security.PackageFilter;
 import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.ResourceFilter;
 import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
@@ -42,6 +54,7 @@ import org.eclipse.emf.ecore.EObject;
  * @see org.eclipse.emf.cdo.security.SecurityPackage
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class SecurityAdapterFactory extends AdapterFactoryImpl
 {
   /**
@@ -178,6 +191,78 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
     public Adapter caseObjectPermission(ObjectPermission object)
     {
       return createObjectPermissionAdapter();
+    }
+
+    @Override
+    public Adapter caseFilterPermission(FilterPermission object)
+    {
+      return createFilterPermissionAdapter();
+    }
+
+    @Override
+    public Adapter casePermissionFilter(PermissionFilter object)
+    {
+      return createPermissionFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseLinkedFilter(LinkedFilter object)
+    {
+      return createLinkedFilterAdapter();
+    }
+
+    @Override
+    public Adapter casePackageFilter(PackageFilter object)
+    {
+      return createPackageFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseClassFilter(ClassFilter object)
+    {
+      return createClassFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseResourceFilter(ResourceFilter object)
+    {
+      return createResourceFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseObjectFilter(ObjectFilter object)
+    {
+      return createObjectFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseExpressionFilter(ExpressionFilter object)
+    {
+      return createExpressionFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseCombinedFilter(CombinedFilter object)
+    {
+      return createCombinedFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseNotFilter(NotFilter object)
+    {
+      return createNotFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseAndFilter(AndFilter object)
+    {
+      return createAndFilterAdapter();
+    }
+
+    @Override
+    public Adapter caseOrFilter(OrFilter object)
+    {
+      return createOrFilterAdapter();
     }
 
     @Override
@@ -414,6 +499,198 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createObjectPermissionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.FilterPermission <em>Filter Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.FilterPermission
+   * @generated
+   */
+  public Adapter createFilterPermissionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.PermissionFilter <em>Permission Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.PermissionFilter
+   * @generated
+   */
+  public Adapter createPermissionFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.LinkedFilter <em>Linked Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.LinkedFilter
+   * @generated
+   */
+  public Adapter createLinkedFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.PackageFilter <em>Package Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.PackageFilter
+   * @generated
+   */
+  public Adapter createPackageFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ClassFilter <em>Class Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ClassFilter
+   * @generated
+   */
+  public Adapter createClassFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ResourceFilter <em>Resource Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter
+   * @generated
+   */
+  public Adapter createResourceFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ObjectFilter <em>Object Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ObjectFilter
+   * @generated
+   */
+  public Adapter createObjectFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ExpressionFilter <em>Expression Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ExpressionFilter
+   * @generated
+   */
+  public Adapter createExpressionFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.CombinedFilter <em>Combined Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.CombinedFilter
+   * @generated
+   */
+  public Adapter createCombinedFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.NotFilter <em>Not Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.NotFilter
+   * @generated
+   */
+  public Adapter createNotFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.AndFilter <em>And Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.AndFilter
+   * @generated
+   */
+  public Adapter createAndFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.OrFilter <em>Or Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.OrFilter
+   * @generated
+   */
+  public Adapter createOrFilterAdapter()
   {
     return null;
   }

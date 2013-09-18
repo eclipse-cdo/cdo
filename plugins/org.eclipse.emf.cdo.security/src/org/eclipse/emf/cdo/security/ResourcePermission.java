@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.security;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Resource Permission</b></em>'.
+ * @deprecated As of 4.3 use {@link FilterPermission} and {@link ResourceFilter}.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -26,6 +27,7 @@ package org.eclipse.emf.cdo.security;
  * @model
  * @generated
  */
+@Deprecated
 public interface ResourcePermission extends Permission
 {
   /**

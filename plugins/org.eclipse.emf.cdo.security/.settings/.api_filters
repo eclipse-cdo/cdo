@@ -1,5 +1,209 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.security" version="2">
+    <resource path="src/org/eclipse/emf/cdo/security/SecurityPackage.java" type="org.eclipse.emf.cdo.security.SecurityPackage">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage"/>
+                <message_argument value="ACCESS"/>
+                <message_argument value="14"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage"/>
+                <message_argument value="ACCESS_OBJECT"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/SecurityPackage.java" type="org.eclipse.emf.cdo.security.SecurityPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="AND_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="CLASS_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="CLASS_FILTER__APPLICABLE_CLASS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="CLASS_FILTER__SUB_TYPES"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="COMBINED_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="COMBINED_FILTER__OPERANDS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="EXPRESSION_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="EXPRESSION_FILTER__EXPRESSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="EXPRESSION_PERMISSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="EXPRESSION_PERMISSION__EXPRESSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="FILTER_PERMISSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="FILTER_PERMISSION__FILTERS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="INCLUSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="LINKED_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="LINKED_FILTER__FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="LOGICAL_OPERATOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="LOGICAL_PERMISSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="LOGICAL_PERMISSION__OPERANDS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="LOGICAL_PERMISSION__OPERATOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="NOT_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="OBJECT_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="OR_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="PACKAGE_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="PACKAGE_FILTER__APPLICABLE_PACKAGE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="PERMISSION_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="REFERENCE_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="REFERENCE_FILTER__REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__INCLUSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__PATH"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__PATTERN"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.java" type="org.eclipse.emf.cdo.security.impl.SecurityFactoryImpl">
         <filter id="1143996420">
             <message_arguments>

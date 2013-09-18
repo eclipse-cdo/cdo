@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EPackage;
  *
  * @generated
  */
+@Deprecated
 public class PackagePermissionImpl extends PermissionImpl implements PackagePermission
 {
   /**
@@ -75,9 +76,6 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
     eSet(SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, newApplicablePackage);
   }
 
-  /**
-   * @ADDED
-   */
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     EPackage actualPackage = revision.getEClass().getEPackage();

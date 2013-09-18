@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.security.presentation;
 
 import org.eclipse.emf.cdo.edit.CDOEditPlugin;
+import org.eclipse.emf.cdo.expressions.provider.ExpressionsEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
@@ -49,7 +50,7 @@ public final class SecurityEditorPlugin extends EMFPlugin
    */
   public SecurityEditorPlugin()
   {
-    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, CDOEditPlugin.INSTANCE, });
+    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, CDOEditPlugin.INSTANCE, ExpressionsEditPlugin.INSTANCE, });
   }
 
   /**

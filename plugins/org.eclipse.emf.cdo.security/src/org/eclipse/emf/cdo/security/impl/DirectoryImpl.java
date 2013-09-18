@@ -155,6 +155,14 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   }
 
   /**
+   * @since 4.3
+   */
+  public User setPassword(String id, String password)
+  {
+    return getRealm().setPassword(id, password);
+  }
+
+  /**
    * @since 4.2
    */
   public Role removeRole(String id)

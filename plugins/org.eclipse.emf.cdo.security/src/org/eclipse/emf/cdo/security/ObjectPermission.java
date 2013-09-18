@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.security;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Object Permission</b></em>'.
  * @since 4.2
+ * @deprecated As of 4.3 use {@link FilterPermission} and {@link ObjectFilter}.
  * <!-- end-user-doc -->
  *
  *
@@ -21,6 +22,7 @@ package org.eclipse.emf.cdo.security;
  * @model abstract="true"
  * @generated
  */
+@Deprecated
 public interface ObjectPermission extends Permission
 {
 } // ObjectPermission

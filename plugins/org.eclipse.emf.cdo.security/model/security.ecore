@@ -102,6 +102,49 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectPermission" abstract="true" eSuperTypes="#//Permission"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FilterPermission" eSuperTypes="#//Permission">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="filters" lowerBound="1"
+        upperBound="-1" eType="#//PermissionFilter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PermissionFilter" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LinkedFilter" eSuperTypes="#//PermissionFilter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="filter" lowerBound="1"
+        eType="#//PermissionFilter"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PackageFilter" eSuperTypes="#//PermissionFilter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="applicablePackage" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassFilter" eSuperTypes="#//PermissionFilter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="applicableClass" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subTypes" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceFilter" eSuperTypes="#//PermissionFilter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inclusion" eType="#//Inclusion"
+        defaultValueLiteral="Regex"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectFilter" abstract="true" eSuperTypes="#//PermissionFilter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpressionFilter" eSuperTypes="#//ObjectFilter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.expressions/model/expressions.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CombinedFilter" abstract="true" eSuperTypes="#//PermissionFilter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operands" lowerBound="1"
+        upperBound="-1" eType="#//PermissionFilter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotFilter" eSuperTypes="#//CombinedFilter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AndFilter" eSuperTypes="#//CombinedFilter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrFilter" eSuperTypes="#//CombinedFilter"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="Inclusion">
+    <eLiterals name="Exact"/>
+    <eLiterals name="ExactAndUp" value="1"/>
+    <eLiterals name="ExactAndDown" value="2"/>
+    <eLiterals name="Regex" value="3"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Access">
     <eLiterals name="READ"/>
     <eLiterals name="WRITE" value="1"/>

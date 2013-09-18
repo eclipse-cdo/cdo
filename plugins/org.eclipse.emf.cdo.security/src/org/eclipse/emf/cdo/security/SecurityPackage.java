@@ -903,6 +903,409 @@ public interface SecurityPackage extends EPackage
   int OBJECT_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.FilterPermissionImpl <em>Filter Permission</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.FilterPermissionImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getFilterPermission()
+   * @generated
+   */
+  int FILTER_PERMISSION = 14;
+
+  /**
+   * The feature id for the '<em><b>Role</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILTER_PERMISSION__ROLE = PERMISSION__ROLE;
+
+  /**
+   * The feature id for the '<em><b>Access</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILTER_PERMISSION__ACCESS = PERMISSION__ACCESS;
+
+  /**
+   * The feature id for the '<em><b>Filters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILTER_PERMISSION__FILTERS = PERMISSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Filter Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILTER_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PermissionFilterImpl <em>Permission Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.PermissionFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPermissionFilter()
+   * @generated
+   */
+  int PERMISSION_FILTER = 15;
+
+  /**
+   * The number of structural features of the '<em>Permission Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERMISSION_FILTER_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.LinkedFilterImpl <em>Linked Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.LinkedFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getLinkedFilter()
+   * @generated
+   */
+  int LINKED_FILTER = 16;
+
+  /**
+   * The feature id for the '<em><b>Filter</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKED_FILTER__FILTER = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Linked Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKED_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PackageFilterImpl <em>Package Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.PackageFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPackageFilter()
+   * @generated
+   */
+  int PACKAGE_FILTER = 17;
+
+  /**
+   * The feature id for the '<em><b>Applicable Package</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_FILTER__APPLICABLE_PACKAGE = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Package Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ClassFilterImpl <em>Class Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ClassFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getClassFilter()
+   * @generated
+   */
+  int CLASS_FILTER = 18;
+
+  /**
+   * The feature id for the '<em><b>Applicable Class</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_FILTER__APPLICABLE_CLASS = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Sub Types</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_FILTER__SUB_TYPES = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Class Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ResourceFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getResourceFilter()
+   * @generated
+   */
+  int RESOURCE_FILTER = 19;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__PATH = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Inclusion</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__INCLUSION = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Resource Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ObjectFilterImpl <em>Object Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ObjectFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getObjectFilter()
+   * @generated
+   */
+  int OBJECT_FILTER = 20;
+
+  /**
+   * The number of structural features of the '<em>Object Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OBJECT_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ExpressionFilterImpl <em>Expression Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ExpressionFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getExpressionFilter()
+   * @generated
+   */
+  int EXPRESSION_FILTER = 21;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPRESSION_FILTER__EXPRESSION = OBJECT_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Expression Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPRESSION_FILTER_FEATURE_COUNT = OBJECT_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.CombinedFilterImpl <em>Combined Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.CombinedFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getCombinedFilter()
+   * @generated
+   */
+  int COMBINED_FILTER = 22;
+
+  /**
+   * The feature id for the '<em><b>Operands</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMBINED_FILTER__OPERANDS = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Combined Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMBINED_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.NotFilterImpl <em>Not Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.NotFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getNotFilter()
+   * @generated
+   */
+  int NOT_FILTER = 23;
+
+  /**
+   * The feature id for the '<em><b>Operands</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NOT_FILTER__OPERANDS = COMBINED_FILTER__OPERANDS;
+
+  /**
+   * The number of structural features of the '<em>Not Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NOT_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.AndFilterImpl <em>And Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.AndFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAndFilter()
+   * @generated
+   */
+  int AND_FILTER = 24;
+
+  /**
+   * The feature id for the '<em><b>Operands</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_FILTER__OPERANDS = COMBINED_FILTER__OPERANDS;
+
+  /**
+   * The number of structural features of the '<em>And Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.OrFilterImpl <em>Or Filter</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.OrFilterImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getOrFilter()
+   * @generated
+   */
+  int OR_FILTER = 25;
+
+  /**
+   * The feature id for the '<em><b>Operands</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_FILTER__OPERANDS = COMBINED_FILTER__OPERANDS;
+
+  /**
+   * The number of structural features of the '<em>Or Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.Inclusion <em>Inclusion</em>}' enum.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.Inclusion
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getInclusion()
+   * @generated
+   */
+  int INCLUSION = 26;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.
    * <!-- begin-user-doc -->
    * @noreference This field is not intended to be referenced by clients.
@@ -911,7 +1314,7 @@ public interface SecurityPackage extends EPackage
    * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccess()
    * @generated
    */
-  int ACCESS = 14;
+  int ACCESS = 27;
 
   /**
    * The meta object id for the '<em>Access Object</em>' data type.
@@ -922,7 +1325,7 @@ public interface SecurityPackage extends EPackage
    * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccessObject()
    * @generated
    */
-  int ACCESS_OBJECT = 15;
+  int ACCESS_OBJECT = 28;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.SecurityElement <em>Element</em>}'.
@@ -1531,6 +1934,257 @@ public interface SecurityPackage extends EPackage
   EClass getObjectPermission();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.FilterPermission <em>Filter Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Filter Permission</em>'.
+   * @see org.eclipse.emf.cdo.security.FilterPermission
+   * @generated
+   */
+  EClass getFilterPermission();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.security.FilterPermission#getFilters <em>Filters</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Filters</em>'.
+   * @see org.eclipse.emf.cdo.security.FilterPermission#getFilters()
+   * @see #getFilterPermission()
+   * @generated
+   */
+  EReference getFilterPermission_Filters();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.PermissionFilter <em>Permission Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Permission Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.PermissionFilter
+   * @generated
+   */
+  EClass getPermissionFilter();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.LinkedFilter <em>Linked Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Linked Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.LinkedFilter
+   * @generated
+   */
+  EClass getLinkedFilter();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.LinkedFilter#getFilter <em>Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.LinkedFilter#getFilter()
+   * @see #getLinkedFilter()
+   * @generated
+   */
+  EReference getLinkedFilter_Filter();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.PackageFilter <em>Package Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Package Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.PackageFilter
+   * @generated
+   */
+  EClass getPackageFilter();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.PackageFilter#getApplicablePackage <em>Applicable Package</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Applicable Package</em>'.
+   * @see org.eclipse.emf.cdo.security.PackageFilter#getApplicablePackage()
+   * @see #getPackageFilter()
+   * @generated
+   */
+  EReference getPackageFilter_ApplicablePackage();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ClassFilter <em>Class Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Class Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.ClassFilter
+   * @generated
+   */
+  EClass getClassFilter();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.ClassFilter#getApplicableClass <em>Applicable Class</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Applicable Class</em>'.
+   * @see org.eclipse.emf.cdo.security.ClassFilter#getApplicableClass()
+   * @see #getClassFilter()
+   * @generated
+   */
+  EReference getClassFilter_ApplicableClass();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ClassFilter#isSubTypes <em>Sub Types</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Sub Types</em>'.
+   * @see org.eclipse.emf.cdo.security.ClassFilter#isSubTypes()
+   * @see #getClassFilter()
+   * @generated
+   */
+  EAttribute getClassFilter_SubTypes();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ResourceFilter <em>Resource Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Resource Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter
+   * @generated
+   */
+  EClass getResourceFilter();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#getPath <em>Path</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Path</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#getPath()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_Path();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#getInclusion <em>Inclusion</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Inclusion</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#getInclusion()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_Inclusion();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ObjectFilter <em>Object Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Object Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.ObjectFilter
+   * @generated
+   */
+  EClass getObjectFilter();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ExpressionFilter <em>Expression Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expression Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.ExpressionFilter
+   * @generated
+   */
+  EClass getExpressionFilter();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.security.ExpressionFilter#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see org.eclipse.emf.cdo.security.ExpressionFilter#getExpression()
+   * @see #getExpressionFilter()
+   * @generated
+   */
+  EReference getExpressionFilter_Expression();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.CombinedFilter <em>Combined Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Combined Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.CombinedFilter
+   * @generated
+   */
+  EClass getCombinedFilter();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.security.CombinedFilter#getOperands <em>Operands</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Operands</em>'.
+   * @see org.eclipse.emf.cdo.security.CombinedFilter#getOperands()
+   * @see #getCombinedFilter()
+   * @generated
+   */
+  EReference getCombinedFilter_Operands();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.NotFilter <em>Not Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Not Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.NotFilter
+   * @generated
+   */
+  EClass getNotFilter();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.AndFilter <em>And Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>And Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.AndFilter
+   * @generated
+   */
+  EClass getAndFilter();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.OrFilter <em>Or Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Or Filter</em>'.
+   * @see org.eclipse.emf.cdo.security.OrFilter
+   * @generated
+   */
+  EClass getOrFilter();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Inclusion <em>Inclusion</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Inclusion</em>'.
+   * @see org.eclipse.emf.cdo.security.Inclusion
+   * @generated
+   */
+  EEnum getInclusion();
+
+  /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2056,6 +2710,230 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EClass OBJECT_PERMISSION = eINSTANCE.getObjectPermission();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.FilterPermissionImpl <em>Filter Permission</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.FilterPermissionImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getFilterPermission()
+     * @generated
+     */
+    EClass FILTER_PERMISSION = eINSTANCE.getFilterPermission();
+
+    /**
+     * The meta object literal for the '<em><b>Filters</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FILTER_PERMISSION__FILTERS = eINSTANCE.getFilterPermission_Filters();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.PermissionFilterImpl <em>Permission Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.PermissionFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPermissionFilter()
+     * @generated
+     */
+    EClass PERMISSION_FILTER = eINSTANCE.getPermissionFilter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.LinkedFilterImpl <em>Linked Filter</em>}' class.
+     * <!-- begin-user-doc -->
+    * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.LinkedFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getLinkedFilter()
+     * @generated
+     */
+    EClass LINKED_FILTER = eINSTANCE.getLinkedFilter();
+
+    /**
+     * The meta object literal for the '<em><b>Filter</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+    * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LINKED_FILTER__FILTER = eINSTANCE.getLinkedFilter_Filter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.PackageFilterImpl <em>Package Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.PackageFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPackageFilter()
+     * @generated
+     */
+    EClass PACKAGE_FILTER = eINSTANCE.getPackageFilter();
+
+    /**
+     * The meta object literal for the '<em><b>Applicable Package</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PACKAGE_FILTER__APPLICABLE_PACKAGE = eINSTANCE.getPackageFilter_ApplicablePackage();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ClassFilterImpl <em>Class Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ClassFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getClassFilter()
+     * @generated
+     */
+    EClass CLASS_FILTER = eINSTANCE.getClassFilter();
+
+    /**
+     * The meta object literal for the '<em><b>Applicable Class</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLASS_FILTER__APPLICABLE_CLASS = eINSTANCE.getClassFilter_ApplicableClass();
+
+    /**
+     * The meta object literal for the '<em><b>Sub Types</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLASS_FILTER__SUB_TYPES = eINSTANCE.getClassFilter_SubTypes();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ResourceFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getResourceFilter()
+     * @generated
+     */
+    EClass RESOURCE_FILTER = eINSTANCE.getResourceFilter();
+
+    /**
+     * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__PATH = eINSTANCE.getResourceFilter_Path();
+
+    /**
+     * The meta object literal for the '<em><b>Inclusion</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__INCLUSION = eINSTANCE.getResourceFilter_Inclusion();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ObjectFilterImpl <em>Object Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ObjectFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getObjectFilter()
+     * @generated
+     */
+    EClass OBJECT_FILTER = eINSTANCE.getObjectFilter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ExpressionFilterImpl <em>Expression Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ExpressionFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getExpressionFilter()
+     * @generated
+     */
+    EClass EXPRESSION_FILTER = eINSTANCE.getExpressionFilter();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXPRESSION_FILTER__EXPRESSION = eINSTANCE.getExpressionFilter_Expression();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.CombinedFilterImpl <em>Combined Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.CombinedFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getCombinedFilter()
+     * @generated
+     */
+    EClass COMBINED_FILTER = eINSTANCE.getCombinedFilter();
+
+    /**
+     * The meta object literal for the '<em><b>Operands</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMBINED_FILTER__OPERANDS = eINSTANCE.getCombinedFilter_Operands();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.NotFilterImpl <em>Not Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.NotFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getNotFilter()
+     * @generated
+     */
+    EClass NOT_FILTER = eINSTANCE.getNotFilter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.AndFilterImpl <em>And Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.AndFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAndFilter()
+     * @generated
+     */
+    EClass AND_FILTER = eINSTANCE.getAndFilter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.OrFilterImpl <em>Or Filter</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.OrFilterImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getOrFilter()
+     * @generated
+     */
+    EClass OR_FILTER = eINSTANCE.getOrFilter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Inclusion <em>Inclusion</em>}' enum.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.Inclusion
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getInclusion()
+     * @generated
+     */
+    EEnum INCLUSION = eINSTANCE.getInclusion();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.security;
 
+import org.eclipse.emf.cdo.expressions.Expression;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
@@ -126,44 +128,201 @@ public interface SecurityFactory extends EFactory
   /**
    * Returns a new object of class '<em>Class Permission</em>'.
    * <!-- begin-user-doc -->
+   * @deprecated As of 4.3 use {@link #createFilterPermission()} and {@link #createClassFilter()}.
    * <!-- end-user-doc -->
    * @return a new object of class '<em>Class Permission</em>'.
    * @generated
    */
+  @Deprecated
   ClassPermission createClassPermission();
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #createFilterPermission(Access, PermissionFilter...)} and {@link #createClassFilter(EClass)}.
    */
+  @Deprecated
   ClassPermission createClassPermission(EClass eClass, Access access);
 
   /**
    * Returns a new object of class '<em>Package Permission</em>'.
    * <!-- begin-user-doc -->
+   * @deprecated As of 4.3 use {@link #createFilterPermission()} and {@link #createPackageFilter()}.
    * <!-- end-user-doc -->
    * @return a new object of class '<em>Package Permission</em>'.
    * @generated
    */
+  @Deprecated
   PackagePermission createPackagePermission();
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #createFilterPermission(Access, PermissionFilter...)} and {@link #createPackageFilter(EPackage)}.
    */
+  @Deprecated
   PackagePermission createPackagePermission(EPackage ePackage, Access access);
 
   /**
    * Returns a new object of class '<em>Resource Permission</em>'.
    * <!-- begin-user-doc -->
+   * @deprecated As of 4.3 use {@link #createFilterPermission()} and {@link #createResourceFilter()}.
    * <!-- end-user-doc -->
    * @return a new object of class '<em>Resource Permission</em>'.
    * @generated
    */
+  @Deprecated
   ResourcePermission createResourcePermission();
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #createFilterPermission()} and {@link #createResourceFilter(String)}.
    */
+  @Deprecated
   ResourcePermission createResourcePermission(String pattern, Access access);
+
+  /**
+   * Returns a new object of class '<em>Filter Permission</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Filter Permission</em>'.
+   * @generated
+   */
+  FilterPermission createFilterPermission();
+
+  /**
+   * Returns a new object of class '<em>Linked Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Linked Filter</em>'.
+   * @generated
+   */
+  LinkedFilter createLinkedFilter();
+
+  /**
+   * @since 4.3
+   */
+  FilterPermission createFilterPermission(Access access, PermissionFilter... filters);
+
+  /**
+   * Returns a new object of class '<em>Package Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Package Filter</em>'.
+   * @generated
+   */
+  PackageFilter createPackageFilter();
+
+  /**
+   * @since 4.3
+   */
+  PackageFilter createPackageFilter(EPackage ePackage);
+
+  /**
+   * Returns a new object of class '<em>Class Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Class Filter</em>'.
+   * @generated
+   */
+  ClassFilter createClassFilter();
+
+  /**
+   * @since 4.3
+   */
+  ClassFilter createClassFilter(EClass eClass);
+
+  /**
+   * Returns a new object of class '<em>Resource Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Resource Filter</em>'.
+   * @generated
+   */
+  ResourceFilter createResourceFilter();
+
+  /**
+   * @since 4.3
+   */
+  ResourceFilter createResourceFilter(String path);
+
+  /**
+   * @since 4.3
+   */
+  ResourceFilter createResourceFilter(String path, Inclusion inclusion);
+
+  /**
+   * Returns a new object of class '<em>Expression Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression Filter</em>'.
+   * @generated
+   */
+  ExpressionFilter createExpressionFilter();
+
+  /**
+   * @since 4.3
+   */
+  ExpressionFilter createExpressionFilter(Expression expression);
+
+  /**
+   * Returns a new object of class '<em>Not Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Not Filter</em>'.
+   * @generated
+   */
+  NotFilter createNotFilter();
+
+  /**
+   * Returns a new object of class '<em>And Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>And Filter</em>'.
+   * @generated
+   */
+  AndFilter createAndFilter();
+
+  /**
+   * Returns a new object of class '<em>Or Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Or Filter</em>'.
+   * @generated
+   */
+  OrFilter createOrFilter();
+
+  /**
+   * @since 4.3
+   */
+  NotFilter createNotFilter(PermissionFilter operand);
+
+  /**
+   * Returns a new object of class '<em>And Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>And Filter</em>'.
+   * @generated NOT
+   */
+  AndFilter createAndFilter(PermissionFilter... operands);
+
+  /**
+   * Returns a new object of class '<em>Or Filter</em>'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Or Filter</em>'.
+   * @generated NOT
+   */
+  OrFilter createOrFilter(PermissionFilter... operands);
 
   /**
    * Returns the package supported by this factory.

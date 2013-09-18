@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
+@Deprecated
 public abstract class ObjectPermissionImpl extends PermissionImpl implements ObjectPermission
 {
   /**

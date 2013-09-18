@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.security/src" creationIcons="false"
-    modelPluginID="org.eclipse.emf.cdo.security" modelName="Security" nonNLSMarkers="true"
-    rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
-    reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
+    modelPluginID="org.eclipse.emf.cdo.security" modelName="Security" updateClasspath="false"
+    nonNLSMarkers="true" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
     featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true"
     tableProviders="true" colorProviders="true" fontProviders="true" runtimeVersion="2.6"
-    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes">
+    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.expressions/model/expressions.genmodel#//expressions">
   <foreignModel>security.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Security" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
@@ -29,6 +29,9 @@
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allPermissions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Realm/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Realm/defaultAccess"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Realm/defaultUserDirectory"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Realm/defaultGroupDirectory"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Realm/defaultRoleDirectory"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//Directory">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//Directory/items"/>
@@ -82,5 +85,33 @@
     <genClasses ecoreClass="security.ecore#//ResourcePermission">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourcePermission/pattern"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="security.ecore#//ObjectPermission"/>
+    <genClasses ecoreClass="security.ecore#//FilterPermission">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//FilterPermission/filter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="security.ecore#//PermissionFilter"/>
+    <genClasses ecoreClass="security.ecore#//ReferenceFilter">
+      <genFeatures children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference security.ecore#//ReferenceFilter/reference"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//PackageFilter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//PackageFilter/applicablePackage"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//ClassFilter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//ClassFilter/applicableClass"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//ResourceFilter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/pattern"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="security.ecore#//ObjectFilter"/>
+    <genClasses ecoreClass="security.ecore#//ExpressionFilter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//ExpressionFilter/expression"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="security.ecore#//CombinedFilter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//CombinedFilter/operands"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//NotFilter"/>
+    <genClasses ecoreClass="security.ecore#//AndFilter"/>
+    <genClasses ecoreClass="security.ecore#//OrFilter"/>
   </genPackages>
 </genmodel:GenModel>

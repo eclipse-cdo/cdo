@@ -262,6 +262,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected ClassPermissionItemProvider classPermissionItemProvider;
 
   /**
@@ -270,6 +271,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Adapter createClassPermissionAdapter()
   {
@@ -287,6 +289,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected PackagePermissionItemProvider packagePermissionItemProvider;
 
   /**
@@ -295,6 +298,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Adapter createPackagePermissionAdapter()
   {
@@ -312,6 +316,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected ResourcePermissionItemProvider resourcePermissionItemProvider;
 
   /**
@@ -320,6 +325,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Adapter createResourcePermissionAdapter()
   {
@@ -329,6 +335,249 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
     }
 
     return resourcePermissionItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.FilterPermission} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected FilterPermissionItemProvider filterPermissionItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.FilterPermission}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createFilterPermissionAdapter()
+  {
+    if (filterPermissionItemProvider == null)
+    {
+      filterPermissionItemProvider = new FilterPermissionItemProvider(this);
+    }
+
+    return filterPermissionItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.LinkedFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected LinkedFilterItemProvider linkedFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.LinkedFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createLinkedFilterAdapter()
+  {
+    if (linkedFilterItemProvider == null)
+    {
+      linkedFilterItemProvider = new LinkedFilterItemProvider(this);
+    }
+
+    return linkedFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.PackageFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected PackageFilterItemProvider packageFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.PackageFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createPackageFilterAdapter()
+  {
+    if (packageFilterItemProvider == null)
+    {
+      packageFilterItemProvider = new PackageFilterItemProvider(this);
+    }
+
+    return packageFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ClassFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ClassFilterItemProvider classFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ClassFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createClassFilterAdapter()
+  {
+    if (classFilterItemProvider == null)
+    {
+      classFilterItemProvider = new ClassFilterItemProvider(this);
+    }
+
+    return classFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ResourceFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ResourceFilterItemProvider resourceFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ResourceFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createResourceFilterAdapter()
+  {
+    if (resourceFilterItemProvider == null)
+    {
+      resourceFilterItemProvider = new ResourceFilterItemProvider(this);
+    }
+
+    return resourceFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ExpressionFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ExpressionFilterItemProvider expressionFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ExpressionFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createExpressionFilterAdapter()
+  {
+    if (expressionFilterItemProvider == null)
+    {
+      expressionFilterItemProvider = new ExpressionFilterItemProvider(this);
+    }
+
+    return expressionFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.NotFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected NotFilterItemProvider notFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.NotFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createNotFilterAdapter()
+  {
+    if (notFilterItemProvider == null)
+    {
+      notFilterItemProvider = new NotFilterItemProvider(this);
+    }
+
+    return notFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.AndFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected AndFilterItemProvider andFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.AndFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createAndFilterAdapter()
+  {
+    if (andFilterItemProvider == null)
+    {
+      andFilterItemProvider = new AndFilterItemProvider(this);
+    }
+
+    return andFilterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.OrFilter} instances.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected OrFilterItemProvider orFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.OrFilter}.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createOrFilterAdapter()
+  {
+    if (orFilterItemProvider == null)
+    {
+      orFilterItemProvider = new OrFilterItemProvider(this);
+    }
+
+    return orFilterItemProvider;
   }
 
   /**
@@ -490,6 +739,24 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
       packagePermissionItemProvider.dispose();
     if (resourcePermissionItemProvider != null)
       resourcePermissionItemProvider.dispose();
+    if (filterPermissionItemProvider != null)
+      filterPermissionItemProvider.dispose();
+    if (linkedFilterItemProvider != null)
+      linkedFilterItemProvider.dispose();
+    if (packageFilterItemProvider != null)
+      packageFilterItemProvider.dispose();
+    if (classFilterItemProvider != null)
+      classFilterItemProvider.dispose();
+    if (resourceFilterItemProvider != null)
+      resourceFilterItemProvider.dispose();
+    if (expressionFilterItemProvider != null)
+      expressionFilterItemProvider.dispose();
+    if (notFilterItemProvider != null)
+      notFilterItemProvider.dispose();
+    if (andFilterItemProvider != null)
+      andFilterItemProvider.dispose();
+    if (orFilterItemProvider != null)
+      orFilterItemProvider.dispose();
   }
 
 }

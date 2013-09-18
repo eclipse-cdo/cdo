@@ -1,0 +1,49 @@
+/**
+ */
+package org.eclipse.emf.cdo.expressions;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Linked Expression</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.expressions.LinkedExpression#getExpression <em>Expression</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getLinkedExpression()
+ * @model
+ * @generated
+ */
+public interface LinkedExpression extends Expression
+{
+  /**
+   * Returns the value of the '<em><b>Expression</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Expression</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Expression</em>' reference.
+   * @see #setExpression(Expression)
+   * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getLinkedExpression_Expression()
+   * @model required="true"
+   * @generated
+   */
+  Expression getExpression();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.expressions.LinkedExpression#getExpression <em>Expression</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Expression</em>' reference.
+   * @see #getExpression()
+   * @generated
+   */
+  void setExpression(Expression value);
+
+} // LinkedExpression

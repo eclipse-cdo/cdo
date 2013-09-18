@@ -24,7 +24,7 @@
       <factory
             productGroup="org.eclipse.emf.cdo.server.commands"
             type="exporthbm"
-            class="org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.ExportHbmCommand$Factory"/>
+            class="org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.ExportHbmCommand"/>
    </extension>
 
 </plugin>

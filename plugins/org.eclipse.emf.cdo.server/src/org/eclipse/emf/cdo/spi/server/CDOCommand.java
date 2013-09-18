@@ -27,13 +27,13 @@ import java.util.Dictionary;
  * @author Eike Stepper
  * @since 4.3
  */
-public abstract class CDOCommand
+public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
 {
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.commands";
+
   public static final String INDENT = "   "; //$NON-NLS-1$
 
   private static final CommandParameter[] NO_PARAMETERS = new CommandParameter[0];
-
-  private final String name;
 
   private final String description;
 
@@ -43,7 +43,7 @@ public abstract class CDOCommand
 
   public CDOCommand(String name, String description, CommandParameter... parameters)
   {
-    this.name = name;
+    super(PRODUCT_GROUP, name);
     this.description = description;
     this.parameters = parameters == null ? NO_PARAMETERS : parameters;
   }
@@ -51,6 +51,11 @@ public abstract class CDOCommand
   public CDOCommand(String name, String description)
   {
     this(name, description, NO_PARAMETERS);
+  }
+
+  public final CDOCommand create(String description) throws ProductCreationException
+  {
+    return this;
   }
 
   public final CommandInterpreter getInterpreter()
@@ -65,7 +70,7 @@ public abstract class CDOCommand
 
   public final String getName()
   {
-    return name;
+    return getType();
   }
 
   public final String getDescription()
@@ -82,7 +87,7 @@ public abstract class CDOCommand
   {
     StringBuilder builder = new StringBuilder();
     builder.append("cdo ");
-    builder.append(name);
+    builder.append(getName());
 
     for (CommandParameter parameter : parameters)
     {
@@ -341,18 +346,16 @@ public abstract class CDOCommand
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
-  {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.commands";
-
-    public Factory(String type)
-    {
-      super(PRODUCT_GROUP, type);
-    }
-
-    public abstract CDOCommand create(String description) throws ProductCreationException;
-  }
+  // /**
+  // * @author Eike Stepper
+  // */
+  // public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+  // {
+  // public Factory(String type)
+  // {
+  // super(CDOCommand.PRODUCT_GROUP, type);
+  // }
+  //
+  // public abstract CDOCommand create(String description) throws ProductCreationException;
+  // }
 }

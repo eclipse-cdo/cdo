@@ -29,7 +29,11 @@
       <factory
             productGroup="org.eclipse.emf.cdo.server.commands"
             type="adduser"
-            class="org.eclipse.emf.cdo.server.internal.security.bundle.AddUserCommand$Factory"/>
+            class="org.eclipse.emf.cdo.server.internal.security.SecurityManagerCommand$AddUser"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.commands"
+            type="setpassword"
+            class="org.eclipse.emf.cdo.server.internal.security.SecurityManagerCommand$SetPassword"/>
    </extension>
 
 </plugin>

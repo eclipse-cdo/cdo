@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.security" version="2">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalSecurityManager"/>
+                <message_argument value="SecurityManager"/>
+                <message_argument value="SecurityItemContainer"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager$PermissionManager">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="IPermissionManager"/>
                 <message_argument value="PermissionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/security/ISecurityManager.java" type="org.eclipse.emf.cdo.server.security.ISecurityManager">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="SecurityItemContainer"/>
+                <message_argument value="ISecurityManager"/>
             </message_arguments>
         </filter>
     </resource>

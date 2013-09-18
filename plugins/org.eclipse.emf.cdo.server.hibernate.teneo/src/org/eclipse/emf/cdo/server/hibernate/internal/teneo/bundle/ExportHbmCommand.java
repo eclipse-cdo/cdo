@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.spi.server.CDOCommand;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
-import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.FileOutputStream;
@@ -25,11 +24,9 @@ import java.io.OutputStream;
  */
 public class ExportHbmCommand extends CDOCommand.WithRepository
 {
-  public static final String NAME = "exporthbm";
-
   public ExportHbmCommand()
   {
-    super(NAME, "export generated hibernate mapping to a file", parameter("export-file"));
+    super("exporthbm", "export generated hibernate mapping to a file", parameter("export-file"));
   }
 
   @Override
@@ -51,23 +48,6 @@ public class ExportHbmCommand extends CDOCommand.WithRepository
     finally
     {
       IOUtil.close(out);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class Factory extends CDOCommand.Factory
-  {
-    public Factory()
-    {
-      super(NAME);
-    }
-
-    @Override
-    public CDOCommand create(String description) throws ProductCreationException
-    {
-      return new ExportHbmCommand();
     }
   }
 }

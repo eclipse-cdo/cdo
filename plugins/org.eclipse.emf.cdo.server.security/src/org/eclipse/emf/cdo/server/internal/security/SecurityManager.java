@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Access;
-import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Permission;
@@ -65,7 +63,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IAuthenticator;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -251,6 +248,20 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
         result[0] = realm.addUser(id);
         result[0].setPassword(userPassword);
+      }
+    });
+
+    return result[0];
+  }
+
+  public User setPassword(final String id, final String password)
+  {
+    final User[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.setPassword(id, password);
       }
     });
 
@@ -471,7 +482,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected Realm createRealm()
   {
-    Realm realm = SecurityFactory.eINSTANCE.createRealm("Security Realm");
+    final SecurityFactory factory = SecurityFactory.eINSTANCE;
+
+    Realm realm = factory.createRealm("Security Realm");
     realm.setDefaultRoleDirectory(addDirectory(realm, "Roles"));
     realm.setDefaultGroupDirectory(addDirectory(realm, "Groups"));
     realm.setDefaultUserDirectory(addDirectory(realm, "Users"));
@@ -479,28 +492,26 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     // Create roles
 
     Role allReaderRole = realm.addRole("All Objects Reader");
-    allReaderRole.getPermissions().add(SecurityFactory.eINSTANCE.createResourcePermission(".*", Access.READ));
+    allReaderRole.getPermissions().add(factory.createFilterPermission(Access.READ, factory.createResourceFilter(".*")));
 
     Role allWriterRole = realm.addRole("All Objects Writer");
-    allWriterRole.getPermissions().add(SecurityFactory.eINSTANCE.createResourcePermission(".*", Access.WRITE));
+    allWriterRole.getPermissions()
+        .add(factory.createFilterPermission(Access.WRITE, factory.createResourceFilter(".*")));
 
     Role treeReaderRole = realm.addRole("Resource Tree Reader");
     treeReaderRole.getPermissions().add(
-        SecurityFactory.eINSTANCE.createPackagePermission(EresourcePackage.eINSTANCE, Access.READ));
+        factory.createFilterPermission(Access.READ, factory.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role treeWriterRole = realm.addRole("Resource Tree Writer");
     treeWriterRole.getPermissions().add(
-        SecurityFactory.eINSTANCE.createPackagePermission(EresourcePackage.eINSTANCE, Access.WRITE));
+        factory.createFilterPermission(Access.WRITE, factory.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role adminRole = realm.addRole("Administration");
-    for (EClass eClass : EMFUtil.getConcreteClasses(SecurityPackage.eINSTANCE))
-    {
-      if (eClass != SecurityPackage.Literals.USER_PASSWORD)
-      {
-        ClassPermission permission = SecurityFactory.eINSTANCE.createClassPermission(eClass, Access.WRITE);
-        adminRole.getPermissions().add(permission);
-      }
-    }
+    adminRole.getPermissions().add(
+        factory.createFilterPermission(
+            Access.WRITE,
+            factory.createAndFilter(factory.createResourceFilter(realmPath),
+                factory.createNotFilter(factory.createClassFilter(SecurityPackage.Literals.USER_PASSWORD)))));
 
     // Create groups
 
@@ -516,6 +527,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     User adminUser = realm.addUser("Administrator", "0000");
     adminUser.getGroups().add(adminsGroup);
 
+    OM.LOG.info("Security realm " + realmPath + " created");
     return realm;
   }
 

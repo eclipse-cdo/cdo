@@ -358,7 +358,7 @@ public class CDOCommandProvider implements CommandProvider
 
     try
     {
-      for (String name : IPluginContainer.INSTANCE.getFactoryTypes(CDOCommand.Factory.PRODUCT_GROUP))
+      for (String name : IPluginContainer.INSTANCE.getFactoryTypes(CDOCommand.PRODUCT_GROUP))
       {
         try
         {
@@ -381,7 +381,7 @@ public class CDOCommandProvider implements CommandProvider
 
   protected CDOCommand createCommand(String name)
   {
-    return (CDOCommand)IPluginContainer.INSTANCE.getElement(CDOCommand.Factory.PRODUCT_GROUP, name, null);
+    return (CDOCommand)IPluginContainer.INSTANCE.getElement(CDOCommand.PRODUCT_GROUP, name, null);
   }
 
   private void addCommand(Map<String, CDOCommand> commands, CDOCommand command)

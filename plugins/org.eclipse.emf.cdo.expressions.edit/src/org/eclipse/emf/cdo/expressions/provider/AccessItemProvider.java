@@ -2,13 +2,21 @@
  */
 package org.eclipse.emf.cdo.expressions.provider;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.emf.cdo.expressions.Access;
 import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.ListValue;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
@@ -20,18 +28,16 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.expressions.ListValue} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.expressions.Access} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ListValueItemProvider extends ValueItemProvider implements IEditingDomainItemProvider,
+public class AccessItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
@@ -41,7 +47,7 @@ public class ListValueItemProvider extends ValueItemProvider implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
-  public ListValueItemProvider(AdapterFactory adapterFactory)
+  public AccessItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -77,7 +83,7 @@ public class ListValueItemProvider extends ValueItemProvider implements IEditing
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS);
+      childrenFeatures.add(ExpressionsPackage.Literals.ACCESS__NAME);
     }
     return childrenFeatures;
   }
@@ -97,15 +103,14 @@ public class ListValueItemProvider extends ValueItemProvider implements IEditing
   }
 
   /**
-   * This returns ListValue.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Object getImage(Object object)
+  public boolean hasChildren(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/ListValue"));
+    return hasChildren(object, true);
   }
 
   /**
@@ -128,7 +133,7 @@ public class ListValueItemProvider extends ValueItemProvider implements IEditing
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_ListValue_type");
+    return getString("_UI_Access_type");
   }
 
   /**
@@ -143,9 +148,9 @@ public class ListValueItemProvider extends ValueItemProvider implements IEditing
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(ListValue.class))
+    switch (notification.getFeatureID(Access.class))
     {
-    case ExpressionsPackage.LIST_VALUE__ELEMENTS:
+    case ExpressionsPackage.ACCESS__NAME:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -164,59 +169,71 @@ public class ListValueItemProvider extends ValueItemProvider implements IEditing
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createByteValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createShortValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createIntValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createLongValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createFloatValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createDoubleValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createCharValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createStringValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createListValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
+        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createContextAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createThis()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createContainedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createLinkedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
+        ExpressionsFactory.eINSTANCE.createListConstruction()));
+  }
+
+  /**
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ResourceLocator getResourceLocator()
+  {
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

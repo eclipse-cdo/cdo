@@ -2,29 +2,7 @@
  */
 package org.eclipse.emf.cdo.expressions.util;
 
-import org.eclipse.emf.cdo.expressions.BooleanValue;
-import org.eclipse.emf.cdo.expressions.ByteValue;
-import org.eclipse.emf.cdo.expressions.CharValue;
-import org.eclipse.emf.cdo.expressions.ContainedObject;
-import org.eclipse.emf.cdo.expressions.ContextAccess;
-import org.eclipse.emf.cdo.expressions.DoubleValue;
-import org.eclipse.emf.cdo.expressions.Expression;
-import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.FloatValue;
-import org.eclipse.emf.cdo.expressions.FunctionInvocation;
-import org.eclipse.emf.cdo.expressions.IntValue;
-import org.eclipse.emf.cdo.expressions.Invocation;
-import org.eclipse.emf.cdo.expressions.LinkedExpression;
-import org.eclipse.emf.cdo.expressions.LinkedObject;
-import org.eclipse.emf.cdo.expressions.ListValue;
-import org.eclipse.emf.cdo.expressions.LongValue;
-import org.eclipse.emf.cdo.expressions.MemberAccess;
-import org.eclipse.emf.cdo.expressions.MemberInvocation;
-import org.eclipse.emf.cdo.expressions.ShortValue;
-import org.eclipse.emf.cdo.expressions.StringValue;
-import org.eclipse.emf.cdo.expressions.This;
-import org.eclipse.emf.cdo.expressions.Value;
-
+import org.eclipse.emf.cdo.expressions.*;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -159,12 +137,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseListValue(ListValue object)
-    {
-      return createListValueAdapter();
-    }
-
-    @Override
     public Adapter caseInvocation(Invocation object)
     {
       return createInvocationAdapter();
@@ -183,6 +155,18 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseAccess(Access object)
+    {
+      return createAccessAdapter();
+    }
+
+    @Override
+    public Adapter caseStaticAccess(StaticAccess object)
+    {
+      return createStaticAccessAdapter();
+    }
+
+    @Override
     public Adapter caseMemberAccess(MemberAccess object)
     {
       return createMemberAccessAdapter();
@@ -192,12 +176,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
     public Adapter caseContextAccess(ContextAccess object)
     {
       return createContextAccessAdapter();
-    }
-
-    @Override
-    public Adapter caseThis(This object)
-    {
-      return createThisAdapter();
     }
 
     @Override
@@ -216,6 +194,12 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
     public Adapter caseLinkedExpression(LinkedExpression object)
     {
       return createLinkedExpressionAdapter();
+    }
+
+    @Override
+    public Adapter caseListConstruction(ListConstruction object)
+    {
+      return createListConstructionAdapter();
     }
 
     @Override
@@ -405,21 +389,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.ListValue <em>List Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.expressions.ListValue
-   * @generated
-   */
-  public Adapter createListValueAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.Invocation <em>Invocation</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -465,6 +434,36 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.Access <em>Access</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.expressions.Access
+   * @generated
+   */
+  public Adapter createAccessAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.StaticAccess <em>Static Access</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.expressions.StaticAccess
+   * @generated
+   */
+  public Adapter createStaticAccessAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.MemberAccess <em>Member Access</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -490,21 +489,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createContextAccessAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.This <em>This</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.expressions.This
-   * @generated
-   */
-  public Adapter createThisAdapter()
   {
     return null;
   }
@@ -550,6 +534,21 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLinkedExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.expressions.ListConstruction <em>List Construction</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.expressions.ListConstruction
+   * @generated
+   */
+  public Adapter createListConstructionAdapter()
   {
     return null;
   }

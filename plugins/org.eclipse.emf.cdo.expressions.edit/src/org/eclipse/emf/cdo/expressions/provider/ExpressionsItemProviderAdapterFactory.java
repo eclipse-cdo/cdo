@@ -324,31 +324,6 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.expressions.ListValue} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ListValueItemProvider listValueItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.expressions.ListValue}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createListValueAdapter()
-  {
-    if (listValueItemProvider == null)
-    {
-      listValueItemProvider = new ListValueItemProvider(this);
-    }
-
-    return listValueItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.expressions.FunctionInvocation} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -399,6 +374,31 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.expressions.StaticAccess} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected StaticAccessItemProvider staticAccessItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.expressions.StaticAccess}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createStaticAccessAdapter()
+  {
+    if (staticAccessItemProvider == null)
+    {
+      staticAccessItemProvider = new StaticAccessItemProvider(this);
+    }
+
+    return staticAccessItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.expressions.MemberAccess} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -446,31 +446,6 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     return contextAccessItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.expressions.This} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ThisItemProvider thisItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.expressions.This}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createThisAdapter()
-  {
-    if (thisItemProvider == null)
-    {
-      thisItemProvider = new ThisItemProvider(this);
-    }
-
-    return thisItemProvider;
   }
 
   /**
@@ -546,6 +521,31 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     return linkedExpressionItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.expressions.ListConstruction} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ListConstructionItemProvider listConstructionItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.expressions.ListConstruction}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createListConstructionAdapter()
+  {
+    if (listConstructionItemProvider == null)
+    {
+      listConstructionItemProvider = new ListConstructionItemProvider(this);
+    }
+
+    return listConstructionItemProvider;
   }
 
   /**
@@ -707,24 +707,24 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
       charValueItemProvider.dispose();
     if (stringValueItemProvider != null)
       stringValueItemProvider.dispose();
-    if (listValueItemProvider != null)
-      listValueItemProvider.dispose();
     if (functionInvocationItemProvider != null)
       functionInvocationItemProvider.dispose();
     if (memberInvocationItemProvider != null)
       memberInvocationItemProvider.dispose();
+    if (staticAccessItemProvider != null)
+      staticAccessItemProvider.dispose();
     if (memberAccessItemProvider != null)
       memberAccessItemProvider.dispose();
     if (contextAccessItemProvider != null)
       contextAccessItemProvider.dispose();
-    if (thisItemProvider != null)
-      thisItemProvider.dispose();
     if (containedObjectItemProvider != null)
       containedObjectItemProvider.dispose();
     if (linkedObjectItemProvider != null)
       linkedObjectItemProvider.dispose();
     if (linkedExpressionItemProvider != null)
       linkedExpressionItemProvider.dispose();
+    if (listConstructionItemProvider != null)
+      listConstructionItemProvider.dispose();
   }
 
 }

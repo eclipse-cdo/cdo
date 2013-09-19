@@ -2,16 +2,21 @@
  */
 package org.eclipse.emf.cdo.expressions.impl;
 
+import org.eclipse.emf.cdo.expressions.EvaluationContext;
 import org.eclipse.emf.cdo.expressions.Expression;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.ListValue;
+import org.eclipse.emf.cdo.expressions.ListConstruction;
+
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -21,20 +26,20 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.expressions.impl.ListValueImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.expressions.impl.ListConstructionImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ListValueImpl extends ValueImpl implements ListValue
+public class ListConstructionImpl extends CDOObjectImpl implements ListConstruction
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ListValueImpl()
+  protected ListConstructionImpl()
   {
     super();
   }
@@ -47,7 +52,18 @@ public class ListValueImpl extends ValueImpl implements ListValue
   @Override
   protected EClass eStaticClass()
   {
-    return ExpressionsPackage.Literals.LIST_VALUE;
+    return ExpressionsPackage.Literals.LIST_CONSTRUCTION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
   }
 
   /**
@@ -58,8 +74,24 @@ public class ListValueImpl extends ValueImpl implements ListValue
   @SuppressWarnings("unchecked")
   public EList<Expression> getElements()
   {
-    return (EList<Expression>)eDynamicGet(ExpressionsPackage.LIST_VALUE__ELEMENTS,
-        ExpressionsPackage.Literals.LIST_VALUE__ELEMENTS, true, true);
+    return (EList<Expression>)eDynamicGet(ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS,
+        ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Object evaluate(EvaluationContext context)
+  {
+    EList<Object> result = new BasicEList<Object>();
+    for (Expression element : getElements())
+    {
+      result.add(element.evaluate(context));
+    }
+
+    return result;
   }
 
   /**
@@ -72,7 +104,7 @@ public class ListValueImpl extends ValueImpl implements ListValue
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LIST_VALUE__ELEMENTS:
+    case ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS:
       return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -88,7 +120,7 @@ public class ListValueImpl extends ValueImpl implements ListValue
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LIST_VALUE__ELEMENTS:
+    case ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -105,7 +137,7 @@ public class ListValueImpl extends ValueImpl implements ListValue
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LIST_VALUE__ELEMENTS:
+    case ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS:
       getElements().clear();
       getElements().addAll((Collection<? extends Expression>)newValue);
       return;
@@ -123,7 +155,7 @@ public class ListValueImpl extends ValueImpl implements ListValue
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LIST_VALUE__ELEMENTS:
+    case ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,16 +172,26 @@ public class ListValueImpl extends ValueImpl implements ListValue
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LIST_VALUE__ELEMENTS:
+    case ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS:
       return !getElements().isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
-  public Object getLiteral()
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
   {
-    return getElements();
+    switch (operationID)
+    {
+    case ExpressionsPackage.LIST_CONSTRUCTION___EVALUATE__EVALUATIONCONTEXT:
+      return evaluate((EvaluationContext)arguments.get(0));
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
 } // ListValueImpl

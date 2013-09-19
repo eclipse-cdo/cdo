@@ -91,7 +91,7 @@ public abstract class PermissionFilterImpl extends CDOObjectImpl implements Perm
     {
       if (tracing)
       {
-        TRACER.trace(msg + " --> " + result);
+        TRACER.trace(msg + " = " + result);
       }
     }
 

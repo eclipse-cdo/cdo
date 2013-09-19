@@ -19,7 +19,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -122,24 +125,178 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
   {
     String name = (String)getName().evaluate(context);
 
-    EList<Object> arguments = new BasicEList<Object>();
-    for (Expression argument : getArguments())
+    EList<Expression> arguments = getArguments();
+    int size = arguments.size();
+
+    Object[] evaluatedArguments = new Object[size];
+    for (int i = 0; i < evaluatedArguments.length; i++)
     {
-      arguments.add(argument.evaluate(context));
+      Expression argument = arguments.get(i);
+      evaluatedArguments[i] = argument.evaluate(context);
     }
 
-    try
+    List<Invocable> invocables = new BasicEList<Invocable>();
+    collectInvocables(context, name, invocables);
+
+    Invocable invocable = selectInvocable(invocables, evaluatedArguments);
+    return invocable.invoke(evaluatedArguments);
+  }
+
+  protected abstract boolean staticModifier();
+
+  protected abstract void collectInvocables(EvaluationContext context, String name, List<Invocable> invocables);
+
+  protected void collectMethods(Object object, Class<?> c, String name, List<Invocable> invocables)
+  {
+    for (Method method : c.getMethods())
     {
-      return evaluate(context, name, arguments);
-    }
-    catch (InvocationTargetException ex)
-    {
-      throw WrappedException.wrap(ex);
+      boolean static1 = Modifier.isStatic(method.getModifiers());
+      boolean staticModifier = staticModifier();
+      String name2 = method.getName();
+      if (name2.equals(name) && static1 == staticModifier)
+      {
+        invocables.add(createMethod(object, method));
+      }
     }
   }
 
-  protected abstract Object evaluate(EvaluationContext context, String name, EList<Object> arguments)
-      throws InvocationTargetException;
+  protected Invocable createMethod(final Object object, final Method method)
+  {
+    return new Invocable()
+    {
+      public String getName()
+      {
+        return method.getName();
+      }
+
+      public Class<?>[] getParameterTypes()
+      {
+        return method.getParameterTypes();
+      }
+
+      public Object invoke(Object[] arguments)
+      {
+        try
+        {
+          return method.invoke(object, arguments);
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      @Override
+      public String toString()
+      {
+        return method.toString();
+      }
+    };
+  }
+
+  protected Invocable selectInvocable(List<Invocable> invocables, Object[] arguments)
+  {
+    Invocable result = null;
+    for (Invocable invocable : invocables)
+    {
+      Class<?>[] parameterTypes = invocable.getParameterTypes();
+      if (isAssignable(parameterTypes, arguments))
+      {
+        if (result != null)
+        {
+          throw new IllegalStateException("Ambiguous invocation: " + invocable.getName() + arguments);
+        }
+
+        result = invocable;
+      }
+    }
+
+    return result;
+  }
+
+  protected boolean isAssignable(Class<?>[] parameterTypes, Object[] arguments)
+  {
+    if (parameterTypes.length != arguments.length)
+    {
+      return false;
+    }
+
+    for (int i = 0; i < parameterTypes.length; i++)
+    {
+      Class<?> parameterType = box(parameterTypes[i]);
+      Class<?> argumentType = arguments[i].getClass();
+      if (!parameterType.isAssignableFrom(argumentType))
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  protected Class<?> box(Class<?> type)
+  {
+    if (type.isPrimitive())
+    {
+      if (type == boolean.class)
+      {
+        return Boolean.class;
+      }
+
+      if (type == char.class)
+      {
+        return Character.class;
+      }
+
+      if (type == byte.class)
+      {
+        return Byte.class;
+      }
+
+      if (type == short.class)
+      {
+        return Short.class;
+      }
+
+      if (type == int.class)
+      {
+        return Integer.class;
+      }
+
+      if (type == long.class)
+      {
+        return Long.class;
+      }
+
+      if (type == float.class)
+      {
+        return Float.class;
+      }
+
+      if (type == double.class)
+      {
+        return Double.class;
+      }
+    }
+
+    return type;
+  }
+
+  protected Class<?>[] getTypes(Object[] objects)
+  {
+    Class<?>[] types = new Class<?>[objects.length];
+    for (int i = 0; i < objects.length; i++)
+    {
+      Object object = objects[i];
+      types[i] = object == null ? Object.class : object.getClass();
+    }
+
+    return types;
+  }
 
   /**
    * <!-- begin-user-doc -->
@@ -251,6 +408,18 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
       return evaluate((EvaluationContext)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Invocable
+  {
+    public String getName();
+
+    public Class<?>[] getParameterTypes();
+
+    public Object invoke(Object[] arguments);
   }
 
 } // InvocationImpl

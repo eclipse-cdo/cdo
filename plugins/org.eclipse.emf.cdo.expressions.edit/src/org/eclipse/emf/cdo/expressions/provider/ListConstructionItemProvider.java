@@ -4,11 +4,13 @@ package org.eclipse.emf.cdo.expressions.provider;
 
 import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.MemberInvocation;
+import org.eclipse.emf.cdo.expressions.ListConstruction;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
@@ -20,18 +22,19 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.expressions.MemberInvocation} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.expressions.ListConstruction} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class MemberInvocationItemProvider extends InvocationItemProvider implements IEditingDomainItemProvider,
+public class ListConstructionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
@@ -41,7 +44,7 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public MemberInvocationItemProvider(AdapterFactory adapterFactory)
+  public ListConstructionItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -77,7 +80,7 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT);
+      childrenFeatures.add(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS);
     }
     return childrenFeatures;
   }
@@ -97,7 +100,18 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
   }
 
   /**
-   * This returns MemberInvocation.gif.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
+   * This returns ListConstruction.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -105,7 +119,7 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/MemberInvocation"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/ListConstruction"));
   }
 
   /**
@@ -128,7 +142,7 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_MemberInvocation_type");
+    return getString("_UI_ListConstruction_type");
   }
 
   /**
@@ -143,9 +157,9 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(MemberInvocation.class))
+    switch (notification.getFeatureID(ListConstruction.class))
     {
-    case ExpressionsPackage.MEMBER_INVOCATION__OBJECT:
+    case ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -164,83 +178,71 @@ public class MemberInvocationItemProvider extends InvocationItemProvider impleme
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createByteValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createShortValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createIntValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createLongValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createFloatValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createDoubleValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createCharValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createStringValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createStaticAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createContextAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createContainedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createLinkedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createLinkedExpression()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
         ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
   /**
-   * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+   * Return the resource locator for this item provider's resources.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection)
+  public ResourceLocator getResourceLocator()
   {
-    Object childFeature = feature;
-    Object childObject = child;
-
-    boolean qualify = childFeature == ExpressionsPackage.Literals.INVOCATION__ARGUMENTS
-        || childFeature == ExpressionsPackage.Literals.INVOCATION__NAME
-        || childFeature == ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT;
-
-    if (qualify)
-    {
-      return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature),
-          getTypeText(owner) });
-    }
-    return super.getCreateChildText(owner, feature, child, selection);
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

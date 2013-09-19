@@ -15,9 +15,7 @@ package org.eclipse.emf.cdo.expressions;
  */
 public interface EvaluationContext
 {
-  public static final String THIS = "this";
+  public Class<?> getClass(String name);
 
   public Object get(Object name);
-
-  public Object getThis();
 }

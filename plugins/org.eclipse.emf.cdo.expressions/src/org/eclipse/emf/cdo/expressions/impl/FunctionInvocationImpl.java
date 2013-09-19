@@ -6,10 +6,12 @@ import org.eclipse.emf.cdo.expressions.EvaluationContext;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
 import org.eclipse.emf.cdo.expressions.FunctionInvocation;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.net4j.util.WrappedException;
+
 import org.eclipse.emf.ecore.EClass;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Constructor;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,44 +46,156 @@ public class FunctionInvocationImpl extends InvocationImpl implements FunctionIn
   }
 
   @Override
-  protected Object evaluate(EvaluationContext context, String name, EList<Object> arguments)
-      throws InvocationTargetException
+  protected boolean staticModifier()
   {
-    // Object left = getLeft().evaluate(context);
-    // Object right = getRight().evaluate(context);
-    //
-    // Operator operator = getOperator();
-    // switch (operator)
-    // {
-    // case EQUAL:
-    // return left.equals(right);
-    //
-    // case NOT_EQUAL:
-    // return !left.equals(right);
-    //
-    // case LESS_THAN:
-    // return ((Comparable<Object>)left).compareTo(right) < 0;
-    //
-    // case LESS_THAN_OR_EQUAL:
-    // return ((Comparable<Object>)left).compareTo(right) <= 0;
-    //
-    // case GREATER_THAN:
-    // return ((Comparable<Object>)left).compareTo(right) > 0;
-    //
-    // case GREATER_THAN_OR_EQUAL:
-    // return ((Comparable<Object>)left).compareTo(right) >= 0;
-    //
-    // case AND:
-    // return (Boolean)left && (Boolean)right;
-    //
-    // case OR:
-    // return (Boolean)left || (Boolean)right;
-    //
-    // default:
-    // throw new IllegalStateException("Unhandled operator: " + operator);
-    // }
-    //
-    return null;
+    return true;
   }
+
+  @Override
+  protected void collectInvocables(EvaluationContext context, String name, List<Invocable> invocables)
+  {
+    int methodStart = name.lastIndexOf('.');
+    if (methodStart == -1)
+    {
+      throw new IllegalArgumentException("Method name missing: " + name);
+    }
+
+    String methodName = name.substring(methodStart + 1);
+    String className = name.substring(0, methodStart);
+    Class<?> c = context.getClass(className);
+
+    if ("new".equals(methodName))
+    {
+      for (Constructor<?> constructor : c.getConstructors())
+      {
+        invocables.add(createConstructor(constructor));
+      }
+    }
+    else
+    {
+      collectMethods(null, c, methodName, invocables);
+    }
+  }
+
+  protected Invocable createConstructor(final Constructor<?> constructor)
+  {
+    return new Invocable()
+    {
+      public String getName()
+      {
+        return "new";
+      }
+
+      public Class<?>[] getParameterTypes()
+      {
+        return constructor.getParameterTypes();
+      }
+
+      public Object invoke(Object[] arguments)
+      {
+        try
+        {
+          return constructor.newInstance(arguments);
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      @Override
+      public String toString()
+      {
+        return constructor.toString();
+      }
+    };
+  }
+
+  // @Override
+  // protected Object evaluate(EvaluationContext context, String name, Object[] arguments)
+  // throws InvocationTargetException
+  // {
+  // int methodStart = name.lastIndexOf('.');
+  // if (methodStart == -1)
+  // {
+  // throw new IllegalArgumentException("Method name missing: " + name);
+  // }
+  //
+  // String className = name.substring(0, methodStart);
+  // String methodName = name.substring(methodStart + 1);
+  //
+  // try
+  // {
+  // Class<?> c = getClass(className);
+  // Class<?>[] argumentTypes = getTypes(arguments);
+  //
+  // if ("new".equals(methodName))
+  // {
+  // Constructor<?> constructor = c.getConstructor(argumentTypes);
+  // return constructor.newInstance(arguments);
+  // }
+  // else
+  // {
+  // Method method = c.getMethod(methodName, argumentTypes);
+  // if (!Modifier.isStatic(method.getModifiers()))
+  // {
+  // throw new IllegalArgumentException("Method is not static: " + name);
+  // }
+  //
+  // return method.invoke(null, arguments);
+  // }
+  // }
+  // catch (RuntimeException ex)
+  // {
+  // throw ex;
+  // }
+  // catch (InvocationTargetException ex)
+  // {
+  // throw ex;
+  // }
+  // catch (Exception ex)
+  // {
+  // throw new InvocationTargetException(ex);
+  // }
+  //
+  // // Object left = getLeft().evaluate(context);
+  // // Object right = getRight().evaluate(context);
+  // //
+  // // Operator operator = getOperator();
+  // // switch (operator)
+  // // {
+  // // case EQUAL:
+  // // return left.equals(right);
+  // //
+  // // case NOT_EQUAL:
+  // // return !left.equals(right);
+  // //
+  // // case LESS_THAN:
+  // // return ((Comparable<Object>)left).compareTo(right) < 0;
+  // //
+  // // case LESS_THAN_OR_EQUAL:
+  // // return ((Comparable<Object>)left).compareTo(right) <= 0;
+  // //
+  // // case GREATER_THAN:
+  // // return ((Comparable<Object>)left).compareTo(right) > 0;
+  // //
+  // // case GREATER_THAN_OR_EQUAL:
+  // // return ((Comparable<Object>)left).compareTo(right) >= 0;
+  // //
+  // // case AND:
+  // // return (Boolean)left && (Boolean)right;
+  // //
+  // // case OR:
+  // // return (Boolean)left || (Boolean)right;
+  // //
+  // // default:
+  // // throw new IllegalStateException("Unhandled operator: " + operator);
+  // // }
+  // //
+  // }
 
 } // FunctionInvocationImpl

@@ -12,15 +12,15 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.expressions.ListValue#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.expressions.ListConstruction#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getListValue()
+ * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getListConstruction()
  * @model
  * @generated
  */
-public interface ListValue extends Value
+public interface ListConstruction extends Expression
 {
   /**
    * Returns the value of the '<em><b>Elements</b></em>' containment reference list.
@@ -32,7 +32,7 @@ public interface ListValue extends Value
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getListValue_Elements()
+   * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getListConstruction_Elements()
    * @model containment="true"
    * @generated
    */

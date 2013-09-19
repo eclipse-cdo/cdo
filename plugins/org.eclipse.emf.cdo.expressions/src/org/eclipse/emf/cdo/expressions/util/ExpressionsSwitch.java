@@ -2,29 +2,7 @@
  */
 package org.eclipse.emf.cdo.expressions.util;
 
-import org.eclipse.emf.cdo.expressions.BooleanValue;
-import org.eclipse.emf.cdo.expressions.ByteValue;
-import org.eclipse.emf.cdo.expressions.CharValue;
-import org.eclipse.emf.cdo.expressions.ContainedObject;
-import org.eclipse.emf.cdo.expressions.ContextAccess;
-import org.eclipse.emf.cdo.expressions.DoubleValue;
-import org.eclipse.emf.cdo.expressions.Expression;
-import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.FloatValue;
-import org.eclipse.emf.cdo.expressions.FunctionInvocation;
-import org.eclipse.emf.cdo.expressions.IntValue;
-import org.eclipse.emf.cdo.expressions.Invocation;
-import org.eclipse.emf.cdo.expressions.LinkedExpression;
-import org.eclipse.emf.cdo.expressions.LinkedObject;
-import org.eclipse.emf.cdo.expressions.ListValue;
-import org.eclipse.emf.cdo.expressions.LongValue;
-import org.eclipse.emf.cdo.expressions.MemberAccess;
-import org.eclipse.emf.cdo.expressions.MemberInvocation;
-import org.eclipse.emf.cdo.expressions.ShortValue;
-import org.eclipse.emf.cdo.expressions.StringValue;
-import org.eclipse.emf.cdo.expressions.This;
-import org.eclipse.emf.cdo.expressions.Value;
-
+import org.eclipse.emf.cdo.expressions.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -218,18 +196,6 @@ public class ExpressionsSwitch<T> extends Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
-    case ExpressionsPackage.LIST_VALUE:
-    {
-      ListValue listValue = (ListValue)theEObject;
-      T result = caseListValue(listValue);
-      if (result == null)
-        result = caseValue(listValue);
-      if (result == null)
-        result = caseExpression(listValue);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
     case ExpressionsPackage.INVOCATION:
     {
       Invocation invocation = (Invocation)theEObject;
@@ -264,10 +230,34 @@ public class ExpressionsSwitch<T> extends Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case ExpressionsPackage.ACCESS:
+    {
+      Access access = (Access)theEObject;
+      T result = caseAccess(access);
+      if (result == null)
+        result = caseExpression(access);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ExpressionsPackage.STATIC_ACCESS:
+    {
+      StaticAccess staticAccess = (StaticAccess)theEObject;
+      T result = caseStaticAccess(staticAccess);
+      if (result == null)
+        result = caseAccess(staticAccess);
+      if (result == null)
+        result = caseExpression(staticAccess);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     case ExpressionsPackage.MEMBER_ACCESS:
     {
       MemberAccess memberAccess = (MemberAccess)theEObject;
       T result = caseMemberAccess(memberAccess);
+      if (result == null)
+        result = caseAccess(memberAccess);
       if (result == null)
         result = caseExpression(memberAccess);
       if (result == null)
@@ -279,17 +269,9 @@ public class ExpressionsSwitch<T> extends Switch<T>
       ContextAccess contextAccess = (ContextAccess)theEObject;
       T result = caseContextAccess(contextAccess);
       if (result == null)
+        result = caseAccess(contextAccess);
+      if (result == null)
         result = caseExpression(contextAccess);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case ExpressionsPackage.THIS:
-    {
-      This this_ = (This)theEObject;
-      T result = caseThis(this_);
-      if (result == null)
-        result = caseExpression(this_);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -320,6 +302,16 @@ public class ExpressionsSwitch<T> extends Switch<T>
       T result = caseLinkedExpression(linkedExpression);
       if (result == null)
         result = caseExpression(linkedExpression);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ExpressionsPackage.LIST_CONSTRUCTION:
+    {
+      ListConstruction listConstruction = (ListConstruction)theEObject;
+      T result = caseListConstruction(listConstruction);
+      if (result == null)
+        result = caseExpression(listConstruction);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -506,22 +498,6 @@ public class ExpressionsSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>List Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>List Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseListValue(ListValue object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Invocation</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -570,6 +546,38 @@ public class ExpressionsSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Access</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Access</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAccess(Access object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Static Access</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Static Access</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStaticAccess(StaticAccess object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Member Access</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -597,22 +605,6 @@ public class ExpressionsSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseContextAccess(ContextAccess object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>This</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>This</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseThis(This object)
   {
     return null;
   }
@@ -661,6 +653,22 @@ public class ExpressionsSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLinkedExpression(LinkedExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>List Construction</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>List Construction</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseListConstruction(ListConstruction object)
   {
     return null;
   }

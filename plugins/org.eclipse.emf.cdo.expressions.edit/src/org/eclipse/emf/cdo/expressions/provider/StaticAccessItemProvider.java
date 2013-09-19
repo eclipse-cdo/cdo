@@ -2,10 +2,12 @@
  */
 package org.eclipse.emf.cdo.expressions.provider;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.edit.provider.IChildCreationExtender;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
@@ -17,18 +19,14 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.expressions.This} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.expressions.StaticAccess} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ThisItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class StaticAccessItemProvider extends AccessItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
@@ -38,7 +36,7 @@ public class ThisItemProvider extends ItemProviderAdapter implements IEditingDom
    * <!-- end-user-doc -->
    * @generated
    */
-  public ThisItemProvider(AdapterFactory adapterFactory)
+  public StaticAccessItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -61,18 +59,7 @@ public class ThisItemProvider extends ItemProviderAdapter implements IEditingDom
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean hasChildren(Object object)
-  {
-    return hasChildren(object, true);
-  }
-
-  /**
-   * This returns This.gif.
+   * This returns StaticAccess.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -80,7 +67,7 @@ public class ThisItemProvider extends ItemProviderAdapter implements IEditingDom
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/This"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/StaticAccess"));
   }
 
   /**
@@ -103,7 +90,7 @@ public class ThisItemProvider extends ItemProviderAdapter implements IEditingDom
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_This_type");
+    return getString("_UI_StaticAccess_type");
   }
 
   /**
@@ -131,18 +118,6 @@ public class ThisItemProvider extends ItemProviderAdapter implements IEditingDom
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

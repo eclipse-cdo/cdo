@@ -2,6 +2,7 @@
  */
 package org.eclipse.emf.cdo.expressions.impl;
 
+import org.eclipse.emf.cdo.expressions.Access;
 import org.eclipse.emf.cdo.expressions.BooleanValue;
 import org.eclipse.emf.cdo.expressions.ByteValue;
 import org.eclipse.emf.cdo.expressions.CharValue;
@@ -18,15 +19,14 @@ import org.eclipse.emf.cdo.expressions.IntValue;
 import org.eclipse.emf.cdo.expressions.Invocation;
 import org.eclipse.emf.cdo.expressions.LinkedExpression;
 import org.eclipse.emf.cdo.expressions.LinkedObject;
-import org.eclipse.emf.cdo.expressions.ListValue;
+import org.eclipse.emf.cdo.expressions.ListConstruction;
 import org.eclipse.emf.cdo.expressions.LongValue;
 import org.eclipse.emf.cdo.expressions.MemberAccess;
 import org.eclipse.emf.cdo.expressions.MemberInvocation;
 import org.eclipse.emf.cdo.expressions.ShortValue;
+import org.eclipse.emf.cdo.expressions.StaticAccess;
 import org.eclipse.emf.cdo.expressions.StringValue;
-import org.eclipse.emf.cdo.expressions.This;
 import org.eclipse.emf.cdo.expressions.Value;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -126,13 +126,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass listValueEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass invocationEClass = null;
 
   /**
@@ -154,6 +147,20 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass accessEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass staticAccessEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass memberAccessEClass = null;
 
   /**
@@ -162,13 +169,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * @generated
    */
   private EClass contextAccessEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass thisEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -190,6 +190,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * @generated
    */
   private EClass linkedExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass listConstructionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -490,26 +497,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getListValue()
-  {
-    return listValueEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getListValue_Elements()
-  {
-    return (EReference)listValueEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getInvocation()
   {
     return invocationEClass;
@@ -570,6 +557,36 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getAccess()
+  {
+    return accessEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAccess_Name()
+  {
+    return (EReference)accessEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getStaticAccess()
+  {
+    return staticAccessEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getMemberAccess()
   {
     return memberAccessEClass;
@@ -590,39 +607,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMemberAccess_Name()
-  {
-    return (EReference)memberAccessEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getContextAccess()
   {
     return contextAccessEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getContextAccess_Name()
-  {
-    return (EAttribute)contextAccessEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getThis()
-  {
-    return thisEClass;
   }
 
   /**
@@ -683,6 +670,26 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
   public EReference getLinkedExpression_Expression()
   {
     return (EReference)linkedExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getListConstruction()
+  {
+    return listConstructionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getListConstruction_Elements()
+  {
+    return (EReference)listConstructionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -759,9 +766,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     stringValueEClass = createEClass(STRING_VALUE);
     createEAttribute(stringValueEClass, STRING_VALUE__LITERAL);
 
-    listValueEClass = createEClass(LIST_VALUE);
-    createEReference(listValueEClass, LIST_VALUE__ELEMENTS);
-
     invocationEClass = createEClass(INVOCATION);
     createEReference(invocationEClass, INVOCATION__ARGUMENTS);
     createEReference(invocationEClass, INVOCATION__NAME);
@@ -771,14 +775,15 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     memberInvocationEClass = createEClass(MEMBER_INVOCATION);
     createEReference(memberInvocationEClass, MEMBER_INVOCATION__OBJECT);
 
+    accessEClass = createEClass(ACCESS);
+    createEReference(accessEClass, ACCESS__NAME);
+
+    staticAccessEClass = createEClass(STATIC_ACCESS);
+
     memberAccessEClass = createEClass(MEMBER_ACCESS);
     createEReference(memberAccessEClass, MEMBER_ACCESS__OBJECT);
-    createEReference(memberAccessEClass, MEMBER_ACCESS__NAME);
 
     contextAccessEClass = createEClass(CONTEXT_ACCESS);
-    createEAttribute(contextAccessEClass, CONTEXT_ACCESS__NAME);
-
-    thisEClass = createEClass(THIS);
 
     containedObjectEClass = createEClass(CONTAINED_OBJECT);
     createEReference(containedObjectEClass, CONTAINED_OBJECT__OBJECT);
@@ -788,6 +793,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
     linkedExpressionEClass = createEClass(LINKED_EXPRESSION);
     createEReference(linkedExpressionEClass, LINKED_EXPRESSION__EXPRESSION);
+
+    listConstructionEClass = createEClass(LIST_CONSTRUCTION);
+    createEReference(listConstructionEClass, LIST_CONSTRUCTION__ELEMENTS);
 
     // Create data types
     evaluationContextEDataType = createEDataType(EVALUATION_CONTEXT);
@@ -836,16 +844,17 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     doubleValueEClass.getESuperTypes().add(this.getValue());
     charValueEClass.getESuperTypes().add(this.getValue());
     stringValueEClass.getESuperTypes().add(this.getValue());
-    listValueEClass.getESuperTypes().add(this.getValue());
     invocationEClass.getESuperTypes().add(this.getExpression());
     functionInvocationEClass.getESuperTypes().add(this.getInvocation());
     memberInvocationEClass.getESuperTypes().add(this.getInvocation());
-    memberAccessEClass.getESuperTypes().add(this.getExpression());
-    contextAccessEClass.getESuperTypes().add(this.getExpression());
-    thisEClass.getESuperTypes().add(this.getExpression());
+    accessEClass.getESuperTypes().add(this.getExpression());
+    staticAccessEClass.getESuperTypes().add(this.getAccess());
+    memberAccessEClass.getESuperTypes().add(this.getAccess());
+    contextAccessEClass.getESuperTypes().add(this.getAccess());
     containedObjectEClass.getESuperTypes().add(this.getExpression());
     linkedObjectEClass.getESuperTypes().add(this.getExpression());
     linkedExpressionEClass.getESuperTypes().add(this.getExpression());
+    listConstructionEClass.getESuperTypes().add(this.getExpression());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -899,11 +908,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     initEAttribute(getStringValue_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, StringValue.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(listValueEClass, ListValue.class, "ListValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getListValue_Elements(), this.getExpression(), null, "elements", null, 0, -1, ListValue.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
     initEClass(invocationEClass, Invocation.class, "Invocation", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInvocation_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, Invocation.class,
@@ -922,21 +926,22 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         MemberInvocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(accessEClass, Access.class, "Access", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAccess_Name(), this.getExpression(), null, "name", null, 1, 1, Access.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(staticAccessEClass, StaticAccess.class, "StaticAccess", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(memberAccessEClass, MemberAccess.class, "MemberAccess", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMemberAccess_Object(), this.getExpression(), null, "object", null, 1, 1, MemberAccess.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getMemberAccess_Name(), this.getExpression(), null, "name", null, 1, 1, MemberAccess.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
 
     initEClass(contextAccessEClass, ContextAccess.class, "ContextAccess", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getContextAccess_Name(), ecorePackage.getEString(), "name", null, 0, 1, ContextAccess.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(thisEClass, This.class, "This", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(containedObjectEClass, ContainedObject.class, "ContainedObject", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -954,6 +959,12 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLinkedExpression_Expression(), this.getExpression(), null, "expression", null, 1, 1,
         LinkedExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(listConstructionEClass, ListConstruction.class, "ListConstruction", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getListConstruction_Elements(), this.getExpression(), null, "elements", null, 0, -1,
+        ListConstruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types

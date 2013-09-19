@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.expressions.impl;
 
 import org.eclipse.emf.cdo.expressions.EvaluationContext;
 
+import org.eclipse.net4j.util.WrappedException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,11 +45,23 @@ public class EvaluationContextImpl extends HashMap<String, Object> implements Ev
 
   public EvaluationContextImpl(Object thisValue)
   {
-    put(THIS, thisValue);
+    put("this", thisValue);
   }
 
-  public Object getThis()
+  public Class<?> getClass(String name)
   {
-    return get(THIS);
+    if (name.lastIndexOf('.') == -1)
+    {
+      name = "java.lang." + name;
+    }
+
+    try
+    {
+      return getClass().getClassLoader().loadClass(name);
+    }
+    catch (ClassNotFoundException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 }

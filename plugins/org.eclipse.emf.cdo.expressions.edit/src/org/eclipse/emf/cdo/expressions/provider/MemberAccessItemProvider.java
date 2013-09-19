@@ -5,12 +5,9 @@ package org.eclipse.emf.cdo.expressions.provider;
 import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
 import org.eclipse.emf.cdo.expressions.MemberAccess;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
@@ -22,9 +19,7 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +29,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class MemberAccessItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class MemberAccessItemProvider extends AccessItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
@@ -81,7 +76,6 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
     {
       super.getChildrenFeatures(object);
       childrenFeatures.add(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT);
-      childrenFeatures.add(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME);
     }
     return childrenFeatures;
   }
@@ -98,17 +92,6 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
     // adding (see {@link AddCommand}) it as a child.
 
     return super.getChildFeature(object, child);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean hasChildren(Object object)
-  {
-    return hasChildren(object, true);
   }
 
   /**
@@ -161,7 +144,6 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
     switch (notification.getFeatureID(MemberAccess.class))
     {
     case ExpressionsPackage.MEMBER_ACCESS__OBJECT:
-    case ExpressionsPackage.MEMBER_ACCESS__NAME:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -208,22 +190,19 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
         ExpressionsFactory.eINSTANCE.createStringValue()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createListValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
         ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
         ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
+        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
         ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
         ExpressionsFactory.eINSTANCE.createContextAccess()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createThis()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
         ExpressionsFactory.eINSTANCE.createContainedObject()));
@@ -234,59 +213,8 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
         ExpressionsFactory.eINSTANCE.createLinkedExpression()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createBooleanValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createByteValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createShortValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createIntValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createLongValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createFloatValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createDoubleValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createCharValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createStringValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createListValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createMemberInvocation()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createMemberAccess()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createContextAccess()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createThis()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createContainedObject()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createLinkedObject()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
+        ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
   /**
@@ -301,8 +229,8 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
     Object childFeature = feature;
     Object childObject = child;
 
-    boolean qualify = childFeature == ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT
-        || childFeature == ExpressionsPackage.Literals.MEMBER_ACCESS__NAME;
+    boolean qualify = childFeature == ExpressionsPackage.Literals.ACCESS__NAME
+        || childFeature == ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT;
 
     if (qualify)
     {
@@ -310,18 +238,6 @@ public class MemberAccessItemProvider extends ItemProviderAdapter implements IEd
           getTypeText(owner) });
     }
     return super.getCreateChildText(owner, feature, child, selection);
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

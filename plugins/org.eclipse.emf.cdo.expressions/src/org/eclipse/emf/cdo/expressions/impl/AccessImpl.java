@@ -2,39 +2,41 @@
  */
 package org.eclipse.emf.cdo.expressions.impl;
 
+import org.eclipse.emf.cdo.expressions.Access;
 import org.eclipse.emf.cdo.expressions.EvaluationContext;
 import org.eclipse.emf.cdo.expressions.Expression;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.LinkedExpression;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Linked Expression</b></em>'.
+ * An implementation of the model object '<em><b>Access</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.expressions.impl.LinkedExpressionImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.expressions.impl.AccessImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpression
+public abstract class AccessImpl extends CDOObjectImpl implements Access
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected LinkedExpressionImpl()
+  protected AccessImpl()
   {
     super();
   }
@@ -47,7 +49,7 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
   @Override
   protected EClass eStaticClass()
   {
-    return ExpressionsPackage.Literals.LINKED_EXPRESSION;
+    return ExpressionsPackage.Literals.ACCESS;
   }
 
   /**
@@ -66,10 +68,10 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpression()
+  public Expression getName()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION,
-        ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, true, true);
+    return (Expression)eDynamicGet(ExpressionsPackage.ACCESS__NAME, ExpressionsPackage.Literals.ACCESS__NAME, true,
+        true);
   }
 
   /**
@@ -77,10 +79,10 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression basicGetExpression()
+  public NotificationChain basicSetName(Expression newName, NotificationChain msgs)
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION,
-        ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, false, true);
+    msgs = eDynamicInverseAdd((InternalEObject)newName, ExpressionsPackage.ACCESS__NAME, msgs);
+    return msgs;
   }
 
   /**
@@ -88,10 +90,9 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(Expression newExpression)
+  public void setName(Expression newName)
   {
-    eDynamicSet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION,
-        ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, newExpression);
+    eDynamicSet(ExpressionsPackage.ACCESS__NAME, ExpressionsPackage.Literals.ACCESS__NAME, newName);
   }
 
   /**
@@ -101,8 +102,26 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    */
   public Object evaluate(EvaluationContext context)
   {
-    Expression expression = getExpression();
-    return expression.evaluate(context);
+    String name = (String)getName().evaluate(context);
+    return evaluate(context, name);
+  }
+
+  protected abstract Object evaluate(EvaluationContext context, String name);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case ExpressionsPackage.ACCESS__NAME:
+      return basicSetName(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -115,10 +134,8 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION:
-      if (resolve)
-        return getExpression();
-      return basicGetExpression();
+    case ExpressionsPackage.ACCESS__NAME:
+      return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -133,8 +150,8 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION:
-      setExpression((Expression)newValue);
+    case ExpressionsPackage.ACCESS__NAME:
+      setName((Expression)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -150,8 +167,8 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION:
-      setExpression((Expression)null);
+    case ExpressionsPackage.ACCESS__NAME:
+      setName((Expression)null);
       return;
     }
     super.eUnset(featureID);
@@ -167,8 +184,8 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
   {
     switch (featureID)
     {
-    case ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION:
-      return basicGetExpression() != null;
+    case ExpressionsPackage.ACCESS__NAME:
+      return getName() != null;
     }
     return super.eIsSet(featureID);
   }
@@ -183,10 +200,10 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
   {
     switch (operationID)
     {
-    case ExpressionsPackage.LINKED_EXPRESSION___EVALUATE__EVALUATIONCONTEXT:
+    case ExpressionsPackage.ACCESS___EVALUATE__EVALUATIONCONTEXT:
       return evaluate((EvaluationContext)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }
 
-} // LinkedExpressionImpl
+} // AccessImpl

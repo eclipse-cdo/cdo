@@ -11,7 +11,6 @@ package org.eclipse.emf.cdo.expressions;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.MemberAccess#getObject <em>Object</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.expressions.MemberAccess#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -19,7 +18,7 @@ package org.eclipse.emf.cdo.expressions;
  * @model
  * @generated
  */
-public interface MemberAccess extends Expression
+public interface MemberAccess extends Access
 {
   /**
    * Returns the value of the '<em><b>Object</b></em>' containment reference.
@@ -46,31 +45,5 @@ public interface MemberAccess extends Expression
    * @generated
    */
   void setObject(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Name</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' containment reference.
-   * @see #setName(Expression)
-   * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getMemberAccess_Name()
-   * @model containment="true" required="true"
-   * @generated
-   */
-  Expression getName();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.expressions.MemberAccess#getName <em>Name</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' containment reference.
-   * @see #getName()
-   * @generated
-   */
-  void setName(Expression value);
 
 } // MemberAccess

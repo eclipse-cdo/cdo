@@ -106,15 +106,6 @@ public interface ExpressionsFactory extends EFactory
   StringValue createStringValue();
 
   /**
-   * Returns a new object of class '<em>List Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>List Value</em>'.
-   * @generated
-   */
-  ListValue createListValue();
-
-  /**
    * Returns a new object of class '<em>Function Invocation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -133,6 +124,15 @@ public interface ExpressionsFactory extends EFactory
   MemberInvocation createMemberInvocation();
 
   /**
+   * Returns a new object of class '<em>Static Access</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Static Access</em>'.
+   * @generated
+   */
+  StaticAccess createStaticAccess();
+
+  /**
    * Returns a new object of class '<em>Member Access</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -149,15 +149,6 @@ public interface ExpressionsFactory extends EFactory
    * @generated
    */
   ContextAccess createContextAccess();
-
-  /**
-   * Returns a new object of class '<em>This</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>This</em>'.
-   * @generated
-   */
-  This createThis();
 
   /**
    * Returns a new object of class '<em>Contained Object</em>'.
@@ -185,6 +176,15 @@ public interface ExpressionsFactory extends EFactory
    * @generated
    */
   LinkedExpression createLinkedExpression();
+
+  /**
+   * Returns a new object of class '<em>List Construction</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>List Construction</em>'.
+   * @generated
+   */
+  ListConstruction createListConstruction();
 
   /**
    * Returns the package supported by this factory.

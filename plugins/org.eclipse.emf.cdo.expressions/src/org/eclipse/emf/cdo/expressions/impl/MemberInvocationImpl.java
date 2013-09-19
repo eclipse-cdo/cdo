@@ -7,14 +7,19 @@ import org.eclipse.emf.cdo.expressions.Expression;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
 import org.eclipse.emf.cdo.expressions.MemberInvocation;
 
+import org.eclipse.net4j.util.WrappedException;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -168,12 +173,172 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
   }
 
   @Override
-  protected Object evaluate(EvaluationContext context, String name, EList<Object> arguments)
-      throws InvocationTargetException
+  protected boolean staticModifier()
   {
-    EObject object = (EObject)getObject().evaluate(context);
-    EOperation operation = object.eClass().getEOperation(0);
-    return object.eInvoke(operation, arguments);
+    return false;
   }
+
+  @Override
+  protected void collectInvocables(EvaluationContext context, String name, List<Invocable> invocables)
+  {
+    Object object = getObject().evaluate(context);
+    if (object instanceof EObject)
+    {
+      EObject eObject = (EObject)object;
+      EClass eClass = eObject.eClass();
+
+      for (EOperation eOperation : eClass.getEAllOperations())
+      {
+        if (eOperation.getName().equals(name))
+        {
+          invocables.add(createEOperation(eClass.getOverride(eOperation), eObject));
+        }
+      }
+    }
+
+    collectMethods(object, object.getClass(), name, invocables);
+  }
+
+  private Invocable createEOperation(final EOperation eOperation, final EObject eObject)
+  {
+    return new Invocable()
+    {
+      public String getName()
+      {
+        return eOperation.getName();
+      }
+
+      public Class<?>[] getParameterTypes()
+      {
+        EList<EParameter> parameters = eOperation.getEParameters();
+        Class<?>[] types = new Class<?>[parameters.size()];
+        for (int i = 0; i < types.length; i++)
+        {
+          EParameter parameter = parameters.get(i);
+          types[i] = parameter.getEType().getInstanceClass();
+        }
+
+        return types;
+      }
+
+      public Object invoke(Object[] arguments)
+      {
+        try
+        {
+          return eObject.eInvoke(eOperation, ECollections.asEList(arguments));
+        }
+        catch (InvocationTargetException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      @Override
+      public String toString()
+      {
+        return eOperation.toString();
+      }
+    };
+  }
+
+  // @Override
+  // protected Object evaluate(EvaluationContext context, String name, Object[] arguments)
+  // throws InvocationTargetException
+  // {
+  // Object object = getObject().evaluate(context);
+  //
+  // try
+  // {
+  // if (object instanceof EObject)
+  // {
+  // EObject eObject = (EObject)object;
+  // return evaluateEOperation(eObject, name, ECollections.asEList(arguments));
+  // }
+  //
+  // Class<?>[] argumentTypes = getTypes(arguments);
+  //
+  // Method method = object.getClass().getMethod(name, argumentTypes);
+  // if (Modifier.isStatic(method.getModifiers()))
+  // {
+  // throw new IllegalArgumentException("Method is static: " + name);
+  // }
+  //
+  // return method.invoke(object, arguments);
+  // }
+  // catch (RuntimeException ex)
+  // {
+  // throw ex;
+  // }
+  // catch (InvocationTargetException ex)
+  // {
+  // throw ex;
+  // }
+  // catch (Exception ex)
+  // {
+  // throw new InvocationTargetException(ex);
+  // }
+  // }
+  //
+  // protected Object evaluateEOperation(EObject object, String name, EList<Object> arguments)
+  // throws InvocationTargetException
+  // {
+  // EOperation operation = getEOperation(object.eClass(), name, arguments);
+  // return object.eInvoke(operation, arguments);
+  // }
+  //
+  // protected EOperation getEOperation(EClass eClass, String name, EList<Object> arguments)
+  // throws InvocationTargetException
+  // {
+  // EOperation result = null;
+  // for (EOperation operation : eClass.getEOperations())
+  // {
+  // if (operation.getName().equals(name))
+  // {
+  // if (isAssignable(operation.getEParameters(), arguments))
+  // {
+  // if (result != null)
+  // {
+  // throw new IllegalStateException("Ambiguous member invocation: " + eClass.getName() + "." + name + arguments);
+  // }
+  //
+  // result = operation;
+  // }
+  // }
+  // }
+  //
+  // return result;
+  // }
+  //
+  // protected boolean isAssignable(EList<EParameter> parameters, EList<Object> arguments)
+  // {
+  // if (parameters.size() != arguments.size())
+  // {
+  // return false;
+  // }
+  //
+  // for (int i = 0; i < parameters.size(); i++)
+  // {
+  // EParameter parameter = parameters.get(i);
+  // Class<?> instanceClass = parameter.getEType().getInstanceClass();
+  // if (!instanceClass.isAssignableFrom(arguments.get(i).getClass()))
+  // {
+  // return false;
+  // }
+  // }
+  //
+  // return true;
+  // }
+  //
+  // protected Class<?>[] getTypes(EList<EParameter> parameters)
+  // {
+  // Class<?>[] types = new Class<?>[parameters.size()];
+  // for (int i = 0; i < types.length; i++)
+  // {
+  // EParameter parameter = parameters.get(i);
+  // types[i] = parameter.getEType().getInstanceClass();
+  // }
+  //
+  // return types;
+  // }
 
 } // MemberInvocationImpl

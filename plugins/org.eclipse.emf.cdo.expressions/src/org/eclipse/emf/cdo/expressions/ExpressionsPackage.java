@@ -640,61 +640,6 @@ public interface ExpressionsPackage extends EPackage
   int STRING_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.ListValueImpl <em>List Value</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.expressions.impl.ListValueImpl
-   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getListValue()
-   * @generated
-   */
-  int LIST_VALUE = 11;
-
-  /**
-   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_VALUE__ELEMENTS = VALUE_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>List Value</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
-
-  /**
-   * The operation id for the '<em>Evaluate</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_VALUE___EVALUATE__EVALUATIONCONTEXT = VALUE___EVALUATE__EVALUATIONCONTEXT;
-
-  /**
-   * The operation id for the '<em>Get Literal</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_VALUE___GET_LITERAL = VALUE___GET_LITERAL;
-
-  /**
-   * The number of operations of the '<em>List Value</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LIST_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.InvocationImpl <em>Invocation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -702,7 +647,7 @@ public interface ExpressionsPackage extends EPackage
    * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getInvocation()
    * @generated
    */
-  int INVOCATION = 12;
+  int INVOCATION = 11;
 
   /**
    * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
@@ -757,7 +702,7 @@ public interface ExpressionsPackage extends EPackage
    * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getFunctionInvocation()
    * @generated
    */
-  int FUNCTION_INVOCATION = 13;
+  int FUNCTION_INVOCATION = 12;
 
   /**
    * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
@@ -812,7 +757,7 @@ public interface ExpressionsPackage extends EPackage
    * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getMemberInvocation()
    * @generated
    */
-  int MEMBER_INVOCATION = 14;
+  int MEMBER_INVOCATION = 13;
 
   /**
    * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
@@ -869,23 +814,14 @@ public interface ExpressionsPackage extends EPackage
   int MEMBER_INVOCATION_OPERATION_COUNT = INVOCATION_OPERATION_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.MemberAccessImpl <em>Member Access</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.AccessImpl <em>Access</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.expressions.impl.MemberAccessImpl
-   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getMemberAccess()
+   * @see org.eclipse.emf.cdo.expressions.impl.AccessImpl
+   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getAccess()
    * @generated
    */
-  int MEMBER_ACCESS = 15;
-
-  /**
-   * The feature id for the '<em><b>Object</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MEMBER_ACCESS__OBJECT = EXPRESSION_FEATURE_COUNT + 0;
+  int ACCESS = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -894,16 +830,16 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MEMBER_ACCESS__NAME = EXPRESSION_FEATURE_COUNT + 1;
+  int ACCESS__NAME = EXPRESSION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Member Access</em>' class.
+   * The number of structural features of the '<em>Access</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MEMBER_ACCESS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
+  int ACCESS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
   /**
    * The operation id for the '<em>Evaluate</em>' operation.
@@ -912,7 +848,108 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MEMBER_ACCESS___EVALUATE__EVALUATIONCONTEXT = EXPRESSION___EVALUATE__EVALUATIONCONTEXT;
+  int ACCESS___EVALUATE__EVALUATIONCONTEXT = EXPRESSION___EVALUATE__EVALUATIONCONTEXT;
+
+  /**
+   * The number of operations of the '<em>Access</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACCESS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.StaticAccessImpl <em>Static Access</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.expressions.impl.StaticAccessImpl
+   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getStaticAccess()
+   * @generated
+   */
+  int STATIC_ACCESS = 15;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATIC_ACCESS__NAME = ACCESS__NAME;
+
+  /**
+   * The number of structural features of the '<em>Static Access</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATIC_ACCESS_FEATURE_COUNT = ACCESS_FEATURE_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Evaluate</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATIC_ACCESS___EVALUATE__EVALUATIONCONTEXT = ACCESS___EVALUATE__EVALUATIONCONTEXT;
+
+  /**
+   * The number of operations of the '<em>Static Access</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATIC_ACCESS_OPERATION_COUNT = ACCESS_OPERATION_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.MemberAccessImpl <em>Member Access</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.expressions.impl.MemberAccessImpl
+   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getMemberAccess()
+   * @generated
+   */
+  int MEMBER_ACCESS = 16;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MEMBER_ACCESS__NAME = ACCESS__NAME;
+
+  /**
+   * The feature id for the '<em><b>Object</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MEMBER_ACCESS__OBJECT = ACCESS_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Member Access</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MEMBER_ACCESS_FEATURE_COUNT = ACCESS_FEATURE_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Evaluate</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MEMBER_ACCESS___EVALUATE__EVALUATIONCONTEXT = ACCESS___EVALUATE__EVALUATIONCONTEXT;
 
   /**
    * The number of operations of the '<em>Member Access</em>' class.
@@ -921,7 +958,7 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MEMBER_ACCESS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
+  int MEMBER_ACCESS_OPERATION_COUNT = ACCESS_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.ContextAccessImpl <em>Context Access</em>}' class.
@@ -931,16 +968,16 @@ public interface ExpressionsPackage extends EPackage
    * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getContextAccess()
    * @generated
    */
-  int CONTEXT_ACCESS = 16;
+  int CONTEXT_ACCESS = 17;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Name</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONTEXT_ACCESS__NAME = EXPRESSION_FEATURE_COUNT + 0;
+  int CONTEXT_ACCESS__NAME = ACCESS__NAME;
 
   /**
    * The number of structural features of the '<em>Context Access</em>' class.
@@ -949,7 +986,7 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONTEXT_ACCESS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+  int CONTEXT_ACCESS_FEATURE_COUNT = ACCESS_FEATURE_COUNT + 0;
 
   /**
    * The operation id for the '<em>Evaluate</em>' operation.
@@ -958,7 +995,7 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONTEXT_ACCESS___EVALUATE__EVALUATIONCONTEXT = EXPRESSION___EVALUATE__EVALUATIONCONTEXT;
+  int CONTEXT_ACCESS___EVALUATE__EVALUATIONCONTEXT = ACCESS___EVALUATE__EVALUATIONCONTEXT;
 
   /**
    * The number of operations of the '<em>Context Access</em>' class.
@@ -967,44 +1004,7 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONTEXT_ACCESS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.ThisImpl <em>This</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.expressions.impl.ThisImpl
-   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getThis()
-   * @generated
-   */
-  int THIS = 17;
-
-  /**
-   * The number of structural features of the '<em>This</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int THIS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The operation id for the '<em>Evaluate</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int THIS___EVALUATE__EVALUATIONCONTEXT = EXPRESSION___EVALUATE__EVALUATIONCONTEXT;
-
-  /**
-   * The number of operations of the '<em>This</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int THIS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
+  int CONTEXT_ACCESS_OPERATION_COUNT = ACCESS_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.ContainedObjectImpl <em>Contained Object</em>}' class.
@@ -1145,6 +1145,52 @@ public interface ExpressionsPackage extends EPackage
   int LINKED_EXPRESSION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.expressions.impl.ListConstructionImpl <em>List Construction</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.expressions.impl.ListConstructionImpl
+   * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getListConstruction()
+   * @generated
+   */
+  int LIST_CONSTRUCTION = 21;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIST_CONSTRUCTION__ELEMENTS = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>List Construction</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIST_CONSTRUCTION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Evaluate</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIST_CONSTRUCTION___EVALUATE__EVALUATIONCONTEXT = EXPRESSION___EVALUATE__EVALUATIONCONTEXT;
+
+  /**
+   * The number of operations of the '<em>List Construction</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIST_CONSTRUCTION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '<em>Evaluation Context</em>' data type.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1152,7 +1198,7 @@ public interface ExpressionsPackage extends EPackage
    * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getEvaluationContext()
    * @generated
    */
-  int EVALUATION_CONTEXT = 21;
+  int EVALUATION_CONTEXT = 22;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.Expression <em>Expression</em>}'.
@@ -1384,27 +1430,6 @@ public interface ExpressionsPackage extends EPackage
   EAttribute getStringValue_Literal();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.ListValue <em>List Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>List Value</em>'.
-   * @see org.eclipse.emf.cdo.expressions.ListValue
-   * @generated
-   */
-  EClass getListValue();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.expressions.ListValue#getElements <em>Elements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Elements</em>'.
-   * @see org.eclipse.emf.cdo.expressions.ListValue#getElements()
-   * @see #getListValue()
-   * @generated
-   */
-  EReference getListValue_Elements();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.Invocation <em>Invocation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1468,6 +1493,37 @@ public interface ExpressionsPackage extends EPackage
   EReference getMemberInvocation_Object();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.Access <em>Access</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Access</em>'.
+   * @see org.eclipse.emf.cdo.expressions.Access
+   * @generated
+   */
+  EClass getAccess();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.expressions.Access#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.expressions.Access#getName()
+   * @see #getAccess()
+   * @generated
+   */
+  EReference getAccess_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.StaticAccess <em>Static Access</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Static Access</em>'.
+   * @see org.eclipse.emf.cdo.expressions.StaticAccess
+   * @generated
+   */
+  EClass getStaticAccess();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.MemberAccess <em>Member Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1489,17 +1545,6 @@ public interface ExpressionsPackage extends EPackage
   EReference getMemberAccess_Object();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.expressions.MemberAccess#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.expressions.MemberAccess#getName()
-   * @see #getMemberAccess()
-   * @generated
-   */
-  EReference getMemberAccess_Name();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.ContextAccess <em>Context Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1508,27 +1553,6 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    */
   EClass getContextAccess();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.expressions.ContextAccess#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.expressions.ContextAccess#getName()
-   * @see #getContextAccess()
-   * @generated
-   */
-  EAttribute getContextAccess_Name();
-
-  /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.This <em>This</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>This</em>'.
-   * @see org.eclipse.emf.cdo.expressions.This
-   * @generated
-   */
-  EClass getThis();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.ContainedObject <em>Contained Object</em>}'.
@@ -1592,6 +1616,27 @@ public interface ExpressionsPackage extends EPackage
    * @generated
    */
   EReference getLinkedExpression_Expression();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.expressions.ListConstruction <em>List Construction</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>List Construction</em>'.
+   * @see org.eclipse.emf.cdo.expressions.ListConstruction
+   * @generated
+   */
+  EClass getListConstruction();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.expressions.ListConstruction#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.expressions.ListConstruction#getElements()
+   * @see #getListConstruction()
+   * @generated
+   */
+  EReference getListConstruction_Elements();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.expressions.EvaluationContext <em>Evaluation Context</em>}'.
@@ -1829,24 +1874,6 @@ public interface ExpressionsPackage extends EPackage
     EAttribute STRING_VALUE__LITERAL = eINSTANCE.getStringValue_Literal();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.ListValueImpl <em>List Value</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.expressions.impl.ListValueImpl
-     * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getListValue()
-     * @generated
-     */
-    EClass LIST_VALUE = eINSTANCE.getListValue();
-
-    /**
-     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LIST_VALUE__ELEMENTS = eINSTANCE.getListValue_Elements();
-
-    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.InvocationImpl <em>Invocation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1901,6 +1928,34 @@ public interface ExpressionsPackage extends EPackage
     EReference MEMBER_INVOCATION__OBJECT = eINSTANCE.getMemberInvocation_Object();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.AccessImpl <em>Access</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.expressions.impl.AccessImpl
+     * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getAccess()
+     * @generated
+     */
+    EClass ACCESS = eINSTANCE.getAccess();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACCESS__NAME = eINSTANCE.getAccess_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.StaticAccessImpl <em>Static Access</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.expressions.impl.StaticAccessImpl
+     * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getStaticAccess()
+     * @generated
+     */
+    EClass STATIC_ACCESS = eINSTANCE.getStaticAccess();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.MemberAccessImpl <em>Member Access</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1919,14 +1974,6 @@ public interface ExpressionsPackage extends EPackage
     EReference MEMBER_ACCESS__OBJECT = eINSTANCE.getMemberAccess_Object();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MEMBER_ACCESS__NAME = eINSTANCE.getMemberAccess_Name();
-
-    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.ContextAccessImpl <em>Context Access</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1935,24 +1982,6 @@ public interface ExpressionsPackage extends EPackage
      * @generated
      */
     EClass CONTEXT_ACCESS = eINSTANCE.getContextAccess();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONTEXT_ACCESS__NAME = eINSTANCE.getContextAccess_Name();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.ThisImpl <em>This</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.expressions.impl.ThisImpl
-     * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getThis()
-     * @generated
-     */
-    EClass THIS = eINSTANCE.getThis();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.ContainedObjectImpl <em>Contained Object</em>}' class.
@@ -2007,6 +2036,24 @@ public interface ExpressionsPackage extends EPackage
      * @generated
      */
     EReference LINKED_EXPRESSION__EXPRESSION = eINSTANCE.getLinkedExpression_Expression();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.expressions.impl.ListConstructionImpl <em>List Construction</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.expressions.impl.ListConstructionImpl
+     * @see org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl#getListConstruction()
+     * @generated
+     */
+    EClass LIST_CONSTRUCTION = eINSTANCE.getListConstruction();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LIST_CONSTRUCTION__ELEMENTS = eINSTANCE.getListConstruction_Elements();
 
     /**
      * The meta object literal for the '<em>Evaluation Context</em>' data type.

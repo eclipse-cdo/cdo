@@ -2,27 +2,7 @@
  */
 package org.eclipse.emf.cdo.expressions.impl;
 
-import org.eclipse.emf.cdo.expressions.BooleanValue;
-import org.eclipse.emf.cdo.expressions.ByteValue;
-import org.eclipse.emf.cdo.expressions.CharValue;
-import org.eclipse.emf.cdo.expressions.ContainedObject;
-import org.eclipse.emf.cdo.expressions.ContextAccess;
-import org.eclipse.emf.cdo.expressions.DoubleValue;
-import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
-import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
-import org.eclipse.emf.cdo.expressions.FloatValue;
-import org.eclipse.emf.cdo.expressions.FunctionInvocation;
-import org.eclipse.emf.cdo.expressions.IntValue;
-import org.eclipse.emf.cdo.expressions.LinkedExpression;
-import org.eclipse.emf.cdo.expressions.LinkedObject;
-import org.eclipse.emf.cdo.expressions.ListValue;
-import org.eclipse.emf.cdo.expressions.LongValue;
-import org.eclipse.emf.cdo.expressions.MemberAccess;
-import org.eclipse.emf.cdo.expressions.MemberInvocation;
-import org.eclipse.emf.cdo.expressions.ShortValue;
-import org.eclipse.emf.cdo.expressions.StringValue;
-import org.eclipse.emf.cdo.expressions.This;
-
+import org.eclipse.emf.cdo.expressions.*;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -101,24 +81,24 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
       return (EObject)createCharValue();
     case ExpressionsPackage.STRING_VALUE:
       return (EObject)createStringValue();
-    case ExpressionsPackage.LIST_VALUE:
-      return (EObject)createListValue();
     case ExpressionsPackage.FUNCTION_INVOCATION:
       return (EObject)createFunctionInvocation();
     case ExpressionsPackage.MEMBER_INVOCATION:
       return (EObject)createMemberInvocation();
+    case ExpressionsPackage.STATIC_ACCESS:
+      return (EObject)createStaticAccess();
     case ExpressionsPackage.MEMBER_ACCESS:
       return (EObject)createMemberAccess();
     case ExpressionsPackage.CONTEXT_ACCESS:
       return (EObject)createContextAccess();
-    case ExpressionsPackage.THIS:
-      return (EObject)createThis();
     case ExpressionsPackage.CONTAINED_OBJECT:
       return (EObject)createContainedObject();
     case ExpressionsPackage.LINKED_OBJECT:
       return (EObject)createLinkedObject();
     case ExpressionsPackage.LINKED_EXPRESSION:
       return (EObject)createLinkedExpression();
+    case ExpressionsPackage.LIST_CONSTRUCTION:
+      return (EObject)createListConstruction();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -258,17 +238,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
-  public ListValue createListValue()
-  {
-    ListValueImpl listValue = new ListValueImpl();
-    return listValue;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public FunctionInvocation createFunctionInvocation()
   {
     FunctionInvocationImpl functionInvocation = new FunctionInvocationImpl();
@@ -291,6 +260,17 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  public StaticAccess createStaticAccess()
+  {
+    StaticAccessImpl staticAccess = new StaticAccessImpl();
+    return staticAccess;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public MemberAccess createMemberAccess()
   {
     MemberAccessImpl memberAccess = new MemberAccessImpl();
@@ -306,17 +286,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
   {
     ContextAccessImpl contextAccess = new ContextAccessImpl();
     return contextAccess;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public This createThis()
-  {
-    ThisImpl this_ = new ThisImpl();
-    return this_;
   }
 
   /**
@@ -350,6 +319,17 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
   {
     LinkedExpressionImpl linkedExpression = new LinkedExpressionImpl();
     return linkedExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ListConstruction createListConstruction()
+  {
+    ListConstructionImpl listConstruction = new ListConstructionImpl();
+    return listConstruction;
   }
 
   /**

@@ -196,22 +196,19 @@ public class InvocationItemProvider extends ItemProviderAdapter implements IEdit
         ExpressionsFactory.eINSTANCE.createStringValue()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
-        ExpressionsFactory.eINSTANCE.createListValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
         ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
         ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
+        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
         ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
         ExpressionsFactory.eINSTANCE.createContextAccess()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
-        ExpressionsFactory.eINSTANCE.createThis()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
         ExpressionsFactory.eINSTANCE.createContainedObject()));
@@ -221,6 +218,9 @@ public class InvocationItemProvider extends ItemProviderAdapter implements IEdit
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
         ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__ARGUMENTS,
+        ExpressionsFactory.eINSTANCE.createListConstruction()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createBooleanValue()));
@@ -250,22 +250,19 @@ public class InvocationItemProvider extends ItemProviderAdapter implements IEdit
         ExpressionsFactory.eINSTANCE.createStringValue()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
-        ExpressionsFactory.eINSTANCE.createListValue()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
+        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createContextAccess()));
-
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
-        ExpressionsFactory.eINSTANCE.createThis()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createContainedObject()));
@@ -275,6 +272,9 @@ public class InvocationItemProvider extends ItemProviderAdapter implements IEdit
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
         ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.INVOCATION__NAME,
+        ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
   /**

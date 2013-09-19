@@ -53,8 +53,8 @@ public abstract class ObjectFilterImpl extends PermissionFilterImpl implements O
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level)
-      throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
     CDOView view = getView(revisionProvider);
     CDOID id = revision.getID();

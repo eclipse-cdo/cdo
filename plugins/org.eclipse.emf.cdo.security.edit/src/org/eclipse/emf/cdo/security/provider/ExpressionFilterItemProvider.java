@@ -194,22 +194,19 @@ public class ExpressionFilterItemProvider extends ObjectFilterItemProvider imple
         ExpressionsFactory.eINSTANCE.createStringValue()));
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createListValue()));
-
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
         ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
         ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
+        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
         ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
         ExpressionsFactory.eINSTANCE.createContextAccess()));
-
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createThis()));
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
         ExpressionsFactory.eINSTANCE.createContainedObject()));
@@ -219,6 +216,9 @@ public class ExpressionFilterItemProvider extends ObjectFilterItemProvider imple
 
     newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
         ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
+        ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
 }

@@ -17,14 +17,21 @@ import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -42,7 +49,9 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private final String realm;
 
-  private Text userIDControl;
+  private final List<String> users;
+
+  private Control userIDControl;
 
   private Text passwordControl;
 
@@ -58,8 +67,10 @@ public class CredentialsDialog extends BaseDialog<Viewer>
    */
   public CredentialsDialog(Shell shell, String realm)
   {
-    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings());
+    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings(), OM
+            .getImageDescriptor("icons/credentials_wiz.gif"));
     this.realm = realm;
+    users = loadUsers();
   }
 
   /**
@@ -68,6 +79,11 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   public final String getRealm()
   {
     return realm;
+  }
+
+  public IPasswordCredentials getCredentials()
+  {
+    return credentials;
   }
 
   @Override
@@ -91,11 +107,6 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     }
   }
 
-  public IPasswordCredentials getCredentials()
-  {
-    return credentials;
-  }
-
   @Override
   protected void createUI(Composite parent)
   {
@@ -104,20 +115,97 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     composite.setLayout(new GridLayout(2, false));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_2")); //$NON-NLS-1$
-    userIDControl = new Text(composite, SWT.BORDER);
+    if (users.isEmpty())
+    {
+      userIDControl = new Text(composite, SWT.BORDER);
+    }
+    else
+    {
+      Combo combo = new Combo(composite, SWT.BORDER);
+      combo.setItems(users.toArray(new String[users.size()]));
+      combo.setText(users.get(0));
+
+      userIDControl = combo;
+    }
+
     userIDControl.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_3")); //$NON-NLS-1$
     passwordControl = new Text(composite, SWT.BORDER | SWT.PASSWORD);
     passwordControl.setLayoutData(UIUtil.createGridData(true, false));
+
+    if (userIDControl instanceof Combo)
+    {
+      passwordControl.setFocus();
+    }
   }
 
   @Override
   protected void okPressed()
   {
-    String userID = userIDControl.getText();
+    String userID;
+    if (userIDControl instanceof Combo)
+    {
+      userID = ((Combo)userIDControl).getText();
+    }
+    else
+    {
+      userID = ((Text)userIDControl).getText();
+    }
+
     String password = passwordControl.getText();
     credentials = new PasswordCredentials(userID, password.toCharArray());
+
+    users.remove(userID);
+    users.add(0, userID);
+    saveUsers(users);
+
     super.okPressed();
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected List<String> loadUsers()
+  {
+    List<String> result = new ArrayList<String>();
+
+    IDialogSettings settings = getUsersSection();
+    String key = getRealmKey();
+
+    String[] users = settings.getArray(key);
+    if (users != null && users.length != 0)
+    {
+      result.addAll(Arrays.asList(users));
+    }
+
+    return result;
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected void saveUsers(List<String> users)
+  {
+    IDialogSettings settings = getUsersSection();
+    String key = getRealmKey();
+
+    settings.put(key, users.toArray(new String[users.size()]));
+  }
+
+  private String getRealmKey()
+  {
+    String key = "realm";
+    if (realm != null)
+    {
+      key += realm;
+    }
+
+    return key;
+  }
+
+  private IDialogSettings getUsersSection()
+  {
+    return getDialogSettings("users");
   }
 }

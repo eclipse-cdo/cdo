@@ -15,8 +15,10 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -24,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
+ * @since 3.4
  */
 public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
 {
@@ -33,19 +36,35 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
 
   private String message;
 
+  private Image image;
+
   private IDialogSettings settings;
 
   private VIEWER currentViewer;
 
   private MenuManager contextMenu;
 
-  public BaseDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings)
+  /**
+   * @since 3.4
+   */
+  public BaseDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings,
+      ImageDescriptor descriptor)
   {
     super(parentShell);
     setShellStyle(shellStyle);
     this.title = title;
     this.message = message;
     this.settings = settings;
+
+    if (descriptor != null)
+    {
+      image = descriptor.createImage(parentShell.getDisplay());
+    }
+  }
+
+  public BaseDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings)
+  {
+    this(parentShell, DEFAULT_SHELL_STYLE, title, message, settings, null);
   }
 
   public BaseDialog(Shell parentShell, String title, String message, IDialogSettings settings)
@@ -64,8 +83,13 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     Composite composite = (Composite)super.createDialogArea(parent);
+
     setTitle(title);
     setMessage(message);
+    if (image != null)
+    {
+      setTitleImage(image);
+    }
 
     contextMenu = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     contextMenu.setRemoveAllWhenShown(true);
@@ -126,20 +150,50 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
   {
   }
 
-  @Override
-  protected IDialogSettings getDialogBoundsSettings()
+  /**
+   * @since 3.4
+   */
+  protected IDialogSettings getDialogSettings()
   {
+    return settings;
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected IDialogSettings getDialogSettings(String sectionName)
+  {
+    IDialogSettings settings = getDialogSettings();
     if (settings == null)
     {
       return null;
     }
 
-    IDialogSettings section = settings.getSection(title);
+    sectionName = getClass().getName() + "_" + sectionName;
+    IDialogSettings section = settings.getSection(sectionName);
     if (section == null)
     {
-      section = settings.addNewSection(title);
+      section = settings.addNewSection(sectionName);
     }
 
     return section;
+  }
+
+  @Override
+  protected IDialogSettings getDialogBoundsSettings()
+  {
+    return getDialogSettings("bounds");
+  }
+
+  @Override
+  public boolean close()
+  {
+    if (image != null)
+    {
+      image.dispose();
+      image = null;
+    }
+
+    return super.close();
   }
 }

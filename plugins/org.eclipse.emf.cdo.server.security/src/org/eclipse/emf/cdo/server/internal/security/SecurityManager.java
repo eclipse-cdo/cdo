@@ -17,14 +17,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.security.PermissionUtil;
 import org.eclipse.emf.cdo.internal.security.ViewCreator;
-import org.eclipse.emf.cdo.internal.security.ViewUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Inclusion;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
@@ -77,6 +78,8 @@ import java.util.Map;
 public class SecurityManager extends Lifecycle implements InternalSecurityManager
 {
   private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = new HashMap<IRepository, InternalSecurityManager>();
+
+  private static final String DEFAULT_HOME_FOLDER = "/home";
 
   private final IListener repositoryListener = new LifecycleEventAdapter()
   {
@@ -444,9 +447,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     boolean firstTime = !transaction.hasResource(realmPath);
     if (firstTime)
     {
-      CDOResource resource = transaction.createResource(realmPath);
+      transaction.createResourceFolder(DEFAULT_HOME_FOLDER);
       realm = createRealm();
+
+      CDOResource resource = transaction.createResource(realmPath);
       resource.getContents().add(realm);
+
       OM.LOG.info("Security realm created in " + realmPath);
     }
     else
@@ -508,21 +514,32 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     treeWriterRole.getPermissions().add(
         factory.createFilterPermission(Access.WRITE, factory.createPackageFilter(EresourcePackage.eINSTANCE)));
 
+    Role homeFolderOwnerRole = realm.addRole("Home Folder Owner");
+    homeFolderOwnerRole.getPermissions().add(
+        factory.createFilterPermission(Access.WRITE,
+            factory.createResourceFilter(DEFAULT_HOME_FOLDER + "/${user}", Inclusion.EXACT_AND_DOWN)));
+    homeFolderOwnerRole.getPermissions().add(
+        factory.createFilterPermission(Access.READ,
+            factory.createResourceFilter(DEFAULT_HOME_FOLDER, Inclusion.EXACT_AND_UP)));
+
     Role adminRole = realm.addRole("Administration");
     adminRole.getPermissions().add(
-        factory.createFilterPermission(
-            Access.WRITE,
-            factory.createAndFilter(factory.createResourceFilter(realmPath),
-                factory.createNotFilter(factory.createClassFilter(SecurityPackage.Literals.USER_PASSWORD)))));
+        factory.createFilterPermission(Access.WRITE,
+            factory.createResourceFilter(DEFAULT_HOME_FOLDER, Inclusion.EXACT_AND_UP)));
+    adminRole.getPermissions()
+        .add(
+            factory.createFilterPermission(Access.WRITE,
+                factory.createResourceFilter(realmPath, Inclusion.EXACT_AND_DOWN)));
+    adminRole.getPermissions().add(
+        factory.createFilterPermission(Access.READ, factory.createResourceFilter(realmPath, Inclusion.EXACT_AND_UP)));
 
     // Create groups
 
     Group adminsGroup = realm.addGroup("Administrators");
-    adminsGroup.getRoles().add(treeReaderRole);
     adminsGroup.getRoles().add(adminRole);
 
     Group usersGroup = realm.addGroup("Users");
-    usersGroup.getRoles().add(treeReaderRole);
+    usersGroup.getRoles().add(homeFolderOwnerRole);
 
     // Create users
 
@@ -559,33 +576,42 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, ISession session, User user)
   {
-    CDOPermission result = convertPermission(user.getDefaultAccess());
-    if (result == CDOPermission.WRITE)
-    {
-      return result;
-    }
+    PermissionUtil.setUser(user.getId());
 
-    EList<Permission> allPermissions = user.getAllPermissions();
-    for (Permission permission : allPermissions)
+    try
     {
-      CDOPermission p = convertPermission(permission.getAccess());
-      if (p.ordinal() <= result.ordinal())
+      CDOPermission result = convertPermission(user.getDefaultAccess());
+      if (result == CDOPermission.WRITE)
       {
-        // Avoid expensive calls to Permission.isApplicable() if the permission wouldn't increase
-        continue;
+        return result;
       }
 
-      if (permission.isApplicable(revision, revisionProvider, securityContext))
+      EList<Permission> allPermissions = user.getAllPermissions();
+      for (Permission permission : allPermissions)
       {
-        result = p;
-        if (result == CDOPermission.WRITE)
+        CDOPermission p = convertPermission(permission.getAccess());
+        if (p.ordinal() <= result.ordinal())
         {
-          return result;
+          // Avoid expensive calls to Permission.isApplicable() if the permission wouldn't increase
+          continue;
+        }
+
+        if (permission.isApplicable(revision, revisionProvider, securityContext))
+        {
+          result = p;
+          if (result == CDOPermission.WRITE)
+          {
+            return result;
+          }
         }
       }
-    }
 
-    return result;
+      return result;
+    }
+    finally
+    {
+      PermissionUtil.setUser(null);
+    }
   }
 
   @Override
@@ -650,7 +676,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       String userID = session.getUserID();
       if (SYSTEM_USER_ID.equals(userID))
       {
-        // TODO Should we also check for access to the /security resource (the realm)?
         return CDOPermission.WRITE;
       }
 
@@ -662,7 +687,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       if (SYSTEM_USER_ID.equals(userID))
       {
-        // TODO Should we also check for access to the /security resource (the realm)?
         return CDOPermission.WRITE;
       }
 
@@ -672,12 +696,17 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     private CDOPermission doGetPermission(CDORevision revision, final CDOBranchPoint securityContext,
         final ISession session, String userID)
     {
+      if (revision.getEClass() == SecurityPackage.Literals.USER_PASSWORD)
+      {
+        return CDOPermission.NONE;
+      }
+
       User user = getUser(userID);
 
       InternalCDORevisionManager revisionManager = repository.getRevisionManager();
       CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
 
-      ViewUtil.initViewCreation(new ViewCreator()
+      PermissionUtil.initViewCreation(new ViewCreator()
       {
         public CDOView createView(CDORevisionProvider revisionProvider)
         {
@@ -691,7 +720,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
       finally
       {
-        ViewUtil.doneViewCreation();
+        PermissionUtil.doneViewCreation();
       }
     }
   }
@@ -715,7 +744,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       handleCommit(commitContext, user);
 
-      ViewUtil.initViewCreation(new ViewCreator()
+      PermissionUtil.initViewCreation(new ViewCreator()
       {
         public CDOView createView(CDORevisionProvider revisionProvider)
         {
@@ -725,12 +754,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       try
       {
-        permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+        // permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
         permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
       }
       finally
       {
-        ViewUtil.doneViewCreation();
+        PermissionUtil.doneViewCreation();
       }
     }
 

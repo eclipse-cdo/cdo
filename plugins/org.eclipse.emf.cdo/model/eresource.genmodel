@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
-    modelDirectory="/org.eclipse.emf.cdo/src" editDirectory="/org.eclipse.emf.cdo.edit/src"
-    editorDirectory="" modelPluginID="org.eclipse.emf.cdo" modelName="Eresource" editPluginClass="org.eclipse.emf.cdo.edit.CDOEditPlugin"
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo/src" creationIcons="false"
+    editDirectory="/org.eclipse.emf.cdo.edit/src" editorDirectory="" modelPluginID="org.eclipse.emf.cdo"
+    modelName="Eresource" editPluginClass="org.eclipse.emf.cdo.edit.CDOEditPlugin"
     editorPluginClass="" updateClasspath="false" nonNLSMarkers="true" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
     rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
@@ -29,6 +28,12 @@
       <genOperations ecoreOperation="eresource.ecore#//CDOResourceFolder/addResource">
         <genParameters ecoreParameter="eresource.ecore#//CDOResourceFolder/addResource/name"/>
       </genOperations>
+      <genOperations ecoreOperation="eresource.ecore#//CDOResourceFolder/addTextResource">
+        <genParameters ecoreParameter="eresource.ecore#//CDOResourceFolder/addTextResource/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="eresource.ecore#//CDOResourceFolder/addBinaryResource">
+        <genParameters ecoreParameter="eresource.ecore#//CDOResourceFolder/addBinaryResource/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="eresource.ecore#//CDOResource">
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/resourceSet"/>
@@ -50,6 +55,7 @@
     </genClasses>
     <genClasses ecoreClass="eresource.ecore#//CDOTextResource">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOTextResource/contents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOTextResource/encoding"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

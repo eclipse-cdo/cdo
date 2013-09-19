@@ -19,14 +19,33 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public final class ViewUtil
+public final class PermissionUtil
 {
+  private static final ThreadLocal<String> USER = new ThreadLocal<String>();
+
   private static final ThreadLocal<ViewCreator> VIEW_CREATOR = new ThreadLocal<ViewCreator>();
 
   private static final ThreadLocal<Map<CDORevisionProvider, CDOView>> VIEWS = new ThreadLocal<Map<CDORevisionProvider, CDOView>>();
 
-  private ViewUtil()
+  private PermissionUtil()
   {
+  }
+
+  public static String getUser()
+  {
+    return USER.get();
+  }
+
+  public static void setUser(String user)
+  {
+    if (user == null)
+    {
+      USER.remove();
+    }
+    else
+    {
+      USER.set(user);
+    }
   }
 
   private static Map<CDORevisionProvider, CDOView> getViews()

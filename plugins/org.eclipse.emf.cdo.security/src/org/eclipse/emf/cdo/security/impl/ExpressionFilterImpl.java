@@ -70,7 +70,7 @@ public class ExpressionFilterImpl extends ObjectFilterImpl implements Expression
   }
 
   @Override
-  protected boolean isApplicable(CDOObject object, CDOBranchPoint securityContext)
+  protected boolean filter(CDOObject object, CDOBranchPoint securityContext)
   {
     EvaluationContext evaluationContext = new EvaluationContextImpl(object);
 

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.internal.security.PermissionUtil;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Role;
@@ -107,4 +108,11 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
     eSet(SecurityPackage.Literals.PERMISSION__ACCESS, newAccess);
   }
 
+  /**
+   * @since 4.3
+   */
+  protected final String getUser()
+  {
+    return PermissionUtil.getUser();
+  }
 } // PermissionImpl

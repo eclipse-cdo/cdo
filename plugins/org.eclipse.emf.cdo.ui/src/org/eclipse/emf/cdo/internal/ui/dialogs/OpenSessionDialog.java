@@ -61,7 +61,9 @@ public class OpenSessionDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     setTitle(TITLE);
-    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_OPEN_SESSION));
+    setMessage(Messages.getString("OpenSessionDialog.1"));
+
     sessionComposite = new SessionComposite(parent, SWT.NONE);
     return sessionComposite;
   }

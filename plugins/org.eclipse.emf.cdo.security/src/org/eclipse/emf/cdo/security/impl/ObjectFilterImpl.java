@@ -7,7 +7,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.internal.security.ViewUtil;
+import org.eclipse.emf.cdo.internal.security.PermissionUtil;
 import org.eclipse.emf.cdo.security.ObjectFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -49,21 +49,20 @@ public abstract class ObjectFilterImpl extends PermissionFilterImpl implements O
 
   protected CDOView getView(CDORevisionProvider revisionProvider)
   {
-    return ViewUtil.getView(revisionProvider);
+    return PermissionUtil.getView(revisionProvider);
   }
 
-  /**
-   * @ADDED
-   */
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level)
+      throws Exception
   {
     CDOView view = getView(revisionProvider);
     CDOID id = revision.getID();
 
     CDOObject object = view.getObject(id);
-    return isApplicable(object, securityContext);
+    return filter(object, securityContext);
   }
 
-  protected abstract boolean isApplicable(CDOObject object, CDOBranchPoint securityContext);
+  protected abstract boolean filter(CDOObject object, CDOBranchPoint securityContext);
 
 } // ObjectFilterImpl

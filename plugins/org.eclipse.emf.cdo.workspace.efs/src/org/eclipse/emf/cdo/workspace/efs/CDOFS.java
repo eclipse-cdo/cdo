@@ -62,7 +62,7 @@ public final class CDOFS
 
   public static CDOWorkspace open(String projectName, File projectFolder) throws Exception
   {
-    IDBStore local = creatLocalStore(projectFolder);
+    IDBStore local = createLocalStore(projectFolder);
     CDOWorkspaceBase base = createWorkspaceBase(new File(projectFolder, "base"));
     IRepositoryLocation remote = readRepositoryLocation(projectFolder);
 
@@ -101,7 +101,7 @@ public final class CDOFS
 
   private static URI checkout(ICheckoutSource checkoutSource, String projectName, File projectFolder) throws Exception
   {
-    IDBStore local = creatLocalStore(projectFolder);
+    IDBStore local = createLocalStore(projectFolder);
     CDOWorkspaceBase base = createWorkspaceBase(new File(projectFolder, "base"));
 
     IRepositoryLocation remote = checkoutSource.getRepositoryLocation();
@@ -127,7 +127,7 @@ public final class CDOFS
     return (CDOWorkspaceFileSystem)EFS.getFileSystem(CDOWorkspaceFileSystem.SCHEME);
   }
 
-  private static IDBStore creatLocalStore(File projectFolder)
+  private static IDBStore createLocalStore(File projectFolder)
   {
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false);
     IDBAdapter dbAdapter = createLocalAdapter();

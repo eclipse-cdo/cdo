@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 /**
  * Various static helper methods for dealing with strings.
@@ -28,6 +29,16 @@ public final class StringUtil
 
   private StringUtil()
   {
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static String create(char c, int length)
+  {
+    char[] chars = new char[length];
+    Arrays.fill(chars, c);
+    return new String(chars);
   }
 
   /**

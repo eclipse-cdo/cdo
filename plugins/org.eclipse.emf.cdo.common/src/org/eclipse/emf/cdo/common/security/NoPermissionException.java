@@ -10,10 +10,6 @@
  */
 package org.eclipse.emf.cdo.common.security;
 
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-
 /**
  * A {@link SecurityException security exception} indicating the lack of permission required to do something.
  *
@@ -26,17 +22,9 @@ public class NoPermissionException extends SecurityException
 
   private Object protectableObject;
 
-  /**
-   * @since 4.3
-   */
-  public NoPermissionException(Object protectableObject, CDORevisionProvider revisionProvider)
-  {
-    this(protectableObject, "No permission to access " + format(protectableObject, revisionProvider));
-  }
-
   public NoPermissionException(Object protectableObject)
   {
-    this(protectableObject, (CDORevisionProvider)null);
+    this(protectableObject, "No permission to access " + protectableObject);
   }
 
   public NoPermissionException(Object protectableObject, String message)
@@ -48,28 +36,5 @@ public class NoPermissionException extends SecurityException
   public Object getProtectableObject()
   {
     return protectableObject;
-  }
-
-  private static String format(Object object, CDORevisionProvider revisionProvider)
-  {
-    String result = object.toString();
-
-    if (object instanceof InternalCDORevision)
-    {
-      InternalCDORevision revision = (InternalCDORevision)object;
-      if (revision.isResourceNode())
-      {
-        if (revisionProvider != null)
-        {
-          result += "(" + CDORevisionUtil.getResourceNodePath(revision, revisionProvider) + ")";
-        }
-        else
-        {
-          result += "(" + revision.getResourceNodeName() + ")";
-        }
-      }
-    }
-
-    return result;
   }
 }

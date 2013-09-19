@@ -5,9 +5,12 @@ package org.eclipse.emf.cdo.security.impl;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.security.FilterPermission;
 import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -28,6 +31,8 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class FilterPermissionImpl extends PermissionImpl implements FilterPermission
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FilterPermissionImpl.class);
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -62,10 +67,27 @@ public class FilterPermissionImpl extends PermissionImpl implements FilterPermis
 
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Checking {0} permission for {1}", getAccess(), revision); //$NON-NLS-1$
+    }
+
     for (PermissionFilter filter : getFilters())
     {
-      if (!filter.isApplicable(revision, revisionProvider, securityContext))
+      try
       {
+        if (!filter.isApplicable(revision, revisionProvider, securityContext, 1))
+        {
+          return false;
+        }
+      }
+      catch (Exception ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+
         return false;
       }
     }

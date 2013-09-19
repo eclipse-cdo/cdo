@@ -21,7 +21,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
  */
 public interface PermissionFilter extends CDOObject
 {
-  boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext);
+  boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception;
 
   String format();
 

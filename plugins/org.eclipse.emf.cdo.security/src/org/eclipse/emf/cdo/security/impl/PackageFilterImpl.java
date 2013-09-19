@@ -68,7 +68,9 @@ public class PackageFilterImpl extends PermissionFilterImpl implements PackageFi
     eSet(SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE, newApplicablePackage);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
     EPackage actualPackage = revision.getEClass().getEPackage();
     EPackage applicablePackage = getApplicablePackage();
@@ -85,7 +87,7 @@ public class PackageFilterImpl extends PermissionFilterImpl implements PackageFi
       label = applicablePackage.getName();
     }
 
-    return "package==" + label;
+    return "package == " + label;
   }
 
 } // PackageFilterImpl

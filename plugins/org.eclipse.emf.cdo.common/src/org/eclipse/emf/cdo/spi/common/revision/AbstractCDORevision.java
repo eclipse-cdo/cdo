@@ -256,13 +256,28 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     EClass eClass = getEClass();
     String name = eClass == null ? "Revision" : eClass.getName();
 
+    String string = name + "@" + getID();
+
     CDOBranch branch = getBranch();
-    if (branch == null)
+    if (branch != null)
     {
-      return name + "@" + getID() + "v" + getVersion();
+      string += ":" + branch.getID();
     }
 
-    return name + "@" + getID() + ":" + branch.getID() + "v" + getVersion();
+    string += "v" + getVersion();
+
+    if (isResourceNode())
+    {
+      String resourceNodeName = getResourceNodeName();
+      if (resourceNodeName == null)
+      {
+        resourceNodeName = "/";
+      }
+
+      string += "(\"" + resourceNodeName + "\")";
+    }
+
+    return string;
   }
 
   /**

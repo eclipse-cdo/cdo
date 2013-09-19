@@ -33,6 +33,8 @@ import java.util.regex.PatternSyntaxException;
  */
 public class ResourceFilterImpl extends PermissionFilterImpl implements ResourceFilter
 {
+  private static final String USER_TOKEN = "${user}";
+
   private static final Pattern OMNI_PATTERN = Pattern.compile(".*");
 
   private Pattern pattern;
@@ -98,7 +100,9 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUSION, newInclusion);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
     if (revisionProvider == null)
     {
@@ -133,7 +137,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     }
 
     String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-    String path = getPath();
+    String path = getSubstitutedPath();
 
     return revisionPath.equals(path);
   }
@@ -146,7 +150,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     }
 
     String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-    String path = getPath();
+    String path = getSubstitutedPath();
 
     int length = revisionPath.length();
     if (length > path.length())
@@ -161,7 +165,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   private boolean includesExactAndDown(CDORevision revision, CDORevisionProvider revisionProvider)
   {
     String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-    String path = getPath();
+    String path = getSubstitutedPath();
 
     int length = path.length();
     if (length > revisionPath.length())
@@ -177,7 +181,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   {
     if (pattern == null)
     {
-      String path = getPath();
+      String path = getSubstitutedPath();
       pattern = compilePattern(path);
 
       if (pattern == null)
@@ -195,6 +199,24 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
 
     Matcher matcher = pattern.matcher(revisionPath);
     return matcher.matches();
+  }
+
+  private String getSubstitutedPath()
+  {
+    String path = getPath();
+    int pos = path.indexOf(USER_TOKEN);
+    if (pos != -1)
+    {
+      String user = getUser();
+      if (user == null || user.length() == 0)
+      {
+        throw new IllegalStateException("User required for evaluation of path " + path);
+      }
+
+      path = path.substring(0, pos) + user + path.substring(pos + USER_TOKEN.length());
+    }
+
+    return path;
   }
 
   private Pattern compilePattern(String value)
@@ -226,9 +248,9 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     String path = getPath();
     if (path != null)
     {
-      if (path.startsWith("/"))
+      if (!path.startsWith("/"))
       {
-        path = path.substring(1);
+        path = "/" + path;
       }
 
       label = path;
@@ -244,16 +266,16 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     switch (inclusion)
     {
     case EXACT:
-      return "==";
+      return " == ";
 
     case EXACT_AND_UP:
-      return "<=";
+      return " <= ";
 
     case EXACT_AND_DOWN:
-      return ">=";
+      return " >= ";
 
     case REGEX:
-      return "~>";
+      return " >~ ";
 
     default:
       throw new IllegalStateException("Unhandled inclusion value: " + inclusion);

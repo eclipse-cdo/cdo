@@ -902,13 +902,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       InternalCDORevision cleanRevision = object.cdoRevision();
       if (!cleanRevision.isWritable())
       {
-        throw new NoPermissionException(cleanRevision, transaction);
+        throw new NoPermissionException(cleanRevision);
       }
 
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.getCleanRevisions().put(object, cleanRevision);
 
       // Copy revision
@@ -927,14 +927,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
-
       InternalCDORevision revision = object.cdoRevision();
       if (!revision.isWritable())
       {
-        throw new NoPermissionException(revision, transaction);
+        throw new NoPermissionException(revision);
       }
 
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -946,14 +945,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
-
       InternalCDORevision revision = object.cdoRevision();
       if (!revision.isWritable())
       {
-        throw new NoPermissionException(revision, transaction);
+        throw new NoPermissionException(revision);
       }
 
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -1116,7 +1114,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       if (forWrite && !revision.isWritable())
       {
-        throw new NoPermissionException(revision, view);
+        throw new NoPermissionException(revision);
       }
 
       object.cdoInternalSetRevision(revision);

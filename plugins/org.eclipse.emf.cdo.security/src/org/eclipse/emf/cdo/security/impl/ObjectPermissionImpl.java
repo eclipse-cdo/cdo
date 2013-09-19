@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.internal.security.ViewUtil;
+import org.eclipse.emf.cdo.internal.security.PermissionUtil;
 import org.eclipse.emf.cdo.security.ObjectPermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -58,7 +58,7 @@ public abstract class ObjectPermissionImpl extends PermissionImpl implements Obj
 
   protected CDOView getView(CDORevisionProvider revisionProvider)
   {
-    return ViewUtil.getView(revisionProvider);
+    return PermissionUtil.getView(revisionProvider);
   }
 
   /**

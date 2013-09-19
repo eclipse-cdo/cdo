@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
@@ -264,7 +265,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     {
     case EresourcePackage.CDO_RESOURCE_NODE__PATH:
       return getPath();
-      
+
     default:
       return super.eGet(featureID, resolve, coreType);
     }
@@ -278,9 +279,23 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     case EresourcePackage.CDO_RESOURCE_NODE__PATH:
       setPath((String)newValue);
       break;
-      
+
     default:
       super.eSet(featureID, newValue);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    String string = super.toString();
+
+    InternalCDORevision revision = cdoRevision();
+    if (revision != null)
+    {
+      string += "(\"" + revision.getResourceNodeName() + "\")";
+    }
+
+    return string;
   }
 } // CDOResourceNodeImpl

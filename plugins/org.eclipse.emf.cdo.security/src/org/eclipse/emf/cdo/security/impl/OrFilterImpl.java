@@ -44,11 +44,14 @@ public class OrFilterImpl extends CombinedFilterImpl implements OrFilter
     return SecurityPackage.Literals.OR_FILTER;
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
+    ++level;
     for (PermissionFilter operand : getOperands())
     {
-      if (operand.isApplicable(revision, revisionProvider, securityContext))
+      if (operand.isApplicable(revision, revisionProvider, securityContext, level))
       {
         return true;
       }

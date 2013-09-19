@@ -21,7 +21,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.etypes.Annotation;
+import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -84,6 +87,16 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
+  /**
+   * @since 4.3
+   */
+  public static final String CDO_ANNOTATION_URI = "http://www.eclipse.org/CDO";
+
+  /**
+   * @since 4.3
+   */
+  public static final String DOCUMENTATION_KEY = "documentation";
+
   static
   {
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[0] = EcorePackage.eINSTANCE;
@@ -630,5 +643,58 @@ public final class CDOUtil
 
     String resource = data.toString();
     IPluginContainer.INSTANCE.putElement("org.eclipse.net4j.util.credentialsProviders", "password", resource, provider);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static String getAnnotation(ModelElement modelElement, String sourceURI, String key)
+  {
+    Annotation annotation = modelElement.getAnnotation(sourceURI);
+    return annotation == null ? null : (String)annotation.getDetails().get(key);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static Annotation setAnnotation(ModelElement modelElement, String sourceURI, String key, String value)
+  {
+    Annotation annotation = modelElement.getAnnotation(sourceURI);
+    if (value == null)
+    {
+      if (annotation != null)
+      {
+        annotation.getDetails().removeKey(key);
+      }
+    }
+    else
+    {
+      if (annotation == null)
+      {
+        annotation = EtypesFactory.eINSTANCE.createAnnotation();
+        annotation.setSource(sourceURI);
+        modelElement.getAnnotations().add(annotation);
+      }
+
+      annotation.getDetails().put(key, value);
+    }
+
+    return annotation;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static String getDocumentation(ModelElement modelElement)
+  {
+    return getAnnotation(modelElement, CDO_ANNOTATION_URI, DOCUMENTATION_KEY);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static Annotation setDocumentation(ModelElement modelElement, String value)
+  {
+    return setAnnotation(modelElement, CDO_ANNOTATION_URI, DOCUMENTATION_KEY, value);
   }
 }

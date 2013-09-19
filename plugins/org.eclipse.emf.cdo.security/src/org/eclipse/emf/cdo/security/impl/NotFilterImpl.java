@@ -44,10 +44,12 @@ public class NotFilterImpl extends CombinedFilterImpl implements NotFilter
     return SecurityPackage.Literals.NOT_FILTER;
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
     PermissionFilter operand = getOperands().get(0);
-    return !operand.isApplicable(revision, revisionProvider, securityContext);
+    return !operand.isApplicable(revision, revisionProvider, securityContext, level + 1);
   }
 
   @Override

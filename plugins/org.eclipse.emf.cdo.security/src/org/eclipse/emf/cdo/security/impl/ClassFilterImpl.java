@@ -88,7 +88,9 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
     eSet(SecurityPackage.Literals.CLASS_FILTER__SUB_TYPES, newSubTypes);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
     EClass actualClass = revision.getEClass();
     EClass applicableClass = getApplicableClass();
@@ -117,7 +119,7 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
 
   private String formatOperator()
   {
-    return isSubTypes() ? ">=" : "==";
+    return isSubTypes() ? " >= " : " == ";
   }
 
 } // ClassFilterImpl

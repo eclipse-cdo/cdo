@@ -172,6 +172,11 @@ public class SharedIcons
 
   private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
 
+  /**
+   * @since 4.2
+   */
+  public static final String WIZBAN_OPEN_SESSION = WIZBAN + "OpenSession" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String WIZBAN_PROTOCOL_PROBLEM = WIZBAN + "ProtocolProblem" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

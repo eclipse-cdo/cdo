@@ -68,9 +68,11 @@ public class LinkedFilterImpl extends PermissionFilterImpl implements LinkedFilt
     eSet(SecurityPackage.Literals.LINKED_FILTER__FILTER, newFilter);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
   {
-    return getFilter().isApplicable(revision, revisionProvider, securityContext);
+    return getFilter().isApplicable(revision, revisionProvider, securityContext, level + 1);
   }
 
   public String format()

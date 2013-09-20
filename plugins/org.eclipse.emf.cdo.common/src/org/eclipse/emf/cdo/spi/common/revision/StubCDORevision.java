@@ -290,7 +290,7 @@ public class StubCDORevision extends AbstractCDORevision
    */
   public String getResourceNodeName()
   {
-    throw new UnsupportedOperationException(getExceptionMessage());
+    return "?";
   }
 
   /**

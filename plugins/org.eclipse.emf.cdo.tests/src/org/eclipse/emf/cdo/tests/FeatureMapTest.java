@@ -76,7 +76,9 @@ public class FeatureMapTest extends AbstractCDOTest
     super.doSetUp();
 
     final EcorePackage epackage = EcorePackage.eINSTANCE;
-    pkg = EMFUtil.createEPackage("fmaps", "fmaps", "http://cdo.emf.eclipse.org/fmaps");
+
+    pkg = createUniquePackage();
+
     dummy = EMFUtil.createEClass(pkg, "Dummy", false, false);
     name = EMFUtil.createEAttribute(dummy, "name", epackage.getEString());
     fmapContainer = EMFUtil.createEClass(pkg, "FMapContainer", false, false);

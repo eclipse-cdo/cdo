@@ -403,8 +403,7 @@ public class UnsetTest extends AbstractCDOTest
 
   public void testUnsettableBaseTypeVsObjectType() throws Exception
   {
-    EPackage pkg = EMFUtil.createEPackage("unsettablePackage", "unset",
-        "http://cdo.eclipse.org/unsettablePackage.ecore");
+    EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "unsettableClass", false, false);
     EAttribute baseElement = EMFUtil.createEAttribute(cls, "baseElement", EcorePackage.eINSTANCE.getEInt());
     baseElement.setUnsettable(true);

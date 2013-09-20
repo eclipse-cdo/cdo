@@ -65,10 +65,9 @@ public class DynamicXSDTest extends AbstractCDOTest
     }
   }
 
-  private static EPackage createPackage()
+  private EPackage createPackage()
   {
-    EPackage result = EMFUtil.createEPackage("xsdmodel", "xsdmodel",
-        "http://www.eclipse.org/emf/CDO/tests/xsdmodel/1.0.0");
+    EPackage result = createUniquePackage();
     EClass company = EMFUtil.createEClass(result, "Company", false, false);
     ExtendedMetaData.INSTANCE.setName(company, "Company");
     ExtendedMetaData.INSTANCE.setContentKind(company, ExtendedMetaData.ELEMENT_ONLY_CONTENT);

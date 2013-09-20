@@ -37,10 +37,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_258933_Test extends AbstractCDOTest
 {
-  private static final String TOP_PACKAGE_URI = "http:///www.elver.org/toppackage";
-
-  private static final String SUB_PACKAGE_URI = "http:///www.elver.org/subPackage1";
-
   private static final Object NIL = new Object();
 
   @CleanRepositoriesBefore(reason = "Dynamic packages")
@@ -101,9 +97,9 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   private void testWithValue(String featureName, Object initializeValue, boolean isSet) throws Exception
   {
-    {
-      EPackage topPackage = createDynamicEPackage();
+    EPackage topPackage = createDynamicEPackage();
 
+    {
       EPackage subpackage1 = topPackage.getESubpackages().get(0);
       EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
       EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
@@ -139,7 +135,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
       ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
     }
 
-    EPackage subpackage1 = session.getPackageRegistry().getEPackage(SUB_PACKAGE_URI);
+    EPackage subpackage1 = session.getPackageRegistry().getEPackage(topPackage.getESubpackages().get(0).getNsURI());
     EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
     EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
 
@@ -197,15 +193,8 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     final EcorePackage epackage = EcorePackage.eINSTANCE;
 
     // Create a new EPackage and add the new EClasses
-    EPackage topPackage = efactory.createEPackage();
-    topPackage.setName("toppackage");
-    topPackage.setNsPrefix("toppackage");
-    topPackage.setNsURI(TOP_PACKAGE_URI);
-
-    EPackage subPackage1 = efactory.createEPackage();
-    subPackage1.setName("subPackage1");
-    subPackage1.setNsPrefix("subPackage1");
-    subPackage1.setNsURI(SUB_PACKAGE_URI);
+    EPackage topPackage = createUniquePackage("top");
+    EPackage subPackage1 = createUniquePackage("sub");
 
     {
       EClass schoolBookEClass = efactory.createEClass();

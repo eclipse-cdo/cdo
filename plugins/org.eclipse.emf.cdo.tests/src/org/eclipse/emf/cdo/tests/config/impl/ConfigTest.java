@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -48,12 +49,18 @@ import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -576,9 +583,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    * resource level.
    *
    * @param resourceName
-   *          - the test-local name of the resource (or null if one wants to receive the path of the test-local resource
-   *          folder
-   * @return the full path of the resource
+   *          the test-local name of the resource or <code>null</code> for the path of the test-local root resource.
+   * @return the full path of the resource.
    */
   public final String getResourcePath(String resourceName)
   {
@@ -599,6 +605,61 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     }
 
     return builder.toString();
+  }
+
+  /**
+   * Constructs a test-specific EPackage of the format "TestClass_testMethod_name". Using this instead of
+   * (just) a hardcoded name for the test package, ensures that the test method is isolated from all others.
+   *
+   * @param name
+   *          the test-local name of the package or <code>null</code> .
+   * @return the created package.
+   * @see #createUniquePackage()
+   */
+  public final EPackage createUniquePackage(String name)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(getClass().getSimpleName()); // Name of this test class
+    builder.append('_');
+    builder.append(getName()); // Name of the executing test method
+
+    if (name != null)
+    {
+      builder.append('_');
+      builder.append(name);
+    }
+
+    final String uniqueName = builder.toString();
+
+    EPackage ePackage = EMFUtil.createEPackage(uniqueName, uniqueName, "http://" + uniqueName);
+    ePackage.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        if (msg.isTouch())
+        {
+          return;
+        }
+
+        Object feature = msg.getFeature();
+        if (feature == EcorePackage.Literals.EPACKAGE__NS_PREFIX || feature == EcorePackage.Literals.EPACKAGE__NS_URI
+            || feature == EcorePackage.Literals.ENAMED_ELEMENT__NAME)
+        {
+          throw new ImplementationError("Don't change the unique package " + uniqueName);
+        }
+      }
+    });
+
+    return ePackage;
+  }
+
+  /**
+   * @see #createUniquePackage(String)
+   */
+  public final EPackage createUniquePackage()
+  {
+    return createUniquePackage(null);
   }
 
   protected boolean isConfig(Config config)

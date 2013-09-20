@@ -548,10 +548,7 @@ public class ContainmentTest extends AbstractCDOTest
     schoolBookEClass.getEStructuralFeatures().add(element);
 
     // Create a new EPackage and add the new EClasses
-    EPackage schoolPackage = efactory.createEPackage();
-    schoolPackage.setName("elv");
-    schoolPackage.setNsPrefix("elv");
-    schoolPackage.setNsURI("http:///www.elver.org/School");
+    EPackage schoolPackage = createUniquePackage();
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     if (!isConfig(LEGACY))
     {

@@ -106,7 +106,6 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testByteArray() throws Exception
   {
     byte saveByteArray[] = new byte[] { 0, 1, 2, 3, 0, 1, 0, 100 };
@@ -148,7 +147,6 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testByteArrayEmpty() throws Exception
   {
     byte saveByteArray[] = new byte[0];
@@ -184,7 +182,6 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testByteArrayNull() throws Exception
   {
     byte saveByteArray[] = null;
@@ -220,7 +217,6 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testBigDecimalAndBigInteger() throws Exception
   {
     BigDecimal bigDecimal = new BigDecimal(10);
@@ -327,10 +323,7 @@ public class AttributeTest extends AbstractCDOTest
     schoolBookEClass.getEStructuralFeatures().add(level);
 
     // Create a new EPackage and add the new EClasses
-    EPackage schoolPackage = efactory.createEPackage();
-    schoolPackage.setName("EPackageTest");
-    schoolPackage.setNsPrefix("EPackageTest");
-    schoolPackage.setNsURI("http:///www.cdo.org/testcase");
+    EPackage schoolPackage = createUniquePackage();
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     return schoolPackage;
   }
@@ -370,10 +363,7 @@ public class AttributeTest extends AbstractCDOTest
     schoolBookEClass.getEStructuralFeatures().add(attrBigInteger);
 
     // Create a new EPackage and add the new EClasses
-    EPackage schoolPackage = efactory.createEPackage();
-    schoolPackage.setName("EPackageTest");
-    schoolPackage.setNsPrefix("EPackageTest");
-    schoolPackage.setNsURI("http:///www.cdo.org/testcase");
+    EPackage schoolPackage = createUniquePackage();
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     return schoolPackage;
   }

@@ -35,11 +35,11 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
 {
   public void testAllProperContentsNoTypeFilter() throws Exception
   {
-    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test/bug416474/Root");
+    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test1/bug416474/Root");
     EClass a = createClass(root, "RootA");
     EClass b = createClass(root, "RootB");
 
-    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test/bug416474/Nested");
+    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test1/bug416474/Nested");
     createClass(nested, "NestedA");
     createClass(nested, "NestedB");
     root.getESubpackages().add(nested);
@@ -70,11 +70,11 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
 
   public void testAllProperContentsTypeFilter() throws Exception
   {
-    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test/bug416474/Root");
+    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test2/bug416474/Root");
     createClass(root, "RootA");
     createClass(root, "RootB");
 
-    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test/bug416474/Nested");
+    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test2/bug416474/Nested");
     createClass(nested, "NestedA");
     createClass(nested, "NestedB");
     root.getESubpackages().add(nested);
@@ -104,11 +104,11 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
 
   public void testMatchesAnyStringAttribute() throws Exception
   {
-    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test/bug416474/Root");
+    EPackage root = createPackage("root", "root", "http://www.eclipse.org/CDO/test3/bug416474/Root");
     createClass(root, "RootA");
     createClass(root, "RootB");
 
-    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test/bug416474/Nested");
+    EPackage nested = createPackage("nested", "nested", "http://www.eclipse.org/CDO/test3/bug416474/Nested");
     EClass a1 = createClass(nested, "NestedA");
     EClass b1 = createClass(nested, "NestedB");
     root.getESubpackages().add(nested);
@@ -154,6 +154,9 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
     assertEquals(3, results.size());
   }
 
+  /**
+   * {@link #createUniquePackage()} would be better but {@link #testMatchesAnyStringAttribute()} relies on particular values.
+   */
   private EPackage createPackage(String name, String nsPrefix, String nsURI)
   {
     EPackage result = EcoreFactory.eINSTANCE.createEPackage();

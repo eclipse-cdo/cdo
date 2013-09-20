@@ -32,22 +32,19 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
 {
   public void testOpposites() throws Exception
   {
-    EPackage pkg1 = null;
+    EPackage pkg = null;
     {
       // create ECore metamodel. Major aspect is to create two classes, which has linked opposite EReferences and one of
       // reference is not persistence
-      pkg1 = EcoreFactory.eINSTANCE.createEPackage();
-      pkg1.setNsURI("http://test.com/custom");
-      pkg1.setName("test");
-      pkg1.setNsPrefix("t");
+      pkg = createUniquePackage();
 
       EClass customClassA = EcoreFactory.eINSTANCE.createEClass();
       customClassA.setName("A");
-      pkg1.getEClassifiers().add(customClassA);
+      pkg.getEClassifiers().add(customClassA);
 
       EClass customClassB = EcoreFactory.eINSTANCE.createEClass();
       customClassB.setName("B");
-      pkg1.getEClassifiers().add(customClassB);
+      pkg.getEClassifiers().add(customClassB);
 
       createOpposites(customClassA, customClassB);
     }
@@ -58,8 +55,8 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
       CDOTransaction openTransaction = openSession.openTransaction();
       CDOResource createResource = openTransaction.createResource(getResourcePath("test"));
 
-      EClass classAClass = (EClass)pkg1.getEClassifier("A");
-      EClass classBClass = (EClass)pkg1.getEClassifier("B");
+      EClass classAClass = (EClass)pkg.getEClassifier("A");
+      EClass classBClass = (EClass)pkg.getEClassifier("B");
 
       EObject instanceA = EcoreUtil.create(classAClass);
       EObject instanceB = EcoreUtil.create(classBClass);

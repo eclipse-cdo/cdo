@@ -34,7 +34,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
 {
   public void testValidEENumLiteral() throws CommitException
   {
-    EPackage pkg = EMFUtil.createEPackage("pkg", "pkg", "http://cdo.eclipse.org/Bugzilla_306998_Test_1.ecore");
+    EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "cls", false, false);
     EAttribute att = EMFUtil.createEAttribute(cls, "att", Model1Package.eINSTANCE.getVAT());
     att.setDefaultValueLiteral("vat7");
@@ -71,10 +71,9 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
 
   // does not affect MemStore!
   @Skips("MEM")
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testInalidEENumLiteral() throws CommitException
   {
-    EPackage pkg = EMFUtil.createEPackage("pkg", "pkg", "http://cdo.eclipse.org/Bugzilla_306998_Test_1.ecore");
+    EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "cls", false, false);
     EAttribute att = EMFUtil.createEAttribute(cls, "att", Model1Package.eINSTANCE.getVAT());
     att.setDefaultValueLiteral("vat8");

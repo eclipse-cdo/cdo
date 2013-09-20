@@ -715,7 +715,7 @@ public class InitialTest extends AbstractCDOTest
   {
     Resource resource1 = new XMLResourceImpl();
 
-    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+    EPackage p = createUniquePackage();
     EClass c = EcoreFactory.eINSTANCE.createEClass();
 
     resource1.getContents().add(p);

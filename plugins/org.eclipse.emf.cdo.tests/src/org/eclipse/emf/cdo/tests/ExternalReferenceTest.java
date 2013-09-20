@@ -533,10 +533,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     schoolBookEClass.getEStructuralFeatures().add(level);
 
     // Create a new EPackage and add the new EClasses
-    EPackage schoolPackage = eFactory.createEPackage();
-    schoolPackage.setName("elv");
-    schoolPackage.setNsPrefix("elv");
-    schoolPackage.setNsURI("http:///www.elver.org/School");
+    EPackage schoolPackage = createUniquePackage();
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     return schoolPackage;
   }

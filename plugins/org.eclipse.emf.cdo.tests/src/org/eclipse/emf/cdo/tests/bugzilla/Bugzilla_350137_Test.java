@@ -34,7 +34,7 @@ public class Bugzilla_350137_Test extends AbstractCDOTest
    */
   public void testDefault() throws Exception
   {
-    EPackage pkg = EMFUtil.createEPackage("Test", "t", "http://cdo.eclipse.org/tests/Bugzilla350137_Test1.ecore");
+    EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
 
     @SuppressWarnings("unused")
@@ -63,7 +63,7 @@ public class Bugzilla_350137_Test extends AbstractCDOTest
    */
   public void testExplicitZero() throws Exception
   {
-    EPackage pkg = EMFUtil.createEPackage("Test", "t", "http://cdo.eclipse.org/tests/Bugzilla350137_Test2.ecore");
+    EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "foo2", false, false);
 
     EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEChar());

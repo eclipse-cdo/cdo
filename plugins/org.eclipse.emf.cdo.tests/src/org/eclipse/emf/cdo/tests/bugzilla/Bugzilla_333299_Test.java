@@ -35,7 +35,7 @@ public class Bugzilla_333299_Test extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
-      EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+      EPackage ePackage = createUniquePackage();
 
       EClass eClass = EcoreFactory.eINSTANCE.createEClass();
       eClass.setName("clazz1");

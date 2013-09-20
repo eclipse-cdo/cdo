@@ -290,10 +290,7 @@ public class MartinsPerformanceTest extends AbstractCDOTest
     mapContainerEClass = theCoreFactory.createEClass();
     mapContainerEClass.setName("MapContainer");
 
-    EPackage dynamicMapEPackage = theCoreFactory.createEPackage();
-    dynamicMapEPackage.setName("DynamicMapPackage");
-    dynamicMapEPackage.setNsPrefix("dynamicmap");
-    dynamicMapEPackage.setNsURI("http:///org.mftech.examples.emf.dynamic.map");
+    EPackage dynamicMapEPackage = createUniquePackage();
     dynamicMapEPackage.getEClassifiers().add(mapContainerEClass);
 
     EStructuralFeature name = theCoreFactory.createEAttribute();

@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_335675_Test extends AbstractCDOTest
 {
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void test0() throws Exception
   {
     EPackage pkg = null;
@@ -51,10 +50,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
 
     EClass classA = null;
     {
-      pkg = EcoreFactory.eINSTANCE.createEPackage();
-      pkg.setNsURI("http://test.com/custom");
-      pkg.setName("test");
-      pkg.setNsPrefix("t");
+      pkg = createUniquePackage();
 
       classA = EcoreFactory.eINSTANCE.createEClass();
       classA.setName("A");

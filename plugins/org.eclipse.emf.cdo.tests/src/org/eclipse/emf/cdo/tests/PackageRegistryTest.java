@@ -253,15 +253,11 @@ public class PackageRegistryTest extends AbstractCDOTest
    */
   public void testGlobalDynamicPackageEager() throws Exception
   {
-    String nsURI = "http://dynamic";
+    EPackage p = createUniquePackage();
+    String nsURI = p.getNsURI();
 
     try
     {
-      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-      p.setName("dynamic");
-      p.setNsPrefix("dynamic");
-      p.setNsURI(nsURI);
-
       EClass c = EcoreFactory.eINSTANCE.createEClass();
       c.setName("DClass");
 
@@ -293,15 +289,11 @@ public class PackageRegistryTest extends AbstractCDOTest
    */
   public void testGlobalDynamicPackage() throws Exception
   {
-    String nsURI = "http://dynamic";
+    EPackage p = createUniquePackage();
+    String nsURI = p.getNsURI();
 
     try
     {
-      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-      p.setName("dynamic");
-      p.setNsPrefix("dynamic");
-      p.setNsURI(nsURI);
-
       EClass c = EcoreFactory.eINSTANCE.createEClass();
       c.setName("DClass");
 
@@ -577,15 +569,11 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testPopulator() throws Exception
   {
-    String nsURI = "http://dynamic";
     EPackage.Registry registry = new EPackageRegistryImpl();
+    EPackage p = createUniquePackage();
+    String nsURI = p.getNsURI();
 
     {
-      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-      p.setName("dynamic");
-      p.setNsPrefix("dynamic");
-      p.setNsURI(nsURI);
-
       EClass c = EcoreFactory.eINSTANCE.createEClass();
       c.setName("DClass");
 
@@ -615,17 +603,13 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testPopulatorGlobal() throws Exception
   {
-    String nsURI = "http://dynamic";
     EPackage.Registry registry = EPackage.Registry.INSTANCE;
+    EPackage p = createUniquePackage();
+    String nsURI = p.getNsURI();
 
     try
     {
       {
-        EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-        p.setName("dynamic");
-        p.setNsPrefix("dynamic");
-        p.setNsURI(nsURI);
-
         EClass c = EcoreFactory.eINSTANCE.createEClass();
         c.setName("DClass");
 

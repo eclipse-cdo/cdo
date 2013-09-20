@@ -138,8 +138,8 @@ public class XRefTest extends AbstractCDOTest
   public void testXRefsToMany() throws Exception
   {
     // create model
-    EPackage pkg = EMFUtil.createEPackage("xreftest", "xreftest",
-        "http://cdo.emf.eclipse.org/TestModels/XRefTestToMany.ecore");
+    EPackage pkg = createUniquePackage();
+
     EClass cls1 = EMFUtil.createEClass(pkg, "referencer", false, false);
     EAttribute id1 = EMFUtil.createEAttribute(cls1, "id", EcorePackage.eINSTANCE.getEInt());
 
@@ -255,12 +255,11 @@ public class XRefTest extends AbstractCDOTest
     session2.close();
   }
 
-  @CleanRepositoriesBefore(reason = "Dynamic package")
   public void testXRefsToOne() throws Exception
   {
     // create model
-    EPackage pkg = EMFUtil.createEPackage("xreftest", "xreftest",
-        "http://cdo.emf.eclipse.org/TestModels/XRefTestToOne.ecore");
+    EPackage pkg = createUniquePackage();
+
     EClass cls1 = EMFUtil.createEClass(pkg, "referencer", false, false);
     EAttribute id1 = EMFUtil.createEAttribute(cls1, "id", EcorePackage.eINSTANCE.getEInt());
 
@@ -384,10 +383,7 @@ public class XRefTest extends AbstractCDOTest
     EReference bb7 = addReference(b, b, false);
     EReference bb8 = addReference(b, b, false);
 
-    EPackage xref = EcoreFactory.eINSTANCE.createEPackage();
-    xref.setName("xref");
-    xref.setNsPrefix("xref");
-    xref.setNsURI("http://xref");
+    EPackage xref = createUniquePackage();
     xref.getEClassifiers().add(a);
     xref.getEClassifiers().add(b);
 
@@ -462,10 +458,7 @@ public class XRefTest extends AbstractCDOTest
     EReference bb7 = addReference(b, b, false);
     EReference bb8 = addReference(b, b, false);
 
-    EPackage xref = EcoreFactory.eINSTANCE.createEPackage();
-    xref.setName("xref");
-    xref.setNsPrefix("xref");
-    xref.setNsURI("http://xref");
+    EPackage xref = createUniquePackage();
     xref.getEClassifiers().add(a);
     xref.getEClassifiers().add(b);
 
@@ -535,10 +528,7 @@ public class XRefTest extends AbstractCDOTest
     EReference bb7 = addReference(b, b, false);
     EReference bb8 = addReference(b, b, false);
 
-    EPackage xref = EcoreFactory.eINSTANCE.createEPackage();
-    xref.setName("xref");
-    xref.setNsPrefix("xref");
-    xref.setNsURI("http://xref");
+    EPackage xref = createUniquePackage();
     xref.getEClassifiers().add(a);
     xref.getEClassifiers().add(b);
 

@@ -43,7 +43,8 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
   {
     super.setUp();
 
-    pkg = EMFUtil.createEPackage("customTest", "ct", "http://cdo.emf.eclipse.org/customTest.ecore");
+    pkg = createUniquePackage();
+
     EDataType custom = EcoreFactory.eINSTANCE.createEDataType();
     custom.setInstanceClass(CustomType.class);
     custom.setName("CustomType");

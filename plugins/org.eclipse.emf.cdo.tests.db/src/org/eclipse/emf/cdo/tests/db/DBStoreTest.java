@@ -123,7 +123,8 @@ public class DBStoreTest extends AbstractCDOTest
 
   public void testStoreCustom() throws CommitException
   {
-    EPackage pkg = EMFUtil.createEPackage("customTest", "ct", "http://tests.cdo.emf.eclipse.org/customTest");
+    String uniqueName = getClass().getSimpleName() + "_" + getName();
+    EPackage pkg = EMFUtil.createEPackage(uniqueName, "anyprefix", "http://" + uniqueName);
 
     EDataType dt = EcoreFactory.eINSTANCE.createEDataType();
     dt.setName("custom");
@@ -282,7 +283,8 @@ public class DBStoreTest extends AbstractCDOTest
 
   public void testUnderscoreFeature() throws Exception
   {
-    EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct", "http://cdo.eclipse.org/tests/underscoreTest.ecore");
+    String uniqueName = getClass().getSimpleName() + "_" + getName();
+    EPackage pkg = EMFUtil.createEPackage(uniqueName, "anyprefix", "http://" + uniqueName);
     EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
     EAttribute att = EMFUtil.createEAttribute(cls, "_bar", EcorePackage.eINSTANCE.getEString());
 
@@ -304,7 +306,8 @@ public class DBStoreTest extends AbstractCDOTest
 
   public void testUnderscoreClass() throws Exception
   {
-    EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct", "http://cdo.eclipse.org/tests/underscoreTest.ecore");
+    String uniqueName = getClass().getSimpleName() + "_" + getName();
+    EPackage pkg = EMFUtil.createEPackage(uniqueName, "anyprefix", "http://" + uniqueName);
     EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
     EAttribute att = EMFUtil.createEAttribute(cls, "_bar", EcorePackage.eINSTANCE.getEString());
 

@@ -99,15 +99,9 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
     final EcorePackage epackage = EcorePackage.eINSTANCE;
 
     // Create a new EPackage and add the new EClasses
-    EPackage topPackage = efactory.createEPackage();
-    topPackage.setName("toppackage");
-    topPackage.setNsPrefix("toppackage");
-    topPackage.setNsURI("http:///www.elver.org/toppackage");
-
-    EPackage subPackage1 = efactory.createEPackage();
-    subPackage1.setName("subPackage1");
-    subPackage1.setNsPrefix("subPackage1");
-    subPackage1.setNsURI("http:///www.elver.org/subPackage1");
+    EPackage topPackage = createUniquePackage("top");
+    EPackage subPackage1 = createUniquePackage("sub1");
+    topPackage.getESubpackages().add(subPackage1);
 
     {
       EClass schoolBookEClass = efactory.createEClass();
@@ -144,12 +138,6 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       subPackage1.getEClassifiers().add(schoolBookEClass);
     }
 
-    EPackage subPackage2 = efactory.createEPackage();
-    subPackage2.setName("subPackage2");
-    subPackage2.setNsPrefix("subPackage2");
-    subPackage2.setNsURI("http:///www.elver.org/subPackage2");
-
-    topPackage.getESubpackages().add(subPackage1);
     return topPackage;
   }
 }

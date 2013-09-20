@@ -56,8 +56,9 @@ public class CustomTypeMappingTest extends AbstractCDOTest
 
     try
     {
-      EPackage pkg = EMFUtil.createEPackage("underscoreTest2", "uct2",
-          "http://cdo.eclipse.org/tests/underscoreTest2.ecore");
+      String uniqueName = getClass().getSimpleName() + "_" + getName();
+      EPackage pkg = EMFUtil.createEPackage(uniqueName, "anyprefix", "http://" + uniqueName);
+
       EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
       EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEInt());
 

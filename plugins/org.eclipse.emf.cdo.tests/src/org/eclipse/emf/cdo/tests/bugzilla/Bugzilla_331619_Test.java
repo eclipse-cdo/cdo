@@ -43,7 +43,7 @@ public class Bugzilla_331619_Test extends AbstractCDOTest
     skipStoreWithoutQueryXRefs();
 
     // set up model
-    EPackage pkg = EMFUtil.createEPackage("test", "test", "http://www.eclipse.org/CDO/Tests/331619.ecore");
+    EPackage pkg = createUniquePackage();
     EClass ref = EMFUtil.createEClass(pkg, "referencee", false, false);
     EAttribute refName = EMFUtil.createEAttribute(ref, "refname", EcorePackage.eINSTANCE.getEString());
 

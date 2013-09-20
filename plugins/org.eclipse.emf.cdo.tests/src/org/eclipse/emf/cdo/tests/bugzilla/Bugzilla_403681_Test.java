@@ -67,10 +67,7 @@ public class Bugzilla_403681_Test extends AbstractCDOTest
 
   protected EPackage createTestPackage()
   {
-    EPackage result = EcoreFactory.eINSTANCE.createEPackage();
-    result.setName("localtest");
-    result.setNsPrefix("ltest");
-    result.setNsURI("http://www.eclipse.org/schema/cdo/test/localtest");
+    EPackage result = createUniquePackage();
 
     EClass classA = EcoreFactory.eINSTANCE.createEClass();
     classA.setName("A");

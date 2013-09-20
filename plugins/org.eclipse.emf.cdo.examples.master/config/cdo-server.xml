@@ -24,8 +24,7 @@
     <property name="optimisticLockingTimeout" value="10000"/>
 
     <!-- Example http://bugs.eclipse.org/380629
-			<securityManager type="default" realmPath="/security"/>
-			<securityManager type="annotation" realmPath="/security"/>
+			<securityManager type="default" realmPath="/security:annotation:home(/home)"/>
     -->
 
     <!-- Example http://bugs.eclipse.org/302775

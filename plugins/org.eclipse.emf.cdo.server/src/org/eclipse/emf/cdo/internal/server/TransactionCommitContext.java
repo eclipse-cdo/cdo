@@ -184,6 +184,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private ExtendedDataInputStream lobs;
 
+  private Map<Object, Object> data;
+
   public TransactionCommitContext(InternalTransaction transaction)
   {
     this.transaction = transaction;
@@ -542,6 +544,30 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setLobs(ExtendedDataInputStream in)
   {
     lobs = in;
+  }
+
+  public <T> T getData(Object key)
+  {
+    if (data == null)
+    {
+      return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    T result = (T)data.get(key);
+    return result;
+  }
+
+  public synchronized <T extends Object> T setData(Object key, T value)
+  {
+    if (data == null)
+    {
+      data = new HashMap<Object, Object>();
+    }
+
+    @SuppressWarnings("unchecked")
+    T old = (T)data.put(key, value);
+    return old;
   }
 
   private InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits)

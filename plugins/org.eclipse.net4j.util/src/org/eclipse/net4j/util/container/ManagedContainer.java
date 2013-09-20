@@ -109,9 +109,9 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         private void updateFactory(Map.Entry<IFactoryKey, IFactory> entry, IManagedContainer container)
         {
           IFactory factory = entry.getValue();
-          if (factory instanceof IManagedContainerFactory)
+          if (factory instanceof ContainerAware)
           {
-            IManagedContainerFactory f = (IManagedContainerFactory)factory;
+            ContainerAware f = (ContainerAware)factory;
             f.setManagedContainer(container);
           }
         }
@@ -377,6 +377,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
     if (oldElement != element)
     {
+      if (element instanceof ContainerAware)
+      {
+        ((ContainerAware)element).setManagedContainer(this);
+      }
+
       EventUtil.addUniqueListener(element, elementListener);
 
       if (oldElement != null)
@@ -411,6 +416,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     {
       EventUtil.removeListener(element, elementListener);
       fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.REMOVED));
+
+      if (element instanceof ContainerAware)
+      {
+        ((ContainerAware)element).setManagedContainer(null);
+      }
     }
 
     return element;

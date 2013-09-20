@@ -25,6 +25,9 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation;
+import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager.CommitHandler;
+
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -152,6 +155,24 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
 
         role.getPermissions().add(permission);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.3
+   */
+  public static class Factory extends InternalSecurityManager.CommitHandler.Factory
+  {
+    public Factory()
+    {
+      super("annotation");
+    }
+
+    @Override
+    public CommitHandler create(String description) throws ProductCreationException
+    {
+      return new AnnotationHandler();
     }
   }
 }

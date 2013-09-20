@@ -53,6 +53,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.ArrayUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
@@ -65,11 +66,9 @@ import org.eclipse.net4j.util.security.IAuthenticator;
 
 import org.eclipse.emf.common.util.EList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,8 +77,6 @@ import java.util.Map;
 public class SecurityManager extends Lifecycle implements InternalSecurityManager
 {
   private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = new HashMap<IRepository, InternalSecurityManager>();
-
-  private static final String DEFAULT_HOME_FOLDER = "/home";
 
   private final IListener repositoryListener = new LifecycleEventAdapter()
   {
@@ -103,13 +100,17 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private final IRepository.WriteAccessHandler writeAccessHandler = new WriteAccessHandler();
 
-  private final List<CommitHandler> commitHandlers = new ArrayList<CommitHandler>();
-
   private final String realmPath;
 
   private final IManagedContainer container;
 
   private final Map<String, User> users = Collections.synchronizedMap(new HashMap<String, User>());
+
+  private final Object commitHandlerLock = new Object();
+
+  private CommitHandler[] commitHandlers = {};
+
+  private CommitHandler2[] commitHandlers2 = {};
 
   private InternalRepository repository;
 
@@ -352,20 +353,24 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public CommitHandler[] getCommitHandlers()
   {
-    synchronized (commitHandlers)
-    {
-      return commitHandlers.toArray(new CommitHandler[commitHandlers.size()]);
-    }
+    return commitHandlers;
+  }
+
+  public CommitHandler2[] getCommitHandlers2()
+  {
+    return commitHandlers2;
   }
 
   public void addCommitHandler(CommitHandler handler)
   {
     checkInactive();
-    synchronized (commitHandlers)
+    synchronized (commitHandlerLock)
     {
-      if (!commitHandlers.contains(handler))
+      commitHandlers = ArrayUtil.add(commitHandlers, handler);
+
+      if (handler instanceof CommitHandler2)
       {
-        commitHandlers.add(handler);
+        commitHandlers2 = ArrayUtil.add(commitHandlers2, (CommitHandler2)handler);
       }
     }
   }
@@ -373,16 +378,24 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   public void removeCommitHandler(CommitHandler handler)
   {
     checkInactive();
-    synchronized (commitHandlers)
+    synchronized (commitHandlerLock)
     {
-      commitHandlers.remove(handler);
+      commitHandlers = ArrayUtil.remove(commitHandlers, handler);
+
+      if (handler instanceof CommitHandler2)
+      {
+        commitHandlers2 = ArrayUtil.remove(commitHandlers2, (CommitHandler2)handler);
+      }
     }
   }
 
   protected void initCommitHandlers(boolean firstTime)
   {
-    for (CommitHandler handler : getCommitHandlers())
+    CommitHandler[] handlers = getCommitHandlers();
+    for (int i = 0; i < handlers.length; i++)
     {
+      CommitHandler handler = handlers[i];
+
       try
       {
         handler.init(this, firstTime);
@@ -396,11 +409,32 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected void handleCommit(CommitContext commitContext, User user)
   {
-    for (CommitHandler handler : getCommitHandlers())
+    CommitHandler[] handlers = getCommitHandlers();
+    for (int i = 0; i < handlers.length; i++)
     {
+      CommitHandler handler = handlers[i];
+
       try
       {
         handler.handleCommit(this, commitContext, user);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
+  protected void handleCommitted(CommitContext commitContext)
+  {
+    CommitHandler2[] handlers = getCommitHandlers2();
+    for (int i = 0; i < handlers.length; i++)
+    {
+      CommitHandler2 handler = handlers[i];
+
+      try
+      {
+        handler.handleCommitted(this, commitContext);
       }
       catch (Exception ex)
       {
@@ -447,7 +481,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     boolean firstTime = !transaction.hasResource(realmPath);
     if (firstTime)
     {
-      transaction.createResourceFolder(DEFAULT_HOME_FOLDER);
       realm = createRealm();
 
       CDOResource resource = transaction.createResource(realmPath);
@@ -461,8 +494,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       realm = (Realm)resource.getContents().get(0);
       OM.LOG.info("Security realm loaded from " + realmPath);
     }
-
-    initCommitHandlers(firstTime);
 
     try
     {
@@ -486,6 +517,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     repository.addHandler(writeAccessHandler);
 
     SECURITY_MANAGERS.put(repository, this);
+    initCommitHandlers(firstTime);
   }
 
   protected Realm createRealm()
@@ -514,18 +546,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     treeWriterRole.getPermissions().add(
         factory.createFilterPermission(Access.WRITE, factory.createPackageFilter(EresourcePackage.eINSTANCE)));
 
-    Role homeFolderOwnerRole = realm.addRole("Home Folder Owner");
-    homeFolderOwnerRole.getPermissions().add(
-        factory.createFilterPermission(Access.WRITE,
-            factory.createResourceFilter(DEFAULT_HOME_FOLDER + "/${user}", Inclusion.EXACT_AND_DOWN)));
-    homeFolderOwnerRole.getPermissions().add(
-        factory.createFilterPermission(Access.READ,
-            factory.createResourceFilter(DEFAULT_HOME_FOLDER, Inclusion.EXACT_AND_UP)));
-
     Role adminRole = realm.addRole("Administration");
-    adminRole.getPermissions().add(
-        factory.createFilterPermission(Access.WRITE,
-            factory.createResourceFilter(DEFAULT_HOME_FOLDER, Inclusion.EXACT_AND_UP)));
     adminRole.getPermissions()
         .add(
             factory.createFilterPermission(Access.WRITE,
@@ -537,9 +558,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     Group adminsGroup = realm.addGroup("Administrators");
     adminsGroup.getRoles().add(adminRole);
-
-    Group usersGroup = realm.addGroup("Users");
-    usersGroup.getRoles().add(homeFolderOwnerRole);
 
     // Create users
 
@@ -735,7 +753,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       if (transaction.getSessionID() == session.getSessionID())
       {
-        return; // Access through ISecurityManager.modify(RealmOperation)
+        // Access through ISecurityManager.modify(RealmOperation)
+        handleCommit(commitContext, null);
+        return;
       }
 
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
@@ -754,7 +774,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       try
       {
-        // permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
         permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
       }
       finally
@@ -777,12 +796,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
     }
 
-    /**
-     * @deprecated Not used.
-     */
-    @Deprecated
-    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+    public void handleTransactionAfterCommitted(ITransaction transaction, final CommitContext commitContext,
+        OMMonitor monitor)
     {
+      handleCommitted(commitContext);
     }
   }
 }

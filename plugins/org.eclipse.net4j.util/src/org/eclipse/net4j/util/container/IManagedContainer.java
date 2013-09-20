@@ -77,4 +77,18 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
   public void loadElements(InputStream stream) throws IOException, FactoryNotFoundException, ProductCreationException;
 
   public void saveElements(OutputStream stream) throws IOException;
+
+  /**
+   * @author Eike Stepper
+   * @since 3.4
+   */
+  public interface ContainerAware
+  {
+    /**
+     * Assigns the container that I should use to get my dependencies.
+     *
+     * @param container the container in which I am created/registered
+     */
+    public void setManagedContainer(IManagedContainer container);
+  }
 }

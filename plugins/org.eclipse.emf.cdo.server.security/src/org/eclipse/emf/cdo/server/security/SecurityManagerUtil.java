@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.security;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.security.SecurityManager;
+import org.eclipse.emf.cdo.server.spi.security.AnnotationHandler;
+import org.eclipse.emf.cdo.server.spi.security.HomeFolderHandler;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -46,9 +48,12 @@ public final class SecurityManagerUtil
     return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(realmPath, container);
   }
 
+  @SuppressWarnings("deprecation")
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new SecurityManagerFactory.Default());
     container.registerFactory(new SecurityManagerFactory.Annotation());
+    container.registerFactory(new AnnotationHandler.Factory());
+    container.registerFactory(new HomeFolderHandler.Factory());
   }
 }

@@ -444,6 +444,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.1
      */
     public List<LockState<Object, IView>> getPostCommmitLockStates();
+
+    /**
+     * @since 4.3
+     */
+    public <T> T getData(Object key);
+
+    /**
+     * @since 4.3
+     */
+    public <T> T setData(Object key, T data);
   }
 
   /**

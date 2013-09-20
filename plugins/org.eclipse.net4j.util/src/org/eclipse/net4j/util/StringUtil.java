@@ -14,7 +14,9 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Various static helper methods for dealing with strings.
@@ -71,6 +73,54 @@ public final class StringUtil
     }
 
     return text;
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static List<String> split(String text, String separators, String brackets)
+  {
+    List<String> result = new ArrayList<String>();
+
+    StringBuilder builder = new StringBuilder();
+    int length = text.length();
+    int bracketLevel = 0;
+
+    for (int i = 0; i < length; i++)
+    {
+      char c = text.charAt(i);
+
+      if (bracketLevel == 0 && separators.indexOf(c) != -1)
+      {
+        result.add(builder.toString());
+        builder.setLength(0);
+      }
+      else
+      {
+        builder.append(c);
+      }
+
+      if (brackets != null)
+      {
+        int bracket = brackets.indexOf(c);
+        if (bracket != -1)
+        {
+          if ((bracket & 1) == 0)
+          {
+            // Opening bracket
+            ++bracketLevel;
+          }
+          else
+          {
+            // Closing bracket
+            --bracketLevel;
+          }
+        }
+      }
+    }
+
+    result.add(builder.toString());
+    return result;
   }
 
   public static String safe(String str)

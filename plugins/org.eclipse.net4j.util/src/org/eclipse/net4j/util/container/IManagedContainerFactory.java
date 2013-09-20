@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.factory.IFactory;
 
 /**
@@ -17,19 +18,14 @@ import org.eclipse.net4j.util.factory.IFactory;
  * awareness of the container that instantiated it, so that the
  * factory may reach back into that container for dependencies.
  *
+ * @author Christian W. Damus (CEA)
+ * @author Eike Stepper
  * @since 3.3
  */
-public interface IManagedContainerFactory extends IFactory
+public interface IManagedContainerFactory extends IFactory, ContainerAware
 {
   /**
    * Obtains the container that I should use to get my dependencies.
    */
   public IManagedContainer getManagedContainer();
-
-  /**
-   * Assigns the container that I should use to get my dependencies.
-   *
-   * @param container the container in which I am created/registered
-   */
-  public void setManagedContainer(IManagedContainer container);
 }

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -34,6 +35,11 @@ public interface InternalSecurityManager extends ISecurityManager
 
   public CommitHandler[] getCommitHandlers();
 
+  /**
+   * @since 4.3
+   */
+  public CommitHandler2[] getCommitHandlers2();
+
   public void addCommitHandler(CommitHandler handler);
 
   public void removeCommitHandler(CommitHandler handler);
@@ -47,6 +53,66 @@ public interface InternalSecurityManager extends ISecurityManager
   {
     public void init(InternalSecurityManager securityManager, boolean firstTime);
 
+    /**
+     * Called <b>before</b> the commit is security checked and passed to the repository.
+     *
+     * @param user the committing user or <code>null</code> if this commit is 
+     * {@link ISecurityManager#modify(ISecurityManager.RealmOperation, boolean) triggered} by the system.
+     * 
+     * @see CommitHandler2
+     */
     public void handleCommit(InternalSecurityManager securityManager, CommitContext commitContext, User user);
+
+    /**
+     * Creates {@link CommitHandler} instances.
+     * 
+     * @author Eike Stepper
+     * @since 4.3
+     */
+    public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+    {
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.security.commitHandlers";
+
+      public Factory(String type)
+      {
+        super(PRODUCT_GROUP, type);
+      }
+
+      public abstract CommitHandler create(String description) throws ProductCreationException;
+    }
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   * @since 4.3
+   */
+  public interface CommitHandler2 extends CommitHandler
+  {
+    /**
+     * Called <b>after</b> the commit has succeeded.
+     */
+    public void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext);
+
+    /**
+     * @author Eike Stepper
+     */
+    public static abstract class WithUser implements CommitHandler2
+    {
+      public void handleCommit(InternalSecurityManager securityManager, CommitContext commitContext, User user)
+      {
+        commitContext.setData(this, user);
+      }
+
+      public void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext)
+      {
+        User user = commitContext.getData(this);
+        handleCommitted(securityManager, commitContext, user);
+      }
+
+      protected abstract void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext,
+          User user);
+    }
   }
 }

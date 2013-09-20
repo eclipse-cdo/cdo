@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,8 @@ public class HibernateRawCommitContext implements InternalCommitContext
   private boolean usingEcore;
 
   private boolean usingEtypes;
+
+  private Map<Object, Object> data;
 
   public CDORevision getRevision(CDOID id)
   {
@@ -341,4 +344,29 @@ public class HibernateRawCommitContext implements InternalCommitContext
   {
     return null;
   }
+
+  public <T> T getData(Object key)
+  {
+    if (data == null)
+    {
+      return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    T result = (T)data.get(key);
+    return result;
+  }
+
+  public synchronized <T extends Object> T setData(Object key, T value)
+  {
+    if (data == null)
+    {
+      data = new HashMap<Object, Object>();
+    }
+
+    @SuppressWarnings("unchecked")
+    T old = (T)data.put(key, value);
+    return old;
+  }
+
 }

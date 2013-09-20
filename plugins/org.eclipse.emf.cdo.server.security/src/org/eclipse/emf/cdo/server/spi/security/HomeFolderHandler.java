@@ -1,0 +1,213 @@
+/*
+ * Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.server.spi.security;
+
+import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.Inclusion;
+import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.security.SecurityFactory;
+import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.User;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
+import org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation;
+import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager.CommitHandler;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+
+import java.util.List;
+
+/**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
+ * @author Eike Stepper
+ * @since 4.3
+ */
+public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
+{
+  public static final String DEFAULT_HOME_FOLDER = "/home";
+
+  private final String homeFolder;
+
+  public HomeFolderHandler(String homeFolder)
+  {
+    this.homeFolder = homeFolder == null || homeFolder.length() == 0 ? DEFAULT_HOME_FOLDER : homeFolder;
+  }
+
+  public HomeFolderHandler()
+  {
+    this(null);
+  }
+
+  public String getHomeFolder()
+  {
+    return homeFolder;
+  }
+
+  public void init(InternalSecurityManager securityManager, boolean firstTime)
+  {
+    if (firstTime)
+    {
+      EList<User> users = securityManager.getRealm().getAllUsers();
+      if (!users.isEmpty())
+      {
+        List<String> userIDs = new BasicEList<String>();
+        for (User user : users)
+        {
+          userIDs.add(user.getId());
+        }
+
+        handleUsers(securityManager, userIDs, true);
+      }
+    }
+  }
+
+  protected void initRole(Role role)
+  {
+    role.getPermissions().add(
+        SecurityFactory.eINSTANCE.createFilterPermission(Access.WRITE,
+            SecurityFactory.eINSTANCE.createResourceFilter(homeFolder + "/${user}", Inclusion.EXACT_AND_DOWN)));
+    role.getPermissions().add(
+        SecurityFactory.eINSTANCE.createFilterPermission(Access.READ,
+            SecurityFactory.eINSTANCE.createResourceFilter(homeFolder, Inclusion.EXACT_AND_UP)));
+  }
+
+  public void handleCommit(final InternalSecurityManager securityManager, CommitContext commitContext, User user)
+  {
+    // Do nothing
+  }
+
+  public void handleCommitted(final InternalSecurityManager securityManager, CommitContext commitContext)
+  {
+    List<String> userIDs = null;
+
+    InternalCDORevision[] newObjects = commitContext.getNewObjects();
+    for (int i = 0; i < newObjects.length; i++)
+    {
+      InternalCDORevision newObject = newObjects[i];
+      EClass eClass = newObject.getEClass();
+      if (eClass == SecurityPackage.Literals.USER)
+      {
+        String userID = (String)newObject.getValue(SecurityPackage.Literals.ASSIGNEE__ID);
+        if (userID != null)
+        {
+          if (userIDs == null)
+          {
+            userIDs = new BasicEList<String>();
+          }
+
+          userIDs.add(userID);
+        }
+      }
+    }
+
+    if (userIDs != null)
+    {
+      final List<String> list = userIDs;
+      long commitTime = commitContext.getBranchPoint().getTimeStamp();
+
+      CDOView view = securityManager.getRealm().cdoView();
+      view.runAfterUpdate(commitTime, new Runnable()
+      {
+        public void run()
+        {
+          handleUsers(securityManager, list, false);
+        }
+      });
+    }
+  }
+
+  protected void handleUsers(InternalSecurityManager securityManager, final List<String> userIDs, final boolean init)
+  {
+    securityManager.modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        String roleID = "Home Folder " + homeFolder;
+        Role role;
+
+        if (init)
+        {
+          role = realm.addRole(roleID);
+          initRole(role);
+        }
+        else
+        {
+          role = realm.getRole(roleID);
+          if (role == null)
+          {
+            OM.LOG.warn("Role '" + roleID + "' not found in " + HomeFolderHandler.this);
+            return;
+          }
+        }
+
+        CDOTransaction transaction = (CDOTransaction)realm.cdoView();
+
+        for (String userID : userIDs)
+        {
+          try
+          {
+            User user = realm.getUser(userID);
+            if (user == null)
+            {
+              OM.LOG.warn("User '" + userID + "' not found in " + HomeFolderHandler.this);
+            }
+            else
+            {
+              handleUser(transaction, realm, role, user);
+            }
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+          }
+        }
+      }
+    });
+  }
+
+  protected void handleUser(CDOTransaction transaction, Realm realm, Role role, User user) throws Exception
+  {
+    user.getRoles().add(role);
+    transaction.createResourceFolder(getHomeFolder() + "/" + user.getId());
+  }
+
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName() + "[" + homeFolder + "]";
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Factory extends InternalSecurityManager.CommitHandler.Factory
+  {
+    public Factory()
+    {
+      super("home");
+    }
+
+    @Override
+    public CommitHandler create(String homeFolder) throws ProductCreationException
+    {
+      return new HomeFolderHandler(homeFolder);
+    }
+  }
+}

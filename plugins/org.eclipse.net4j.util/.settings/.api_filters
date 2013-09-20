@@ -68,4 +68,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/container/IManagedContainerFactory.java" type="org.eclipse.net4j.util.container.IManagedContainerFactory">
+        <filter comment="https://bugs.eclipse.org/bugs/show_bug.cgi?id=404845" id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.container.IManagedContainerFactory"/>
+                <message_argument value="org.eclipse.net4j.util.container.IManagedContainer$ContainerAware"/>
+                <message_argument value="setManagedContainer(IManagedContainer)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

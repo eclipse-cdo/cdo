@@ -14,7 +14,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.security.Access;
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.FilterPermission;
+import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -107,20 +108,20 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
 
   protected void handlePackagePermission(Realm realm, EPackage ePackage, String key, Access access)
   {
-    EClass permissionClass = SecurityPackage.Literals.PACKAGE_PERMISSION;
-    EReference permissionFeature = SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE;
-    handlePermission(realm, ePackage, key, access, permissionClass, permissionFeature);
+    EClass filterClass = SecurityPackage.Literals.PACKAGE_FILTER;
+    EReference filterFeature = SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE;
+    handlePermission(realm, ePackage, key, access, filterClass, filterFeature);
   }
 
   protected void handleClassPermission(Realm realm, EClass eClass, String key, Access access)
   {
-    EClass permissionClass = SecurityPackage.Literals.CLASS_PERMISSION;
-    EReference permissionFeature = SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS;
-    handlePermission(realm, eClass, key, access, permissionClass, permissionFeature);
+    EClass filterClass = SecurityPackage.Literals.CLASS_FILTER;
+    EReference filterFeature = SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS;
+    handlePermission(realm, eClass, key, access, filterClass, filterFeature);
   }
 
   protected void handlePermission(Realm realm, EModelElement modelElement, String key, Access access,
-      EClass permissionClass, EReference permissionFeature)
+      EClass filterClass, EReference filterFeature)
   {
     String annotation = EcoreUtil.getAnnotation(modelElement, SOURCE_URI, key);
     if (annotation == null || annotation.length() == 0)
@@ -136,9 +137,10 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
       String token = tokenizer.nextToken();
       if (token != null && token.length() != 0)
       {
-        Permission permission = (Permission)EcoreUtil.create(permissionClass);
-        permission.setAccess(access);
-        permission.eSet(permissionFeature, modelElement);
+        PermissionFilter filter = (PermissionFilter)EcoreUtil.create(filterClass);
+        filter.eSet(filterFeature, modelElement);
+
+        FilterPermission permission = SecurityFactory.eINSTANCE.createFilterPermission(access, filter);
 
         Role role = RealmUtil.findRole(items, token);
         if (role == null)

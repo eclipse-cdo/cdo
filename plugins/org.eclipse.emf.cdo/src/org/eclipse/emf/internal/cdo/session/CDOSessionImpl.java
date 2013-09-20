@@ -794,6 +794,36 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  public boolean runAfterUpdate(final long updateTime, final Runnable runnable)
+  {
+    synchronized (lastUpdateTimeLock)
+    {
+      if (lastUpdateTime < updateTime)
+      {
+        addListener(new IListener()
+        {
+          public void notifyEvent(IEvent event)
+          {
+            if (event instanceof CDOSessionInvalidationEvent)
+            {
+              CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+              if (e.getTimeStamp() >= updateTime)
+              {
+                removeListener(this);
+                runnable.run();
+              }
+            }
+          }
+        });
+
+        return false;
+      }
+    }
+
+    runnable.run();
+    return true;
+  }
+
   /**
    * @since 3.0
    */

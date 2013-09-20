@@ -1304,6 +1304,37 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
+  public boolean runAfterUpdate(final long updateTime, final Runnable runnable)
+  {
+    synchronized (this)
+    {
+      long lastUpdateTime = getLastUpdateTime();
+      if (lastUpdateTime < updateTime)
+      {
+        addListener(new IListener()
+        {
+          public void notifyEvent(IEvent event)
+          {
+            if (event instanceof CDOViewInvalidationEvent)
+            {
+              CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
+              if (e.getTimeStamp() >= updateTime)
+              {
+                removeListener(this);
+                runnable.run();
+              }
+            }
+          }
+        });
+
+        return false;
+      }
+    }
+
+    runnable.run();
+    return true;
+  }
+
   protected static Object getLockTarget(CDOObject object)
   {
     CDOView view = object.cdoView();

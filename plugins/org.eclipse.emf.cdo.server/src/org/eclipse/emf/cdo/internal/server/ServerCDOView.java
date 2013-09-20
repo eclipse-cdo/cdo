@@ -191,6 +191,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public boolean runAfterUpdate(long updateTime, Runnable runnable)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void setViewID(int viewId)
   {
     throw new UnsupportedOperationException();
@@ -713,6 +718,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public boolean isEmpty()
     {
       return false;
+    }
+
+    public boolean runAfterUpdate(long updateTime, Runnable runnable)
+    {
+      throw new UnsupportedOperationException();
     }
 
     public boolean waitForUpdate(long updateTime, long timeoutMillis)

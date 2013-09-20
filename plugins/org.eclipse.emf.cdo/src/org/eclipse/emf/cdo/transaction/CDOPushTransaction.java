@@ -376,6 +376,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.waitForUpdate(updateTime, timeoutMillis);
   }
 
+  /**
+   * @since 4.3
+   */
+  public boolean runAfterUpdate(long updateTime, Runnable runnable)
+  {
+    return delegate.runAfterUpdate(updateTime, runnable);
+  }
+
   public Set<CDOObject> getConflicts()
   {
     return delegate.getConflicts();

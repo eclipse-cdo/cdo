@@ -44,4 +44,9 @@ public interface CDOUpdatable
    *         <code>false</code> otherwise.
    */
   public boolean waitForUpdate(long updateTime, long timeoutMillis);
+
+  /**
+   * @since 4.3
+   */
+  public boolean runAfterUpdate(long updateTime, Runnable runnable);
 }

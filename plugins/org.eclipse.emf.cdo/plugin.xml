@@ -50,6 +50,12 @@
          namespace="org.eclipse.emf.cdo.view"
          properties="open,viewID,branchName,branch,timeStamp,lastUpdateTime,readOnly,dirty,durable,sessionID,userID"
          class="org.eclipse.emf.internal.cdo.view.ViewProperties$Tester"/>
+      <propertyTester
+         id="org.eclipse.emf.cdo.object.properties"
+         type="org.eclipse.emf.ecore.EObject"
+         namespace="org.eclipse.emf.cdo.object"
+         properties="id,state,transactional,readable,writable,writableContainer,permission,permissionContainer,readLocks,writeLock,writeOption"
+         class="org.eclipse.emf.internal.cdo.object.ObjectProperties$Tester"/>
    </extension>
 
 </plugin>

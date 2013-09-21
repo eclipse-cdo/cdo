@@ -95,6 +95,16 @@ public class CDOSessionsView extends ContainerView
   {
     IWorkbenchPage page = getSite().getPage();
 
+    if (object instanceof CDOSession)
+    {
+      CDOSession session = (CDOSession)object;
+      if (session.getViews().length == 0)
+      {
+        session.openTransaction();
+        return;
+      }
+    }
+
     if (object instanceof CDOResourceLeaf)
     {
       CDOResourceLeaf resource = (CDOResourceLeaf)object;
@@ -111,11 +121,11 @@ public class CDOSessionsView extends ContainerView
       {
         CDOEditorUtil.openEditor(page, resource);
       }
+
+      return;
     }
-    else
-    {
-      super.doubleClicked(object);
-    }
+
+    super.doubleClicked(object);
   }
 
   public static ResourceOpener registerResourceOpener(String resourceExtension, ResourceOpener opener)

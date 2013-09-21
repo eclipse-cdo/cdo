@@ -1163,7 +1163,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       Composite composite = UIUtil.createGridComposite(getContainer(), 1);
       composite.setLayoutData(UIUtil.createGridData());
       composite.setLayout(UIUtil.createGridLayout(1));
-      Tree tree = new Tree(composite, SWT.MULTI | SWT.BORDER);
+      Tree tree = new Tree(composite, SWT.MULTI);
       tree.setLayoutData(UIUtil.createGridData());
 
       final Set<CDOID> expandedIDs = new HashSet<CDOID>();

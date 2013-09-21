@@ -92,6 +92,18 @@ public class ViewProperties extends Properties<CDOView>
       }
     });
 
+    add(new Property<CDOView>(
+        "rootResourcePermission", //$NON-NLS-1$
+        "Root Resource Permission", "The permission the current user has for the root resource of this view.",
+        CATEGORY_VIEW)
+    {
+      @Override
+      protected Object eval(CDOView view)
+      {
+        return view.getRootResource().cdoPermission();
+      }
+    });
+
     add(new Property<CDOView>("readOnly", //$NON-NLS-1$
         "Read-Only", "Whether this view is read-only or not.", CATEGORY_VIEW)
     {
@@ -143,9 +155,6 @@ public class ViewProperties extends Properties<CDOView>
     });
   }
 
-  /**
-   *
-   */
   public static void main(String[] args)
   {
     new Tester().dumpContributionMarkup();

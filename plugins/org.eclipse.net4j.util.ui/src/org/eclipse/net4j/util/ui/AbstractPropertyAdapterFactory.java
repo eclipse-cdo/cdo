@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui;
 
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.ui.IActionFilter;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
@@ -21,7 +22,7 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 @SuppressWarnings("rawtypes")
 public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
 {
-  private static final Class[] CLASSES = { IPropertySourceProvider.class };
+  private static final Class[] CLASSES = { IPropertySourceProvider.class, IActionFilter.class };
 
   public AbstractPropertyAdapterFactory()
   {
@@ -49,8 +50,21 @@ public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
       }
     }
 
+    if (adapterType == CLASSES[1])
+    {
+      return createActionFilter(adaptableObject);
+    }
+
     return null;
   }
 
   protected abstract IPropertySource createPropertySource(Object object);
+
+  /**
+   * @since 3.4
+   */
+  protected IActionFilter createActionFilter(Object object)
+  {
+    return null;
+  }
 }

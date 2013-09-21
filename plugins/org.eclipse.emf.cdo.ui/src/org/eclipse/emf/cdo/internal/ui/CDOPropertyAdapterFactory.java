@@ -13,12 +13,17 @@ package org.eclipse.emf.cdo.internal.ui;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.object.ObjectProperties;
 import org.eclipse.emf.internal.cdo.session.SessionProperties;
 import org.eclipse.emf.internal.cdo.view.ViewProperties;
 
 import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
+import org.eclipse.net4j.util.ui.DefaultActionFilter;
 import org.eclipse.net4j.util.ui.DefaultPropertySource;
 
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.ui.IActionFilter;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -26,6 +31,13 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 {
+  private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<CDOSession>(
+      SessionProperties.INSTANCE);
+
+  private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<CDOView>(ViewProperties.INSTANCE);
+
+  private static final IActionFilter OBJECT_ACTION_FILTER = new DefaultActionFilter<EObject>(ObjectProperties.INSTANCE);
+
   public CDOPropertyAdapterFactory()
   {
   }
@@ -43,6 +55,32 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
       return new DefaultPropertySource<CDOView>((CDOView)object, ViewProperties.INSTANCE);
     }
 
+    if (object instanceof EObject)
+    {
+      return new DefaultPropertySource<EObject>((EObject)object, ObjectProperties.INSTANCE);
+    }
+
     return null;
+  }
+
+  @Override
+  protected IActionFilter createActionFilter(Object object)
+  {
+    if (object instanceof CDOSession)
+    {
+      return SESSION_ACTION_FILTER;
+    }
+
+    if (object instanceof CDOView)
+    {
+      return VIEW_ACTION_FILTER;
+    }
+
+    if (object instanceof EObject)
+    {
+      return OBJECT_ACTION_FILTER;
+    }
+
+    return super.createActionFilter(object);
   }
 }

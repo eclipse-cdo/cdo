@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -58,7 +59,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -177,8 +177,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOResourceFolder)
     {
-      EList<CDOResourceNode> result = CDOUtil.filterReadables(((CDOResourceFolder)element).getNodes());
-      return result.toArray();
+      return ((CDOResourceFolder)element).getNodes().toArray();
     }
 
     return super.getChildren(element);
@@ -247,7 +246,13 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOResourceFolder)
     {
-      return !((CDOResourceFolder)element).getNodes().isEmpty();
+      CDOResourceFolder folder = (CDOResourceFolder)element;
+      if (folder.cdoPermission() == CDOPermission.NONE)
+      {
+        return false;
+      }
+
+      return !folder.getNodes().isEmpty();
     }
 
     return super.hasChildren(element);
@@ -552,10 +557,13 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (!view.isReadOnly())
     {
       CDOResource rootResource = view.getRootResource();
-      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.FOLDER));
-      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.MODEL));
-      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.TEXT));
-      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.BINARY));
+      if (rootResource.cdoPermission() == CDOPermission.WRITE)
+      {
+        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.FOLDER));
+        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.MODEL));
+        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.TEXT));
+        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.BINARY));
+      }
     }
 
     manager.add(new Separator());

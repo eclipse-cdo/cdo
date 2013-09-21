@@ -1,8 +1,39 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.expressions.util;
 
-import org.eclipse.emf.cdo.expressions.*;
+import org.eclipse.emf.cdo.expressions.Access;
+import org.eclipse.emf.cdo.expressions.BooleanValue;
+import org.eclipse.emf.cdo.expressions.ByteValue;
+import org.eclipse.emf.cdo.expressions.CharValue;
+import org.eclipse.emf.cdo.expressions.ContainedObject;
+import org.eclipse.emf.cdo.expressions.ContextAccess;
+import org.eclipse.emf.cdo.expressions.DoubleValue;
+import org.eclipse.emf.cdo.expressions.Expression;
+import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
+import org.eclipse.emf.cdo.expressions.FloatValue;
+import org.eclipse.emf.cdo.expressions.FunctionInvocation;
+import org.eclipse.emf.cdo.expressions.IntValue;
+import org.eclipse.emf.cdo.expressions.Invocation;
+import org.eclipse.emf.cdo.expressions.LinkedExpression;
+import org.eclipse.emf.cdo.expressions.LinkedObject;
+import org.eclipse.emf.cdo.expressions.ListConstruction;
+import org.eclipse.emf.cdo.expressions.LongValue;
+import org.eclipse.emf.cdo.expressions.MemberAccess;
+import org.eclipse.emf.cdo.expressions.MemberInvocation;
+import org.eclipse.emf.cdo.expressions.ShortValue;
+import org.eclipse.emf.cdo.expressions.StaticAccess;
+import org.eclipse.emf.cdo.expressions.StringValue;
+import org.eclipse.emf.cdo.expressions.Value;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;

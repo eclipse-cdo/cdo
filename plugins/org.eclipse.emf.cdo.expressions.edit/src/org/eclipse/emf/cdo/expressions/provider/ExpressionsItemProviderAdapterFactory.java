@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.expressions.provider;
 
@@ -604,7 +612,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -690,41 +698,77 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
   public void dispose()
   {
     if (booleanValueItemProvider != null)
+    {
       booleanValueItemProvider.dispose();
+    }
     if (byteValueItemProvider != null)
+    {
       byteValueItemProvider.dispose();
+    }
     if (shortValueItemProvider != null)
+    {
       shortValueItemProvider.dispose();
+    }
     if (intValueItemProvider != null)
+    {
       intValueItemProvider.dispose();
+    }
     if (longValueItemProvider != null)
+    {
       longValueItemProvider.dispose();
+    }
     if (floatValueItemProvider != null)
+    {
       floatValueItemProvider.dispose();
+    }
     if (doubleValueItemProvider != null)
+    {
       doubleValueItemProvider.dispose();
+    }
     if (charValueItemProvider != null)
+    {
       charValueItemProvider.dispose();
+    }
     if (stringValueItemProvider != null)
+    {
       stringValueItemProvider.dispose();
+    }
     if (functionInvocationItemProvider != null)
+    {
       functionInvocationItemProvider.dispose();
+    }
     if (memberInvocationItemProvider != null)
+    {
       memberInvocationItemProvider.dispose();
+    }
     if (staticAccessItemProvider != null)
+    {
       staticAccessItemProvider.dispose();
+    }
     if (memberAccessItemProvider != null)
+    {
       memberAccessItemProvider.dispose();
+    }
     if (contextAccessItemProvider != null)
+    {
       contextAccessItemProvider.dispose();
+    }
     if (containedObjectItemProvider != null)
+    {
       containedObjectItemProvider.dispose();
+    }
     if (linkedObjectItemProvider != null)
+    {
       linkedObjectItemProvider.dispose();
+    }
     if (linkedExpressionItemProvider != null)
+    {
       linkedExpressionItemProvider.dispose();
+    }
     if (listConstructionItemProvider != null)
+    {
       listConstructionItemProvider.dispose();
+    }
   }
 
 }

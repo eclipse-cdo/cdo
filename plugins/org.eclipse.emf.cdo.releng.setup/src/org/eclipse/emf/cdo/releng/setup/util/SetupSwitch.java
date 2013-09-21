@@ -1,13 +1,35 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import java.util.List;
-
-import org.eclipse.emf.cdo.releng.setup.*;
+import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
+import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Configuration;
+import org.eclipse.emf.cdo.releng.setup.DirectorCall;
+import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.GitClone;
+import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.LinkLocation;
+import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.Preferences;
+import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
+import org.eclipse.emf.cdo.releng.setup.ToolPreference;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,9 +113,13 @@ public class SetupSwitch<T>
       Preferences preferences = (Preferences)theEObject;
       T result = casePreferences(preferences);
       if (result == null)
+      {
         result = caseToolInstallation(preferences);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.LINK_LOCATION:
@@ -101,7 +127,9 @@ public class SetupSwitch<T>
       LinkLocation linkLocation = (LinkLocation)theEObject;
       T result = caseLinkLocation(linkLocation);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.TOOL_INSTALLATION:
@@ -109,7 +137,9 @@ public class SetupSwitch<T>
       ToolInstallation toolInstallation = (ToolInstallation)theEObject;
       T result = caseToolInstallation(toolInstallation);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.TOOL_PREFERENCE:
@@ -117,7 +147,9 @@ public class SetupSwitch<T>
       ToolPreference toolPreference = (ToolPreference)theEObject;
       T result = caseToolPreference(toolPreference);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.ECLIPSE_VERSION:
@@ -125,7 +157,9 @@ public class SetupSwitch<T>
       EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
       T result = caseEclipseVersion(eclipseVersion);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.DIRECTOR_CALL:
@@ -133,7 +167,9 @@ public class SetupSwitch<T>
       DirectorCall directorCall = (DirectorCall)theEObject;
       T result = caseDirectorCall(directorCall);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.INSTALLABLE_UNIT:
@@ -141,7 +177,9 @@ public class SetupSwitch<T>
       InstallableUnit installableUnit = (InstallableUnit)theEObject;
       T result = caseInstallableUnit(installableUnit);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.P2_REPOSITORY:
@@ -149,7 +187,9 @@ public class SetupSwitch<T>
       P2Repository p2Repository = (P2Repository)theEObject;
       T result = caseP2Repository(p2Repository);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.CONFIGURATION:
@@ -157,7 +197,9 @@ public class SetupSwitch<T>
       Configuration configuration = (Configuration)theEObject;
       T result = caseConfiguration(configuration);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.PROJECT:
@@ -165,9 +207,13 @@ public class SetupSwitch<T>
       Project project = (Project)theEObject;
       T result = caseProject(project);
       if (result == null)
+      {
         result = caseToolInstallation(project);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.BRANCH:
@@ -175,9 +221,13 @@ public class SetupSwitch<T>
       Branch branch = (Branch)theEObject;
       T result = caseBranch(branch);
       if (result == null)
+      {
         result = caseToolInstallation(branch);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.API_BASELINE:
@@ -185,7 +235,9 @@ public class SetupSwitch<T>
       ApiBaseline apiBaseline = (ApiBaseline)theEObject;
       T result = caseApiBaseline(apiBaseline);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.GIT_CLONE:
@@ -193,7 +245,9 @@ public class SetupSwitch<T>
       GitClone gitClone = (GitClone)theEObject;
       T result = caseGitClone(gitClone);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.SETUP:
@@ -201,7 +255,9 @@ public class SetupSwitch<T>
       Setup setup = (Setup)theEObject;
       T result = caseSetup(setup);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -449,4 +505,4 @@ public class SetupSwitch<T>
     return null;
   }
 
-} //SetupSwitch
+} // SetupSwitch

@@ -1,8 +1,36 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.expressions.impl;
 
-import org.eclipse.emf.cdo.expressions.*;
+import org.eclipse.emf.cdo.expressions.BooleanValue;
+import org.eclipse.emf.cdo.expressions.ByteValue;
+import org.eclipse.emf.cdo.expressions.CharValue;
+import org.eclipse.emf.cdo.expressions.ContainedObject;
+import org.eclipse.emf.cdo.expressions.ContextAccess;
+import org.eclipse.emf.cdo.expressions.DoubleValue;
+import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
+import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
+import org.eclipse.emf.cdo.expressions.FloatValue;
+import org.eclipse.emf.cdo.expressions.FunctionInvocation;
+import org.eclipse.emf.cdo.expressions.IntValue;
+import org.eclipse.emf.cdo.expressions.LinkedExpression;
+import org.eclipse.emf.cdo.expressions.LinkedObject;
+import org.eclipse.emf.cdo.expressions.ListConstruction;
+import org.eclipse.emf.cdo.expressions.LongValue;
+import org.eclipse.emf.cdo.expressions.MemberAccess;
+import org.eclipse.emf.cdo.expressions.MemberInvocation;
+import org.eclipse.emf.cdo.expressions.ShortValue;
+import org.eclipse.emf.cdo.expressions.StaticAccess;
+import org.eclipse.emf.cdo.expressions.StringValue;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -64,41 +92,41 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
     switch (eClass.getClassifierID())
     {
     case ExpressionsPackage.BOOLEAN_VALUE:
-      return (EObject)createBooleanValue();
+      return createBooleanValue();
     case ExpressionsPackage.BYTE_VALUE:
-      return (EObject)createByteValue();
+      return createByteValue();
     case ExpressionsPackage.SHORT_VALUE:
-      return (EObject)createShortValue();
+      return createShortValue();
     case ExpressionsPackage.INT_VALUE:
-      return (EObject)createIntValue();
+      return createIntValue();
     case ExpressionsPackage.LONG_VALUE:
-      return (EObject)createLongValue();
+      return createLongValue();
     case ExpressionsPackage.FLOAT_VALUE:
-      return (EObject)createFloatValue();
+      return createFloatValue();
     case ExpressionsPackage.DOUBLE_VALUE:
-      return (EObject)createDoubleValue();
+      return createDoubleValue();
     case ExpressionsPackage.CHAR_VALUE:
-      return (EObject)createCharValue();
+      return createCharValue();
     case ExpressionsPackage.STRING_VALUE:
-      return (EObject)createStringValue();
+      return createStringValue();
     case ExpressionsPackage.FUNCTION_INVOCATION:
-      return (EObject)createFunctionInvocation();
+      return createFunctionInvocation();
     case ExpressionsPackage.MEMBER_INVOCATION:
-      return (EObject)createMemberInvocation();
+      return createMemberInvocation();
     case ExpressionsPackage.STATIC_ACCESS:
-      return (EObject)createStaticAccess();
+      return createStaticAccess();
     case ExpressionsPackage.MEMBER_ACCESS:
-      return (EObject)createMemberAccess();
+      return createMemberAccess();
     case ExpressionsPackage.CONTEXT_ACCESS:
-      return (EObject)createContextAccess();
+      return createContextAccess();
     case ExpressionsPackage.CONTAINED_OBJECT:
-      return (EObject)createContainedObject();
+      return createContainedObject();
     case ExpressionsPackage.LINKED_OBJECT:
-      return (EObject)createLinkedObject();
+      return createLinkedObject();
     case ExpressionsPackage.LINKED_EXPRESSION:
-      return (EObject)createLinkedExpression();
+      return createLinkedExpression();
     case ExpressionsPackage.LIST_CONSTRUCTION:
-      return (EObject)createListConstruction();
+      return createListConstruction();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

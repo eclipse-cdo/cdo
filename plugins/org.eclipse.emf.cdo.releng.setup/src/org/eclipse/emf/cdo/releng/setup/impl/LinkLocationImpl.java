@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -6,9 +14,7 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocation;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
@@ -109,7 +115,9 @@ public class LinkLocationImpl extends MinimalEObjectImpl.Container implements Li
     String oldPath = path;
     path = newPath;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.LINK_LOCATION__PATH, oldPath, path));
+    }
   }
 
   /**
@@ -132,7 +140,9 @@ public class LinkLocationImpl extends MinimalEObjectImpl.Container implements Li
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.LINK_LOCATION__NAME, oldName, name));
+    }
   }
 
   /**
@@ -220,7 +230,9 @@ public class LinkLocationImpl extends MinimalEObjectImpl.Container implements Li
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (path: ");
@@ -231,4 +243,4 @@ public class LinkLocationImpl extends MinimalEObjectImpl.Container implements Li
     return result.toString();
   }
 
-} //LinkLocationImpl
+} // LinkLocationImpl

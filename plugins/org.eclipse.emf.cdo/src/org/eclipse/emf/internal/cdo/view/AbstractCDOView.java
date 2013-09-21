@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -334,8 +335,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public synchronized boolean isEmpty()
   {
     CDOResource rootResource = getRootResource();
-    boolean empty = rootResource.getContents().isEmpty();
+    if (rootResource.cdoPermission() == CDOPermission.NONE)
+    {
+      return true;
+    }
 
+    boolean empty = rootResource.getContents().isEmpty();
     ensureContainerAdapter(rootResource);
     return empty;
   }
@@ -343,7 +348,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public synchronized CDOResourceNode[] getElements()
   {
     CDOResource rootResource = getRootResource();
-    EList<EObject> contents = CDOUtil.filterReadables(rootResource.getContents());
+    EList<EObject> contents = rootResource.getContents();
 
     List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>(contents.size());
     for (EObject object : contents)

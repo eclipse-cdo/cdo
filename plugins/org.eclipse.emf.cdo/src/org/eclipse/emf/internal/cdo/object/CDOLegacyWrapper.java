@@ -190,6 +190,21 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return null;
   }
 
+  public InternalCDORevision cdoRevision(boolean loadOnDemand)
+  {
+    if (loadOnDemand)
+    {
+      CDOStateMachine.INSTANCE.read(this);
+    }
+
+    return cdoRevision();
+  }
+
+  public CDOPermission cdoPermission()
+  {
+    return cdoRevision(true).getPermission();
+  }
+
   @Override
   public CDOResourceImpl cdoResource()
   {

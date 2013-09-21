@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.PersistenceFilter;
@@ -159,6 +160,27 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   public final InternalCDORevision cdoRevision()
   {
     return revision.getProperRevision();
+  }
+
+  /**
+   * @since 4.3
+   */
+  public final InternalCDORevision cdoRevision(boolean loadOnDemand)
+  {
+    if (loadOnDemand)
+    {
+      CDOStateMachine.INSTANCE.read(this);
+    }
+
+    return cdoRevision();
+  }
+
+  /**
+   * @since 4.3
+   */
+  public final CDOPermission cdoPermission()
+  {
+    return cdoRevision(true).getPermission();
   }
 
   public final CDOResource cdoResource()

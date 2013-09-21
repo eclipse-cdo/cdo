@@ -477,6 +477,11 @@ public final class CDOUtil
    */
   public static CDOObject getCDOObject(EObject object)
   {
+    if (object == null)
+    {
+      return null;
+    }
+
     if (object instanceof CDOObject)
     {
       return (CDOObject)object;

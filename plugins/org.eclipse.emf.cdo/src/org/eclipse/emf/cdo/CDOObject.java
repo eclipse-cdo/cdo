@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
@@ -94,6 +96,22 @@ public interface CDOObject extends EObject, CDOWithID
    * required by the framework.
    */
   public CDORevision cdoRevision();
+
+  /**
+   * Returns the {@link CDORevision revision} of this object, or <code>null</code> if this object does currently not
+   * have a revision and loadOnDemand is <code>false</code>. The revision is used to store all modeled data of this object, 
+   * together with some technical data required by the framework.
+   * 
+   * @since 4.3
+   */
+  public CDORevision cdoRevision(boolean loadOnDemand);
+
+  /**
+   * Returns the permission of the current {@link CDOSession session}'s user for this object.
+   * 
+   * @since 4.3
+   */
+  public CDOPermission cdoPermission();
 
   /**
    * Returns the {@link CDOResource resource} of this object, no matter where this object is located in the containment

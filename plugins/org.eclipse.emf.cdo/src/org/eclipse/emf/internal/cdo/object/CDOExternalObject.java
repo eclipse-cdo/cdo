@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.InternalEObject;
@@ -58,6 +59,16 @@ public class CDOExternalObject extends CDOObjectWrapperBase
   }
 
   public CDORevision cdoRevision()
+  {
+    return null;
+  }
+
+  public CDORevision cdoRevision(boolean loadOnDemand)
+  {
+    return null;
+  }
+
+  public CDOPermission cdoPermission()
   {
     return null;
   }

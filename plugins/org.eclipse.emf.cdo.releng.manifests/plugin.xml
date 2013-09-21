@@ -46,20 +46,6 @@
       <handler
             class="org.eclipse.emf.cdo.releng.manifests.handlers.CleanBuildHandler"
             commandId="org.eclipse.emf.cdo.releng.buildClean">
-         <enabledWhen>
-            <iterate
-                  ifEmpty="false"
-                  operator="or">
-               <or>
-                  <adapt
-                        type="org.eclipse.core.resources.IResource">
-                  </adapt>
-                  <adapt
-                        type="org.eclipse.core.resources.IMarker">
-                  </adapt>
-               </or>
-            </iterate>
-         </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.emf.cdo.releng.manifests.OpenPropertiesHandler"
@@ -160,6 +146,21 @@
                icon="icons/build.gif"
                label="Build Clean"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+			            <iterate
+			                  ifEmpty="false"
+			                  operator="or">
+			               <or>
+			                  <adapt
+			                        type="org.eclipse.core.resources.IResource">
+			                  </adapt>
+			                  <adapt
+			                        type="org.eclipse.core.resources.IMarker">
+			                  </adapt>
+			               </or>
+			            </iterate>
+            </visibleWhen>
          </command>
       </menuContribution>
    </extension>

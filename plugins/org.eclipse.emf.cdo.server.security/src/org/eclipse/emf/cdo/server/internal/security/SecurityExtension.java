@@ -98,14 +98,19 @@ public class SecurityExtension implements IAppExtension
         throw new IllegalStateException("Security manager type not specified for repository " + repository); //$NON-NLS-1$
       }
 
-      String realmPath = securityManagerElement.getAttribute("realmPath");
-      if (realmPath == null || realmPath.length() == 0)
+      String description = securityManagerElement.getAttribute("description");
+      if (description == null || description.length() == 0)
       {
-        realmPath = DEFAULT_REALM_PATH;
+        description = securityManagerElement.getAttribute("realmPath");
+      }
+
+      if (description == null || description.length() == 0)
+      {
+        description = DEFAULT_REALM_PATH;
       }
 
       InternalSecurityManager securityManager = (InternalSecurityManager)container.getElement(
-          SecurityManagerFactory.PRODUCT_GROUP, type, realmPath);
+          SecurityManagerFactory.PRODUCT_GROUP, type, description);
       securityManager.setRepository(repository);
     }
   }

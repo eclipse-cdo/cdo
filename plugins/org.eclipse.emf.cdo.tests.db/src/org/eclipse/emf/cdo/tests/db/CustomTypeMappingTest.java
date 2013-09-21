@@ -47,22 +47,20 @@ import java.sql.Statement;
  */
 public class CustomTypeMappingTest extends AbstractCDOTest
 {
-
   public void testCustomTypeMapping() throws CommitException
   {
-    // manually register type mapping
+    // Manually register type mapping
     MyIntToVarcharTypeMapping.Factory factory = new MyIntToVarcharTypeMapping.Factory();
     IPluginContainer.INSTANCE.registerFactory(factory);
 
     try
     {
-      String uniqueName = getClass().getSimpleName() + "_" + getName();
-      EPackage pkg = EMFUtil.createEPackage(uniqueName, "anyprefix", "http://" + uniqueName);
+      final EPackage pkg = createUniquePackage();
 
       EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
       EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEInt());
 
-      // annotate type mapping and column type
+      // Annotate type mapping and column type
       EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
       annotation.setSource("http://www.eclipse.org/CDO/DBStore");
       annotation.getDetails().put("typeMapping", "org.eclipse.emf.cdo.tests.db.EIntToVarchar");
@@ -94,10 +92,11 @@ public class CustomTypeMappingTest extends AbstractCDOTest
         {
           Statement stmt = null;
           ResultSet rset = null;
+
           try
           {
             stmt = getStatement();
-            rset = stmt.executeQuery("SELECT bar FROM underscoreTest2_foo");
+            rset = stmt.executeQuery("SELECT bar FROM " + pkg.getName() + "_foo");
             assertEquals("java.lang.String", rset.getMetaData().getColumnClassName(1));
 
             rset.next();

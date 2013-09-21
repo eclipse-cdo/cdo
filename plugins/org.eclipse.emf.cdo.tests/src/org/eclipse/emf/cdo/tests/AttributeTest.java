@@ -264,7 +264,6 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @CleanRepositoriesBefore(reason = "Dynamic packages")
   public void testBigDecimalAndBigIntegerNull() throws Exception
   {
     BigDecimal bigDecimal = null;

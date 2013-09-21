@@ -350,7 +350,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       prefix += NAME_SEPARATOR;
     }
 
-    return getName(prefix + name, typePrefix + getUniqueID(element), getMaxTableNameLength());
+    String suffix = typePrefix + getUniqueID(element);
+    int maxTableNameLength = getMaxTableNameLength();
+
+    return getName(prefix + name, suffix, maxTableNameLength);
   }
 
   public String getTableName(EClass eClass, EStructuralFeature feature)
@@ -371,7 +374,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       prefix += NAME_SEPARATOR;
     }
 
-    return getName(prefix + name, TYPE_PREFIX_FEATURE + getUniqueID(feature), getMaxTableNameLength());
+    String suffix = TYPE_PREFIX_FEATURE + getUniqueID(feature);
+    int maxTableNameLength = getMaxTableNameLength();
+
+    return getName(prefix + name, suffix, maxTableNameLength);
   }
 
   public String getFieldName(EStructuralFeature feature)
@@ -414,6 +420,12 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       suffix = NAME_SEPARATOR + suffix.replace('-', 'S');
       int length = Math.min(name.length(), maxLength - suffix.length());
+      if (length < 0)
+      {
+        // Most likely CDOIDs are client side-assigned, i.e., meta IDs are extrefs. See getUniqueID()
+        throw new IllegalStateException("Suffix is too long: " + suffix);
+      }
+
       name = name.substring(0, length) + suffix;
     }
 
@@ -433,11 +445,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       // This happens outside a commit, i.e. at system init time.
       // Ensure that resulting ext refs are not replicated!
       timeStamp = CDOBranchPoint.INVALID_DATE;
-
       // timeStamp = getStore().getRepository().getTimeStamp();
     }
 
-    CDOID result = getMetaDataManager().getMetaID(element, timeStamp);
+    IMetaDataManager metaDataManager = getMetaDataManager();
+    CDOID result = metaDataManager.getMetaID(element, timeStamp);
 
     StringBuilder builder = new StringBuilder();
     CDOIDUtil.write(builder, result);

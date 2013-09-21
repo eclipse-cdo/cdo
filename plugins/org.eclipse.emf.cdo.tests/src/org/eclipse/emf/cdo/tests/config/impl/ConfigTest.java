@@ -82,6 +82,10 @@ import junit.framework.TestResult;
  */
 public abstract class ConfigTest extends AbstractOMTest implements IConstants
 {
+  private static int dynamicPackageCounter;
+
+  private transient int dynamicPackageNumber;
+
   private IScenario scenario;
 
   private Properties homeProperties;
@@ -608,7 +612,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   * Constructs a test-specific EPackage of the format "TestClass_testMethod_name". Using this instead of
+   * Constructs a test-specific EPackage of the format "pkg123_name". Using this instead of
    * (just) a hardcoded name for the test package, ensures that the test method is isolated from all others.
    *
    * @param name
@@ -618,10 +622,14 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public final EPackage createUniquePackage(String name)
   {
+    if (dynamicPackageNumber == 0)
+    {
+      dynamicPackageNumber = ++dynamicPackageCounter;
+    }
+
     StringBuilder builder = new StringBuilder();
-    builder.append(getClass().getSimpleName()); // Name of this test class
-    builder.append('_');
-    builder.append(getName()); // Name of the executing test method
+    builder.append("pkg");
+    builder.append(dynamicPackageNumber);
 
     if (name != null)
     {

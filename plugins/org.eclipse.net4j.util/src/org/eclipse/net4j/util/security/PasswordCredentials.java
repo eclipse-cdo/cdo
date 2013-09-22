@@ -23,6 +23,22 @@ public class PasswordCredentials extends Credentials implements IPasswordCredent
     this.password = password;
   }
 
+  /**
+   * @since 3.4
+   */
+  public PasswordCredentials(String userID, String password)
+  {
+    this(userID, password.toCharArray());
+  }
+
+  /**
+   * @since 3.4
+   */
+  public PasswordCredentials(String userID)
+  {
+    super(userID);
+  }
+
   public char[] getPassword()
   {
     return password;

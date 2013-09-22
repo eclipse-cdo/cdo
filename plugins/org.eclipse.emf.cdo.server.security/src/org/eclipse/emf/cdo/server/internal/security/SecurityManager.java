@@ -63,6 +63,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IAuthenticator;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -256,6 +257,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     });
 
     return result[0];
+  }
+
+  public User addUser(IPasswordCredentials credentials)
+  {
+    return addUser(credentials.getUserID(), new String(credentials.getPassword()));
   }
 
   public User setPassword(final String id, final String password)
@@ -532,11 +538,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     // Create roles
 
     Role allReaderRole = realm.addRole("All Objects Reader");
-    allReaderRole.getPermissions().add(factory.createFilterPermission(Access.READ, factory.createResourceFilter(".*")));
+    allReaderRole.getPermissions().add(
+        factory.createFilterPermission(Access.READ, factory.createResourceFilter(".*", Inclusion.REGEX)));
 
     Role allWriterRole = realm.addRole("All Objects Writer");
-    allWriterRole.getPermissions()
-        .add(factory.createFilterPermission(Access.WRITE, factory.createResourceFilter(".*")));
+    allWriterRole.getPermissions().add(
+        factory.createFilterPermission(Access.WRITE, factory.createResourceFilter(".*", Inclusion.REGEX)));
 
     Role treeReaderRole = realm.addRole("Resource Tree Reader");
     treeReaderRole.getPermissions().add(

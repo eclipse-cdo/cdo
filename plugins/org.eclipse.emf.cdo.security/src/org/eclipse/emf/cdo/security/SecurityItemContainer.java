@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.security;
 
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+
 /**
  * A {@link SecurityItemProvider security item provider} that {@link SecurityItem items} 
  * such as {@link User users} or {@link Role roles} can be added to or removed from.
@@ -28,6 +30,11 @@ public interface SecurityItemContainer extends SecurityItemProvider
   public User addUser(String id);
 
   public User addUser(String id, String password);
+
+  /**
+   * @since 4.3
+   */
+  public User addUser(IPasswordCredentials credentials);
 
   /**
    * @since 4.3

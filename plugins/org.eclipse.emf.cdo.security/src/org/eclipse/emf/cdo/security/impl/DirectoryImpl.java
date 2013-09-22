@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
@@ -152,6 +154,14 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
     User user = SecurityFactory.eINSTANCE.createUser(id, password);
     getItems().add(user);
     return user;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public User addUser(IPasswordCredentials credentials)
+  {
+    return addUser(credentials.getUserID(), new String(credentials.getPassword()));
   }
 
   /**

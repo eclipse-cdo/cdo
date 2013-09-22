@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -409,6 +411,14 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   {
     User user = SecurityFactory.eINSTANCE.createUser(id, password);
     return addUser(user);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public User addUser(IPasswordCredentials credentials)
+  {
+    return addUser(credentials.getUserID(), new String(credentials.getPassword()));
   }
 
   /**

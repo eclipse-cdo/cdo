@@ -267,10 +267,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This is the property sheet page.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  protected PropertySheetPage propertySheetPage;
+  protected List<PropertySheetPage> propertySheetPages = new ArrayList<PropertySheetPage>();
 
   /**
    * This is the viewer that shadows the selection in the content outline.
@@ -328,7 +329,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       else if (p instanceof PropertySheet)
       {
-        if (((PropertySheet)p).getCurrentPage() == propertySheetPage)
+        if (propertySheetPages.contains(((PropertySheet)p).getCurrentPage()))
         {
           getActionBarContributor().setActiveEditor(CDOEditor.this);
           handleActivate();
@@ -456,6 +457,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     protected void unsetTarget(Resource target)
     {
       basicUnsetTarget(target);
+      resourceToDiagnosticMap.remove(target);
+      if (updateProblemIndication)
+      {
+        getSite().getShell().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            updateProblemIndication();
+          }
+        });
+      }
     }
   };
 
@@ -715,9 +727,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             {
               setSelectionToViewer(mostRecentCommand.getAffectedObjects());
             }
-            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+            for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext();)
             {
-              propertySheetPage.refresh();
+              PropertySheetPage propertySheetPage = i.next();
+              if (propertySheetPage.getControl().isDisposed())
+              {
+                i.remove();
+              }
+              else
+              {
+                propertySheetPage.refresh();
+              }
             }
           }
         });
@@ -983,38 +1003,38 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       view = editorInput.getView();
       view.addListener(viewTargetListener);
 
-      // TODO Check if a CommandStack is needed
       BasicCommandStack commandStack = new BasicCommandStack();
       commandStack.addCommandStackListener(new CommandStackListener()
       {
         public void commandStackChanged(final EventObject event)
         {
-          try
+          getContainer().getDisplay().asyncExec(new Runnable()
           {
-            if (getContainer() != null && !getContainer().isDisposed())
+            public void run()
             {
-              getContainer().getDisplay().asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-                  if (mostRecentCommand != null)
-                  {
-                    setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-                  }
+              firePropertyChange(IEditorPart.PROP_DIRTY);
 
-                  if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-                  {
-                    propertySheetPage.refresh();
-                  }
+              // Try to select the affected objects.
+              //
+              Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+              if (mostRecentCommand != null)
+              {
+                setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+              }
+              for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext();)
+              {
+                PropertySheetPage propertySheetPage = i.next();
+                if (propertySheetPage.getControl().isDisposed())
+                {
+                  i.remove();
                 }
-              });
+                else
+                {
+                  propertySheetPage.refresh();
+                }
+              }
             }
-          }
-          catch (RuntimeException ex)
-          {
-            OM.LOG.error(ex);
-          }
+          });
         }
       });
 
@@ -1276,6 +1296,23 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           if (CDOUtil.isLegacyObject(cdoObject))
           {
             CDOStateMachine.INSTANCE.read(cdoObject);
+          }
+
+          for (PropertySheetPage propertySheetPage : propertySheetPages)
+          {
+            if (propertySheetPage instanceof ExtendedPropertySheetPage)
+            {
+              ExtendedPropertySheetPage page = (ExtendedPropertySheetPage)propertySheetPage;
+              List<?> input = page.getInput();
+              for (Object object : input)
+              {
+                if (object == cdoObject)
+                {
+                  propertySheetPage.refresh();
+                  break;
+                }
+              }
+            }
           }
         }
 
@@ -1609,26 +1646,24 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public IPropertySheetPage getPropertySheetPageGen()
   {
-    if (propertySheetPage == null)
+    PropertySheetPage propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
     {
-      propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
+      @Override
+      public void setSelectionToViewer(List<?> selection)
       {
-        @Override
-        public void setSelectionToViewer(List<?> selection)
-        {
-          CDOEditor.this.setSelectionToViewer(selection);
-          CDOEditor.this.setFocus();
-        }
+        CDOEditor.this.setSelectionToViewer(selection);
+        CDOEditor.this.setFocus();
+      }
 
-        @Override
-        public void setActionBars(IActionBars actionBars)
-        {
-          super.setActionBars(actionBars);
-          getActionBarContributor().shareGlobalActions(this, actionBars);
-        }
-      };
-      propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
-    }
+      @Override
+      public void setActionBars(IActionBars actionBars)
+      {
+        super.setActionBars(actionBars);
+        getActionBarContributor().shareGlobalActions(this, actionBars);
+      }
+    };
+    propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
+    propertySheetPages.add(propertySheetPage);
 
     return propertySheetPage;
   }
@@ -1640,37 +1675,37 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public IPropertySheetPage getPropertySheetPage()
   {
-    if (propertySheetPage == null)
+    PropertySheetPage propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
     {
-      propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
       {
+        setSorter(new PropertySheetSorter()
         {
-          setSorter(new PropertySheetSorter()
+          @Override
+          public void sort(IPropertySheetEntry[] entries)
           {
-            @Override
-            public void sort(IPropertySheetEntry[] entries)
-            {
-              // Intentionally left empty
-            }
-          });
-        }
+            // Intentionally left empty
+          }
+        });
+      }
 
-        @Override
-        public void setSelectionToViewer(List<?> selection)
-        {
-          CDOEditor.this.setSelectionToViewer(selection);
-          CDOEditor.this.setFocus();
-        }
+      @Override
+      public void setSelectionToViewer(List<?> selection)
+      {
+        CDOEditor.this.setSelectionToViewer(selection);
+        CDOEditor.this.setFocus();
+      }
 
-        @Override
-        public void setActionBars(IActionBars actionBars)
-        {
-          super.setActionBars(actionBars);
-          getActionBarContributor().shareGlobalActions(this, actionBars);
-        }
-      };
-      propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
-    }
+      @Override
+      public void setActionBars(IActionBars actionBars)
+      {
+        super.setActionBars(actionBars);
+        getActionBarContributor().shareGlobalActions(this, actionBars);
+      }
+    };
+
+    propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
+    propertySheetPages.add(propertySheetPage);
+
     return propertySheetPage;
   }
 
@@ -1897,7 +1932,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This returns whether something has been persisted to the URI of the specified resource.
-   * The implementation uses the URI converter from the editor's resource set to try to open an input stream. 
+   * The implementation uses the URI converter from the editor's resource set to try to open an input stream.
    * <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * @generated
@@ -2390,7 +2425,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       getActionBarContributor().setActiveEditor(null);
     }
 
-    if (propertySheetPage != null)
+    for (PropertySheetPage propertySheetPage : propertySheetPages)
     {
       propertySheetPage.dispose();
     }
@@ -2446,7 +2481,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       getActionBarContributor().setActiveEditor(null);
     }
 
-    if (propertySheetPage != null)
+    for (PropertySheetPage propertySheetPage : propertySheetPages)
     {
       propertySheetPage.dispose();
     }

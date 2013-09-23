@@ -57,10 +57,10 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDODeltaNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
+import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
@@ -131,10 +131,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
 
-  private QueueRunner invalidationRunner;
-
-  @ExcludeFromDump
-  private InvalidationRunnerLock invalidationRunnerLock = new InvalidationRunnerLock();
+  private QueueRunner invalidationRunner = createInvalidationRunner();
 
   private volatile boolean invalidationRunnerActive;
 
@@ -899,26 +896,18 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  private QueueRunner getInvalidationRunner()
+  public QueueRunner getInvalidationRunner()
   {
-    synchronized (invalidationRunnerLock)
+    try
     {
-      if (invalidationRunner == null)
+      invalidationRunner.activate();
+    }
+    catch (LifecycleException ex)
+    {
+      // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
+      if (!(ex.getCause() instanceof InterruptedException))
       {
-        invalidationRunner = createInvalidationRunner();
-
-        try
-        {
-          invalidationRunner.activate();
-        }
-        catch (LifecycleException ex)
-        {
-          // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
-          if (!(ex.getCause() instanceof InterruptedException))
-          {
-            throw ex;
-          }
-        }
+        throw ex;
       }
     }
 
@@ -1185,6 +1174,12 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     CDOViewRegistryImpl.INSTANCE.register(this);
+
+    Runnable runnable = SessionUtil.getTestDelayInViewActivation();
+    if (runnable != null)
+    {
+      runnable.run();
+    }
   }
 
   @Override
@@ -1225,12 +1220,7 @@ public class CDOViewImpl extends AbstractCDOView
     // }
 
     CDOViewRegistryImpl.INSTANCE.deregister(this);
-
-    if (invalidationRunner != null)
-    {
-      LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
-      invalidationRunner = null;
-    }
+    LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
 
     try
     {
@@ -1680,15 +1670,6 @@ public class CDOViewImpl extends AbstractCDOView
     {
       this.count = count;
     }
-  }
-
-  /**
-   * A separate class for better monitor debugging.
-   *
-   * @author Eike Stepper
-   */
-  private static final class InvalidationRunnerLock
-  {
   }
 
   /**

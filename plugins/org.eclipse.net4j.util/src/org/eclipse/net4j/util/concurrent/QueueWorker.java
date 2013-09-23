@@ -27,7 +27,7 @@ public abstract class QueueWorker<E> extends Worker
    */
   public static final int DEFAULT_POLL_MILLIS = 100;
 
-  private BlockingQueue<E> queue;
+  private BlockingQueue<E> queue = createQueue();
 
   private long pollMillis;
 
@@ -70,14 +70,7 @@ public abstract class QueueWorker<E> extends Worker
   @Override
   protected void work(WorkContext context) throws Exception
   {
-    if (queue == null)
-    {
-      context.terminate();
-    }
-    else
-    {
-      doWork(context);
-    }
+    doWork(context);
   }
 
   private void doWork(WorkContext context) throws InterruptedException
@@ -124,13 +117,6 @@ public abstract class QueueWorker<E> extends Worker
   }
 
   @Override
-  protected void doActivate() throws Exception
-  {
-    queue = createQueue();
-    super.doActivate();
-  }
-
-  @Override
   protected void doDeactivate() throws Exception
   {
     super.doDeactivate();
@@ -148,8 +134,6 @@ public abstract class QueueWorker<E> extends Worker
       {
         queue.clear();
       }
-
-      queue = null;
     }
   }
 }

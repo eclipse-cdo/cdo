@@ -30,6 +30,8 @@ public final class SessionUtil
 
   private static Runnable testDelayInSessionActivation;
 
+  private static Runnable testDelayInViewActivation;
+
   private SessionUtil()
   {
   }
@@ -98,5 +100,15 @@ public final class SessionUtil
   public static void setTestDelayInSessionActivation(Runnable runnable)
   {
     testDelayInSessionActivation = runnable;
+  }
+
+  public static Runnable getTestDelayInViewActivation()
+  {
+    return testDelayInViewActivation;
+  }
+
+  public static void setTestDelayInViewActivation(Runnable runnable)
+  {
+    testDelayInViewActivation = runnable;
   }
 }

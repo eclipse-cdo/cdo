@@ -252,7 +252,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     {
       view.setViewID(++lastViewID);
       initViewSynced(view);
-      views.add(view);
+      views.add(view); // From now the view.invalidate() method can be called!
     }
 
     // Link ViewSet with View

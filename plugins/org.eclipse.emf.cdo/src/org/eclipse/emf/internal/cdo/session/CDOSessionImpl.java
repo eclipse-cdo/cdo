@@ -1073,6 +1073,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache);
   }
 
+  public ILifecycle getInvalidator()
+  {
+    return invalidator;
+  }
+
   public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);
@@ -1260,7 +1265,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    LifecycleUtil.activate(invalidator);
+
+    Runnable runnable = SessionUtil.getTestDelayInSessionActivation();
+    if (runnable != null)
+    {
+      runnable.run();
+    }
 
     InternalCDORemoteSessionManager remoteSessionManager = new CDORemoteSessionManagerImpl();
     remoteSessionManager.setLocalSession(this);
@@ -1269,6 +1279,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     checkState(sessionProtocol, "sessionProtocol"); //$NON-NLS-1$
     checkState(remoteSessionManager, "remoteSessionManager"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+    LifecycleUtil.activate(invalidator);
   }
 
   @Override
@@ -1660,6 +1677,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private final List<Invalidation> reorderQueue = new ArrayList<Invalidation>();
 
+    private boolean terminateIfSessionClosed;
+
     public Invalidator()
     {
     }
@@ -1737,10 +1756,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     @Override
     protected void noWork(WorkContext context)
     {
-      if (isClosed())
+      if (isClosed() && terminateIfSessionClosed)
       {
         context.terminate();
       }
+    }
+
+    @Override
+    protected void doAfterActivate() throws Exception
+    {
+      super.doAfterActivate();
+      terminateIfSessionClosed = true;
     }
 
     @Override

@@ -55,6 +55,9 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -364,6 +367,24 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     determineCodeLink();
     ISessionConfig sessionConfig = getSessionConfig();
     return sessionConfig.openSession(repositoryName);
+  }
+
+  /**
+   * @category Session
+   */
+  public CDOSession openSession(IPasswordCredentials credentials)
+  {
+    if (credentials != null)
+    {
+      IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(credentials);
+      getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, credentialsProvider);
+    }
+    else
+    {
+      getTestProperties().remove(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER);
+    }
+
+    return openSession();
   }
 
   // /////////////////////////////////////////////////////////////////////////

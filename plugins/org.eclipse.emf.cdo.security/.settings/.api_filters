@@ -164,6 +164,12 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="PATTERN_STYLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
                 <message_argument value="PERMISSION_FILTER"/>
             </message_arguments>
         </filter>
@@ -188,7 +194,49 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__BINARY_RESOURCES"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__FOLDERS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__INCLUDE_PARENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__INCLUDE_ROOT"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
                 <message_argument value="RESOURCE_FILTER__INCLUSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__MODEL_OBJECTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__MODEL_RESOURCES"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__PARENT_FOLDERS"/>
             </message_arguments>
         </filter>
         <filter id="403767336">
@@ -201,6 +249,36 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
                 <message_argument value="RESOURCE_FILTER__PATTERN"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__PATTERN_STYLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__ROOT_RESOURCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__STYLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="RESOURCE_FILTER__TEXT_RESOURCES"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.security.SecurityPackage.Literals"/>
+                <message_argument value="STYLE"/>
             </message_arguments>
         </filter>
     </resource>

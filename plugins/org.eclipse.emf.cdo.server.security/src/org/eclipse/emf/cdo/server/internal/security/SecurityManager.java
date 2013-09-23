@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.Inclusion;
+import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
@@ -78,6 +78,8 @@ import java.util.Map;
 public class SecurityManager extends Lifecycle implements InternalSecurityManager
 {
   private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = new HashMap<IRepository, InternalSecurityManager>();
+
+  private static final SecurityFactory SF = SecurityFactory.eINSTANCE;
 
   private final IListener repositoryListener = new LifecycleEventAdapter()
   {
@@ -248,7 +250,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       public void execute(Realm realm)
       {
-        UserPassword userPassword = SecurityFactory.eINSTANCE.createUserPassword();
+        UserPassword userPassword = SF.createUserPassword();
         userPassword.setEncrypted(new String(password));
 
         result[0] = realm.addUser(id);
@@ -528,9 +530,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected Realm createRealm()
   {
-    final SecurityFactory factory = SecurityFactory.eINSTANCE;
-
-    Realm realm = factory.createRealm("Security Realm");
+    Realm realm = SF.createRealm("Security Realm");
     realm.setDefaultRoleDirectory(addDirectory(realm, "Roles"));
     realm.setDefaultGroupDirectory(addDirectory(realm, "Groups"));
     realm.setDefaultUserDirectory(addDirectory(realm, "Users"));
@@ -539,27 +539,25 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     Role allReaderRole = realm.addRole("All Objects Reader");
     allReaderRole.getPermissions().add(
-        factory.createFilterPermission(Access.READ, factory.createResourceFilter(".*", Inclusion.REGEX)));
+        SF.createFilterPermission(Access.READ, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
     Role allWriterRole = realm.addRole("All Objects Writer");
     allWriterRole.getPermissions().add(
-        factory.createFilterPermission(Access.WRITE, factory.createResourceFilter(".*", Inclusion.REGEX)));
+        SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
     Role treeReaderRole = realm.addRole("Resource Tree Reader");
     treeReaderRole.getPermissions().add(
-        factory.createFilterPermission(Access.READ, factory.createPackageFilter(EresourcePackage.eINSTANCE)));
+        SF.createFilterPermission(Access.READ, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role treeWriterRole = realm.addRole("Resource Tree Writer");
     treeWriterRole.getPermissions().add(
-        factory.createFilterPermission(Access.WRITE, factory.createPackageFilter(EresourcePackage.eINSTANCE)));
+        SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role adminRole = realm.addRole("Administration");
-    adminRole.getPermissions()
-        .add(
-            factory.createFilterPermission(Access.WRITE,
-                factory.createResourceFilter(realmPath, Inclusion.EXACT_AND_DOWN)));
     adminRole.getPermissions().add(
-        factory.createFilterPermission(Access.READ, factory.createResourceFilter(realmPath, Inclusion.EXACT_AND_UP)));
+        SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
+    adminRole.getPermissions().add(
+        SF.createFilterPermission(Access.READ, SF.createResourceFilter(realmPath, PatternStyle.EXACT, true)));
 
     // Create groups
 
@@ -578,7 +576,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected Directory addDirectory(Realm realm, String name)
   {
-    Directory directory = SecurityFactory.eINSTANCE.createDirectory(name);
+    Directory directory = SF.createDirectory(name);
     realm.getItems().add(directory);
     return directory;
   }

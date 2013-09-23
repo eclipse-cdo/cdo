@@ -26,7 +26,9 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.server.IPermissionManager;
@@ -57,6 +59,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.core.runtime.Platform;
 
 import java.text.MessageFormat;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -407,7 +410,14 @@ public class Session extends Container<IView> implements InternalSession
     sendCommitNotification(commitInfo, true);
   }
 
-  public void sendCommitNotification(final CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
+  @Deprecated
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
+  {
+    sendCommitNotification(commitInfo, true, null);
+  }
+
+  public void sendCommitNotification(final CDOCommitInfo commitInfo, boolean clearResourcePathCache,
+      final CDORevisionProvider revisionProvider) throws Exception
   {
     if (protocol == null)
     {
@@ -419,7 +429,10 @@ public class Session extends Container<IView> implements InternalSession
       return;
     }
 
+    final IPermissionManager permissionManager = manager.getPermissionManager();
+    final Set<CDOID> readOnly = new HashSet<CDOID>();
     final InternalView[] views = getViews();
+
     protocol.sendCommitNotification(new DelegatingCommitInfo()
     {
       private final PassiveUpdateMode passiveUpdateMode = getPassiveUpdateMode();
@@ -443,16 +456,30 @@ public class Session extends Container<IView> implements InternalSession
           @Override
           public CDOIDAndVersion get(int index)
           {
-            // The following will always be a CDORevision!
-            CDOIDAndVersion newObject = newObjects.get(index);
+            CDORevision revision = (CDORevision)newObjects.get(index);
             if (additions)
             {
-              // Return full revisions if not in INVALIDATION mode
-              return newObject;
+              if (permissionManager == null)
+              {
+                // Return full revision
+                return revision;
+              }
+
+              CDOPermission permission = permissionManager.getPermission(revision, commitInfo, Session.this);
+              if (permission != CDOPermission.NONE)
+              {
+                if (permission == CDOPermission.READ)
+                {
+                  readOnly.add(revision.getID());
+                }
+
+                // Return full revision
+                return revision;
+              }
             }
 
-            // Prevent sending whole revisions by copying the id and version
-            return CDOIDUtil.createIDAndVersion(newObject);
+            // Prevent sending full revision by copying the id and version
+            return CDOIDUtil.createIDAndVersion(revision);
           }
 
           @Override
@@ -472,15 +499,39 @@ public class Session extends Container<IView> implements InternalSession
           @Override
           public CDORevisionKey get(int index)
           {
-            // The following will always be a CDORevisionDelta!
-            CDORevisionKey changedObject = changedObjects.get(index);
-            if (changes || additions || hasSubscription(changedObject.getID(), views))
+            CDORevisionDelta revisionDelta = (CDORevisionDelta)changedObjects.get(index);
+            CDOID id = revisionDelta.getID();
+
+            if (changes || additions || hasSubscription(id, views))
             {
-              return changedObject;
+              if (permissionManager == null)
+              {
+                // Return full delta
+                return revisionDelta;
+              }
+
+              if (revisionProvider == null)
+              {
+                // Return full delta
+                return revisionDelta;
+              }
+
+              CDORevision newRevision = revisionProvider.getRevision(id);
+              CDOPermission permission = permissionManager.getPermission(newRevision, commitInfo, Session.this);
+              if (permission != CDOPermission.NONE)
+              {
+                if (permission == CDOPermission.READ)
+                {
+                  readOnly.add(id);
+                }
+
+                // Return full delta
+                return revisionDelta;
+              }
             }
 
-            // Prevent sending whole revisions by copying the id and version
-            return CDORevisionUtil.copyRevisionKey(changedObject);
+            // Prevent sending full delta by copying the id and version
+            return CDORevisionUtil.copyRevisionKey(revisionDelta);
           }
 
           @Override
@@ -490,7 +541,7 @@ public class Session extends Container<IView> implements InternalSession
           }
         };
       }
-    }, clearResourcePathCache);
+    }, clearResourcePathCache, readOnly);
 
     synchronized (lastUpdateTimeLock)
     {

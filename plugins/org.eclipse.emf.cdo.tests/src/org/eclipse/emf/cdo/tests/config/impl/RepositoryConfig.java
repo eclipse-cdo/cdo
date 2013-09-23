@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
@@ -904,7 +905,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
                 volatile int counter = 1;
 
                 @Override
-                public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+                public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache,
+                    Set<CDOID> readOnly)
                 {
                   long delay = getTestDelayed2CommitHandling();
                   if (delay != 0L && counter++ % 2 == 0)
@@ -912,7 +914,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
                     AbstractOMTest.sleep(delay);
                   }
 
-                  super.handleCommitNotification(commitInfo, clearResourcePathCache);
+                  super.handleCommitNotification(commitInfo, clearResourcePathCache, readOnly);
                 }
               };
             }

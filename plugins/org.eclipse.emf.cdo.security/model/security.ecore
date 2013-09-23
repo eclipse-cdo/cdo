@@ -123,8 +123,22 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ResourceFilter" eSuperTypes="#//PermissionFilter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inclusion" eType="#//Inclusion"
-        defaultValueLiteral="Regex"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="patternStyle" eType="#//PatternStyle"
+        defaultValueLiteral="TREE"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="folders" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textResources" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="binaryResources" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelResources" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelObjects" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="includeParents" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="includeRoot" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectFilter" abstract="true" eSuperTypes="#//PermissionFilter"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExpressionFilter" eSuperTypes="#//ObjectFilter">
@@ -139,11 +153,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="NotFilter" eSuperTypes="#//CombinedFilter"/>
   <eClassifiers xsi:type="ecore:EClass" name="AndFilter" eSuperTypes="#//CombinedFilter"/>
   <eClassifiers xsi:type="ecore:EClass" name="OrFilter" eSuperTypes="#//CombinedFilter"/>
-  <eClassifiers xsi:type="ecore:EEnum" name="Inclusion">
-    <eLiterals name="Exact"/>
-    <eLiterals name="ExactAndUp" value="1"/>
-    <eLiterals name="ExactAndDown" value="2"/>
-    <eLiterals name="Regex" value="3"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="PatternStyle">
+    <eLiterals name="EXACT"/>
+    <eLiterals name="TREE" value="1"/>
+    <eLiterals name="ANT" value="2" literal="ANT"/>
+    <eLiterals name="REGEX" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Access">
     <eLiterals name="READ"/>

@@ -1099,14 +1099,84 @@ public interface SecurityPackage extends EPackage
   int RESOURCE_FILTER__PATH = PERMISSION_FILTER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Inclusion</b></em>' attribute.
+   * The feature id for the '<em><b>Pattern Style</b></em>' attribute.
    * <!-- begin-user-doc -->
    * @since 4.3
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RESOURCE_FILTER__INCLUSION = PERMISSION_FILTER_FEATURE_COUNT + 1;
+  int RESOURCE_FILTER__PATTERN_STYLE = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Folders</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__FOLDERS = PERMISSION_FILTER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Text Resources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__TEXT_RESOURCES = PERMISSION_FILTER_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Binary Resources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__BINARY_RESOURCES = PERMISSION_FILTER_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Model Resources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__MODEL_RESOURCES = PERMISSION_FILTER_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Model Objects</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__MODEL_OBJECTS = PERMISSION_FILTER_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Include Parents</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__INCLUDE_PARENTS = PERMISSION_FILTER_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Include Root</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER__INCLUDE_ROOT = PERMISSION_FILTER_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>Resource Filter</em>' class.
@@ -1116,7 +1186,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RESOURCE_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 2;
+  int RESOURCE_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 9;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ObjectFilterImpl <em>Object Filter</em>}' class.
@@ -1295,15 +1365,15 @@ public interface SecurityPackage extends EPackage
   int OR_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.security.Inclusion <em>Inclusion</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.PatternStyle <em>Pattern Style</em>}' enum.
    * <!-- begin-user-doc -->
    * @since 4.3
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.security.Inclusion
-   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getInclusion()
+   * @see org.eclipse.emf.cdo.security.PatternStyle
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPatternStyle()
    * @generated
    */
-  int INCLUSION = 26;
+  int PATTERN_STYLE = 26;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.
@@ -2072,16 +2142,100 @@ public interface SecurityPackage extends EPackage
   EAttribute getResourceFilter_Path();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#getInclusion <em>Inclusion</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#getPatternStyle <em>Pattern Style</em>}'.
    * <!-- begin-user-doc -->
    * @since 4.3
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Inclusion</em>'.
-   * @see org.eclipse.emf.cdo.security.ResourceFilter#getInclusion()
+   * @return the meta object for the attribute '<em>Pattern Style</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#getPatternStyle()
    * @see #getResourceFilter()
    * @generated
    */
-  EAttribute getResourceFilter_Inclusion();
+  EAttribute getResourceFilter_PatternStyle();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isFolders <em>Folders</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Folders</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isFolders()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_Folders();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isModelResources <em>Model Resources</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Model Resources</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isModelResources()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_ModelResources();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isModelObjects <em>Model Objects</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Model Objects</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isModelObjects()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_ModelObjects();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isIncludeParents <em>Include Parents</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Include Parents</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isIncludeParents()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_IncludeParents();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isIncludeRoot <em>Include Root</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Include Root</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isIncludeRoot()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_IncludeRoot();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isTextResources <em>Text Resources</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Text Resources</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isTextResources()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_TextResources();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceFilter#isBinaryResources <em>Binary Resources</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Binary Resources</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceFilter#isBinaryResources()
+   * @see #getResourceFilter()
+   * @generated
+   */
+  EAttribute getResourceFilter_BinaryResources();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ObjectFilter <em>Object Filter</em>}'.
@@ -2174,15 +2328,15 @@ public interface SecurityPackage extends EPackage
   EClass getOrFilter();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Inclusion <em>Inclusion</em>}'.
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.PatternStyle <em>Pattern Style</em>}'.
    * <!-- begin-user-doc -->
    * @since 4.3
    * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Inclusion</em>'.
-   * @see org.eclipse.emf.cdo.security.Inclusion
+   * @return the meta object for enum '<em>Pattern Style</em>'.
+   * @see org.eclipse.emf.cdo.security.PatternStyle
    * @generated
    */
-  EEnum getInclusion();
+  EEnum getPatternStyle();
 
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}'.
@@ -2832,13 +2986,76 @@ public interface SecurityPackage extends EPackage
     EAttribute RESOURCE_FILTER__PATH = eINSTANCE.getResourceFilter_Path();
 
     /**
-     * The meta object literal for the '<em><b>Inclusion</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Pattern Style</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * @since 4.3
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute RESOURCE_FILTER__INCLUSION = eINSTANCE.getResourceFilter_Inclusion();
+    EAttribute RESOURCE_FILTER__PATTERN_STYLE = eINSTANCE.getResourceFilter_PatternStyle();
+
+    /**
+     * The meta object literal for the '<em><b>Folders</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__FOLDERS = eINSTANCE.getResourceFilter_Folders();
+
+    /**
+     * The meta object literal for the '<em><b>Model Resources</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__MODEL_RESOURCES = eINSTANCE.getResourceFilter_ModelResources();
+
+    /**
+     * The meta object literal for the '<em><b>Model Objects</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__MODEL_OBJECTS = eINSTANCE.getResourceFilter_ModelObjects();
+
+    /**
+     * The meta object literal for the '<em><b>Include Parents</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__INCLUDE_PARENTS = eINSTANCE.getResourceFilter_IncludeParents();
+
+    /**
+     * The meta object literal for the '<em><b>Include Root</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__INCLUDE_ROOT = eINSTANCE.getResourceFilter_IncludeRoot();
+
+    /**
+     * The meta object literal for the '<em><b>Text Resources</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__TEXT_RESOURCES = eINSTANCE.getResourceFilter_TextResources();
+
+    /**
+     * The meta object literal for the '<em><b>Binary Resources</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_FILTER__BINARY_RESOURCES = eINSTANCE.getResourceFilter_BinaryResources();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ObjectFilterImpl <em>Object Filter</em>}' class.
@@ -2925,15 +3142,15 @@ public interface SecurityPackage extends EPackage
     EClass OR_FILTER = eINSTANCE.getOrFilter();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Inclusion <em>Inclusion</em>}' enum.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.PatternStyle <em>Pattern Style</em>}' enum.
      * <!-- begin-user-doc -->
      * @since 4.3
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.security.Inclusion
-     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getInclusion()
+     * @see org.eclipse.emf.cdo.security.PatternStyle
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPatternStyle()
      * @generated
      */
-    EEnum INCLUSION = eINSTANCE.getInclusion();
+    EEnum PATTERN_STYLE = eINSTANCE.getPatternStyle();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.

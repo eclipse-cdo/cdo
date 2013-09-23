@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
@@ -895,12 +896,29 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     handleCommitNotification(commitInfo, true);
   }
 
+  @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    handleCommitNotification(commitInfo, true, null);
+  }
+
+  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
   {
     try
     {
       registerPackageUnits(commitInfo.getNewPackageUnits());
-      invalidate(commitInfo, null, clearResourcePathCache);
+
+      Map<CDOID, CDOPermission> permissions = null;
+      if (readOnly != null)
+      {
+        permissions = CDOIDUtil.createMap();
+        for (CDOID id : readOnly)
+        {
+          permissions.put(id, CDOPermission.READ);
+        }
+      }
+
+      invalidate(commitInfo, null, clearResourcePathCache, permissions);
     }
     catch (RuntimeException ex)
     {
@@ -935,77 +953,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       packageRegistry.putPackageUnit((InternalCDOPackageUnit)newPackageUnit);
     }
-  }
-
-  private Map<CDOID, InternalCDORevision> reviseRevisions(CDOCommitInfo commitInfo)
-  {
-    Map<CDOID, InternalCDORevision> oldRevisions = null;
-    CDOBranch newBranch = commitInfo.getBranch();
-    long timeStamp = commitInfo.getTimeStamp();
-
-    // Cache new revisions
-    for (CDOIDAndVersion key : commitInfo.getNewObjects())
-    {
-      if (key instanceof InternalCDORevision)
-      {
-        InternalCDORevision newRevision = (InternalCDORevision)key;
-        revisionManager.addRevision(newRevision);
-      }
-    }
-
-    // Apply deltas and cache the resulting new revisions, if possible...
-    for (CDORevisionKey key : commitInfo.getChangedObjects())
-    {
-      CDOID id = key.getID();
-      if (key instanceof CDORevisionDelta)
-      {
-        CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
-
-        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, revisionDelta,
-            CDORevision.UNCHUNKED, false);
-        if (oldRevision != null)
-        {
-          addOldValuesToDelta(oldRevision, revisionDelta);
-
-          InternalCDORevision newRevision = oldRevision.copy();
-          newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
-
-          CDORevisable target = revisionDelta.getTarget();
-          if (target != null)
-          {
-            newRevision.setVersion(target.getVersion());
-          }
-
-          revisionDelta.apply(newRevision);
-          newRevision.freeze();
-
-          revisionManager.addRevision(newRevision);
-          if (oldRevisions == null)
-          {
-            oldRevisions = CDOIDUtil.createMap();
-          }
-
-          oldRevisions.put(id, oldRevision);
-        }
-      }
-      else
-      {
-        // ... otherwise try to revise old revision if it is in the same branch
-        if (key.getBranch() == newBranch)
-        {
-          revisionManager.reviseVersion(id, key, timeStamp);
-        }
-      }
-    }
-
-    // Revise old revisions
-    for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
-    {
-      CDOID id = key.getID();
-      revisionManager.reviseLatest(id, newBranch);
-    }
-
-    return oldRevisions;
   }
 
   /**
@@ -1098,9 +1045,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     invalidate(commitInfo, sender, true);
   }
 
+  @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
   {
-    invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache);
+    invalidate(commitInfo, sender, true, null);
+  }
+
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
+      Map<CDOID, CDOPermission> permissions)
+  {
+    invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache, permissions);
   }
 
   public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
@@ -1726,14 +1680,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     public synchronized void reorderInvalidations(CDOCommitInfo commitInfo, InternalCDOTransaction sender,
-        boolean clearResourcePathCache)
+        boolean clearResourcePathCache, Map<CDOID, CDOPermission> permissions)
     {
       if (!isActive())
       {
         return;
       }
 
-      Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache);
+      Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, permissions);
       reorderQueue.add(invalidation);
       Collections.sort(reorderQueue);
 
@@ -1796,11 +1750,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private final boolean clearResourcePathCache;
 
-    public Invalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
+    private final Map<CDOID, CDOPermission> permissions;
+
+    public Invalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
+        Map<CDOID, CDOPermission> permissions)
     {
       this.commitInfo = commitInfo;
       this.sender = sender;
       this.clearResourcePathCache = clearResourcePathCache;
+      this.permissions = permissions;
     }
 
     public long getTimeStamp()
@@ -1840,7 +1798,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         boolean success = commitInfo.getBranch() != null;
         if (success)
         {
-          oldRevisions = reviseRevisions(commitInfo);
+          oldRevisions = reviseRevisions();
         }
 
         if (options.isPassiveUpdateEnabled()/* || sender != null */)
@@ -1877,6 +1835,99 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         // Give the Invalidator another chance to schedule Invalidations.
         invalidator.scheduleInvalidations();
       }
+    }
+
+    private Map<CDOID, InternalCDORevision> reviseRevisions()
+    {
+      Map<CDOID, InternalCDORevision> oldRevisions = null;
+      CDOBranch newBranch = commitInfo.getBranch();
+      long timeStamp = commitInfo.getTimeStamp();
+
+      // Cache new revisions
+      for (CDOIDAndVersion key : commitInfo.getNewObjects())
+      {
+        if (key instanceof InternalCDORevision)
+        {
+          InternalCDORevision newRevision = (InternalCDORevision)key;
+          addNewRevision(newRevision);
+        }
+      }
+
+      // Apply deltas and cache the resulting new revisions, if possible...
+      for (CDORevisionKey key : commitInfo.getChangedObjects())
+      {
+        CDOID id = key.getID();
+        if (key instanceof CDORevisionDelta)
+        {
+          CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
+
+          InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, revisionDelta,
+              CDORevision.UNCHUNKED, false);
+          if (oldRevision != null)
+          {
+            addOldValuesToDelta(oldRevision, revisionDelta);
+
+            InternalCDORevision newRevision = oldRevision.copy();
+            newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
+
+            CDORevisable target = revisionDelta.getTarget();
+            if (target != null)
+            {
+              newRevision.setVersion(target.getVersion());
+            }
+
+            try
+            {
+              newRevision.bypassPermissionChecks(true);
+              revisionDelta.apply(newRevision);
+            }
+            finally
+            {
+              newRevision.bypassPermissionChecks(false);
+              newRevision.freeze();
+            }
+
+            addNewRevision(newRevision);
+            if (oldRevisions == null)
+            {
+              oldRevisions = CDOIDUtil.createMap();
+            }
+
+            oldRevisions.put(id, oldRevision);
+          }
+        }
+        else
+        {
+          // ... otherwise try to revise old revision if it is in the same branch
+          if (key.getBranch() == newBranch)
+          {
+            revisionManager.reviseVersion(id, key, timeStamp);
+          }
+        }
+      }
+
+      // Revise old revisions
+      for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
+      {
+        CDOID id = key.getID();
+        revisionManager.reviseLatest(id, newBranch);
+      }
+
+      return oldRevisions;
+    }
+
+    private void addNewRevision(InternalCDORevision newRevision)
+    {
+      if (permissions != null)
+      {
+        CDOPermission permission = permissions.get(newRevision.getID());
+        if (permission != null)
+        {
+          newRevision.setPermission(permission);
+        }
+      }
+
+      revisionManager.addRevision(newRevision);
     }
 
     private void invalidateView(CDOCommitInfo commitInfo, InternalCDOView view, InternalCDOTransaction sender,

@@ -382,7 +382,7 @@ public class SessionTest extends AbstractCDOTest
     getRepository("authrepo7");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, null)));
+        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID)));
 
     try
     {

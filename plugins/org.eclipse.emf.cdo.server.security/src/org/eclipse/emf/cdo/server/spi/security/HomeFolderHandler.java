@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.spi.security;
 
 import org.eclipse.emf.cdo.security.Access;
-import org.eclipse.emf.cdo.security.Inclusion;
+import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
@@ -42,6 +42,8 @@ import java.util.List;
 public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
 {
   public static final String DEFAULT_HOME_FOLDER = "/home";
+
+  private static final SecurityFactory SF = SecurityFactory.eINSTANCE;
 
   private final String homeFolder;
 
@@ -80,12 +82,11 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
 
   protected void initRole(Role role)
   {
-    role.getPermissions().add(
-        SecurityFactory.eINSTANCE.createFilterPermission(Access.WRITE,
-            SecurityFactory.eINSTANCE.createResourceFilter(homeFolder + "/${user}", Inclusion.EXACT_AND_DOWN)));
-    role.getPermissions().add(
-        SecurityFactory.eINSTANCE.createFilterPermission(Access.READ,
-            SecurityFactory.eINSTANCE.createResourceFilter(homeFolder, Inclusion.EXACT_AND_UP)));
+    role.getPermissions().add(SF.createFilterPermission(Access.WRITE, //
+        SF.createResourceFilter(homeFolder + "/${user}", PatternStyle.TREE, false)));
+
+    role.getPermissions().add(SF.createFilterPermission(Access.READ, //
+        SF.createResourceFilter(homeFolder, PatternStyle.EXACT, true)));
   }
 
   public void handleCommit(final InternalSecurityManager securityManager, CommitContext commitContext, User user)

@@ -34,6 +34,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -147,11 +149,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     sendCommitNotification(commitInfo, true);
   }
 
+  @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
+  {
+    sendCommitNotification(commitInfo, true, null);
+
+  }
+
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
+      throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new CommitNotificationRequest(this, commitInfo, clearResourcePathCache).sendAsync();
+      new CommitNotificationRequest(this, commitInfo, clearResourcePathCache, readOnly).sendAsync();
     }
     else
     {

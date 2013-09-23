@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -192,15 +193,22 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 3.0
-   * @deprecated As of 4.2 use {@link #handleCommitNotification(CDOCommitInfo, boolean)}
+   * @deprecated As of 4.2 use {@link #handleCommitNotification(CDOCommitInfo, boolean)}.
    */
   @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo);
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #handleCommitNotification(CDOCommitInfo, boolean, Set)}.
    */
+  @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache);
+
+  /**
+   * @since 4.3
+   */
+  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly);
 
   /**
    * @since 4.1
@@ -219,15 +227,23 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 3.0
-   * @deprecated As of 4.2 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)}
+   * @deprecated As of 4.2 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)}.
    */
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender);
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, Map)}.
    */
+  @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache);
+
+  /**
+   * @since 4.3
+   */
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
+      Map<CDOID, CDOPermission> permissions);
 
   /**
    * @since 3.0

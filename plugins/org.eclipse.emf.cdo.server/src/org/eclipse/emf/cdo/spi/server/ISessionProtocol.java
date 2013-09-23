@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
+import java.util.Set;
+
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
@@ -63,15 +65,23 @@ public interface ISessionProtocol extends CDOProtocol
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception;
 
   /**
-   * @deprecated As of 4.2 use {@link #sendCommitNotification(CDOCommitInfo, boolean)}
+   * @deprecated As of 4.2 use {@link #sendCommitNotification(CDOCommitInfo, boolean)}.
    */
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception;
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #sendCommitNotification(CDOCommitInfo, boolean, Set)}.
    */
+  @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception;
+
+  /**
+   * @since 4.3
+   */
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
+      throws Exception;
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
 

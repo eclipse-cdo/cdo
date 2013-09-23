@@ -20,12 +20,12 @@ import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.ExpressionFilter;
 import org.eclipse.emf.cdo.security.FilterPermission;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.Inclusion;
 import org.eclipse.emf.cdo.security.LinkedFilter;
 import org.eclipse.emf.cdo.security.NotFilter;
 import org.eclipse.emf.cdo.security.OrFilter;
 import org.eclipse.emf.cdo.security.PackageFilter;
 import org.eclipse.emf.cdo.security.PackagePermission;
+import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.ResourceFilter;
@@ -105,41 +105,41 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     switch (eClass.getClassifierID())
     {
     case SecurityPackage.REALM:
-      return (EObject)createRealm();
+      return createRealm();
     case SecurityPackage.DIRECTORY:
-      return (EObject)createDirectory();
+      return createDirectory();
     case SecurityPackage.ROLE:
-      return (EObject)createRole();
+      return createRole();
     case SecurityPackage.GROUP:
-      return (EObject)createGroup();
+      return createGroup();
     case SecurityPackage.USER:
-      return (EObject)createUser();
+      return createUser();
     case SecurityPackage.USER_PASSWORD:
-      return (EObject)createUserPassword();
+      return createUserPassword();
     case SecurityPackage.CLASS_PERMISSION:
-      return (EObject)createClassPermission();
+      return createClassPermission();
     case SecurityPackage.PACKAGE_PERMISSION:
-      return (EObject)createPackagePermission();
+      return createPackagePermission();
     case SecurityPackage.RESOURCE_PERMISSION:
-      return (EObject)createResourcePermission();
+      return createResourcePermission();
     case SecurityPackage.FILTER_PERMISSION:
-      return (EObject)createFilterPermission();
+      return createFilterPermission();
     case SecurityPackage.LINKED_FILTER:
-      return (EObject)createLinkedFilter();
+      return createLinkedFilter();
     case SecurityPackage.PACKAGE_FILTER:
-      return (EObject)createPackageFilter();
+      return createPackageFilter();
     case SecurityPackage.CLASS_FILTER:
-      return (EObject)createClassFilter();
+      return createClassFilter();
     case SecurityPackage.RESOURCE_FILTER:
-      return (EObject)createResourceFilter();
+      return createResourceFilter();
     case SecurityPackage.EXPRESSION_FILTER:
-      return (EObject)createExpressionFilter();
+      return createExpressionFilter();
     case SecurityPackage.NOT_FILTER:
-      return (EObject)createNotFilter();
+      return createNotFilter();
     case SecurityPackage.AND_FILTER:
-      return (EObject)createAndFilter();
+      return createAndFilter();
     case SecurityPackage.OR_FILTER:
-      return (EObject)createOrFilter();
+      return createOrFilter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -155,8 +155,8 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case SecurityPackage.INCLUSION:
-      return createInclusionFromString(eDataType, initialValue);
+    case SecurityPackage.PATTERN_STYLE:
+      return createPatternStyleFromString(eDataType, initialValue);
     case SecurityPackage.ACCESS:
       return createAccessFromString(eDataType, initialValue);
     case SecurityPackage.ACCESS_OBJECT:
@@ -176,8 +176,8 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case SecurityPackage.INCLUSION:
-      return convertInclusionToString(eDataType, instanceValue);
+    case SecurityPackage.PATTERN_STYLE:
+      return convertPatternStyleToString(eDataType, instanceValue);
     case SecurityPackage.ACCESS:
       return convertAccessToString(eDataType, instanceValue);
     case SecurityPackage.ACCESS_OBJECT:
@@ -472,10 +472,20 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
-  public ResourceFilter createResourceFilter(String path, Inclusion inclusion)
+  public ResourceFilter createResourceFilter(String path, PatternStyle patternStyle)
   {
     ResourceFilter filter = createResourceFilter(path);
-    filter.setInclusion(inclusion);
+    filter.setPatternStyle(patternStyle);
+    return filter;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public ResourceFilter createResourceFilter(String path, PatternStyle patternStyle, boolean includeParents)
+  {
+    ResourceFilter filter = createResourceFilter(path, patternStyle);
+    filter.setIncludeParents(includeParents);
     return filter;
   }
 
@@ -563,12 +573,14 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Inclusion createInclusionFromString(EDataType eDataType, String initialValue)
+  public PatternStyle createPatternStyleFromString(EDataType eDataType, String initialValue)
   {
-    Inclusion result = Inclusion.get(initialValue);
+    PatternStyle result = PatternStyle.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException(
           "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
     return result;
   }
 
@@ -578,7 +590,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public String convertInclusionToString(EDataType eDataType, Object instanceValue)
+  public String convertPatternStyleToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
@@ -602,8 +614,10 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     Access result = Access.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException(
           "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
     return result;
   }
 

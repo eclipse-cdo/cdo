@@ -125,9 +125,17 @@ public final class StringUtil
 
   public static String safe(String str)
   {
+    return safe(str, EMPTY);
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static String safe(String str, String def)
+  {
     if (str == null)
     {
-      return EMPTY;
+      return def;
     }
 
     return str;

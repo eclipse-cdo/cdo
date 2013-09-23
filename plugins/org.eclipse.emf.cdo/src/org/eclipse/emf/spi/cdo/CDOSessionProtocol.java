@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -685,6 +686,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOLockState[] newLockStates;
 
+    private Map<CDOID, CDOPermission> newPermissions;
+
     private boolean clearResourcePathCache;
 
     /**
@@ -836,6 +839,27 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     {
       CheckUtil.checkArg(newLockStates, "newLockStates");
       this.newLockStates = newLockStates;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public Map<CDOID, CDOPermission> getNewPermissions()
+    {
+      return newPermissions;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public void addNewPermission(CDOID id, CDOPermission permission)
+    {
+      if (newPermissions == null)
+      {
+        newPermissions = CDOIDUtil.createMap();
+      }
+
+      newPermissions.put(id, permission);
     }
 
     protected PostCommitReferenceAdjuster createReferenceAdjuster()

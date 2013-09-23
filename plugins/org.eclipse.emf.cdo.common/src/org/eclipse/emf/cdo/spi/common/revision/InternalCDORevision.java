@@ -156,6 +156,17 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void setPermission(CDOPermission permission);
 
   /**
+   * Enables or disables permission checking for this revision.
+   * <p>
+   * This method is used on the client side if the framework changes the revision on another 
+   * user's behalf, e.g., during invalidation or general revision copying. It's safe to offer this method
+   * on the client side because the server is always the permission checking authority (during load or commit).
+   * 
+   * @since 4.3
+   */
+  public boolean bypassPermissionChecks(boolean on);
+
+  /**
    * @since 4.0
    */
   public void freeze();

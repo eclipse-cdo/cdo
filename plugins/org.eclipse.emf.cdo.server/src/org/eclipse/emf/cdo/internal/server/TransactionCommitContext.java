@@ -780,10 +780,7 @@ public class TransactionCommitContext implements InternalCommitContext
       // Send notifications (in particular FailureCommitInfos) only if timeStamp had been allocated
       if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        InternalSession sender = transaction.getSession();
-        CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
-
-        repository.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
+        sendCommitNotifications(success);
       }
     }
     catch (Exception ex)
@@ -802,6 +799,14 @@ public class TransactionCommitContext implements InternalCommitContext
         packageRegistry = null;
       }
     }
+  }
+
+  private void sendCommitNotifications(boolean success)
+  {
+    InternalSession sender = transaction.getSession();
+    CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
+
+    repository.sendCommitNotification(sender, commitInfo, clearResourcePathCache, this);
   }
 
   public CDOCommitInfo createCommitInfo()

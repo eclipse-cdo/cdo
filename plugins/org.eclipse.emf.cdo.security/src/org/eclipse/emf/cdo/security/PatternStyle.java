@@ -18,97 +18,97 @@ import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Inclusion</b></em>',
+ * A representation of the literals of the enumeration '<em><b>PatternStyle</b></em>',
  * and utility methods for working with them.
  * @since 4.3
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.security.SecurityPackage#getInclusion()
+ * @see org.eclipse.emf.cdo.security.SecurityPackage#getPatternStyle()
  * @model
  * @generated
  */
-public enum Inclusion implements Enumerator
+public enum PatternStyle implements Enumerator
 {
   /**
-   * The '<em><b>Exact</b></em>' literal object.
+   * The '<em><b>EXACT</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #EXACT_VALUE
    * @generated
    * @ordered
    */
-  EXACT(0, "Exact", "Exact"), /**
-                              * The '<em><b>Exact And Up</b></em>' literal object.
+  EXACT(0, "EXACT", "EXACT"), /**
+                              * The '<em><b>TREE</b></em>' literal object.
                               * <!-- begin-user-doc -->
                               * <!-- end-user-doc -->
-                              * @see #EXACT_AND_UP_VALUE
+                              * @see #TREE_VALUE
                               * @generated
                               * @ordered
                               */
-  EXACT_AND_UP(1, "ExactAndUp", "ExactAndUp"), /**
-                                               * The '<em><b>Exact And Down</b></em>' literal object.
-                                               * <!-- begin-user-doc -->
-                                               * <!-- end-user-doc -->
-                                               * @see #EXACT_AND_DOWN_VALUE
-                                               * @generated
-                                               * @ordered
-                                               */
-  EXACT_AND_DOWN(2, "ExactAndDown", "ExactAndDown"), /**
-                                                     * The '<em><b>Regex</b></em>' literal object.
-                                                     * <!-- begin-user-doc -->
+  TREE(1, "TREE", "TREE"), /**
+                           * The '<em><b>ANT</b></em>' literal object.
+                           * <!-- begin-user-doc -->
+                              * <!-- end-user-doc -->
+                           * @see #ANT_VALUE
+                           * @generated
+                           * @ordered
+                           */
+  ANT(2, "ANT", "ANT"), /**
+                        * The '<em><b>REGEX</b></em>' literal object.
+                        * <!-- begin-user-doc -->
                                                      * <!-- end-user-doc -->
-                                                     * @see #REGEX_VALUE
-                                                     * @generated
-                                                     * @ordered
-                                                     */
-  REGEX(3, "Regex", "Regex"); //$NON-NLS-1$ //$NON-NLS-2$
+                        * @see #REGEX_VALUE
+                        * @generated
+                        * @ordered
+                        */
+  REGEX(3, "REGEX", "REGEX"); //$NON-NLS-1$ //$NON-NLS-2$
 
   /**
-   * The '<em><b>Exact</b></em>' literal value.
+   * The '<em><b>EXACT</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Exact</b></em>' literal object isn't clear,
+   * If the meaning of '<em><b>EXACT</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * @see #EXACT
-   * @model name="Exact"
+   * @model
    * @generated
    * @ordered
    */
   public static final int EXACT_VALUE = 0;
 
   /**
-   * The '<em><b>Exact And Up</b></em>' literal value.
+   * The '<em><b>TREE</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Exact And Up</b></em>' literal object isn't clear,
+   * If the meaning of '<em><b>TREE</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #EXACT_AND_UP
-   * @model name="ExactAndUp"
+   * @see #TREE
+   * @model
    * @generated
    * @ordered
    */
-  public static final int EXACT_AND_UP_VALUE = 1;
+  public static final int TREE_VALUE = 1;
 
   /**
-   * The '<em><b>Exact And Down</b></em>' literal value.
+   * The '<em><b>ANT</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Exact And Down</b></em>' literal object isn't clear,
+   * If the meaning of '<em><b>ANT</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #EXACT_AND_DOWN
-   * @model name="ExactAndDown"
+   * @see #ANT
+   * @model
    * @generated
    * @ordered
    */
-  public static final int EXACT_AND_DOWN_VALUE = 2;
+  public static final int ANT_VALUE = 2;
 
   /**
-   * The '<em><b>Regex</b></em>' literal value.
+   * The '<em><b>REGEX</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Regex</b></em>' literal object isn't clear,
@@ -116,39 +116,39 @@ public enum Inclusion implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #REGEX
-   * @model name="Regex"
+   * @model
    * @generated
    * @ordered
    */
   public static final int REGEX_VALUE = 3;
 
   /**
-   * An array of all the '<em><b>Inclusion</b></em>' enumerators.
+   * An array of all the '<em><b>Pattern Style</b></em>' enumerators.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private static final Inclusion[] VALUES_ARRAY = new Inclusion[] { EXACT, EXACT_AND_UP, EXACT_AND_DOWN, REGEX, };
+  private static final PatternStyle[] VALUES_ARRAY = new PatternStyle[] { EXACT, TREE, ANT, REGEX, };
 
   /**
-   * A public read-only list of all the '<em><b>Inclusion</b></em>' enumerators.
+   * A public read-only list of all the '<em><b>Pattern Style</b></em>' enumerators.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final List<Inclusion> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+  public static final List<PatternStyle> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Inclusion</b></em>' literal with the specified literal value.
+   * Returns the '<em><b>Pattern Style</b></em>' literal with the specified literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static Inclusion get(String literal)
+  public static PatternStyle get(String literal)
   {
     for (int i = 0; i < VALUES_ARRAY.length; ++i)
     {
-      Inclusion result = VALUES_ARRAY[i];
+      PatternStyle result = VALUES_ARRAY[i];
       if (result.toString().equals(literal))
       {
         return result;
@@ -158,16 +158,16 @@ public enum Inclusion implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Inclusion</b></em>' literal with the specified name.
+   * Returns the '<em><b>Pattern Style</b></em>' literal with the specified name.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static Inclusion getByName(String name)
+  public static PatternStyle getByName(String name)
   {
     for (int i = 0; i < VALUES_ARRAY.length; ++i)
     {
-      Inclusion result = VALUES_ARRAY[i];
+      PatternStyle result = VALUES_ARRAY[i];
       if (result.getName().equals(name))
       {
         return result;
@@ -177,21 +177,21 @@ public enum Inclusion implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Inclusion</b></em>' literal with the specified integer value.
+   * Returns the '<em><b>Pattern Style</b></em>' literal with the specified integer value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static Inclusion get(int value)
+  public static PatternStyle get(int value)
   {
     switch (value)
     {
     case EXACT_VALUE:
       return EXACT;
-    case EXACT_AND_UP_VALUE:
-      return EXACT_AND_UP;
-    case EXACT_AND_DOWN_VALUE:
-      return EXACT_AND_DOWN;
+    case TREE_VALUE:
+      return TREE;
+    case ANT_VALUE:
+      return ANT;
     case REGEX_VALUE:
       return REGEX;
     }
@@ -225,7 +225,7 @@ public enum Inclusion implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
-  private Inclusion(int value, String name, String literal)
+  private PatternStyle(int value, String name, String literal)
   {
     this.value = value;
     this.name = name;
@@ -274,4 +274,4 @@ public enum Inclusion implements Enumerator
     return literal;
   }
 
-} // Inclusion
+} // PatternStyle

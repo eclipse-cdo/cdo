@@ -70,7 +70,14 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider imp
       super.getPropertyDescriptors(object);
 
       addPathPropertyDescriptor(object);
-      addInclusionPropertyDescriptor(object);
+      addPatternStylePropertyDescriptor(object);
+      addFoldersPropertyDescriptor(object);
+      addTextResourcesPropertyDescriptor(object);
+      addBinaryResourcesPropertyDescriptor(object);
+      addModelResourcesPropertyDescriptor(object);
+      addModelObjectsPropertyDescriptor(object);
+      addIncludeParentsPropertyDescriptor(object);
+      addIncludeRootPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -93,21 +100,154 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider imp
   }
 
   /**
-   * This adds a property descriptor for the Inclusion feature.
+   * This adds a property descriptor for the Pattern Style feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addInclusionPropertyDescriptor(Object object)
+  protected void addPatternStylePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_patternStyle_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Folders feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addFoldersPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_folders_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Model Resources feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addModelResourcesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_modelResources_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Model Objects feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addModelObjectsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_modelObjects_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Include Parents feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIncludeParentsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_includeParents_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Include Root feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIncludeRootPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ResourceFilter_inclusion_feature"), //$NON-NLS-1$
+        getString("_UI_ResourceFilter_includeRoot_feature"), //$NON-NLS-1$
         getString(
-            "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_inclusion_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.RESOURCE_FILTER__INCLUSION, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+            "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true, false, false,
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Text Resources feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addTextResourcesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_textResources_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Binary Resources feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addBinaryResourcesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ResourceFilter_binaryResources_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -160,7 +300,14 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider imp
     switch (notification.getFeatureID(ResourceFilter.class))
     {
     case SecurityPackage.RESOURCE_FILTER__PATH:
-    case SecurityPackage.RESOURCE_FILTER__INCLUSION:
+    case SecurityPackage.RESOURCE_FILTER__PATTERN_STYLE:
+    case SecurityPackage.RESOURCE_FILTER__FOLDERS:
+    case SecurityPackage.RESOURCE_FILTER__TEXT_RESOURCES:
+    case SecurityPackage.RESOURCE_FILTER__BINARY_RESOURCES:
+    case SecurityPackage.RESOURCE_FILTER__MODEL_RESOURCES:
+    case SecurityPackage.RESOURCE_FILTER__MODEL_OBJECTS:
+    case SecurityPackage.RESOURCE_FILTER__INCLUDE_PARENTS:
+    case SecurityPackage.RESOURCE_FILTER__INCLUDE_ROOT:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

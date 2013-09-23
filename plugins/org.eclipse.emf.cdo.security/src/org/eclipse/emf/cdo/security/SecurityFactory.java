@@ -252,7 +252,12 @@ public interface SecurityFactory extends EFactory
   /**
    * @since 4.3
    */
-  ResourceFilter createResourceFilter(String path, Inclusion inclusion);
+  ResourceFilter createResourceFilter(String path, PatternStyle PatternStyle);
+
+  /**
+   * @since 4.3
+   */
+  ResourceFilter createResourceFilter(String path, PatternStyle PatternStyle, boolean includeParents);
 
   /**
    * Returns a new object of class '<em>Expression Filter</em>'.

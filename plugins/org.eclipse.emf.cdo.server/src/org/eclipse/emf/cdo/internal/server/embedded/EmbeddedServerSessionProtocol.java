@@ -24,6 +24,8 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  * @deprecated Not yet supported.
@@ -95,13 +97,21 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     clientSession.handleBranchNotification(branch);
   }
 
+  @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
     clientSession.handleCommitNotification(commitInfo);
   }
 
+  @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
+      throws Exception
   {
     throw new UnsupportedOperationException();
   }

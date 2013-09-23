@@ -416,6 +416,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public boolean bypassPermissionChecks(boolean on)
+  {
+    return getDelegate().bypassPermissionChecks(on);
+  }
+
+  /**
    * @since 4.0
    */
   public void freeze()

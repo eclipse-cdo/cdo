@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
@@ -285,7 +286,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     sendCommitNotification(sender, commitInfo, true);
   }
 
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    sendCommitNotification(sender, commitInfo, true, null);
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
+      CDORevisionProvider revisionProvider)
   {
     for (InternalSession session : getSessions())
     {
@@ -293,7 +301,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          session.sendCommitNotification(commitInfo, clearResourcePathCache);
+          session.sendCommitNotification(commitInfo, clearResourcePathCache, revisionProvider);
         }
         catch (Exception ex)
         {

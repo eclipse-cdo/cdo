@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -942,7 +943,14 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
+        Map<CDOID, CDOPermission> permissions)
     {
       throw new UnsupportedOperationException();
     }
@@ -953,7 +961,13 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
     {
       throw new UnsupportedOperationException();
     }

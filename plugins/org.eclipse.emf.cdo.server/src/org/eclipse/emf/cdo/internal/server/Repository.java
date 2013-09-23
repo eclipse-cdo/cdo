@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -1042,12 +1043,19 @@ public class Repository extends Container<Object> implements InternalRepository
     commitInfoManager.removeCommitInfoHandler(handler);
   }
 
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    sendCommitNotification(sender, commitInfo, clearResourcePathCache, null);
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
+      CDORevisionProvider revisionProvider)
   {
     boolean isFailureCommitInfo = commitInfo.getBranch() == null;
     if (isFailureCommitInfo || !commitInfo.isEmpty())
     {
-      sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
+      sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache, revisionProvider);
       commitInfoManager.notifyCommitInfoHandlers(commitInfo);
     }
   }

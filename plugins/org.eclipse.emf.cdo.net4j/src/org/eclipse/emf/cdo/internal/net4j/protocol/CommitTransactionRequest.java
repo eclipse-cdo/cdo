@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -296,6 +297,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     result = confirmingResult(in);
     confirmingMappingNewObjects(in, result);
     confirmingNewLockStates(in, result);
+    confirmingNewPermissions(in, result);
     return result;
   }
 
@@ -370,5 +372,20 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     }
 
     result.setNewLockStates(newLockStates);
+  }
+
+  protected void confirmingNewPermissions(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
+    if (in.readBoolean())
+    {
+      int n = in.readInt();
+      for (int i = 0; i < n; i++)
+      {
+        CDOID id = in.readCDOID();
+        CDOPermission permission = in.readEnum(CDOPermission.class);
+
+        result.addNewPermission(id, permission);
+      }
+    }
   }
 }

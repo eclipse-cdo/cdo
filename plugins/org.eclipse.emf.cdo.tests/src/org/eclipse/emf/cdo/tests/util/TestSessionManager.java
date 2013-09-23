@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -54,7 +55,8 @@ public class TestSessionManager extends SessionManager
   }
 
   @Override
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
+      CDORevisionProvider revisionProvider)
   {
     synchronized (lock)
     {
@@ -66,6 +68,6 @@ public class TestSessionManager extends SessionManager
       }
     }
 
-    super.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
+    super.sendCommitNotification(sender, commitInfo, clearResourcePathCache, revisionProvider);
   }
 }

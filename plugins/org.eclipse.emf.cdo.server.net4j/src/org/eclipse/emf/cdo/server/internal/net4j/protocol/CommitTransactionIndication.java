@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
@@ -24,7 +25,9 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -32,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
@@ -332,6 +336,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         respondingResult(out);
         respondingMappingNewObjects(out);
         respondingNewLockStates(out);
+        respondingNewPermissions(out);
       }
     }
     finally
@@ -404,6 +409,38 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     else
     {
       out.writeInt(0);
+    }
+  }
+
+  protected void respondingNewPermissions(CDODataOutput out) throws Exception
+  {
+    InternalSession session = getSession();
+    IPermissionManager permissionManager = session.getManager().getPermissionManager();
+    if (permissionManager != null)
+    {
+      out.writeBoolean(true);
+      respondingNewPermissions(out, permissionManager, session, commitContext.getNewObjects());
+      respondingNewPermissions(out, permissionManager, session, commitContext.getDirtyObjects());
+    }
+    else
+    {
+      out.writeBoolean(false);
+    }
+  }
+
+  protected void respondingNewPermissions(CDODataOutput out, IPermissionManager permissionManager,
+      InternalSession session, InternalCDORevision[] revisions) throws Exception
+  {
+    CDOBranchPoint securityContext = commitContext.getBranchPoint();
+
+    out.writeInt(revisions.length);
+    for (int i = 0; i < revisions.length; i++)
+    {
+      InternalCDORevision revision = revisions[i];
+      CDOPermission permission = permissionManager.getPermission(revision, securityContext, session);
+
+      out.writeCDOID(revision.getID());
+      out.writeEnum(permission);
     }
   }
 

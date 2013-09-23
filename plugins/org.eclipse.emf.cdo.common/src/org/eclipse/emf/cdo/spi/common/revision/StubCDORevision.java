@@ -310,6 +310,14 @@ public class StubCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public boolean bypassPermissionChecks(boolean on)
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
    * @since 4.0
    */
   public void freeze()

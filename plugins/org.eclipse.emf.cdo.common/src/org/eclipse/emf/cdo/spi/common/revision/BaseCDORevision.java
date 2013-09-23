@@ -81,16 +81,17 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte SET_NOT_NULL_OPCODE = 2;
 
-  /**
-   * private static final byte READ_PERMISSION_FLAG = 0x01;
-   *
-   * private static final byte WRITE_PERMISSION_FLAG = 0x02;
-   */
-  private static final byte FROZEN_FLAG = 0x04;
+  private static final byte READ_PERMISSION_FLAG = 1 << 0; // 1
 
-  private static final byte UNCHUNKED_FLAG = 0x08;
+  private static final byte WRITE_PERMISSION_FLAG = 1 << 1; // 2
 
-  private static final byte PERMISSION_MASK = 0x03;
+  private static final byte FROZEN_FLAG = 1 << 2; // 4
+
+  private static final byte UNCHUNKED_FLAG = 1 << 3; // 8
+
+  private static final byte BYPASS_PERMISSION_CHECKS_FLAG = 1 << 4; // 16
+
+  private static final byte PERMISSION_MASK = READ_PERMISSION_FLAG | WRITE_PERMISSION_FLAG; // 3
 
   private CDOID id;
 
@@ -155,10 +156,11 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     readSystemValues(in);
 
-    byte flagBits = in.readByte(); // Don't set permissions into this.falgs before readValues()
-    flagBits |= UNCHUNKED_FLAG; // First assume all lists are unchunked; may be revised below
+    flags = in.readByte(); // Don't set permissions into this.falgs before readValues()
+    flags |= UNCHUNKED_FLAG; // First assume all lists are unchunked; may be revised below
+    flags |= BYPASS_PERMISSION_CHECKS_FLAG; // Temporarily disable permission checking to be able to set the read values
 
-    if ((flagBits & PERMISSION_MASK) == CDOPermission.NONE.ordinal())
+    if ((flags & PERMISSION_MASK) == CDOPermission.NONE.ordinal())
     {
       if (getClassInfo().isResourceNode())
       {
@@ -172,11 +174,12 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     {
       if (!readValues(in))
       {
-        flagBits &= ~UNCHUNKED_FLAG;
+        flags &= ~UNCHUNKED_FLAG;
       }
     }
 
-    flags = flagBits;
+    // Enable permission checking
+    flags &= ~BYPASS_PERMISSION_CHECKS_FLAG;
 
     if (READING.isEnabled())
     {
@@ -783,6 +786,25 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public boolean bypassPermissionChecks(boolean on)
+  {
+    boolean old = (flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0;
+
+    if (on)
+    {
+      flags |= BYPASS_PERMISSION_CHECKS_FLAG;
+    }
+    else
+    {
+      flags &= ~BYPASS_PERMISSION_CHECKS_FLAG;
+    }
+
+    return old;
+  }
+
+  /**
    * @since 4.1
    */
   public void freeze()
@@ -889,12 +911,17 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private void checkReadable(EStructuralFeature feature)
   {
+    if ((flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0)
+    {
+      return;
+    }
+
     if (CDOModelUtil.isResourcePathFeature(feature))
     {
       return;
     }
 
-    if (!isReadable())
+    if ((flags & READ_PERMISSION_FLAG) == 0)
     {
       throw new NoPermissionException(this);
     }
@@ -902,7 +929,12 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private void checkWritable()
   {
-    if (!isWritable())
+    if ((flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0)
+    {
+      return;
+    }
+
+    if ((flags & WRITE_PERMISSION_FLAG) == 0)
     {
       throw new NoPermissionException(this);
     }

@@ -63,7 +63,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(PushTransactionTest.class);
     testClasses.add(PushTransactionWithoutReconstructSavepointsTest.class);
     testClasses.add(CommitInfoTest.class);
-    testClasses.add(SecurityManagerTest.class);
+    testClasses.add(SecurityTest.class);
     testClasses.add(AuditTest.class);
     testClasses.add(AuditEMapTest.class);
     testClasses.add(AuditSameSessionTest.class);

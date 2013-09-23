@@ -11,16 +11,23 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.security.Inclusion;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.ResourceFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
+
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EClass;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -33,7 +40,14 @@ import java.util.regex.PatternSyntaxException;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#getPath <em>Path</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#getInclusion <em>Inclusion</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#getPatternStyle <em>Pattern Style</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isFolders <em>Folders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isTextResources <em>Text Resources</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isBinaryResources <em>Binary Resources</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isModelResources <em>Model Resources</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isModelObjects <em>Model Objects</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isIncludeParents <em>Include Parents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isIncludeRoot <em>Include Root</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,9 +57,13 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
 {
   private static final String USER_TOKEN = "${user}";
 
-  private static final Pattern OMNI_PATTERN = Pattern.compile(".*");
+  private static final int USER_TOKEN_NONE = -1;
 
-  private Pattern pattern;
+  private static final int USER_TOKEN_UNINITIALIZED = -2;
+
+  private transient int userTokenPos = USER_TOKEN_UNINITIALIZED;
+
+  private transient BasicEList<Matcher> matchers;
 
   /**
    * <!-- begin-user-doc -->
@@ -81,11 +99,12 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  public void setPath(String newPath)
+  public ResourceFilter setPath(String newPath)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__PATH, newPath);
+    return this;
   }
 
   /**
@@ -93,9 +112,20 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
-  public Inclusion getInclusion()
+  public PatternStyle getPatternStyle()
   {
-    return (Inclusion)eGet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUSION, true);
+    return (PatternStyle)eGet(SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setPatternStyle(PatternStyle newPatternStyle)
+  {
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, newPatternStyle);
+    return this;
   }
 
   /**
@@ -103,151 +133,245 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInclusion(Inclusion newInclusion)
+  public boolean isFolders()
   {
-    eSet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUSION, newInclusion);
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true);
   }
 
-  @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setFolders(boolean newFolders)
   {
-    if (revisionProvider == null)
-    {
-      return false;
-    }
-
-    Inclusion inclusion = getInclusion();
-    switch (inclusion)
-    {
-    case EXACT:
-      return includesExact(revision, revisionProvider);
-
-    case EXACT_AND_UP:
-      return includesExactAndUp(revision, revisionProvider);
-
-    case EXACT_AND_DOWN:
-      return includesExactAndDown(revision, revisionProvider);
-
-    case REGEX:
-      return includesRegex(revision, revisionProvider);
-
-    default:
-      throw new IllegalStateException("Unhandled inclusion value: " + inclusion);
-    }
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, newFolders);
+    return this;
   }
 
-  private boolean includesExact(CDORevision revision, CDORevisionProvider revisionProvider)
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isModelResources()
   {
-    if (!revision.isResourceNode())
-    {
-      return false;
-    }
-
-    String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-    String path = getSubstitutedPath();
-
-    return revisionPath.equals(path);
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true);
   }
 
-  private boolean includesExactAndUp(CDORevision revision, CDORevisionProvider revisionProvider)
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setModelResources(boolean newModelResources)
   {
-    if (!revision.isResourceNode())
-    {
-      return false;
-    }
-
-    String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-    String path = getSubstitutedPath();
-
-    int length = revisionPath.length();
-    if (length > path.length())
-    {
-      return false;
-    }
-
-    path = path.substring(0, length);
-    return revisionPath.equals(path);
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, newModelResources);
+    return this;
   }
 
-  private boolean includesExactAndDown(CDORevision revision, CDORevisionProvider revisionProvider)
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isModelObjects()
   {
-    String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-    String path = getSubstitutedPath();
-
-    int length = path.length();
-    if (length > revisionPath.length())
-    {
-      return false;
-    }
-
-    revisionPath = revisionPath.substring(0, length);
-    return path.equals(revisionPath);
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true);
   }
 
-  private boolean includesRegex(CDORevision revision, CDORevisionProvider revisionProvider)
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setModelObjects(boolean newModelObjects)
   {
-    if (pattern == null)
-    {
-      String path = getSubstitutedPath();
-      pattern = compilePattern(path);
-
-      if (pattern == null)
-      {
-        return false;
-      }
-    }
-
-    if (pattern == OMNI_PATTERN)
-    {
-      return true;
-    }
-
-    String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-
-    Matcher matcher = pattern.matcher(revisionPath);
-    return matcher.matches();
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, newModelObjects);
+    return this;
   }
 
-  private String getSubstitutedPath()
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isIncludeParents()
   {
-    String path = getPath();
-    int pos = path.indexOf(USER_TOKEN);
-    if (pos != -1)
-    {
-      String user = getUser();
-      if (user == null || user.length() == 0)
-      {
-        throw new IllegalStateException("User required for evaluation of path " + path);
-      }
-
-      path = path.substring(0, pos) + user + path.substring(pos + USER_TOKEN.length());
-    }
-
-    return path;
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true);
   }
 
-  private Pattern compilePattern(String value)
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setIncludeParents(boolean newIncludeParents)
   {
-    if (value == null)
-    {
-      return null;
-    }
-
-    if (value.equals(OMNI_PATTERN.pattern()))
-    {
-      return OMNI_PATTERN;
-    }
-
-    try
-    {
-      return Pattern.compile(value);
-    }
-    catch (PatternSyntaxException ex)
-    {
-      return null;
-    }
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, newIncludeParents);
+    return this;
   }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isIncludeRoot()
+  {
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setIncludeRoot(boolean newIncludeRoot)
+  {
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, newIncludeRoot);
+    return this;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isTextResources()
+  {
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setTextResources(boolean newTextResources)
+  {
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, newTextResources);
+    return this;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isBinaryResources()
+  {
+    return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ResourceFilter setBinaryResources(boolean newBinaryResources)
+  {
+    eSet(SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, newBinaryResources);
+    return this;
+  }
+
+  // private boolean includesExactAndUp(CDORevision revision, CDORevisionProvider revisionProvider)
+  // {
+  // if (!revision.isResourceNode())
+  // {
+  // return false;
+  // }
+  //
+  // String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
+  // String path = getSubstitutedPath();
+  //
+  // int length = revisionPath.length();
+  // if (length > path.length())
+  // {
+  // return false;
+  // }
+  //
+  // path = path.substring(0, length);
+  // return revisionPath.equals(path);
+  // }
+  //
+  // private boolean includesExactAndDown(CDORevision revision, CDORevisionProvider revisionProvider)
+  // {
+  // String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
+  // String path = getSubstitutedPath();
+  //
+  // int length = path.length();
+  // if (length > revisionPath.length())
+  // {
+  // return false;
+  // }
+  //
+  // revisionPath = revisionPath.substring(0, length);
+  // return path.equals(revisionPath);
+  // }
+  //
+  // private boolean includesRegex(CDORevision revision, CDORevisionProvider revisionProvider)
+  // {
+  // if (pattern == null)
+  // {
+  // String path = substituteUserToken(getPath());
+  // pattern = compilePattern(path);
+  //
+  // if (pattern == null)
+  // {
+  // return false;
+  // }
+  // }
+  //
+  // if (pattern == OMNI_PATTERN)
+  // {
+  // return true;
+  // }
+  //
+  // String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
+  //
+  // Matcher matcher = pattern.matcher(revisionPath);
+  // return matcher.matches();
+  // }
+  //
+  // private String substituteUserToken(String string)
+  // {
+  // int pos = string.indexOf(USER_TOKEN);
+  // if (pos != -1)
+  // {
+  // String user = getUser();
+  // if (user == null || user.length() == 0)
+  // {
+  // throw new IllegalStateException("User required for evaluation of path " + string);
+  // }
+  //
+  // string = string.substring(0, pos) + user + string.substring(pos + USER_TOKEN.length());
+  // }
+  //
+  // return string;
+  // }
+  //
+  // private Pattern compilePattern(String value)
+  // {
+  // if (value == null)
+  // {
+  // return null;
+  // }
+  //
+  // if (OMNI_PATTERN.pattern().equals(value))
+  // {
+  // return OMNI_PATTERN;
+  // }
+  //
+  // try
+  // {
+  // return Pattern.compile(value);
+  // }
+  // catch (PatternSyntaxException ex)
+  // {
+  // return null;
+  // }
+  // }
 
   public String format()
   {
@@ -268,25 +392,334 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     return "resource" + operator + label;
   }
 
-  private String formatOperator()
+  protected String formatOperator()
   {
-    Inclusion inclusion = getInclusion();
-    switch (inclusion)
+    PatternStyle patternStyle = getPatternStyle();
+    switch (patternStyle)
     {
     case EXACT:
       return " == ";
 
-    case EXACT_AND_UP:
-      return " <= ";
-
-    case EXACT_AND_DOWN:
+    case TREE:
       return " >= ";
 
+    case ANT:
     case REGEX:
-      return " >~ ";
+      return " ~= ";
 
     default:
-      throw new IllegalStateException("Unhandled inclusion value: " + inclusion);
+      throw new IllegalStateException("Unhandled pattern style: " + patternStyle);
     }
   }
+
+  @Override
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
+      int level) throws Exception
+  {
+    if (!preChecks(revision, revisionProvider))
+    {
+      return false;
+    }
+
+    String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
+
+    BasicEList<Matcher> list = getMatchers();
+    Object[] matchers = list.data();
+
+    int length = list.size();
+    for (int i = 0; i < length; i++)
+    {
+      Matcher matcher = (Matcher)matchers[i];
+      if (matcher.matches(revisionPath))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean preChecks(CDORevision revision, CDORevisionProvider revisionProvider)
+  {
+    if (revisionProvider == null)
+    {
+      return false;
+    }
+
+    EClass eClass = revision.getEClass();
+    boolean resourceNode = false;
+
+    // Check folders
+    if (eClass == EresourcePackage.Literals.CDO_RESOURCE_FOLDER)
+    {
+      resourceNode = true;
+      if (!isFolders())
+      {
+        return false;
+      }
+    }
+
+    // Check model resources
+    if (eClass == EresourcePackage.Literals.CDO_RESOURCE)
+    {
+      resourceNode = true;
+
+      boolean rootResource = CDOIDUtil.isNull((CDOID)((InternalCDORevision)revision).getContainerID());
+      if (rootResource)
+      {
+        if (!isIncludeRoot())
+        {
+          return false;
+        }
+      }
+      else
+      {
+        if (!isModelResources())
+        {
+          return false;
+        }
+      }
+    }
+
+    // Check text resources
+    if (eClass == EresourcePackage.Literals.CDO_TEXT_RESOURCE)
+    {
+      resourceNode = true;
+      if (!isTextResources())
+      {
+        return false;
+      }
+    }
+
+    // Check binary resources
+    if (eClass == EresourcePackage.Literals.CDO_BINARY_RESOURCE)
+    {
+      resourceNode = true;
+      if (!isBinaryResources())
+      {
+        return false;
+      }
+    }
+
+    // Check model objects
+    boolean modelObject = !resourceNode;
+    if (modelObject && !isModelObjects())
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  private BasicEList<Matcher> getMatchers()
+  {
+    if (matchers != null)
+    {
+      return matchers;
+    }
+
+    String path = getPath();
+    PatternStyle patternStyle = getPatternStyle();
+    boolean includeParents = isIncludeParents();
+
+    if (userTokenPos == USER_TOKEN_UNINITIALIZED)
+    {
+      userTokenPos = path.indexOf(USER_TOKEN);
+    }
+
+    if (userTokenPos != USER_TOKEN_NONE)
+    {
+      String user = getUser();
+      if (user == null || user.length() == 0)
+      {
+        throw new IllegalStateException("User required for evaluation of path " + path);
+      }
+
+      path = path.substring(0, userTokenPos) + user + path.substring(userTokenPos + USER_TOKEN.length());
+    }
+
+    BasicEList<Matcher> list = new BasicEList<Matcher>(1);
+    getMatchers(list, path, patternStyle, includeParents);
+
+    if (userTokenPos == USER_TOKEN_NONE)
+    {
+      // Cache matchers if no user token is specified
+      matchers = list;
+    }
+
+    return list;
+  }
+
+  private void getMatchers(BasicEList<Matcher> matchers, String path, PatternStyle patternStyle, boolean includeParents)
+  {
+    Matcher matcher = createMatcher(path, patternStyle);
+    matchers.add(matcher);
+
+    if (includeParents)
+    {
+      int pos = path.lastIndexOf("/");
+      if (pos != -1)
+      {
+        path = path.substring(0, pos);
+        patternStyle = matcher.getParentPatternStyle();
+
+        getMatchers(matchers, path, patternStyle, includeParents);
+      }
+    }
+  }
+
+  private Matcher createMatcher(String path, PatternStyle patternStyle)
+  {
+    switch (patternStyle)
+    {
+    case EXACT:
+      return new ExactMatcher(path);
+
+    case TREE:
+      return new TreeMatcher(path);
+
+    case ANT:
+      return new AntMatcher(path);
+
+    case REGEX:
+      return new RegexMatcher(path);
+
+    default:
+      throw new IllegalStateException("Unhandled pattern style: " + patternStyle);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Matcher
+  {
+    public boolean matches(String revisionPath);
+
+    public PatternStyle getParentPatternStyle();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static abstract class PathMatcher implements Matcher
+  {
+    protected final String path;
+
+    public PathMatcher(String path)
+    {
+      this.path = path == null || path.length() == 0 ? "/" : path;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getClass().getSimpleName() + "[" + path + "]";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static class ExactMatcher extends PathMatcher
+  {
+    public ExactMatcher(String path)
+    {
+      super(path);
+    }
+
+    public boolean matches(String revisionPath)
+    {
+      return path.equals(revisionPath);
+    }
+
+    public PatternStyle getParentPatternStyle()
+    {
+      return PatternStyle.EXACT;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static class TreeMatcher extends PathMatcher
+  {
+    public TreeMatcher(String path)
+    {
+      super(path);
+    }
+
+    public boolean matches(String revisionPath)
+    {
+      if (revisionPath == null)
+      {
+        return path.length() == 0;
+      }
+
+      return revisionPath.startsWith(path);
+    }
+
+    public PatternStyle getParentPatternStyle()
+    {
+      return PatternStyle.EXACT;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static class AntMatcher extends PathMatcher
+  {
+    public AntMatcher(String path)
+    {
+      super(path);
+    }
+
+    public boolean matches(String revisionPath)
+    {
+      return StringUtil.glob(path, revisionPath);
+    }
+
+    public PatternStyle getParentPatternStyle()
+    {
+      return PatternStyle.ANT;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static class RegexMatcher implements Matcher
+  {
+    private final Pattern pattern;
+
+    public RegexMatcher(String path)
+    {
+      try
+      {
+        pattern = Pattern.compile(path);
+      }
+      catch (PatternSyntaxException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    public boolean matches(String revisionPath)
+    {
+      return pattern.matcher(revisionPath).matches();
+    }
+
+    public PatternStyle getParentPatternStyle()
+    {
+      return PatternStyle.REGEX;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getClass().getSimpleName() + "[" + pattern.pattern() + "]";
+    }
+  }
+
 } // ResourceFilterImpl

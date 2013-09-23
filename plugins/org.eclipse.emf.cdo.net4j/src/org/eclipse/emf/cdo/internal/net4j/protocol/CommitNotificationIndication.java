@@ -12,12 +12,15 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -36,6 +39,17 @@ public class CommitNotificationIndication extends CDOClientIndication
     CDOCommitInfo commitInfo = in.readCDOCommitInfo();
     boolean clearResourcePathCache = in.readBoolean();
 
-    session.handleCommitNotification(commitInfo, clearResourcePathCache);
+    Set<CDOID> readOnly = null;
+    int size = in.readInt();
+    if (size != 0)
+    {
+      readOnly = new HashSet<CDOID>();
+      for (int i = 0; i < size; i++)
+      {
+        readOnly.add(in.readCDOID());
+      }
+    }
+
+    session.handleCommitNotification(commitInfo, clearResourcePathCache, readOnly);
   }
 }

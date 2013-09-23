@@ -28,7 +28,7 @@ import org.eclipse.emf.cdo.tests.LockingNotificationsTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.PackageRegistryTest;
-import org.eclipse.emf.cdo.tests.SecurityManagerTest;
+import org.eclipse.emf.cdo.tests.SecurityTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.WorkspaceTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
@@ -149,7 +149,7 @@ public class AllTestsHibernate extends AllConfigs
 
       // the security model inherits from the ecore model
       // not so well supported for now for auditing
-      testClasses.remove(SecurityManagerTest.class);
+      testClasses.remove(SecurityTest.class);
 
       // the package registry count changes when auditing
       // as auditing adds epackages

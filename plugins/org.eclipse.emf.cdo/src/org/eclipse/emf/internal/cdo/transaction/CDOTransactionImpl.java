@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
@@ -2995,7 +2996,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (result.getRollbackMessage() != null)
         {
           CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
-          session.invalidate(commitInfo, transaction, clearResourcePathCache);
+          session.invalidate(commitInfo, transaction, clearResourcePathCache, null);
           return;
         }
 
@@ -3028,7 +3029,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
         if (!commitInfo.isEmpty())
         {
-          session.invalidate(commitInfo, transaction, clearResourcePathCache);
+          Map<CDOID, CDOPermission> newPermissions = result.getNewPermissions();
+          session.invalidate(commitInfo, transaction, clearResourcePathCache, newPermissions);
         }
 
         // Bug 290032 - Sticky views

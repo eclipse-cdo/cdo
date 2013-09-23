@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -102,15 +103,23 @@ public interface InternalSessionManager extends ISessionManager
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);
 
   /**
-   * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}
+   * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}.
    */
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
 
   /**
    * @since 4.2
+   * @deprecated As of 4.3 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean, CDORevisionProvider)}.
    */
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
+
+  /**
+   * @since 4.3
+   */
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
+      CDORevisionProvider revisionProvider);
 
   /**
    * @since 4.1

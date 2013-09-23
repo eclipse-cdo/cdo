@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
@@ -71,6 +72,7 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorRegistry;
@@ -428,6 +430,17 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     return resourceManager;
+  }
+
+  @Override
+  public Color getForeground(Object obj)
+  {
+    if (obj instanceof CDOObject)
+    {
+      return CDOLabelProvider.getColor((CDOObject)obj);
+
+    }
+    return super.getForeground(obj);
   }
 
   @Override

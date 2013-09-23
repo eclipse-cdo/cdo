@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -41,6 +43,8 @@ import org.eclipse.swt.graphics.Font;
 public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider
 {
   private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+
+  private static final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_YELLOW);
 
   private static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
 
@@ -117,24 +121,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
   @Override
   public Color getForeground(Object object)
   {
-    try
-    {
-      InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
-      switch (cdoObject.cdoState())
-      {
-      case PROXY:
-        return GRAY;
-
-      case CONFLICT:
-        return RED;
-      }
-    }
-    catch (RuntimeException ignore)
-    {
-    }
-
-    // Use default
-    return null;
+    return getColor(FSMUtil.adapt(object, view));
   }
 
   @Override
@@ -149,6 +136,39 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
       case DIRTY:
       case CONFLICT:
         return bold;
+      }
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+
+    // Use default
+    return null;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static Color getColor(CDOObject object)
+  {
+    try
+    {
+      if (object.cdoConflict())
+      {
+        return RED;
+      }
+
+      CDOPermission permission = object.cdoPermission();
+      switch (permission)
+      {
+      case NONE:
+        return GRAY;
+
+      case READ:
+        return YELLOW;
+
+      default:
+        //$FALL-THROUGH$
       }
     }
     catch (RuntimeException ignore)

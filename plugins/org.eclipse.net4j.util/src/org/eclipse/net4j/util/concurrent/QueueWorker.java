@@ -51,15 +51,12 @@ public abstract class QueueWorker<E> extends Worker
    */
   public void clearQueue()
   {
-    if (queue != null)
-    {
-      queue.clear();
-    }
+    queue.clear();
   }
 
   public boolean addWork(E element)
   {
-    if (queue != null && getLifecycleState() != LifecycleState.DEACTIVATING)
+    if (getLifecycleState() != LifecycleState.DEACTIVATING)
     {
       return queue.offer(element);
     }
@@ -120,20 +117,17 @@ public abstract class QueueWorker<E> extends Worker
   protected void doDeactivate() throws Exception
   {
     super.doDeactivate();
-    if (queue != null)
+    if (doRemainingWorkBeforeDeactivate())
     {
-      if (doRemainingWorkBeforeDeactivate())
+      WorkContext context = new WorkContext();
+      while (!queue.isEmpty())
       {
-        WorkContext context = new WorkContext();
-        while (!queue.isEmpty())
-        {
-          doWork(context);
-        }
+        doWork(context);
       }
-      else
-      {
-        queue.clear();
-      }
+    }
+    else
+    {
+      queue.clear();
     }
   }
 }

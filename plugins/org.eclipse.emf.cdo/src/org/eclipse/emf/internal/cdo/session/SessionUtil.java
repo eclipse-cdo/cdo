@@ -28,32 +28,10 @@ public final class SessionUtil
 {
   private static final boolean ROOT_RESOURCE_EXCLUSION_CHECK = false;
 
+  private static Runnable testDelayInSessionActivation;
+
   private SessionUtil()
   {
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static InternalCDOViewSet prepareResourceSet(ResourceSet resourceSet)
-  {
-    InternalCDOViewSet viewSet = null;
-    synchronized (resourceSet)
-    {
-      if (ROOT_RESOURCE_EXCLUSION_CHECK)
-      {
-        addRootResourceExclusionCheckAdapter(resourceSet);
-      }
-
-      viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
-      if (viewSet == null)
-      {
-        viewSet = new CDOViewSetImpl();
-        resourceSet.eAdapters().add(viewSet);
-      }
-    }
-
-    return viewSet;
   }
 
   private static void addRootResourceExclusionCheckAdapter(ResourceSet resourceSet)
@@ -86,5 +64,39 @@ public final class SessionUtil
     }
 
     resourceSet.eAdapters().add(new RootResourceExclusionCheckAdapter());
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static InternalCDOViewSet prepareResourceSet(ResourceSet resourceSet)
+  {
+    InternalCDOViewSet viewSet = null;
+    synchronized (resourceSet)
+    {
+      if (ROOT_RESOURCE_EXCLUSION_CHECK)
+      {
+        addRootResourceExclusionCheckAdapter(resourceSet);
+      }
+
+      viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
+      if (viewSet == null)
+      {
+        viewSet = new CDOViewSetImpl();
+        resourceSet.eAdapters().add(viewSet);
+      }
+    }
+
+    return viewSet;
+  }
+
+  public static Runnable getTestDelayInSessionActivation()
+  {
+    return testDelayInSessionActivation;
+  }
+
+  public static void setTestDelayInSessionActivation(Runnable runnable)
+  {
+    testDelayInSessionActivation = runnable;
   }
 }

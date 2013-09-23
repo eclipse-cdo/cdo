@@ -27,7 +27,7 @@ public abstract class QueueWorker<E> extends Worker
    */
   public static final int DEFAULT_POLL_MILLIS = 100;
 
-  private BlockingQueue<E> queue;
+  private BlockingQueue<E> queue = createQueue();
 
   private long pollMillis;
 
@@ -51,15 +51,12 @@ public abstract class QueueWorker<E> extends Worker
    */
   public void clearQueue()
   {
-    if (queue != null)
-    {
-      queue.clear();
-    }
+    queue.clear();
   }
 
   public boolean addWork(E element)
   {
-    if (queue != null && getLifecycleState() != LifecycleState.DEACTIVATING)
+    if (getLifecycleState() != LifecycleState.DEACTIVATING)
     {
       return queue.offer(element);
     }
@@ -70,14 +67,7 @@ public abstract class QueueWorker<E> extends Worker
   @Override
   protected void work(WorkContext context) throws Exception
   {
-    if (queue == null)
-    {
-      context.terminate();
-    }
-    else
-    {
-      doWork(context);
-    }
+    doWork(context);
   }
 
   private void doWork(WorkContext context) throws InterruptedException
@@ -124,32 +114,20 @@ public abstract class QueueWorker<E> extends Worker
   }
 
   @Override
-  protected void doActivate() throws Exception
-  {
-    queue = createQueue();
-    super.doActivate();
-  }
-
-  @Override
   protected void doDeactivate() throws Exception
   {
     super.doDeactivate();
-    if (queue != null)
+    if (doRemainingWorkBeforeDeactivate())
     {
-      if (doRemainingWorkBeforeDeactivate())
+      WorkContext context = new WorkContext();
+      while (!queue.isEmpty())
       {
-        WorkContext context = new WorkContext();
-        while (!queue.isEmpty())
-        {
-          doWork(context);
-        }
+        doWork(context);
       }
-      else
-      {
-        queue.clear();
-      }
-
-      queue = null;
+    }
+    else
+    {
+      queue.clear();
     }
   }
 }

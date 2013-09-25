@@ -467,6 +467,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       registerWrapper(this);
       counter.increment();
       viewAndState.view.registerObject(this);
+      revision.bypassPermissionChecks(true);
 
       revisionToInstanceResource();
       revisionToInstanceContainer();
@@ -495,6 +496,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
     finally
     {
+      revision.bypassPermissionChecks(false);
+
       if (resource != null)
       {
         resource.cdoInternalLoadingDone(instance);

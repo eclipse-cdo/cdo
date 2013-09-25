@@ -85,12 +85,20 @@ public class CDORevisionImpl extends BaseCDORevision
   @Override
   protected Object doGetValue(int featureIndex)
   {
-    return values[featureIndex];
+    if (values != null) // Can be null if READ permission is missing
+    {
+      return values[featureIndex];
+    }
+
+    return null;
   }
 
   @Override
   protected void doSetValue(int featureIndex, Object value)
   {
-    values[featureIndex] = value;
+    if (values != null) // Can be null if READ permission is missing
+    {
+      values[featureIndex] = value;
+    }
   }
 }

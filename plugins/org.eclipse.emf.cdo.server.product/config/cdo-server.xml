@@ -23,8 +23,8 @@
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
 
-    <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
 		  <securityManager type="default" description="/security:annotation:home(/home)"/>
+    <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
     -->
 
     <!-- Example http://bugs.eclipse.org/302775
@@ -105,11 +105,11 @@
 			<dbAdapter name="oracle"/>
 			<dataSource class="oracle.jdbc.pool.OracleDataSource"
 				driverType="thin"
-				serverName="serverURL"
+				serverName="localhost"
 				portNumber="1521"
-				databaseName="SID"
-				user="user"
-				password="passwd"/>
+				databaseName="TEST"
+				user="cdotest"
+				password="oracle"/>
 			-->
 
     </store>

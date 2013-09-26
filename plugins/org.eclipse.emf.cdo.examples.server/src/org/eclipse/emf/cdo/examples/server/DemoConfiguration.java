@@ -179,7 +179,7 @@ public class DemoConfiguration extends Lifecycle
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
-    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(createDataSource());
+    IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(createDataSource());
     IDBStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
     return store;
   }

@@ -251,6 +251,7 @@ public class SessionTest extends AbstractCDOTest
     session2.close();
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testNoAuthentication() throws Exception
   {
     IRepository repository = getRepository("authrepo1");
@@ -264,6 +265,7 @@ public class SessionTest extends AbstractCDOTest
     session.close();
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testWithAuthentication() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -284,6 +286,7 @@ public class SessionTest extends AbstractCDOTest
     session.close();
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testWithAuthenticationNoCredentialsProvider() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -304,6 +307,7 @@ public class SessionTest extends AbstractCDOTest
     }
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testWithAuthenticationNoCredentials() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -326,6 +330,7 @@ public class SessionTest extends AbstractCDOTest
     }
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testWithAuthenticationWrongCredentials() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -349,6 +354,7 @@ public class SessionTest extends AbstractCDOTest
     }
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testWithAuthenticationNoUserID() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -372,6 +378,7 @@ public class SessionTest extends AbstractCDOTest
     }
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testWithAuthenticationNoPassword() throws Exception
   {
     UserManager userManager = new UserManager();

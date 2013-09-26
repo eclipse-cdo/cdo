@@ -24,6 +24,7 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.security.IUserAware;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -63,6 +64,16 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
     ((InternalDBSchema)schema).lock();
     activate();
+  }
+
+  public String getUserID()
+  {
+    if (connectionProvider instanceof IUserAware)
+    {
+      return ((IUserAware)connectionProvider).getUserID();
+    }
+
+    return null;
   }
 
   public DBAdapter getAdapter()
@@ -249,6 +260,21 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       schemaAccessQueue.removeFirst();
       schemaAccessQueue.notifyAll();
     }
+  }
+
+  public String convertString(DBPreparedStatement preparedStatement, int parameterIndex, String value)
+  {
+    return adapter.convertString(preparedStatement, parameterIndex, value);
+  }
+
+  public String convertString(DBResultSet resultSet, int columnIndex, String value)
+  {
+    return adapter.convertString(resultSet, columnIndex, value);
+  }
+
+  public String convertString(DBResultSet resultSet, String columnLabel, String value)
+  {
+    return adapter.convertString(resultSet, columnLabel, value);
   }
 
   /**

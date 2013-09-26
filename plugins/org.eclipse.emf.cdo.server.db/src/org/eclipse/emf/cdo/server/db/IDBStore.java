@@ -109,6 +109,9 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
    */
   public interface Props
   {
+    /**
+     * In minutes.
+     */
     public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$
 
     /**

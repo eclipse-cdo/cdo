@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.util.security.IUserAware;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ import java.sql.SQLException;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBConnection extends Connection
+public interface IDBConnection extends Connection, IUserAware
 {
   public IDBDatabase getDatabase();
 

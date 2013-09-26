@@ -16,6 +16,9 @@ Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)";visibil
  org.eclipse.net4j.db.mysql;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.postgresql;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.net4j.db.jdbc;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.net4j.db.oracle;bundle-version="[1.0.0,2.0.0)",
+ oracle.database.driver;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.emf.cdo.common.db;bundle-version="[3.0.0,4.0.0)"
 Eclipse-BuddyPolicy: dependent
 Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",

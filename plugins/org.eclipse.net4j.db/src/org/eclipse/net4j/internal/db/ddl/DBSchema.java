@@ -286,7 +286,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
-    return create(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    return create(dbAdapter, dbAdapter.createConnectionProvider(dataSource));
   }
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
@@ -316,7 +316,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
 
   public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
-    drop(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    drop(dbAdapter, dbAdapter.createConnectionProvider(dataSource));
   }
 
   public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException

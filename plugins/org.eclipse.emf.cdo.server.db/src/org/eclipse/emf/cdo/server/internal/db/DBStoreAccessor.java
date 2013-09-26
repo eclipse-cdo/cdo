@@ -750,6 +750,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void doActivate() throws Exception
   {
+    super.doActivate();
+
     DBStore store = getStore();
     connection = store.getDatabase().getConnection();
     connectionKeepAliveTask = new ConnectionKeepAliveTask(this);
@@ -776,6 +778,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     DBUtil.close(connection);
     connection = null;
+
+    super.doDeactivate();
   }
 
   @Override

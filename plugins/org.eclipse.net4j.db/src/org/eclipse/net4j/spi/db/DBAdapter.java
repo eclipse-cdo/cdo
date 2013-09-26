@@ -15,6 +15,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -134,6 +135,14 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
+   * @since 4.3
+   */
+  public IDBConnectionProvider createConnectionProvider(DataSource dataSource)
+  {
+    return DBUtil.createConnectionProvider(dataSource);
+  }
+
+  /**
    * @since 4.2
    */
   public IDBSchema readSchema(Connection connection, String name)
@@ -158,7 +167,7 @@ public abstract class DBAdapter implements IDBAdapter
         schemaName = null;
       }
 
-      ResultSet tables = metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
+      ResultSet tables = readTables(connection, metaData, schemaName);
       while (tables.next())
       {
         String tableName = tables.getString(3);
@@ -176,6 +185,15 @@ public abstract class DBAdapter implements IDBAdapter
     {
       DBField.trackConstruction(true);
     }
+  }
+
+  /**
+   * @since 4.3
+   */
+  protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName)
+      throws SQLException
+  {
+    return metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
   }
 
   /**
@@ -698,6 +716,30 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
+   * @since 4.3
+   */
+  public String convertString(PreparedStatement preparedStatement, int parameterIndex, String value)
+  {
+    return value;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public String convertString(ResultSet resultSet, int columnIndex, String value)
+  {
+    return value;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public String convertString(ResultSet resultSet, String columnLabel, String value)
+  {
+    return value;
+  }
+
+  /**
    * @since 2.0
    */
   protected void doCreateTable(IDBTable table, Statement statement) throws SQLException
@@ -1040,6 +1082,14 @@ public abstract class DBAdapter implements IDBAdapter
   protected String sqlModifyField(String tableName, String fieldName, String definition)
   {
     return "ALTER TABLE " + tableName + " ALTER COLUMN " + fieldName + " " + definition;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public int convertRowNumberToDriver(int row)
+  {
+    return row;
   }
 
   /**

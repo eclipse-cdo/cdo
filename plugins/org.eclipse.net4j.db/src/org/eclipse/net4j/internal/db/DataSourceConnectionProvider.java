@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.IDBConnectionProvider2;
 
 import javax.sql.DataSource;
 
@@ -21,18 +21,26 @@ import java.sql.SQLException;
 /**
  * @author Eike Stepper
  */
-public class DataSourceConnectionProvider implements IDBConnectionProvider
+public class DataSourceConnectionProvider implements IDBConnectionProvider2
 {
-  private DataSource dataSource;
+  private final DataSource dataSource;
 
-  public DataSourceConnectionProvider(DataSource dataSource)
+  private final String user;
+
+  public DataSourceConnectionProvider(DataSource dataSource, String user)
   {
     this.dataSource = dataSource;
+    this.user = user;
   }
 
   public DataSource getDataSource()
   {
     return dataSource;
+  }
+
+  public String getUserID()
+  {
+    return user;
   }
 
   public Connection getConnection()

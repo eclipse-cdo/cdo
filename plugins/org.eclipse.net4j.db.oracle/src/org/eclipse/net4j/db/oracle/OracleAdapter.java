@@ -11,10 +11,21 @@
  */
 package org.eclipse.net4j.db.oracle;
 
+import oracle.jdbc.pool.OracleDataSource;
+
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.util.security.IUserAware;
 
+import javax.sql.DataSource;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +40,17 @@ public class OracleAdapter extends DBAdapter
   public OracleAdapter()
   {
     super(NAME, VERSION);
+  }
+
+  @Override
+  public IDBConnectionProvider createConnectionProvider(DataSource dataSource)
+  {
+    if (dataSource instanceof OracleDataSource)
+    {
+      return DBUtil.createConnectionProvider(dataSource, ((OracleDataSource)dataSource).getUser());
+    }
+
+    return super.createConnectionProvider(dataSource);
   }
 
   public String[] getReservedWords()
@@ -70,6 +92,7 @@ public class OracleAdapter extends DBAdapter
       return "NUMBER(5)";
     case SMALLINT:
     case BOOLEAN:
+    case BIT:
       return "NUMBER(7)";
     case INTEGER:
       return "NUMBER(12)";
@@ -78,7 +101,13 @@ public class OracleAdapter extends DBAdapter
       return "DATE";
     case CHAR:
     case VARCHAR:
-      return "VARCHAR2(" + field.getPrecision() + ")";
+      return "VARCHAR2(" + field.getPrecision() + " CHAR)";
+    case LONGVARCHAR:
+      return "LONG";
+    case BINARY:
+    case VARBINARY:
+    case LONGVARBINARY:
+      return "LONG RAW";
     default:
       return super.getTypeName(field);
     }
@@ -143,5 +172,74 @@ public class OracleAdapter extends DBAdapter
   protected String sqlModifyField(String tableName, String fieldName, String definition)
   {
     return "ALTER TABLE " + tableName + " MODIFY " + fieldName + " " + definition;
+  }
+
+  @Override
+  protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName)
+      throws SQLException
+  {
+    if (schemaName == null && connection instanceof IUserAware)
+    {
+      schemaName = ((IUserAware)connection).getUserID();
+    }
+
+    return metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
+  }
+
+  @Override
+  public String convertString(PreparedStatement preparedStatement, int parameterIndex, String value)
+  {
+    if (value != null && value.length() == 0)
+    {
+      String replacement = getEmptyStringReplacement();
+      if (replacement != null)
+      {
+        value = replacement;
+      }
+    }
+
+    return super.convertString(preparedStatement, parameterIndex, value);
+  }
+
+  @Override
+  public String convertString(ResultSet resultSet, int columnIndex, String value)
+  {
+    value = super.convertString(resultSet, columnIndex, value);
+
+    if (value != null)
+    {
+      String replacement = getEmptyStringReplacement();
+      if (replacement != null && replacement.equals(value))
+      {
+        value = "";
+      }
+    }
+
+    return value;
+  }
+
+  @Override
+  public String convertString(ResultSet resultSet, String columnLabel, String value)
+  {
+    value = super.convertString(resultSet, columnLabel, value);
+
+    if (value != null)
+    {
+      String replacement = getEmptyStringReplacement();
+      if (replacement != null && replacement.equals(value))
+      {
+        value = null;
+      }
+    }
+
+    return value;
+  }
+
+  /**
+   * @since 1.1
+   */
+  protected String getEmptyStringReplacement()
+  {
+    return "<empty>";
   }
 }

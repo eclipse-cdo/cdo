@@ -55,6 +55,11 @@ public interface IDBAdapter
   public DataSource createJDBCDataSource();
 
   /**
+   * @since 4.3
+   */
+  public IDBConnectionProvider createConnectionProvider(DataSource dataSource);
+
+  /**
    * @since 4.2
    */
   public IDBSchema readSchema(Connection connection, String name);
@@ -144,4 +149,9 @@ public interface IDBAdapter
    * @since 4.2
    */
   public String sqlModifyField(IDBField field);
+
+  /**
+   * @since 4.3
+   */
+  public int convertRowNumberToDriver(int row);
 }

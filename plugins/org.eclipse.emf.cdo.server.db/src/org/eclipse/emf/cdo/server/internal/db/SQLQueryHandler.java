@@ -17,10 +17,12 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
@@ -197,7 +199,11 @@ public class SQLQueryHandler implements IQueryHandler
         resultSet = stmt.executeQuery();
         if (firstResult > -1)
         {
-          resultSet.absolute(firstResult);
+          IDBStore store = (IDBStore)context.getView().getRepository().getStore();
+          IDBAdapter dbAdapter = store.getDBAdapter();
+
+          int row = dbAdapter.convertRowNumberToDriver(1 + firstResult);
+          resultSet.absolute(row);
         }
 
         String[] columnNames = null;

@@ -119,4 +119,21 @@ public final class DBPreparedStatement extends DelegatingPreparedStatement imple
   {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  public void setString(int parameterIndex, String value) throws SQLException
+  {
+    value = getConnection().convertString(this, parameterIndex, value);
+    super.setString(parameterIndex, value);
+  }
+
+  public String convertString(DBResultSet resultSet, int columnIndex, String value) throws SQLException
+  {
+    return getConnection().convertString(resultSet, columnIndex, value);
+  }
+
+  public String convertString(DBResultSet resultSet, String columnLabel, String value) throws SQLException
+  {
+    return getConnection().convertString(resultSet, columnLabel, value);
+  }
 }

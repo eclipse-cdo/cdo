@@ -28,8 +28,22 @@ public final class DBResultSet extends DelegatingResultSet implements IDBResultS
   }
 
   @Override
-  public IDBPreparedStatement getStatement() throws SQLException
+  public DBPreparedStatement getStatement() throws SQLException
   {
-    return (IDBPreparedStatement)super.getStatement();
+    return (DBPreparedStatement)super.getStatement();
+  }
+
+  @Override
+  public String getString(int columnIndex) throws SQLException
+  {
+    String value = super.getString(columnIndex);
+    return getStatement().convertString(this, columnIndex, value);
+  }
+
+  @Override
+  public String getString(String columnLabel) throws SQLException
+  {
+    String value = super.getString(columnLabel);
+    return getStatement().convertString(this, columnLabel, value);
   }
 }

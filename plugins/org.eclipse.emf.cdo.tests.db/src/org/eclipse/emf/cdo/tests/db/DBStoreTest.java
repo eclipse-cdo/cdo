@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import oracle.jdbc.pool.OracleDataSource;
+
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -23,7 +25,10 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.jdbc.DelegatingConnection;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.security.IUserAware;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -34,13 +39,48 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.sql.Connection;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author Stefan Winkler
  */
 public class DBStoreTest extends AbstractCDOTest
 {
+  public static void main(String[] args) throws Exception
+  {
+    Connection connection = null;
+
+    try
+    {
+      final String userName = "test_repo1";
+      OracleDataSource dataSource = OracleConfig.createDataSourceForUser(userName);
+
+      class UserConnection extends DelegatingConnection.Default implements IUserAware
+      {
+        public UserConnection(Connection delegate)
+        {
+          super(delegate);
+        }
+
+        public String getUserID()
+        {
+          return userName;
+        }
+      }
+
+      connection = new UserConnection(dataSource.getConnection());
+
+      List<String> names = DBUtil.getAllTableNames(connection, null);
+      System.out.println(names);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+  }
+
   // Bug 256462
   public void testInsertNull() throws Exception
   {

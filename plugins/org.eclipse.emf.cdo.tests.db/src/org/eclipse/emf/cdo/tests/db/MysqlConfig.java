@@ -19,6 +19,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javax.sql.DataSource;
 
+import java.sql.SQLException;
+
 /**
  * @author Simon McDuff
  */
@@ -57,7 +59,7 @@ public class MysqlConfig extends AbstractSetupDBConfig
   }
 
   @Override
-  protected DataSource createDataSourceForDB(String dbName)
+  protected DataSource createDataSourceForDB(String dbName) throws SQLException
   {
     MysqlDataSource dataSource = new MysqlDataSource();
     dataSource.setUrl("jdbc:mysql://" + HOST);

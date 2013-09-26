@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
@@ -314,7 +313,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true);
     IDBAdapter dbAdapter = new H2Adapter();
-    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
+    IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 
     Map<String, String> props = new HashMap<String, String>();

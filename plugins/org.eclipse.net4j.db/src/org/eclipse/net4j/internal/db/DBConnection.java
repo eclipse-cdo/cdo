@@ -62,10 +62,16 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     return database;
   }
 
+  public String getUserID()
+  {
+    return database.getUserID();
+  }
+
   @Override
   public void close()
   {
     DBUtil.close(getDelegate());
+    // System.out.println("-- Open connections: " + --COUNT);
     closed = true;
     database.closeConnection(this);
   }
@@ -207,5 +213,20 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
       cache.clear();
     }
+  }
+
+  public String convertString(DBPreparedStatement preparedStatement, int parameterIndex, String value)
+  {
+    return getDatabase().convertString(preparedStatement, parameterIndex, value);
+  }
+
+  public String convertString(DBResultSet resultSet, int columnIndex, String value)
+  {
+    return getDatabase().convertString(resultSet, columnIndex, value);
+  }
+
+  public String convertString(DBResultSet resultSet, String columnLabel, String value)
+  {
+    return getDatabase().convertString(resultSet, columnLabel, value);
   }
 }

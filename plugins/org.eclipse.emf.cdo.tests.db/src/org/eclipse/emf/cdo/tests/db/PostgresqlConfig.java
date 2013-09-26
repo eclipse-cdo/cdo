@@ -19,6 +19,8 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 
+import java.sql.SQLException;
+
 /**
  * @author Victor Roldan Betancort
  */
@@ -55,7 +57,7 @@ public class PostgresqlConfig extends AbstractSetupDBConfig
   }
 
   @Override
-  protected DataSource createDataSourceForDB(String dbName)
+  protected DataSource createDataSourceForDB(String dbName) throws SQLException
   {
     PGSimpleDataSource dataSource = new PGSimpleDataSource();
     dataSource.setServerName(HOST);

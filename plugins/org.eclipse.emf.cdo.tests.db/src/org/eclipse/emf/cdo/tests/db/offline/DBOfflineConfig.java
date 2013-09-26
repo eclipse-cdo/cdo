@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.db.DBConfig;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -88,7 +87,7 @@ public abstract class DBOfflineConfig extends OfflineConfig
     IDBAdapter dbAdapter = createDBAdapter();
 
     DataSource dataSource = createDataSource(repoName);
-    IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
+    IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(dataSource);
 
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
   }

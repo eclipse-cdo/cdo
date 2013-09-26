@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.IUserAware;
 
 import javax.sql.DataSource;
 
@@ -371,7 +372,15 @@ public final class DBUtil
 
   public static IDBConnectionProvider createConnectionProvider(DataSource dataSource)
   {
-    return new DataSourceConnectionProvider(dataSource);
+    return createConnectionProvider(dataSource, null);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static IDBConnectionProvider2 createConnectionProvider(DataSource dataSource, String user)
+  {
+    return new DataSourceConnectionProvider(dataSource, user);
   }
 
   /**
@@ -584,6 +593,11 @@ public final class DBUtil
         }
       }
 
+      if (dbName == null && connection instanceof IUserAware)
+      {
+        dbName = ((IUserAware)connection).getUserID();
+      }
+
       tables = metaData.getTables(null, dbName, null, new String[] { "TABLE" }); //$NON-NLS-1$
       while (tables.next())
       {
@@ -608,12 +622,13 @@ public final class DBUtil
    */
   public static List<Exception> dropAllTables(Connection connection, String dbName)
   {
-    List<Exception> exceptions = new ArrayList<Exception>();
     Statement statement = null;
 
     try
     {
       statement = connection.createStatement();
+      List<Exception> exceptions = new ArrayList<Exception>();
+
       for (String tableName : getAllTableNames(connection, dbName))
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
@@ -628,6 +643,8 @@ public final class DBUtil
           exceptions.add(ex);
         }
       }
+
+      return exceptions;
     }
     catch (SQLException ex)
     {
@@ -637,8 +654,6 @@ public final class DBUtil
     {
       close(statement);
     }
-
-    return exceptions;
   }
 
   /**
@@ -812,7 +827,7 @@ public final class DBUtil
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex);
+      throw new DBException(ex.getMessage() + " --> " + sql, ex);
     }
     finally
     {

@@ -43,9 +43,11 @@ public abstract class AbstractDBRevisionCacheTest extends AbstractRevisionCacheT
 
     clearDb(dataSource);
 
+    IDBAdapter dbAdapter = getAdapter();
+
     CDORevisionCache revisionCache = CDOCommonDBUtil.createDBCache(//
-        getAdapter() //
-        , DBUtil.createConnectionProvider(dataSource)//
+        dbAdapter //
+        , dbAdapter.createConnectionProvider(dataSource)//
         , CDOListFactory.DEFAULT//
         , session.getPackageRegistry() //
         , ((InternalCDOSession)session).getRevisionManager().getFactory());

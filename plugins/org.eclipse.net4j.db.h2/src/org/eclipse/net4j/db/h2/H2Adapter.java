@@ -97,6 +97,15 @@ public class H2Adapter extends DBAdapter
   }
 
   /**
+   * See H2 bug http://code.google.com/p/h2database/issues/detail?id=508
+   */
+  @Override
+  public int convertRowNumberToDriver(int row)
+  {
+    return row - 1;
+  }
+
+  /**
    * @since 4.2
    */
   public static void createSchema(DataSource dataSource, final String name, final boolean dropIfExists)

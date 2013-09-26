@@ -47,7 +47,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     adapter = createAdapter();
 
     DataSource dataSource = createDataSource();
-    connectionProvider = DBUtil.createConnectionProvider(dataSource);
+    connectionProvider = adapter.createConnectionProvider(dataSource);
   }
 
   @Override

@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
@@ -225,7 +224,7 @@ public abstract class AbstractOfflineExampleServer
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true);
     IDBAdapter dbAdapter = new H2Adapter();
-    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
+    IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(dataSource);
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
   }
 

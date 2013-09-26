@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 import org.eclipse.emf.cdo.workspace.internal.efs.CDOWorkspaceFileSystem;
 import org.eclipse.emf.cdo.workspace.internal.efs.CDOWorkspaceStore;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
@@ -129,12 +128,13 @@ public final class CDOFS
 
   private static IDBStore createLocalStore(File projectFolder)
   {
+    DataSource dataSource = createLocalDataSource(new File(projectFolder, "local"));
+
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false);
     IDBAdapter dbAdapter = createLocalAdapter();
-    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(createLocalDataSource(new File(
-        projectFolder, "local")));
-    IDBStore local = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
-    return local;
+    IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(dataSource);
+
+    return CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
   }
 
   private static IDBAdapter createLocalAdapter()

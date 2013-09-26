@@ -51,7 +51,7 @@ public class DBStoreFactory implements IStoreFactory
     IMappingStrategy mappingStrategy = getMappingStrategy(repositoryName, repositoryProperties, storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
-    IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
+    IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(dataSource);
 
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);

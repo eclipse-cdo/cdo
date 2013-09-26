@@ -471,6 +471,12 @@ public abstract class AbstractOMTest extends TestCase
     return file;
   }
 
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName() + "." + getName();
+  }
+
   public static AbstractOMTest getCurrrentTest()
   {
     return (AbstractOMTest)TestExecuter.getValue();
@@ -645,7 +651,7 @@ public abstract class AbstractOMTest extends TestCase
     }
   }
 
-  protected static void msg(Object m)
+  public static void msg(Object m)
   {
     if (!SUPPRESS_OUTPUT)
     {
@@ -656,7 +662,7 @@ public abstract class AbstractOMTest extends TestCase
     }
   }
 
-  protected static void skipTest(boolean skip)
+  public static void skipTest(boolean skip)
   {
     if (skip)
     {
@@ -664,7 +670,7 @@ public abstract class AbstractOMTest extends TestCase
     }
   }
 
-  protected static void skipTest()
+  public static void skipTest()
   {
     skipTest(true);
   }

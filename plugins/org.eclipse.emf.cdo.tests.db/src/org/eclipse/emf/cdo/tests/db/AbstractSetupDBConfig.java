@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 
 import javax.sql.DataSource;
@@ -19,8 +20,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Victor Roldan Betancort
@@ -31,44 +30,45 @@ public abstract class AbstractSetupDBConfig extends DBConfig
 
   private transient DataSource setupDataSource;
 
-  private transient List<String> databases = new ArrayList<String>();
-
   public AbstractSetupDBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges,
       boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
   {
     super(name, supportingAudits, supportingBranches, withRanges, copyOnBranch, idGenerationLocation);
   }
 
+  protected String getDBName(String repoName)
+  {
+    return "test_" + repoName;
+  }
+
   @Override
   protected DataSource createDataSource(String repoName)
   {
-    String dbName = "test_" + repoName;
+    String dbName = getDBName(repoName);
     initDatabase(dbName);
 
-    return createDataSourceForDB(dbName);
-  }
-
-  @Override
-  protected void deactivateRepositories()
-  {
-    super.deactivateRepositories();
-    for (String dbName : databases)
+    try
     {
-      dropDatabase(dbName);
+      return createDataSourceForDB(dbName);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
     }
   }
 
-  private void initDatabase(String dbName)
+  protected void initDatabase(String dbName)
   {
     dropDatabase(dbName);
+
     Connection connection = null;
     Statement stmt = null;
 
     try
     {
-      connection = getSetupDataSource().getConnection();
+      connection = getSetupConnection();
       stmt = connection.createStatement();
-      stmt.execute("CREATE DATABASE " + dbName);
+      initDatabase(connection, stmt, dbName);
     }
     catch (SQLException ignore)
     {
@@ -80,16 +80,21 @@ public abstract class AbstractSetupDBConfig extends DBConfig
     }
   }
 
-  private void dropDatabase(String dbName)
+  protected void initDatabase(Connection connection, Statement stmt, String dbName) throws SQLException
+  {
+    stmt.execute("CREATE DATABASE " + dbName);
+  }
+
+  protected void dropDatabase(String dbName)
   {
     Connection connection = null;
     Statement stmt = null;
 
     try
     {
-      connection = getSetupDataSource().getConnection();
+      connection = getSetupConnection();
       stmt = connection.createStatement();
-      stmt.execute("DROP DATABASE " + dbName);
+      dropDatabase(connection, stmt, dbName);
     }
     catch (SQLException ignore)
     {
@@ -101,7 +106,24 @@ public abstract class AbstractSetupDBConfig extends DBConfig
     }
   }
 
-  private DataSource getSetupDataSource()
+  protected void dropDatabase(Connection connection, Statement stmt, String dbName) throws SQLException
+  {
+    stmt.execute("DROP DATABASE " + dbName);
+  }
+
+  protected final Connection getSetupConnection()
+  {
+    try
+    {
+      return getSetupDataSource().getConnection();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  protected final DataSource getSetupDataSource() throws SQLException
   {
     if (setupDataSource == null)
     {
@@ -113,7 +135,7 @@ public abstract class AbstractSetupDBConfig extends DBConfig
 
   /**
    * Note that <code>dbName</code> can be <code>null</code>, in which case a <i>setup</i> datasource must be returned.
-   * A connection form a setup< datasource can be used to create or drop other databases.
+   * A connection from a setup datasource can be used to create or drop other databases.
    */
-  protected abstract DataSource createDataSourceForDB(String dbName);
+  protected abstract DataSource createDataSourceForDB(String dbName) throws SQLException;
 }

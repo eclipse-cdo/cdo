@@ -23,8 +23,8 @@
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
 
-		  <securityManager type="default" description="/security:annotation:home(/home)"/>
     <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
+		  <securityManager type="default" description="/security:annotation:home(/home)"/>
     -->
 
     <!-- Example http://bugs.eclipse.org/302775

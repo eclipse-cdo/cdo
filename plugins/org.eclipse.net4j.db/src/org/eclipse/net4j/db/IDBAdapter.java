@@ -149,9 +149,4 @@ public interface IDBAdapter
    * @since 4.2
    */
   public String sqlModifyField(IDBField field);
-
-  /**
-   * @since 4.3
-   */
-  public int convertRowNumberToDriver(int row);
 }

@@ -1085,14 +1085,6 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
-   * @since 4.3
-   */
-  public int convertRowNumberToDriver(int row)
-  {
-    return row;
-  }
-
-  /**
    * @since 4.2
    */
   public String format(PreparedStatement stmt)

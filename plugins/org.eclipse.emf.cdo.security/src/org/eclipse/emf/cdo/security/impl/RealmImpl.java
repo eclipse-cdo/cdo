@@ -54,7 +54,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public class RealmImpl extends SecurityElementImpl implements Realm
 {
-  private EList<User> allUsers = new CachedList<User>()
+  private EList<User> allUsers = new DerivedList<User>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -76,7 +76,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     }
   };
 
-  private EList<Group> allGroups = new CachedList<Group>()
+  private EList<Group> allGroups = new DerivedList<Group>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -98,7 +98,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     }
   };
 
-  private EList<Role> allRoles = new CachedList<Role>()
+  private EList<Role> allRoles = new DerivedList<Role>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -120,7 +120,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     }
   };
 
-  private EList<Permission> allPermissions = new CachedList<Permission>()
+  private EList<Permission> allPermissions = new DerivedList<Permission>()
   {
     @Override
     protected InternalEObject getOwner()

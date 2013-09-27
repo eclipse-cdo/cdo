@@ -12,11 +12,8 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
@@ -32,7 +29,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.lang.reflect.InvocationTargetException;
@@ -44,10 +40,6 @@ import java.lang.reflect.Method;
 @Requires(ISessionConfig.CAPABILITY_NET4J_JVM)
 public class StateMachineTest extends AbstractCDOTest
 {
-  private static final long TIMESTAMP = 12345678;
-
-  private static final CDOBranch BRANCH = new CDOBranchImpl.Main(null, false, 0L);
-
   // ///////////////////////////////////////////////////
 
   public void test_TRANSIENT_with_ATTACH() throws Exception
@@ -139,23 +131,6 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(supplier);
     invalidate(supplier);
     assertTransient(supplier);
-  }
-
-  public void test_TRANSIENT_with_COMMIT() throws Exception
-  {
-    Supplier supplier = getModel1Factory().createSupplier();
-    supplier.setName("Stepper");
-    assertTransient(supplier);
-    try
-    {
-      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP), CDOBranchPoint.UNSPECIFIED_DATE,
-          false));
-      fail("IllegalStateException expected");
-    }
-    catch (IllegalStateException expected)
-    {
-      assertFailure(expected);
-    }
   }
 
   public void test_TRANSIENT_with_ROLLBACK() throws Exception
@@ -257,24 +232,6 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       invalidate(supplier);
-      fail("IllegalStateException expected");
-    }
-    catch (IllegalStateException expected)
-    {
-      assertFailure(expected);
-    }
-  }
-
-  public void test_PREPARED_with_COMMIT() throws Exception
-  {
-    Supplier supplier = getModel1Factory().createSupplier();
-    supplier.setName("Stepper");
-    setState(supplier, CDOState.PREPARED);
-
-    try
-    {
-      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP), CDOBranchPoint.UNSPECIFIED_DATE,
-          false));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -463,15 +420,6 @@ public class StateMachineTest extends AbstractCDOTest
     if (cdoObject != null)
     {
       CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, null);
-    }
-  }
-
-  private static void commit(EObject object, CommitTransactionResult result)
-  {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    if (cdoObject != null)
-    {
-      CDOStateMachine.INSTANCE.commit((InternalCDOObject)cdoObject, result);
     }
   }
 

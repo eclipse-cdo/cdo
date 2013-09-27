@@ -55,7 +55,7 @@ import java.util.Set;
  */
 public class UserImpl extends AssigneeImpl implements User
 {
-  private EList<Group> allGroups = new CachedList<Group>()
+  private EList<Group> allGroups = new DerivedList<Group>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -84,7 +84,7 @@ public class UserImpl extends AssigneeImpl implements User
     }
   };
 
-  private EList<Role> allRoles = new CachedList<Role>()
+  private EList<Role> allRoles = new DerivedList<Role>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -113,7 +113,7 @@ public class UserImpl extends AssigneeImpl implements User
     }
   };
 
-  private EList<Permission> allPermissions = new CachedList<Permission>()
+  private EList<Permission> allPermissions = new DerivedList<Permission>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -141,7 +141,7 @@ public class UserImpl extends AssigneeImpl implements User
     }
   };
 
-  private EList<Role> unassignedRoles = new CachedList<Role>()
+  private EList<Role> unassignedRoles = new DerivedList<Role>()
   {
     @Override
     protected InternalEObject getOwner()

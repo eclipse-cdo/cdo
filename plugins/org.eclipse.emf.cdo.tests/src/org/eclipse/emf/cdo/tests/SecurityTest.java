@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.ResourceFilter;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.impl.PermissionFilterImpl;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -345,6 +346,11 @@ public class SecurityTest extends AbstractCDOTest
         CDOBranchPoint securityContext, int level) throws Exception
     {
       return value;
+    }
+
+    public boolean isImpacted(CommitImpactContext context)
+    {
+      return false;
     }
   }
 }

@@ -13,12 +13,13 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
@@ -283,25 +284,25 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
-    sendCommitNotification(sender, commitInfo, true);
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
-    sendCommitNotification(sender, commitInfo, true, null);
+    throw new UnsupportedOperationException();
   }
 
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
-      CDORevisionProvider revisionProvider)
+  public void sendCommitNotification(CommitNotificationInfo info)
   {
+    CDOCommonSession sender = info.getSender();
     for (InternalSession session : getSessions())
     {
       if (session != sender)
       {
         try
         {
-          session.sendCommitNotification(commitInfo, clearResourcePathCache, revisionProvider);
+          session.sendCommitNotification(info);
         }
         catch (Exception ex)
         {

@@ -534,7 +534,16 @@ public abstract class AbstractOMTest extends TestCase
       return;
     }
 
-    Assert.assertEquals(expected, actual);
+    try
+    {
+      Assert.assertEquals(expected, actual);
+    }
+    catch (AssertionError ex)
+    {
+      AssertionFailedError error = new AssertionFailedError(ex.getMessage());
+      error.initCause(ex);
+      throw error;
+    }
   }
 
   public static void assertEquals(String message, Object expected, Object actual)

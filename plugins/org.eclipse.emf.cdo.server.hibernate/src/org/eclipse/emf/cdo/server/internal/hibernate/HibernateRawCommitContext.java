@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -39,6 +40,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Used during raw import.
@@ -72,6 +74,7 @@ public class HibernateRawCommitContext implements InternalCommitContext
         return cdoRevision;
       }
     }
+
     for (CDORevision cdoRevision : dirtyObjects)
     {
       if (id.equals(cdoRevision.getID()))
@@ -79,6 +82,7 @@ public class HibernateRawCommitContext implements InternalCommitContext
         return cdoRevision;
       }
     }
+
     return null;
   }
 
@@ -88,6 +92,7 @@ public class HibernateRawCommitContext implements InternalCommitContext
     {
       branchPoint = new CDOHibernateBranchPointImpl(System.currentTimeMillis());
     }
+
     return branchPoint;
   }
 
@@ -128,6 +133,25 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return HibernateThreadContext.getCurrentStoreAccessor().getStore().getRepository().getPackageRegistry();
+  }
+
+  public ISession getSender()
+  {
+    return null;
+  }
+
+  public CDOCommitInfo getCommitInfo()
+  {
+    return null;
+  }
+
+  public boolean isClearPermissionCache()
+  {
+    return false;
+  }
+
+  public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules)
+  {
   }
 
   public boolean isClearResourcePathCache()
@@ -368,5 +392,4 @@ public class HibernateRawCommitContext implements InternalCommitContext
     T old = (T)data.put(key, value);
     return old;
   }
-
 }

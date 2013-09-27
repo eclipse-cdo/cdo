@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -79,6 +80,11 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
       public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
       {
         throw new UnsupportedOperationException();
+      }
+
+      public boolean hasAnyRule(ISession session, Set<? extends Object> permissions)
+      {
+        return false;
       }
     };
 

@@ -36,12 +36,12 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -1046,16 +1046,16 @@ public class Repository extends Container<Object> implements InternalRepository
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
-    sendCommitNotification(sender, commitInfo, clearResourcePathCache, null);
+    throw new UnsupportedOperationException();
   }
 
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
-      CDORevisionProvider revisionProvider)
+  public void sendCommitNotification(CommitNotificationInfo info)
   {
+    CDOCommitInfo commitInfo = info.getCommitInfo();
     boolean isFailureCommitInfo = commitInfo.getBranch() == null;
     if (isFailureCommitInfo || !commitInfo.isEmpty())
     {
-      sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache, revisionProvider);
+      sessionManager.sendCommitNotification(info);
       commitInfoManager.notifyCommitInfoHandlers(commitInfo);
     }
   }

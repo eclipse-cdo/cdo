@@ -17,8 +17,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -90,7 +90,7 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
 
   /**
    * @since 4.2
-   * @deprecated As of 4.3 use {@link #sendCommitNotification(CDOCommitInfo, boolean, CDORevisionProvider)}.
+   * @deprecated As of 4.3 use {@link #sendCommitNotification(CommitNotificationInfo)}.
    */
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception;
@@ -98,8 +98,7 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
   /**
    * @since 4.3
    */
-  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache,
-      CDORevisionProvider revisionProvider) throws Exception;
+  public void sendCommitNotification(CommitNotificationInfo info) throws Exception;
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
 

@@ -113,6 +113,12 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
     return matcher.matches();
   }
 
+  @Override
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    return ResourceFilterImpl.isResourceTreeImpacted(context);
+  }
+
   private Pattern compilePattern(String value)
   {
     if (value == null)

@@ -12,8 +12,12 @@ package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -33,6 +37,8 @@ import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -42,8 +48,10 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -55,6 +63,9 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ArrayUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.HashBag;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -68,9 +79,10 @@ import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -97,6 +109,15 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   };
 
+  private final IListener sessionManagerListener = new ContainerEventAdapter<ISession>()
+  {
+    @Override
+    protected void onRemoved(IContainer<ISession> container, ISession session)
+    {
+      removeUserInfo(session);
+    }
+  };
+
   private final IAuthenticator authenticator = new Authenticator();
 
   private final IPermissionManager permissionManager = new PermissionManager();
@@ -107,7 +128,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private final IManagedContainer container;
 
-  private final Map<String, User> users = Collections.synchronizedMap(new HashMap<String, User>());
+  private final Map<ISession, UserInfo> userInfos = new HashMap<ISession, UserInfo>();
+
+  private final HashBag<PermissionImpl> permissionBag = new HashBag<PermissionImpl>();
 
   private final Object commitHandlerLock = new Object();
 
@@ -115,17 +138,21 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private CommitHandler2[] commitHandlers2 = {};
 
+  private PermissionImpl[] permissionArray = {};
+
   private InternalRepository repository;
 
   private IAcceptor acceptor;
 
   private IConnector connector;
 
-  private CDONet4jSession session;
+  private CDONet4jSession systemSession;
 
   private CDOView view;
 
   private Realm realm;
+
+  private CDOID realmID;
 
   public SecurityManager(String realmPath, IManagedContainer container)
   {
@@ -186,16 +213,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public User getUser(String id)
   {
-    User item = users.get(id);
+    User item = realm.getUser(id);
     if (item == null)
     {
-      item = realm.getUser(id);
-      if (item == null)
-      {
-        throw new SecurityException("User " + id + " not found");
-      }
-
-      users.put(id, item);
+      throw new SecurityException("User " + id + " not found");
     }
 
     return item;
@@ -336,7 +357,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   public void modify(RealmOperation operation, boolean waitUntilReadable)
   {
     checkActive();
-    CDOTransaction transaction = session.openTransaction();
+    CDOTransaction transaction = systemSession.openTransaction();
 
     try
     {
@@ -483,8 +504,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     config.setRepositoryName(repositoryName);
     config.setUserID(SYSTEM_USER_ID);
 
-    session = config.openNet4jSession();
-    CDOTransaction transaction = session.openTransaction();
+    systemSession = config.openNet4jSession();
+    CDOTransaction transaction = systemSession.openTransaction();
 
     boolean firstTime = !transaction.hasResource(realmPath);
     if (firstTime)
@@ -516,12 +537,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       transaction.close();
     }
 
-    view = session.openView();
+    view = systemSession.openView();
     realm = view.getObject(realm);
+    realmID = realm.cdoID();
 
     InternalSessionManager sessionManager = repository.getSessionManager();
     sessionManager.setAuthenticator(authenticator);
     sessionManager.setPermissionManager(permissionManager);
+    sessionManager.addListener(sessionManagerListener);
     repository.addHandler(writeAccessHandler);
 
     SECURITY_MANAGERS.put(repository, this);
@@ -531,29 +554,29 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   protected Realm createRealm()
   {
     Realm realm = SF.createRealm("Security Realm");
-    realm.setDefaultRoleDirectory(addDirectory(realm, "Roles"));
-    realm.setDefaultGroupDirectory(addDirectory(realm, "Groups"));
-    realm.setDefaultUserDirectory(addDirectory(realm, "Users"));
+    realm.setDefaultRoleDirectory(addDirectory(realm, Directory.ROLES));
+    realm.setDefaultGroupDirectory(addDirectory(realm, Directory.GROUPS));
+    realm.setDefaultUserDirectory(addDirectory(realm, Directory.USERS));
 
     // Create roles
 
-    Role allReaderRole = realm.addRole("All Objects Reader");
+    Role allReaderRole = realm.addRole(Role.ALL_OBJECTS_READER);
     allReaderRole.getPermissions().add(
         SF.createFilterPermission(Access.READ, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
-    Role allWriterRole = realm.addRole("All Objects Writer");
+    Role allWriterRole = realm.addRole(Role.ALL_OBJECTS_WRITER);
     allWriterRole.getPermissions().add(
         SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
-    Role treeReaderRole = realm.addRole("Resource Tree Reader");
+    Role treeReaderRole = realm.addRole(Role.RESOURCE_TREE_READER);
     treeReaderRole.getPermissions().add(
         SF.createFilterPermission(Access.READ, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
-    Role treeWriterRole = realm.addRole("Resource Tree Writer");
+    Role treeWriterRole = realm.addRole(Role.RESOURCE_TREE_WRITER);
     treeWriterRole.getPermissions().add(
         SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
-    Role adminRole = realm.addRole("Administration");
+    Role adminRole = realm.addRole(Role.ADMINISTRATION);
     adminRole.getPermissions().add(
         SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
     adminRole.getPermissions().add(
@@ -561,14 +584,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     // Create groups
 
-    Group adminsGroup = realm.addGroup("Administrators");
+    Group adminsGroup = realm.addGroup(Group.ADMINISTRATORS);
     adminsGroup.getRoles().add(adminRole);
 
-    realm.addGroup("Users");
+    realm.addGroup(Directory.USERS);
 
     // Create users
 
-    User adminUser = realm.addUser("Administrator", "0000");
+    User adminUser = realm.addUser(User.ADMINISTRATOR, "0000");
     adminUser.getGroups().add(adminsGroup);
 
     return realm;
@@ -598,22 +621,33 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return CDOPermission.NONE;
   }
 
-  protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext, ISession session, User user)
+  protected CDOPermission authorize(CDORevision revision, CDORevisionProvider revisionProvider,
+      CDOBranchPoint securityContext, ISession session, Access defaultAccess, Permission[] permissions)
   {
-    PermissionUtil.setUser(user.getId());
+    boolean setUser = defaultAccess == null;
+    if (setUser)
+    {
+      UserInfo userInfo = getUserInfo(session);
+      User user = userInfo.getUser();
+
+      defaultAccess = user.getDefaultAccess();
+      permissions = userInfo.getPermissions();
+
+      PermissionUtil.setUser(user.getId());
+    }
 
     try
     {
-      CDOPermission result = convertPermission(user.getDefaultAccess());
+      CDOPermission result = convertPermission(defaultAccess);
       if (result == CDOPermission.WRITE)
       {
         return result;
       }
 
-      EList<Permission> allPermissions = user.getAllPermissions();
-      for (Permission permission : allPermissions)
+      for (int i = 0; i < permissions.length; i++)
       {
+        Permission permission = permissions[i];
+
         CDOPermission p = convertPermission(permission.getAccess());
         if (p.ordinal() <= result.ordinal())
         {
@@ -635,8 +669,75 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
     finally
     {
-      PermissionUtil.setUser(null);
+      if (setUser)
+      {
+        PermissionUtil.setUser(null);
+      }
     }
+  }
+
+  protected UserInfo getUserInfo(ISession session)
+  {
+    UserInfo userInfo;
+    synchronized (userInfos)
+    {
+      userInfo = userInfos.get(session);
+    }
+
+    if (userInfo == null)
+    {
+      userInfo = addUserInfo(session);
+    }
+
+    return userInfo;
+  }
+
+  protected UserInfo addUserInfo(ISession session)
+  {
+    String userID = session.getUserID();
+    User user = getUser(userID);
+    UserInfo userInfo = new UserInfo(user);
+
+    synchronized (userInfos)
+    {
+      userInfos.put(session, userInfo);
+
+      Permission[] permissions = userInfo.getPermissions();
+      for (int i = 0; i < permissions.length; i++)
+      {
+        Permission permission = permissions[i];
+        permissionBag.add((PermissionImpl)permission);
+      }
+
+      // Atomic update
+      permissionArray = permissionBag.toArray(new PermissionImpl[permissionBag.size()]);
+    }
+
+    return userInfo;
+  }
+
+  protected UserInfo removeUserInfo(ISession session)
+  {
+    UserInfo userInfo;
+    synchronized (userInfos)
+    {
+      userInfo = userInfos.remove(session);
+
+      if (userInfo != null)
+      {
+        Permission[] permissions = userInfo.getPermissions();
+        for (int i = 0; i < permissions.length; i++)
+        {
+          Permission permission = permissions[i];
+          permissionBag.remove(permission);
+        }
+
+        // Atomic update
+        permissionArray = permissionBag.toArray(new PermissionImpl[permissionBag.size()]);
+      }
+    }
+
+    return userInfo;
   }
 
   @Override
@@ -649,11 +750,15 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   @Override
   protected void doDeactivate() throws Exception
   {
-    users.clear();
-    realm = null;
+    userInfos.clear();
+    permissionBag.clear();
+    permissionArray = null;
 
-    session.close();
-    session = null;
+    realm = null;
+    realmID = null;
+
+    systemSession.close();
+    systemSession = null;
     view = null;
 
     connector.close();
@@ -668,6 +773,33 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   public static InternalSecurityManager get(IRepository repository)
   {
     return SECURITY_MANAGERS.get(repository);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class UserInfo
+  {
+    private final User user;
+
+    private final Permission[] permissions;
+
+    public UserInfo(User user)
+    {
+      this.user = user;
+      EList<Permission> allPermissions = user.getAllPermissions();
+      permissions = allPermissions.toArray(new Permission[allPermissions.size()]);
+    }
+
+    public User getUser()
+    {
+      return user;
+    }
+
+    public Permission[] getPermissions()
+    {
+      return permissions;
+    }
   }
 
   /**
@@ -696,7 +828,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    */
   private final class PermissionManager implements IPermissionManager
   {
-    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session)
+    @Deprecated
+    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOPermission getPermission(CDORevision revision, final CDOBranchPoint securityContext,
+        final ISession session)
     {
       String userID = session.getUserID();
       if (SYSTEM_USER_ID.equals(userID))
@@ -704,29 +843,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         return CDOPermission.WRITE;
       }
 
-      return doGetPermission(revision, securityContext, session, userID);
-    }
-
-    @Deprecated
-    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
-    {
-      if (SYSTEM_USER_ID.equals(userID))
-      {
-        return CDOPermission.WRITE;
-      }
-
-      return doGetPermission(revision, securityContext, null, userID);
-    }
-
-    private CDOPermission doGetPermission(CDORevision revision, final CDOBranchPoint securityContext,
-        final ISession session, String userID)
-    {
       if (revision.getEClass() == SecurityPackage.Literals.USER_PASSWORD)
       {
         return CDOPermission.NONE;
       }
-
-      User user = getUser(userID);
 
       InternalCDORevisionManager revisionManager = repository.getRevisionManager();
       CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
@@ -741,12 +861,34 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       try
       {
-        return SecurityManager.this.getPermission(revision, revisionProvider, securityContext, session, user);
+        return authorize(revision, revisionProvider, securityContext, session, null, null);
       }
       finally
       {
         PermissionUtil.doneViewCreation();
       }
+    }
+
+    public boolean hasAnyRule(ISession session, Set<? extends Object> rules)
+    {
+      String userID = session.getUserID();
+      if (SYSTEM_USER_ID.equals(userID))
+      {
+        return false;
+      }
+
+      UserInfo userInfo = getUserInfo(session);
+      Permission[] userPermissions = userInfo.getPermissions();
+      for (int i = 0; i < userPermissions.length; i++)
+      {
+        Permission userPermission = userPermissions[i];
+        if (rules.contains(userPermission))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 
@@ -758,19 +900,20 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     public void handleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
-      if (transaction.getSessionID() == session.getSessionID())
+      if (transaction.getSessionID() == systemSession.getSessionID())
       {
         // Access through ISecurityManager.modify(RealmOperation)
         handleCommit(commitContext, null);
+        ((InternalCommitContext)commitContext).setSecurityImpact(CommitNotificationInfo.IMPACT_REALM, null);
         return;
       }
 
-      CDOBranchPoint securityContext = commitContext.getBranchPoint();
-      String userID = commitContext.getUserID();
-      User user = getUser(userID);
+      UserInfo userInfo = getUserInfo(transaction.getSession());
+      User user = userInfo.getUser();
 
       handleCommit(commitContext, user);
 
+      PermissionUtil.setUser(user.getId());
       PermissionUtil.initViewCreation(new ViewCreator()
       {
         public CDOView createView(CDORevisionProvider revisionProvider)
@@ -781,25 +924,95 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       try
       {
-        permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+        CDOBranchPoint securityContext = commitContext.getBranchPoint();
+        ISession session = transaction.getSession();
+
+        Access userDefaultAccess = user.getDefaultAccess();
+        Permission[] userPermissions = userInfo.getPermissions();
+
+        final InternalCDORevision[] revisions = commitContext.getDirtyObjects();
+        final InternalCDORevisionDelta[] revisionDeltas = commitContext.getDirtyObjectDeltas();
+
+        // Check permissions on the commit changes and detect realm modifications
+        byte securityImpact = CommitNotificationInfo.IMPACT_NONE;
+        for (int i = 0; i < revisions.length; i++)
+        {
+          InternalCDORevision revision = revisions[i];
+          CDOPermission permission = authorize(revision, commitContext, securityContext, session, userDefaultAccess,
+              userPermissions);
+
+          if (permission != CDOPermission.WRITE)
+          {
+            throw new SecurityException("User " + commitContext.getUserID() + " is not allowed to write to " + revision);
+          }
+
+          if (securityImpact != CommitNotificationInfo.IMPACT_REALM)
+          {
+            InternalCDORevisionDelta revisionDelta = revisionDeltas[i];
+            if (CDORevisionUtil.isContained(revisionDelta.getID(), realmID, transaction)) // Use "before commit" state
+            {
+              securityImpact = CommitNotificationInfo.IMPACT_REALM;
+            }
+          }
+        }
+
+        // Determine permissions that are impacted by the commit changes
+        Set<Permission> impactedRules = null;
+        if (securityImpact != CommitNotificationInfo.IMPACT_REALM)
+        {
+          PermissionImpl[] assignedPermissions = permissionArray; // Thread-safe
+          if (assignedPermissions.length != 0)
+          {
+            CommitImpactContext commitImpactContext = new PermissionImpl.CommitImpactContext()
+            {
+              public CDORevision[] getNewObjects()
+              {
+                return commitContext.getNewObjects();
+              }
+
+              public CDORevision[] getDirtyObjects()
+              {
+                return revisions;
+              }
+
+              public CDORevisionDelta[] getDirtyObjectDeltas()
+              {
+                return revisionDeltas;
+              }
+
+              public CDOID[] getDetachedObjects()
+              {
+                return commitContext.getDetachedObjects();
+              }
+            };
+
+            for (int i = 0; i < assignedPermissions.length; i++)
+            {
+              PermissionImpl permission = assignedPermissions[i];
+              if (permission.isImpacted(commitImpactContext))
+              {
+                if (impactedRules == null)
+                {
+                  impactedRules = new HashSet<Permission>();
+                }
+
+                impactedRules.add(permission);
+              }
+            }
+
+            if (impactedRules != null)
+            {
+              securityImpact = CommitNotificationInfo.IMPACT_PERMISSIONS;
+            }
+          }
+        }
+
+        ((InternalCommitContext)commitContext).setSecurityImpact(securityImpact, impactedRules);
       }
       finally
       {
+        PermissionUtil.setUser(null);
         PermissionUtil.doneViewCreation();
-      }
-    }
-
-    private void permissionRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
-        User user, InternalCDORevision[] revisions)
-    {
-      ISession session = commitContext.getTransaction().getSession();
-      for (InternalCDORevision revision : revisions)
-      {
-        CDOPermission permission = getPermission(revision, commitContext, securityContext, session, user);
-        if (permission != CDOPermission.WRITE)
-        {
-          throw new SecurityException("User " + user + " is not allowed to write to " + revision);
-        }
       }
     }
 

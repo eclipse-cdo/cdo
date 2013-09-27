@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -33,8 +32,6 @@ import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
-
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -51,14 +48,14 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
   public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {
-    super(CDOProtocolConstants.PROTOCOL_NAME);
+    super(PROTOCOL_NAME);
     this.repositoryProvider = repositoryProvider;
   }
 
   @Override
   public int getVersion()
   {
-    return CDOProtocolConstants.PROTOCOL_VERSION;
+    return PROTOCOL_VERSION;
   }
 
   public InternalSession getSession()
@@ -146,22 +143,20 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
   {
-    sendCommitNotification(commitInfo, true);
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
   {
-    sendCommitNotification(commitInfo, true, null);
-
+    throw new UnsupportedOperationException();
   }
 
-  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
-      throws Exception
+  public void sendCommitNotification(CommitNotificationInfo info) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new CommitNotificationRequest(this, commitInfo, clearResourcePathCache, readOnly).sendAsync();
+      new CommitNotificationRequest(this, info).sendAsync();
     }
     else
     {
@@ -215,142 +210,142 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   {
     switch (signalID)
     {
-    case CDOProtocolConstants.SIGNAL_OPEN_SESSION:
+    case SIGNAL_OPEN_SESSION:
       return new OpenSessionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_OPEN_VIEW:
+    case SIGNAL_OPEN_VIEW:
       return new OpenViewIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_SWITCH_TARGET:
+    case SIGNAL_SWITCH_TARGET:
       return new SwitchTargetIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CLOSE_VIEW:
+    case SIGNAL_CLOSE_VIEW:
       return new CloseViewIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_PACKAGES:
+    case SIGNAL_LOAD_PACKAGES:
       return new LoadPackagesIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CREATE_BRANCH:
+    case SIGNAL_CREATE_BRANCH:
       return new CreateBranchIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_BRANCH:
+    case SIGNAL_LOAD_BRANCH:
       return new LoadBranchIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_SUB_BRANCHES:
+    case SIGNAL_LOAD_SUB_BRANCHES:
       return new LoadSubBranchesIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_BRANCHES:
+    case SIGNAL_LOAD_BRANCHES:
       return new LoadBranchesIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_REVISIONS:
+    case SIGNAL_LOAD_REVISIONS:
       return new LoadRevisionsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION:
+    case SIGNAL_LOAD_REVISION_BY_VERSION:
       return new LoadRevisionByVersionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_CHUNK:
+    case SIGNAL_LOAD_CHUNK:
       return new LoadChunkIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_QUERY_LOBS:
+    case SIGNAL_QUERY_LOBS:
       return new QueryLobsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_LOB:
+    case SIGNAL_LOAD_LOB:
       return new LoadLobIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
+    case SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION:
+    case SIGNAL_COMMIT_DELEGATION:
       return new CommitDelegationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE1:
+    case SIGNAL_XA_COMMIT_TRANSACTION_PHASE1:
       return new CommitXATransactionPhase1Indication(this);
 
-    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2:
+    case SIGNAL_XA_COMMIT_TRANSACTION_PHASE2:
       return new CommitXATransactionPhase2Indication(this);
 
-    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE3:
+    case SIGNAL_XA_COMMIT_TRANSACTION_PHASE3:
       return new CommitXATransactionPhase3Indication(this);
 
-    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_CANCEL:
+    case SIGNAL_XA_COMMIT_TRANSACTION_CANCEL:
       return new CommitXATransactionCancelIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_QUERY:
+    case SIGNAL_QUERY:
       return new QueryIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_QUERY_CANCEL:
+    case SIGNAL_QUERY_CANCEL:
       return new QueryCancelIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REFRESH_SESSION:
+    case SIGNAL_REFRESH_SESSION:
       return new RefreshSessionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_DISABLE_PASSIVE_UPDATE:
+    case SIGNAL_DISABLE_PASSIVE_UPDATE:
       return new DisablePassiveUpdateIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_SET_PASSIVE_UPDATE_MODE:
+    case SIGNAL_SET_PASSIVE_UPDATE_MODE:
       return new SetPassiveUpdateModeIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
+    case SIGNAL_CHANGE_SUBSCRIPTION:
       return new ChangeSubscriptionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REPOSITORY_TIME:
+    case SIGNAL_REPOSITORY_TIME:
       return new RepositoryTimeIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOCK_OBJECTS:
+    case SIGNAL_LOCK_OBJECTS:
       return new LockObjectsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS:
+    case SIGNAL_UNLOCK_OBJECTS:
       return new UnlockObjectsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOCK_DELEGATION:
+    case SIGNAL_LOCK_DELEGATION:
       return new LockDelegationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_UNLOCK_DELEGATION:
+    case SIGNAL_UNLOCK_DELEGATION:
       return new UnlockDelegationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_OBJECT_LOCKED:
+    case SIGNAL_OBJECT_LOCKED:
       return new ObjectLockedIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOCK_AREA:
+    case SIGNAL_LOCK_AREA:
       return new LockAreaIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS:
+    case SIGNAL_GET_REMOTE_SESSIONS:
       return new GetRemoteSessionsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS:
+    case SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS:
       return new UnsubscribeRemoteSessionsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE:
+    case SIGNAL_REMOTE_MESSAGE:
       return new RemoteMessageIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS:
+    case SIGNAL_LOAD_COMMIT_INFOS:
       return new LoadCommitInfosIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_COMMIT_DATA:
+    case SIGNAL_LOAD_COMMIT_DATA:
       return new LoadCommitDataIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY:
+    case SIGNAL_REPLICATE_REPOSITORY:
       return new ReplicateRepositoryIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW:
+    case SIGNAL_REPLICATE_REPOSITORY_RAW:
       return new ReplicateRepositoryRawIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS:
+    case SIGNAL_LOAD_CHANGE_SETS:
       return new LoadChangeSetsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA:
+    case SIGNAL_LOAD_MERGE_DATA:
       return new LoadMergeDataIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_HANDLE_REVISIONS:
+    case SIGNAL_HANDLE_REVISIONS:
       return new HandleRevisionsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOCK_STATE:
+    case SIGNAL_LOCK_STATE:
       return new LockStateIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_ENABLE_LOCK_NOTIFICATION:
+    case SIGNAL_ENABLE_LOCK_NOTIFICATION:
       return new EnableLockNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_SET_LOCK_NOTIFICATION_MODE:
+    case SIGNAL_SET_LOCK_NOTIFICATION_MODE:
       return new SetLockNotificationModeIndication(this);
 
     default:

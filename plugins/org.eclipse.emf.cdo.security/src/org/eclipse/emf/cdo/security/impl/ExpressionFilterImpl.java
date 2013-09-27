@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.expressions.Expression;
 import org.eclipse.emf.cdo.expressions.impl.EvaluationContextImpl;
 import org.eclipse.emf.cdo.security.ExpressionFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -84,6 +85,12 @@ public class ExpressionFilterImpl extends ObjectFilterImpl implements Expression
 
     Expression expression = getExpression();
     return (Boolean)expression.evaluate(evaluationContext);
+  }
+
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    // TODO Implement impact analysis in the expression model
+    return true;
   }
 
   public String format()

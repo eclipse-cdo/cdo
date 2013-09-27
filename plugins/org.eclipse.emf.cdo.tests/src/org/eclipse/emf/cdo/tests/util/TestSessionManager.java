@@ -10,10 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.util;
 
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
@@ -55,8 +53,7 @@ public class TestSessionManager extends SessionManager
   }
 
   @Override
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
-      CDORevisionProvider revisionProvider)
+  public void sendCommitNotification(CommitNotificationInfo info)
   {
     synchronized (lock)
     {
@@ -68,6 +65,6 @@ public class TestSessionManager extends SessionManager
       }
     }
 
-    super.sendCommitNotification(sender, commitInfo, clearResourcePathCache, revisionProvider);
+    super.sendCommitNotification(info);
   }
 }

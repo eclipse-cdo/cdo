@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -144,4 +145,9 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
   public void addIDMapping(CDOID oldID, CDOID newID);
 
   public void applyIDMappings(OMMonitor monitor);
+
+  /**
+   * @since 4.3
+   */
+  public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules);
 }

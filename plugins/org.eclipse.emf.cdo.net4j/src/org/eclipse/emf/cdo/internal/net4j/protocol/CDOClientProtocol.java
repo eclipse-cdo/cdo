@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -84,13 +83,13 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
   public CDOClientProtocol()
   {
-    super(CDOProtocolConstants.PROTOCOL_NAME);
+    super(PROTOCOL_NAME);
   }
 
   @Override
   public int getVersion()
   {
-    return CDOProtocolConstants.PROTOCOL_VERSION;
+    return PROTOCOL_VERSION;
   }
 
   public CDOSession getSession()
@@ -466,28 +465,28 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   {
     switch (signalID)
     {
-    case CDOProtocolConstants.SIGNAL_AUTHENTICATION:
+    case SIGNAL_AUTHENTICATION:
       return new AuthenticationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION:
+    case SIGNAL_BRANCH_NOTIFICATION:
       return new BranchNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REPOSITORY_TYPE_NOTIFICATION:
+    case SIGNAL_REPOSITORY_TYPE_NOTIFICATION:
       return new RepositoryTypeNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REPOSITORY_STATE_NOTIFICATION:
+    case SIGNAL_REPOSITORY_STATE_NOTIFICATION:
       return new RepositoryStateNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION:
+    case SIGNAL_COMMIT_NOTIFICATION:
       return new CommitNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION:
+    case SIGNAL_REMOTE_SESSION_NOTIFICATION:
       return new RemoteSessionNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION:
+    case SIGNAL_REMOTE_MESSAGE_NOTIFICATION:
       return new RemoteMessageNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION:
+    case SIGNAL_LOCK_NOTIFICATION:
       return new LockNotificationIndication(this);
 
     default:

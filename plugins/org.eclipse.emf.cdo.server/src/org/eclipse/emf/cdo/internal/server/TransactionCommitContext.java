@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -66,7 +67,6 @@ import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -132,8 +132,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String commitComment;
 
-  private boolean clearResourcePathCache;
-
   private boolean usingEcore;
 
   private boolean usingEtypes;
@@ -185,6 +183,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private ExtendedDataInputStream lobs;
 
   private Map<Object, Object> data;
+
+  private CommitNotificationInfo commitNotificationInfo = new CommitNotificationInfo();
 
   public TransactionCommitContext(InternalTransaction transaction)
   {
@@ -257,7 +257,12 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public boolean isClearResourcePathCache()
   {
-    return clearResourcePathCache;
+    return commitNotificationInfo.isClearResourcePathCache();
+  }
+
+  public boolean isClearPermissionCache()
+  {
+    return commitNotificationInfo.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE;
   }
 
   public boolean isUsingEcore()
@@ -473,7 +478,13 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public void setClearResourcePathCache(boolean clearResourcePathCache)
   {
-    this.clearResourcePathCache = clearResourcePathCache;
+    commitNotificationInfo.setClearResourcePathCache(clearResourcePathCache);
+  }
+
+  public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules)
+  {
+    commitNotificationInfo.setSecurityImpact(securityImpact);
+    commitNotificationInfo.setImpactedRules(impactedRules);
   }
 
   public void setUsingEcore(boolean usingEcore)
@@ -803,10 +814,19 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private void sendCommitNotifications(boolean success)
   {
-    InternalSession sender = transaction.getSession();
-    CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
+    commitNotificationInfo.setSender(transaction.getSession());
+    commitNotificationInfo.setRevisionProvider(this);
 
-    repository.sendCommitNotification(sender, commitInfo, clearResourcePathCache, this);
+    if (success)
+    {
+      commitNotificationInfo.setCommitInfo(createCommitInfo());
+    }
+    else
+    {
+      commitNotificationInfo.setCommitInfo(createFailureCommitInfo());
+    }
+
+    repository.sendCommitNotification(commitNotificationInfo);
   }
 
   public CDOCommitInfo createCommitInfo()

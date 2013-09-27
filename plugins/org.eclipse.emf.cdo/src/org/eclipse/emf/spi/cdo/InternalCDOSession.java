@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -200,7 +201,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 4.2
-   * @deprecated As of 4.3 use {@link #handleCommitNotification(CDOCommitInfo, boolean, Set)}.
+   * @deprecated As of 4.3 use {@link #handleCommitNotification(CommitNotificationInfo)}.
    */
   @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache);
@@ -208,7 +209,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 4.3
    */
-  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly);
+  public void handleCommitNotification(CommitNotificationInfo info);
 
   /**
    * @since 4.1
@@ -234,7 +235,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 4.2
-   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, Map)}.
+   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, boolean, Map)}.
    */
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache);
@@ -243,7 +244,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 4.3
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-      Map<CDOID, CDOPermission> permissions);
+      boolean clearPermissionCache, Map<CDOID, CDOPermission> permissions);
 
   /**
    * @since 3.0

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,6 +32,8 @@ public interface PermissionFilter extends CDOObject
 {
   boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
       int level) throws Exception;
+
+  boolean isImpacted(CommitImpactContext context);
 
   String format();
 

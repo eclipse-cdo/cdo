@@ -17,10 +17,10 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -181,7 +181,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   /**
    * @since 4.2
-   * @deprecated As of 4.3 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean, CDORevisionProvider)}.
+   * @deprecated As of 4.3 use {@link #sendCommitNotification(ISessionProtocol.CommitNotificationInfo)}.
    */
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
@@ -189,8 +189,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @since 4.3
    */
-  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache,
-      CDORevisionProvider revisionProvider);
+  public void sendCommitNotification(CommitNotificationInfo info);
 
   public void setRootResourceID(CDOID rootResourceID);
 

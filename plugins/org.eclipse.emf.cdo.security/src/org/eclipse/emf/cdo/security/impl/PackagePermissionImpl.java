@@ -83,4 +83,10 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
     return actualPackage == applicablePackage;
   }
 
+  @Override
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    return false;
+  }
+
 } // PackagePermissionImpl

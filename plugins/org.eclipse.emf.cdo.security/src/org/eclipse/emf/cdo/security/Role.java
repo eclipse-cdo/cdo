@@ -35,6 +35,31 @@ import org.eclipse.emf.common.util.EList;
 public interface Role extends SecurityItem
 {
   /**
+   * @since 4.3
+   */
+  public static final String ADMINISTRATION = "Administration";
+
+  /**
+   * @since 4.3
+   */
+  public static final String RESOURCE_TREE_WRITER = "Resource Tree Writer";
+
+  /**
+   * @since 4.3
+   */
+  public static final String RESOURCE_TREE_READER = "Resource Tree Reader";
+
+  /**
+   * @since 4.3
+   */
+  public static final String ALL_OBJECTS_WRITER = "All Objects Writer";
+
+  /**
+   * @since 4.3
+   */
+  public static final String ALL_OBJECTS_READER = "All Objects Reader";
+
+  /**
    * Returns the value of the '<em><b>Assignees</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.security.Assignee}.
    * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.security.Assignee#getRoles <em>Roles</em>}'.

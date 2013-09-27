@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.security.impl;
 import org.eclipse.emf.cdo.security.CombinedFilter;
 import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -65,6 +66,19 @@ public abstract class CombinedFilterImpl extends PermissionFilterImpl implements
   public EList<PermissionFilter> getOperands()
   {
     return (EList<PermissionFilter>)eGet(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, true);
+  }
+
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    for (PermissionFilter operand : getOperands())
+    {
+      if (operand.isImpacted(context))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public String format()

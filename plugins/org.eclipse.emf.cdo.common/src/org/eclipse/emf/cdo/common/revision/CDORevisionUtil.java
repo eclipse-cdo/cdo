@@ -303,6 +303,74 @@ public final class CDORevisionUtil
   }
 
   /**
+   * @since 4.3
+   */
+  public static boolean isContained(CDOID child, CDOID container, CDORevisionProvider provider)
+  {
+    InternalCDORevision revision = (InternalCDORevision)provider.getRevision(child);
+    return isContained(revision, container, provider);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean isContained(InternalCDORevision child, CDOID container, CDORevisionProvider provider)
+  {
+    if (child.getID() == container)
+    {
+      return true;
+    }
+
+    InternalCDORevision parent = getParentRevision(child, provider);
+    if (parent != null)
+    {
+      return isContained(parent, container, provider);
+    }
+
+    return false;
+  }
+
+  private static InternalCDORevision getParentRevision(InternalCDORevision revision, CDORevisionProvider provider)
+  {
+    CDOID parentID;
+
+    Object containerID = revision.getContainerID();
+    if (containerID instanceof CDOWithID)
+    {
+      parentID = ((CDOWithID)containerID).cdoID();
+    }
+    else
+    {
+      parentID = (CDOID)containerID;
+    }
+
+    if (CDOIDUtil.isNull(parentID))
+    {
+      parentID = revision.getResourceID();
+      if (CDOIDUtil.isNull(parentID))
+      {
+        return null;
+      }
+      else if (parentID == revision.getID())
+      {
+        // This must be the root resource!
+        return null;
+      }
+    }
+
+    return (InternalCDORevision)provider.getRevision(parentID);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static String getResourceNodePath(CDOID id, CDORevisionProvider provider)
+  {
+    CDORevision revision = provider.getRevision(id);
+    return getResourceNodePath(revision, provider);
+  }
+
+  /**
    * @since 4.0
    */
   public static String getResourceNodePath(CDORevision revision, CDORevisionProvider provider)
@@ -336,37 +404,6 @@ public final class CDORevisionUtil
         result.append(name);
       }
     }
-  }
-
-  private static InternalCDORevision getParentRevision(InternalCDORevision revision, CDORevisionProvider provider)
-  {
-    CDOID parentID;
-
-    Object containerID = revision.getContainerID();
-    if (containerID instanceof CDOWithID)
-    {
-      parentID = ((CDOWithID)containerID).cdoID();
-    }
-    else
-    {
-      parentID = (CDOID)containerID;
-    }
-
-    if (CDOIDUtil.isNull(parentID))
-    {
-      parentID = revision.getResourceID();
-      if (CDOIDUtil.isNull(parentID))
-      {
-        return null;
-      }
-      else if (parentID == revision.getID())
-      {
-        // This must be the root resource!
-        return null;
-      }
-    }
-
-    return (InternalCDORevision)provider.getRevision(parentID);
   }
 
   private static EAttribute getResourceNodeNameAttribute(CDORevision revision)

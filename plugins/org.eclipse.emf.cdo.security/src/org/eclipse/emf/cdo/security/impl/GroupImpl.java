@@ -42,7 +42,7 @@ import java.util.Set;
  */
 public class GroupImpl extends AssigneeImpl implements Group
 {
-  private EList<Group> allInheritedGroups = new CachedList.RecursionSafe<Group, Group>()
+  private EList<Group> allInheritedGroups = new DerivedList.RecursionSafe<Group, Group>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -71,7 +71,7 @@ public class GroupImpl extends AssigneeImpl implements Group
     }
   };
 
-  private EList<Group> allInheritingGroups = new CachedList.RecursionSafe<Group, Group>()
+  private EList<Group> allInheritingGroups = new DerivedList.RecursionSafe<Group, Group>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -100,7 +100,7 @@ public class GroupImpl extends AssigneeImpl implements Group
     }
   };
 
-  private EList<Role> allRoles = new CachedList.RecursionSafe<Role, Group>()
+  private EList<Role> allRoles = new DerivedList.RecursionSafe<Role, Group>()
   {
     @Override
     protected InternalEObject getOwner()

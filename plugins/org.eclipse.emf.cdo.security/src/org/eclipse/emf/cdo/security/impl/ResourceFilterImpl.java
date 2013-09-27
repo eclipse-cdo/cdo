@@ -16,11 +16,15 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.ResourceFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -275,103 +279,10 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     return this;
   }
 
-  // private boolean includesExactAndUp(CDORevision revision, CDORevisionProvider revisionProvider)
-  // {
-  // if (!revision.isResourceNode())
-  // {
-  // return false;
-  // }
-  //
-  // String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-  // String path = getSubstitutedPath();
-  //
-  // int length = revisionPath.length();
-  // if (length > path.length())
-  // {
-  // return false;
-  // }
-  //
-  // path = path.substring(0, length);
-  // return revisionPath.equals(path);
-  // }
-  //
-  // private boolean includesExactAndDown(CDORevision revision, CDORevisionProvider revisionProvider)
-  // {
-  // String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-  // String path = getSubstitutedPath();
-  //
-  // int length = path.length();
-  // if (length > revisionPath.length())
-  // {
-  // return false;
-  // }
-  //
-  // revisionPath = revisionPath.substring(0, length);
-  // return path.equals(revisionPath);
-  // }
-  //
-  // private boolean includesRegex(CDORevision revision, CDORevisionProvider revisionProvider)
-  // {
-  // if (pattern == null)
-  // {
-  // String path = substituteUserToken(getPath());
-  // pattern = compilePattern(path);
-  //
-  // if (pattern == null)
-  // {
-  // return false;
-  // }
-  // }
-  //
-  // if (pattern == OMNI_PATTERN)
-  // {
-  // return true;
-  // }
-  //
-  // String revisionPath = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
-  //
-  // Matcher matcher = pattern.matcher(revisionPath);
-  // return matcher.matches();
-  // }
-  //
-  // private String substituteUserToken(String string)
-  // {
-  // int pos = string.indexOf(USER_TOKEN);
-  // if (pos != -1)
-  // {
-  // String user = getUser();
-  // if (user == null || user.length() == 0)
-  // {
-  // throw new IllegalStateException("User required for evaluation of path " + string);
-  // }
-  //
-  // string = string.substring(0, pos) + user + string.substring(pos + USER_TOKEN.length());
-  // }
-  //
-  // return string;
-  // }
-  //
-  // private Pattern compilePattern(String value)
-  // {
-  // if (value == null)
-  // {
-  // return null;
-  // }
-  //
-  // if (OMNI_PATTERN.pattern().equals(value))
-  // {
-  // return OMNI_PATTERN;
-  // }
-  //
-  // try
-  // {
-  // return Pattern.compile(value);
-  // }
-  // catch (PatternSyntaxException ex)
-  // {
-  // return null;
-  // }
-  // }
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    return isResourceTreeImpacted(context);
+  }
 
   public String format()
   {
@@ -587,6 +498,32 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     default:
       throw new IllegalStateException("Unhandled pattern style: " + patternStyle);
     }
+  }
+
+  public static boolean isResourceTreeImpacted(CommitImpactContext context)
+  {
+    InternalCDORevisionDelta[] revisionDeltas = (InternalCDORevisionDelta[])context.getDirtyObjectDeltas();
+  
+    for (int i = 0; i < revisionDeltas.length; i++)
+    {
+      InternalCDORevisionDelta revisionDelta = revisionDeltas[i];
+  
+      // Any tree move might impact this permission
+      CDOFeatureDelta containerDelta = revisionDelta.getFeatureDelta(CDOContainerFeatureDelta.CONTAINER_FEATURE);
+      if (containerDelta != null)
+      {
+        return true;
+      }
+  
+      // Any change of a resource node name might impact this permission
+      CDOFeatureDelta nameDelta = revisionDelta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME);
+      if (nameDelta != null)
+      {
+        return true;
+      }
+    }
+  
+    return false;
   }
 
   /**

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import java.lang.ref.SoftReference;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,30 +27,18 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-abstract class CachedList<E extends EObject> implements InternalEList<E>, EStructuralFeature.Setting
+abstract class DerivedList<E extends EObject> implements InternalEList<E>, EStructuralFeature.Setting
 {
-  private SoftReference<Object[]> cache;
-
-  protected CachedList()
+  protected DerivedList()
   {
   }
 
   private InternalEList<E> getList()
   {
-    Object[] data = null;
-    if (cache != null)
-    {
-      data = cache.get();
-    }
-
-    if (data == null)
-    {
-      data = getData();
-      cache = new SoftReference<Object[]>(data);
-    }
-
     InternalEObject owner = getOwner();
     EStructuralFeature feature = getFeature();
+    Object[] data = getData();
+
     return new EcoreEList.UnmodifiableEList.FastCompare<E>(owner, feature, data.length, data);
   }
 
@@ -321,7 +308,7 @@ abstract class CachedList<E extends EObject> implements InternalEList<E>, EStruc
   /**
    * @author Eike Stepper
    */
-  static abstract class RecursionSafe<E extends EObject, O extends EObject> extends CachedList<E>
+  static abstract class RecursionSafe<E extends EObject, O extends EObject> extends DerivedList<E>
   {
     protected RecursionSafe()
     {

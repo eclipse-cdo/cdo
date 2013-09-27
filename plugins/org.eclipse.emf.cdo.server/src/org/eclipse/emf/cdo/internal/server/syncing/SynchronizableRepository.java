@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -449,9 +450,15 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       CDOCommitData data = CDOCommitInfoUtil.createCommitData(newPackages, newObjects, changedObjects, detachedObjects);
 
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
-      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, previousCommitTime, SYSTEM_USER_ID,
-          comment, data);
-      sessionManager.sendCommitNotification(replicatorSession, commitInfo, true, null);
+      final CDOCommitInfo commitInfo = manager.createCommitInfo( //
+          branch, toCommitTime, previousCommitTime, SYSTEM_USER_ID, comment, data);
+
+      CommitNotificationInfo info = new CommitNotificationInfo();
+      info.setSender(replicatorSession);
+      info.setCommitInfo(commitInfo);
+      info.setClearResourcePathCache(true);
+
+      sessionManager.sendCommitNotification(info);
     }
 
     CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo();

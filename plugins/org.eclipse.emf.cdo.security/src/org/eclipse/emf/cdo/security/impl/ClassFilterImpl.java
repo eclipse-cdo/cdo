@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.ClassFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -109,6 +110,11 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
     }
 
     return applicableClass == actualClass;
+  }
+
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    return false;
   }
 
   public String format()

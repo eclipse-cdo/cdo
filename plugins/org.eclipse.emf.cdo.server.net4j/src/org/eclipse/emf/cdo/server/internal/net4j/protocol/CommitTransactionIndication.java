@@ -378,6 +378,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
   {
     out.writeCDOBranchPoint(commitContext.getBranchPoint());
     out.writeLong(commitContext.getPreviousTimeStamp());
+    out.writeBoolean(commitContext.isClearPermissionCache());
   }
 
   protected void respondingMappingNewObjects(CDODataOutput out) throws Exception
@@ -431,16 +432,20 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
   protected void respondingNewPermissions(CDODataOutput out, IPermissionManager permissionManager,
       InternalSession session, InternalCDORevision[] revisions) throws Exception
   {
-    CDOBranchPoint securityContext = commitContext.getBranchPoint();
-
-    out.writeInt(revisions.length);
-    for (int i = 0; i < revisions.length; i++)
+    int size = revisions.length;
+    if (size != 0)
     {
-      InternalCDORevision revision = revisions[i];
-      CDOPermission permission = permissionManager.getPermission(revision, securityContext, session);
+      CDOBranchPoint securityContext = commitContext.getBranchPoint();
 
-      out.writeCDOID(revision.getID());
-      out.writeEnum(permission);
+      out.writeInt(size);
+      for (int i = 0; i < size; i++)
+      {
+        InternalCDORevision revision = revisions[i];
+        CDOPermission permission = permissionManager.getPermission(revision, securityContext, session);
+
+        out.writeCDOID(revision.getID());
+        out.writeEnum(permission);
+      }
     }
   }
 

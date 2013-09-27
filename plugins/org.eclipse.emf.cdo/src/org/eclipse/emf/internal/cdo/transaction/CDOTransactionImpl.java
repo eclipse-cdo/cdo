@@ -2996,7 +2996,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (result.getRollbackMessage() != null)
         {
           CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
-          session.invalidate(commitInfo, transaction, clearResourcePathCache, null);
+          session.invalidate(commitInfo, transaction, clearResourcePathCache, false, null);
           return;
         }
 
@@ -3029,8 +3029,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
         if (!commitInfo.isEmpty())
         {
+          boolean clearPermissionCache = result.isClearPermissionCache();
           Map<CDOID, CDOPermission> newPermissions = result.getNewPermissions();
-          session.invalidate(commitInfo, transaction, clearResourcePathCache, newPermissions);
+          session.invalidate(commitInfo, transaction, clearResourcePathCache, clearPermissionCache, newPermissions);
         }
 
         // Bug 290032 - Sticky views

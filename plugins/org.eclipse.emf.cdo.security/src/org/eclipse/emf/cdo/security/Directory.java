@@ -35,6 +35,21 @@ import org.eclipse.emf.common.util.EList;
 public interface Directory extends SecurityItem, SecurityItemContainer
 {
   /**
+   * @since 4.3
+   */
+  public static final String ROLES = "Roles";
+
+  /**
+   * @since 4.3
+   */
+  public static final String GROUPS = "Groups";
+
+  /**
+   * @since 4.3
+   */
+  public static final String USERS = "Users";
+
+  /**
    * Returns the value of the '<em><b>Items</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.security.SecurityItem}.
    * <!-- begin-user-doc -->

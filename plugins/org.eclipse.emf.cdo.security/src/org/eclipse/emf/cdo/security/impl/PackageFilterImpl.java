@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.PackageFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -83,6 +84,11 @@ public class PackageFilterImpl extends PermissionFilterImpl implements PackageFi
     EPackage actualPackage = revision.getEClass().getEPackage();
     EPackage applicablePackage = getApplicablePackage();
     return actualPackage == applicablePackage;
+  }
+
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    return false;
   }
 
   public String format()

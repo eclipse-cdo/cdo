@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -893,32 +894,27 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo)
   {
-    handleCommitNotification(commitInfo, true);
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
-    handleCommitNotification(commitInfo, true, null);
+    throw new UnsupportedOperationException();
   }
 
-  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache, Set<CDOID> readOnly)
+  public void handleCommitNotification(CommitNotificationInfo info)
   {
     try
     {
+      CDOCommitInfo commitInfo = info.getCommitInfo();
       registerPackageUnits(commitInfo.getNewPackageUnits());
 
-      Map<CDOID, CDOPermission> permissions = null;
-      if (readOnly != null)
-      {
-        permissions = CDOIDUtil.createMap();
-        for (CDOID id : readOnly)
-        {
-          permissions.put(id, CDOPermission.READ);
-        }
-      }
+      boolean clearResourcePathCache = info.isClearResourcePathCache();
+      boolean clearPermissionCache = info.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE;
+      Map<CDOID, CDOPermission> newPermissions = info.getNewPermissions();
 
-      invalidate(commitInfo, null, clearResourcePathCache, permissions);
+      invalidate(commitInfo, null, clearResourcePathCache, clearPermissionCache, newPermissions);
     }
     catch (RuntimeException ex)
     {
@@ -1042,19 +1038,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    invalidate(commitInfo, sender, true);
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
   {
-    invalidate(commitInfo, sender, true, null);
+    throw new UnsupportedOperationException();
   }
 
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-      Map<CDOID, CDOPermission> permissions)
+      boolean clearPermissionCache, Map<CDOID, CDOPermission> newPermissions)
   {
-    invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache, permissions);
+    invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache, clearPermissionCache, newPermissions);
   }
 
   public ILifecycle getInvalidator()
@@ -1699,14 +1695,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     public synchronized void reorderInvalidations(CDOCommitInfo commitInfo, InternalCDOTransaction sender,
-        boolean clearResourcePathCache, Map<CDOID, CDOPermission> permissions)
+        boolean clearResourcePathCache, boolean clearPermissionCache, Map<CDOID, CDOPermission> newPermissions)
     {
       if (!isActive())
       {
         return;
       }
 
-      Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, permissions);
+      Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, clearPermissionCache,
+          newPermissions);
+
       reorderQueue.add(invalidation);
       Collections.sort(reorderQueue);
 
@@ -1776,15 +1774,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private final boolean clearResourcePathCache;
 
-    private final Map<CDOID, CDOPermission> permissions;
+    private final boolean clearPermissionCache;
+
+    private final Map<CDOID, CDOPermission> newPermissions;
 
     public Invalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-        Map<CDOID, CDOPermission> permissions)
+        boolean clearPermissionCache, Map<CDOID, CDOPermission> newPermissions)
     {
       this.commitInfo = commitInfo;
       this.sender = sender;
       this.clearResourcePathCache = clearResourcePathCache;
-      this.permissions = permissions;
+      this.clearPermissionCache = clearPermissionCache;
+      this.newPermissions = newPermissions;
     }
 
     public long getTimeStamp()
@@ -1944,12 +1945,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private void addNewRevision(InternalCDORevision newRevision)
     {
-      if (permissions != null)
+      if (newPermissions != null)
       {
-        CDOPermission permission = permissions.get(newRevision.getID());
-        if (permission != null)
+        CDOPermission newPermission = newPermissions.get(newRevision.getID());
+        if (newPermission != null)
         {
-          newRevision.setPermission(permission);
+          newRevision.setPermission(newPermission);
         }
       }
 

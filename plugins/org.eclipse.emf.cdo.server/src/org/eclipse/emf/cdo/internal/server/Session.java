@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -59,8 +60,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.core.runtime.Platform;
 
 import java.text.MessageFormat;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -407,17 +408,16 @@ public class Session extends Container<IView> implements InternalSession
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
   {
-    sendCommitNotification(commitInfo, true);
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
   {
-    sendCommitNotification(commitInfo, true, null);
+    throw new UnsupportedOperationException();
   }
 
-  public void sendCommitNotification(final CDOCommitInfo commitInfo, boolean clearResourcePathCache,
-      final CDORevisionProvider revisionProvider) throws Exception
+  public void sendCommitNotification(CommitNotificationInfo notificationInfo) throws Exception
   {
     if (protocol == null)
     {
@@ -429,123 +429,34 @@ public class Session extends Container<IView> implements InternalSession
       return;
     }
 
-    final IPermissionManager permissionManager = manager.getPermissionManager();
-    final Set<CDOID> readOnly = new HashSet<CDOID>();
-    final InternalView[] views = getViews();
-
-    protocol.sendCommitNotification(new DelegatingCommitInfo()
+    byte securityImpact = notificationInfo.getSecurityImpact();
+    if (securityImpact == CommitNotificationInfo.IMPACT_PERMISSIONS)
     {
-      private final PassiveUpdateMode passiveUpdateMode = getPassiveUpdateMode();
+      IPermissionManager permissionManager = manager.getPermissionManager();
+      Set<? extends Object> impactedRules = notificationInfo.getImpactedRules();
 
-      private final boolean additions = passiveUpdateMode == PassiveUpdateMode.ADDITIONS;
-
-      private final boolean changes = passiveUpdateMode == PassiveUpdateMode.CHANGES;
-
-      @Override
-      protected CDOCommitInfo getDelegate()
+      if (!permissionManager.hasAnyRule(this, impactedRules))
       {
-        return commitInfo;
+        securityImpact = CommitNotificationInfo.IMPACT_NONE;
       }
+    }
 
-      @Override
-      public List<CDOIDAndVersion> getNewObjects()
-      {
-        final List<CDOIDAndVersion> newObjects = super.getNewObjects();
-        return new IndexedList<CDOIDAndVersion>()
-        {
-          @Override
-          public CDOIDAndVersion get(int index)
-          {
-            CDORevision revision = (CDORevision)newObjects.get(index);
-            if (additions)
-            {
-              if (permissionManager == null)
-              {
-                // Return full revision
-                return revision;
-              }
+    CommitInfo sessionCommitInfo = new CommitInfo(notificationInfo);
 
-              CDOPermission permission = permissionManager.getPermission(revision, commitInfo, Session.this);
-              if (permission != CDOPermission.NONE)
-              {
-                if (permission == CDOPermission.READ)
-                {
-                  readOnly.add(revision.getID());
-                }
+    CommitNotificationInfo sessionNotificationInfo = new CommitNotificationInfo();
+    sessionNotificationInfo.setSender(notificationInfo.getSender());
+    sessionNotificationInfo.setCommitInfo(sessionCommitInfo);
+    sessionNotificationInfo.setRevisionProvider(notificationInfo.getRevisionProvider());
+    sessionNotificationInfo.setClearResourcePathCache(notificationInfo.isClearResourcePathCache());
+    sessionNotificationInfo.setNewPermissions(sessionCommitInfo.getNewPermissions());
+    sessionNotificationInfo.setSecurityImpact(securityImpact);
 
-                // Return full revision
-                return revision;
-              }
-            }
-
-            // Prevent sending full revision by copying the id and version
-            return CDOIDUtil.createIDAndVersion(revision);
-          }
-
-          @Override
-          public int size()
-          {
-            return newObjects.size();
-          }
-        };
-      }
-
-      @Override
-      public List<CDORevisionKey> getChangedObjects()
-      {
-        final List<CDORevisionKey> changedObjects = super.getChangedObjects();
-        return new IndexedList<CDORevisionKey>()
-        {
-          @Override
-          public CDORevisionKey get(int index)
-          {
-            CDORevisionDelta revisionDelta = (CDORevisionDelta)changedObjects.get(index);
-            CDOID id = revisionDelta.getID();
-
-            if (changes || additions || hasSubscription(id, views))
-            {
-              if (permissionManager == null)
-              {
-                // Return full delta
-                return revisionDelta;
-              }
-
-              if (revisionProvider == null)
-              {
-                // Return full delta
-                return revisionDelta;
-              }
-
-              CDORevision newRevision = revisionProvider.getRevision(id);
-              CDOPermission permission = permissionManager.getPermission(newRevision, commitInfo, Session.this);
-              if (permission != CDOPermission.NONE)
-              {
-                if (permission == CDOPermission.READ)
-                {
-                  readOnly.add(id);
-                }
-
-                // Return full delta
-                return revisionDelta;
-              }
-            }
-
-            // Prevent sending full delta by copying the id and version
-            return CDORevisionUtil.copyRevisionKey(revisionDelta);
-          }
-
-          @Override
-          public int size()
-          {
-            return changedObjects.size();
-          }
-        };
-      }
-    }, clearResourcePathCache, readOnly);
+    protocol.sendCommitNotification(sessionNotificationInfo);
 
     synchronized (lastUpdateTimeLock)
     {
-      lastUpdateTime = commitInfo.getTimeStamp();
+      CDOCommitInfo originalCommitInfo = notificationInfo.getCommitInfo();
+      lastUpdateTime = originalCommitInfo.getTimeStamp();
     }
   }
 
@@ -653,5 +564,152 @@ public class Session extends Container<IView> implements InternalSession
     manager.sessionClosed(this);
     manager = null;
     super.doDeactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CommitInfo extends DelegatingCommitInfo
+  {
+    private final CDOCommitInfo delegate;
+
+    private final CDORevisionProvider revisionProvider;
+
+    private final InternalView[] views;
+
+    private final IPermissionManager permissionManager;
+
+    private final Map<CDOID, CDOPermission> newPermissions;
+
+    private final boolean additions;
+
+    private final boolean changes;
+
+    public CommitInfo(CommitNotificationInfo notificationInfo)
+    {
+      delegate = notificationInfo.getCommitInfo();
+      revisionProvider = notificationInfo.getRevisionProvider();
+
+      views = getViews();
+      permissionManager = manager.getPermissionManager();
+      if (permissionManager != null)
+      {
+        newPermissions = CDOIDUtil.createMap();
+      }
+      else
+      {
+        newPermissions = null;
+      }
+
+      PassiveUpdateMode passiveUpdateMode = getPassiveUpdateMode();
+      additions = passiveUpdateMode == PassiveUpdateMode.ADDITIONS;
+      changes = additions || passiveUpdateMode == PassiveUpdateMode.CHANGES;
+    }
+
+    @Override
+    protected CDOCommitInfo getDelegate()
+    {
+      return delegate;
+    }
+
+    protected void addNewPermission(CDOID id, CDOPermission permission)
+    {
+      newPermissions.put(id, permission);
+    }
+
+    public Map<CDOID, CDOPermission> getNewPermissions()
+    {
+      return newPermissions;
+    }
+
+    @Override
+    public List<CDOIDAndVersion> getNewObjects()
+    {
+      final List<CDOIDAndVersion> newObjects = super.getNewObjects();
+      return new IndexedList<CDOIDAndVersion>()
+      {
+        @Override
+        public CDOIDAndVersion get(int index)
+        {
+          CDORevision revision = (CDORevision)newObjects.get(index);
+          if (additions)
+          {
+            if (permissionManager == null)
+            {
+              // Return full revision
+              return revision;
+            }
+
+            CDOPermission permission = permissionManager.getPermission(revision, delegate, Session.this);
+            CDOID id = revision.getID();
+            addNewPermission(id, permission);
+
+            if (permission != CDOPermission.NONE)
+            {
+              // Return full revision
+              return revision;
+            }
+          }
+
+          // Prevent sending full revision by copying the id and version
+          return CDOIDUtil.createIDAndVersion(revision);
+        }
+
+        @Override
+        public int size()
+        {
+          return newObjects.size();
+        }
+      };
+    }
+
+    @Override
+    public List<CDORevisionKey> getChangedObjects()
+    {
+      final List<CDORevisionKey> changedObjects = super.getChangedObjects();
+      return new IndexedList<CDORevisionKey>()
+      {
+        @Override
+        public CDORevisionKey get(int index)
+        {
+          CDORevisionDelta revisionDelta = (CDORevisionDelta)changedObjects.get(index);
+          CDOID id = revisionDelta.getID();
+
+          if (changes || hasSubscription(id, views))
+          {
+            if (permissionManager == null)
+            {
+              // Return full delta
+              return revisionDelta;
+            }
+
+            if (revisionProvider == null)
+            {
+              // Return full delta
+              return revisionDelta;
+            }
+
+            CDORevision newRevision = revisionProvider.getRevision(id);
+            CDOPermission permission = permissionManager.getPermission(newRevision, delegate, Session.this);
+            addNewPermission(id, permission);
+
+            if (permission != CDOPermission.NONE)
+            {
+              // Return full delta
+              return revisionDelta;
+            }
+          }
+
+          // Prevent sending full delta by copying the id and version
+          return CDORevisionUtil.copyRevisionKey(revisionDelta);
+        }
+
+        @Override
+        public int size()
+        {
+          return changedObjects.size();
+        }
+      };
+    }
   }
 }

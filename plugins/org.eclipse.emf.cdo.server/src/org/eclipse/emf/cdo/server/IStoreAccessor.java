@@ -329,6 +329,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public boolean isClearResourcePathCache();
 
     /**
+     * @since 4.3
+     */
+    public boolean isClearPermissionCache();
+
+    /**
      * @since 4.2
      */
     public boolean isUsingEcore();

@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 
+import java.util.Set;
+
 /**
  * Provides the protection level of {@link CDORevision revisions} in the context of a specific user.
  *
@@ -34,4 +36,9 @@ public interface IPermissionManager
    * @since 4.2
    */
   public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session);
+
+  /**
+   * @since 4.3
+   */
+  public boolean hasAnyRule(ISession session, Set<? extends Object> rules);
 }

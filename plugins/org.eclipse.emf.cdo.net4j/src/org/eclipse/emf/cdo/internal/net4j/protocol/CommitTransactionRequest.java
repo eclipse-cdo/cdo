@@ -17,7 +17,6 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -304,38 +303,44 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   protected CommitTransactionResult confirmingCheckError(CDODataInput in) throws IOException
   {
     boolean success = in.readBoolean();
-    if (!success)
+    if (success)
     {
-      byte rollbackReason = in.readByte();
-      String rollbackMessage = in.readString();
-
-      CDOBranchPoint branchPoint = in.readCDOBranchPoint();
-      long previousTimeStamp = in.readLong();
-
-      List<CDOObjectReference> xRefs = null;
-      int size = in.readInt();
-      if (size != 0)
-      {
-        xRefs = new ArrayList<CDOObjectReference>(size);
-        for (int i = 0; i < size; i++)
-        {
-          CDOIDReference idReference = in.readCDOIDReference();
-          xRefs.add(new CDOObjectReferenceImpl(transaction, idReference));
-        }
-      }
-
-      return new CommitTransactionResult(idProvider, rollbackReason, rollbackMessage, branchPoint, previousTimeStamp,
-          xRefs, clearResourcePathCache);
+      return null;
     }
 
-    return null;
+    CommitTransactionResult result = new CommitTransactionResult();
+    result.setIDProvider(idProvider);
+    result.setClearResourcePathCache(clearResourcePathCache);
+    result.setRollbackReason(in.readByte());
+    result.setRollbackMessage(in.readString());
+    result.setBranchPoint(in.readCDOBranchPoint());
+    result.setPreviousTimeStamp(in.readLong());
+
+    int size = in.readInt();
+    if (size != 0)
+    {
+      List<CDOObjectReference> xRefs = new ArrayList<CDOObjectReference>(size);
+      result.setXRefs(xRefs);
+
+      for (int i = 0; i < size; i++)
+      {
+        CDOIDReference idReference = in.readCDOIDReference();
+        xRefs.add(new CDOObjectReferenceImpl(transaction, idReference));
+      }
+    }
+
+    return result;
   }
 
   protected CommitTransactionResult confirmingResult(CDODataInput in) throws IOException
   {
-    CDOBranchPoint branchPoint = in.readCDOBranchPoint();
-    long previousTimeStamp = in.readLong();
-    return new CommitTransactionResult(idProvider, branchPoint, previousTimeStamp, clearResourcePathCache);
+    CommitTransactionResult result = new CommitTransactionResult();
+    result.setIDProvider(idProvider);
+    result.setClearResourcePathCache(clearResourcePathCache);
+    result.setBranchPoint(in.readCDOBranchPoint());
+    result.setPreviousTimeStamp(in.readLong());
+    result.setClearPermissionCache(in.readBoolean());
+    return result;
   }
 
   protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException

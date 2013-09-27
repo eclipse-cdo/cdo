@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.LinkedFilter;
 import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -80,7 +81,14 @@ public class LinkedFilterImpl extends PermissionFilterImpl implements LinkedFilt
   protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
       int level) throws Exception
   {
-    return getFilter().isApplicable(revision, revisionProvider, securityContext, level + 1);
+    PermissionFilter filter = getFilter();
+    return filter.isApplicable(revision, revisionProvider, securityContext, level + 1);
+  }
+
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    PermissionFilter filter = getFilter();
+    return filter.isImpacted(context);
   }
 
   public String format()

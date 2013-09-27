@@ -82,4 +82,10 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
     return actualClass == applicableClass;
   }
 
+  @Override
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    return false;
+  }
+
 } // ClassPermissionImpl

@@ -45,6 +45,11 @@ import org.eclipse.emf.common.util.EList;
 public interface User extends Assignee
 {
   /**
+   * @since 4.3
+   */
+  public static final String ADMINISTRATOR = "Administrator";
+
+  /**
    * Returns the value of the '<em><b>Groups</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.security.Group}.
    * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.security.Group#getUsers <em>Users</em>}'.

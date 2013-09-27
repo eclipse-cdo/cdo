@@ -103,4 +103,18 @@ public class FilterPermissionImpl extends PermissionImpl implements FilterPermis
     return true;
   }
 
+  @Override
+  public boolean isImpacted(CommitImpactContext context)
+  {
+    for (PermissionFilter filter : getFilters())
+    {
+      if (filter.isImpacted(context))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
 } // FilterPermissionImpl

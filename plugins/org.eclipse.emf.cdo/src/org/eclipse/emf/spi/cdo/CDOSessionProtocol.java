@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -686,9 +685,18 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOLockState[] newLockStates;
 
+    private boolean clearResourcePathCache;
+
+    private boolean clearPermissionCache;
+
     private Map<CDOID, CDOPermission> newPermissions;
 
-    private boolean clearResourcePathCache;
+    /**
+     * @since 4.3
+     */
+    public CommitTransactionResult()
+    {
+    }
 
     /**
      * @since 4.0
@@ -698,24 +706,19 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
         long previousTimeStamp, List<CDOObjectReference> xRefs)
     {
-      this(idProvider, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN, rollbackMessage, branchPoint, previousTimeStamp,
-          xRefs, true);
+      throw new UnsupportedOperationException();
     }
 
     /**
      * @since 4.2
+     * @deprecated As of 4.3
      */
+    @Deprecated
     public CommitTransactionResult(CDOIDProvider idProvider, byte rollbackReason, String rollbackMessage,
         CDOBranchPoint branchPoint, long previousTimeStamp, List<CDOObjectReference> xRefs,
         boolean clearResourcePathCache)
     {
-      this.idProvider = idProvider;
-      this.rollbackReason = rollbackReason;
-      this.rollbackMessage = rollbackMessage;
-      this.branchPoint = branchPoint;
-      this.previousTimeStamp = previousTimeStamp;
-      this.xRefs = xRefs;
-      this.clearResourcePathCache = clearResourcePathCache;
+      throw new UnsupportedOperationException();
     }
 
     /**
@@ -725,19 +728,55 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     @Deprecated
     public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp)
     {
-      this(idProvider, branchPoint, previousTimeStamp, false);
+      throw new UnsupportedOperationException();
     }
 
     /**
      * @since 4.2
+     * @deprecated As of 4.3
      */
+    @Deprecated
     public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp,
         boolean clearResourcePathCache)
     {
-      this.idProvider = idProvider;
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 3.0
+     */
+    public CDOBranch getBranch()
+    {
+      return branchPoint.getBranch();
+    }
+
+    public long getTimeStamp()
+    {
+      return branchPoint.getTimeStamp();
+    }
+
+    /**
+     * @since 4.3
+     */
+    public void setBranchPoint(CDOBranchPoint branchPoint)
+    {
       this.branchPoint = branchPoint;
+    }
+
+    /**
+     * @since 4.0
+     */
+    public long getPreviousTimeStamp()
+    {
+      return previousTimeStamp;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public void setPreviousTimeStamp(long previousTimeStamp)
+    {
       this.previousTimeStamp = previousTimeStamp;
-      this.clearResourcePathCache = clearResourcePathCache;
     }
 
     /**
@@ -769,30 +808,25 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return rollbackReason;
     }
 
+    /**
+     * @since 4.3
+     */
+    public void setRollbackReason(byte rollbackReason)
+    {
+      this.rollbackReason = rollbackReason;
+    }
+
     public String getRollbackMessage()
     {
       return rollbackMessage;
     }
 
     /**
-     * @since 3.0
+     * @since 4.3
      */
-    public CDOBranch getBranch()
+    public void setRollbackMessage(String rollbackMessage)
     {
-      return branchPoint.getBranch();
-    }
-
-    public long getTimeStamp()
-    {
-      return branchPoint.getTimeStamp();
-    }
-
-    /**
-     * @since 4.0
-     */
-    public long getPreviousTimeStamp()
-    {
-      return previousTimeStamp;
+      this.rollbackMessage = rollbackMessage;
     }
 
     /**
@@ -804,11 +838,59 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
+     * @since 4.3
+     */
+    public void setXRefs(List<CDOObjectReference> xRefs)
+    {
+      this.xRefs = xRefs;
+    }
+
+    /**
      * @since 4.2
      */
     public boolean isClearResourcePathCache()
     {
       return clearResourcePathCache;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public void setClearResourcePathCache(boolean clearResourcePathCache)
+    {
+      this.clearResourcePathCache = clearResourcePathCache;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public boolean isClearPermissionCache()
+    {
+      return clearPermissionCache;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public void setClearPermissionCache(boolean clearPermissionCache)
+    {
+      this.clearPermissionCache = clearPermissionCache;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public CDOIDProvider getIDProvider()
+    {
+      return idProvider;
+    }
+
+    /**
+     * @since 4.3
+     */
+    public void setIDProvider(CDOIDProvider idProvider)
+    {
+      this.idProvider = idProvider;
     }
 
     public Map<CDOID, CDOID> getIDMappings()

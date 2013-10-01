@@ -158,6 +158,12 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
     }
   }
 
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName();
+  }
+
   /**
    * @author Eike Stepper
    * @since 4.3

@@ -419,9 +419,13 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     IPermissionManager permissionManager = session.getManager().getPermissionManager();
     if (permissionManager != null)
     {
-      out.writeBoolean(true);
-      respondingNewPermissions(out, permissionManager, session, commitContext.getNewObjects());
-      respondingNewPermissions(out, permissionManager, session, commitContext.getDirtyObjects());
+      InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      InternalCDORevision[] dirtyObjects = commitContext.getDirtyObjects();
+
+      out.writeInt(newObjects.length + dirtyObjects.length);
+
+      respondingNewPermissions(out, permissionManager, session, newObjects);
+      respondingNewPermissions(out, permissionManager, session, dirtyObjects);
     }
     else
     {
@@ -436,8 +440,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     if (size != 0)
     {
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
-
-      out.writeInt(size);
       for (int i = 0; i < size; i++)
       {
         InternalCDORevision revision = revisions[i];

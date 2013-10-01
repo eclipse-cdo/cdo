@@ -25,6 +25,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -32,6 +35,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -47,6 +51,8 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
 
   private final String homeFolder;
 
+  private ExecutorService executorService;
+
   public HomeFolderHandler(String homeFolder)
   {
     this.homeFolder = homeFolder == null || homeFolder.length() == 0 ? DEFAULT_HOME_FOLDER : homeFolder;
@@ -60,6 +66,16 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
   public String getHomeFolder()
   {
     return homeFolder;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return executorService;
+  }
+
+  public void setExecutorService(ExecutorService executorService)
+  {
+    this.executorService = executorService;
   }
 
   public void init(InternalSecurityManager securityManager, boolean firstTime)
@@ -134,51 +150,58 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
     }
   }
 
-  protected void handleUsers(InternalSecurityManager securityManager, final List<String> userIDs, final boolean init)
+  protected void handleUsers(final InternalSecurityManager securityManager, final List<String> userIDs,
+      final boolean init)
   {
-    securityManager.modify(new RealmOperation()
+    executorService.submit(new Runnable()
     {
-      public void execute(Realm realm)
+      public void run()
       {
-        String roleID = "Home Folder " + homeFolder;
-        Role role;
-
-        if (init)
+        securityManager.modify(new RealmOperation()
         {
-          role = realm.addRole(roleID);
-          initRole(role);
-        }
-        else
-        {
-          role = realm.getRole(roleID);
-          if (role == null)
+          public void execute(Realm realm)
           {
-            OM.LOG.warn("Role '" + roleID + "' not found in " + HomeFolderHandler.this);
-            return;
-          }
-        }
+            String roleID = "Home Folder " + homeFolder;
+            Role role;
 
-        CDOTransaction transaction = (CDOTransaction)realm.cdoView();
-
-        for (String userID : userIDs)
-        {
-          try
-          {
-            User user = realm.getUser(userID);
-            if (user == null)
+            if (init)
             {
-              OM.LOG.warn("User '" + userID + "' not found in " + HomeFolderHandler.this);
+              role = realm.addRole(roleID);
+              initRole(role);
             }
             else
             {
-              handleUser(transaction, realm, role, user);
+              role = realm.getRole(roleID);
+              if (role == null)
+              {
+                OM.LOG.warn("Role '" + roleID + "' not found in " + HomeFolderHandler.this);
+                return;
+              }
+            }
+
+            CDOTransaction transaction = (CDOTransaction)realm.cdoView();
+
+            for (String userID : userIDs)
+            {
+              try
+              {
+                User user = realm.getUser(userID);
+                if (user == null)
+                {
+                  OM.LOG.warn("User '" + userID + "' not found in " + HomeFolderHandler.this);
+                }
+                else
+                {
+                  handleUser(transaction, realm, role, user);
+                }
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
             }
           }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-          }
-        }
+        });
       }
     });
   }
@@ -198,17 +221,28 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends InternalSecurityManager.CommitHandler.Factory
+  public static class Factory extends InternalSecurityManager.CommitHandler.Factory implements ContainerAware
   {
+    private IManagedContainer container;
+
     public Factory()
     {
       super("home");
     }
 
+    public void setManagedContainer(IManagedContainer container)
+    {
+      this.container = container;
+    }
+
     @Override
     public CommitHandler create(String homeFolder) throws ProductCreationException
     {
-      return new HomeFolderHandler(homeFolder);
+      ExecutorService executorService = ExecutorServiceFactory.get(container);
+
+      HomeFolderHandler handler = new HomeFolderHandler(homeFolder);
+      handler.setExecutorService(executorService);
+      return handler;
     }
   }
 }

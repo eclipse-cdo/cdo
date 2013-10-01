@@ -55,6 +55,7 @@ public class OpenSessionDialog extends TitleAreaDialog
   {
     super.configureShell(newShell);
     newShell.setText(TITLE);
+    newShell.setSize(380, 240);
   }
 
   @Override

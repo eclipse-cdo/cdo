@@ -456,6 +456,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       try
       {
         handler.init(this, firstTime);
+        OM.LOG.info("Security realm handled by " + handler);
       }
       catch (Exception ex)
       {

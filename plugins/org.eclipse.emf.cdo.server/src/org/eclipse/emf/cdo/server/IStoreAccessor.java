@@ -331,7 +331,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * @since 4.3
      */
-    public boolean isClearPermissionCache();
+    public byte getSecurityImpact();
 
     /**
      * @since 4.2

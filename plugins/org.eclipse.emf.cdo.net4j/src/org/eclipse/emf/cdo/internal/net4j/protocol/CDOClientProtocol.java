@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -555,7 +556,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     send(new SetLockNotificationModeRequest(this, mode));
   }
 
-  public Map<InternalCDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     return send(new LoadPermissionsRequest(this, revisions));
   }

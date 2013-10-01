@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -24,7 +25,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class LoadPermissionsRequest extends CDOClientRequest<Map<InternalCDORevision, CDOPermission>>
+public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CDOPermission>>
 {
   private InternalCDORevision[] revisions;
 
@@ -55,9 +56,9 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<InternalCDORevi
   }
 
   @Override
-  protected Map<InternalCDORevision, CDOPermission> confirming(CDODataInput in) throws IOException
+  protected Map<CDORevision, CDOPermission> confirming(CDODataInput in) throws IOException
   {
-    Map<InternalCDORevision, CDOPermission> oldPermissions = new HashMap<InternalCDORevision, CDOPermission>();
+    Map<CDORevision, CDOPermission> oldPermissions = null;
 
     int length = revisions.length;
     for (int i = 0; i < length; i++)
@@ -89,6 +90,12 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<InternalCDORevi
         }
 
         revision.setPermission(newPermission);
+
+        if (oldPermissions == null)
+        {
+          oldPermissions = new HashMap<CDORevision, CDOPermission>();
+        }
+
         oldPermissions.put(revision, oldPermission);
       }
     }

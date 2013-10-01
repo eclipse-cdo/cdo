@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -916,7 +917,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public Map<InternalCDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     int attempt = 0;
     for (;;)

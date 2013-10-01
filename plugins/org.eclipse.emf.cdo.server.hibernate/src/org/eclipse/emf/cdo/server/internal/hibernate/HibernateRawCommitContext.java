@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -135,19 +135,9 @@ public class HibernateRawCommitContext implements InternalCommitContext
     return HibernateThreadContext.getCurrentStoreAccessor().getStore().getRepository().getPackageRegistry();
   }
 
-  public ISession getSender()
+  public byte getSecurityImpact()
   {
-    return null;
-  }
-
-  public CDOCommitInfo getCommitInfo()
-  {
-    return null;
-  }
-
-  public boolean isClearPermissionCache()
-  {
-    return false;
+    return CommitNotificationInfo.IMPACT_NONE;
   }
 
   public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules)
@@ -258,16 +248,6 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public List<LockState<Object, IView>> getPostCommmitLockStates()
   {
     return null;
-  }
-
-  public void setDirtyObjects(List<InternalCDORevision> dirtyObjects)
-  {
-    this.dirtyObjects = dirtyObjects;
-  }
-
-  public void setNewObjects(List<InternalCDORevision> newObjects)
-  {
-    this.newObjects = newObjects;
   }
 
   public void preWrite()

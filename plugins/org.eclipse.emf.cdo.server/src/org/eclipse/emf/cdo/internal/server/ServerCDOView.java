@@ -951,7 +951,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-        boolean clearPermissionCache, Map<CDOID, CDOPermission> permissions)
+        byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
     {
       throw new UnsupportedOperationException();
     }

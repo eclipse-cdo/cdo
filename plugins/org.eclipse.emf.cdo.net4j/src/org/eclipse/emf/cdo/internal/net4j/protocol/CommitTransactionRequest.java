@@ -339,7 +339,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     result.setClearResourcePathCache(clearResourcePathCache);
     result.setBranchPoint(in.readCDOBranchPoint());
     result.setPreviousTimeStamp(in.readLong());
-    result.setClearPermissionCache(in.readBoolean());
+    result.setSecurityImpact(in.readByte());
     return result;
   }
 

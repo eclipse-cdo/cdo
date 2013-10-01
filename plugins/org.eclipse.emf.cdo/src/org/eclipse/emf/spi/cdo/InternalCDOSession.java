@@ -235,7 +235,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 4.2
-   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, boolean, Map)}.
+   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map)}.
    */
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache);
@@ -244,7 +244,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 4.3
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-      boolean clearPermissionCache, Map<CDOID, CDOPermission> permissions);
+      byte securityImpact, Map<CDOID, CDOPermission> newPermissions);
 
   /**
    * @since 3.0

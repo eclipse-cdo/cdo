@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -24,7 +25,7 @@ public interface CDOPermissionUpdater
 {
   public static final CDOPermissionUpdater SERVER = new CDOPermissionUpdater()
   {
-    public Map<InternalCDORevision, CDOPermission> updatePermissions(InternalCDOSession session,
+    public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session,
         Set<InternalCDORevision> revisions)
     {
       InternalCDORevision[] revisionArray = revisions.toArray(new InternalCDORevision[revisions.size()]);
@@ -33,6 +34,6 @@ public interface CDOPermissionUpdater
     }
   };
 
-  public Map<InternalCDORevision, CDOPermission> updatePermissions(InternalCDOSession session,
+  public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session,
       Set<InternalCDORevision> revisions);
 }

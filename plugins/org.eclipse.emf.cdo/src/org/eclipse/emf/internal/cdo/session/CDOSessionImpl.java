@@ -124,6 +124,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -919,10 +920,10 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       registerPackageUnits(commitInfo.getNewPackageUnits());
 
       boolean clearResourcePathCache = info.isClearResourcePathCache();
-      boolean clearPermissionCache = info.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE;
+      byte securityImpact = info.getSecurityImpact();
       Map<CDOID, CDOPermission> newPermissions = info.getNewPermissions();
 
-      invalidate(commitInfo, null, clearResourcePathCache, clearPermissionCache, newPermissions);
+      invalidate(commitInfo, null, clearResourcePathCache, securityImpact, newPermissions);
     }
     catch (RuntimeException ex)
     {
@@ -1056,9 +1057,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-      boolean clearPermissionCache, Map<CDOID, CDOPermission> newPermissions)
+      byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
   {
-    invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache, clearPermissionCache, newPermissions);
+    invalidator.reorderInvalidations(commitInfo, sender, clearResourcePathCache, securityImpact, newPermissions);
   }
 
   public ILifecycle getInvalidator()
@@ -1749,14 +1750,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     public synchronized void reorderInvalidations(CDOCommitInfo commitInfo, InternalCDOTransaction sender,
-        boolean clearResourcePathCache, boolean clearPermissionCache, Map<CDOID, CDOPermission> newPermissions)
+        boolean clearResourcePathCache, byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
     {
       if (!isActive())
       {
         return;
       }
 
-      Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, clearPermissionCache,
+      Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, securityImpact,
           newPermissions);
 
       reorderQueue.add(invalidation);
@@ -1828,17 +1829,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private final boolean clearResourcePathCache;
 
-    private final boolean clearPermissionCache;
+    private final byte securityImpact;
 
     private final Map<CDOID, CDOPermission> newPermissions;
 
     public Invalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-        boolean clearPermissionCache, Map<CDOID, CDOPermission> newPermissions)
+        byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
     {
       this.commitInfo = commitInfo;
       this.sender = sender;
       this.clearResourcePathCache = clearResourcePathCache;
-      this.clearPermissionCache = clearPermissionCache;
+      this.securityImpact = securityImpact;
       this.newPermissions = newPermissions;
     }
 
@@ -1876,14 +1877,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       try
       {
         InternalCDOView[] views = getViews();
+        Map<CDORevision, CDOPermission> oldPermissions = null;
         Map<CDOID, InternalCDORevision> oldRevisions = null;
 
         boolean success = commitInfo.getBranch() != null;
         if (success)
         {
-          if (clearPermissionCache)
+          if (securityImpact != CommitNotificationInfo.IMPACT_NONE)
           {
-            updatePermissions(views);
+            oldPermissions = updatePermissions(views);
           }
 
           oldRevisions = reviseRevisions();
@@ -1896,7 +1898,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
         if (success)
         {
-          CDOSessionImpl.this.fireEvent(new InvalidationEvent(sender, commitInfo));
+          CDOSessionImpl.this.fireEvent(new InvalidationEvent(sender, commitInfo, securityImpact, oldPermissions));
           commitInfoManager.notifyCommitInfoHandlers(commitInfo);
         }
 
@@ -1923,6 +1925,56 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         // Give the Invalidator another chance to schedule Invalidations.
         invalidator.scheduleInvalidations();
       }
+    }
+
+    private Map<CDORevision, CDOPermission> updatePermissions(InternalCDOView[] views)
+    {
+      CDOPermissionUpdater permissionUpdater = options().getPermissionUpdater();
+      if (permissionUpdater != null)
+      {
+        CDOBranchPoint head = getBranchManager().getMainBranch().getHead();
+        Set<InternalCDORevision> revisions = new HashSet<InternalCDORevision>();
+
+        for (int i = 0; i < views.length; i++)
+        {
+          InternalCDOView view = views[i];
+          if (!head.equals(view))
+          {
+            throw new IllegalStateException("Security not supported with auditing or branching");
+          }
+
+          for (InternalCDOObject object : view.getObjects().values())
+          {
+            InternalCDORevision revision;
+
+            CDOState state = object.cdoState();
+            switch (state)
+            {
+            case CLEAN:
+              revision = object.cdoRevision();
+              break;
+
+            case DIRTY:
+            case CONFLICT:
+              CDOID id = object.cdoID();
+              revision = getRevisionManager().getRevision(id, head, 0, CDORevision.DEPTH_NONE, false);
+              break;
+
+            default:
+              continue;
+            }
+
+            if (revision != null)
+            {
+              revisions.add(revision);
+            }
+          }
+        }
+
+        return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
+      }
+
+      return null;
     }
 
     private Map<CDOID, InternalCDORevision> reviseRevisions()
@@ -2005,56 +2057,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return oldRevisions;
     }
 
-    private Map<InternalCDORevision, CDOPermission> updatePermissions(InternalCDOView[] views)
-    {
-      CDOPermissionUpdater permissionUpdater = options().getPermissionUpdater();
-      if (permissionUpdater != null)
-      {
-        CDOBranchPoint head = getBranchManager().getMainBranch().getHead();
-        Set<InternalCDORevision> revisions = new HashSet<InternalCDORevision>();
-
-        for (int i = 0; i < views.length; i++)
-        {
-          InternalCDOView view = views[i];
-          if (!head.equals(view))
-          {
-            throw new IllegalStateException("Security not supported with auditing or branching");
-          }
-
-          for (InternalCDOObject object : view.getObjects().values())
-          {
-            InternalCDORevision revision;
-
-            CDOState state = object.cdoState();
-            switch (state)
-            {
-            case CLEAN:
-              revision = object.cdoRevision();
-              break;
-
-            case DIRTY:
-            case CONFLICT:
-              CDOID id = object.cdoID();
-              revision = getRevisionManager().getRevision(id, head, 0, CDORevision.DEPTH_NONE, false);
-              break;
-
-            default:
-              continue;
-            }
-
-            if (revision != null)
-            {
-              revisions.add(revision);
-            }
-          }
-        }
-
-        return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
-      }
-
-      return null;
-    }
-
     private void addNewRevision(InternalCDORevision newRevision)
     {
       if (newPermissions != null)
@@ -2111,7 +2113,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
+  private final class InvalidationEvent extends Event implements InternalCDOSessionInvalidationEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -2119,11 +2121,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private CDOCommitInfo commitInfo;
 
-    public InvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo)
+    private byte securityImpact;
+
+    private Map<CDORevision, CDOPermission> oldPermissions;
+
+    public InvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo, byte securityImpact,
+        Map<CDORevision, CDOPermission> oldPermissions)
     {
       super(CDOSessionImpl.this);
       this.sender = sender;
       this.commitInfo = commitInfo;
+      this.securityImpact = securityImpact;
+      this.oldPermissions = oldPermissions;
     }
 
     @Override
@@ -2231,6 +2240,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public CDOChangeKind getChangeKind(CDOID id)
     {
       return commitInfo.getChangeKind(id);
+    }
+
+    public byte getSecurityImpact()
+    {
+      return securityImpact;
+    }
+
+    public Map<CDORevision, CDOPermission> getOldPermissions()
+    {
+      return oldPermissions;
     }
 
     @Override

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -560,7 +561,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public Map<InternalCDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     throw new UnsupportedOperationException();
   }

@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -293,7 +294,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.3
    */
-  public Map<InternalCDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -692,7 +693,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean clearResourcePathCache;
 
-    private boolean clearPermissionCache;
+    private byte securityImpact;
 
     private Map<CDOID, CDOPermission> newPermissions;
 
@@ -869,17 +870,17 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.3
      */
-    public boolean isClearPermissionCache()
+    public byte getSecurityImpact()
     {
-      return clearPermissionCache;
+      return securityImpact;
     }
 
     /**
      * @since 4.3
      */
-    public void setClearPermissionCache(boolean clearPermissionCache)
+    public void setSecurityImpact(byte securityImpact)
     {
-      this.clearPermissionCache = clearPermissionCache;
+      this.securityImpact = securityImpact;
     }
 
     /**

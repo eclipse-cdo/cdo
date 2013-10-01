@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -67,6 +68,7 @@ import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -77,6 +79,7 @@ import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -118,6 +121,31 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   };
 
+  private final IListener systemListener = new IListener()
+  {
+    private boolean clearUserInfos;
+
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof InternalCDOSessionInvalidationEvent)
+      {
+        InternalCDOSessionInvalidationEvent e = (InternalCDOSessionInvalidationEvent)event;
+        if (e.getSecurityImpact() == CommitNotificationInfo.IMPACT_REALM)
+        {
+          clearUserInfos = true;
+        }
+      }
+      else if (event instanceof CDOViewInvalidationEvent)
+      {
+        if (clearUserInfos)
+        {
+          clearUserInfos();
+          clearUserInfos = false;
+        }
+      }
+    }
+  };
+
   private final IAuthenticator authenticator = new Authenticator();
 
   private final IPermissionManager permissionManager = new PermissionManager();
@@ -148,7 +176,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private CDONet4jSession systemSession;
 
-  private CDOView view;
+  private CDOView systemView;
 
   private Realm realm;
 
@@ -367,7 +395,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       if (waitUntilReadable)
       {
-        view.waitForUpdate(commit.getTimeStamp());
+        systemView.waitForUpdate(commit.getTimeStamp());
       }
     }
     catch (CommitException ex)
@@ -505,28 +533,30 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     config.setUserID(SYSTEM_USER_ID);
 
     systemSession = config.openNet4jSession();
-    CDOTransaction transaction = systemSession.openTransaction();
+    systemSession.addListener(systemListener);
 
-    boolean firstTime = !transaction.hasResource(realmPath);
+    CDOTransaction initialTransaction = systemSession.openTransaction();
+
+    boolean firstTime = !initialTransaction.hasResource(realmPath);
     if (firstTime)
     {
       realm = createRealm();
 
-      CDOResource resource = transaction.createResource(realmPath);
+      CDOResource resource = initialTransaction.createResource(realmPath);
       resource.getContents().add(realm);
 
       OM.LOG.info("Security realm created in " + realmPath);
     }
     else
     {
-      CDOResource resource = transaction.getResource(realmPath);
+      CDOResource resource = initialTransaction.getResource(realmPath);
       realm = (Realm)resource.getContents().get(0);
       OM.LOG.info("Security realm loaded from " + realmPath);
     }
 
     try
     {
-      transaction.commit();
+      initialTransaction.commit();
     }
     catch (Exception ex)
     {
@@ -534,11 +564,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
     finally
     {
-      transaction.close();
+      initialTransaction.close();
     }
 
-    view = systemSession.openView();
-    realm = view.getObject(realm);
+    systemView = systemSession.openView();
+    systemView.addListener(systemListener);
+
+    realm = systemView.getObject(realm);
     realmID = realm.cdoID();
 
     InternalSessionManager sessionManager = repository.getSessionManager();
@@ -740,6 +772,16 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return userInfo;
   }
 
+  protected void clearUserInfos()
+  {
+    synchronized (userInfos)
+    {
+      userInfos.clear();
+      permissionBag.clear();
+      permissionArray = null;
+    }
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
@@ -750,16 +792,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   @Override
   protected void doDeactivate() throws Exception
   {
-    userInfos.clear();
-    permissionBag.clear();
-    permissionArray = null;
+    clearUserInfos();
 
     realm = null;
     realmID = null;
 
     systemSession.close();
     systemSession = null;
-    view = null;
+    systemView = null;
 
     connector.close();
     connector = null;

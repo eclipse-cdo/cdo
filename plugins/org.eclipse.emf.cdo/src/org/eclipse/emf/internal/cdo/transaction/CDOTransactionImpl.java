@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -2996,7 +2997,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (result.getRollbackMessage() != null)
         {
           CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
-          session.invalidate(commitInfo, transaction, clearResourcePathCache, false, null);
+          session.invalidate(commitInfo, transaction, clearResourcePathCache, CommitNotificationInfo.IMPACT_NONE, null);
           return;
         }
 
@@ -3029,9 +3030,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
         if (!commitInfo.isEmpty())
         {
-          boolean clearPermissionCache = result.isClearPermissionCache();
+          byte securityImpact = result.getSecurityImpact();
           Map<CDOID, CDOPermission> newPermissions = result.getNewPermissions();
-          session.invalidate(commitInfo, transaction, clearResourcePathCache, clearPermissionCache, newPermissions);
+          session.invalidate(commitInfo, transaction, clearResourcePathCache, securityImpact, newPermissions);
         }
 
         // Bug 290032 - Sticky views

@@ -378,7 +378,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
   {
     out.writeCDOBranchPoint(commitContext.getBranchPoint());
     out.writeLong(commitContext.getPreviousTimeStamp());
-    out.writeBoolean(commitContext.isClearPermissionCache());
+    out.writeByte(commitContext.getSecurityImpact());
   }
 
   protected void respondingMappingNewObjects(CDODataOutput out) throws Exception

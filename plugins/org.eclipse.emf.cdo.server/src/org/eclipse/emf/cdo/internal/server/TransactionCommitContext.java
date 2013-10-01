@@ -260,9 +260,9 @@ public class TransactionCommitContext implements InternalCommitContext
     return commitNotificationInfo.isClearResourcePathCache();
   }
 
-  public boolean isClearPermissionCache()
+  public byte getSecurityImpact()
   {
-    return commitNotificationInfo.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE;
+    return commitNotificationInfo.getSecurityImpact();
   }
 
   public boolean isUsingEcore()

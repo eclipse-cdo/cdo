@@ -75,6 +75,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final int RESOURCE_NODE_NAME_INDEX = 1;
 
+  private static final int RESOURCE_FOLDER_NODES_INDEX = 2;
+
   private static final byte UNSET_OPCODE = 0;
 
   private static final byte SET_NULL_OPCODE = 1;
@@ -166,8 +168,17 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       {
         clearValues();
 
-        String name = in.readString();
-        doSetValue(RESOURCE_NODE_NAME_INDEX, name);
+        EClass eClass = getEClass();
+        EStructuralFeature[] features = getAllPersistentFeatures();
+        readValue(in, eClass, features, RESOURCE_NODE_NAME_INDEX, true);
+
+        if (getClassInfo().isResourceFolder())
+        {
+          if (!readValue(in, eClass, features, RESOURCE_FOLDER_NODES_INDEX, true))
+          {
+            flags &= ~UNCHUNKED_FLAG;
+          }
+        }
       }
     }
     else
@@ -217,6 +228,71 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public boolean readValues(CDODataInput in) throws IOException
+  {
+    EClass owner = getEClass();
+    EStructuralFeature[] features = getAllPersistentFeatures();
+    initValues(features);
+
+    boolean unchunked = true;
+    for (int i = 0; i < features.length; i++)
+    {
+      unchunked = readValue(in, owner, features, i, unchunked);
+    }
+
+    return unchunked;
+  }
+
+  private boolean readValue(CDODataInput in, EClass owner, EStructuralFeature[] features, int i, boolean unchunked)
+      throws IOException
+  {
+    Object value;
+    byte unsetState = in.readByte();
+    switch (unsetState)
+    {
+    case UNSET_OPCODE:
+      return unchunked;
+
+    case SET_NULL_OPCODE:
+      setValue(i, CDORevisionData.NIL);
+      return unchunked;
+    }
+
+    EStructuralFeature feature = features[i];
+    if (feature.isMany())
+    {
+      CDOList list = in.readCDOList(owner, feature);
+      if (unchunked)
+      {
+        int size = list.size();
+        if (size != 0)
+        {
+          Object lastElement = list.get(size - 1);
+          if (lastElement == InternalCDOList.UNINITIALIZED || lastElement instanceof CDOElementProxy)
+          {
+            unchunked = false;
+          }
+        }
+      }
+
+      value = list;
+    }
+    else
+    {
+      value = in.readCDOFeatureValue(feature);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Read feature {0}: {1}", feature.getName(), value);
+      }
+    }
+
+    setValue(i, value);
+    return unchunked;
+  }
+
+  /**
    * @since 4.0
    */
   public void write(CDODataOutput out, int referenceChunk) throws IOException
@@ -244,8 +320,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     {
       if (getClassInfo().isResourceNode())
       {
-        String name = getResourceNodeName();
-        out.writeString(name);
+        EClass eClass = getEClass();
+        EStructuralFeature[] features = getAllPersistentFeatures();
+        writeValue(out, eClass, features, RESOURCE_NODE_NAME_INDEX, referenceChunk);
+
+        if (getClassInfo().isResourceFolder())
+        {
+          writeValue(out, eClass, features, RESOURCE_FOLDER_NODES_INDEX, referenceChunk);
+        }
       }
     }
     else
@@ -296,6 +378,63 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     out.writeCDOID(resourceID);
     out.writeCDOID(out.getIDProvider().provideCDOID(containerID));
     out.writeInt(containingFeatureID);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
+  {
+    EClass owner = getEClass();
+    EStructuralFeature[] features = getAllPersistentFeatures();
+    for (int i = 0; i < features.length; i++)
+    {
+      writeValue(out, owner, features, i, referenceChunk);
+    }
+  }
+
+  private void writeValue(CDODataOutput out, EClass owner, EStructuralFeature[] features, int i, int referenceChunk)
+      throws IOException
+  {
+    EStructuralFeature feature = features[i];
+    Object value = getValue(i);
+    if (value == null)
+    {
+      // Feature is NOT set
+      out.writeByte(UNSET_OPCODE);
+      return;
+    }
+
+    // Feature IS set
+    if (value == CDORevisionData.NIL)
+    {
+      // Feature IS null
+      out.writeByte(SET_NULL_OPCODE);
+      return;
+    }
+
+    // Feature is NOT null
+    out.writeByte(SET_NOT_NULL_OPCODE);
+    if (feature.isMany())
+    {
+      CDOList list = (CDOList)value;
+      out.writeCDOList(owner, feature, list, referenceChunk);
+    }
+    else
+    {
+      checkNoFeatureMap(feature);
+      if (feature instanceof EReference)
+      {
+        value = out.getIDProvider().provideCDOID(value);
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing feature {0}: {1}", feature.getName(), value);
+      }
+
+      out.writeCDOFeatureValue(feature, value);
+    }
   }
 
   /**
@@ -722,22 +861,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
       synchronized (this)
       {
-        CDOPermission permission = getPermission();
-        if (permission != CDOPermission.WRITE)
-        {
-          setPermission(CDOPermission.WRITE);
-        }
-
         try
         {
+          bypassPermissionChecks(true);
           setValue(featureIndex, list);
         }
         finally
         {
-          if (permission != CDOPermission.WRITE)
-          {
-            setPermission(permission);
-          }
+          bypassPermissionChecks(false);
         }
       }
     }
@@ -860,7 +991,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   protected void setValue(int featureIndex, Object value)
   {
-    checkFrozen(featureIndex, value);
+    checkUnfrozen(featureIndex, value);
     checkWritable();
     doSetValue(featureIndex, value);
   }
@@ -882,24 +1013,30 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return (CDOList)getValue(i);
   }
 
-  private void checkFrozen(int featureIndex, Object value)
+  private void checkUnfrozen(int featureIndex, Object value)
   {
     if ((flags & FROZEN_FLAG) != 0)
     {
+      // Exception 1: LoadPermissionsRequest needs to "reload" revision values in case the original permission was NONE.
+      // In this case BYPASS_PERMISSION_CHECKS_FLAG is set.
+      if ((flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0)
+      {
+        return;
+      }
+
       Object oldValue = getValue(featureIndex);
 
-      // Exception 1: Setting an empty list as the value for an isMany feature, is
-      // allowed if the old value is null. This is a case of lazy initialization.
+      // Exception 2: Setting an empty list as the value for an isMany feature, is allowed if the old value is null.
+      // This is a case of lazy initialization.
       boolean newIsEmptyList = value instanceof EList<?> && ((EList<?>)value).size() == 0;
       if (newIsEmptyList && oldValue == null)
       {
         return;
       }
 
-      // Exception 2a: Replacing a temp ID with a regular ID is allowed (happens during
-      // postCommit of new objects)
-      // Exception 2b: Replacing a temp ID with another temp ID is also allowed (happens
-      // when changes are imported in a PushTx).
+      // Exception 3a: Replacing a temp ID with a regular ID is allowed (happens during postCommit of new objects)
+      // Exception 3b: Replacing a temp ID with another temp ID is also allowed (happens when changes are imported in a
+      // PushTx).
       if (oldValue instanceof CDOIDTemp && value instanceof CDOID)
       {
         return;
@@ -938,109 +1075,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     {
       throw new NoPermissionException(this);
     }
-  }
-
-  private void writeValues(CDODataOutput out, int referenceChunk) throws IOException
-  {
-    EClass owner = getEClass();
-    EStructuralFeature[] features = getAllPersistentFeatures();
-    for (int i = 0; i < features.length; i++)
-    {
-      EStructuralFeature feature = features[i];
-      Object value = getValue(i);
-      if (value == null)
-      {
-        // Feature is NOT set
-        out.writeByte(UNSET_OPCODE);
-        continue;
-      }
-
-      // Feature IS set
-      if (value == CDORevisionData.NIL)
-      {
-        // Feature IS null
-        out.writeByte(SET_NULL_OPCODE);
-        continue;
-      }
-
-      // Feature is NOT null
-      out.writeByte(SET_NOT_NULL_OPCODE);
-      if (feature.isMany())
-      {
-        CDOList list = (CDOList)value;
-        out.writeCDOList(owner, feature, list, referenceChunk);
-      }
-      else
-      {
-        checkNoFeatureMap(feature);
-        if (feature instanceof EReference)
-        {
-          value = out.getIDProvider().provideCDOID(value);
-        }
-
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Writing feature {0}: {1}", feature.getName(), value);
-        }
-
-        out.writeCDOFeatureValue(feature, value);
-      }
-    }
-  }
-
-  private boolean readValues(CDODataInput in) throws IOException
-  {
-    EClass owner = getEClass();
-    EStructuralFeature[] features = getAllPersistentFeatures();
-    initValues(features);
-
-    boolean unchunked = true;
-    for (int i = 0; i < features.length; i++)
-    {
-      Object value;
-      EStructuralFeature feature = features[i];
-      byte unsetState = in.readByte();
-      switch (unsetState)
-      {
-      case UNSET_OPCODE:
-        continue;
-
-      case SET_NULL_OPCODE:
-        setValue(i, CDORevisionData.NIL);
-        continue;
-      }
-
-      if (feature.isMany())
-      {
-        CDOList list = in.readCDOList(owner, feature);
-        if (unchunked)
-        {
-          int size = list.size();
-          if (size != 0)
-          {
-            Object lastElement = list.get(size - 1);
-            if (lastElement == InternalCDOList.UNINITIALIZED || lastElement instanceof CDOElementProxy)
-            {
-              unchunked = false;
-            }
-          }
-        }
-
-        value = list;
-      }
-      else
-      {
-        value = in.readCDOFeatureValue(feature);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Read feature {0}: {1}", feature.getName(), value);
-        }
-      }
-
-      setValue(i, value);
-    }
-
-    return unchunked;
   }
 
   public static void checkNoFeatureMap(EStructuralFeature feature)
@@ -1102,7 +1136,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       builder.append("FROZEN");
     }
 
-    if ((flags & CDOPermission.READ.getBits()) != 0)
+    if ((flags & READ_PERMISSION_FLAG) != 0)
     {
       if (builder.length() != 0)
       {
@@ -1112,7 +1146,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       builder.append("READ");
     }
 
-    if ((flags & CDOPermission.WRITE.getBits()) != 0)
+    if ((flags & WRITE_PERMISSION_FLAG) != 0)
     {
       if (builder.length() != 0)
       {

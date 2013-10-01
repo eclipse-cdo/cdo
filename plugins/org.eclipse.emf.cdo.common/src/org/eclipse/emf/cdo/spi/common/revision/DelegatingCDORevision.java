@@ -333,6 +333,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     getDelegate().read(in);
   }
 
+  /**
+   * @since 4.3
+   */
+  public boolean readValues(CDODataInput in) throws IOException
+  {
+    return getDelegate().readValues(in);
+  }
+
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     getDelegate().write(out, referenceChunk);
@@ -344,6 +352,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     getDelegate().write(out, referenceChunk, securityContext);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
+  {
+    getDelegate().writeValues(out, referenceChunk);
   }
 
   public void convertEObjects(CDOIDProvider oidProvider)

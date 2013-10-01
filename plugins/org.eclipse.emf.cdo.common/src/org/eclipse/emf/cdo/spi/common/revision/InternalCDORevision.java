@@ -116,6 +116,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void read(CDODataInput in) throws IOException;
 
   /**
+   * @since 4.3
+   */
+  public boolean readValues(CDODataInput in) throws IOException;
+
+  /**
    * @since 3.0
    */
   public void write(CDODataOutput out, int referenceChunk) throws IOException;
@@ -124,6 +129,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 4.1
    */
   public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException;
+
+  /**
+   * @since 4.3
+   */
+  public void writeValues(CDODataOutput out, int referenceChunk) throws IOException;
 
   /**
    * @since 3.0

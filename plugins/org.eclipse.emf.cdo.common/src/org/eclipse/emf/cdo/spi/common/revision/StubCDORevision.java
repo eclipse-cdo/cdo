@@ -148,6 +148,14 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.3
+   */
+  public boolean readValues(CDODataInput in) throws IOException
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     throw new UnsupportedOperationException(getExceptionMessage());
@@ -157,6 +165,14 @@ public class StubCDORevision extends AbstractCDORevision
    * @since 4.1
    */
   public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

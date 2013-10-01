@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -641,16 +642,32 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     EReference nodesFeature = EresourcePackage.eINSTANCE.getCDOResourceFolder_Nodes();
     EAttribute nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
-    int size = folderRevision.data().size(nodesFeature);
+
+    CDOList list;
+
+    try
+    {
+      folderRevision.bypassPermissionChecks(true);
+      list = folderRevision.getList(nodesFeature);
+    }
+    finally
+    {
+      folderRevision.bypassPermissionChecks(false);
+    }
+
+    CDOStore store = getStore();
+    int size = list.size();
     for (int i = 0; i < size; i++)
     {
-      Object value = folderRevision.data().get(nodesFeature, i);
-      value = getStore().resolveProxy(folderRevision, nodesFeature, i, value);
+      Object value = list.get(i);
+      value = store.resolveProxy(folderRevision, nodesFeature, i, value);
 
-      CDORevision childRevision = getLocalRevision((CDOID)convertObjectToID(value));
-      if (name.equals(childRevision.data().get(nameFeature, 0)))
+      CDOID childID = (CDOID)convertObjectToID(value);
+      InternalCDORevision childRevision = getLocalRevision(childID);
+      String childName = (String)childRevision.get(nameFeature, 0);
+      if (name.equals(childName))
       {
-        return childRevision.getID();
+        return childID;
       }
     }
 
@@ -1387,7 +1404,16 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     try
     {
-      CDOID id = isRoot ? getSession().getRepositoryInfo().getRootResourceID() : getResourceNodeID(path);
+      CDOID id;
+      if (isRoot)
+      {
+        id = getSession().getRepositoryInfo().getRootResourceID();
+      }
+      else
+      {
+        id = getResourceNodeID(path);
+      }
+
       resource.cdoInternalSetID(id);
       registerObject(resource);
       if (isRoot)

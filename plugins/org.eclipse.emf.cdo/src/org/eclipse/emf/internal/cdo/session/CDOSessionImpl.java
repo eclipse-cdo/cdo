@@ -15,6 +15,7 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -117,8 +118,10 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -641,13 +644,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
 
+    InternalCDORevisionManager revisionManager = getRevisionManager();
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
     List<InternalCDORevision> newRevisions = result.getChangedObjects(branch);
+
     for (InternalCDORevision newRevision : newRevisions)
     {
-      getRevisionManager().addRevision(newRevision);
+      revisionManager.addRevision(newRevision);
 
-      InternalCDORevision oldRevision = oldRevisions.get(newRevision.getID());
+      CDOID id = newRevision.getID();
+      InternalCDORevision oldRevision = oldRevisions.get(id);
       InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
       changedObjects.add(delta);
     }
@@ -655,13 +661,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
-      getRevisionManager().reviseLatest(detachedObject.getID(), branch);
+      CDOID id = detachedObject.getID();
+      revisionManager.reviseLatest(id, branch);
     }
 
+    long lastUpdateTime = result.getLastUpdateTime();
     for (InternalCDOView view : branchViews)
     {
-      view.invalidate(view.getBranch(), result.getLastUpdateTime(), changedObjects, detachedObjects, oldRevisions,
-          false, true);
+      CDOBranch viewBranch = view.getBranch();
+      view.invalidate(viewBranch, lastUpdateTime, changedObjects, detachedObjects, oldRevisions, false, true);
     }
   }
 
@@ -1339,6 +1347,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private CDOLobStore lobCache = CDOLobStoreImpl.INSTANCE;
 
+    private CDOPermissionUpdater permissionUpdater = CDOPermissionUpdater.SERVER;
+
     public OptionsImpl()
     {
       setCollectionLoadingPolicy(null); // Init default
@@ -1537,6 +1547,37 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    public CDOPermissionUpdater getPermissionUpdater()
+    {
+      synchronized (this)
+      {
+        return permissionUpdater;
+      }
+    }
+
+    public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater)
+    {
+      IListener[] listeners = getListeners();
+      IEvent event = null;
+
+      synchronized (this)
+      {
+        if (this.permissionUpdater != permissionUpdater)
+        {
+          this.permissionUpdater = permissionUpdater;
+          if (listeners != null)
+          {
+            event = new PermissionUpdaterEventImpl();
+          }
+        }
+      }
+
+      if (event != null)
+      {
+        fireEvent(event, listeners);
+      }
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -1645,6 +1686,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       private static final long serialVersionUID = 1L;
 
       public LobCacheEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class PermissionUpdaterEventImpl extends OptionsEvent implements PermissionUpdaterEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public PermissionUpdaterEventImpl()
       {
         super(OptionsImpl.this);
       }
@@ -1821,10 +1875,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
       try
       {
+        InternalCDOView[] views = getViews();
         Map<CDOID, InternalCDORevision> oldRevisions = null;
+
         boolean success = commitInfo.getBranch() != null;
         if (success)
         {
+          if (clearPermissionCache)
+          {
+            updatePermissions(views);
+          }
+
           oldRevisions = reviseRevisions();
         }
 
@@ -1839,7 +1900,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           commitInfoManager.notifyCommitInfoHandlers(commitInfo);
         }
 
-        for (InternalCDOView view : getViews())
+        for (InternalCDOView view : views)
         {
           invalidateView(commitInfo, view, sender, oldRevisions, clearResourcePathCache);
         }
@@ -1903,14 +1964,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
               newRevision.setVersion(target.getVersion());
             }
 
+            boolean bypassPermissionChecks = newRevision.bypassPermissionChecks(true);
+
             try
             {
-              newRevision.bypassPermissionChecks(true);
               revisionDelta.apply(newRevision);
             }
             finally
             {
-              newRevision.bypassPermissionChecks(false);
+              newRevision.bypassPermissionChecks(bypassPermissionChecks);
               newRevision.freeze();
             }
 
@@ -1941,6 +2003,56 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
 
       return oldRevisions;
+    }
+
+    private Map<InternalCDORevision, CDOPermission> updatePermissions(InternalCDOView[] views)
+    {
+      CDOPermissionUpdater permissionUpdater = options().getPermissionUpdater();
+      if (permissionUpdater != null)
+      {
+        CDOBranchPoint head = getBranchManager().getMainBranch().getHead();
+        Set<InternalCDORevision> revisions = new HashSet<InternalCDORevision>();
+
+        for (int i = 0; i < views.length; i++)
+        {
+          InternalCDOView view = views[i];
+          if (!head.equals(view))
+          {
+            throw new IllegalStateException("Security not supported with auditing or branching");
+          }
+
+          for (InternalCDOObject object : view.getObjects().values())
+          {
+            InternalCDORevision revision;
+
+            CDOState state = object.cdoState();
+            switch (state)
+            {
+            case CLEAN:
+              revision = object.cdoRevision();
+              break;
+
+            case DIRTY:
+            case CONFLICT:
+              CDOID id = object.cdoID();
+              revision = getRevisionManager().getRevision(id, head, 0, CDORevision.DEPTH_NONE, false);
+              break;
+
+            default:
+              continue;
+            }
+
+            if (revision != null)
+            {
+              revisions.add(revision);
+            }
+          }
+        }
+
+        return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
+      }
+
+      return null;
     }
 
     private void addNewRevision(InternalCDORevision newRevision)

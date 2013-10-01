@@ -644,15 +644,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     EAttribute nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
 
     CDOList list;
+    boolean bypassPermissionChecks = folderRevision.bypassPermissionChecks(true);
 
     try
     {
-      folderRevision.bypassPermissionChecks(true);
       list = folderRevision.getList(nodesFeature);
     }
     finally
     {
-      folderRevision.bypassPermissionChecks(false);
+      folderRevision.bypassPermissionChecks(bypassPermissionChecks);
     }
 
     CDOStore store = getStore();

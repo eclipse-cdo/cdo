@@ -94,6 +94,11 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
     return Collections.emptyMap();
   }
 
+  public void getAllRevisions(List<InternalCDORevision> result)
+  {
+    // Do nothing
+  }
+
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     return Collections.emptyList();

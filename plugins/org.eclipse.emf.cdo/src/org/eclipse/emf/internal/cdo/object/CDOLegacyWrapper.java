@@ -461,13 +461,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
     Counter counter = recursionCounter.get();
     InternalCDOResource resource = null;
+    boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
 
     try
     {
       registerWrapper(this);
       counter.increment();
       viewAndState.view.registerObject(this);
-      revision.bypassPermissionChecks(true);
 
       revisionToInstanceResource();
       revisionToInstanceContainer();
@@ -496,7 +496,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
     finally
     {
-      revision.bypassPermissionChecks(false);
+      revision.bypassPermissionChecks(bypassPermissionChecks);
 
       if (resource != null)
       {

@@ -147,6 +147,18 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     return result;
   }
 
+  public void getAllRevisions(List<InternalCDORevision> result)
+  {
+    for (Reference<InternalCDORevision> ref : revisions.values())
+    {
+      InternalCDORevision revision = ref.get();
+      if (revision != null)
+      {
+        result.add(revision);
+      }
+    }
+  }
+
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     checkBranch(branchPoint.getBranch());

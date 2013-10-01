@@ -132,6 +132,17 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return result;
   }
 
+  public void getAllRevisions(List<InternalCDORevision> result)
+  {
+    synchronized (revisionLists)
+    {
+      for (RevisionList list : revisionLists.values())
+      {
+        list.getAllRevisions(result);
+      }
+    }
+  }
+
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     CDOBranch branch = branchPoint.getBranch();
@@ -143,7 +154,6 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
       for (Map.Entry<Object, RevisionList> entry : revisionLists.entrySet())
       {
         if (isKeyInBranch(entry.getKey(), branch))
-        // if (ObjectUtil.equals(entry.getKey().getBranch(), branch))
         {
           RevisionList list = entry.getValue();
           InternalCDORevision revision = list.getRevision(branchPoint.getTimeStamp());
@@ -440,6 +450,19 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
           }
 
           resultList.add(revision);
+        }
+      }
+    }
+
+    public void getAllRevisions(List<InternalCDORevision> result)
+    {
+      for (Iterator<Reference<InternalCDORevision>> it = iterator(); it.hasNext();)
+      {
+        Reference<InternalCDORevision> ref = it.next();
+        InternalCDORevision revision = ref.get();
+        if (revision != null)
+        {
+          result.add(revision);
         }
       }
     }

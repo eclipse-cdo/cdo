@@ -39,10 +39,10 @@ public class CDORevisionImpl extends BaseCDORevision
   protected CDORevisionImpl(CDORevisionImpl source)
   {
     super(source);
+    boolean bypassPermissionChecks = bypassPermissionChecks(true);
 
     try
     {
-      bypassPermissionChecks(true);
       EStructuralFeature[] features = clearValues();
 
       int length = features.length;
@@ -67,7 +67,7 @@ public class CDORevisionImpl extends BaseCDORevision
     }
     finally
     {
-      bypassPermissionChecks(false);
+      bypassPermissionChecks(bypassPermissionChecks);
     }
   }
 

@@ -861,14 +861,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
       synchronized (this)
       {
+        boolean bypassPermissionChecks = bypassPermissionChecks(true);
+
         try
         {
-          bypassPermissionChecks(true);
           setValue(featureIndex, list);
         }
         finally
         {
-          bypassPermissionChecks(false);
+          bypassPermissionChecks(bypassPermissionChecks);
         }
       }
     }
@@ -1154,6 +1155,16 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       }
 
       builder.append("WRITE");
+    }
+
+    if ((flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0)
+    {
+      if (builder.length() != 0)
+      {
+        builder.append("|");
+      }
+
+      builder.append("BYPASS_PERMISSION_CHECKS");
     }
 
     return builder.toString();

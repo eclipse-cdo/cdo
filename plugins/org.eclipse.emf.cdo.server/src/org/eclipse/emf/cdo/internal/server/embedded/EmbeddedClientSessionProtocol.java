@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
@@ -555,6 +556,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public Map<InternalCDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     throw new UnsupportedOperationException();
   }

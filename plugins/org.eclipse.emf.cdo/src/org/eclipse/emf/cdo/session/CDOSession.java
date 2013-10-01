@@ -39,6 +39,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
@@ -266,6 +267,20 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
     public void setLobCache(CDOLobStore lobCache);
 
     /**
+     * Returns the {@link CDOPermissionUpdater permission updater} currently being used by this session.
+     * 
+     * @since 4.3
+     */
+    public CDOPermissionUpdater getPermissionUpdater();
+
+    /**
+     * Sets the {@link CDOPermissionUpdater permission updater} to be used by this session.
+     * 
+     * @since 4.3
+     */
+    public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater);
+
+    /**
      * An {@link IOptionsEvent options event} fired when the
      * {@link Options#setGeneratedPackageEmulationEnabled(boolean) generated package emulation enabled} option of a
      * {@link CDOSession session} has changed.
@@ -301,6 +316,19 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface LobCacheEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired when the {@link Options#setPermissionUpdater(CDOPermissionUpdater) permission updater}
+     * option of a {@link CDOSession session} has changed.
+     * 
+     * @author Eike Stepper
+     * @since 4.3
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface PermissionUpdaterEvent extends IOptionsEvent
     {
     }
   }

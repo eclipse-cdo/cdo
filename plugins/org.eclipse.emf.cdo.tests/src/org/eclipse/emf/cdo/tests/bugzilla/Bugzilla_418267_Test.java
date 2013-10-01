@@ -34,6 +34,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * Bug 418267 - [Security] Cached permissions are not always properly updated after commits.
  * 
@@ -136,61 +138,77 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
         User writer = realm.addUser(CREDENTIALS_WRITER);
         writer.getRoles().add(realm.getRole(Role.ALL_OBJECTS_WRITER));
       }
-
-      private Access getAccess(CDOPermission permission)
-      {
-        switch (permission)
-        {
-        case READ:
-          return Access.READ;
-
-        case WRITE:
-          return Access.WRITE;
-
-        default:
-          return null;
-        }
-      }
     });
 
     CDOSession sessionWriter = openSession(CREDENTIALS_WRITER);
     CDOTransaction transactionWriter = sessionWriter.openTransaction();
     CDOResource resourceWriter = transactionWriter.getResource(pathResource1);
+    Company companyWriter = (Company)resourceWriter.getContents().get(0);
     CDOResourceFolder targetFolderWriter = transactionWriter.getResourceFolder(pathFolder2);
 
     CDOSession session = openSession(CREDENTIALS);
     session.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
 
     CDOTransaction transaction = session.openTransaction();
-    assertPermission(from, resourceWriter, transaction); // Pre check
+    assertPermissions(from, transaction, resourceWriter, companyWriter); // Pre check
 
     targetFolderWriter.getNodes().add(resourceWriter); // Move
+
+    // int xxx;
+    // transactionWriter.commit();
+    // sleep(1000000000);
+
     commitAndSync(transactionWriter, transaction); // Commit + invalidate
-    assertPermission(to, resourceWriter, transaction); // Post check
+    assertPermissions(to, transaction, resourceWriter, companyWriter); // Post check
   }
 
-  private static void assertPermission(CDOPermission expected, CDOResource resourceWriter, CDOTransaction transaction)
+  private static Access getAccess(CDOPermission permission)
   {
-    if (expected == CDOPermission.NONE)
+    switch (permission)
     {
-      try
-      {
-        transaction.getObject(resourceWriter);
-        fail("Exception expected");
-      }
-      catch (Exception ex)
-      {
-        // SUCCESS
-      }
-    }
-    else
-    {
-      CDOResource resource = transaction.getObject(resourceWriter);
-      assertEquals(expected, resource.cdoPermission());
+    case READ:
+      return Access.READ;
 
-      Company company = (Company)resource.getContents().get(0);
-      assertEquals(expected, CDOUtil.getCDOObject(company).cdoPermission());
+    case WRITE:
+      return Access.WRITE;
+
+    default:
+      return null;
     }
+  }
+
+  private static void assertPermissions(CDOPermission expected, CDOTransaction transaction, EObject... objectsWriter)
+  {
+    for (EObject objectWriter : objectsWriter)
+    {
+      EObject object = transaction.getObject(objectWriter);
+      CDOPermission permission = CDOUtil.getCDOObject(object).cdoPermission();
+      assertEquals(expected, permission);
+    }
+
+    // if (expected == CDOPermission.NONE)
+    // {
+    // try
+    // {
+    // CDOResource resource = transaction.getObject(resourceWriter);
+    // fail("Exception expected");
+    // }
+    // catch (Exception ex)
+    // {
+    // // SUCCESS
+    // }
+    // }
+    // else
+    // {
+    // CDOResource resource = transaction.getObject(resourceWriter);
+    // assertEquals(expected, resource.cdoPermission());
+    //
+    // if (expected != CDOPermission.NONE)
+    // {
+    // Company company = (Company)resource.getContents().get(0);
+    // assertEquals(expected, CDOUtil.getCDOObject(company).cdoPermission());
+    // }
+    // }
   }
 
   private ISecurityManager startSecureRepository(ISecurityManager.RealmOperation operation)

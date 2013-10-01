@@ -50,6 +50,8 @@ public enum CDOPermission
 
   public static CDOPermission get(int bits)
   {
+    bits &= WRITE.getBits();
+
     switch (bits)
     {
     case 0x00:

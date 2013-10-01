@@ -38,4 +38,12 @@ public interface InternalCDORevisionCache extends CDORevisionCache, CDOAllRevisi
   public void clear();
 
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint);
+
+  /**
+   * Fills a list with all {@link CDORevision revisions}.
+   * 
+   * @since 4.3
+   * @see #getAllRevisions()
+   */
+  public void getAllRevisions(List<InternalCDORevision> result);
 }

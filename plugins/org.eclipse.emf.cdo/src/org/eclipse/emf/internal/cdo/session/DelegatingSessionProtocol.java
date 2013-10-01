@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
@@ -907,6 +908,22 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.loadMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public Map<InternalCDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.loadPermissions(revisions);
       }
       catch (Exception ex)
       {

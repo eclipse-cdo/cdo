@@ -348,6 +348,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case SIGNAL_SET_LOCK_NOTIFICATION_MODE:
       return new SetLockNotificationModeIndication(this);
 
+    case SIGNAL_LOAD_PERMISSIONS:
+      return new LoadPermissionsIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

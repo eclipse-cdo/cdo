@@ -416,6 +416,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     }
   }
 
+  public void getAllRevisions(List<InternalCDORevision> result)
+  {
+    // TODO: implement DBRevisionCache.enclosing_method(enclosing_method_arguments)
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * Adds a given revision to this cache. It furthermore updates the revised timestamp of the latest (before inserting
    * the new one) revision

@@ -252,6 +252,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_SET_LOCK_NOTIFICATION_MODE = 54;
 
+  /**
+   * @since 4.3
+   */
+  public static final short SIGNAL_LOAD_PERMISSIONS = 55;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

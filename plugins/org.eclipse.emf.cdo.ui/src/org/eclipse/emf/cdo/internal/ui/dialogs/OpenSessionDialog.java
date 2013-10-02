@@ -35,7 +35,7 @@ public class OpenSessionDialog extends TitleAreaDialog
 
   public OpenSessionDialog(IWorkbenchPage page)
   {
-    super(new Shell(page.getWorkbenchWindow().getShell()));
+    super(page.getWorkbenchWindow().getShell());
     this.page = page;
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
   }

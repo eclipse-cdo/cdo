@@ -527,7 +527,13 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   public String toString()
   {
-    return MessageFormat.format("Session[{0}]", sessionID); //$NON-NLS-1$
+    String name = manager.getRepository().getName();
+    if (userID != null && userID.length() != 0)
+    {
+      name = userID + "@" + name;
+    }
+
+    return MessageFormat.format("Session{0} [{1}]", sessionID, name); //$NON-NLS-1$
   }
 
   /**

@@ -208,8 +208,11 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
 
   protected void handleUser(CDOTransaction transaction, Realm realm, Role role, User user) throws Exception
   {
-    user.getRoles().add(role);
-    transaction.createResourceFolder(getHomeFolder() + "/" + user.getId());
+    EList<Role> roles = user.getRoles();
+    roles.add(role);
+
+    String path = getHomeFolder() + "/" + user.getId();
+    transaction.getOrCreateResourceFolder(path);
   }
 
   @Override

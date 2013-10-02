@@ -81,7 +81,9 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CD
           }
           else if (newPermission == CDOPermission.NONE)
           {
-            revision.clearValues();
+            // TODO Handle newPermission == CDOPermission.NONE
+            // clearValues() also wipes out CDOResourceNode.name and CDOResourceFolder.nodes!
+            // revision.clearValues();
           }
         }
         finally

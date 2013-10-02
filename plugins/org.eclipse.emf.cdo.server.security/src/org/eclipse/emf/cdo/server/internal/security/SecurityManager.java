@@ -182,6 +182,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private CDOID realmID;
 
+  private long lastRealmModification = CDOBranchPoint.UNSPECIFIED_DATE;
+
   public SecurityManager(String realmPath, IManagedContainer container)
   {
     this.realmPath = realmPath;
@@ -657,6 +659,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   protected CDOPermission authorize(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, ISession session, Access defaultAccess, Permission[] permissions)
   {
+    if (lastRealmModification != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      systemView.waitForUpdate(lastRealmModification);
+      lastRealmModification = CDOBranchPoint.UNSPECIFIED_DATE;
+    }
+
     boolean setUser = defaultAccess == null;
     if (setUser)
     {
@@ -777,6 +785,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   {
     synchronized (userInfos)
     {
+      // System.out.println("clearUserInfos()");
+
       userInfos.clear();
       permissionBag.clear();
       permissionArray = null;
@@ -902,7 +912,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       try
       {
-        return authorize(revision, revisionProvider, securityContext, session, null, null);
+        CDOPermission permission = authorize(revision, revisionProvider, securityContext, session, null, null);
+        // System.out.println("Loading from " + session + ": " + permission + " --> " + revision);
+        return permission;
       }
       finally
       {
@@ -1060,6 +1072,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     public void handleTransactionAfterCommitted(ITransaction transaction, final CommitContext commitContext,
         OMMonitor monitor)
     {
+      if (commitContext.getSecurityImpact() == CommitNotificationInfo.IMPACT_REALM)
+      {
+        lastRealmModification = commitContext.getBranchPoint().getTimeStamp();
+      }
+
       handleCommitted(commitContext);
     }
   }

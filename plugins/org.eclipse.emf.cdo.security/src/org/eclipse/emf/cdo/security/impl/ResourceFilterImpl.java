@@ -69,6 +69,8 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
 
   private transient BasicEList<Matcher> matchers;
 
+  private transient int lastVersion;
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -424,16 +426,28 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
 
   private BasicEList<Matcher> getMatchers()
   {
-    if (matchers != null)
+    InternalCDORevision revision = cdoRevision();
+    if (revision != null)
     {
-      return matchers;
+      int currentVersion = revision.getVersion();
+      if (currentVersion > lastVersion)
+      {
+        userTokenPos = USER_TOKEN_UNINITIALIZED;
+        matchers = null;
+        lastVersion = currentVersion;
+      }
+
+      if (matchers != null)
+      {
+        return matchers;
+      }
     }
 
     String path = getPath();
     PatternStyle patternStyle = getPatternStyle();
     boolean includeParents = isIncludeParents();
 
-    if (userTokenPos == USER_TOKEN_UNINITIALIZED)
+    if (userTokenPos == USER_TOKEN_UNINITIALIZED || revision == null)
     {
       userTokenPos = path.indexOf(USER_TOKEN);
     }
@@ -503,18 +517,18 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   public static boolean isResourceTreeImpacted(CommitImpactContext context)
   {
     InternalCDORevisionDelta[] revisionDeltas = (InternalCDORevisionDelta[])context.getDirtyObjectDeltas();
-  
+
     for (int i = 0; i < revisionDeltas.length; i++)
     {
       InternalCDORevisionDelta revisionDelta = revisionDeltas[i];
-  
+
       // Any tree move might impact this permission
       CDOFeatureDelta containerDelta = revisionDelta.getFeatureDelta(CDOContainerFeatureDelta.CONTAINER_FEATURE);
       if (containerDelta != null)
       {
         return true;
       }
-  
+
       // Any change of a resource node name might impact this permission
       CDOFeatureDelta nameDelta = revisionDelta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME);
       if (nameDelta != null)
@@ -522,7 +536,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
         return true;
       }
     }
-  
+
     return false;
   }
 

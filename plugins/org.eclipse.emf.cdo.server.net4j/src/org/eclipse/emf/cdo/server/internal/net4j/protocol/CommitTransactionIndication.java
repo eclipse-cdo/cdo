@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
@@ -419,18 +420,22 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     IPermissionManager permissionManager = session.getManager().getPermissionManager();
     if (permissionManager != null)
     {
-      InternalCDORevision[] newObjects = commitContext.getNewObjects();
-      InternalCDORevision[] dirtyObjects = commitContext.getDirtyObjects();
+      if (commitContext.getSecurityImpact() != CommitNotificationInfo.IMPACT_REALM)
+      {
+        out.writeBoolean(true);
 
-      out.writeInt(newObjects.length + dirtyObjects.length);
+        InternalCDORevision[] newObjects = commitContext.getNewObjects();
+        InternalCDORevision[] dirtyObjects = commitContext.getDirtyObjects();
 
-      respondingNewPermissions(out, permissionManager, session, newObjects);
-      respondingNewPermissions(out, permissionManager, session, dirtyObjects);
+        out.writeInt(newObjects.length + dirtyObjects.length);
+        respondingNewPermissions(out, permissionManager, session, newObjects);
+        respondingNewPermissions(out, permissionManager, session, dirtyObjects);
+
+        return;
+      }
     }
-    else
-    {
-      out.writeBoolean(false);
-    }
+
+    out.writeBoolean(false);
   }
 
   protected void respondingNewPermissions(CDODataOutput out, IPermissionManager permissionManager,

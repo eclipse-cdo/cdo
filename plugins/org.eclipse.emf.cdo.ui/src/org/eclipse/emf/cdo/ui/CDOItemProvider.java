@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013 Eike Stepper (Berlin, Germany), CEA LIST, and others.
+ * Copyright (c) 2007-2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,6 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
- *    Christian W. Damus (CEA LIST) - 418452
  */
 package org.eclipse.emf.cdo.ui;
 
@@ -180,12 +179,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOResourceFolder)
     {
-      CDOResourceFolder folder = (CDOResourceFolder)element;
-      if (folder.cdoPermission() == CDOPermission.NONE)
-      {
-        return NO_ELEMENTS;
-      }
-      return folder.getNodes().toArray();
+      return ((CDOResourceFolder)element).getNodes().toArray();
     }
 
     return super.getChildren(element);

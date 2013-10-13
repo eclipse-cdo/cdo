@@ -24,10 +24,16 @@
 				</dictionary>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.pde.api.tools.apiAnalysisBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.emf.cdo.releng.version.VersionNature</nature>
+		<nature>org.eclipse.pde.api.tools.apiAnalysisNature</nature>
 	</natures>
 </projectDescription>

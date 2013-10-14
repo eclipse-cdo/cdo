@@ -49,6 +49,14 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
     return ExtendedIOUtil.readEnum(this, type);
   }
 
+  /**
+   * @since 3.4
+   */
+  public Throwable readException() throws IOException
+  {
+    return ExtendedIOUtil.readException(this);
+  }
+
   public Object readObject(ClassLoader classLoader) throws IOException
   {
     return ExtendedIOUtil.readObject(this, classLoader);

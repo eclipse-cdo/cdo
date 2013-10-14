@@ -16,6 +16,8 @@ import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ExtendedDataOutput extends DataOutput
 {
@@ -29,6 +31,11 @@ public interface ExtendedDataOutput extends DataOutput
    * @since 3.0
    */
   public void writeEnum(Enum<?> literal) throws IOException;
+
+  /**
+   * @since 3.4
+   */
+  public void writeException(Throwable t) throws IOException;
 
   /**
    * @author Eike Stepper
@@ -134,6 +141,14 @@ public interface ExtendedDataOutput extends DataOutput
     public void writeEnum(Enum<?> literal) throws IOException
     {
       delegate.writeEnum(literal);
+    }
+
+    /**
+     * @since 3.4
+     */
+    public void writeException(Throwable t) throws IOException
+    {
+      delegate.writeException(t);
     }
 
     public void writeUTF(String str) throws IOException

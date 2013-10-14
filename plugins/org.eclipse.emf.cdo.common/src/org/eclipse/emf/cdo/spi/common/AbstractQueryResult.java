@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 
+import org.eclipse.net4j.util.WrappedException;
+
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
@@ -86,7 +88,19 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
   @SuppressWarnings("unchecked")
   public T next()
   {
-    return (T)queueItr.next();
+    Object element = queueItr.next();
+
+    if (element instanceof Throwable)
+    {
+      if (element instanceof Error)
+      {
+        throw (Error)element;
+      }
+
+      throw WrappedException.wrap((Exception)element);
+    }
+
+    return (T)element;
   }
 
   public void remove()

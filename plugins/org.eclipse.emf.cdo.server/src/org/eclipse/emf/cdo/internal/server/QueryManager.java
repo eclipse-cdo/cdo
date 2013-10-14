@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -276,30 +277,47 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
         throw new IllegalStateException("Maximum number of results exceeded"); //$NON-NLS-1$
       }
 
-      queryResult.getQueue().add(object);
+      CDOQueryQueue<Object> queue = queryResult.getQueue();
+      queue.add(object);
+
       return !cancelled && --resultCount > 0;
     }
 
     public void run()
     {
+      CDOQueryQueue<Object> queue = queryResult.getQueue();
+
       InternalSession session = queryResult.getView().getSession();
       StoreThreadLocal.setSession(session);
 
       try
       {
         started = true;
+
         CDOQueryInfo info = queryResult.getQueryInfo();
         resultCount = info.getMaxResults() < 0 ? Integer.MAX_VALUE : info.getMaxResults();
         IQueryHandler handler = repository.getQueryHandler(info);
-        handler.executeQuery(info, this);
+
+        try
+        {
+          handler.executeQuery(info, this);
+        }
+        catch (Throwable executionException)
+        {
+          // int xxx;
+          // ConcurrencyUtil.sleep(2000);
+
+          addResult(executionException);
+          return;
+        }
       }
-      catch (Throwable exception)
+      catch (Throwable initializationException)
       {
-        queryResult.getQueue().setException(exception);
+        queue.setException(initializationException);
       }
       finally
       {
-        queryResult.getQueue().close();
+        queue.close();
         unregister(this);
         StoreThreadLocal.release();
       }

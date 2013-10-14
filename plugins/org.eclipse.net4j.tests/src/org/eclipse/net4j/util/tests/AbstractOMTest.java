@@ -143,6 +143,11 @@ public abstract class AbstractOMTest extends TestCase
     return null;
   }
 
+  protected boolean logSetUpAndTearDown()
+  {
+    return false;
+  }
+
   @Override
   public void setUp() throws Exception
   {
@@ -165,21 +170,36 @@ public abstract class AbstractOMTest extends TestCase
       IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
     }
 
+    if (!logSetUpAndTearDown())
+    {
+      disableConsole();
+    }
+
     super.setUp();
     doSetUp();
 
-    if (!SUPPRESS_OUTPUT)
+    if (!SUPPRESS_OUTPUT && logSetUpAndTearDown())
     {
       IOUtil.OUT().println();
       IOUtil.OUT().println("------------------------ START ------------------------"); //$NON-NLS-1$
     }
+
+    enableConsole();
   }
 
   @Override
   public void tearDown() throws Exception
   {
-    enableConsole();
-    if (!SUPPRESS_OUTPUT)
+    if (logSetUpAndTearDown())
+    {
+      enableConsole();
+    }
+    else
+    {
+      disableConsole();
+    }
+
+    if (!SUPPRESS_OUTPUT && logSetUpAndTearDown())
     {
       IOUtil.OUT().println("------------------------- END -------------------------"); //$NON-NLS-1$
       IOUtil.OUT().println();

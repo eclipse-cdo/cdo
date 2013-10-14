@@ -117,4 +117,12 @@ public class DataOutputExtender implements ExtendedDataOutput
   {
     ExtendedIOUtil.writeEnum(output, literal);
   }
+
+  /**
+   * @since 3.4
+   */
+  public void writeException(Throwable t) throws IOException
+  {
+    ExtendedIOUtil.writeException(output, t);
+  }
 }

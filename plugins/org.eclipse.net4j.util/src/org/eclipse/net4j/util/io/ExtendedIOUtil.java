@@ -11,11 +11,16 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
+import java.io.DataInputStream;
 import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
@@ -357,6 +362,71 @@ public final class ExtendedIOUtil
     }
 
     return literals[ordinal - Byte.MIN_VALUE - 1];
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static void writeException(DataOutput out, Throwable t) throws IOException
+  {
+    String message = StringUtil.formatException(t);
+    writeString(out, message);
+
+    byte[] bytes = ExtendedIOUtil.serializeThrowable(t);
+    writeByteArray(out, bytes);
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static Throwable readException(DataInput in) throws IOException
+  {
+    String message = readString(in);
+    byte[] bytes = readByteArray(in);
+
+    try
+    {
+      return ExtendedIOUtil.deserializeThrowable(bytes);
+    }
+    catch (Throwable couldNotLoadExceptionClass)
+    {
+      return new RuntimeException(message);
+    }
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static byte[] serializeThrowable(Throwable t)
+  {
+    try
+    {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DataOutputStream dos = new DataOutputStream(baos);
+      writeObject(dos, t);
+      return baos.toByteArray();
+    }
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static Throwable deserializeThrowable(byte[] bytes)
+  {
+    try
+    {
+      ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+      DataInputStream dis = new DataInputStream(bais);
+      return (Throwable)readObject(dis, OM.class.getClassLoader());
+    }
+    catch (IOException ex)
+    {
+      return null;
+    }
   }
 
   private static <T> T[] getEnumLiterals(Class<T> type)

@@ -56,7 +56,6 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     {
       if (!closed)
       {
-        closed = true;
         queue.add(QUEUE_CLOSED);
       }
     }
@@ -72,7 +71,8 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   public boolean add(E e)
   {
-    return queue.add(new QueueEntry<E>(e));
+    QueueEntry<E> entry = new QueueEntry<E>(e);
+    return queue.add(entry);
   }
 
   public void clear()
@@ -216,7 +216,17 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   private E checkObject(QueueEntry<E> entry)
   {
-    if (entry == null || entry == QUEUE_CLOSED)
+    if (entry == QUEUE_CLOSED)
+    {
+      synchronized (closeLock)
+      {
+        closed = true;
+      }
+
+      return null;
+    }
+
+    if (entry == null)
     {
       return null;
     }
@@ -261,7 +271,8 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       {
         throw WrappedException.wrap((Exception)exception);
       }
-      else if (exception instanceof Error)
+
+      if (exception instanceof Error)
       {
         throw (Error)exception;
       }
@@ -281,16 +292,6 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
     public int compareTo(QueueEntry<E> o)
     {
-      if (getException() != null)
-      {
-        return -1;
-      }
-
-      if (o.getException() != null)
-      {
-        return 1;
-      }
-
       if (this == o)
       {
         return 0;

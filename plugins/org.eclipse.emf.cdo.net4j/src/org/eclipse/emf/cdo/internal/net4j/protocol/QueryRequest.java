@@ -87,7 +87,7 @@ public class QueryRequest extends CDOClientRequest<Boolean>
         }
 
         resultQueue.add(element);
-        numberOfObjectsReceived++;
+        ++numberOfObjectsReceived;
       }
 
       if (TRACER.isEnabled())

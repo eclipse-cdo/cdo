@@ -28,7 +28,9 @@ public interface CDOProtocolConstants
   /**
    * @since 4.2
    */
-  public static final int PROTOCOL_VERSION = 16; // Last update for permission transfers
+  public static final int PROTOCOL_VERSION = 17; // Make query fail in sequence
+
+  // public static final int PROTOCOL_VERSION = 16; // Last update for permission transfers
 
   // //////////////////////////////////////////////////////////////////////
   // Signal IDs
@@ -282,6 +284,21 @@ public interface CDOProtocolConstants
 
   // //////////////////////////////////////////////////////////////////////
   // Query Support
+
+  /**
+   * @since 4.3
+   */
+  public static final byte QUERY_RESULT_EXCEPTION = 0;
+
+  /**
+   * @since 4.3
+   */
+  public static final byte QUERY_RESULT_PRIMITIVE = 1;
+
+  /**
+   * @since 4.3
+   */
+  public static final byte QUERY_RESULT_REVISION = 2;
 
   public static final String QUERY_LANGUAGE_RESOURCES = "resources"; //$NON-NLS-1$
 

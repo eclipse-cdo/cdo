@@ -256,6 +256,11 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
     return in().readEnum(type);
   }
 
+  public Throwable readException() throws IOException
+  {
+    return in().readException();
+  }
+
   public CDOPackageUnit readCDOPackageUnit(ResourceSet resourceSet) throws IOException
   {
     return in().readCDOPackageUnit(resourceSet);
@@ -491,6 +496,11 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
   public void writeEnum(Enum<?> literal) throws IOException
   {
     out().writeEnum(literal);
+  }
+
+  public void writeException(Throwable t) throws IOException
+  {
+    out().writeException(t);
   }
 
   public void writeCDOPackageUnit(CDOPackageUnit packageUnit, boolean withPackages) throws IOException

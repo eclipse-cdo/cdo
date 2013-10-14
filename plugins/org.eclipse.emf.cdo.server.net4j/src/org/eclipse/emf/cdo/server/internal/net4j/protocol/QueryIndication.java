@@ -68,12 +68,24 @@ public class QueryIndication extends CDOServerReadIndication
     flushUnlessDisabled();
 
     int numberOfResults = 0;
-    while (queryResult.hasNext())
+    for (;;)
     {
-      Object object = queryResult.next();
+      Object object;
 
-      // Object to return
-      numberOfResults++;
+      try
+      {
+        if (!queryResult.hasNext())
+        {
+          break;
+        }
+
+        object = queryResult.next();
+      }
+      catch (Throwable ex)
+      {
+        object = ex;
+      }
+
       out.writeBoolean(true);
 
       if (xrefs)
@@ -84,11 +96,29 @@ public class QueryIndication extends CDOServerReadIndication
       else
       {
         out.writeCDORevisionOrPrimitive(object);
+
+        if (object instanceof Throwable)
+        {
+          break;
+        }
       }
 
-      if (queryResult.peek() == null)
+      ++numberOfResults;
+
+      try
       {
-        flushUnlessDisabled();
+        if (queryResult.peek() == null)
+        {
+          flushUnlessDisabled();
+        }
+      }
+      catch (IOException ex)
+      {
+        throw ex;
+      }
+      catch (Throwable ex)
+      {
+        // Ignore execution exceptions from peek(); they're handle
       }
     }
 

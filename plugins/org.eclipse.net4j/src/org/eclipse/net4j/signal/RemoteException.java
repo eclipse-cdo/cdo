@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.signal;
 
+
 /**
  * An exception that wraps an exception that has been thrown during the execution of a remote {@link SignalReactor signal}.
  *

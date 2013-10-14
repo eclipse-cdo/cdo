@@ -504,6 +504,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
 
   public void writeCDORevisionOrPrimitive(Object value) throws IOException
   {
+    // Value conversions
     if (value == null)
     {
       value = CDOID.NULL;
@@ -517,10 +518,15 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       value = ((CDORevision)value).getID();
     }
 
+    // Type determination
     CDOType type = null;
     if (value instanceof CDOID)
     {
       type = CDOType.OBJECT;
+    }
+    else if (value instanceof Throwable)
+    {
+      type = CDOType.EXCEPTION;
     }
     else
     {

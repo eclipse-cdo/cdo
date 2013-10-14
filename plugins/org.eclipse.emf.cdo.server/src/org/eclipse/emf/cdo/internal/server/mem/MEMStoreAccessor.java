@@ -71,6 +71,15 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
       List<Object> filters = new ArrayList<Object>();
       Object context = info.getParameters().get("context"); //$NON-NLS-1$
       Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
+      Integer integers = (Integer)info.getParameters().get("integers"); //$NON-NLS-1$
+      Integer error = (Integer)info.getParameters().get("error"); //$NON-NLS-1$
+
+      if (integers != null)
+      {
+        executeQuery(integers, error, queryContext);
+        return;
+      }
+
       if (context != null)
       {
         if (context instanceof EClass)
@@ -94,6 +103,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
         }
       }
 
+      int i = 0;
       for (InternalCDORevision revision : getStore().getCurrentRevisions())
       {
         if (sleep != null)
@@ -108,19 +118,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
           }
         }
 
-        boolean valid = true;
-
-        for (Object filter : filters)
+        if (isValid(revision, filters))
         {
-          if (!filter.equals(revision))
-          {
-            valid = false;
-            break;
-          }
-        }
+          throwExceptionAt(error, ++i);
 
-        if (valid)
-        {
           if (!queryContext.addResult(revision))
           {
             // No more results allowed
@@ -128,6 +129,41 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
           }
         }
       }
+    }
+
+    private void throwExceptionAt(Integer error, int i)
+    {
+      if (error != null && i == error)
+      {
+        throw new RuntimeException("Simulated problem in query execution at result " + i);
+      }
+    }
+
+    private void executeQuery(int integers, Integer error, IQueryContext queryContext)
+    {
+      for (int i = 1; i <= integers; ++i)
+      {
+        throwExceptionAt(error, i);
+
+        if (!queryContext.addResult(i))
+        {
+          // No more results allowed
+          break;
+        }
+      }
+    }
+
+    private boolean isValid(InternalCDORevision revision, List<Object> filters)
+    {
+      for (Object filter : filters)
+      {
+        if (!filter.equals(revision))
+        {
+          return false;
+        }
+      }
+
+      return true;
     }
   };
 

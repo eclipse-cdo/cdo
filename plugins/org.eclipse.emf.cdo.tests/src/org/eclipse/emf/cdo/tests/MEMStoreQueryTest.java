@@ -35,7 +35,7 @@ import java.util.Set;
 @Requires("MEM")
 public class MEMStoreQueryTest extends AbstractCDOTest
 {
-  public void testMEMStoreBasicQuery() throws Exception
+  public void testBasicQuery() throws Exception
   {
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
@@ -69,7 +69,41 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testMEMStoreBasicQuery_EClassParameter() throws Exception
+  public void testQueryException() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    query.setParameter("error", 5000);
+    query.setParameter("integers", 10000);
+
+    CloseableIterator<Object> it = query.getResultAsync(Object.class);
+    int i = 0;
+
+    for (;;)
+    {
+      ++i;
+
+      try
+      {
+        if (!it.hasNext())
+        {
+          break;
+        }
+      }
+      catch (Exception expected)
+      {
+        expected.printStackTrace();
+        break;
+      }
+
+      it.next();
+    }
+
+    assertEquals("Query should have stopped at the 5000th result", 5000, i);
+  }
+
+  public void testBasicQuery_EClassParameter() throws Exception
   {
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
@@ -102,7 +136,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testMEMStoreQueryCancel_successful() throws Exception
+  public void testQueryCancel_successful() throws Exception
   {
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
@@ -124,7 +158,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testMEMStoreQueryCancel_ViewClose() throws Exception
+  public void testQueryCancel_ViewClose() throws Exception
   {
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
@@ -144,7 +178,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testMEMStoreQueryCancel_SessionClose() throws Exception
+  public void testQueryCancel_SessionClose() throws Exception
   {
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
@@ -162,7 +196,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     }.assertNoTimeOut();
   }
 
-  public void testMEMStoreQueryAsync_UnsupportedLanguage() throws Exception
+  public void testQueryAsync_UnsupportedLanguage() throws Exception
   {
     CDOTransaction transaction = initialize(100);
     CDOQuery query = transaction.createQuery("TESTss", "QUERYSTRING");
@@ -178,7 +212,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     }
   }
 
-  public void testMEMStoreQuerySync_UnsupportedLanguage() throws Exception
+  public void testQuerySync_UnsupportedLanguage() throws Exception
   {
     CDOTransaction transaction = initialize(100);
     CDOQuery query = transaction.createQuery("TESTss", "QUERYSTRING");

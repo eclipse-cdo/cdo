@@ -137,6 +137,11 @@ public interface CDOType
    */
   public static final CDOType FEATURE_MAP_ENTRY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.FEATURE_MAP_ENTRY;
 
+  /**
+   * @since 4.3
+   */
+  public static final CDOType EXCEPTION = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.EXCEPTION;
+
   public String getName();
 
   /**

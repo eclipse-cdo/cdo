@@ -16,10 +16,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-
 /**
  * @author Eike Stepper
  */
@@ -48,7 +44,7 @@ class RemoteExceptionIndication extends Indication
 
     try
     {
-      t = deserializeThrowable(in.readByteArray());
+      t = ExtendedIOUtil.deserializeThrowable(in.readByteArray());
     }
     catch (Throwable couldNotLoadExceptionClass)
     {
@@ -64,20 +60,6 @@ class RemoteExceptionIndication extends Indication
     if (protocol != null)
     {
       protocol.handleRemoteException(correlationID, t, responding);
-    }
-  }
-
-  public static Throwable deserializeThrowable(byte[] bytes)
-  {
-    try
-    {
-      ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-      DataInputStream dis = new DataInputStream(bais);
-      return (Throwable)ExtendedIOUtil.readObject(dis, OM.class.getClassLoader());
-    }
-    catch (IOException ex)
-    {
-      return null;
     }
   }
 }

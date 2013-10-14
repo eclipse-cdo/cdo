@@ -16,15 +16,12 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
 /**
  * @author Eike Stepper
  */
 class RemoteExceptionRequest extends Request
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RemoteExceptionRequest.class);
+  public static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RemoteExceptionRequest.class);
 
   private int correlationID;
 
@@ -56,25 +53,10 @@ class RemoteExceptionRequest extends Request
     out.writeInt(correlationID);
     out.writeBoolean(responding);
     out.writeString(message);
-    out.writeByteArray(serializeThrowable(t));
+    out.writeByteArray(ExtendedIOUtil.serializeThrowable(t));
   }
 
-  public static byte[] serializeThrowable(Throwable t)
-  {
-    try
-    {
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      DataOutputStream dos = new DataOutputStream(baos);
-      ExtendedIOUtil.writeObject(dos, t);
-      return baos.toByteArray();
-    }
-    catch (Exception ex)
-    {
-      return null;
-    }
-  }
-
-  public static String getFirstLine(String message)
+  static String getFirstLine(String message)
   {
     if (message == null)
     {

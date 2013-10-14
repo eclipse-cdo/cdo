@@ -19,6 +19,8 @@ import java.io.InputStream;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ExtendedDataInput extends DataInput
 {
@@ -36,6 +38,11 @@ public interface ExtendedDataInput extends DataInput
    * @since 3.0
    */
   public <T extends Enum<?>> T readEnum(Class<T> type) throws IOException;
+
+  /**
+   * @since 3.4
+   */
+  public Throwable readException() throws IOException;
 
   /**
    * @author Eike Stepper
@@ -141,6 +148,14 @@ public interface ExtendedDataInput extends DataInput
     public <T extends Enum<?>> T readEnum(Class<T> type) throws IOException
     {
       return delegate.readEnum(type);
+    }
+
+    /**
+     * @since 3.4
+     */
+    public Throwable readException() throws IOException
+    {
+      return delegate.readException();
     }
 
     public int readUnsignedByte() throws IOException

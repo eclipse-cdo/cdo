@@ -523,6 +523,11 @@ public final class CDOModelUtil implements CDOModelConstants
       return CDOType.FEATURE_MAP_ENTRY;
     }
 
+    if (object instanceof Throwable)
+    {
+      return CDOType.EXCEPTION;
+    }
+
     throw new IllegalArgumentException("Object type " + objectClass.getName() + " is not supported.");
   }
 

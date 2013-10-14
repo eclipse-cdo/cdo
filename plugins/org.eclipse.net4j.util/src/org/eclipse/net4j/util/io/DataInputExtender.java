@@ -130,6 +130,14 @@ public class DataInputExtender implements ExtendedDataInput
     return ExtendedIOUtil.readEnum(input, type);
   }
 
+  /**
+   * @since 3.4
+   */
+  public Throwable readException() throws IOException
+  {
+    return ExtendedIOUtil.readException(input);
+  }
+
   public int skipBytes(int n) throws IOException
   {
     return input.skipBytes(n);

@@ -140,6 +140,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/protocol/CDODataInput.java" type="org.eclipse.emf.cdo.common.protocol.CDODataInput">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ExtendedDataInput"/>
+                <message_argument value="CDODataInput"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/protocol/CDODataOutput.java" type="org.eclipse.emf.cdo.common.protocol.CDODataOutput">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ExtendedDataOutput"/>
+                <message_argument value="CDODataOutput"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.java" type="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants">
         <filter id="388194388">
             <message_arguments>

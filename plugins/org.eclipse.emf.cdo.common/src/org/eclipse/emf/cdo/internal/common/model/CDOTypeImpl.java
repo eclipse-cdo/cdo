@@ -880,6 +880,21 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
+  public static final CDOType EXCEPTION = new ObjectType("EXCEPTION", -9) //$NON-NLS-1$
+  {
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      out.writeException((Throwable)value);
+    }
+
+    @Override
+    protected Throwable doReadValue(CDODataInput in) throws IOException
+    {
+      return in.readException();
+    }
+  };
+
   private String name;
 
   private byte typeID;

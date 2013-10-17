@@ -122,14 +122,18 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     }
   }
 
-  @Override
-  public void dispose()
+  /**
+   * @since 3.4
+   */
+  public void clearNodesCache()
   {
-    super.dispose();
+    disposeRoot();
+
+    CONTAINER input = getInput();
+    initRoot(input);
   }
 
-  @Override
-  protected void connectInput(CONTAINER input)
+  private void initRoot(CONTAINER input)
   {
     root = createNode(null, input);
     if (root != null)
@@ -138,12 +142,23 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     }
   }
 
+  private void disposeRoot()
+  {
+    root.dispose(); // Also disposes of all children
+    root = null;
+    nodes.clear();
+  }
+
+  @Override
+  protected void connectInput(CONTAINER input)
+  {
+    initRoot(input);
+  }
+
   @Override
   protected void disconnectInput(CONTAINER input)
   {
-    root.dispose();
-    root = null;
-    nodes.clear();
+    disposeRoot();
   }
 
   /**
@@ -620,8 +635,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       if (!isDisposed())
       {
         container.removeListener(containerListener);
-        container = null;
         super.dispose();
+        container = null;
       }
     }
 

@@ -463,6 +463,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
    */
   protected void refreshPressed()
   {
+    itemProvider.clearNodesCache();
     UIUtil.refreshViewer(viewer);
   }
 

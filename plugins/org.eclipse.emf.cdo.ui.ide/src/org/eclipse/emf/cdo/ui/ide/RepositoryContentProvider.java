@@ -15,11 +15,12 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveResourceActionDelegate;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
@@ -493,8 +494,8 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       if (selection instanceof CDOResource)
       {
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        CDOTransaction transaction = ((CDOResource)selection).cdoView().getSession().openTransaction();
-        new CDOTransactionCommentator(transaction);
+        CDOSession session = ((CDOResource)selection).cdoView().getSession();
+        CDOTransaction transaction = OpenTransactionAction.openTransaction(session);
 
         try
         {

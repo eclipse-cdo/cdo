@@ -347,7 +347,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     setPath(newPath);
   }
 
-
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -355,7 +354,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     {
     case EresourcePackage.CDO_RESOURCE__URI:
       return getURI();
-      
+
     default:
       return super.eGet(featureID, resolve, coreType);
     }
@@ -369,7 +368,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     case EresourcePackage.CDO_RESOURCE__URI:
       setURI((URI)newValue);
       break;
-      
+
     default:
       super.eSet(featureID, newValue);
     }
@@ -1085,17 +1084,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         }
       }
 
-      String query = initialURI.query();
-      if (query != null && query.length() != 0)
+      if (initialURI != null)
       {
-        Map<String, String> parameters = CDOURIUtil.getParameters(query);
-        String value = parameters.get(CDOResource.PREFETCH_PARAMETER);
-        if (value != null)
+        String query = initialURI.query();
+        if (query != null && query.length() != 0)
         {
-          boolean prefetch = Boolean.parseBoolean(value);
-          if (prefetch)
+          Map<String, String> parameters = CDOURIUtil.getParameters(query);
+          String value = parameters.get(CDOResource.PREFETCH_PARAMETER);
+          if (value != null)
           {
-            cdoPrefetch(CDORevision.DEPTH_INFINITE);
+            boolean prefetch = Boolean.parseBoolean(value);
+            if (prefetch)
+            {
+              cdoPrefetch(CDORevision.DEPTH_INFINITE);
+            }
           }
         }
       }

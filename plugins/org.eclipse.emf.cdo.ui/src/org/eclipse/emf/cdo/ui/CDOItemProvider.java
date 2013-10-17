@@ -678,9 +678,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     super.elementAdded(element, parent);
 
+    // TODO Remove listeners?
+
     if (element instanceof CDOSession)
     {
-      ((CDOSession)element).addListener(new IListener()
+      CDOSession session = (CDOSession)element;
+      session.addListener(new IListener()
       {
         public void notifyEvent(IEvent event)
         {
@@ -694,7 +697,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOView)
     {
-      ((CDOView)element).addListener(new IListener()
+      final CDOView view = (CDOView)element;
+      view.addListener(new IListener()
       {
         public void notifyEvent(IEvent event)
         {

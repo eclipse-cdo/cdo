@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.transfer.RepositoryTransferDragListener;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transfer.ui.TransferDropAdapter;
@@ -100,7 +101,7 @@ public class CDOSessionsView extends ContainerView
       CDOSession session = (CDOSession)object;
       if (session.getViews().length == 0)
       {
-        session.openTransaction();
+        OpenTransactionAction.openTransaction(session);
         return;
       }
     }

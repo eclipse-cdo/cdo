@@ -15,9 +15,9 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
@@ -132,7 +132,7 @@ public class CDOHistoryPage extends HistoryPage
           }
 
           transaction = session.openTransaction(branch);
-          new CDOTransactionCommentator(transaction);
+          OpenTransactionAction.configureTransaction(transaction);
 
           CDOResourceFolder folder = transaction.getOrCreateResourceFolder("test");
           folder.addResource("resource-" + folder.getNodes().size());

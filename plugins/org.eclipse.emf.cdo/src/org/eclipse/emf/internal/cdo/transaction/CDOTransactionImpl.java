@@ -789,15 +789,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     conflict -= resolved;
-    if (conflict == 0)
-    {
-      setDirty(false);
-    }
-    else
-    {
-      Map<CDOID, CDOObject> dirtyObjects = getLastSavepoint().getDirtyObjects();
-      setDirty(!dirtyObjects.isEmpty());
-    }
+
+    Map<CDOID, CDOObject> dirtyObjects = getLastSavepoint().getDirtyObjects();
+    setDirty(!dirtyObjects.isEmpty());
   }
 
   /**

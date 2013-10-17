@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -28,6 +29,10 @@ import org.eclipse.ui.IWorkbenchPage;
 public class OpenSessionDialog extends TitleAreaDialog
 {
   public static final String TITLE = Messages.getString("OpenSessionDialog.0"); //$NON-NLS-1$
+
+  private static final int WIDTH = 380;
+
+  private static final int HEIGHT = 240;
 
   private IWorkbenchPage page;
 
@@ -55,7 +60,11 @@ public class OpenSessionDialog extends TitleAreaDialog
   {
     super.configureShell(newShell);
     newShell.setText(TITLE);
-    newShell.setSize(380, 240);
+
+    Rectangle bounds = page.getWorkbenchWindow().getShell().getBounds();
+    int x = bounds.x + (bounds.width - WIDTH) / 2;
+    int y = bounds.y + (bounds.height - HEIGHT) / 2;
+    newShell.setBounds(x, y, WIDTH, HEIGHT);
   }
 
   @Override

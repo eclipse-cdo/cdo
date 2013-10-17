@@ -58,6 +58,7 @@ import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -75,6 +76,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
@@ -111,6 +113,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.Platform;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -331,6 +334,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     rootResource = resource;
     rootResource.setRoot(true);
     registerObject(rootResource);
+
+    try
+    {
+      rootResource.load(null);
+    }
+    catch (IOException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public synchronized boolean isEmpty()
@@ -365,7 +377,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return elements.toArray(new CDOResourceNode[elements.size()]);
   }
 
-  private void ensureContainerAdapter(CDOResource rootResource)
+  private void ensureContainerAdapter(final CDOResource rootResource)
   {
     EList<Adapter> adapters = rootResource.eAdapters();
     ContainerAdapter adapter = getContainerAdapter(adapters);
@@ -373,6 +385,14 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       adapter = new ContainerAdapter();
       adapters.add(adapter);
+
+      options().addChangeSubscriptionPolicy(new CDOAdapterPolicy()
+      {
+        public boolean isValid(EObject eObject, Adapter adapter)
+        {
+          return eObject == rootResource;
+        }
+      });
     }
   }
 
@@ -1984,10 +2004,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         break;
 
       case Notification.REMOVE_MANY:
-        // TODO
-        break;
-
-      case Notification.SET:
         // TODO
         break;
 

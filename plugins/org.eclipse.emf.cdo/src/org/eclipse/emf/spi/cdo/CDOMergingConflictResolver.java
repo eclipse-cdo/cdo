@@ -120,30 +120,15 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
       InternalCDOObject object = (InternalCDOObject)transaction.getObject(id, false);
       if (object != null)
       {
-        // Compute new version
-        InternalCDORevision localRevision = object.cdoRevision();
-        int newVersion = localRevision.getVersion() + 1;
-
-        // Compute new local revision
-        InternalCDORevision cleanRevision = cleanRevisions.get(object);
-        if (cleanRevision == null)
-        {
-          // In this case the object revision *is clean*
-          cleanRevision = object.cdoRevision();
-        }
-
-        InternalCDORevision newLocalRevision = cleanRevision.copy();
-        newLocalRevision.setVersion(newVersion);
-        resultDelta.apply(newLocalRevision);
+        int newVersion = computeNewVersion(object);
+        InternalCDORevision cleanRevision = computeOldCleanRevision(object, cleanRevisions);
+        InternalCDORevision newLocalRevision = computeNewLocalRevision(resultDelta, newVersion, cleanRevision);
 
         // Adjust local object
         object.cdoInternalSetRevision(newLocalRevision);
 
-        // Compute new clean revision
-        CDORevisionDelta remoteDelta = remoteDeltas.get(id);
-        final InternalCDORevision newCleanRevision = cleanRevision.copy();
-        newCleanRevision.setVersion(newVersion);
-        remoteDelta.apply(newCleanRevision);
+        final InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion,
+            cleanRevision);
 
         // Compute new local delta
         InternalCDORevisionDelta newLocalDelta = newLocalRevision.compare(newCleanRevision);
@@ -223,6 +208,49 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
         }
       }
     }
+  }
+
+  private int computeNewVersion(InternalCDOObject object)
+  {
+    InternalCDORevision localRevision = object.cdoRevision();
+    int newVersion = localRevision.getVersion() + 1;
+    return newVersion;
+  }
+
+  private InternalCDORevision computeOldCleanRevision(InternalCDOObject object,
+      Map<InternalCDOObject, InternalCDORevision> cleanRevisions)
+  {
+    InternalCDORevision cleanRevision = cleanRevisions.get(object);
+    if (cleanRevision == null)
+    {
+      // In this case the object revision *is clean*
+      cleanRevision = object.cdoRevision();
+    }
+    return cleanRevision;
+  }
+
+  private InternalCDORevision computeNewLocalRevision(InternalCDORevisionDelta resultDelta, int newVersion,
+      InternalCDORevision cleanRevision)
+  {
+    InternalCDORevision newLocalRevision = cleanRevision.copy();
+    newLocalRevision.setVersion(newVersion);
+    resultDelta.apply(newLocalRevision);
+    return newLocalRevision;
+  }
+
+  private InternalCDORevision computeNewCleanRevision(Map<CDOID, CDORevisionDelta> remoteDeltas, CDOID id,
+      int newVersion, InternalCDORevision cleanRevision)
+  {
+    CDORevisionDelta remoteDelta = remoteDeltas.get(id);
+    if (remoteDelta != null)
+    {
+      InternalCDORevision newCleanRevision = cleanRevision.copy();
+      newCleanRevision.setVersion(newVersion);
+      remoteDelta.apply(newCleanRevision);
+      return newCleanRevision;
+    }
+
+    return cleanRevision;
   }
 
   private Map<CDOID, CDORevisionDelta> getRemoteDeltas(CDOChangeSet remoteChangeSet)

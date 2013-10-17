@@ -367,6 +367,6 @@ public class StubCDORevision extends AbstractCDORevision
 
   private String getExceptionMessage()
   {
-    return "Unsupported operation in " + this;
+    return "Unsupported operation in " + getClass().getSimpleName();
   }
 }

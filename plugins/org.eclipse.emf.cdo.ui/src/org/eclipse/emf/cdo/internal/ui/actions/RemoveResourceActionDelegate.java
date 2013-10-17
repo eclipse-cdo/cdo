@@ -15,10 +15,10 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -78,12 +78,12 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
           Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<Integer, CDOTransaction>();
           for (CDOResourceNode node : nodes)
           {
-            int sessionID = node.cdoView().getSession().getSessionID();
+            CDOSession session = node.cdoView().getSession();
+            int sessionID = session.getSessionID();
             CDOTransaction transaction = repositoryToTransaction.get(sessionID);
             if (transaction == null)
             {
-              transaction = node.cdoView().getSession().openTransaction();
-              new CDOTransactionCommentator(transaction);
+              transaction = OpenTransactionAction.openTransaction(session);
               repositoryToTransaction.put(sessionID, transaction);
             }
 

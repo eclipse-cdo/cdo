@@ -1020,9 +1020,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           newRevision = (InternalCDORevision)cache.getRevisionByVersion(newKey.getID(), newKey);
         }
 
+        object.cdoInternalSetRevision(newRevision);
         if (newRevision != null)
         {
-          object.cdoInternalSetRevision(newRevision);
           changeState(object, CDOState.CLEAN);
           object.cdoInternalPostLoad();
         }
@@ -1032,6 +1032,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
           CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
           policy.handleInvalidation(object, key);
+
           object.cdoInternalPostInvalidate();
         }
       }

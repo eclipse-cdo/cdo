@@ -12,9 +12,9 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -104,8 +104,8 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
    */
   protected CDOObject preRun(CDOObject object)
   {
-    CDOTransaction transaction = object.cdoView().getSession().openTransaction();
-    new CDOTransactionCommentator(transaction);
+    CDOSession session = object.cdoView().getSession();
+    CDOTransaction transaction = OpenTransactionAction.openTransaction(session);
 
     CDOObject transactionalObject = transaction.getObject(object);
     return transactionalObject;

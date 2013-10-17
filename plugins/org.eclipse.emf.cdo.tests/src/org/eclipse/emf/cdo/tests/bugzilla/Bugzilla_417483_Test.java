@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDODeltaNotification;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.security.Access;
@@ -395,6 +397,8 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
   private boolean isWritable(EObject object)
   {
-    return CDOUtil.getCDOObject(object).cdoRevision().isWritable();
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    CDORevision revision = cdoObject.cdoRevision(true);
+    return revision.isWritable();
   }
 }

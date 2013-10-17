@@ -167,12 +167,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    */
   public final InternalCDORevision cdoRevision(boolean loadOnDemand)
   {
-    if (loadOnDemand)
+    InternalCDORevision revision = cdoRevision();
+    if (revision == null && loadOnDemand)
     {
-      CDOStateMachine.INSTANCE.read(this);
+      revision = CDOStateMachine.INSTANCE.read(this);
     }
 
-    return cdoRevision();
+    return revision;
   }
 
   /**

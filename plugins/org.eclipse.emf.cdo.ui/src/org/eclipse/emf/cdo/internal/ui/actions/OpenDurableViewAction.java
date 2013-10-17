@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.OpenDurableViewDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -59,7 +58,7 @@ public final class OpenDurableViewAction extends AbstractOpenViewAction
     {
       CDOSession session = getSession();
       CDOTransaction transaction = session.openTransaction(areaID);
-      new CDOTransactionCommentator(transaction);
+      OpenTransactionAction.configureTransaction(transaction);
     }
     catch (IllegalStateException ex)
     {

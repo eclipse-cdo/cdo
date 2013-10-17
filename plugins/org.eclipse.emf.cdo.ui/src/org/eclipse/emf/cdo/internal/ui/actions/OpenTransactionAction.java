@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -37,10 +39,20 @@ public final class OpenTransactionAction extends AbstractOpenViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    CDOTransaction transaction = getSession().openTransaction();
-    new CDOTransactionCommentator(transaction);
+    CDOSession session = getSession();
+    openTransaction(session);
+  }
 
-    // CDOTransaction transaction = getSession().openTransaction();
-    // transaction.options().getConflictResolvers().add(new CDOObjectConflictResolver.MergeLocalChangesPerFeature());
+  public static CDOTransaction openTransaction(CDOSession session)
+  {
+    CDOTransaction transaction = session.openTransaction();
+    configureTransaction(transaction);
+    return transaction;
+  }
+
+  public static void configureTransaction(CDOTransaction transaction)
+  {
+    transaction.options().addConflictResolver(new CDOMergingConflictResolver());
+    new CDOTransactionCommentator(transaction);
   }
 }

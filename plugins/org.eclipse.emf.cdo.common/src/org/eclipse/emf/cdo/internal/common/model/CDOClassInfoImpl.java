@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -410,6 +411,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     {
       return null;
     }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("RevisionWithoutID[{0}]", getClassInfo());
+    }
   }
 
   /**
@@ -451,6 +458,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     public InternalCDORevision getProperRevision()
     {
       return null;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("RevisionWithoutID[{0}, {1}]", getClassInfo(), id);
     }
   }
 }

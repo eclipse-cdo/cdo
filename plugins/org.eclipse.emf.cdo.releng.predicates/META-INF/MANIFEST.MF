@@ -13,6 +13,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.egit.core;bundle-version="[3.0.1,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.releng.predicates,
- org.eclipse.emf.cdo.releng.predicates.impl,
- org.eclipse.emf.cdo.releng.predicates.util
+Export-Package: org.eclipse.emf.cdo.releng.predicates;version="1.0.200",
+ org.eclipse.emf.cdo.releng.predicates.impl;version="1.0.200",
+ org.eclipse.emf.cdo.releng.predicates.util;version="1.0.200"

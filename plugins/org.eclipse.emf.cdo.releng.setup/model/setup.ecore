@@ -1,49 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="setup" nsURI="http://www.eclipse.org/CDO/releng/setup/1.0" nsPrefix="setup">
-  <eClassifiers xsi:type="ecore:EClass" name="Preferences" eSuperTypes="#//ToolInstallation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="installFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gitPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkLocations" upperBound="-1"
-        eType="#//LinkLocation" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LinkLocation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ToolInstallation" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="directorCalls" upperBound="-1"
-        eType="#//DirectorCall" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="toolPreferences" upperBound="-1"
-        eType="#//ToolPreference" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ToolPreference">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EclipseVersion">
+  <eClassifiers xsi:type="ecore:EClass" name="EclipseVersion" eSuperTypes="#//ConfigurableItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
         eOpposite="#//Configuration/eclipseVersions"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="directorCall" lowerBound="1"
-        eType="#//DirectorCall" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DirectorCall">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="installableUnits" lowerBound="1"
-        upperBound="-1" eType="#//InstallableUnit" containment="true" eOpposite="#//InstallableUnit/directorCall"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Repositories" lowerBound="1"
-        upperBound="-1" eType="#//P2Repository" containment="true" eOpposite="#//P2Repository/directorCall"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InstallableUnit">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="directorCall" eType="#//DirectorCall"
-        eOpposite="#//DirectorCall/installableUnits"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="P2Repository">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="directorCall" eType="#//DirectorCall"
-        eOpposite="#//DirectorCall/p2Repositories"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" lowerBound="1"
@@ -51,55 +12,143 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
         upperBound="-1" eType="#//EclipseVersion" containment="true" eOpposite="#//EclipseVersion/configuration"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ToolInstallation">
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//SetupTaskContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
-        eOpposite="#//Configuration/projects"/>
+        transient="true" eOpposite="#//Configuration/projects"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="branches" lowerBound="1"
         upperBound="-1" eType="#//Branch" containment="true" eOpposite="#//Branch/project"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="apiBaselines" upperBound="-1"
-        eType="#//ApiBaseline" containment="true" eOpposite="#//ApiBaseline/project"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="workingSetGroup" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.ecore#//WorkingSetGroup"
-        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Branch" eSuperTypes="#//ToolInstallation">
-    <eOperations name="isInstalled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="installFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eOperations>
-    <eOperations name="getURI" eType="#//URI">
-      <eParameters name="installFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eOperations>
+  <eClassifiers xsi:type="ecore:EClass" name="Branch" eSuperTypes="#//ConfigurableItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="project" eType="#//Project"
         eOpposite="#//Project/branches"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="gitClones" lowerBound="1"
-        upperBound="-1" eType="#//GitClone" containment="true" eOpposite="#//GitClone/branch"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="apiBaseline" eType="#//ApiBaseline"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mspecFilePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cloneVariableName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ApiBaseline">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="project" eType="#//Project"
-        eOpposite="#//Project/apiBaselines"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zipLocation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GitClone">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="branch" eType="#//Branch"
-        eOpposite="#//Branch/gitClones"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checkoutBranch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Preferences" eSuperTypes="#//SetupTaskContainer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="installFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gitPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Setup">
+    <eOperations name="getSetupTasks" upperBound="-1" eType="#//SetupTask">
+      <eParameters name="filterRestrictions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="trigger" eType="#//Trigger"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="branch" lowerBound="1"
         eType="#//Branch"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersion" lowerBound="1"
         eType="#//EclipseVersion"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="preferences" eType="#//Preferences"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preferences" lowerBound="1"
+        eType="#//Preferences"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetupTask" abstract="true">
+    <eOperations name="requires" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="setupTask" eType="#//SetupTask"/>
+    </eOperations>
+    <eOperations name="getValidTriggers" lowerBound="1" eType="#//TriggerSet"/>
+    <eOperations name="getTriggers" lowerBound="1" eType="#//TriggerSet"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requirements" upperBound="-1"
+        eType="#//SetupTask"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="restrictions" upperBound="-1"
+        eType="#//ConfigurableItem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="#//SetupTaskScope"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="excludedTriggers" lowerBound="1"
+        eType="#//TriggerSet" defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetupTaskContainer" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="setupTasks" upperBound="-1"
+        eType="#//SetupTask" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompoundSetupTask" eSuperTypes="#//SetupTask #//SetupTaskContainer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OneTimeSetupTask" abstract="true" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EclipseIniTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="option" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LinkLocationTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="P2Task" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Repositories" lowerBound="1"
+        upperBound="-1" eType="#//P2Repository" containment="true" eOpposite="#//P2Repository/p2Task"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="installableUnits" lowerBound="1"
+        upperBound="-1" eType="#//InstallableUnit" containment="true" eOpposite="#//InstallableUnit/p2Task"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InstallableUnit">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Task" eType="#//P2Task"
+        eOpposite="#//P2Task/installableUnits"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="P2Repository">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Task" eType="#//P2Task"
+        eOpposite="#//P2Task/p2Repositories"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BuckminsterImportTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mspec" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetPlatform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundlePool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ApiBaselineTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zipLocation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GitCloneTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="origin"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checkoutBranch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EclipsePreferenceTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringVariableTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WorkingSetTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="workingSets" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.ecore#//WorkingSet"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="updateLocations" upperBound="-1"
-        eType="#//P2Repository" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
+    <eLiterals name="None"/>
+    <eLiterals name="Configuration" value="1"/>
+    <eLiterals name="Project" value="2"/>
+    <eLiterals name="Branch" value="3"/>
+    <eLiterals name="User" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Exception" instanceClassName="java.lang.Exception"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceCopyTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextModifyTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modifications" upperBound="-1"
+        eType="#//TextModification" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextModification">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="substitutions" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TriggerSet" instanceTypeName="java.util.Set&lt;org.eclipse.emf.cdo.releng.setup.Trigger>"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="Trigger">
+    <eLiterals name="BOOTSTRAP"/>
+    <eLiterals name="STARTUP" value="1"/>
+    <eLiterals name="MANUAL" value="2"/>
+  </eClassifiers>
 </ecore:EPackage>

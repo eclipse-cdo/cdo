@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Setup#getBranch <em>Branch</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Setup#getEclipseVersion <em>Eclipse Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Setup#getPreferences <em>Preferences</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Setup#getUpdateLocations <em>Update Locations</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,45 +86,37 @@ public interface Setup extends EObject
   void setEclipseVersion(EclipseVersion value);
 
   /**
-   * Returns the value of the '<em><b>Preferences</b></em>' containment reference.
+   * Returns the value of the '<em><b>Preferences</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Preferences</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Preferences</em>' containment reference.
+   * @return the value of the '<em>Preferences</em>' reference.
    * @see #setPreferences(Preferences)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetup_Preferences()
-   * @model containment="true"
+   * @model required="true"
    * @generated
    */
   Preferences getPreferences();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Setup#getPreferences <em>Preferences</em>}' containment reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Setup#getPreferences <em>Preferences</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Preferences</em>' containment reference.
+   * @param value the new value of the '<em>Preferences</em>' reference.
    * @see #getPreferences()
    * @generated
    */
   void setPreferences(Preferences value);
 
   /**
-   * Returns the value of the '<em><b>Update Locations</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Update Locations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Update Locations</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetup_UpdateLocations()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  EList<P2Repository> getUpdateLocations();
+  EList<SetupTask> getSetupTasks(boolean filterRestrictions, Trigger trigger);
 
 } // Workspace

@@ -47,7 +47,7 @@
    <includes id="org.eclipse.emf.cdo.releng.projectcopy" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.releng.relativepaths" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.releng.setup.editor" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.setup.ide" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.releng.setup" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.releng.setup.product" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.releng.version" version="0.0.0"/>

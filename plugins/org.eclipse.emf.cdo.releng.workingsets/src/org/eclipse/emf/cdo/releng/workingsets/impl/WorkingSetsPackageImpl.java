@@ -10,22 +10,18 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
-import org.eclipse.emf.cdo.releng.workingsets.NamePredicate;
-import org.eclipse.emf.cdo.releng.workingsets.Predicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -48,20 +44,6 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
    * @generated
    */
   private EClass workingSetGroupEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass predicateEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass namePredicateEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -120,6 +102,9 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
     isInited = true;
 
+    // Initialize simple dependencies
+    PredicatesPackage.eINSTANCE.eClass();
+
     // Create package meta-data objects
     theWorkingSetsPackage.createPackageContents();
 
@@ -151,7 +136,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
    */
   public EReference getWorkingSet_Predicates()
   {
-    return (EReference)workingSetEClass.getEStructuralFeatures().get(0);
+    return (EReference)workingSetEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -159,9 +144,19 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getWorkingSet_Id()
+  {
+    return (EAttribute)workingSetEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EAttribute getWorkingSet_Name()
   {
-    return (EAttribute)workingSetEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)workingSetEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -182,46 +177,6 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   public EReference getWorkingSetGroup_WorkingSets()
   {
     return (EReference)workingSetGroupEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getPredicate()
-  {
-    return predicateEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPredicate__Matches__IProject()
-  {
-    return predicateEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getNamePredicate()
-  {
-    return namePredicateEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getNamePredicate_Pattern()
-  {
-    return (EAttribute)namePredicateEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -266,17 +221,12 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
     // Create classes and their features
     workingSetEClass = createEClass(WORKING_SET);
-    createEReference(workingSetEClass, WORKING_SET__PREDICATES);
     createEAttribute(workingSetEClass, WORKING_SET__NAME);
+    createEReference(workingSetEClass, WORKING_SET__PREDICATES);
+    createEAttribute(workingSetEClass, WORKING_SET__ID);
 
     workingSetGroupEClass = createEClass(WORKING_SET_GROUP);
     createEReference(workingSetGroupEClass, WORKING_SET_GROUP__WORKING_SETS);
-
-    predicateEClass = createEClass(PREDICATE);
-    createEOperation(predicateEClass, PREDICATE___MATCHES__IPROJECT);
-
-    namePredicateEClass = createEClass(NAME_PREDICATE);
-    createEAttribute(namePredicateEClass, NAME_PREDICATE__PATTERN);
 
     // Create data types
     projectEDataType = createEDataType(PROJECT);
@@ -307,21 +257,26 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
+    // Obtain other dependent packages
+    PredicatesPackage thePredicatesPackage = (PredicatesPackage)EPackage.Registry.INSTANCE
+        .getEPackage(PredicatesPackage.eNS_URI);
+
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    namePredicateEClass.getESuperTypes().add(this.getPredicate());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(workingSetEClass, WorkingSet.class, "WorkingSet", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWorkingSet_Predicates(), this.getPredicate(), null, "predicates", null, 0, -1, WorkingSet.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getWorkingSet_Name(), ecorePackage.getEString(), "name", null, 1, 1, WorkingSet.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWorkingSet_Predicates(), thePredicatesPackage.getPredicate(), null, "predicates", null, 0, -1,
+        WorkingSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getWorkingSet_Id(), ecorePackage.getEString(), "id", null, 0, 1, WorkingSet.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(workingSetGroupEClass, WorkingSetGroup.class, "WorkingSetGroup", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -329,17 +284,6 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
         WorkingSetGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     getWorkingSetGroup_WorkingSets().getEKeys().add(this.getWorkingSet_Name());
-
-    initEClass(predicateEClass, Predicate.class, "Predicate", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    EOperation op = initEOperation(getPredicate__Matches__IProject(), ecorePackage.getEBoolean(), "matches", 0, 1,
-        IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    initEClass(namePredicateEClass, NamePredicate.class, "NamePredicate", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNamePredicate_Pattern(), ecorePackage.getEString(), "pattern", null, 1, 1, NamePredicate.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(projectEDataType, IProject.class, "Project", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

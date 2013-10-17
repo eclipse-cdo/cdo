@@ -14,20 +14,24 @@
 <plugin>
 
    <extension point="org.eclipse.ui.newWizards">
-      <!-- @generated setup -->
+      <!-- @generated setup not -->
       <category
             id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <category
+            id="org.eclipse.emf.cdo.releng"
             name="%_UI_Wizard_category"/>
       <wizard
             id="org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizardID"
             name="%_UI_SetupModelWizard_label"
             class="org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            category="org.eclipse.emf.cdo.releng"
             icon="icons/full/obj16/SetupModelFile.gif">
          <description>%_UI_SetupModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
    </extension>
+
 
    <extension point="org.eclipse.ui.editors">
       <!-- @generated setup -->
@@ -40,5 +44,58 @@
             contributorClass="org.eclipse.emf.cdo.releng.setup.presentation.SetupActionBarContributor">
       </editor>
    </extension>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.eclipse.emf.cdo.releng.setup.editor.actionSet"
+            label="Setup Actions"
+            visible="true">
+         <menu
+               id="setupMenu"
+               label="Setup &amp;Menu">
+            <separator
+                  name="setupGroup">
+            </separator>
+         </menu>
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.PreferencesAction"
+               icon="icons/prefs.gif"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.PreferencesAction"
+               label="&amp;Preferences"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Opens an editor on the setup preferences">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.ManualPerformAction"
+               icon="icons/update.gif"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.ManualPerformAction"
+               label="&amp;Perform"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Perform setup tasks">
+         </action>
+      </actionSet>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.releng.setup.editor.contribution1"
+            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.PushDirectAction"
+               enablesFor="1"
+               icon="icons/push_directly.gif"
+               id="org.eclipse.emf.cdo.releng.setup.editor.PushDirectAction"
+               label="Push Directly"
+               menubarPath="additions"
+               state="true"
+               style="push"/>
+      </objectContribution>
+   </extension>
+
 
 </plugin>

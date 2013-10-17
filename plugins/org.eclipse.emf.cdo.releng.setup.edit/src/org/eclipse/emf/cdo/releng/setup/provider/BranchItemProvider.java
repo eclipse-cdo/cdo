@@ -11,12 +11,10 @@
 package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
-import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -36,7 +34,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class BranchItemProvider extends ToolInstallationItemProvider implements IEditingDomainItemProvider,
+public class BranchItemProvider extends ConfigurableItemItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -64,9 +62,6 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
       super.getPropertyDescriptors(object);
 
       addNamePropertyDescriptor(object);
-      addApiBaselinePropertyDescriptor(object);
-      addMspecFilePathPropertyDescriptor(object);
-      addCloneVariableNamePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -85,86 +80,6 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
             getString("_UI_PropertyDescriptor_description", "_UI_Branch_name_feature", "_UI_Branch_type"),
             SetupPackage.Literals.BRANCH__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
             null));
-  }
-
-  /**
-   * This adds a property descriptor for the Api Baseline feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addApiBaselinePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Branch_apiBaseline_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Branch_apiBaseline_feature", "_UI_Branch_type"),
-        SetupPackage.Literals.BRANCH__API_BASELINE, true, false, true, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Mspec File Path feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addMspecFilePathPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Branch_mspecFilePath_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Branch_mspecFilePath_feature", "_UI_Branch_type"),
-        SetupPackage.Literals.BRANCH__MSPEC_FILE_PATH, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Clone Variable Name feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addCloneVariableNamePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Branch_cloneVariableName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Branch_cloneVariableName_feature", "_UI_Branch_type"),
-        SetupPackage.Literals.BRANCH__CLONE_VARIABLE_NAME, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-  {
-    if (childrenFeatures == null)
-    {
-      super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.BRANCH__GIT_CLONES);
-    }
-    return childrenFeatures;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EStructuralFeature getChildFeature(Object object, Object child)
-  {
-    // Check the type of the specified child object and return the proper feature to use for
-    // adding (see {@link AddCommand}) it as a child.
-
-    return super.getChildFeature(object, child);
   }
 
   /**
@@ -207,12 +122,7 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
     switch (notification.getFeatureID(Branch.class))
     {
     case SetupPackage.BRANCH__NAME:
-    case SetupPackage.BRANCH__MSPEC_FILE_PATH:
-    case SetupPackage.BRANCH__CLONE_VARIABLE_NAME:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-      return;
-    case SetupPackage.BRANCH__GIT_CLONES:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
     super.notifyChanged(notification);
@@ -229,9 +139,6 @@ public class BranchItemProvider extends ToolInstallationItemProvider implements 
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.BRANCH__GIT_CLONES,
-        SetupFactory.eINSTANCE.createGitClone()));
   }
 
 }

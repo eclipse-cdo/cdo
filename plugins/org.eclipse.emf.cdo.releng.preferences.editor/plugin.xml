@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.emf.cdo.releng.ui.preferences.RelengPreferencePage"
+            class="org.eclipse.emf.cdo.releng.preferences.presentation.AllPreferencesPreferencePage"
+            id="org.eclipse.emf.cdo.releng.preferences.presentation.AllPreferencesPreferencePage"
+            name="All Preferences">
+      </page>
+   </extension>
+   
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated preferences -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <category
+            id="org.eclipse.emf.cdo.releng"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesModelWizardID"
+            name="%_UI_PreferencesModelWizard_label"
+            class="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesModelWizard"
+            category="org.eclipse.emf.cdo.releng"
+            icon="icons/full/obj16/PreferencesModelFile.gif">
+         <description>%_UI_PreferencesModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated preferences -->
+      <editor
+            id="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditorID"
+            name="%_UI_PreferencesEditor_label"
+            icon="icons/full/obj16/PreferencesModelFile.gif"
+            extensions="preferences"
+            class="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditor"
+            contributorClass="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesActionBarContributor">
+      </editor>
+   </extension>
+
+
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.eclipse.emf.cdo.releng.preferences.action.OpenEditor"
+            objectClass="org.eclipse.emf.cdo.releng.preferences.PreferenceNode">
+         <action
+               id="org.eclipse.emf.cdo.releng.preferences.action.OpenEditorAction"
+               label="Open Editor"
+               menubarPath="additions"
+               class="org.eclipse.emf.cdo.releng.preferences.action.OpenEditorAction"
+               enablesFor="1"/>
+      </objectContribution>
+   </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.eclipse.emf.cdo.releng.preferences.action.ShowInExplorer"
+            objectClass="org.eclipse.emf.cdo.releng.preferences.PreferenceNode">
+         <action
+               id="org.eclipse.emf.cdo.releng.preferences.action.ShowInExplorerAction"
+               label="Show in Package Explorer"
+               menubarPath="additions"
+               class="org.eclipse.emf.cdo.releng.preferences.action.ShowInExplorerAction"
+               enablesFor="1"/>
+      </objectContribution>
+   </extension>
+   
+</plugin>

@@ -10,11 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
-import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.workingsets.util.WorkingSetsAdapterFactory;
 import org.eclipse.emf.cdo.releng.workingsets.util.WorkingSetsUtil;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -73,7 +73,7 @@ public class WorkingSetsPreferencePage extends PreferencePage implements IWorkbe
     composite.setLayout(layout);
 
     TreeViewer treeViewer = new TreeViewer(composite);
-    WorkingSetsAdapterFactory adapterFactory = new WorkingSetsItemProviderAdapterFactory();
+    AdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
     treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
     treeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
     treeViewer.setInput(WorkingSetsUtil.getWorkingSetGroup());

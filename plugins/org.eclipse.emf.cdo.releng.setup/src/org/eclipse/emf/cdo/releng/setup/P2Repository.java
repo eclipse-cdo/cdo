@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getDirectorCall <em>Director Call</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getP2Task <em>P2 Task</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
@@ -32,32 +32,32 @@ import org.eclipse.emf.ecore.EObject;
 public interface P2Repository extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Director Call</b></em>' container reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.DirectorCall#getP2Repositories <em>P2 Repositories</em>}'.
+   * Returns the value of the '<em><b>P2 Task</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Director Call</em>' container reference isn't clear,
+   * If the meaning of the '<em>P2 Task</em>' container reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Director Call</em>' container reference.
-   * @see #setDirectorCall(DirectorCall)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Repository_DirectorCall()
-   * @see org.eclipse.emf.cdo.releng.setup.DirectorCall#getP2Repositories
+   * @return the value of the '<em>P2 Task</em>' container reference.
+   * @see #setP2Task(P2Task)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Repository_P2Task()
+   * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories
    * @model opposite="p2Repositories" transient="false"
    * @generated
    */
-  DirectorCall getDirectorCall();
+  P2Task getP2Task();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getDirectorCall <em>Director Call</em>}' container reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getP2Task <em>P2 Task</em>}' container reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Director Call</em>' container reference.
-   * @see #getDirectorCall()
+   * @param value the new value of the '<em>P2 Task</em>' container reference.
+   * @see #getP2Task()
    * @generated
    */
-  void setDirectorCall(DirectorCall value);
+  void setP2Task(P2Task value);
 
   /**
    * Returns the value of the '<em><b>Url</b></em>' attribute.

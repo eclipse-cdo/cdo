@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="preferences" nsURI="http://www.eclipse.org/CDO/releng/preferences/1.0"
+    nsPrefix="preferences">
+  <eClassifiers xsi:type="ecore:EClass" name="PreferenceNode">
+    <eOperations name="getNode" eType="#//PreferenceNode">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getProperty" eType="#//Property">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//PreferenceNode" containment="true" eOpposite="#//PreferenceNode/parent"
+        eKeys="#//PreferenceNode/name"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PreferenceNode"
+        eOpposite="#//PreferenceNode/children"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property" containment="true" eOpposite="#//Property/parent" eKeys="#//Property/name"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Property">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PreferenceNode"
+        eOpposite="#//PreferenceNode/properties"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//EscapedString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="EscapedString" instanceClassName="java.lang.String"/>
+</ecore:EPackage>

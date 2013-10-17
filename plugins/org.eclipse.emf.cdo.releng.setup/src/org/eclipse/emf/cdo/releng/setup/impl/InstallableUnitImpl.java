@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getDirectorCall <em>Director Call</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getP2Task <em>P2 Task</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
@@ -84,11 +84,11 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public DirectorCall getDirectorCall()
+  public P2Task getP2Task()
   {
-    if (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL)
+    if (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK)
       return null;
-    return (DirectorCall)eInternalContainer();
+    return (P2Task)eContainer();
   }
 
   /**
@@ -96,9 +96,21 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDirectorCall(DirectorCall newDirectorCall, NotificationChain msgs)
+  public P2Task basicGetP2Task()
   {
-    msgs = eBasicSetContainer((InternalEObject)newDirectorCall, SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL, msgs);
+    if (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK)
+      return null;
+    return (P2Task)eInternalContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetP2Task(P2Task newP2Task, NotificationChain msgs)
+  {
+    msgs = eBasicSetContainer((InternalEObject)newP2Task, SetupPackage.INSTALLABLE_UNIT__P2_TASK, msgs);
     return msgs;
   }
 
@@ -107,26 +119,26 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDirectorCall(DirectorCall newDirectorCall)
+  public void setP2Task(P2Task newP2Task)
   {
-    if (newDirectorCall != eInternalContainer()
-        || (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL && newDirectorCall != null))
+    if (newP2Task != eInternalContainer()
+        || (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK && newP2Task != null))
     {
-      if (EcoreUtil.isAncestor(this, newDirectorCall))
+      if (EcoreUtil.isAncestor(this, newP2Task))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      if (newDirectorCall != null)
-        msgs = ((InternalEObject)newDirectorCall).eInverseAdd(this, SetupPackage.DIRECTOR_CALL__INSTALLABLE_UNITS,
-            DirectorCall.class, msgs);
-      msgs = basicSetDirectorCall(newDirectorCall, msgs);
+      if (newP2Task != null)
+        msgs = ((InternalEObject)newP2Task).eInverseAdd(this, SetupPackage.P2_TASK__INSTALLABLE_UNITS, P2Task.class,
+            msgs);
+      msgs = basicSetP2Task(newP2Task, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL,
-          newDirectorCall, newDirectorCall));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__P2_TASK, newP2Task,
+          newP2Task));
   }
 
   /**
@@ -162,10 +174,10 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      return basicSetDirectorCall((DirectorCall)otherEnd, msgs);
+      return basicSetP2Task((P2Task)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -180,8 +192,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
-      return basicSetDirectorCall(null, msgs);
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
+      return basicSetP2Task(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -196,9 +208,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (eContainerFeatureID())
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
-      return eInternalContainer().eInverseRemove(this, SetupPackage.DIRECTOR_CALL__INSTALLABLE_UNITS,
-          DirectorCall.class, msgs);
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
+      return eInternalContainer().eInverseRemove(this, SetupPackage.P2_TASK__INSTALLABLE_UNITS, P2Task.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -213,8 +224,10 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
-      return getDirectorCall();
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
+      if (resolve)
+        return getP2Task();
+      return basicGetP2Task();
     case SetupPackage.INSTALLABLE_UNIT__ID:
       return getId();
     }
@@ -231,8 +244,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
-      setDirectorCall((DirectorCall)newValue);
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
+      setP2Task((P2Task)newValue);
       return;
     case SetupPackage.INSTALLABLE_UNIT__ID:
       setId((String)newValue);
@@ -251,8 +264,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
-      setDirectorCall((DirectorCall)null);
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
+      setP2Task((P2Task)null);
       return;
     case SetupPackage.INSTALLABLE_UNIT__ID:
       setId(ID_EDEFAULT);
@@ -271,8 +284,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-    case SetupPackage.INSTALLABLE_UNIT__DIRECTOR_CALL:
-      return getDirectorCall() != null;
+    case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
+      return basicGetP2Task() != null;
     case SetupPackage.INSTALLABLE_UNIT__ID:
       return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
     }

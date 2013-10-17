@@ -132,31 +132,6 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.workingsets.NamePredicate} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected NamePredicateItemProvider namePredicateItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.NamePredicate}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createNamePredicateAdapter()
-  {
-    if (namePredicateItemProvider == null)
-    {
-      namePredicateItemProvider = new NamePredicateItemProvider(this);
-    }
-
-    return namePredicateItemProvider;
-  }
-
-  /**
    * This returns the root adapter factory that contains this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -212,7 +187,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -268,17 +243,9 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   public void dispose()
   {
     if (workingSetItemProvider != null)
-    {
       workingSetItemProvider.dispose();
-    }
     if (workingSetGroupItemProvider != null)
-    {
       workingSetGroupItemProvider.dispose();
-    }
-    if (namePredicateItemProvider != null)
-    {
-      namePredicateItemProvider.dispose();
-    }
   }
 
 }

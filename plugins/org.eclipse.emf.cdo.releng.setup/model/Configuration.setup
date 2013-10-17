@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Configuration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
+  <projects href="../../org.eclipse.emf.cdo.releng/local.setup#/"/>
+  <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/"/>
+  <eclipseVersions version="3.8">
+    <setupTasks xsi:type="setup:P2Task">
+      <p2Repositories url="http://download.eclipse.org/eclipse/updates/3.8"/>
+      <p2Repositories url="${releng.url}"/>
+      <installableUnits id="org.eclipse.sdk.ide"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.setup.editor.feature.group"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.0/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
+    <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.0/@setupTasks.0" option="-Dorg.eclipse.emf.cdo.releng.setup.ide" value="=true" vm="true"/>
+  </eclipseVersions>
+  <eclipseVersions version="4.3">
+    <setupTasks xsi:type="setup:P2Task">
+      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+      <p2Repositories url="${releng.url}"/>
+      <installableUnits id="org.eclipse.sdk.ide"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.setup.editor.feature.group"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.1/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
+    <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.1/@setupTasks.0" option="-Dorg.eclipse.emf.cdo.releng.setup.ide" value="=true" vm="true"/>
+  </eclipseVersions>
+</setup:Configuration>

@@ -35,12 +35,9 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <plugin
+   <includes
          id="org.eclipse.emf.cdo.releng.setup"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.cdo.releng.setup.edit"

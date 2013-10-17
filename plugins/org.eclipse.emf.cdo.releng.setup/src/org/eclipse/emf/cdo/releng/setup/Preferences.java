@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.releng.setup;
 import org.eclipse.emf.common.util.URI;
 
 import java.io.File;
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix <em>Git Prefix</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getLinkLocations <em>Link Locations</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,7 +32,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Preferences extends ToolInstallation
+public interface Preferences extends SetupTaskContainer
 {
   public static final String PREFERENCES_NAME = "setup-eclipse.xmi";
 
@@ -118,21 +116,5 @@ public interface Preferences extends ToolInstallation
    * @generated
    */
   void setGitPrefix(String value);
-
-  /**
-   * Returns the value of the '<em><b>Link Locations</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.LinkLocation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Link Locations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Link Locations</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_LinkLocations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<LinkLocation> getLinkLocations();
 
 } // Preferences

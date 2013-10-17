@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -117,7 +118,6 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
       childrenFeatures.add(SetupPackage.Literals.SETUP__BRANCH);
       childrenFeatures.add(SetupPackage.Literals.SETUP__ECLIPSE_VERSION);
       childrenFeatures.add(SetupPackage.Literals.SETUP__PREFERENCES);
-      childrenFeatures.add(SetupPackage.Literals.SETUP__UPDATE_LOCATIONS);
     }
     return childrenFeatures;
   }
@@ -186,7 +186,6 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
     switch (notification.getFeatureID(Setup.class))
     {
     case SetupPackage.SETUP__PREFERENCES:
-    case SetupPackage.SETUP__UPDATE_LOCATIONS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -207,9 +206,6 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP__PREFERENCES,
         SetupFactory.eINSTANCE.createPreferences()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP__UPDATE_LOCATIONS,
-        SetupFactory.eINSTANCE.createP2Repository()));
   }
 
   /**
@@ -221,7 +217,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   @Override
   public ResourceLocator getResourceLocator()
   {
-    return SetupEditPlugin.INSTANCE;
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

@@ -1,34 +1,35 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
+import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
+import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
+import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
+import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
-import org.eclipse.emf.cdo.releng.setup.GitClone;
+import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
-import org.eclipse.emf.cdo.releng.setup.LinkLocation;
+import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
+import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
-import org.eclipse.emf.cdo.releng.setup.ToolPreference;
-
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
+import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
+import org.eclipse.emf.cdo.releng.setup.TextModification;
+import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import java.util.List;
 
 /**
@@ -108,88 +109,16 @@ public class SetupSwitch<T>
   {
     switch (classifierID)
     {
-    case SetupPackage.PREFERENCES:
-    {
-      Preferences preferences = (Preferences)theEObject;
-      T result = casePreferences(preferences);
-      if (result == null)
-      {
-        result = caseToolInstallation(preferences);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.LINK_LOCATION:
-    {
-      LinkLocation linkLocation = (LinkLocation)theEObject;
-      T result = caseLinkLocation(linkLocation);
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.TOOL_INSTALLATION:
-    {
-      ToolInstallation toolInstallation = (ToolInstallation)theEObject;
-      T result = caseToolInstallation(toolInstallation);
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.TOOL_PREFERENCE:
-    {
-      ToolPreference toolPreference = (ToolPreference)theEObject;
-      T result = caseToolPreference(toolPreference);
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
     case SetupPackage.ECLIPSE_VERSION:
     {
       EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
       T result = caseEclipseVersion(eclipseVersion);
       if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.DIRECTOR_CALL:
-    {
-      DirectorCall directorCall = (DirectorCall)theEObject;
-      T result = caseDirectorCall(directorCall);
+        result = caseConfigurableItem(eclipseVersion);
       if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.INSTALLABLE_UNIT:
-    {
-      InstallableUnit installableUnit = (InstallableUnit)theEObject;
-      T result = caseInstallableUnit(installableUnit);
+        result = caseSetupTaskContainer(eclipseVersion);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.P2_REPOSITORY:
-    {
-      P2Repository p2Repository = (P2Repository)theEObject;
-      T result = caseP2Repository(p2Repository);
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.CONFIGURATION:
@@ -197,9 +126,17 @@ public class SetupSwitch<T>
       Configuration configuration = (Configuration)theEObject;
       T result = caseConfiguration(configuration);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
+      return result;
+    }
+    case SetupPackage.CONFIGURABLE_ITEM:
+    {
+      ConfigurableItem configurableItem = (ConfigurableItem)theEObject;
+      T result = caseConfigurableItem(configurableItem);
+      if (result == null)
+        result = caseSetupTaskContainer(configurableItem);
+      if (result == null)
+        result = defaultCase(theEObject);
       return result;
     }
     case SetupPackage.PROJECT:
@@ -207,13 +144,11 @@ public class SetupSwitch<T>
       Project project = (Project)theEObject;
       T result = caseProject(project);
       if (result == null)
-      {
-        result = caseToolInstallation(project);
-      }
+        result = caseConfigurableItem(project);
       if (result == null)
-      {
+        result = caseSetupTaskContainer(project);
+      if (result == null)
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.BRANCH:
@@ -221,33 +156,21 @@ public class SetupSwitch<T>
       Branch branch = (Branch)theEObject;
       T result = caseBranch(branch);
       if (result == null)
-      {
-        result = caseToolInstallation(branch);
-      }
+        result = caseConfigurableItem(branch);
       if (result == null)
-      {
+        result = caseSetupTaskContainer(branch);
+      if (result == null)
         result = defaultCase(theEObject);
-      }
       return result;
     }
-    case SetupPackage.API_BASELINE:
+    case SetupPackage.PREFERENCES:
     {
-      ApiBaseline apiBaseline = (ApiBaseline)theEObject;
-      T result = caseApiBaseline(apiBaseline);
+      Preferences preferences = (Preferences)theEObject;
+      T result = casePreferences(preferences);
       if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.GIT_CLONE:
-    {
-      GitClone gitClone = (GitClone)theEObject;
-      T result = caseGitClone(gitClone);
+        result = caseSetupTaskContainer(preferences);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SetupPackage.SETUP:
@@ -255,9 +178,179 @@ public class SetupSwitch<T>
       Setup setup = (Setup)theEObject;
       T result = caseSetup(setup);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
+      return result;
+    }
+    case SetupPackage.SETUP_TASK:
+    {
+      SetupTask setupTask = (SetupTask)theEObject;
+      T result = caseSetupTask(setupTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.SETUP_TASK_CONTAINER:
+    {
+      SetupTaskContainer setupTaskContainer = (SetupTaskContainer)theEObject;
+      T result = caseSetupTaskContainer(setupTaskContainer);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.COMPOUND_SETUP_TASK:
+    {
+      CompoundSetupTask compoundSetupTask = (CompoundSetupTask)theEObject;
+      T result = caseCompoundSetupTask(compoundSetupTask);
+      if (result == null)
+        result = caseSetupTask(compoundSetupTask);
+      if (result == null)
+        result = caseSetupTaskContainer(compoundSetupTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.ONE_TIME_SETUP_TASK:
+    {
+      OneTimeSetupTask oneTimeSetupTask = (OneTimeSetupTask)theEObject;
+      T result = caseOneTimeSetupTask(oneTimeSetupTask);
+      if (result == null)
+        result = caseSetupTask(oneTimeSetupTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.ECLIPSE_INI_TASK:
+    {
+      EclipseIniTask eclipseIniTask = (EclipseIniTask)theEObject;
+      T result = caseEclipseIniTask(eclipseIniTask);
+      if (result == null)
+        result = caseSetupTask(eclipseIniTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.LINK_LOCATION_TASK:
+    {
+      LinkLocationTask linkLocationTask = (LinkLocationTask)theEObject;
+      T result = caseLinkLocationTask(linkLocationTask);
+      if (result == null)
+        result = caseSetupTask(linkLocationTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.P2_TASK:
+    {
+      P2Task p2Task = (P2Task)theEObject;
+      T result = caseP2Task(p2Task);
+      if (result == null)
+        result = caseSetupTask(p2Task);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.INSTALLABLE_UNIT:
+    {
+      InstallableUnit installableUnit = (InstallableUnit)theEObject;
+      T result = caseInstallableUnit(installableUnit);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.P2_REPOSITORY:
+    {
+      P2Repository p2Repository = (P2Repository)theEObject;
+      T result = caseP2Repository(p2Repository);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.BUCKMINSTER_IMPORT_TASK:
+    {
+      BuckminsterImportTask buckminsterImportTask = (BuckminsterImportTask)theEObject;
+      T result = caseBuckminsterImportTask(buckminsterImportTask);
+      if (result == null)
+        result = caseSetupTask(buckminsterImportTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.API_BASELINE_TASK:
+    {
+      ApiBaselineTask apiBaselineTask = (ApiBaselineTask)theEObject;
+      T result = caseApiBaselineTask(apiBaselineTask);
+      if (result == null)
+        result = caseSetupTask(apiBaselineTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.GIT_CLONE_TASK:
+    {
+      GitCloneTask gitCloneTask = (GitCloneTask)theEObject;
+      T result = caseGitCloneTask(gitCloneTask);
+      if (result == null)
+        result = caseSetupTask(gitCloneTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.ECLIPSE_PREFERENCE_TASK:
+    {
+      EclipsePreferenceTask eclipsePreferenceTask = (EclipsePreferenceTask)theEObject;
+      T result = caseEclipsePreferenceTask(eclipsePreferenceTask);
+      if (result == null)
+        result = caseSetupTask(eclipsePreferenceTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.STRING_VARIABLE_TASK:
+    {
+      StringVariableTask stringVariableTask = (StringVariableTask)theEObject;
+      T result = caseStringVariableTask(stringVariableTask);
+      if (result == null)
+        result = caseSetupTask(stringVariableTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.WORKING_SET_TASK:
+    {
+      WorkingSetTask workingSetTask = (WorkingSetTask)theEObject;
+      T result = caseWorkingSetTask(workingSetTask);
+      if (result == null)
+        result = caseSetupTask(workingSetTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.RESOURCE_COPY_TASK:
+    {
+      ResourceCopyTask resourceCopyTask = (ResourceCopyTask)theEObject;
+      T result = caseResourceCopyTask(resourceCopyTask);
+      if (result == null)
+        result = caseSetupTask(resourceCopyTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.TEXT_MODIFY_TASK:
+    {
+      TextModifyTask textModifyTask = (TextModifyTask)theEObject;
+      T result = caseTextModifyTask(textModifyTask);
+      if (result == null)
+        result = caseSetupTask(textModifyTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.TEXT_MODIFICATION:
+    {
+      TextModification textModification = (TextModification)theEObject;
+      T result = caseTextModification(textModification);
+      if (result == null)
+        result = defaultCase(theEObject);
       return result;
     }
     default:
@@ -282,6 +375,54 @@ public class SetupSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Link Location Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Link Location Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLinkLocationTask(LinkLocationTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Task Container</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Task Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSetupTaskContainer(SetupTaskContainer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEclipsePreferenceTask(EclipsePreferenceTask object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Eclipse Version</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -298,17 +439,17 @@ public class SetupSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Director Call</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>P2 Task</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Director Call</em>'.
+   * @return the result of interpreting the object as an instance of '<em>P2 Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseDirectorCall(DirectorCall object)
+  public T caseP2Task(P2Task object)
   {
     return null;
   }
@@ -362,22 +503,6 @@ public class SetupSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Tool Installation</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Tool Installation</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseToolInstallation(ToolInstallation object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Project</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -410,33 +535,33 @@ public class SetupSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Api Baseline</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Api Baseline Task</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Api Baseline</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Api Baseline Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseApiBaseline(ApiBaseline object)
+  public T caseApiBaselineTask(ApiBaselineTask object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Git Clone</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Git Clone Task</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Git Clone</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Git Clone Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseGitClone(GitClone object)
+  public T caseGitCloneTask(GitCloneTask object)
   {
     return null;
   }
@@ -458,33 +583,177 @@ public class SetupSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Tool Preference</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Task</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Tool Preference</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseToolPreference(ToolPreference object)
+  public T caseSetupTask(SetupTask object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Link Location</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Working Set Task</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Link Location</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Working Set Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLinkLocation(LinkLocation object)
+  public T caseWorkingSetTask(WorkingSetTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Resource Copy Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Resource Copy Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseResourceCopyTask(ResourceCopyTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Text Modify Task</em>'.
+   * <!-- begin-user-doc -->
+  	 * This implementation returns null;
+  	 * returning a non-null result will terminate the switch.
+  	 * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Text Modify Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTextModifyTask(TextModifyTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Text Modification</em>'.
+   * <!-- begin-user-doc -->
+  	 * This implementation returns null;
+  	 * returning a non-null result will terminate the switch.
+  	 * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Text Modification</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTextModification(TextModification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
+   * <!-- begin-user-doc -->
+       * This implementation returns null;
+       * returning a non-null result will terminate the switch.
+       * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEclipseIniTask(EclipseIniTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Compound Setup Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Compound Setup Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCompoundSetupTask(CompoundSetupTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>One Time Setup Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>One Time Setup Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOneTimeSetupTask(OneTimeSetupTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Configurable Item</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Configurable Item</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConfigurableItem(ConfigurableItem object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Buckminster Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Buckminster Import Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBuckminsterImportTask(BuckminsterImportTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String Variable Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String Variable Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringVariableTask(StringVariableTask object)
   {
     return null;
   }

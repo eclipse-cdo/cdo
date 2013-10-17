@@ -11,9 +11,7 @@
 package org.eclipse.emf.cdo.releng.workingsets.provider;
 
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -28,9 +26,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import java.util.Collection;
 import java.util.List;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet} object.
@@ -170,6 +168,7 @@ public class WorkingSetItemProvider extends ItemProviderAdapter implements IEdit
     switch (notification.getFeatureID(WorkingSet.class))
     {
     case WorkingSetsPackage.WORKING_SET__NAME:
+    case WorkingSetsPackage.WORKING_SET__ID:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case WorkingSetsPackage.WORKING_SET__PREDICATES:
@@ -192,7 +191,28 @@ public class WorkingSetItemProvider extends ItemProviderAdapter implements IEdit
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
     newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
-        WorkingSetsFactory.eINSTANCE.createNamePredicate()));
+        PredicatesFactory.eINSTANCE.createNamePredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createRepositoryPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createAndPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createOrPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNotPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNaturePredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createBuilderPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createFilePredicate()));
   }
 
   /**

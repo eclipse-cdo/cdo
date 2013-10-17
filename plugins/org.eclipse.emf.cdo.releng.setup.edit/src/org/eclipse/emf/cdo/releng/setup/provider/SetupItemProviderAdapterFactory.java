@@ -10,15 +10,20 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.util.SetupAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
+import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,6 +34,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -40,7 +46,7 @@ import java.util.Collection;
  * @generated
  */
 public class SetupItemProviderAdapterFactory extends SetupAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable
+    IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -57,6 +63,15 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
+
+  /**
+   * This helps manage the child creation extenders.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
+      SetupEditPlugin.INSTANCE, SetupPackage.eNS_URI);
 
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -157,6 +172,56 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ApiBaselineTaskItemProvider apiBaselineTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createApiBaselineTaskAdapter()
+  {
+    if (apiBaselineTaskItemProvider == null)
+    {
+      apiBaselineTaskItemProvider = new ApiBaselineTaskItemProvider(this);
+    }
+
+    return apiBaselineTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.GitCloneTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected GitCloneTaskItemProvider gitCloneTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.GitCloneTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createGitCloneTaskAdapter()
+  {
+    if (gitCloneTaskItemProvider == null)
+    {
+      gitCloneTaskItemProvider = new GitCloneTaskItemProvider(this);
+    }
+
+    return gitCloneTaskItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseVersion} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -182,28 +247,28 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.DirectorCall} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.P2Task} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected DirectorCallItemProvider directorCallItemProvider;
+  protected P2TaskItemProvider p2TaskItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.DirectorCall}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.P2Task}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createDirectorCallAdapter()
+  public Adapter createP2TaskAdapter()
   {
-    if (directorCallItemProvider == null)
+    if (p2TaskItemProvider == null)
     {
-      directorCallItemProvider = new DirectorCallItemProvider(this);
+      p2TaskItemProvider = new P2TaskItemProvider(this);
     }
 
-    return directorCallItemProvider;
+    return p2TaskItemProvider;
   }
 
   /**
@@ -257,56 +322,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ApiBaseline} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ApiBaselineItemProvider apiBaselineItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ApiBaseline}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createApiBaselineAdapter()
-  {
-    if (apiBaselineItemProvider == null)
-    {
-      apiBaselineItemProvider = new ApiBaselineItemProvider(this);
-    }
-
-    return apiBaselineItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.GitClone} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected GitCloneItemProvider gitCloneItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.GitClone}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createGitCloneAdapter()
-  {
-    if (gitCloneItemProvider == null)
-    {
-      gitCloneItemProvider = new GitCloneItemProvider(this);
-    }
-
-    return gitCloneItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Setup} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -332,53 +347,203 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ToolPreference} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ToolPreferenceItemProvider toolPreferenceItemProvider;
+  protected WorkingSetTaskItemProvider workingSetTaskItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ToolPreference}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createToolPreferenceAdapter()
+  public Adapter createWorkingSetTaskAdapter()
   {
-    if (toolPreferenceItemProvider == null)
+    if (workingSetTaskItemProvider == null)
     {
-      toolPreferenceItemProvider = new ToolPreferenceItemProvider(this);
+      workingSetTaskItemProvider = new WorkingSetTaskItemProvider(this);
     }
 
-    return toolPreferenceItemProvider;
+    return workingSetTaskItemProvider;
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.LinkLocation} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected LinkLocationItemProvider linkLocationItemProvider;
+  protected ResourceCopyTaskItemProvider resourceCopyTaskItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.LinkLocation}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createResourceCopyTaskAdapter()
+  {
+    if (resourceCopyTaskItemProvider == null)
+    {
+      resourceCopyTaskItemProvider = new ResourceCopyTaskItemProvider(this);
+    }
+
+    return resourceCopyTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TextModifyTask} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TextModifyTaskItemProvider textModifyTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TextModifyTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createTextModifyTaskAdapter()
+  {
+    if (textModifyTaskItemProvider == null)
+    {
+      textModifyTaskItemProvider = new TextModifyTaskItemProvider(this);
+    }
+
+    return textModifyTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TextModification} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TextModificationItemProvider textModificationItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TextModification}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createTextModificationAdapter()
+  {
+    if (textModificationItemProvider == null)
+    {
+      textModificationItemProvider = new TextModificationItemProvider(this);
+    }
+
+    return textModificationItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  protected EclipseIniTaskItemProvider eclipseIniTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createLinkLocationAdapter()
+  public Adapter createEclipseIniTaskAdapter()
   {
-    if (linkLocationItemProvider == null)
+    if (eclipseIniTaskItemProvider == null)
     {
-      linkLocationItemProvider = new LinkLocationItemProvider(this);
+      eclipseIniTaskItemProvider = new EclipseIniTaskItemProvider(this);
     }
 
-    return linkLocationItemProvider;
+    return eclipseIniTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.CompoundSetupTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected CompoundSetupTaskItemProvider compoundSetupTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.CompoundSetupTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createCompoundSetupTaskAdapter()
+  {
+    if (compoundSetupTaskItemProvider == null)
+    {
+      compoundSetupTaskItemProvider = new CompoundSetupTaskItemProvider(this);
+    }
+
+    return compoundSetupTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected BuckminsterImportTaskItemProvider buckminsterImportTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createBuckminsterImportTaskAdapter()
+  {
+    if (buckminsterImportTaskItemProvider == null)
+    {
+      buckminsterImportTaskItemProvider = new BuckminsterImportTaskItemProvider(this);
+    }
+
+    return buckminsterImportTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.StringVariableTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected StringVariableTaskItemProvider stringVariableTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.StringVariableTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createStringVariableTaskAdapter()
+  {
+    if (stringVariableTaskItemProvider == null)
+    {
+      stringVariableTaskItemProvider = new StringVariableTaskItemProvider(this);
+    }
+
+    return stringVariableTaskItemProvider;
   }
 
   /**
@@ -404,6 +569,56 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     }
 
     return preferencesItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected LinkLocationTaskItemProvider linkLocationTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createLinkLocationTaskAdapter()
+  {
+    if (linkLocationTaskItemProvider == null)
+    {
+      linkLocationTaskItemProvider = new LinkLocationTaskItemProvider(this);
+    }
+
+    return linkLocationTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected EclipsePreferenceTaskItemProvider eclipsePreferenceTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createEclipsePreferenceTaskAdapter()
+  {
+    if (eclipsePreferenceTaskItemProvider == null)
+    {
+      eclipsePreferenceTaskItemProvider = new EclipsePreferenceTaskItemProvider(this);
+    }
+
+    return eclipsePreferenceTaskItemProvider;
   }
 
   /**
@@ -472,6 +687,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public List<IChildCreationExtender> getChildCreationExtenders()
+  {
+    return childCreationExtenderManager.getChildCreationExtenders();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
+  {
+    return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ResourceLocator getResourceLocator()
+  {
+    return childCreationExtenderManager;
+  }
+
+  /**
    * This adds a listener.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -517,32 +762,48 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    */
   public void dispose()
   {
-    if (preferencesItemProvider != null)
-      preferencesItemProvider.dispose();
-    if (linkLocationItemProvider != null)
-      linkLocationItemProvider.dispose();
-    if (toolPreferenceItemProvider != null)
-      toolPreferenceItemProvider.dispose();
     if (eclipseVersionItemProvider != null)
       eclipseVersionItemProvider.dispose();
-    if (directorCallItemProvider != null)
-      directorCallItemProvider.dispose();
-    if (installableUnitItemProvider != null)
-      installableUnitItemProvider.dispose();
-    if (p2RepositoryItemProvider != null)
-      p2RepositoryItemProvider.dispose();
     if (configurationItemProvider != null)
       configurationItemProvider.dispose();
     if (projectItemProvider != null)
       projectItemProvider.dispose();
     if (branchItemProvider != null)
       branchItemProvider.dispose();
-    if (apiBaselineItemProvider != null)
-      apiBaselineItemProvider.dispose();
-    if (gitCloneItemProvider != null)
-      gitCloneItemProvider.dispose();
+    if (preferencesItemProvider != null)
+      preferencesItemProvider.dispose();
     if (setupItemProvider != null)
       setupItemProvider.dispose();
+    if (compoundSetupTaskItemProvider != null)
+      compoundSetupTaskItemProvider.dispose();
+    if (eclipseIniTaskItemProvider != null)
+      eclipseIniTaskItemProvider.dispose();
+    if (linkLocationTaskItemProvider != null)
+      linkLocationTaskItemProvider.dispose();
+    if (p2TaskItemProvider != null)
+      p2TaskItemProvider.dispose();
+    if (installableUnitItemProvider != null)
+      installableUnitItemProvider.dispose();
+    if (p2RepositoryItemProvider != null)
+      p2RepositoryItemProvider.dispose();
+    if (buckminsterImportTaskItemProvider != null)
+      buckminsterImportTaskItemProvider.dispose();
+    if (apiBaselineTaskItemProvider != null)
+      apiBaselineTaskItemProvider.dispose();
+    if (gitCloneTaskItemProvider != null)
+      gitCloneTaskItemProvider.dispose();
+    if (eclipsePreferenceTaskItemProvider != null)
+      eclipsePreferenceTaskItemProvider.dispose();
+    if (stringVariableTaskItemProvider != null)
+      stringVariableTaskItemProvider.dispose();
+    if (workingSetTaskItemProvider != null)
+      workingSetTaskItemProvider.dispose();
+    if (resourceCopyTaskItemProvider != null)
+      resourceCopyTaskItemProvider.dispose();
+    if (textModifyTaskItemProvider != null)
+      textModifyTaskItemProvider.dispose();
+    if (textModificationItemProvider != null)
+      textModificationItemProvider.dispose();
   }
 
 }

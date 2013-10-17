@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.workingsets.presentation;
 import org.eclipse.emf.cdo.releng.workingsets.impl.PreferencesURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -697,6 +698,7 @@ public class WorkingSetsEditor extends MultiPageEditorPart implements IEditingDo
 
     adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new WorkingSetsItemProviderAdapterFactory());
+    adapterFactory.addAdapterFactory(new PredicatesItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
     // Create the command stack that will notify this editor as commands are executed.
@@ -1480,7 +1482,7 @@ public class WorkingSetsEditor extends MultiPageEditorPart implements IEditingDo
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

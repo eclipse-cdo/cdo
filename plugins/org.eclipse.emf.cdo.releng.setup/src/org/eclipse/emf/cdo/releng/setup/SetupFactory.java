@@ -58,6 +58,24 @@ public interface SetupFactory extends EFactory
   Branch createBranch();
 
   /**
+   * Returns a new object of class '<em>Api Baseline Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Api Baseline Task</em>'.
+   * @generated
+   */
+  ApiBaselineTask createApiBaselineTask();
+
+  /**
+   * Returns a new object of class '<em>Git Clone Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Git Clone Task</em>'.
+   * @generated
+   */
+  GitCloneTask createGitCloneTask();
+
+  /**
    * Returns a new object of class '<em>Eclipse Version</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -67,13 +85,13 @@ public interface SetupFactory extends EFactory
   EclipseVersion createEclipseVersion();
 
   /**
-   * Returns a new object of class '<em>Director Call</em>'.
+   * Returns a new object of class '<em>P2 Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Director Call</em>'.
+   * @return a new object of class '<em>P2 Task</em>'.
    * @generated
    */
-  DirectorCall createDirectorCall();
+  P2Task createP2Task();
 
   /**
    * Returns a new object of class '<em>Installable Unit</em>'.
@@ -94,24 +112,6 @@ public interface SetupFactory extends EFactory
   P2Repository createP2Repository();
 
   /**
-   * Returns a new object of class '<em>Api Baseline</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Api Baseline</em>'.
-   * @generated
-   */
-  ApiBaseline createApiBaseline();
-
-  /**
-   * Returns a new object of class '<em>Git Clone</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Git Clone</em>'.
-   * @generated
-   */
-  GitClone createGitClone();
-
-  /**
    * Returns a new object of class '<em>Setup</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -121,22 +121,76 @@ public interface SetupFactory extends EFactory
   Setup createSetup();
 
   /**
-   * Returns a new object of class '<em>Tool Preference</em>'.
+   * Returns a new object of class '<em>Working Set Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Tool Preference</em>'.
+   * @return a new object of class '<em>Working Set Task</em>'.
    * @generated
    */
-  ToolPreference createToolPreference();
+  WorkingSetTask createWorkingSetTask();
 
   /**
-   * Returns a new object of class '<em>Link Location</em>'.
+   * Returns a new object of class '<em>Resource Copy Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Link Location</em>'.
+   * @return a new object of class '<em>Resource Copy Task</em>'.
    * @generated
    */
-  LinkLocation createLinkLocation();
+  ResourceCopyTask createResourceCopyTask();
+
+  /**
+   * Returns a new object of class '<em>Text Modify Task</em>'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return a new object of class '<em>Text Modify Task</em>'.
+   * @generated
+   */
+  TextModifyTask createTextModifyTask();
+
+  /**
+   * Returns a new object of class '<em>Text Modification</em>'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return a new object of class '<em>Text Modification</em>'.
+   * @generated
+   */
+  TextModification createTextModification();
+
+  /**
+   * Returns a new object of class '<em>Eclipse Ini Task</em>'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eclipse Ini Task</em>'.
+   * @generated
+   */
+  EclipseIniTask createEclipseIniTask();
+
+  /**
+   * Returns a new object of class '<em>Compound Setup Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Compound Setup Task</em>'.
+   * @generated
+   */
+  CompoundSetupTask createCompoundSetupTask();
+
+  /**
+   * Returns a new object of class '<em>Buckminster Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Buckminster Import Task</em>'.
+   * @generated
+   */
+  BuckminsterImportTask createBuckminsterImportTask();
+
+  /**
+   * Returns a new object of class '<em>String Variable Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>String Variable Task</em>'.
+   * @generated
+   */
+  StringVariableTask createStringVariableTask();
 
   /**
    * Returns a new object of class '<em>Preferences</em>'.
@@ -146,6 +200,24 @@ public interface SetupFactory extends EFactory
    * @generated
    */
   Preferences createPreferences();
+
+  /**
+   * Returns a new object of class '<em>Link Location Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Link Location Task</em>'.
+   * @generated
+   */
+  LinkLocationTask createLinkLocationTask();
+
+  /**
+   * Returns a new object of class '<em>Eclipse Preference Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eclipse Preference Task</em>'.
+   * @generated
+   */
+  EclipsePreferenceTask createEclipsePreferenceTask();
 
   /**
    * Returns the package supported by this factory.

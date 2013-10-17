@@ -406,7 +406,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
      * <!-- end-user-doc -->
      * @generated
      */
-    public void createControl(Composite parent)
+    public void createControlGen(Composite parent)
     {
       Composite composite = new Composite(parent, SWT.NONE);
       {
@@ -476,6 +476,21 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
       setPageComplete(validatePage());
       setControl(composite);
+    }
+
+    public void createControl(Composite parent)
+    {
+      createControlGen(parent);
+
+      String[] items = initialObjectField.getItems();
+      for (int i = 0; i < items.length; ++i)
+      {
+        if (items[i].equals("Project"))
+        {
+          initialObjectField.select(i);
+          break;
+        }
+      }
     }
 
     /**

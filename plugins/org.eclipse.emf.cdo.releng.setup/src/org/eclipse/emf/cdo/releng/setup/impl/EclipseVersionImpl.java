@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
@@ -20,7 +19,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -32,13 +30,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl#getVersion <em>Version</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl#getDirectorCall <em>Director Call</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements EclipseVersion
+public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseVersion
 {
   /**
    * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
@@ -59,16 +56,6 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected String version = VERSION_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getDirectorCall() <em>Director Call</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDirectorCall()
-   * @generated
-   * @ordered
-   */
-  protected DirectorCall directorCall;
 
   /**
    * <!-- begin-user-doc -->
@@ -97,6 +84,18 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   public Configuration getConfiguration()
+  {
+    if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
+      return null;
+    return (Configuration)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Configuration basicGetConfiguration()
   {
     if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
       return null;
@@ -169,62 +168,6 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public DirectorCall getDirectorCall()
-  {
-    return directorCall;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetDirectorCall(DirectorCall newDirectorCall, NotificationChain msgs)
-  {
-    DirectorCall oldDirectorCall = directorCall;
-    directorCall = newDirectorCall;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL, oldDirectorCall, newDirectorCall);
-      if (msgs == null)
-        msgs = notification;
-      else
-        msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setDirectorCall(DirectorCall newDirectorCall)
-  {
-    if (newDirectorCall != directorCall)
-    {
-      NotificationChain msgs = null;
-      if (directorCall != null)
-        msgs = ((InternalEObject)directorCall).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL, null, msgs);
-      if (newDirectorCall != null)
-        msgs = ((InternalEObject)newDirectorCall).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL, null, msgs);
-      msgs = basicSetDirectorCall(newDirectorCall, msgs);
-      if (msgs != null)
-        msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL,
-          newDirectorCall, newDirectorCall));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -250,8 +193,6 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     {
     case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
       return basicSetConfiguration(null, msgs);
-    case SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL:
-      return basicSetDirectorCall(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -284,11 +225,11 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     switch (featureID)
     {
     case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
-      return getConfiguration();
+      if (resolve)
+        return getConfiguration();
+      return basicGetConfiguration();
     case SetupPackage.ECLIPSE_VERSION__VERSION:
       return getVersion();
-    case SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL:
-      return getDirectorCall();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -308,9 +249,6 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
       return;
     case SetupPackage.ECLIPSE_VERSION__VERSION:
       setVersion((String)newValue);
-      return;
-    case SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL:
-      setDirectorCall((DirectorCall)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -332,9 +270,6 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     case SetupPackage.ECLIPSE_VERSION__VERSION:
       setVersion(VERSION_EDEFAULT);
       return;
-    case SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL:
-      setDirectorCall((DirectorCall)null);
-      return;
     }
     super.eUnset(featureID);
   }
@@ -350,11 +285,9 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     switch (featureID)
     {
     case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
-      return getConfiguration() != null;
+      return basicGetConfiguration() != null;
     case SetupPackage.ECLIPSE_VERSION__VERSION:
       return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
-    case SetupPackage.ECLIPSE_VERSION__DIRECTOR_CALL:
-      return directorCall != null;
     }
     return super.eIsSet(featureID);
   }
@@ -376,5 +309,4 @@ public class EclipseVersionImpl extends MinimalEObjectImpl.Container implements 
     result.append(')');
     return result.toString();
   }
-
 } // EclipseVersionImpl

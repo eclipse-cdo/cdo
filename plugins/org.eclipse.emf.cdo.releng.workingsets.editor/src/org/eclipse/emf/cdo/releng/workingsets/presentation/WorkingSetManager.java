@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
-import org.eclipse.emf.cdo.releng.workingsets.Predicate;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.util.WorkingSetsUtil;

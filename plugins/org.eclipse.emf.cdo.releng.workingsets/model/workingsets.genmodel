@@ -6,25 +6,19 @@
     editorPluginClass="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsEditorPlugin"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
     testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    copyrightFields="false" operationReflection="true" importOrganizing="true" decoration="Live">
+    copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
+    operationReflection="true" importOrganizing="true" decoration="Live">
   <foreignModel>workingsets.ecore</foreignModel>
   <genPackages prefix="WorkingSets" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
       multipleEditorPages="false" ecorePackage="workingsets.ecore#/">
     <genDataTypes ecoreDataType="workingsets.ecore#//Project"/>
     <genClasses ecoreClass="workingsets.ecore#//WorkingSet">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference workingsets.ecore#//WorkingSet/predicates"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workingsets.ecore#//WorkingSet/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference workingsets.ecore#//WorkingSet/predicates"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute workingsets.ecore#//WorkingSet/id"/>
     </genClasses>
     <genClasses ecoreClass="workingsets.ecore#//WorkingSetGroup">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference workingsets.ecore#//WorkingSetGroup/workingSets"/>
-    </genClasses>
-    <genClasses ecoreClass="workingsets.ecore#//Predicate">
-      <genOperations ecoreOperation="workingsets.ecore#//Predicate/matches">
-        <genParameters ecoreParameter="workingsets.ecore#//Predicate/matches/project"/>
-      </genOperations>
-    </genClasses>
-    <genClasses ecoreClass="workingsets.ecore#//NamePredicate">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workingsets.ecore#//NamePredicate/pattern"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

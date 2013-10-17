@@ -10,11 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
-import org.eclipse.emf.cdo.releng.workingsets.NamePredicate;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+import org.eclipse.emf.cdo.releng.workingsets.*;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -79,8 +75,6 @@ public class WorkingSetsFactoryImpl extends EFactoryImpl implements WorkingSetsF
       return createWorkingSet();
     case WorkingSetsPackage.WORKING_SET_GROUP:
       return createWorkingSetGroup();
-    case WorkingSetsPackage.NAME_PREDICATE:
-      return createNamePredicate();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -136,17 +130,6 @@ public class WorkingSetsFactoryImpl extends EFactoryImpl implements WorkingSetsF
   {
     WorkingSetGroupImpl workingSetGroup = new WorkingSetGroupImpl();
     return workingSetGroup;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NamePredicate createNamePredicate()
-  {
-    NamePredicateImpl namePredicate = new NamePredicateImpl();
-    return namePredicate;
   }
 
   /**

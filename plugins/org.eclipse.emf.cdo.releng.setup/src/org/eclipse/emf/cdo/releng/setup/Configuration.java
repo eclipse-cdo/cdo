@@ -45,7 +45,7 @@ public interface Configuration extends EObject
    * @return the value of the '<em>Projects</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getConfiguration_Projects()
    * @see org.eclipse.emf.cdo.releng.setup.Project#getConfiguration
-   * @model opposite="configuration" containment="true" required="true"
+   * @model opposite="configuration" containment="true" resolveProxies="true" required="true"
    * @generated
    */
   EList<Project> getProjects();
@@ -63,7 +63,7 @@ public interface Configuration extends EObject
    * @return the value of the '<em>Eclipse Versions</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getConfiguration_EclipseVersions()
    * @see org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration
-   * @model opposite="configuration" containment="true" required="true"
+   * @model opposite="configuration" containment="true" resolveProxies="true" required="true"
    * @generated
    */
   EList<EclipseVersion> getEclipseVersions();

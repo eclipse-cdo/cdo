@@ -49,15 +49,6 @@ public interface WorkingSetsFactory extends EFactory
   WorkingSetGroup createWorkingSetGroup();
 
   /**
-   * Returns a new object of class '<em>Name Predicate</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Name Predicate</em>'.
-   * @generated
-   */
-  NamePredicate createNamePredicate();
-
-  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

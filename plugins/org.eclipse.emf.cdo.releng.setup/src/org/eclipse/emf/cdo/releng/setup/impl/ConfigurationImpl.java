@@ -91,7 +91,7 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   {
     if (projects == null)
     {
-      projects = new EObjectContainmentWithInverseEList<Project>(Project.class, this,
+      projects = new EObjectContainmentWithInverseEList.Resolving<Project>(Project.class, this,
           SetupPackage.CONFIGURATION__PROJECTS, SetupPackage.PROJECT__CONFIGURATION);
     }
     return projects;
@@ -106,7 +106,7 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   {
     if (eclipseVersions == null)
     {
-      eclipseVersions = new EObjectContainmentWithInverseEList<EclipseVersion>(EclipseVersion.class, this,
+      eclipseVersions = new EObjectContainmentWithInverseEList.Resolving<EclipseVersion>(EclipseVersion.class, this,
           SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS, SetupPackage.ECLIPSE_VERSION__CONFIGURATION);
     }
     return eclipseVersions;

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesEditPlugin;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -48,7 +49,7 @@ public final class WorkingSetsEditorPlugin extends EMFPlugin
    */
   public WorkingSetsEditorPlugin()
   {
-    super(new ResourceLocator[] {});
+    super(new ResourceLocator[] { PredicatesEditPlugin.INSTANCE, });
   }
 
   /**

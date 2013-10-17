@@ -10,10 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
-import org.eclipse.emf.cdo.releng.workingsets.Predicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,8 +21,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import java.util.Collection;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,8 +31,9 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetImpl#getPredicates <em>Predicates</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetImpl#getPredicates <em>Predicates</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,16 +41,6 @@ import java.util.Collection;
  */
 public class WorkingSetImpl extends MinimalEObjectImpl.Container implements WorkingSet
 {
-  /**
-   * The cached value of the '{@link #getPredicates() <em>Predicates</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPredicates()
-   * @generated
-   * @ordered
-   */
-  protected EList<Predicate> predicates;
-
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -73,10 +62,40 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   protected String name = NAME_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getPredicates() <em>Predicates</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @see #getPredicates()
+   * @generated
+   * @ordered
+   */
+  protected EList<Predicate> predicates;
+
+  /**
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getId()
    * @generated
+   * @ordered
    */
+  protected static final String ID_EDEFAULT = null;
+
+  /**
+  	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #getId()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected String id = ID_EDEFAULT;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected WorkingSetImpl()
   {
     super();
@@ -113,6 +132,29 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getId()
+  {
+    return id;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setId(String newId)
+  {
+    String oldId = id;
+    id = newId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WorkingSetsPackage.WORKING_SET__ID, oldId, id));
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public String getName()
   {
     return name;
@@ -157,10 +199,12 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   {
     switch (featureID)
     {
-    case WorkingSetsPackage.WORKING_SET__PREDICATES:
-      return getPredicates();
     case WorkingSetsPackage.WORKING_SET__NAME:
       return getName();
+    case WorkingSetsPackage.WORKING_SET__PREDICATES:
+      return getPredicates();
+    case WorkingSetsPackage.WORKING_SET__ID:
+      return getId();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -176,12 +220,15 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   {
     switch (featureID)
     {
+    case WorkingSetsPackage.WORKING_SET__NAME:
+      setName((String)newValue);
+      return;
     case WorkingSetsPackage.WORKING_SET__PREDICATES:
       getPredicates().clear();
       getPredicates().addAll((Collection<? extends Predicate>)newValue);
       return;
-    case WorkingSetsPackage.WORKING_SET__NAME:
-      setName((String)newValue);
+    case WorkingSetsPackage.WORKING_SET__ID:
+      setId((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -197,11 +244,14 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   {
     switch (featureID)
     {
+    case WorkingSetsPackage.WORKING_SET__NAME:
+      setName(NAME_EDEFAULT);
+      return;
     case WorkingSetsPackage.WORKING_SET__PREDICATES:
       getPredicates().clear();
       return;
-    case WorkingSetsPackage.WORKING_SET__NAME:
-      setName(NAME_EDEFAULT);
+    case WorkingSetsPackage.WORKING_SET__ID:
+      setId(ID_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -217,10 +267,12 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   {
     switch (featureID)
     {
-    case WorkingSetsPackage.WORKING_SET__PREDICATES:
-      return predicates != null && !predicates.isEmpty();
     case WorkingSetsPackage.WORKING_SET__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case WorkingSetsPackage.WORKING_SET__PREDICATES:
+      return predicates != null && !predicates.isEmpty();
+    case WorkingSetsPackage.WORKING_SET__ID:
+      return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
     }
     return super.eIsSet(featureID);
   }
@@ -239,6 +291,8 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", id: ");
+    result.append(id);
     result.append(')');
     return result.toString();
   }

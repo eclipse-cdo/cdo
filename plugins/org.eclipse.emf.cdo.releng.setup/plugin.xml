@@ -21,4 +21,12 @@
             genModel="model/setup.genmodel"/>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.eclipse.emf.cdo.releng.internal.setup.Activator$EarlyStartup">
+      </startup>
+   </extension>
+   
+   
 </plugin>

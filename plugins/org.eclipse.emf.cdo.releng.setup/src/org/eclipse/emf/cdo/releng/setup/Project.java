@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -24,8 +23,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getApiBaselines <em>Api Baselines</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getWorkingSetGroup <em>Working Set Group</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,7 +30,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Project extends ToolInstallation
+public interface Project extends ConfigurableItem
 {
   /**
    * Returns the value of the '<em><b>Configuration</b></em>' container reference.
@@ -48,7 +45,7 @@ public interface Project extends ToolInstallation
    * @see #setConfiguration(Configuration)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_Configuration()
    * @see org.eclipse.emf.cdo.releng.setup.Configuration#getProjects
-   * @model opposite="projects" transient="false"
+   * @model opposite="projects"
    * @generated
    */
   Configuration getConfiguration();
@@ -76,7 +73,7 @@ public interface Project extends ToolInstallation
    * @return the value of the '<em>Branches</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_Branches()
    * @see org.eclipse.emf.cdo.releng.setup.Branch#getProject
-   * @model opposite="project" containment="true" required="true"
+   * @model opposite="project" containment="true" resolveProxies="true" required="true"
    * @generated
    */
   EList<Branch> getBranches();
@@ -106,49 +103,5 @@ public interface Project extends ToolInstallation
    * @generated
    */
   void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Api Baselines</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.ApiBaseline}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.ApiBaseline#getProject <em>Project</em>}'.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Api Baselines</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Api Baselines</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_ApiBaselines()
-   * @see org.eclipse.emf.cdo.releng.setup.ApiBaseline#getProject
-   * @model opposite="project" containment="true"
-   * @generated
-   */
-  EList<ApiBaseline> getApiBaselines();
-
-  /**
-  	 * Returns the value of the '<em><b>Working Set Group</b></em>' containment reference.
-  	 * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Working Set Group</em>' containment reference isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
-  	 * @return the value of the '<em>Working Set Group</em>' containment reference.
-  	 * @see #setWorkingSetGroup(WorkingSetGroup)
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_WorkingSetGroup()
-  	 * @model containment="true"
-  	 * @generated
-  	 */
-  WorkingSetGroup getWorkingSetGroup();
-
-  /**
-  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Project#getWorkingSetGroup <em>Working Set Group</em>}' containment reference.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @param value the new value of the '<em>Working Set Group</em>' containment reference.
-  	 * @see #getWorkingSetGroup()
-  	 * @generated
-  	 */
-  void setWorkingSetGroup(WorkingSetGroup value);
 
 } // Project

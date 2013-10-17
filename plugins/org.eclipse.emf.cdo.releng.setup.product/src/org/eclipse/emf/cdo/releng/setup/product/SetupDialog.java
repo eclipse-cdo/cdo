@@ -10,37 +10,34 @@
  */
 package org.eclipse.emf.cdo.releng.setup.product;
 
+import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
-import org.eclipse.emf.cdo.releng.setup.LinkLocation;
-import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
-import org.eclipse.emf.cdo.releng.setup.helper.OS;
-import org.eclipse.emf.cdo.releng.setup.helper.Progress;
-import org.eclipse.emf.cdo.releng.setup.helper.ProgressLog;
-import org.eclipse.emf.cdo.releng.setup.helper.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.provider.BranchItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ConfigurationItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ProjectItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.setup.ui.ProgressLogDialog;
+import org.eclipse.emf.cdo.releng.setup.util.OS;
+import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -85,17 +82,13 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.wb.swt.ResourceManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -103,17 +96,10 @@ import java.util.Set;
 public class SetupDialog extends TitleAreaDialog
 {
   private static final String SETUP_URI = System.getProperty("setup.uri",
-      "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.xmi");
+      "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.setup")
+      .replace('\\', '/');
 
-  private static final String EGIT_URI = System.getProperty("egit.uri", "http://download.eclipse.org/releases/kepler");
-
-  private static final String BUCKY_URI = System.getProperty("bucky.uri",
-      "http://download.eclipse.org/tools/buckminster/updates-4.3");
-
-  private static final String RELENG_URI = System.getProperty("releng.uri",
-      "http://download.eclipse.org/modeling/emf/cdo/updates/integration");
-
-  private HashMap<Branch, Setup> setups;
+  private Map<Branch, Setup> setups;
 
   private AdapterFactory adapterFactory;
 
@@ -150,7 +136,7 @@ public class SetupDialog extends TitleAreaDialog
   @Override
   public boolean close()
   {
-    savePreferences();
+    saveEObject(preferences);
     return super.close();
   }
 
@@ -163,7 +149,7 @@ public class SetupDialog extends TitleAreaDialog
   {
     getShell().setText(ProgressLogDialog.TITLE);
     setTitle(ProgressLogDialog.TITLE);
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup.ui", "icons/install_wiz.gif"));
+    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/install_wiz.gif"));
 
     URI configurationURI = URI.createURI(SETUP_URI);
     Resource resource = resourceSet.getResource(configurationURI, true);
@@ -292,16 +278,6 @@ public class SetupDialog extends TitleAreaDialog
             {
               Branch branch = (Branch)element;
               Setup setup = setups.get(branch);
-              if (setup == null)
-              {
-                setup = SetupFactory.eINSTANCE.createSetup();
-                setup.setBranch(branch);
-                setup.setEclipseVersion(getDefaultEclipseVersion());
-
-                Resource resource = resourceSet.createResource(getSetupURI(branch));
-                resource.getContents().add(setup);
-              }
-
               EclipseVersion eclipseVersion = setup.getEclipseVersion();
               return labelProvider.getText(eclipseVersion);
             }
@@ -347,8 +323,21 @@ public class SetupDialog extends TitleAreaDialog
       }
     });
 
-    Label empty = new Label(grpPreferences, SWT.NONE);
-    empty.setBounds(0, 0, 55, 15);
+    // Label empty = new Label(grpPreferences, SWT.NONE);
+    // empty.setBounds(0, 0, 55, 15);
+    Button editButton = new Button(grpPreferences, SWT.NONE);
+    editButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    editButton.setBounds(0, 0, 75, 25);
+    editButton.setText("Edit...");
+    editButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        close();
+        setReturnCode(-2);
+      }
+    });
 
     Label installFolderLabel = new Label(grpPreferences, SWT.NONE);
     installFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -363,6 +352,12 @@ public class SetupDialog extends TitleAreaDialog
       public void modifyText(ModifyEvent e)
       {
         preferences.setInstallFolder(installFolderText.getText());
+        for (Setup setup : setups.values())
+        {
+          URI uri = getSetupURI(setup.getBranch());
+          setup.eResource().setURI(uri);
+        }
+
         validate();
       }
     });
@@ -469,6 +464,8 @@ public class SetupDialog extends TitleAreaDialog
       Resource resource = resourceSet.getResource(Preferences.PREFERENCES_URI, true);
       preferences = (Preferences)resource.getContents().get(0);
 
+      setups = initSetups();
+
       userNameText.setText(safe(preferences.getUserName()));
       installFolderText.setText(safe(preferences.getInstallFolder()));
       gitPrefixText.setText(safe(preferences.getGitPrefix()));
@@ -479,6 +476,8 @@ public class SetupDialog extends TitleAreaDialog
       preferences = SetupFactory.eINSTANCE.createPreferences();
       resource.getContents().add(preferences);
 
+      setups = initSetups();
+
       File rootFolder = new File(System.getProperty("user.home", "."));
 
       userNameText.setText(safe(System.getProperty("user.name", "<username>")).toLowerCase());
@@ -486,14 +485,13 @@ public class SetupDialog extends TitleAreaDialog
       gitPrefixText.setText(safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix()))));
     }
 
-    initWorkspaces();
     viewer.setInput(configuration);
     viewer.expandAll();
   }
 
-  private void initWorkspaces()
+  private Map<Branch, Setup> initSetups()
   {
-    setups = new HashMap<Branch, Setup>();
+    Map<Branch, Setup> setups = new HashMap<Branch, Setup>();
     for (Project project : configuration.getProjects())
     {
       for (Branch branch : project.getBranches())
@@ -508,8 +506,9 @@ public class SetupDialog extends TitleAreaDialog
         else
         {
           setup = SetupFactory.eINSTANCE.createSetup();
-          setup.setBranch(branch);
           setup.setEclipseVersion(getDefaultEclipseVersion());
+          setup.setBranch(branch);
+          setup.setPreferences(preferences);
 
           Resource resource = resourceSet.createResource(uri);
           resource.getContents().add(setup);
@@ -518,6 +517,8 @@ public class SetupDialog extends TitleAreaDialog
         setups.put(branch, setup);
       }
     }
+
+    return setups;
   }
 
   private EclipseVersion getDefaultEclipseVersion()
@@ -625,7 +626,9 @@ public class SetupDialog extends TitleAreaDialog
     if (object instanceof Branch)
     {
       Branch branch = (Branch)object;
-      return branch.isInstalled(installFolderText.getText());
+      Setup setup = setups.get(branch);
+      URI uri = setup.eResource().getURI();
+      return resourceSet.getURIConverter().exists(uri, null);
     }
 
     return false;
@@ -672,218 +675,29 @@ public class SetupDialog extends TitleAreaDialog
 
   private void install(Setup setup, String installFolder, String gitPrefix) throws Exception
   {
-    Branch branch = setup.getBranch();
-    Progress.log().addLine("Setting up " + branch.getProject().getName() + " " + branch.getName());
+    saveEObject(setup);
 
-    URI branchURI = branch.getURI(installFolder).trimSegments(1);
-    String destination = branchURI.appendSegment("eclipse").toFileString();
+    SetupTaskPerformer performer = new SetupTaskPerformer(new File(installFolder, setup.getBranch().getProject()
+        .getName()
+        + "/" + setup.getBranch().getName()));
+    performer.getWorkspaceDir().mkdirs();
+    performer.perform();
 
-    Set<String> updateLocations = new HashSet<String>();
-    updateLocations.add(EGIT_URI);
-    updateLocations.add(BUCKY_URI);
-    updateLocations.add(RELENG_URI);
-
-    String bundlePool = new File(installFolder, ".p2pool-ide").getAbsolutePath();
-
-    install(bundlePool, destination, updateLocations, setup.getEclipseVersion().getDirectorCall(), true);
-
-    Director.from(bundlePool) //
-        .feature("org.eclipse.egit") //
-        .repository(EGIT_URI) //
-        //
-        .feature("org.eclipse.buckminster.core.feature") //
-        .feature("org.eclipse.buckminster.git.feature") //
-        .feature("org.eclipse.buckminster.pde.feature") //
-        .repository(BUCKY_URI) //
-        //
-        .feature("org.eclipse.emf.cdo.releng.setup.ide") //
-        .repository(RELENG_URI) //
-        //
-        .install(destination);
-
-    install(bundlePool, destination, updateLocations, branch.getProject());
-    install(bundlePool, destination, updateLocations, branch);
-    install(bundlePool, destination, updateLocations, preferences);
-
-    install(preferences.getLinkLocations(), destination);
-
-    File branchFolder = new File(branchURI.toFileString());
-    mangleEclipseIni(destination, branchFolder, gitPrefix);
-
-    setup.setPreferences(EcoreUtil.copy(preferences));
-    for (String updateLocation : updateLocations)
-    {
-      P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
-      p2Repository.setUrl(updateLocation);
-
-      setup.getUpdateLocations().add(p2Repository);
-    }
-
-    Resource setupResource = setup.eResource();
-    setupResource.setURI(getSetupURI(branch, installFolder));
-    setupResource.save(null);
-
-    new File(branchFolder, "ws").mkdirs();
-    launchIDE(setup, branchFolder);
-  }
-
-  private void install(String bundlePool, String destination, Set<String> updateLocations, ToolInstallation installation)
-      throws Exception
-  {
-    for (DirectorCall directorCall : installation.getDirectorCalls())
-    {
-      install(bundlePool, destination, updateLocations, directorCall, false);
-    }
-  }
-
-  private void install(String bundlePool, String destination, Set<String> updateLocations, DirectorCall directorCall,
-      boolean resetProfile) throws Exception
-  {
-    Director.install(bundlePool, directorCall, destination, resetProfile);
-    for (P2Repository p2Repository : directorCall.getP2Repositories())
-    {
-      updateLocations.add(p2Repository.getUrl());
-    }
-  }
-
-  private void install(EList<LinkLocation> linkLocations, String destination) throws Exception
-  {
-    if (!linkLocations.isEmpty())
-    {
-      File links = new File(destination, "links");
-      links.mkdirs();
-
-      for (LinkLocation linkLocation : linkLocations)
-      {
-        File path = new File(linkLocation.getPath()).getCanonicalFile();
-
-        String name = linkLocation.getName();
-        if (name == null || name.length() == 0)
-        {
-          name = path.getName();
-        }
-
-        File link = new File(links, name + ".link");
-
-        List<String> lines = Collections.singletonList("path=" + path.toString().replace("\\", "\\\\"));
-        OS.INSTANCE.writeText(link, lines);
-      }
-    }
-  }
-
-  private void mangleEclipseIni(String destination, File branchFolder, String gitPrefix)
-  {
-    File eclipseIni = new File(destination, "eclipse.ini");
-
-    List<String> oldLines = OS.INSTANCE.readText(eclipseIni);
-    List<String> newLines = new ArrayList<String>(oldLines);
-    mangleEclipseIni(newLines, branchFolder, gitPrefix);
-
-    if (!newLines.equals(oldLines))
-    {
-      Progress.log().addLine("Adjusting eclipse.ini");
-      OS.INSTANCE.writeText(eclipseIni, newLines);
-    }
-  }
-
-  private void mangleEclipseIni(List<String> lines, File branchFolder, String gitPrefix)
-  {
-    String maxHeap = Platform.getOSArch().endsWith("_64") ? "-Xmx4g" : "-Xmx1g";
-
-    int xmx = findLine(lines, "-Xmx");
-    if (xmx == -1)
-    {
-      lines.add(maxHeap);
-    }
-    else
-    {
-      lines.set(xmx, maxHeap);
-    }
-
-    int maxperm = findLine(lines, "--launcher.XXMaxPermSize");
-    if (maxperm == -1)
-    {
-      maxperm = findLine(lines, "-vmargs");
-      lines.add(maxperm, "--launcher.XXMaxPermSize");
-      lines.add(maxperm + 1, "512m");
-    }
-    else
-    {
-      lines.set(maxperm + 1, "512m");
-    }
-
-    String ws = new File(branchFolder, "ws").getAbsolutePath();
-
-    int data = findLine(lines, "-data");
-    if (data == -1)
-    {
-      data = findLine(lines, "-vmargs");
-      lines.add(data, "-data");
-      lines.add(data + 1, ws);
-    }
-    else
-    {
-      lines.set(data + 1, ws);
-    }
-
-    if (gitPrefix.length() != 0)
-    {
-      gitPrefix = "-Djgit.gitprefix=" + gitPrefix;
-      if (!lines.contains(gitPrefix))
-      {
-        lines.add(gitPrefix);
-      }
-    }
-
-    String setupIDE = "-Dorg.eclipse.emf.cdo.releng.setup.ide=true";
-    if (!lines.contains(setupIDE))
-    {
-      lines.add(setupIDE);
-    }
-
-    File projectFolder = branchFolder.getParentFile();
-    String poolPath = new File(projectFolder.getParentFile(), ".p2pool-tp").getAbsolutePath();
-    String bundlePool = "-Dorg.eclipse.buckminster.core.bundle.pool=" + poolPath;
-    if (!lines.contains(bundlePool))
-    {
-      lines.add(bundlePool);
-    }
-  }
-
-  private int findLine(List<String> lines, String search)
-  {
-    int index = 0;
-    for (String line : lines)
-    {
-      if (line.contains(search))
-      {
-        return index;
-      }
-
-      ++index;
-    }
-
-    return -1;
-  }
-
-  private void launchIDE(Setup setup, File branchFolder) throws IOException
-  {
-    Progress.log().addLine("Launching IDE");
-
-    String eclipseExecutable = OS.INSTANCE.getEclipseExecutable();
-    String eclipsePath = new File(branchFolder, "eclipse/" + eclipseExecutable).getAbsolutePath();
-    File ws = new File(branchFolder, "ws");
+    performer.log("Launching IDE");
+    String eclipseExecutable = performer.getOS().getEclipseExecutable();
+    String eclipsePath = new File(performer.getBranchDir(), "eclipse/" + eclipseExecutable).getAbsolutePath();
+    File ws = new File(performer.getBranchDir(), "ws");
 
     ProcessBuilder builder = new ProcessBuilder(eclipsePath);
     builder.directory(ws);
     builder.start();
   }
 
-  private void savePreferences()
+  private void saveEObject(EObject eObject)
   {
     try
     {
-      XMLResource xmlResource = (XMLResource)preferences.eResource();
+      XMLResource xmlResource = (XMLResource)eObject.eResource();
       xmlResource.getEObjectToExtensionMap().clear();
       xmlResource.save(null);
     }
@@ -913,6 +727,7 @@ public class SetupDialog extends TitleAreaDialog
               childrenFeatures = new ArrayList<EStructuralFeature>();
               childrenFeatures.add(SetupPackage.Literals.CONFIGURATION__PROJECTS);
             }
+
             return childrenFeatures;
           }
         };
@@ -928,7 +743,6 @@ public class SetupDialog extends TitleAreaDialog
       {
         projectItemProvider = new ProjectItemProvider(this)
         {
-
           @Override
           public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
           {
@@ -937,6 +751,7 @@ public class SetupDialog extends TitleAreaDialog
               childrenFeatures = new ArrayList<EStructuralFeature>();
               childrenFeatures.add(SetupPackage.Literals.PROJECT__BRANCHES);
             }
+
             return childrenFeatures;
           }
         };
@@ -959,6 +774,7 @@ public class SetupDialog extends TitleAreaDialog
             {
               childrenFeatures = new ArrayList<EStructuralFeature>();
             }
+
             return childrenFeatures;
           }
         };
@@ -999,7 +815,7 @@ public class SetupDialog extends TitleAreaDialog
     {
       if (isInstalled(object))
       {
-        return getShell().getDisplay().getSystemColor(SWT.COLOR_GRAY);
+        return getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
       }
 
       return super.getBackground(object);

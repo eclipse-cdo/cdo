@@ -10,21 +10,32 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import org.eclipse.emf.cdo.releng.setup.*;
-import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
+import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
+import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.DirectorCall;
+import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
+import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
-import org.eclipse.emf.cdo.releng.setup.GitClone;
+import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
+import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.ToolInstallation;
-
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
+import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
+import org.eclipse.emf.cdo.releng.setup.TextModification;
+import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -93,57 +104,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   protected SetupSwitch<Adapter> modelSwitch = new SetupSwitch<Adapter>()
   {
     @Override
-    public Adapter casePreferences(Preferences object)
-    {
-      return createPreferencesAdapter();
-    }
-
-    @Override
-    public Adapter caseLinkLocation(LinkLocation object)
-    {
-      return createLinkLocationAdapter();
-    }
-
-    @Override
-    public Adapter caseToolInstallation(ToolInstallation object)
-    {
-      return createToolInstallationAdapter();
-    }
-
-    @Override
-    public Adapter caseToolPreference(ToolPreference object)
-    {
-      return createToolPreferenceAdapter();
-    }
-
-    @Override
     public Adapter caseEclipseVersion(EclipseVersion object)
     {
       return createEclipseVersionAdapter();
     }
 
     @Override
-    public Adapter caseDirectorCall(DirectorCall object)
-    {
-      return createDirectorCallAdapter();
-    }
-
-    @Override
-    public Adapter caseInstallableUnit(InstallableUnit object)
-    {
-      return createInstallableUnitAdapter();
-    }
-
-    @Override
-    public Adapter caseP2Repository(P2Repository object)
-    {
-      return createP2RepositoryAdapter();
-    }
-
-    @Override
     public Adapter caseConfiguration(Configuration object)
     {
       return createConfigurationAdapter();
+    }
+
+    @Override
+    public Adapter caseConfigurableItem(ConfigurableItem object)
+    {
+      return createConfigurableItemAdapter();
     }
 
     @Override
@@ -159,21 +134,123 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseApiBaseline(ApiBaseline object)
+    public Adapter casePreferences(Preferences object)
     {
-      return createApiBaselineAdapter();
-    }
-
-    @Override
-    public Adapter caseGitClone(GitClone object)
-    {
-      return createGitCloneAdapter();
+      return createPreferencesAdapter();
     }
 
     @Override
     public Adapter caseSetup(Setup object)
     {
       return createSetupAdapter();
+    }
+
+    @Override
+    public Adapter caseSetupTask(SetupTask object)
+    {
+      return createSetupTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseSetupTaskContainer(SetupTaskContainer object)
+    {
+      return createSetupTaskContainerAdapter();
+    }
+
+    @Override
+    public Adapter caseCompoundSetupTask(CompoundSetupTask object)
+    {
+      return createCompoundSetupTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseOneTimeSetupTask(OneTimeSetupTask object)
+    {
+      return createOneTimeSetupTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseEclipseIniTask(EclipseIniTask object)
+    {
+      return createEclipseIniTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseLinkLocationTask(LinkLocationTask object)
+    {
+      return createLinkLocationTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseP2Task(P2Task object)
+    {
+      return createP2TaskAdapter();
+    }
+
+    @Override
+    public Adapter caseInstallableUnit(InstallableUnit object)
+    {
+      return createInstallableUnitAdapter();
+    }
+
+    @Override
+    public Adapter caseP2Repository(P2Repository object)
+    {
+      return createP2RepositoryAdapter();
+    }
+
+    @Override
+    public Adapter caseBuckminsterImportTask(BuckminsterImportTask object)
+    {
+      return createBuckminsterImportTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseApiBaselineTask(ApiBaselineTask object)
+    {
+      return createApiBaselineTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseGitCloneTask(GitCloneTask object)
+    {
+      return createGitCloneTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseEclipsePreferenceTask(EclipsePreferenceTask object)
+    {
+      return createEclipsePreferenceTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseStringVariableTask(StringVariableTask object)
+    {
+      return createStringVariableTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseWorkingSetTask(WorkingSetTask object)
+    {
+      return createWorkingSetTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseResourceCopyTask(ResourceCopyTask object)
+    {
+      return createResourceCopyTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseTextModifyTask(TextModifyTask object)
+    {
+      return createTextModifyTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseTextModification(TextModification object)
+    {
+      return createTextModificationAdapter();
     }
 
     @Override
@@ -243,16 +320,31 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ToolInstallation <em>Tool Installation</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask <em>Api Baseline Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.ToolInstallation
+   * @see org.eclipse.emf.cdo.releng.setup.ApiBaselineTask
    * @generated
    */
-  public Adapter createToolInstallationAdapter()
+  public Adapter createApiBaselineTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask <em>Git Clone Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask
+   * @generated
+   */
+  public Adapter createGitCloneTaskAdapter()
   {
     return null;
   }
@@ -273,16 +365,31 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.DirectorCall <em>Director Call</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.P2Task <em>P2 Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.DirectorCall
+   * @see org.eclipse.emf.cdo.releng.setup.P2Task
    * @generated
    */
-  public Adapter createDirectorCallAdapter()
+  public Adapter createP2TaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.StringVariableTask <em>String Variable Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.StringVariableTask
+   * @generated
+   */
+  public Adapter createStringVariableTaskAdapter()
   {
     return null;
   }
@@ -318,36 +425,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ApiBaseline <em>Api Baseline</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.ApiBaseline
-   * @generated
-   */
-  public Adapter createApiBaselineAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.GitClone <em>Git Clone</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.GitClone
-   * @generated
-   */
-  public Adapter createGitCloneAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Setup <em>Setup</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -363,31 +440,151 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ToolPreference <em>Tool Preference</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.SetupTask <em>Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.ToolPreference
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTask
    * @generated
    */
-  public Adapter createToolPreferenceAdapter()
+  public Adapter createSetupTaskAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocation <em>Link Location</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask <em>Working Set Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.LinkLocation
+   * @see org.eclipse.emf.cdo.releng.setup.WorkingSetTask
    * @generated
    */
-  public Adapter createLinkLocationAdapter()
+  public Adapter createWorkingSetTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask <em>Resource Copy Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCopyTask
+   * @generated
+   */
+  public Adapter createResourceCopyTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask <em>Text Modify Task</em>}'.
+   * <!-- begin-user-doc -->
+  	 * This default implementation returns null so that we can easily ignore cases;
+  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+  	 * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask
+   * @generated
+   */
+  public Adapter createTextModifyTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TextModification <em>Text Modification</em>}'.
+   * <!-- begin-user-doc -->
+  	 * This default implementation returns null so that we can easily ignore cases;
+  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+  	 * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.TextModification
+   * @generated
+   */
+  public Adapter createTextModificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+   * <!-- begin-user-doc -->
+       * This default implementation returns null so that we can easily ignore cases;
+       * it's useful to ignore a case when inheritance will catch all the cases anyway.
+       * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+   * @generated
+   */
+  public Adapter createEclipseIniTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.CompoundSetupTask <em>Compound Setup Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.CompoundSetupTask
+   * @generated
+   */
+  public Adapter createCompoundSetupTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask <em>One Time Setup Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask
+   * @generated
+   */
+  public Adapter createOneTimeSetupTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ConfigurableItem <em>Configurable Item</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ConfigurableItem
+   * @generated
+   */
+  public Adapter createConfigurableItemAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask <em>Buckminster Import Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask
+   * @generated
+   */
+  public Adapter createBuckminsterImportTaskAdapter()
   {
     return null;
   }
@@ -403,6 +600,51 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPreferencesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask <em>Link Location Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.LinkLocationTask
+   * @generated
+   */
+  public Adapter createLinkLocationTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskContainer <em>Task Container</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskContainer
+   * @generated
+   */
+  public Adapter createSetupTaskContainerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask <em>Eclipse Preference Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask
+   * @generated
+   */
+  public Adapter createEclipsePreferenceTaskAdapter()
   {
     return null;
   }

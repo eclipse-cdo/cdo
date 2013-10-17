@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -37,7 +36,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProjectItemProvider extends ToolInstallationItemProvider implements IEditingDomainItemProvider,
+public class ProjectItemProvider extends ConfigurableItemItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -100,8 +99,6 @@ public class ProjectItemProvider extends ToolInstallationItemProvider implements
     {
       super.getChildrenFeatures(object);
       childrenFeatures.add(SetupPackage.Literals.PROJECT__BRANCHES);
-      childrenFeatures.add(SetupPackage.Literals.PROJECT__API_BASELINES);
-      childrenFeatures.add(SetupPackage.Literals.PROJECT__WORKING_SET_GROUP);
     }
     return childrenFeatures;
   }
@@ -163,8 +160,6 @@ public class ProjectItemProvider extends ToolInstallationItemProvider implements
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.PROJECT__BRANCHES:
-    case SetupPackage.PROJECT__API_BASELINES:
-    case SetupPackage.PROJECT__WORKING_SET_GROUP:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -185,12 +180,6 @@ public class ProjectItemProvider extends ToolInstallationItemProvider implements
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.PROJECT__BRANCHES,
         SetupFactory.eINSTANCE.createBranch()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.PROJECT__API_BASELINES,
-        SetupFactory.eINSTANCE.createApiBaseline()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.PROJECT__WORKING_SET_GROUP,
-        WorkingSetsFactory.eINSTANCE.createWorkingSetGroup()));
   }
 
 }

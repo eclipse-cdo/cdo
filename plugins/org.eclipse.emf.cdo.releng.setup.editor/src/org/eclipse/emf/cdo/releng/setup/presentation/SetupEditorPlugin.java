@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -17,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesEditPlugin;
 
 /**
  * This is the central singleton for the Setup editor plugin.
@@ -50,7 +53,7 @@ public final class SetupEditorPlugin extends EMFPlugin
    */
   public SetupEditorPlugin()
   {
-    super(new ResourceLocator[] {});
+    super(new ResourceLocator[] { WorkingSetsEditPlugin.INSTANCE, PredicatesEditPlugin.INSTANCE, });
   }
 
   /**

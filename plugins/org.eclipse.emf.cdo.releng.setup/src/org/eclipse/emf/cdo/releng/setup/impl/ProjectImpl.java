@@ -10,13 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import org.eclipse.emf.cdo.releng.setup.ApiBaseline;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -39,14 +37,12 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getApiBaselines <em>Api Baselines</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getWorkingSetGroup <em>Working Set Group</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ProjectImpl extends ToolInstallationImpl implements Project
+public class ProjectImpl extends ConfigurableItemImpl implements Project
 {
   /**
    * The cached value of the '{@link #getBranches() <em>Branches</em>}' containment reference list.
@@ -79,30 +75,10 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getApiBaselines() <em>Api Baselines</em>}' containment reference list.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getApiBaselines()
-   * @generated
-   * @ordered
-   */
-  protected EList<ApiBaseline> apiBaselines;
-
-  /**
-   * The cached value of the '{@link #getWorkingSetGroup() <em>Working Set Group</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getWorkingSetGroup()
-   * @generated
-   * @ordered
-   */
-  protected WorkingSetGroup workingSetGroup;
-
-  /**
-  	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ProjectImpl()
   {
     super();
@@ -125,6 +101,18 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
    * @generated
    */
   public Configuration getConfiguration()
+  {
+    if (eContainerFeatureID() != SetupPackage.PROJECT__CONFIGURATION)
+      return null;
+    return (Configuration)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Configuration basicGetConfiguration()
   {
     if (eContainerFeatureID() != SetupPackage.PROJECT__CONFIGURATION)
       return null;
@@ -178,8 +166,8 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
   {
     if (branches == null)
     {
-      branches = new EObjectContainmentWithInverseEList<Branch>(Branch.class, this, SetupPackage.PROJECT__BRANCHES,
-          SetupPackage.BRANCH__PROJECT);
+      branches = new EObjectContainmentWithInverseEList.Resolving<Branch>(Branch.class, this,
+          SetupPackage.PROJECT__BRANCHES, SetupPackage.BRANCH__PROJECT);
     }
     return branches;
   }
@@ -209,80 +197,9 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<ApiBaseline> getApiBaselines()
-  {
-    if (apiBaselines == null)
-    {
-      apiBaselines = new EObjectContainmentWithInverseEList<ApiBaseline>(ApiBaseline.class, this,
-          SetupPackage.PROJECT__API_BASELINES, SetupPackage.API_BASELINE__PROJECT);
-    }
-    return apiBaselines;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public WorkingSetGroup getWorkingSetGroup()
-  {
-    return workingSetGroup;
-  }
-
-  /**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  public NotificationChain basicSetWorkingSetGroup(WorkingSetGroup newWorkingSetGroup, NotificationChain msgs)
-  {
-    WorkingSetGroup oldWorkingSetGroup = workingSetGroup;
-    workingSetGroup = newWorkingSetGroup;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          SetupPackage.PROJECT__WORKING_SET_GROUP, oldWorkingSetGroup, newWorkingSetGroup);
-      if (msgs == null)
-        msgs = notification;
-      else
-        msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
-  public void setWorkingSetGroup(WorkingSetGroup newWorkingSetGroup)
-  {
-    if (newWorkingSetGroup != workingSetGroup)
-    {
-      NotificationChain msgs = null;
-      if (workingSetGroup != null)
-        msgs = ((InternalEObject)workingSetGroup).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - SetupPackage.PROJECT__WORKING_SET_GROUP, null, msgs);
-      if (newWorkingSetGroup != null)
-        msgs = ((InternalEObject)newWorkingSetGroup).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - SetupPackage.PROJECT__WORKING_SET_GROUP, null, msgs);
-      msgs = basicSetWorkingSetGroup(newWorkingSetGroup, msgs);
-      if (msgs != null)
-        msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PROJECT__WORKING_SET_GROUP,
-          newWorkingSetGroup, newWorkingSetGroup));
-  }
-
-  /**
-  	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -295,8 +212,6 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
       return basicSetConfiguration((Configuration)otherEnd, msgs);
     case SetupPackage.PROJECT__BRANCHES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getBranches()).basicAdd(otherEnd, msgs);
-    case SetupPackage.PROJECT__API_BASELINES:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getApiBaselines()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -315,10 +230,6 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
       return basicSetConfiguration(null, msgs);
     case SetupPackage.PROJECT__BRANCHES:
       return ((InternalEList<?>)getBranches()).basicRemove(otherEnd, msgs);
-    case SetupPackage.PROJECT__API_BASELINES:
-      return ((InternalEList<?>)getApiBaselines()).basicRemove(otherEnd, msgs);
-    case SetupPackage.PROJECT__WORKING_SET_GROUP:
-      return basicSetWorkingSetGroup(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -350,15 +261,13 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     switch (featureID)
     {
     case SetupPackage.PROJECT__CONFIGURATION:
-      return getConfiguration();
+      if (resolve)
+        return getConfiguration();
+      return basicGetConfiguration();
     case SetupPackage.PROJECT__BRANCHES:
       return getBranches();
     case SetupPackage.PROJECT__NAME:
       return getName();
-    case SetupPackage.PROJECT__API_BASELINES:
-      return getApiBaselines();
-    case SetupPackage.PROJECT__WORKING_SET_GROUP:
-      return getWorkingSetGroup();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -384,13 +293,6 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     case SetupPackage.PROJECT__NAME:
       setName((String)newValue);
       return;
-    case SetupPackage.PROJECT__API_BASELINES:
-      getApiBaselines().clear();
-      getApiBaselines().addAll((Collection<? extends ApiBaseline>)newValue);
-      return;
-    case SetupPackage.PROJECT__WORKING_SET_GROUP:
-      setWorkingSetGroup((WorkingSetGroup)newValue);
-      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -414,12 +316,6 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     case SetupPackage.PROJECT__NAME:
       setName(NAME_EDEFAULT);
       return;
-    case SetupPackage.PROJECT__API_BASELINES:
-      getApiBaselines().clear();
-      return;
-    case SetupPackage.PROJECT__WORKING_SET_GROUP:
-      setWorkingSetGroup((WorkingSetGroup)null);
-      return;
     }
     super.eUnset(featureID);
   }
@@ -435,15 +331,11 @@ public class ProjectImpl extends ToolInstallationImpl implements Project
     switch (featureID)
     {
     case SetupPackage.PROJECT__CONFIGURATION:
-      return getConfiguration() != null;
+      return basicGetConfiguration() != null;
     case SetupPackage.PROJECT__BRANCHES:
       return branches != null && !branches.isEmpty();
     case SetupPackage.PROJECT__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-    case SetupPackage.PROJECT__API_BASELINES:
-      return apiBaselines != null && !apiBaselines.isEmpty();
-    case SetupPackage.PROJECT__WORKING_SET_GROUP:
-      return workingSetGroup != null;
     }
     return super.eIsSet(featureID);
   }

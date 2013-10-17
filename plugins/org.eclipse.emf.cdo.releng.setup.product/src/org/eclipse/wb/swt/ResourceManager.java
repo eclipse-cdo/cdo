@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.wb.swt;
 
+import org.eclipse.emf.cdo.releng.internal.setup.ui.SWTResourceManager;
+
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;

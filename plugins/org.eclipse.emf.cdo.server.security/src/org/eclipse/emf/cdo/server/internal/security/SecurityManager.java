@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
@@ -76,6 +77,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IAuthenticator;
+import org.eclipse.net4j.util.security.IAuthenticator2;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import org.eclipse.emf.common.util.EList;
@@ -793,6 +795,30 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   }
 
+  protected final boolean isAdministrator(User user)
+  {
+    // an administrator is one that has write permission on the realm resource
+    Realm realm = getRealm();
+
+    if (realm != null)
+    {
+      // can't be an administrator if there isn't a realm
+      CDORevision revision = realm.cdoRevision();
+      CDORevisionProvider revisionProvider = realm.cdoView();
+      CDOBranchPoint securityContext = realm.cdoView();
+
+      for (Permission next : user.getAllPermissions())
+      {
+        if (next.getAccess() == Access.WRITE && next.isApplicable(revision, revisionProvider, securityContext))
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
@@ -856,7 +882,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   /**
    * @author Eike Stepper
    */
-  private final class Authenticator implements IAuthenticator
+  private final class Authenticator implements IAuthenticator2
   {
     public void authenticate(String userID, char[] password) throws SecurityException
     {
@@ -871,6 +897,25 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
           throw new SecurityException("Access denied"); //$NON-NLS-1$
         }
       }
+    }
+
+    public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
+    {
+      authenticate(userID, oldPassword);
+      setPassword(userID, new String(newPassword));
+    }
+
+    public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
+    {
+      authenticate(adminID, adminPassword);
+
+      User admin = getUser(adminID);
+      if (!isAdministrator(admin))
+      {
+        throw new SecurityException("Password reset requires administrator privilege"); //$NON-NLS-1$
+      }
+
+      setPassword(userID, new String(newPassword));
     }
   }
 

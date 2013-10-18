@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
@@ -491,6 +492,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     case SIGNAL_LOCK_NOTIFICATION:
       return new LockNotificationIndication(this);
 
+    case SIGNAL_CHANGE_CREDENTIALS:
+      return new ChangeCredentialsIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }
@@ -559,5 +563,15 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     return send(new LoadPermissionsRequest(this, revisions));
+  }
+
+  public void requestChangeCredentials()
+  {
+    send(new RequestChangeCredentialsRequest(this, RequestChangeCredentialsRequest.Operation.CHANGE_PASSWORD, null));
+  }
+
+  public void requestResetCredentials(String userID)
+  {
+    send(new RequestChangeCredentialsRequest(this, RequestChangeCredentialsRequest.Operation.RESET_PASSWORD, userID));
   }
 }

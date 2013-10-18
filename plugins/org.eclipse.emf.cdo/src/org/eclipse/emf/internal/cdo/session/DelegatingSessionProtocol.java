@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.internal.cdo.session;
 
@@ -925,6 +926,40 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.loadPermissions(revisions);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public void requestChangeCredentials()
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        delegate.requestChangeCredentials();
+        return;
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public void requestResetCredentials(String userID)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        delegate.requestResetCredentials(userID);
+        return;
       }
       catch (Exception ex)
       {

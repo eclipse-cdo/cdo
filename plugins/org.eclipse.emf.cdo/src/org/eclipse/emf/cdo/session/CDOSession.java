@@ -10,6 +10,7 @@
  *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - maintenance
  *    Andre Dietisheim - bug 256649
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.session;
 
@@ -137,6 +138,28 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @since 4.3
    */
   public IPasswordCredentialsProvider getCredentialsProvider();
+
+  /**
+   * Initiates interactive changing of credentials for the user logged in in this session.
+   * This is an optional operation of the session.
+   * 
+   * @since 4.3
+   * 
+   * @throws UnsupportedOperationException if the session implementation does not permit changing credentials
+   */
+  public void changeCredentials();
+
+  /**
+   * Initiates interactive reset of credentials for the specified user.
+   * This is an optional operation of the session.
+   * 
+   * @param userID the ID of the user for which to reset credentials
+   * 
+   * @since 4.3
+   * 
+   * @throws UnsupportedOperationException if the session implementation does not permit resetting user credentials
+   */
+  public void resetCredentials(String userID);
 
   /**
    * Returns the CDO {@link CDORemoteSessionManager remote session manager} that keeps track of the other remote

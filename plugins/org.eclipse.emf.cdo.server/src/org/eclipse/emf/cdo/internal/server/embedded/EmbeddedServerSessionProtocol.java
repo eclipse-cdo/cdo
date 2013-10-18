@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
@@ -66,6 +67,11 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   }
 
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public Response sendChangeCredentialsChallenge(Challenge challenge, String userID, boolean isReset) throws Exception
   {
     throw new UnsupportedOperationException();
   }

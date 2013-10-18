@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.spi.cdo;
 
@@ -295,6 +296,30 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 4.3
    */
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
+
+  /**
+   * Requests that the server initiate the change-credentials protocol.
+   * This is an optional session protocol operation.
+   * 
+   * @since 4.3
+   * 
+   * @throws UnsupportedOperationException if the session protocol implementation does
+   *         not support requesting change of credentials
+   */
+  public void requestChangeCredentials();
+
+  /**
+   * Requests that the server initiate the reset-credentials protocol.
+   * This is an optional session protocol operation.
+   * 
+   * @param userID the ID of the user whose credentials are to be reset
+   * 
+   * @since 4.3
+   * 
+   * @throws UnsupportedOperationException if the session protocol implementation does
+   *         not support requesting reset of credentials
+   */
+  public void requestResetCredentials(String userID);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -43,6 +44,11 @@ public interface ISessionProtocol extends CDOProtocol
    * @since 4.2
    */
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception;
+
+  /**
+   * @since 4.3
+   */
+  public Response sendChangeCredentialsChallenge(Challenge challenge, String userID, boolean isReset) throws Exception;
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
       throws Exception;

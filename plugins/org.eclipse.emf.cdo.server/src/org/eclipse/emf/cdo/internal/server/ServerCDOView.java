@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -513,6 +514,28 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public CDOLobStore getLobStore()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Server sessions may not be used to change the user's credentials: it must
+     * be done client-side by interaction with the user.
+     * 
+     * @since 4.3
+     */
+    public void changeCredentials()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Server sessions may not be used to reset a user's credentials: it must
+     * be done client-side by interaction with an adminstrator.
+     * 
+     * @since 4.3
+     */
+    public void resetCredentials(String userID)
     {
       throw new UnsupportedOperationException();
     }

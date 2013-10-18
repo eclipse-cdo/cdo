@@ -7,22 +7,35 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.net4j.util.ui.security;
 
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
+import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
+import org.eclipse.net4j.util.security.IPasswordCredentialsUpdateProvider;
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class InteractiveCredentialsProvider implements IPasswordCredentialsProvider2
+public class InteractiveCredentialsProvider implements IPasswordCredentialsProvider2,
+    IPasswordCredentialsUpdateProvider
 {
   public InteractiveCredentialsProvider()
   {
@@ -70,5 +83,101 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
     });
 
     return credentials[0];
+  }
+
+  /**
+   * @since 3.4
+   */
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String userID, boolean isReset)
+  {
+    return getCredentialsUpdate(null, userID, isReset);
+  }
+
+  /**
+   * @since 3.4
+   */
+  public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID, final boolean isReset)
+  {
+    final IPasswordCredentialsUpdate[] update = { null };
+    final Display display = UIUtil.getDisplay();
+    display.syncExec(new Runnable()
+    {
+      public void run()
+      {
+        Shell shell;
+
+        try
+        {
+          IWorkbenchWindow window = UIUtil.getActiveWorkbenchWindow();
+          shell = window.getShell();
+        }
+        catch (Exception ex)
+        {
+          shell = new Shell(display);
+        }
+
+        if (!isReset)
+        {
+          CredentialsUpdateDialog dialog = new CredentialsUpdateDialog(shell, realm);
+
+          if (dialog.open() == Window.OK)
+          {
+            update[0] = dialog.getCredentials();
+          }
+        }
+        else
+        {
+          CredentialsResetDialog dialog = new CredentialsResetDialog(shell, realm, userID);
+          if (dialog.open() == Window.OK)
+          {
+            update[0] = dialog.getCredentials();
+            final String newPassword = new String(update[0].getNewPassword());
+
+            MessageDialog msg = new MessageDialog(shell,
+                Messages.getString("InteractiveCredentialsProvider.0"), null, MessageFormat.format( //$NON-NLS-1$
+                    Messages.getString("InteractiveCredentialsProvider.1"), //$NON-NLS-1$
+                    userID, newPassword), MessageDialog.INFORMATION, new String[] {
+                    Messages.getString("InteractiveCredentialsProvider.2"), //$NON-NLS-1$
+                    IDialogConstants.OK_LABEL }, 0)
+            {
+
+              @Override
+              protected void buttonPressed(int buttonId)
+              {
+                if (buttonId == 0)
+                {
+                  copyToClipboard();
+
+                  // don't close the dialog
+                }
+                else
+                {
+                  // close the dialog in the usual way
+                  super.buttonPressed(IDialogConstants.OK_ID);
+                }
+              }
+
+              private void copyToClipboard()
+              {
+                Clipboard clipboard = new Clipboard(getShell().getDisplay());
+
+                try
+                {
+                  clipboard.setContents(new Object[] { newPassword }, new Transfer[] { TextTransfer.getInstance() });
+                }
+                finally
+                {
+                  clipboard.dispose();
+                }
+              }
+            };
+
+            msg.open();
+          }
+        }
+      }
+    });
+
+    return update[0];
   }
 }

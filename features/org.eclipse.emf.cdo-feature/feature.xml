@@ -8,6 +8,7 @@
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
+	  Christian W. Damus (CEA LIST) - 399306
 -->
 <feature
       id="org.eclipse.emf.cdo"
@@ -134,6 +135,13 @@
 
    <plugin
          id="org.eclipse.emf.cdo.security.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.security.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.net4j.util.ui.security;
 
@@ -67,8 +68,16 @@ public class CredentialsDialog extends BaseDialog<Viewer>
    */
   public CredentialsDialog(Shell shell, String realm)
   {
-    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings(), OM
-            .getImageDescriptor("icons/credentials_wiz.gif"));
+    this(shell, realm, TITLE, MESSAGE);
+  }
+
+  /**
+   * @since 3.4
+   */
+  public CredentialsDialog(Shell shell, String realm, String title, String message)
+  {
+    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message,
+        OM.Activator.INSTANCE.getDialogSettings(), OM.getImageDescriptor("icons/credentials_wiz.gif")); //$NON-NLS-1$
     this.realm = realm;
     users = loadUsers();
   }
@@ -91,24 +100,40 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   {
     super.configureShell(newShell);
 
+    configureShell(newShell, WIDTH, HEIGHT);
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected void configureShell(Shell newShell, int width, int height)
+  {
     Composite parent = newShell.getParent();
     if (parent != null)
     {
       Rectangle bounds = parent.getBounds();
 
-      int x = bounds.x + (bounds.width >> 1) - (WIDTH >> 1);
-      int y = bounds.y + (bounds.height >> 1) - (HEIGHT >> 1);
+      int x = bounds.x + (bounds.width >> 1) - (width >> 1);
+      int y = bounds.y + (bounds.height >> 1) - (height >> 1);
 
-      newShell.setBounds(x, y, WIDTH, HEIGHT);
+      newShell.setBounds(x, y, width, height);
     }
     else
     {
-      newShell.setSize(WIDTH, HEIGHT);
+      newShell.setSize(width, height);
     }
   }
 
   @Override
   protected void createUI(Composite parent)
+  {
+    createCredentialsArea(parent);
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected Composite createCredentialsArea(Composite parent)
   {
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayoutData(UIUtil.createGridData());
@@ -138,6 +163,8 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     {
       passwordControl.setFocus();
     }
+
+    return composite;
   }
 
   @Override
@@ -154,13 +181,21 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     }
 
     String password = passwordControl.getText();
-    credentials = new PasswordCredentials(userID, password.toCharArray());
+    credentials = createCredentials(userID, password.toCharArray());
 
     users.remove(userID);
     users.add(0, userID);
     saveUsers(users);
 
     super.okPressed();
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected IPasswordCredentials createCredentials(String userID, char[] password)
+  {
+    return new PasswordCredentials(userID, password);
   }
 
   /**

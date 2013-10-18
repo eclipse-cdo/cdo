@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 201266
  *    Simon McDuff - bug 202725
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -31,6 +32,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -39,6 +41,7 @@ import org.eclipse.net4j.util.security.DiffieHellman;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import org.eclipse.net4j.util.security.IAuthenticator;
+import org.eclipse.net4j.util.security.IAuthenticator2;
 import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.security.UserManagerAuthenticator;
 
@@ -419,6 +422,86 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
       authenticator.authenticate(userID, password);
       return userID;
+    }
+    catch (SecurityException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      Throwable cause = ex.getCause();
+      if (cause instanceof SecurityException)
+      {
+        throw (SecurityException)cause;
+      }
+
+      throw new SecurityException(ex);
+    }
+  }
+
+  public void changeUserCredentials(ISessionProtocol sessionProtocol)
+  {
+    changeUserCredentials(sessionProtocol, null, false);
+  }
+
+  public void resetUserCredentials(ISessionProtocol sessionProtocol, String userID)
+  {
+    changeUserCredentials(sessionProtocol, userID, true);
+  }
+
+  protected void changeUserCredentials(ISessionProtocol sessionProtocol, String userID, boolean isReset)
+  {
+
+    if (sessionProtocol == null)
+    {
+      return;
+    }
+
+    if (authenticationServer == null || authenticator == null)
+    {
+      return;
+    }
+
+    if (!(authenticator instanceof IAuthenticator2))
+    {
+      throw new SecurityException("Current authenticator does not permit password updates"); //$NON-NLS-1$
+    }
+
+    try
+    {
+      Challenge challenge = authenticationServer.getChallenge();
+      Response response = sessionProtocol.sendChangeCredentialsChallenge(challenge, userID, isReset);
+      if (response == null)
+      {
+        throw new NotAuthenticatedException();
+      }
+
+      ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
+      @SuppressWarnings("resource")
+      ExtendedDataInputStream stream = new ExtendedDataInputStream(baos);
+
+      if (isReset)
+      {
+        String adminID = stream.readString();
+        char[] adminPassword = stream.readString().toCharArray();
+        if (!ObjectUtil.equals(userID, stream.readString()))
+        {
+          throw new SecurityException("Attempt to reset password of a different user than requested"); //$NON-NLS-1$
+        }
+        char[] newPassword = stream.readString().toCharArray();
+
+        // this will throw if the current credentials are not authenticated as an administrator
+        ((IAuthenticator2)authenticator).resetPassword(adminID, adminPassword, userID, newPassword);
+      }
+      else
+      {
+        userID = stream.readString(); // user can change any password that she can authenticate on the old password
+        char[] password = stream.readString().toCharArray();
+        char[] newPassword = stream.readString().toCharArray();
+
+        // this will throw if the "old password" provided by the user is not correct
+        ((IAuthenticator2)authenticator).updatePassword(userID, password, newPassword);
+      }
     }
     catch (SecurityException ex)
     {

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - 399306
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
@@ -593,6 +594,24 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
 
     return result;
+  }
+
+  /**
+   * Change of credentials may not be requested by embedded client sessions, only by
+   * interactive user client sessions.
+   */
+  public void requestChangeCredentials()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * Reset of credentials may not be requested by embedded client sessions, only by
+   * interactive client sessions.
+   */
+  public void requestResetCredentials(String userID)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

@@ -134,13 +134,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    */
   protected String checkoutBranch = CHECKOUT_BRANCH_EDEFAULT;
 
-  private transient Object cachedGit;
-
-  private transient Object cachedRepository;
-
-  private transient File workDir;
-
-  private transient boolean hasCheckout;
+  private transient GitDelegate gitDelegate;
 
   /**
    * <!-- begin-user-doc -->
@@ -183,7 +177,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__NAME, oldName, name));
+    }
   }
 
   /**
@@ -206,8 +202,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldRemoteName = remoteName;
     remoteName = newRemoteName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__REMOTE_NAME, oldRemoteName,
           remoteName));
+    }
   }
 
   /**
@@ -230,8 +228,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldRemoteURI = remoteURI;
     remoteURI = newRemoteURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__REMOTE_URI, oldRemoteURI,
           remoteURI));
+    }
   }
 
   /**
@@ -254,8 +254,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldCheckoutBranch = checkoutBranch;
     checkoutBranch = newCheckoutBranch;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH,
           oldCheckoutBranch, checkoutBranch));
+    }
   }
 
   /**
@@ -364,7 +366,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -387,228 +391,281 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    workDir = getWorkDir(context);
-    if (!workDir.isDirectory())
-    {
-      return true;
-    }
-
-    context.log("Opening Git clone " + workDir);
-
-    Git git = Git.open(workDir);
-    if (!hasWorkTree(git))
-    {
-      FileUtil.rename(workDir);
-      return true;
-    }
-
-    Repository repository = git.getRepository();
-    configureRepository(context, repository);
-
-    hasCheckout = repository.getAllRefs().containsKey("refs/heads/" + getCheckoutBranch());
-    if (!hasCheckout)
-    {
-      cachedGit = git;
-      cachedRepository = repository;
-      return true;
-    }
-
-    return false;
+    gitDelegate = GitUtil.create();
+    return gitDelegate.isNeeded(context, getName(), getCheckoutBranch(), getRemoteName());
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    Git git = (Git)cachedGit;
-    Repository repository = (Repository)cachedRepository;
-
-    if (git == null)
+    if (gitDelegate != null)
     {
-      git = cloneRepository(context, workDir, getCheckoutBranch());
-      repository = git.getRepository();
-      configureRepository(context, repository);
-    }
-
-    if (!hasCheckout)
-    {
-      createBranch(context, git, getCheckoutBranch());
-      checkout(context, git, getCheckoutBranch());
-      resetHard(context, git);
+      gitDelegate.perform(context, getCheckoutBranch(), getRemoteName(), getRemoteURI());
     }
   }
 
   @Override
   public void dispose()
   {
-    if (cachedRepository != null)
+    if (gitDelegate != null)
     {
-      ((Repository)cachedRepository).close();
+      gitDelegate.dispose();
+      gitDelegate = null;
     }
   }
 
-  private File getWorkDir(SetupTaskContext context)
+  private interface GitDelegate
   {
-    File gitDir = new File(context.getBranchDir(), "git");
-    return new File(gitDir, getName());
+    public boolean isNeeded(SetupTaskContext context, String name, String checkoutBranch, String remoteName)
+        throws Exception;
+
+    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI)
+        throws Exception;
+
+    public void dispose();
   }
 
-  private boolean hasWorkTree(Git git) throws Exception
+  private static class GitUtil implements GitDelegate
   {
-    try
+    private File workDir;
+
+    private boolean hasCheckout;
+
+    private Git cachedGit;
+
+    private Repository cachedRepository;
+
+    private static GitDelegate create()
     {
-      StatusCommand statusCommand = git.status();
-      statusCommand.call();
-      return true;
+      return new GitUtil();
     }
-    catch (NoWorkTreeException ex)
+
+    public boolean isNeeded(SetupTaskContext context, String name, String checkoutBranch, String remoteName)
+        throws Exception
     {
+      workDir = getWorkDir(context, name);
+      if (!workDir.isDirectory())
+      {
+        return true;
+      }
+
+      context.log("Opening Git clone " + workDir);
+
+      Git git = Git.open(workDir);
+      if (!GitUtil.hasWorkTree(git))
+      {
+        FileUtil.rename(workDir);
+        return true;
+      }
+
+      Repository repository = git.getRepository();
+      GitUtil.configureRepository(context, repository, checkoutBranch, remoteName);
+
+      hasCheckout = repository.getAllRefs().containsKey("refs/heads/" + checkoutBranch);
+      if (!hasCheckout)
+      {
+        cachedGit = git;
+        cachedRepository = repository;
+        return true;
+      }
+
       return false;
     }
-  }
 
-  private Git cloneRepository(SetupTaskContext context, File workDir, String checkoutBranch) throws Exception
-  {
-    URI baseURI = URI.createURI(getRemoteURI());
-    String remote = URI.createHierarchicalURI(baseURI.scheme(),
-        context.getSetup().getPreferences().getUserName() + "@" + baseURI.authority(), baseURI.device(),
-        baseURI.segments(), baseURI.query(), baseURI.fragment()).toString();
-
-    context.log("Cloning Git repo " + remote + " to " + workDir);
-
-    CloneCommand command = Git.cloneRepository();
-    command.setNoCheckout(true);
-    command.setURI(remote);
-    command.setRemote(getRemoteName());
-    command.setBranchesToClone(Collections.singleton(checkoutBranch));
-    command.setDirectory(workDir);
-    command.setTimeout(10);
-    command.setProgressMonitor(new ProgressLogWrapper(context));
-    return command.call();
-  }
-
-  private void configureRepository(SetupTaskContext context, Repository repository) throws Exception, IOException
-  {
-    StoredConfig config = repository.getConfig();
-
-    boolean changed = false;
-    changed |= configureLineEndingConversion(context, config);
-    changed |= addPushRefSpec(context, config);
-    if (changed)
+    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String removeURI)
+        throws Exception
     {
-      config.save();
-    }
-  }
-
-  private boolean configureLineEndingConversion(SetupTaskContext context, StoredConfig config) throws Exception
-  {
-    if (context.getOS().isLineEndingConversionNeeded())
-    {
-      context.log("Setting " + ConfigConstants.CONFIG_KEY_AUTOCRLF + " = true");
-      config.setEnum(ConfigConstants.CONFIG_CORE_SECTION, null, ConfigConstants.CONFIG_KEY_AUTOCRLF, AutoCRLF.TRUE);
-      return true;
-    }
-
-    return false;
-  }
-
-  private boolean addPushRefSpec(SetupTaskContext context, StoredConfig config) throws Exception
-  {
-    String gerritQueue = "refs/for/" + getCheckoutBranch();
-    for (RemoteConfig remoteConfig : RemoteConfig.getAllRemoteConfigs(config))
-    {
-      if (getRemoteName().equals(remoteConfig.getName()))
+      if (cachedGit == null)
       {
-        List<RefSpec> pushRefSpecs = remoteConfig.getPushRefSpecs();
-        if (hasGerritPushRefSpec(pushRefSpecs, gerritQueue))
+        cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, removeURI);
+        cachedRepository = cachedGit.getRepository();
+        GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName);
+      }
+
+      if (!hasCheckout)
+      {
+        GitUtil.createBranch(context, cachedGit, checkoutBranch);
+        GitUtil.checkout(context, cachedGit, checkoutBranch);
+        GitUtil.resetHard(context, cachedGit);
+      }
+    }
+
+    public void dispose()
+    {
+      if (cachedRepository != null)
+      {
+        cachedRepository.close();
+      }
+    }
+
+    private static File getWorkDir(SetupTaskContext context, String name)
+    {
+      File gitDir = new File(context.getBranchDir(), "git");
+      return new File(gitDir, name);
+    }
+
+    private static boolean hasWorkTree(Git git) throws Exception
+    {
+      try
+      {
+        StatusCommand statusCommand = git.status();
+        statusCommand.call();
+        return true;
+      }
+      catch (NoWorkTreeException ex)
+      {
+        return false;
+      }
+    }
+
+    private static Git cloneRepository(SetupTaskContext context, File workDir, String checkoutBranch,
+        String remoteName, String remoteURI) throws Exception
+    {
+      URI baseURI = URI.createURI(remoteURI);
+      String remote = URI.createHierarchicalURI(baseURI.scheme(),
+          context.getSetup().getPreferences().getUserName() + "@" + baseURI.authority(), baseURI.device(),
+          baseURI.segments(), baseURI.query(), baseURI.fragment()).toString();
+
+      context.log("Cloning Git repo " + remote + " to " + workDir);
+
+      CloneCommand command = Git.cloneRepository();
+      command.setNoCheckout(true);
+      command.setURI(remote);
+      command.setRemote(remoteName);
+      command.setBranchesToClone(Collections.singleton(checkoutBranch));
+      command.setDirectory(workDir);
+      command.setTimeout(10);
+      command.setProgressMonitor(new ProgressLogWrapper(context));
+      return command.call();
+    }
+
+    private static void configureRepository(SetupTaskContext context, Repository repository, String checkoutBranch,
+        String remoteName) throws Exception, IOException
+    {
+      StoredConfig config = repository.getConfig();
+
+      boolean changed = false;
+      changed |= configureLineEndingConversion(context, config);
+      changed |= addPushRefSpec(context, config, checkoutBranch, remoteName);
+      if (changed)
+      {
+        config.save();
+      }
+    }
+
+    private static boolean configureLineEndingConversion(SetupTaskContext context, StoredConfig config)
+        throws Exception
+    {
+      if (context.getOS().isLineEndingConversionNeeded())
+      {
+        context.log("Setting " + ConfigConstants.CONFIG_KEY_AUTOCRLF + " = true");
+        config.setEnum(ConfigConstants.CONFIG_CORE_SECTION, null, ConfigConstants.CONFIG_KEY_AUTOCRLF, AutoCRLF.TRUE);
+        return true;
+      }
+
+      return false;
+    }
+
+    private static boolean addPushRefSpec(SetupTaskContext context, StoredConfig config, String checkoutBranch,
+        String remoteName) throws Exception
+    {
+      String gerritQueue = "refs/for/" + checkoutBranch;
+      for (RemoteConfig remoteConfig : RemoteConfig.getAllRemoteConfigs(config))
+      {
+        if (remoteName.equals(remoteConfig.getName()))
         {
-          return false;
+          List<RefSpec> pushRefSpecs = remoteConfig.getPushRefSpecs();
+          if (hasGerritPushRefSpec(pushRefSpecs, gerritQueue))
+          {
+            return false;
+          }
+
+          RefSpec refSpec = new RefSpec("HEAD:" + gerritQueue);
+          context.log("Adding push ref spec: " + refSpec);
+
+          remoteConfig.addPushRefSpec(refSpec);
+          remoteConfig.update(config);
+          return true;
         }
-
-        RefSpec refSpec = new RefSpec("HEAD:" + gerritQueue);
-        context.log("Adding push ref spec: " + refSpec);
-
-        remoteConfig.addPushRefSpec(refSpec);
-        remoteConfig.update(config);
-        return true;
       }
+
+      return false;
     }
 
-    return false;
-  }
-
-  private boolean hasGerritPushRefSpec(List<RefSpec> pushRefSpecs, String gerritQueue)
-  {
-    for (RefSpec refSpec : pushRefSpecs)
+    private static boolean hasGerritPushRefSpec(List<RefSpec> pushRefSpecs, String gerritQueue)
     {
-      if (refSpec.getDestination().equals(gerritQueue))
+      for (RefSpec refSpec : pushRefSpecs)
       {
-        return true;
+        if (refSpec.getDestination().equals(gerritQueue))
+        {
+          return true;
+        }
       }
+
+      return false;
     }
 
-    return false;
-  }
-
-  private void createBranch(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
-  {
-    context.log("Creating local branch " + checkoutBranch);
-
-    CreateBranchCommand command = git.branchCreate();
-    command.setUpstreamMode(SetupUpstreamMode.SET_UPSTREAM);
-    command.setName(checkoutBranch);
-    command.setStartPoint("refs/remotes/origin/" + checkoutBranch);
-    command.call();
-  }
-
-  private void checkout(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
-  {
-    context.log("Checking out local branch " + checkoutBranch);
-
-    CheckoutCommand command = git.checkout();
-    command.setName(checkoutBranch);
-    command.call();
-  }
-
-  private void resetHard(SetupTaskContext context, Git git) throws Exception
-  {
-    context.log("Resetting hard");
-
-    ResetCommand command = git.reset();
-    command.setMode(ResetType.HARD);
-    command.call();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ProgressLogWrapper implements ProgressMonitor
-  {
-    private SetupTaskContext context;
-
-    public ProgressLogWrapper(SetupTaskContext context)
+    private static void createBranch(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
     {
-      this.context = context;
+      context.log("Creating local branch " + checkoutBranch);
+
+      CreateBranchCommand command = git.branchCreate();
+      command.setUpstreamMode(SetupUpstreamMode.SET_UPSTREAM);
+      command.setName(checkoutBranch);
+      command.setStartPoint("refs/remotes/origin/" + checkoutBranch);
+      command.call();
     }
 
-    public void update(int completed)
+    private static void checkout(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
     {
+      context.log("Checking out local branch " + checkoutBranch);
+
+      CheckoutCommand command = git.checkout();
+      command.setName(checkoutBranch);
+      command.call();
     }
 
-    public void start(int totalTasks)
+    private static void resetHard(SetupTaskContext context, Git git) throws Exception
     {
+      context.log("Resetting hard");
+
+      ResetCommand command = git.reset();
+      command.setMode(ResetType.HARD);
+      command.call();
     }
 
-    public boolean isCancelled()
+    /**
+     * @author Eike Stepper
+     */
+    private static final class ProgressLogWrapper implements ProgressMonitor
     {
-      return context.isCancelled();
-    }
+      private SetupTaskContext context;
 
-    public void endTask()
-    {
-    }
+      public ProgressLogWrapper(SetupTaskContext context)
+      {
+        this.context = context;
+      }
 
-    public void beginTask(String title, int totalWork)
-    {
-      context.log(title);
+      public void update(int completed)
+      {
+      }
+
+      public void start(int totalTasks)
+      {
+      }
+
+      public boolean isCancelled()
+      {
+        return context.isCancelled();
+      }
+
+      public void endTask()
+      {
+      }
+
+      public void beginTask(String title, int totalWork)
+      {
+        context.log(title);
+      }
     }
   }
 

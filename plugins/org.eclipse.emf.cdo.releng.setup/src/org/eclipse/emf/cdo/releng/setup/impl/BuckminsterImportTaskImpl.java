@@ -39,6 +39,7 @@ import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherAppli
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
@@ -160,8 +161,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldMspec = mspec;
     mspec = newMspec;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__MSPEC, oldMspec,
           mspec));
+    }
   }
 
   /**
@@ -184,8 +187,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldTargetPlatform = targetPlatform;
     targetPlatform = newTargetPlatform;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM,
           oldTargetPlatform, targetPlatform));
+    }
   }
 
   /**
@@ -208,8 +213,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldBundlePool = bundlePool;
     bundlePool = newBundlePool;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL,
           oldBundlePool, bundlePool));
+    }
   }
 
   /**
@@ -308,7 +315,9 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (mspec: ");
@@ -362,28 +371,7 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
             .getProject().getName()
             + " Target", true, context);
 
-        URL mSpecURL = new URL(context.expandString(getMspec()));
-        MaterializationSpec mspec = getMSpec(mSpecURL, monitor); // 20 ticks
-        ComponentQuery cquery = getCQuery(mspec.getResolvedURL(), monitor); // 20 ticks
-
-        IResolver resolver = new MainResolver(new ResolutionContext(mspec, cquery));
-        resolver.getContext().setContinueOnError(true);
-
-        monitor.subTask("Resolving components");
-        BillOfMaterials bom = resolver.resolve(MonitorUtils.subMonitor(monitor, 40));
-
-        MaterializationSpecBuilder mspecBuilder = new MaterializationSpecBuilder();
-        mspecBuilder.initFrom(mspec);
-        mspecBuilder.setName(bom.getViewName());
-
-        bom.addMaterializationNodes(mspecBuilder);
-
-        ResolutionContext resolutionContext = new ResolutionContext(bom.getQuery());
-        MaterializationContext materializationContext = new MaterializationContext(bom, mspec, resolutionContext);
-
-        monitor.subTask("Materializing components");
-        MaterializationJob job = new MaterializationJob(materializationContext);
-        job.run(MonitorUtils.subMonitor(monitor, 80));
+        BuckminsterHelper.materialize(context, getMspec(), monitor);
 
         if (tpPoolLock != null)
         {
@@ -491,25 +479,56 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     publisher.run(args);
   }
 
-  private MaterializationSpec getMSpec(URL mspecURL, IProgressMonitor monitor) throws Exception
+  private static class BuckminsterHelper
   {
-    monitor.subTask("Downloading MSpec");
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    DownloadManager.readInto(mspecURL, null, baos, MonitorUtils.subMonitor(monitor, 20));
+    private static MaterializationSpec getMSpec(URL mspecURL, IProgressMonitor monitor) throws Exception
+    {
+      monitor.subTask("Downloading MSpec");
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DownloadManager.readInto(mspecURL, null, baos, MonitorUtils.subMonitor(monitor, 20));
 
-    monitor.subTask("Parsing MSpec");
-    IParser<MaterializationSpec> parser = CorePlugin.getDefault().getParserFactory().getMaterializationSpecParser(true);
-    return parser.parse(mspecURL.toString(), new ByteArrayInputStream(baos.toByteArray()));
-  }
+      monitor.subTask("Parsing MSpec");
+      IParser<MaterializationSpec> parser = CorePlugin.getDefault().getParserFactory()
+          .getMaterializationSpecParser(true);
+      return parser.parse(mspecURL.toString(), new ByteArrayInputStream(baos.toByteArray()));
+    }
 
-  private ComponentQuery getCQuery(URL cqueryURL, IProgressMonitor monitor) throws Exception
-  {
-    monitor.subTask("Downloading CQuery");
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    DownloadManager.readInto(cqueryURL, null, baos, MonitorUtils.subMonitor(monitor, 20));
+    private static ComponentQuery getCQuery(URL cqueryURL, IProgressMonitor monitor) throws Exception
+    {
+      monitor.subTask("Downloading CQuery");
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DownloadManager.readInto(cqueryURL, null, baos, MonitorUtils.subMonitor(monitor, 20));
 
-    monitor.subTask("Parsing CQuery");
-    return ComponentQuery.fromStream(cqueryURL, null, new ByteArrayInputStream(baos.toByteArray()), true);
+      monitor.subTask("Parsing CQuery");
+      return ComponentQuery.fromStream(cqueryURL, null, new ByteArrayInputStream(baos.toByteArray()), true);
+    }
+
+    private static void materialize(SetupTaskContext context, String mSpec, IProgressMonitor monitor)
+        throws MalformedURLException, Exception
+    {
+      URL mSpecURL = new URL(context.expandString(mSpec));
+      MaterializationSpec mspec = BuckminsterHelper.getMSpec(mSpecURL, monitor); // 20 ticks
+      ComponentQuery cquery = BuckminsterHelper.getCQuery(mspec.getResolvedURL(), monitor); // 20 ticks
+
+      IResolver resolver = new MainResolver(new ResolutionContext(mspec, cquery));
+      resolver.getContext().setContinueOnError(true);
+
+      monitor.subTask("Resolving components");
+      BillOfMaterials bom = resolver.resolve(MonitorUtils.subMonitor(monitor, 40));
+
+      MaterializationSpecBuilder mspecBuilder = new MaterializationSpecBuilder();
+      mspecBuilder.initFrom(mspec);
+      mspecBuilder.setName(bom.getViewName());
+
+      bom.addMaterializationNodes(mspecBuilder);
+
+      ResolutionContext resolutionContext = new ResolutionContext(bom.getQuery());
+      MaterializationContext materializationContext = new MaterializationContext(bom, mspec, resolutionContext);
+
+      monitor.subTask("Materializing components");
+      MaterializationJob job = new MaterializationJob(materializationContext);
+      job.run(MonitorUtils.subMonitor(monitor, 80));
+    }
   }
 
 } // BuckminsterImportTaskImpl

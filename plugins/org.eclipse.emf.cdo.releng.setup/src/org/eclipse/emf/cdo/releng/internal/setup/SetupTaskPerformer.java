@@ -39,8 +39,6 @@ import org.eclipse.ui.PlatformUI;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -338,7 +336,43 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     Map<SetupTask, SetupTask> substitutions = getSubstitutions(setupTasks);
     setup = copySetup(setupTasks, substitutions);
 
+    reorder(setupTasks);
+
     perform(setupTasks);
+  }
+
+  private void reorder(EList<SetupTask> setupTasks)
+  {
+    for (int i = 0, size = setupTasks.size(), count = 0; i < size; ++i)
+    {
+      SetupTask setupTask = setupTasks.get(i);
+      if (count == size)
+      {
+        throw new IllegalArgumentException("Circular requirements " + setupTask);
+      }
+
+      EList<SetupTask> requirements = setupTask.getRequirements();
+      boolean changed = false;
+      for (SetupTask requirement : requirements)
+      {
+        int index = setupTasks.indexOf(requirement);
+        if (index > i)
+        {
+          setupTasks.move(i, index);
+          changed = true;
+        }
+      }
+
+      if (changed)
+      {
+        --i;
+        ++count;
+      }
+      else
+      {
+        count = 0;
+      }
+    }
   }
 
   private void perform(EList<SetupTask> setupTasks) throws Exception
@@ -383,8 +417,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private Map<SetupTask, SetupTask> getSubstitutions(EList<SetupTask> setupTasks)
   {
-    SetupTaskComparator.sort(setupTasks);
-
     Map<Object, SetupTask> overrides = new HashMap<Object, SetupTask>();
     Map<SetupTask, SetupTask> substitutions = new HashMap<SetupTask, SetupTask>();
 
@@ -457,7 +489,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       }
     }
 
-    SetupTaskComparator.sort(setupTasks);
     return setup;
   }
 
@@ -489,52 +520,5 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   public static void setProgress(ProgressLog progress)
   {
     SetupTaskPerformer.progress = progress;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class SetupTaskComparator implements Comparator<SetupTask>
-  {
-    public static void sort(EList<SetupTask> setupTasks)
-    {
-      Collections.sort(setupTasks, new SetupTaskComparator());
-    }
-
-    public int compare(SetupTask t1, SetupTask t2)
-    {
-      boolean t1RequiresT2 = t1.requires(t2);
-      boolean t2RequiresT1 = t2.requires(t1);
-      if (t1RequiresT2 && t2RequiresT1)
-      {
-        throw new IllegalStateException("Requirements cycle detected between " + t1 + " and " + t2);
-      }
-
-      if (t1RequiresT2 && !t2RequiresT1)
-      {
-        return 1;
-      }
-
-      if (!t1RequiresT2 && t2RequiresT1)
-      {
-        return -1;
-      }
-
-      int scope1 = t1.getScope().getValue();
-      int scope2 = t2.getScope().getValue();
-      if (scope1 < scope2)
-      {
-        return -1;
-      }
-
-      if (scope1 > scope2)
-      {
-        return 1;
-      }
-
-      String uri1 = EcoreUtil.getURI(t1).toString();
-      String uri2 = EcoreUtil.getURI(t2).toString();
-      return uri1.compareTo(uri2); // Arbitrary but symmetric within one ResourceSet
-    }
   }
 }

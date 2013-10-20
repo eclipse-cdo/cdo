@@ -22,4 +22,14 @@
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.1/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.1/@setupTasks.0" option="-Dorg.eclipse.emf.cdo.releng.setup.ide" value="=true" vm="true"/>
   </eclipseVersions>
+  <eclipseVersions version="4.4">
+    <setupTasks xsi:type="setup:P2Task">
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
+      <p2Repositories url="${releng.url}"/>
+      <installableUnits id="org.eclipse.sdk.ide"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.setup.editor.feature.group"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.2/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
+    <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.2/@setupTasks.0" option="-Dorg.eclipse.emf.cdo.releng.setup.ide" value="=true" vm="true"/>
+  </eclipseVersions>
 </setup:Configuration>

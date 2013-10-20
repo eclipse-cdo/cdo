@@ -202,7 +202,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public CDOPermission cdoPermission()
   {
-    return cdoRevision(true).getPermission();
+    InternalCDORevision revision = cdoRevision(true);
+    if (revision == null)
+    {
+      return CDOPermission.WRITE;
+    }
+
+    return revision.getPermission();
   }
 
   @Override

@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.provider;
 
@@ -69,19 +77,12 @@ public class NamePredicateItemProvider extends ItemProviderAdapter implements IE
    */
   protected void addPatternPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_NamePredicate_pattern_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_NamePredicate_pattern_feature", "_UI_NamePredicate_type"),
-         PredicatesPackage.Literals.NAME_PREDICATE__PATTERN,
-         true,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_NamePredicate_pattern_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_NamePredicate_pattern_feature", "_UI_NamePredicate_type"),
+        PredicatesPackage.Literals.NAME_PREDICATE__PATTERN, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -134,9 +135,9 @@ public class NamePredicateItemProvider extends ItemProviderAdapter implements IE
 
     switch (notification.getFeatureID(NamePredicate.class))
     {
-      case PredicatesPackage.NAME_PREDICATE__PATTERN:
-        fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-        return;
+    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
     }
     super.notifyChanged(notification);
   }

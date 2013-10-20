@@ -1,15 +1,29 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
-import org.eclipse.emf.cdo.releng.projectconfig.*;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
+import org.eclipse.emf.cdo.releng.projectconfig.Project;
+import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
+
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -93,18 +107,18 @@ public class ProjectConfigValidator extends EObjectValidator
   {
     switch (classifierID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION:
-        return validateWorkspaceConfiguration((WorkspaceConfiguration)value, diagnostics, context);
-      case ProjectConfigPackage.PROJECT:
-        return validateProject((Project)value, diagnostics, context);
-      case ProjectConfigPackage.PREFERENCE_PROFILE:
-        return validatePreferenceProfile((PreferenceProfile)value, diagnostics, context);
-      case ProjectConfigPackage.PREFERENCE_FILTER:
-        return validatePreferenceFilter((PreferenceFilter)value, diagnostics, context);
-      case ProjectConfigPackage.PATTERN:
-        return validatePattern((Pattern)value, diagnostics, context);
-      default:
-        return true;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION:
+      return validateWorkspaceConfiguration((WorkspaceConfiguration)value, diagnostics, context);
+    case ProjectConfigPackage.PROJECT:
+      return validateProject((Project)value, diagnostics, context);
+    case ProjectConfigPackage.PREFERENCE_PROFILE:
+      return validatePreferenceProfile((PreferenceProfile)value, diagnostics, context);
+    case ProjectConfigPackage.PREFERENCE_FILTER:
+      return validatePreferenceFilter((PreferenceFilter)value, diagnostics, context);
+    case ProjectConfigPackage.PATTERN:
+      return validatePattern((Pattern)value, diagnostics, context);
+    default:
+      return true;
     }
   }
 
@@ -126,16 +140,25 @@ public class ProjectConfigValidator extends EObjectValidator
    */
   public boolean validateProject(Project project, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    if (!validate_NoCircularContainment(project, diagnostics, context)) return false;
+    if (!validate_NoCircularContainment(project, diagnostics, context))
+      return false;
     boolean result = validate_EveryMultiplicityConforms(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_EveryDataValueConforms(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_EveryProxyResolves(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_UniqueID(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_EveryKeyUnique(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(project, diagnostics, context);
-    if (result || diagnostics != null) result &= validateProject_AllPreferencesManaged(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_EveryDataValueConforms(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_EveryReferenceIsContained(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_EveryBidirectionalReferenceIsPaired(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_EveryProxyResolves(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_UniqueID(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_EveryKeyUnique(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validate_EveryMapEntryUnique(project, diagnostics, context);
+    if (result || diagnostics != null)
+      result &= validateProject_AllPreferencesManaged(project, diagnostics, context);
     return result;
   }
 

@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
@@ -85,8 +93,16 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
     operand = newOperand;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PredicatesPackage.NOT_PREDICATE__OPERAND, oldOperand, newOperand);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+          PredicatesPackage.NOT_PREDICATE__OPERAND, oldOperand, newOperand);
+      if (msgs == null)
+      {
+        msgs = notification;
+      }
+      else
+      {
+        msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -102,14 +118,26 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
     {
       NotificationChain msgs = null;
       if (operand != null)
-        msgs = ((InternalEObject)operand).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PredicatesPackage.NOT_PREDICATE__OPERAND, null, msgs);
+      {
+        msgs = ((InternalEObject)operand).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - PredicatesPackage.NOT_PREDICATE__OPERAND, null, msgs);
+      }
       if (newOperand != null)
-        msgs = ((InternalEObject)newOperand).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PredicatesPackage.NOT_PREDICATE__OPERAND, null, msgs);
+      {
+        msgs = ((InternalEObject)newOperand).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+            - PredicatesPackage.NOT_PREDICATE__OPERAND, null, msgs);
+      }
       msgs = basicSetOperand(newOperand, msgs);
-      if (msgs != null) msgs.dispatch();
+      if (msgs != null)
+      {
+        msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NOT_PREDICATE__OPERAND, newOperand, newOperand));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NOT_PREDICATE__OPERAND, newOperand,
+          newOperand));
+    }
   }
 
   /**
@@ -134,8 +162,8 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
   {
     switch (featureID)
     {
-      case PredicatesPackage.NOT_PREDICATE__OPERAND:
-        return basicSetOperand(null, msgs);
+    case PredicatesPackage.NOT_PREDICATE__OPERAND:
+      return basicSetOperand(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -150,8 +178,8 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
   {
     switch (featureID)
     {
-      case PredicatesPackage.NOT_PREDICATE__OPERAND:
-        return getOperand();
+    case PredicatesPackage.NOT_PREDICATE__OPERAND:
+      return getOperand();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -166,9 +194,9 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
   {
     switch (featureID)
     {
-      case PredicatesPackage.NOT_PREDICATE__OPERAND:
-        setOperand((Predicate)newValue);
-        return;
+    case PredicatesPackage.NOT_PREDICATE__OPERAND:
+      setOperand((Predicate)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -183,9 +211,9 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
   {
     switch (featureID)
     {
-      case PredicatesPackage.NOT_PREDICATE__OPERAND:
-        setOperand((Predicate)null);
-        return;
+    case PredicatesPackage.NOT_PREDICATE__OPERAND:
+      setOperand((Predicate)null);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -200,8 +228,8 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
   {
     switch (featureID)
     {
-      case PredicatesPackage.NOT_PREDICATE__OPERAND:
-        return operand != null;
+    case PredicatesPackage.NOT_PREDICATE__OPERAND:
+      return operand != null;
     }
     return super.eIsSet(featureID);
   }
@@ -216,8 +244,8 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
   {
     switch (operationID)
     {
-      case PredicatesPackage.NOT_PREDICATE___MATCHES__IPROJECT:
-        return matches((IProject)arguments.get(0));
+    case PredicatesPackage.NOT_PREDICATE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }

@@ -1,12 +1,23 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
-import org.eclipse.emf.cdo.releng.projectconfig.*;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
+import org.eclipse.emf.cdo.releng.projectconfig.Project;
+import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -72,35 +83,40 @@ public class ProjectConfigSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION:
-      {
-        WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)theEObject;
-        T result = caseWorkspaceConfiguration(workspaceConfiguration);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case ProjectConfigPackage.PROJECT:
-      {
-        Project project = (Project)theEObject;
-        T result = caseProject(project);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case ProjectConfigPackage.PREFERENCE_PROFILE:
-      {
-        PreferenceProfile preferenceProfile = (PreferenceProfile)theEObject;
-        T result = casePreferenceProfile(preferenceProfile);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case ProjectConfigPackage.PREFERENCE_FILTER:
-      {
-        PreferenceFilter preferenceFilter = (PreferenceFilter)theEObject;
-        T result = casePreferenceFilter(preferenceFilter);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      default: return defaultCase(theEObject);
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION:
+    {
+      WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)theEObject;
+      T result = caseWorkspaceConfiguration(workspaceConfiguration);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ProjectConfigPackage.PROJECT:
+    {
+      Project project = (Project)theEObject;
+      T result = caseProject(project);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ProjectConfigPackage.PREFERENCE_PROFILE:
+    {
+      PreferenceProfile preferenceProfile = (PreferenceProfile)theEObject;
+      T result = casePreferenceProfile(preferenceProfile);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ProjectConfigPackage.PREFERENCE_FILTER:
+    {
+      PreferenceFilter preferenceFilter = (PreferenceFilter)theEObject;
+      T result = casePreferenceFilter(preferenceFilter);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 
@@ -185,4 +201,4 @@ public class ProjectConfigSwitch<T> extends Switch<T>
     return null;
   }
 
-} //ProjectConfigSwitch
+} // ProjectConfigSwitch

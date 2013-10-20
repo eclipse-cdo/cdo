@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.workingsets.provider;
 
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 

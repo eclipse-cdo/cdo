@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -114,8 +122,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     String oldSourceURL = sourceURL;
     sourceURL = newSourceURL;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL, oldSourceURL,
           sourceURL));
+    }
   }
 
   /**
@@ -138,8 +148,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     String oldTargetURL = targetURL;
     targetURL = newTargetURL;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_COPY_TASK__TARGET_URL, oldTargetURL,
           targetURL));
+    }
   }
 
   /**
@@ -227,7 +239,9 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (sourceURL: ");

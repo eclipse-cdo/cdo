@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
@@ -8,12 +16,14 @@ import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
 import java.util.regex.Pattern;
 
 /**
@@ -34,7 +44,8 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
   {
     try
     {
-      ProjectConfigFactory theProjectConfigFactory = (ProjectConfigFactory)EPackage.Registry.INSTANCE.getEFactory(ProjectConfigPackage.eNS_URI);
+      ProjectConfigFactory theProjectConfigFactory = (ProjectConfigFactory)EPackage.Registry.INSTANCE
+          .getEFactory(ProjectConfigPackage.eNS_URI);
       if (theProjectConfigFactory != null)
       {
         return theProjectConfigFactory;
@@ -68,12 +79,16 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
   {
     switch (eClass.getClassifierID())
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION: return createWorkspaceConfiguration();
-      case ProjectConfigPackage.PROJECT: return createProject();
-      case ProjectConfigPackage.PREFERENCE_PROFILE: return createPreferenceProfile();
-      case ProjectConfigPackage.PREFERENCE_FILTER: return createPreferenceFilter();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION:
+      return createWorkspaceConfiguration();
+    case ProjectConfigPackage.PROJECT:
+      return createProject();
+    case ProjectConfigPackage.PREFERENCE_PROFILE:
+      return createPreferenceProfile();
+    case ProjectConfigPackage.PREFERENCE_FILTER:
+      return createPreferenceFilter();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
@@ -87,10 +102,10 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
   {
     switch (eDataType.getClassifierID())
     {
-      case ProjectConfigPackage.PATTERN:
-        return createPatternFromString(eDataType, initialValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    case ProjectConfigPackage.PATTERN:
+      return createPatternFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -104,10 +119,10 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
   {
     switch (eDataType.getClassifierID())
     {
-      case ProjectConfigPackage.PATTERN:
-        return convertPatternToString(eDataType, instanceValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    case ProjectConfigPackage.PATTERN:
+      return convertPatternToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 

@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
@@ -119,7 +127,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     if (projects == null)
     {
-      projects = new EObjectContainmentWithInverseEList<Project>(Project.class, this, ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS, ProjectConfigPackage.PROJECT__CONFIGURATION);
+      projects = new EObjectContainmentWithInverseEList<Project>(Project.class, this,
+          ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS, ProjectConfigPackage.PROJECT__CONFIGURATION);
     }
     return projects;
   }
@@ -138,7 +147,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
       if (defaultPreferenceNode != oldDefaultPreferenceNode)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, oldDefaultPreferenceNode, defaultPreferenceNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, oldDefaultPreferenceNode,
+              defaultPreferenceNode));
       }
     }
     return defaultPreferenceNode;
@@ -164,7 +175,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
     PreferenceNode oldDefaultPreferenceNode = defaultPreferenceNode;
     defaultPreferenceNode = newDefaultPreferenceNode;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, oldDefaultPreferenceNode, defaultPreferenceNode));
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, oldDefaultPreferenceNode,
+          defaultPreferenceNode));
   }
 
   /**
@@ -181,7 +194,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
       if (instancePreferenceNode != oldInstancePreferenceNode)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, oldInstancePreferenceNode, instancePreferenceNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, oldInstancePreferenceNode,
+              instancePreferenceNode));
       }
     }
     return instancePreferenceNode;
@@ -207,7 +222,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
     PreferenceNode oldInstancePreferenceNode = instancePreferenceNode;
     instancePreferenceNode = newInstancePreferenceNode;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, oldInstancePreferenceNode, instancePreferenceNode));
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, oldInstancePreferenceNode,
+          instancePreferenceNode));
   }
 
   /**
@@ -356,8 +373,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getProjects()).basicAdd(otherEnd, msgs);
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getProjects()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -372,8 +389,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        return ((InternalEList<?>)getProjects()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      return ((InternalEList<?>)getProjects()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -388,14 +405,16 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        return getProjects();
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
-        if (resolve) return getDefaultPreferenceNode();
-        return basicGetDefaultPreferenceNode();
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
-        if (resolve) return getInstancePreferenceNode();
-        return basicGetInstancePreferenceNode();
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      return getProjects();
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
+      if (resolve)
+        return getDefaultPreferenceNode();
+      return basicGetDefaultPreferenceNode();
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
+      if (resolve)
+        return getInstancePreferenceNode();
+      return basicGetInstancePreferenceNode();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -411,16 +430,16 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        getProjects().clear();
-        getProjects().addAll((Collection<? extends Project>)newValue);
-        return;
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
-        setDefaultPreferenceNode((PreferenceNode)newValue);
-        return;
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
-        setInstancePreferenceNode((PreferenceNode)newValue);
-        return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      getProjects().clear();
+      getProjects().addAll((Collection<? extends Project>)newValue);
+      return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
+      setDefaultPreferenceNode((PreferenceNode)newValue);
+      return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
+      setInstancePreferenceNode((PreferenceNode)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -435,15 +454,15 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        getProjects().clear();
-        return;
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
-        setDefaultPreferenceNode((PreferenceNode)null);
-        return;
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
-        setInstancePreferenceNode((PreferenceNode)null);
-        return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      getProjects().clear();
+      return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
+      setDefaultPreferenceNode((PreferenceNode)null);
+      return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
+      setInstancePreferenceNode((PreferenceNode)null);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -458,12 +477,12 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        return projects != null && !projects.isEmpty();
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
-        return defaultPreferenceNode != null;
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
-        return instancePreferenceNode != null;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      return projects != null && !projects.isEmpty();
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
+      return defaultPreferenceNode != null;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
+      return instancePreferenceNode != null;
     }
     return super.eIsSet(featureID);
   }
@@ -478,12 +497,12 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (operationID)
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION___APPLY_PREFERENCE_PROFILES:
-        applyPreferenceProfiles();
-        return null;
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION___UPDATE_PREFERENCE_PROFILE_REFERENCES:
-        updatePreferenceProfileReferences();
-        return null;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION___APPLY_PREFERENCE_PROFILES:
+      applyPreferenceProfiles();
+      return null;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION___UPDATE_PREFERENCE_PROFILE_REFERENCES:
+      updatePreferenceProfileReferences();
+      return null;
     }
     return super.eInvoke(operationID, arguments);
   }

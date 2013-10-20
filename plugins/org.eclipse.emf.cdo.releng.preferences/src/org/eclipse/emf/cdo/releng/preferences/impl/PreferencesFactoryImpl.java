@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.impl;
 
@@ -6,6 +14,7 @@ import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -31,7 +40,8 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
   {
     try
     {
-      PreferencesFactory thePreferencesFactory = (PreferencesFactory)EPackage.Registry.INSTANCE.getEFactory(PreferencesPackage.eNS_URI);
+      PreferencesFactory thePreferencesFactory = (PreferencesFactory)EPackage.Registry.INSTANCE
+          .getEFactory(PreferencesPackage.eNS_URI);
       if (thePreferencesFactory != null)
       {
         return thePreferencesFactory;
@@ -65,10 +75,12 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
   {
     switch (eClass.getClassifierID())
     {
-      case PreferencesPackage.PREFERENCE_NODE: return createPreferenceNode();
-      case PreferencesPackage.PROPERTY: return createProperty();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case PreferencesPackage.PREFERENCE_NODE:
+      return createPreferenceNode();
+    case PreferencesPackage.PROPERTY:
+      return createProperty();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
@@ -82,10 +94,10 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
   {
     switch (eDataType.getClassifierID())
     {
-      case PreferencesPackage.ESCAPED_STRING:
-        return createEscapedStringFromString(eDataType, initialValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    case PreferencesPackage.ESCAPED_STRING:
+      return createEscapedStringFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -99,10 +111,10 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
   {
     switch (eDataType.getClassifierID())
     {
-      case PreferencesPackage.ESCAPED_STRING:
-        return convertEscapedStringToString(eDataType, instanceValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    case PreferencesPackage.ESCAPED_STRING:
+      return convertEscapedStringToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 

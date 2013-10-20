@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.impl;
 
@@ -13,7 +21,6 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -86,10 +93,12 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    */
   public static PreferencesPackage init()
   {
-    if (isInited) return (PreferencesPackage)EPackage.Registry.INSTANCE.getEPackage(PreferencesPackage.eNS_URI);
+    if (isInited)
+      return (PreferencesPackage)EPackage.Registry.INSTANCE.getEPackage(PreferencesPackage.eNS_URI);
 
     // Obtain or create and register package
-    PreferencesPackageImpl thePreferencesPackage = (PreferencesPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof PreferencesPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new PreferencesPackageImpl());
+    PreferencesPackageImpl thePreferencesPackage = (PreferencesPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof PreferencesPackageImpl ? EPackage.Registry.INSTANCE
+        .get(eNS_URI) : new PreferencesPackageImpl());
 
     isInited = true;
 
@@ -102,7 +111,6 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     // Mark meta-data to indicate it can't be changed
     thePreferencesPackage.freeze();
 
-  
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(PreferencesPackage.eNS_URI, thePreferencesPackage);
     return thePreferencesPackage;
@@ -264,7 +272,8 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+      return;
     isCreated = true;
 
     // Create classes and their features
@@ -302,7 +311,8 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+      return;
     isInitialized = true;
 
     // Initialize package
@@ -317,25 +327,41 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     // Add supertypes to classes
 
     // Initialize classes, features, and operations; add parameters
-    initEClass(preferenceNodeEClass, PreferenceNode.class, "PreferenceNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPreferenceNode_Children(), this.getPreferenceNode(), this.getPreferenceNode_Parent(), "children", null, 0, -1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(preferenceNodeEClass, PreferenceNode.class, "PreferenceNode", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPreferenceNode_Children(), this.getPreferenceNode(), this.getPreferenceNode_Parent(), "children",
+        null, 0, -1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     getPreferenceNode_Children().getEKeys().add(this.getPreferenceNode_Name());
-    initEReference(getPreferenceNode_Parent(), this.getPreferenceNode(), this.getPreferenceNode_Children(), "parent", null, 0, 1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPreferenceNode_Properties(), this.getProperty(), this.getProperty_Parent(), "properties", null, 0, -1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPreferenceNode_Parent(), this.getPreferenceNode(), this.getPreferenceNode_Children(), "parent",
+        null, 0, 1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPreferenceNode_Properties(), this.getProperty(), this.getProperty_Parent(), "properties", null,
+        0, -1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     getPreferenceNode_Properties().getEKeys().add(this.getProperty_Name());
-    initEAttribute(getPreferenceNode_Name(), ecorePackage.getEString(), "name", null, 1, 1, PreferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPreferenceNode_Location(), ecorePackage.getEString(), "location", null, 0, 1, PreferenceNode.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPreferenceNode_Name(), ecorePackage.getEString(), "name", null, 1, 1, PreferenceNode.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPreferenceNode_Location(), ecorePackage.getEString(), "location", null, 0, 1,
+        PreferenceNode.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
+        IS_ORDERED);
 
-    EOperation op = initEOperation(getPreferenceNode__GetNode__String(), this.getPreferenceNode(), "getNode", 0, 1, IS_UNIQUE, IS_ORDERED);
+    EOperation op = initEOperation(getPreferenceNode__GetNode__String(), this.getPreferenceNode(), "getNode", 0, 1,
+        IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    op = initEOperation(getPreferenceNode__GetProperty__String(), this.getProperty(), "getProperty", 0, 1, IS_UNIQUE, IS_ORDERED);
+    op = initEOperation(getPreferenceNode__GetProperty__String(), this.getProperty(), "getProperty", 0, 1, IS_UNIQUE,
+        IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(propertyEClass, Property.class, "Property", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getProperty_Name(), ecorePackage.getEString(), "name", null, 1, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProperty_Parent(), this.getPreferenceNode(), this.getPreferenceNode_Properties(), "parent", null, 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProperty_Value(), this.getEscapedString(), "value", null, 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProperty_Name(), ecorePackage.getEString(), "name", null, 1, 1, Property.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProperty_Parent(), this.getPreferenceNode(), this.getPreferenceNode_Properties(), "parent", null,
+        0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProperty_Value(), this.getEscapedString(), "value", null, 0, 1, Property.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(escapedStringEDataType, String.class, "EscapedString", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
@@ -344,4 +370,4 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     createResource(eNS_URI);
   }
 
-} //PreferencesPackageImpl
+} // PreferencesPackageImpl

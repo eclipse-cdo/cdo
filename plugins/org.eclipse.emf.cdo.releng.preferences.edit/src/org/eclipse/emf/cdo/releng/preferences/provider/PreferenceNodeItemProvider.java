@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.provider;
 
@@ -71,19 +79,12 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_PreferenceNode_name_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_PreferenceNode_name_feature", "_UI_PreferenceNode_type"),
-         PreferencesPackage.Literals.PREFERENCE_NODE__NAME,
-         true,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_PreferenceNode_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceNode_name_feature", "_UI_PreferenceNode_type"),
+        PreferencesPackage.Literals.PREFERENCE_NODE__NAME, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -94,19 +95,13 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
    */
   protected void addLocationPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_PreferenceNode_location_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_PreferenceNode_location_feature", "_UI_PreferenceNode_type"),
-         PreferencesPackage.Literals.PREFERENCE_NODE__LOCATION,
-         false,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_PreferenceNode_location_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceNode_location_feature",
+            "_UI_PreferenceNode_type"), PreferencesPackage.Literals.PREFERENCE_NODE__LOCATION, false, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -161,7 +156,7 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
    * @generated
    */
   @Override
-  protected boolean shouldComposeCreationImage() 
+  protected boolean shouldComposeCreationImage()
   {
     return true;
   }
@@ -193,14 +188,14 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
 
     switch (notification.getFeatureID(PreferenceNode.class))
     {
-      case PreferencesPackage.PREFERENCE_NODE__NAME:
-      case PreferencesPackage.PREFERENCE_NODE__LOCATION:
-        fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-        return;
-      case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
-      case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
-        fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-        return;
+    case PreferencesPackage.PREFERENCE_NODE__NAME:
+    case PreferencesPackage.PREFERENCE_NODE__LOCATION:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
+    case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
     }
     super.notifyChanged(notification);
   }
@@ -217,15 +212,11 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add
-      (createChildParameter
-        (PreferencesPackage.Literals.PREFERENCE_NODE__CHILDREN,
-         PreferencesFactory.eINSTANCE.createPreferenceNode()));
+    newChildDescriptors.add(createChildParameter(PreferencesPackage.Literals.PREFERENCE_NODE__CHILDREN,
+        PreferencesFactory.eINSTANCE.createPreferenceNode()));
 
-    newChildDescriptors.add
-      (createChildParameter
-        (PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES,
-         PreferencesFactory.eINSTANCE.createProperty()));
+    newChildDescriptors.add(createChildParameter(PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES,
+        PreferencesFactory.eINSTANCE.createProperty()));
   }
 
   /**

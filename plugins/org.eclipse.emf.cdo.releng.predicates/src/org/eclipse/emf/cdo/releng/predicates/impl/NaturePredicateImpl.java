@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
@@ -92,7 +100,10 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
     String oldNature = nature;
     nature = newNature;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NATURE_PREDICATE__NATURE, oldNature, nature));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NATURE_PREDICATE__NATURE, oldNature,
+          nature));
+    }
   }
 
   /**
@@ -130,8 +141,8 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case PredicatesPackage.NATURE_PREDICATE__NATURE:
-        return getNature();
+    case PredicatesPackage.NATURE_PREDICATE__NATURE:
+      return getNature();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -146,9 +157,9 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case PredicatesPackage.NATURE_PREDICATE__NATURE:
-        setNature((String)newValue);
-        return;
+    case PredicatesPackage.NATURE_PREDICATE__NATURE:
+      setNature((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -163,9 +174,9 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case PredicatesPackage.NATURE_PREDICATE__NATURE:
-        setNature(NATURE_EDEFAULT);
-        return;
+    case PredicatesPackage.NATURE_PREDICATE__NATURE:
+      setNature(NATURE_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -180,8 +191,8 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case PredicatesPackage.NATURE_PREDICATE__NATURE:
-        return NATURE_EDEFAULT == null ? nature != null : !NATURE_EDEFAULT.equals(nature);
+    case PredicatesPackage.NATURE_PREDICATE__NATURE:
+      return NATURE_EDEFAULT == null ? nature != null : !NATURE_EDEFAULT.equals(nature);
     }
     return super.eIsSet(featureID);
   }
@@ -196,8 +207,8 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
   {
     switch (operationID)
     {
-      case PredicatesPackage.NATURE_PREDICATE___MATCHES__IPROJECT:
-        return matches((IProject)arguments.get(0));
+    case PredicatesPackage.NATURE_PREDICATE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -210,7 +221,10 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (nature: ");

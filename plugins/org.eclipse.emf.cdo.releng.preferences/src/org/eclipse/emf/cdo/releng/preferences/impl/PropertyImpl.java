@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.impl;
 
@@ -8,13 +16,10 @@ import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -125,7 +130,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    */
   public PreferenceNode getParent()
   {
-    if (eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT) return null;
+    if (eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT)
+      return null;
     return (PreferenceNode)eInternalContainer();
   }
 
@@ -147,7 +153,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    */
   public void setParent(PreferenceNode newParent)
   {
-    if (newParent != eInternalContainer() || (eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT && newParent != null))
+    if (newParent != eInternalContainer()
+        || (eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT && newParent != null))
     {
       if (EcoreUtil.isAncestor(this, newParent))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -155,9 +162,11 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
       if (newParent != null)
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, PreferencesPackage.PREFERENCE_NODE__PROPERTIES, PreferenceNode.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, PreferencesPackage.PREFERENCE_NODE__PROPERTIES,
+            PreferenceNode.class, msgs);
       msgs = basicSetParent(newParent, msgs);
-      if (msgs != null) msgs.dispatch();
+      if (msgs != null)
+        msgs.dispatch();
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, PreferencesPackage.PROPERTY__PARENT, newParent, newParent));
@@ -196,10 +205,10 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-      case PreferencesPackage.PROPERTY__PARENT:
-        if (eInternalContainer() != null)
-          msgs = eBasicRemoveFromContainer(msgs);
-        return basicSetParent((PreferenceNode)otherEnd, msgs);
+    case PreferencesPackage.PROPERTY__PARENT:
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      return basicSetParent((PreferenceNode)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -214,8 +223,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-      case PreferencesPackage.PROPERTY__PARENT:
-        return basicSetParent(null, msgs);
+    case PreferencesPackage.PROPERTY__PARENT:
+      return basicSetParent(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -230,8 +239,9 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (eContainerFeatureID())
     {
-      case PreferencesPackage.PROPERTY__PARENT:
-        return eInternalContainer().eInverseRemove(this, PreferencesPackage.PREFERENCE_NODE__PROPERTIES, PreferenceNode.class, msgs);
+    case PreferencesPackage.PROPERTY__PARENT:
+      return eInternalContainer().eInverseRemove(this, PreferencesPackage.PREFERENCE_NODE__PROPERTIES,
+          PreferenceNode.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -246,12 +256,12 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-      case PreferencesPackage.PROPERTY__NAME:
-        return getName();
-      case PreferencesPackage.PROPERTY__PARENT:
-        return getParent();
-      case PreferencesPackage.PROPERTY__VALUE:
-        return getValue();
+    case PreferencesPackage.PROPERTY__NAME:
+      return getName();
+    case PreferencesPackage.PROPERTY__PARENT:
+      return getParent();
+    case PreferencesPackage.PROPERTY__VALUE:
+      return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -266,15 +276,15 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-      case PreferencesPackage.PROPERTY__NAME:
-        setName((String)newValue);
-        return;
-      case PreferencesPackage.PROPERTY__PARENT:
-        setParent((PreferenceNode)newValue);
-        return;
-      case PreferencesPackage.PROPERTY__VALUE:
-        setValue((String)newValue);
-        return;
+    case PreferencesPackage.PROPERTY__NAME:
+      setName((String)newValue);
+      return;
+    case PreferencesPackage.PROPERTY__PARENT:
+      setParent((PreferenceNode)newValue);
+      return;
+    case PreferencesPackage.PROPERTY__VALUE:
+      setValue((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -289,15 +299,15 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-      case PreferencesPackage.PROPERTY__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case PreferencesPackage.PROPERTY__PARENT:
-        setParent((PreferenceNode)null);
-        return;
-      case PreferencesPackage.PROPERTY__VALUE:
-        setValue(VALUE_EDEFAULT);
-        return;
+    case PreferencesPackage.PROPERTY__NAME:
+      setName(NAME_EDEFAULT);
+      return;
+    case PreferencesPackage.PROPERTY__PARENT:
+      setParent((PreferenceNode)null);
+      return;
+    case PreferencesPackage.PROPERTY__VALUE:
+      setValue(VALUE_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -312,12 +322,12 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-      case PreferencesPackage.PROPERTY__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case PreferencesPackage.PROPERTY__PARENT:
-        return getParent() != null;
-      case PreferencesPackage.PROPERTY__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+    case PreferencesPackage.PROPERTY__NAME:
+      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case PreferencesPackage.PROPERTY__PARENT:
+      return getParent() != null;
+    case PreferencesPackage.PROPERTY__VALUE:
+      return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
     }
     return super.eIsSet(featureID);
   }
@@ -330,7 +340,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -341,4 +352,4 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
     return result.toString();
   }
 
-} //PropertyImpl
+} // PropertyImpl

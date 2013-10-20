@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.util;
 
-import org.eclipse.emf.cdo.releng.workingsets.*;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;

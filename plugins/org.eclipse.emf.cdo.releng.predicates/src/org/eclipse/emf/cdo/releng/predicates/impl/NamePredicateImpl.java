@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
@@ -91,7 +99,10 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
     String oldPattern = pattern;
     pattern = newPattern;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NAME_PREDICATE__PATTERN, oldPattern, pattern));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NAME_PREDICATE__PATTERN, oldPattern,
+          pattern));
+    }
   }
 
   /**
@@ -114,8 +125,8 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
   {
     switch (featureID)
     {
-      case PredicatesPackage.NAME_PREDICATE__PATTERN:
-        return getPattern();
+    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+      return getPattern();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -130,9 +141,9 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
   {
     switch (featureID)
     {
-      case PredicatesPackage.NAME_PREDICATE__PATTERN:
-        setPattern((String)newValue);
-        return;
+    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+      setPattern((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -147,9 +158,9 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
   {
     switch (featureID)
     {
-      case PredicatesPackage.NAME_PREDICATE__PATTERN:
-        setPattern(PATTERN_EDEFAULT);
-        return;
+    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+      setPattern(PATTERN_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -164,8 +175,8 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
   {
     switch (featureID)
     {
-      case PredicatesPackage.NAME_PREDICATE__PATTERN:
-        return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
+    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+      return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
     }
     return super.eIsSet(featureID);
   }
@@ -180,8 +191,8 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
   {
     switch (operationID)
     {
-      case PredicatesPackage.NAME_PREDICATE___MATCHES__IPROJECT:
-        return matches((IProject)arguments.get(0));
+    case PredicatesPackage.NAME_PREDICATE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -194,7 +205,10 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (pattern: ");

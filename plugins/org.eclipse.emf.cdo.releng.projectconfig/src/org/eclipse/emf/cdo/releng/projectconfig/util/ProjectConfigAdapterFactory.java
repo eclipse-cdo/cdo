@@ -1,14 +1,24 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
-import org.eclipse.emf.cdo.releng.projectconfig.*;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
+import org.eclipse.emf.cdo.releng.projectconfig.Project;
+import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -71,35 +81,38 @@ public class ProjectConfigAdapterFactory extends AdapterFactoryImpl
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ProjectConfigSwitch<Adapter> modelSwitch =
-    new ProjectConfigSwitch<Adapter>()
+  protected ProjectConfigSwitch<Adapter> modelSwitch = new ProjectConfigSwitch<Adapter>()
+  {
+    @Override
+    public Adapter caseWorkspaceConfiguration(WorkspaceConfiguration object)
     {
-      @Override
-      public Adapter caseWorkspaceConfiguration(WorkspaceConfiguration object)
-      {
-        return createWorkspaceConfigurationAdapter();
-      }
-      @Override
-      public Adapter caseProject(Project object)
-      {
-        return createProjectAdapter();
-      }
-      @Override
-      public Adapter casePreferenceProfile(PreferenceProfile object)
-      {
-        return createPreferenceProfileAdapter();
-      }
-      @Override
-      public Adapter casePreferenceFilter(PreferenceFilter object)
-      {
-        return createPreferenceFilterAdapter();
-      }
-      @Override
-      public Adapter defaultCase(EObject object)
-      {
-        return createEObjectAdapter();
-      }
-    };
+      return createWorkspaceConfigurationAdapter();
+    }
+
+    @Override
+    public Adapter caseProject(Project object)
+    {
+      return createProjectAdapter();
+    }
+
+    @Override
+    public Adapter casePreferenceProfile(PreferenceProfile object)
+    {
+      return createPreferenceProfileAdapter();
+    }
+
+    @Override
+    public Adapter casePreferenceFilter(PreferenceFilter object)
+    {
+      return createPreferenceFilterAdapter();
+    }
+
+    @Override
+    public Adapter defaultCase(EObject object)
+    {
+      return createEObjectAdapter();
+    }
+  };
 
   /**
    * Creates an adapter for the <code>target</code>.
@@ -114,7 +127,6 @@ public class ProjectConfigAdapterFactory extends AdapterFactoryImpl
   {
     return modelSwitch.doSwitch((EObject)target);
   }
-
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration <em>Workspace Configuration</em>}'.
@@ -189,4 +201,4 @@ public class ProjectConfigAdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //ProjectConfigAdapterFactory
+} // ProjectConfigAdapterFactory

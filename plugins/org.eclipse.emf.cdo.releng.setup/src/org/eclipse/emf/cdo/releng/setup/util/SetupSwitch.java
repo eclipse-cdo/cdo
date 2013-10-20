@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
@@ -28,8 +36,10 @@ import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
 import java.util.List;
 
 /**
@@ -114,11 +124,17 @@ public class SetupSwitch<T>
       EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
       T result = caseEclipseVersion(eclipseVersion);
       if (result == null)
+      {
         result = caseConfigurableItem(eclipseVersion);
+      }
       if (result == null)
+      {
         result = caseSetupTaskContainer(eclipseVersion);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.CONFIGURATION:
@@ -126,7 +142,9 @@ public class SetupSwitch<T>
       Configuration configuration = (Configuration)theEObject;
       T result = caseConfiguration(configuration);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.CONFIGURABLE_ITEM:
@@ -134,9 +152,13 @@ public class SetupSwitch<T>
       ConfigurableItem configurableItem = (ConfigurableItem)theEObject;
       T result = caseConfigurableItem(configurableItem);
       if (result == null)
+      {
         result = caseSetupTaskContainer(configurableItem);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.PROJECT:
@@ -144,11 +166,17 @@ public class SetupSwitch<T>
       Project project = (Project)theEObject;
       T result = caseProject(project);
       if (result == null)
+      {
         result = caseConfigurableItem(project);
+      }
       if (result == null)
+      {
         result = caseSetupTaskContainer(project);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.BRANCH:
@@ -156,11 +184,17 @@ public class SetupSwitch<T>
       Branch branch = (Branch)theEObject;
       T result = caseBranch(branch);
       if (result == null)
+      {
         result = caseConfigurableItem(branch);
+      }
       if (result == null)
+      {
         result = caseSetupTaskContainer(branch);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.PREFERENCES:
@@ -168,9 +202,13 @@ public class SetupSwitch<T>
       Preferences preferences = (Preferences)theEObject;
       T result = casePreferences(preferences);
       if (result == null)
+      {
         result = caseSetupTaskContainer(preferences);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.SETUP:
@@ -178,7 +216,9 @@ public class SetupSwitch<T>
       Setup setup = (Setup)theEObject;
       T result = caseSetup(setup);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.SETUP_TASK:
@@ -186,7 +226,9 @@ public class SetupSwitch<T>
       SetupTask setupTask = (SetupTask)theEObject;
       T result = caseSetupTask(setupTask);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.SETUP_TASK_CONTAINER:
@@ -194,7 +236,9 @@ public class SetupSwitch<T>
       SetupTaskContainer setupTaskContainer = (SetupTaskContainer)theEObject;
       T result = caseSetupTaskContainer(setupTaskContainer);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.COMPOUND_SETUP_TASK:
@@ -202,11 +246,17 @@ public class SetupSwitch<T>
       CompoundSetupTask compoundSetupTask = (CompoundSetupTask)theEObject;
       T result = caseCompoundSetupTask(compoundSetupTask);
       if (result == null)
+      {
         result = caseSetupTask(compoundSetupTask);
+      }
       if (result == null)
+      {
         result = caseSetupTaskContainer(compoundSetupTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.ONE_TIME_SETUP_TASK:
@@ -214,9 +264,13 @@ public class SetupSwitch<T>
       OneTimeSetupTask oneTimeSetupTask = (OneTimeSetupTask)theEObject;
       T result = caseOneTimeSetupTask(oneTimeSetupTask);
       if (result == null)
+      {
         result = caseSetupTask(oneTimeSetupTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.ECLIPSE_INI_TASK:
@@ -224,9 +278,13 @@ public class SetupSwitch<T>
       EclipseIniTask eclipseIniTask = (EclipseIniTask)theEObject;
       T result = caseEclipseIniTask(eclipseIniTask);
       if (result == null)
+      {
         result = caseSetupTask(eclipseIniTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.LINK_LOCATION_TASK:
@@ -234,9 +292,13 @@ public class SetupSwitch<T>
       LinkLocationTask linkLocationTask = (LinkLocationTask)theEObject;
       T result = caseLinkLocationTask(linkLocationTask);
       if (result == null)
+      {
         result = caseSetupTask(linkLocationTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.P2_TASK:
@@ -244,9 +306,13 @@ public class SetupSwitch<T>
       P2Task p2Task = (P2Task)theEObject;
       T result = caseP2Task(p2Task);
       if (result == null)
+      {
         result = caseSetupTask(p2Task);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.INSTALLABLE_UNIT:
@@ -254,7 +320,9 @@ public class SetupSwitch<T>
       InstallableUnit installableUnit = (InstallableUnit)theEObject;
       T result = caseInstallableUnit(installableUnit);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.P2_REPOSITORY:
@@ -262,7 +330,9 @@ public class SetupSwitch<T>
       P2Repository p2Repository = (P2Repository)theEObject;
       T result = caseP2Repository(p2Repository);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.BUCKMINSTER_IMPORT_TASK:
@@ -270,9 +340,13 @@ public class SetupSwitch<T>
       BuckminsterImportTask buckminsterImportTask = (BuckminsterImportTask)theEObject;
       T result = caseBuckminsterImportTask(buckminsterImportTask);
       if (result == null)
+      {
         result = caseSetupTask(buckminsterImportTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.API_BASELINE_TASK:
@@ -280,9 +354,13 @@ public class SetupSwitch<T>
       ApiBaselineTask apiBaselineTask = (ApiBaselineTask)theEObject;
       T result = caseApiBaselineTask(apiBaselineTask);
       if (result == null)
+      {
         result = caseSetupTask(apiBaselineTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.GIT_CLONE_TASK:
@@ -290,9 +368,13 @@ public class SetupSwitch<T>
       GitCloneTask gitCloneTask = (GitCloneTask)theEObject;
       T result = caseGitCloneTask(gitCloneTask);
       if (result == null)
+      {
         result = caseSetupTask(gitCloneTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
@@ -300,9 +382,13 @@ public class SetupSwitch<T>
       EclipsePreferenceTask eclipsePreferenceTask = (EclipsePreferenceTask)theEObject;
       T result = caseEclipsePreferenceTask(eclipsePreferenceTask);
       if (result == null)
+      {
         result = caseSetupTask(eclipsePreferenceTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.STRING_VARIABLE_TASK:
@@ -310,9 +396,13 @@ public class SetupSwitch<T>
       StringVariableTask stringVariableTask = (StringVariableTask)theEObject;
       T result = caseStringVariableTask(stringVariableTask);
       if (result == null)
+      {
         result = caseSetupTask(stringVariableTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.WORKING_SET_TASK:
@@ -320,9 +410,13 @@ public class SetupSwitch<T>
       WorkingSetTask workingSetTask = (WorkingSetTask)theEObject;
       T result = caseWorkingSetTask(workingSetTask);
       if (result == null)
+      {
         result = caseSetupTask(workingSetTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.RESOURCE_COPY_TASK:
@@ -330,9 +424,13 @@ public class SetupSwitch<T>
       ResourceCopyTask resourceCopyTask = (ResourceCopyTask)theEObject;
       T result = caseResourceCopyTask(resourceCopyTask);
       if (result == null)
+      {
         result = caseSetupTask(resourceCopyTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.TEXT_MODIFY_TASK:
@@ -340,9 +438,13 @@ public class SetupSwitch<T>
       TextModifyTask textModifyTask = (TextModifyTask)theEObject;
       T result = caseTextModifyTask(textModifyTask);
       if (result == null)
+      {
         result = caseSetupTask(textModifyTask);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SetupPackage.TEXT_MODIFICATION:
@@ -350,7 +452,9 @@ public class SetupSwitch<T>
       TextModification textModification = (TextModification)theEObject;
       T result = caseTextModification(textModification);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

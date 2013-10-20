@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
@@ -8,6 +16,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -25,6 +34,7 @@ import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -117,19 +127,13 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
    */
   protected void addInclusionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_PreferenceFilter_inclusions_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_inclusions_feature", "_UI_PreferenceFilter_type"),
-         ProjectConfigPackage.Literals.PREFERENCE_FILTER__INCLUSIONS,
-         true,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_PreferenceFilter_inclusions_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_inclusions_feature",
+            "_UI_PreferenceFilter_type"), ProjectConfigPackage.Literals.PREFERENCE_FILTER__INCLUSIONS, true, false,
+        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -140,19 +144,13 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
    */
   protected void addExclusionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_PreferenceFilter_exclusions_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_exclusions_feature", "_UI_PreferenceFilter_type"),
-         ProjectConfigPackage.Literals.PREFERENCE_FILTER__EXCLUSIONS,
-         true,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_PreferenceFilter_exclusions_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_exclusions_feature",
+            "_UI_PreferenceFilter_type"), ProjectConfigPackage.Literals.PREFERENCE_FILTER__EXCLUSIONS, true, false,
+        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

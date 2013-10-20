@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
@@ -96,7 +104,10 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
     IProject oldProject = project;
     project = newProject;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.REPOSITORY_PREDICATE__PROJECT, oldProject, project));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.REPOSITORY_PREDICATE__PROJECT,
+          oldProject, project));
+    }
   }
 
   private IPath getGitDirAbsolutePath(IProject project)
@@ -137,8 +148,8 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
-        return getProject();
+    case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
+      return getProject();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -153,9 +164,9 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
-        setProject((IProject)newValue);
-        return;
+    case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
+      setProject((IProject)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -170,9 +181,9 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
-        setProject(PROJECT_EDEFAULT);
-        return;
+    case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
+      setProject(PROJECT_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -187,8 +198,8 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   {
     switch (featureID)
     {
-      case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
-        return PROJECT_EDEFAULT == null ? project != null : !PROJECT_EDEFAULT.equals(project);
+    case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
+      return PROJECT_EDEFAULT == null ? project != null : !PROJECT_EDEFAULT.equals(project);
     }
     return super.eIsSet(featureID);
   }
@@ -203,8 +214,8 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   {
     switch (operationID)
     {
-      case PredicatesPackage.REPOSITORY_PREDICATE___MATCHES__IPROJECT:
-        return matches((IProject)arguments.get(0));
+    case PredicatesPackage.REPOSITORY_PREDICATE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -217,7 +228,10 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (project: ");

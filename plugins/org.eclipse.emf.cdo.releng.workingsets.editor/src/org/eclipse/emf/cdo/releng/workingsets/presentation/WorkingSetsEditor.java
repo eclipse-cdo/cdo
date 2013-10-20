@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.workingsets.impl.PreferencesURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
-import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;

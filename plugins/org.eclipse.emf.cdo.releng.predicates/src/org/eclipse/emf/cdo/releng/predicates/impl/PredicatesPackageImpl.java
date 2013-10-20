@@ -1,8 +1,14 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
-
-import org.eclipse.core.resources.IProject;
 
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
@@ -22,8 +28,9 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
+import org.eclipse.core.resources.IProject;
 
 /**
  * <!-- begin-user-doc -->
@@ -144,10 +151,14 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
    */
   public static PredicatesPackage init()
   {
-    if (isInited) return (PredicatesPackage)EPackage.Registry.INSTANCE.getEPackage(PredicatesPackage.eNS_URI);
+    if (isInited)
+    {
+      return (PredicatesPackage)EPackage.Registry.INSTANCE.getEPackage(PredicatesPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    PredicatesPackageImpl thePredicatesPackage = (PredicatesPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof PredicatesPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new PredicatesPackageImpl());
+    PredicatesPackageImpl thePredicatesPackage = (PredicatesPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof PredicatesPackageImpl ? EPackage.Registry.INSTANCE
+        .get(eNS_URI) : new PredicatesPackageImpl());
 
     isInited = true;
 
@@ -160,7 +171,6 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
     // Mark meta-data to indicate it can't be changed
     thePredicatesPackage.freeze();
 
-  
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(PredicatesPackage.eNS_URI, thePredicatesPackage);
     return thePredicatesPackage;
@@ -392,7 +402,10 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -444,7 +457,10 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -457,45 +473,69 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    namePredicateEClass.getESuperTypes().add(this.getPredicate());
-    repositoryPredicateEClass.getESuperTypes().add(this.getPredicate());
-    andPredicateEClass.getESuperTypes().add(this.getPredicate());
-    orPredicateEClass.getESuperTypes().add(this.getPredicate());
-    notPredicateEClass.getESuperTypes().add(this.getPredicate());
-    naturePredicateEClass.getESuperTypes().add(this.getPredicate());
-    builderPredicateEClass.getESuperTypes().add(this.getPredicate());
-    filePredicateEClass.getESuperTypes().add(this.getPredicate());
+    namePredicateEClass.getESuperTypes().add(getPredicate());
+    repositoryPredicateEClass.getESuperTypes().add(getPredicate());
+    andPredicateEClass.getESuperTypes().add(getPredicate());
+    orPredicateEClass.getESuperTypes().add(getPredicate());
+    notPredicateEClass.getESuperTypes().add(getPredicate());
+    naturePredicateEClass.getESuperTypes().add(getPredicate());
+    builderPredicateEClass.getESuperTypes().add(getPredicate());
+    filePredicateEClass.getESuperTypes().add(getPredicate());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(predicateEClass, Predicate.class, "Predicate", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    EOperation op = initEOperation(getPredicate__Matches__IProject(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
+    EOperation op = initEOperation(getPredicate__Matches__IProject(), ecorePackage.getEBoolean(), "matches", 0, 1,
+        IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEClass(namePredicateEClass, NamePredicate.class, "NamePredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNamePredicate_Pattern(), ecorePackage.getEString(), "pattern", null, 1, 1, NamePredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(namePredicateEClass, NamePredicate.class, "NamePredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getNamePredicate_Pattern(), ecorePackage.getEString(), "pattern", null, 1, 1, NamePredicate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(repositoryPredicateEClass, RepositoryPredicate.class, "RepositoryPredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRepositoryPredicate_Project(), this.getProject(), "project", null, 0, 1, RepositoryPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(repositoryPredicateEClass, RepositoryPredicate.class, "RepositoryPredicate", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRepositoryPredicate_Project(), getProject(), "project", null, 0, 1, RepositoryPredicate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(andPredicateEClass, AndPredicate.class, "AndPredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAndPredicate_Operands(), this.getPredicate(), null, "operands", null, 0, -1, AndPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(andPredicateEClass, AndPredicate.class, "AndPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAndPredicate_Operands(), getPredicate(), null, "operands", null, 0, -1, AndPredicate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
-    initEClass(orPredicateEClass, OrPredicate.class, "OrPredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOrPredicate_Operands(), this.getPredicate(), null, "operands", null, 0, -1, OrPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(orPredicateEClass, OrPredicate.class, "OrPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOrPredicate_Operands(), getPredicate(), null, "operands", null, 0, -1, OrPredicate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
-    initEClass(notPredicateEClass, NotPredicate.class, "NotPredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getNotPredicate_Operand(), this.getPredicate(), null, "operand", null, 0, 1, NotPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(notPredicateEClass, NotPredicate.class, "NotPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNotPredicate_Operand(), getPredicate(), null, "operand", null, 0, 1, NotPredicate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
-    initEClass(naturePredicateEClass, NaturePredicate.class, "NaturePredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNaturePredicate_Nature(), ecorePackage.getEString(), "nature", null, 1, 1, NaturePredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(naturePredicateEClass, NaturePredicate.class, "NaturePredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getNaturePredicate_Nature(), ecorePackage.getEString(), "nature", null, 1, 1, NaturePredicate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(builderPredicateEClass, BuilderPredicate.class, "BuilderPredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBuilderPredicate_Builder(), ecorePackage.getEString(), "builder", null, 1, 1, BuilderPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(builderPredicateEClass, BuilderPredicate.class, "BuilderPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBuilderPredicate_Builder(), ecorePackage.getEString(), "builder", null, 1, 1,
+        BuilderPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
-    initEClass(filePredicateEClass, FilePredicate.class, "FilePredicate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFilePredicate_FilePattern(), ecorePackage.getEString(), "filePattern", null, 1, 1, FilePredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFilePredicate_ContentPattern(), ecorePackage.getEString(), "contentPattern", null, 0, 1, FilePredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(filePredicateEClass, FilePredicate.class, "FilePredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFilePredicate_FilePattern(), ecorePackage.getEString(), "filePattern", null, 1, 1,
+        FilePredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFilePredicate_ContentPattern(), ecorePackage.getEString(), "contentPattern", null, 0, 1,
+        FilePredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(projectEDataType, IProject.class, "Project", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
@@ -504,4 +544,4 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
     createResource(eNS_URI);
   }
 
-} //PredicatesPackageImpl
+} // PredicatesPackageImpl

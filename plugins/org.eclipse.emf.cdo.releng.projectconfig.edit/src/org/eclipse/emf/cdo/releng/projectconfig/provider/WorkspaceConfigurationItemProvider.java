@@ -1,10 +1,14 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
-
-
-import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
@@ -12,11 +16,8 @@ import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -27,20 +28,17 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class WorkspaceConfigurationItemProvider
-  extends ItemProviderAdapter
-  implements
-    IEditingDomainItemProvider,
-    IStructuredItemContentProvider,
-    ITreeItemContentProvider,
-    IItemLabelProvider,
-    IItemPropertySource
+public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -80,19 +78,14 @@ public class WorkspaceConfigurationItemProvider
    */
   protected void addDefaultPreferenceNodePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_WorkspaceConfiguration_defaultPreferenceNode_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_WorkspaceConfiguration_defaultPreferenceNode_feature", "_UI_WorkspaceConfiguration_type"),
-         ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_WorkspaceConfiguration_defaultPreferenceNode_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_WorkspaceConfiguration_defaultPreferenceNode_feature",
+            "_UI_WorkspaceConfiguration_type"),
+        ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, true, false, true, null, null,
+        null));
   }
 
   /**
@@ -103,19 +96,14 @@ public class WorkspaceConfigurationItemProvider
    */
   protected void addInstancePreferenceNodePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_WorkspaceConfiguration_instancePreferenceNode_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_WorkspaceConfiguration_instancePreferenceNode_feature", "_UI_WorkspaceConfiguration_type"),
-         ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_WorkspaceConfiguration_instancePreferenceNode_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_WorkspaceConfiguration_instancePreferenceNode_feature",
+            "_UI_WorkspaceConfiguration_type"),
+        ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, true, false, true, null, null,
+        null));
   }
 
   /**
@@ -169,7 +157,7 @@ public class WorkspaceConfigurationItemProvider
    * @generated
    */
   @Override
-  protected boolean shouldComposeCreationImage() 
+  protected boolean shouldComposeCreationImage()
   {
     return true;
   }
@@ -200,9 +188,9 @@ public class WorkspaceConfigurationItemProvider
 
     switch (notification.getFeatureID(WorkspaceConfiguration.class))
     {
-      case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
-        fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-        return;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
     }
     super.notifyChanged(notification);
   }
@@ -219,10 +207,8 @@ public class WorkspaceConfigurationItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add
-      (createChildParameter
-        (ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROJECTS,
-         ProjectConfigFactory.eINSTANCE.createProject()));
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROJECTS,
+        ProjectConfigFactory.eINSTANCE.createProject()));
   }
 
   /**

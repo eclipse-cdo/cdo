@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
@@ -106,8 +114,8 @@ public class OrPredicateImpl extends MinimalEObjectImpl.Container implements OrP
   {
     switch (featureID)
     {
-      case PredicatesPackage.OR_PREDICATE__OPERANDS:
-        return ((InternalEList<?>)getOperands()).basicRemove(otherEnd, msgs);
+    case PredicatesPackage.OR_PREDICATE__OPERANDS:
+      return ((InternalEList<?>)getOperands()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -122,8 +130,8 @@ public class OrPredicateImpl extends MinimalEObjectImpl.Container implements OrP
   {
     switch (featureID)
     {
-      case PredicatesPackage.OR_PREDICATE__OPERANDS:
-        return getOperands();
+    case PredicatesPackage.OR_PREDICATE__OPERANDS:
+      return getOperands();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -139,10 +147,10 @@ public class OrPredicateImpl extends MinimalEObjectImpl.Container implements OrP
   {
     switch (featureID)
     {
-      case PredicatesPackage.OR_PREDICATE__OPERANDS:
-        getOperands().clear();
-        getOperands().addAll((Collection<? extends Predicate>)newValue);
-        return;
+    case PredicatesPackage.OR_PREDICATE__OPERANDS:
+      getOperands().clear();
+      getOperands().addAll((Collection<? extends Predicate>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -157,9 +165,9 @@ public class OrPredicateImpl extends MinimalEObjectImpl.Container implements OrP
   {
     switch (featureID)
     {
-      case PredicatesPackage.OR_PREDICATE__OPERANDS:
-        getOperands().clear();
-        return;
+    case PredicatesPackage.OR_PREDICATE__OPERANDS:
+      getOperands().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -174,8 +182,8 @@ public class OrPredicateImpl extends MinimalEObjectImpl.Container implements OrP
   {
     switch (featureID)
     {
-      case PredicatesPackage.OR_PREDICATE__OPERANDS:
-        return operands != null && !operands.isEmpty();
+    case PredicatesPackage.OR_PREDICATE__OPERANDS:
+      return operands != null && !operands.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -190,8 +198,8 @@ public class OrPredicateImpl extends MinimalEObjectImpl.Container implements OrP
   {
     switch (operationID)
     {
-      case PredicatesPackage.OR_PREDICATE___MATCHES__IPROJECT:
-        return matches((IProject)arguments.get(0));
+    case PredicatesPackage.OR_PREDICATE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }

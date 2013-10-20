@@ -1,14 +1,29 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.util;
 
-import org.eclipse.emf.cdo.releng.predicates.*;
+import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
+import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
+import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
+import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
+import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
+import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
+import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -71,60 +86,68 @@ public class PredicatesAdapterFactory extends AdapterFactoryImpl
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PredicatesSwitch<Adapter> modelSwitch =
-    new PredicatesSwitch<Adapter>()
+  protected PredicatesSwitch<Adapter> modelSwitch = new PredicatesSwitch<Adapter>()
+  {
+    @Override
+    public Adapter casePredicate(Predicate object)
     {
-      @Override
-      public Adapter casePredicate(Predicate object)
-      {
-        return createPredicateAdapter();
-      }
-      @Override
-      public Adapter caseNamePredicate(NamePredicate object)
-      {
-        return createNamePredicateAdapter();
-      }
-      @Override
-      public Adapter caseRepositoryPredicate(RepositoryPredicate object)
-      {
-        return createRepositoryPredicateAdapter();
-      }
-      @Override
-      public Adapter caseAndPredicate(AndPredicate object)
-      {
-        return createAndPredicateAdapter();
-      }
-      @Override
-      public Adapter caseOrPredicate(OrPredicate object)
-      {
-        return createOrPredicateAdapter();
-      }
-      @Override
-      public Adapter caseNotPredicate(NotPredicate object)
-      {
-        return createNotPredicateAdapter();
-      }
-      @Override
-      public Adapter caseNaturePredicate(NaturePredicate object)
-      {
-        return createNaturePredicateAdapter();
-      }
-      @Override
-      public Adapter caseBuilderPredicate(BuilderPredicate object)
-      {
-        return createBuilderPredicateAdapter();
-      }
-      @Override
-      public Adapter caseFilePredicate(FilePredicate object)
-      {
-        return createFilePredicateAdapter();
-      }
-      @Override
-      public Adapter defaultCase(EObject object)
-      {
-        return createEObjectAdapter();
-      }
-    };
+      return createPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseNamePredicate(NamePredicate object)
+    {
+      return createNamePredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseRepositoryPredicate(RepositoryPredicate object)
+    {
+      return createRepositoryPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseAndPredicate(AndPredicate object)
+    {
+      return createAndPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseOrPredicate(OrPredicate object)
+    {
+      return createOrPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseNotPredicate(NotPredicate object)
+    {
+      return createNotPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseNaturePredicate(NaturePredicate object)
+    {
+      return createNaturePredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseBuilderPredicate(BuilderPredicate object)
+    {
+      return createBuilderPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseFilePredicate(FilePredicate object)
+    {
+      return createFilePredicateAdapter();
+    }
+
+    @Override
+    public Adapter defaultCase(EObject object)
+    {
+      return createEObjectAdapter();
+    }
+  };
 
   /**
    * Creates an adapter for the <code>target</code>.
@@ -139,7 +162,6 @@ public class PredicatesAdapterFactory extends AdapterFactoryImpl
   {
     return modelSwitch.doSwitch((EObject)target);
   }
-
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.predicates.Predicate <em>Predicate</em>}'.
@@ -289,4 +311,4 @@ public class PredicatesAdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //PredicatesAdapterFactory
+} // PredicatesAdapterFactory

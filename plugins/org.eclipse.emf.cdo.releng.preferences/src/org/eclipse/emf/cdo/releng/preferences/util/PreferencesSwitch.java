@@ -1,12 +1,21 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.util;
 
-import org.eclipse.emf.cdo.releng.preferences.*;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -72,21 +81,24 @@ public class PreferencesSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case PreferencesPackage.PREFERENCE_NODE:
-      {
-        PreferenceNode preferenceNode = (PreferenceNode)theEObject;
-        T result = casePreferenceNode(preferenceNode);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case PreferencesPackage.PROPERTY:
-      {
-        Property property = (Property)theEObject;
-        T result = caseProperty(property);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      default: return defaultCase(theEObject);
+    case PreferencesPackage.PREFERENCE_NODE:
+    {
+      PreferenceNode preferenceNode = (PreferenceNode)theEObject;
+      T result = casePreferenceNode(preferenceNode);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case PreferencesPackage.PROPERTY:
+    {
+      Property property = (Property)theEObject;
+      T result = caseProperty(property);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 
@@ -139,4 +151,4 @@ public class PreferencesSwitch<T> extends Switch<T>
     return null;
   }
 
-} //PreferencesSwitch
+} // PreferencesSwitch

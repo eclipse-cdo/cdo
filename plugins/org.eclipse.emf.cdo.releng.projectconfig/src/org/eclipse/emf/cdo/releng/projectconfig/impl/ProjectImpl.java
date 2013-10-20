@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
@@ -101,7 +109,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    */
   public WorkspaceConfiguration getConfiguration()
   {
-    if (eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION) return null;
+    if (eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION)
+      return null;
     return (WorkspaceConfiguration)eInternalContainer();
   }
 
@@ -123,7 +132,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    */
   public void setConfiguration(WorkspaceConfiguration newConfiguration)
   {
-    if (newConfiguration != eInternalContainer() || (eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION && newConfiguration != null))
+    if (newConfiguration != eInternalContainer()
+        || (eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION && newConfiguration != null))
     {
       if (EcoreUtil.isAncestor(this, newConfiguration))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -131,12 +141,15 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
       if (newConfiguration != null)
-        msgs = ((InternalEObject)newConfiguration).eInverseAdd(this, ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS, WorkspaceConfiguration.class, msgs);
+        msgs = ((InternalEObject)newConfiguration).eInverseAdd(this,
+            ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS, WorkspaceConfiguration.class, msgs);
       msgs = basicSetConfiguration(newConfiguration, msgs);
-      if (msgs != null) msgs.dispatch();
+      if (msgs != null)
+        msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROJECT__CONFIGURATION, newConfiguration, newConfiguration));
+      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROJECT__CONFIGURATION,
+          newConfiguration, newConfiguration));
   }
 
   /**
@@ -148,7 +161,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     if (preferenceProfiles == null)
     {
-      preferenceProfiles = new EObjectContainmentWithInverseEList<PreferenceProfile>(PreferenceProfile.class, this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES, ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT);
+      preferenceProfiles = new EObjectContainmentWithInverseEList<PreferenceProfile>(PreferenceProfile.class, this,
+          ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES, ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT);
     }
     return preferenceProfiles;
   }
@@ -167,7 +181,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       if (preferenceNode != oldPreferenceNode)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ProjectConfigPackage.PROJECT__PREFERENCE_NODE, oldPreferenceNode, preferenceNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ProjectConfigPackage.PROJECT__PREFERENCE_NODE,
+              oldPreferenceNode, preferenceNode));
       }
     }
     return preferenceNode;
@@ -193,7 +208,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     PreferenceNode oldPreferenceNode = preferenceNode;
     preferenceNode = newPreferenceNode;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROJECT__PREFERENCE_NODE, oldPreferenceNode, preferenceNode));
+      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROJECT__PREFERENCE_NODE,
+          oldPreferenceNode, preferenceNode));
   }
 
   /**
@@ -205,7 +221,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     if (preferenceProfileReferences == null)
     {
-      preferenceProfileReferences = new EObjectWithInverseResolvingEList.ManyInverse<PreferenceProfile>(PreferenceProfile.class, this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES, ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS);
+      preferenceProfileReferences = new EObjectWithInverseResolvingEList.ManyInverse<PreferenceProfile>(
+          PreferenceProfile.class, this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES,
+          ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS);
     }
     return preferenceProfileReferences;
   }
@@ -221,14 +239,15 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        if (eInternalContainer() != null)
-          msgs = eBasicRemoveFromContainer(msgs);
-        return basicSetConfiguration((WorkspaceConfiguration)otherEnd, msgs);
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceProfiles()).basicAdd(otherEnd, msgs);
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceProfileReferences()).basicAdd(otherEnd, msgs);
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      return basicSetConfiguration((WorkspaceConfiguration)otherEnd, msgs);
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceProfiles()).basicAdd(otherEnd, msgs);
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceProfileReferences()).basicAdd(otherEnd,
+          msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -243,12 +262,12 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        return basicSetConfiguration(null, msgs);
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
-        return ((InternalEList<?>)getPreferenceProfiles()).basicRemove(otherEnd, msgs);
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
-        return ((InternalEList<?>)getPreferenceProfileReferences()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      return basicSetConfiguration(null, msgs);
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
+      return ((InternalEList<?>)getPreferenceProfiles()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
+      return ((InternalEList<?>)getPreferenceProfileReferences()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -263,8 +282,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (eContainerFeatureID())
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        return eInternalContainer().eInverseRemove(this, ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS, WorkspaceConfiguration.class, msgs);
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      return eInternalContainer().eInverseRemove(this, ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS,
+          WorkspaceConfiguration.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -279,15 +299,16 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        return getConfiguration();
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
-        return getPreferenceProfiles();
-      case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
-        if (resolve) return getPreferenceNode();
-        return basicGetPreferenceNode();
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
-        return getPreferenceProfileReferences();
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      return getConfiguration();
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
+      return getPreferenceProfiles();
+    case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
+      if (resolve)
+        return getPreferenceNode();
+      return basicGetPreferenceNode();
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
+      return getPreferenceProfileReferences();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -303,20 +324,20 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        setConfiguration((WorkspaceConfiguration)newValue);
-        return;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
-        getPreferenceProfiles().clear();
-        getPreferenceProfiles().addAll((Collection<? extends PreferenceProfile>)newValue);
-        return;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
-        setPreferenceNode((PreferenceNode)newValue);
-        return;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
-        getPreferenceProfileReferences().clear();
-        getPreferenceProfileReferences().addAll((Collection<? extends PreferenceProfile>)newValue);
-        return;
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      setConfiguration((WorkspaceConfiguration)newValue);
+      return;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
+      getPreferenceProfiles().clear();
+      getPreferenceProfiles().addAll((Collection<? extends PreferenceProfile>)newValue);
+      return;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
+      setPreferenceNode((PreferenceNode)newValue);
+      return;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
+      getPreferenceProfileReferences().clear();
+      getPreferenceProfileReferences().addAll((Collection<? extends PreferenceProfile>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -331,18 +352,18 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        setConfiguration((WorkspaceConfiguration)null);
-        return;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
-        getPreferenceProfiles().clear();
-        return;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
-        setPreferenceNode((PreferenceNode)null);
-        return;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
-        getPreferenceProfileReferences().clear();
-        return;
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      setConfiguration((WorkspaceConfiguration)null);
+      return;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
+      getPreferenceProfiles().clear();
+      return;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
+      setPreferenceNode((PreferenceNode)null);
+      return;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
+      getPreferenceProfileReferences().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -357,14 +378,14 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PROJECT__CONFIGURATION:
-        return getConfiguration() != null;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
-        return preferenceProfiles != null && !preferenceProfiles.isEmpty();
-      case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
-        return preferenceNode != null;
-      case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
-        return preferenceProfileReferences != null && !preferenceProfileReferences.isEmpty();
+    case ProjectConfigPackage.PROJECT__CONFIGURATION:
+      return getConfiguration() != null;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
+      return preferenceProfiles != null && !preferenceProfiles.isEmpty();
+    case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
+      return preferenceNode != null;
+    case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
+      return preferenceProfileReferences != null && !preferenceProfileReferences.isEmpty();
     }
     return super.eIsSet(featureID);
   }

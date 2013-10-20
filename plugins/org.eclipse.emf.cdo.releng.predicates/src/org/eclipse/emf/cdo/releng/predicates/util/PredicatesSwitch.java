@@ -1,12 +1,28 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.util;
 
-import org.eclipse.emf.cdo.releng.predicates.*;
+import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
+import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
+import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
+import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
+import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
+import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
+import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -72,78 +88,130 @@ public class PredicatesSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case PredicatesPackage.PREDICATE:
+    case PredicatesPackage.PREDICATE:
+    {
+      Predicate predicate = (Predicate)theEObject;
+      T result = casePredicate(predicate);
+      if (result == null)
       {
-        Predicate predicate = (Predicate)theEObject;
-        T result = casePredicate(predicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = defaultCase(theEObject);
       }
-      case PredicatesPackage.NAME_PREDICATE:
+      return result;
+    }
+    case PredicatesPackage.NAME_PREDICATE:
+    {
+      NamePredicate namePredicate = (NamePredicate)theEObject;
+      T result = caseNamePredicate(namePredicate);
+      if (result == null)
       {
-        NamePredicate namePredicate = (NamePredicate)theEObject;
-        T result = caseNamePredicate(namePredicate);
-        if (result == null) result = casePredicate(namePredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = casePredicate(namePredicate);
       }
-      case PredicatesPackage.REPOSITORY_PREDICATE:
+      if (result == null)
       {
-        RepositoryPredicate repositoryPredicate = (RepositoryPredicate)theEObject;
-        T result = caseRepositoryPredicate(repositoryPredicate);
-        if (result == null) result = casePredicate(repositoryPredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = defaultCase(theEObject);
       }
-      case PredicatesPackage.AND_PREDICATE:
+      return result;
+    }
+    case PredicatesPackage.REPOSITORY_PREDICATE:
+    {
+      RepositoryPredicate repositoryPredicate = (RepositoryPredicate)theEObject;
+      T result = caseRepositoryPredicate(repositoryPredicate);
+      if (result == null)
       {
-        AndPredicate andPredicate = (AndPredicate)theEObject;
-        T result = caseAndPredicate(andPredicate);
-        if (result == null) result = casePredicate(andPredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = casePredicate(repositoryPredicate);
       }
-      case PredicatesPackage.OR_PREDICATE:
+      if (result == null)
       {
-        OrPredicate orPredicate = (OrPredicate)theEObject;
-        T result = caseOrPredicate(orPredicate);
-        if (result == null) result = casePredicate(orPredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = defaultCase(theEObject);
       }
-      case PredicatesPackage.NOT_PREDICATE:
+      return result;
+    }
+    case PredicatesPackage.AND_PREDICATE:
+    {
+      AndPredicate andPredicate = (AndPredicate)theEObject;
+      T result = caseAndPredicate(andPredicate);
+      if (result == null)
       {
-        NotPredicate notPredicate = (NotPredicate)theEObject;
-        T result = caseNotPredicate(notPredicate);
-        if (result == null) result = casePredicate(notPredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = casePredicate(andPredicate);
       }
-      case PredicatesPackage.NATURE_PREDICATE:
+      if (result == null)
       {
-        NaturePredicate naturePredicate = (NaturePredicate)theEObject;
-        T result = caseNaturePredicate(naturePredicate);
-        if (result == null) result = casePredicate(naturePredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = defaultCase(theEObject);
       }
-      case PredicatesPackage.BUILDER_PREDICATE:
+      return result;
+    }
+    case PredicatesPackage.OR_PREDICATE:
+    {
+      OrPredicate orPredicate = (OrPredicate)theEObject;
+      T result = caseOrPredicate(orPredicate);
+      if (result == null)
       {
-        BuilderPredicate builderPredicate = (BuilderPredicate)theEObject;
-        T result = caseBuilderPredicate(builderPredicate);
-        if (result == null) result = casePredicate(builderPredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = casePredicate(orPredicate);
       }
-      case PredicatesPackage.FILE_PREDICATE:
+      if (result == null)
       {
-        FilePredicate filePredicate = (FilePredicate)theEObject;
-        T result = caseFilePredicate(filePredicate);
-        if (result == null) result = casePredicate(filePredicate);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
+        result = defaultCase(theEObject);
       }
-      default: return defaultCase(theEObject);
+      return result;
+    }
+    case PredicatesPackage.NOT_PREDICATE:
+    {
+      NotPredicate notPredicate = (NotPredicate)theEObject;
+      T result = caseNotPredicate(notPredicate);
+      if (result == null)
+      {
+        result = casePredicate(notPredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case PredicatesPackage.NATURE_PREDICATE:
+    {
+      NaturePredicate naturePredicate = (NaturePredicate)theEObject;
+      T result = caseNaturePredicate(naturePredicate);
+      if (result == null)
+      {
+        result = casePredicate(naturePredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case PredicatesPackage.BUILDER_PREDICATE:
+    {
+      BuilderPredicate builderPredicate = (BuilderPredicate)theEObject;
+      T result = caseBuilderPredicate(builderPredicate);
+      if (result == null)
+      {
+        result = casePredicate(builderPredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case PredicatesPackage.FILE_PREDICATE:
+    {
+      FilePredicate filePredicate = (FilePredicate)theEObject;
+      T result = caseFilePredicate(filePredicate);
+      if (result == null)
+      {
+        result = casePredicate(filePredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 
@@ -308,4 +376,4 @@ public class PredicatesSwitch<T> extends Switch<T>
     return null;
   }
 
-} //PredicatesSwitch
+} // PredicatesSwitch

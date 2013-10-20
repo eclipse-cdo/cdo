@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.provider;
 
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -26,9 +28,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import java.util.Collection;
 import java.util.List;
-import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet} object.

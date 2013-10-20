@@ -1,7 +1,62 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.presentation;
 
+import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
+import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesEditPlugin;
+
+import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.ISetSelectionTarget;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,78 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.StringTokenizer;
-
-import org.eclipse.emf.common.CommonPlugin;
-
-import org.eclipse.emf.common.util.URI;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
-import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.ecore.xmi.XMLResource;
-
-import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-
-import org.eclipse.jface.dialogs.MessageDialog;
-
-import org.eclipse.jface.viewers.IStructuredSelection;
-
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardPage;
-
-import org.eclipse.swt.SWT;
-
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-
-import org.eclipse.ui.INewWizard;
-import org.eclipse.ui.IWorkbench;
-
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
-
-import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
-
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.part.ISetSelectionTarget;
-
-import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
-import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
-import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesEditPlugin;
-
-
-import org.eclipse.core.runtime.Path;
-
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-
 
 /**
  * This is a simple wizard for creating a new model file.
@@ -99,8 +82,9 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS =
-    Collections.unmodifiableList(Arrays.asList(PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesEditorFilenameExtensions").split("\\s*,\\s*")));
+  public static final List<String> FILE_EXTENSIONS = Collections
+      .unmodifiableList(Arrays.asList(PreferencesEditorPlugin.INSTANCE.getString(
+          "_UI_PreferencesEditorFilenameExtensions").split("\\s*,\\s*")));
 
   /**
    * A formatted list of supported file extensions, suitable for display.
@@ -108,8 +92,8 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS =
-    PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+  public static final String FORMATTED_FILE_EXTENSIONS = PreferencesEditorPlugin.INSTANCE.getString(
+      "_UI_PreferencesEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
 
   /**
    * This caches an instance of the model package.
@@ -178,7 +162,8 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(PreferencesEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(PreferencesEditorPlugin.INSTANCE.getImage("full/wizban/NewPreferences")));
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(PreferencesEditorPlugin.INSTANCE
+        .getImage("full/wizban/NewPreferences")));
   }
 
   /**
@@ -238,50 +223,49 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
 
       // Do the work within an operation.
       //
-      WorkspaceModifyOperation operation =
-        new WorkspaceModifyOperation()
+      WorkspaceModifyOperation operation = new WorkspaceModifyOperation()
+      {
+        @Override
+        protected void execute(IProgressMonitor progressMonitor)
         {
-          @Override
-          protected void execute(IProgressMonitor progressMonitor)
+          try
           {
-            try
+            // Create a resource set
+            //
+            ResourceSet resourceSet = new ResourceSetImpl();
+
+            // Get the URI of the model file.
+            //
+            URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+
+            // Create a resource for this file.
+            //
+            Resource resource = resourceSet.createResource(fileURI);
+
+            // Add the initial model object to the contents.
+            //
+            EObject rootObject = createInitialModel();
+            if (rootObject != null)
             {
-              // Create a resource set
-              //
-              ResourceSet resourceSet = new ResourceSetImpl();
-
-              // Get the URI of the model file.
-              //
-              URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
-
-              // Create a resource for this file.
-              //
-              Resource resource = resourceSet.createResource(fileURI);
-
-              // Add the initial model object to the contents.
-              //
-              EObject rootObject = createInitialModel();
-              if (rootObject != null)
-              {
-                resource.getContents().add(rootObject);
-              }
-
-              // Save the contents of the resource to the file system.
-              //
-              Map<Object, Object> options = new HashMap<Object, Object>();
-              options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
-              resource.save(options);
+              resource.getContents().add(rootObject);
             }
-            catch (Exception exception)
-            {
-              PreferencesEditorPlugin.INSTANCE.log(exception);
-            }
-            finally
-            {
-              progressMonitor.done();
-            }
+
+            // Save the contents of the resource to the file system.
+            //
+            Map<Object, Object> options = new HashMap<Object, Object>();
+            options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
+            resource.save(options);
           }
-        };
+          catch (Exception exception)
+          {
+            PreferencesEditorPlugin.INSTANCE.log(exception);
+          }
+          finally
+          {
+            progressMonitor.done();
+          }
+        }
+      };
 
       getContainer().run(false, false, operation);
 
@@ -293,27 +277,26 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
       if (activePart instanceof ISetSelectionTarget)
       {
         final ISelection targetSelection = new StructuredSelection(modelFile);
-        getShell().getDisplay().asyncExec
-          (new Runnable()
-           {
-             public void run()
-             {
-               ((ISetSelectionTarget)activePart).selectReveal(targetSelection);
-             }
-           });
+        getShell().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            ((ISetSelectionTarget)activePart).selectReveal(targetSelection);
+          }
+        });
       }
 
       // Open an editor on the new file.
       //
       try
       {
-        page.openEditor
-          (new FileEditorInput(modelFile),
-           workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());					 	 
+        page.openEditor(new FileEditorInput(modelFile),
+            workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
       }
       catch (PartInitException exception)
       {
-        MessageDialog.openError(workbenchWindow.getShell(), PreferencesEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+        MessageDialog.openError(workbenchWindow.getShell(),
+            PreferencesEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
         return false;
       }
 
@@ -360,7 +343,7 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
         if (extension == null || !FILE_EXTENSIONS.contains(extension))
         {
           String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
-          setErrorMessage(PreferencesEditorPlugin.INSTANCE.getString(key, new Object [] { FORMATTED_FILE_EXTENSIONS }));
+          setErrorMessage(PreferencesEditorPlugin.INSTANCE.getString(key, new Object[] { FORMATTED_FILE_EXTENSIONS }));
           return false;
         }
         return true;
@@ -501,14 +484,13 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ModifyListener validator =
-      new ModifyListener()
+    protected ModifyListener validator = new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
       {
-        public void modifyText(ModifyEvent e)
-        {
-          setPageComplete(validatePage());
-        }
-      };
+        setPageComplete(validatePage());
+      }
+    };
 
     /**
      * <!-- begin-user-doc -->
@@ -585,7 +567,7 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
       {
         return PreferencesEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
       }
-      catch(MissingResourceException mre)
+      catch (MissingResourceException mre)
       {
         PreferencesEditorPlugin.INSTANCE.log(mre);
       }
@@ -602,7 +584,8 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
       if (encodings == null)
       {
         encodings = new ArrayList<String>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(PreferencesEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); )
+        for (StringTokenizer stringTokenizer = new StringTokenizer(
+            PreferencesEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();)
         {
           encodings.add(stringTokenizer.nextToken());
         }
@@ -617,15 +600,17 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-    @Override
+  @Override
   public void addPages()
   {
     // Create a page, set the title, and the initial model file name.
     //
     newFileCreationPage = new PreferencesModelWizardNewFileCreationPage("Whatever", selection);
     newFileCreationPage.setTitle(PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesModelWizard_label"));
-    newFileCreationPage.setDescription(PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesModelWizard_description"));
-    newFileCreationPage.setFileName(PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+    newFileCreationPage.setDescription(PreferencesEditorPlugin.INSTANCE
+        .getString("_UI_PreferencesModelWizard_description"));
+    newFileCreationPage.setFileName(PreferencesEditorPlugin.INSTANCE
+        .getString("_UI_PreferencesEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -655,7 +640,8 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
 
           // Make up a unique new name here.
           //
-          String defaultModelBaseFilename = PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesEditorFilenameDefaultBase");
+          String defaultModelBaseFilename = PreferencesEditorPlugin.INSTANCE
+              .getString("_UI_PreferencesEditorFilenameDefaultBase");
           String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
           String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
           for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i)
@@ -668,7 +654,8 @@ public class PreferencesModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new PreferencesModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(PreferencesEditorPlugin.INSTANCE.getString("_UI_PreferencesModelWizard_label"));
-    initialObjectCreationPage.setDescription(PreferencesEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage.setDescription(PreferencesEditorPlugin.INSTANCE
+        .getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

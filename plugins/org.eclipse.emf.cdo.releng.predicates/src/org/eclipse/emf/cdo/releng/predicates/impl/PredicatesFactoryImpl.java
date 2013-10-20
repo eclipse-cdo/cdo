@@ -1,9 +1,18 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
@@ -11,16 +20,17 @@ import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.cdo.releng.predicates.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,7 +52,8 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     try
     {
-      PredicatesFactory thePredicatesFactory = (PredicatesFactory)EPackage.Registry.INSTANCE.getEFactory(PredicatesPackage.eNS_URI);
+      PredicatesFactory thePredicatesFactory = (PredicatesFactory)EPackage.Registry.INSTANCE
+          .getEFactory(PredicatesPackage.eNS_URI);
       if (thePredicatesFactory != null)
       {
         return thePredicatesFactory;
@@ -76,16 +87,24 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     switch (eClass.getClassifierID())
     {
-      case PredicatesPackage.NAME_PREDICATE: return createNamePredicate();
-      case PredicatesPackage.REPOSITORY_PREDICATE: return createRepositoryPredicate();
-      case PredicatesPackage.AND_PREDICATE: return createAndPredicate();
-      case PredicatesPackage.OR_PREDICATE: return createOrPredicate();
-      case PredicatesPackage.NOT_PREDICATE: return createNotPredicate();
-      case PredicatesPackage.NATURE_PREDICATE: return createNaturePredicate();
-      case PredicatesPackage.BUILDER_PREDICATE: return createBuilderPredicate();
-      case PredicatesPackage.FILE_PREDICATE: return createFilePredicate();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case PredicatesPackage.NAME_PREDICATE:
+      return createNamePredicate();
+    case PredicatesPackage.REPOSITORY_PREDICATE:
+      return createRepositoryPredicate();
+    case PredicatesPackage.AND_PREDICATE:
+      return createAndPredicate();
+    case PredicatesPackage.OR_PREDICATE:
+      return createOrPredicate();
+    case PredicatesPackage.NOT_PREDICATE:
+      return createNotPredicate();
+    case PredicatesPackage.NATURE_PREDICATE:
+      return createNaturePredicate();
+    case PredicatesPackage.BUILDER_PREDICATE:
+      return createBuilderPredicate();
+    case PredicatesPackage.FILE_PREDICATE:
+      return createFilePredicate();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
@@ -99,10 +118,10 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     switch (eDataType.getClassifierID())
     {
-      case PredicatesPackage.PROJECT:
-        return createProjectFromString(eDataType, initialValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    case PredicatesPackage.PROJECT:
+      return createProjectFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -116,10 +135,10 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     switch (eDataType.getClassifierID())
     {
-      case PredicatesPackage.PROJECT:
-        return convertProjectToString(eDataType, instanceValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    case PredicatesPackage.PROJECT:
+      return convertProjectToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 

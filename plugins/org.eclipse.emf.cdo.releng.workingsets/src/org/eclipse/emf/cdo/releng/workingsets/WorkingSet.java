@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.workingsets;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 

@@ -1,14 +1,22 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.util;
 
-import org.eclipse.emf.cdo.releng.preferences.*;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -71,25 +79,26 @@ public class PreferencesAdapterFactory extends AdapterFactoryImpl
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PreferencesSwitch<Adapter> modelSwitch =
-    new PreferencesSwitch<Adapter>()
+  protected PreferencesSwitch<Adapter> modelSwitch = new PreferencesSwitch<Adapter>()
+  {
+    @Override
+    public Adapter casePreferenceNode(PreferenceNode object)
     {
-      @Override
-      public Adapter casePreferenceNode(PreferenceNode object)
-      {
-        return createPreferenceNodeAdapter();
-      }
-      @Override
-      public Adapter caseProperty(Property object)
-      {
-        return createPropertyAdapter();
-      }
-      @Override
-      public Adapter defaultCase(EObject object)
-      {
-        return createEObjectAdapter();
-      }
-    };
+      return createPreferenceNodeAdapter();
+    }
+
+    @Override
+    public Adapter caseProperty(Property object)
+    {
+      return createPropertyAdapter();
+    }
+
+    @Override
+    public Adapter defaultCase(EObject object)
+    {
+      return createEObjectAdapter();
+    }
+  };
 
   /**
    * Creates an adapter for the <code>target</code>.
@@ -104,7 +113,6 @@ public class PreferencesAdapterFactory extends AdapterFactoryImpl
   {
     return modelSwitch.doSwitch((EObject)target);
   }
-
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode <em>Preference Node</em>}'.
@@ -149,4 +157,4 @@ public class PreferencesAdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //PreferencesAdapterFactory
+} // PreferencesAdapterFactory

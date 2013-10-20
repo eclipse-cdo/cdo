@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
@@ -138,7 +146,9 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     if (preferenceFilters == null)
     {
-      preferenceFilters = new EObjectContainmentWithInverseEList<PreferenceFilter>(PreferenceFilter.class, this, ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS, ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE);
+      preferenceFilters = new EObjectContainmentWithInverseEList<PreferenceFilter>(PreferenceFilter.class, this,
+          ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS,
+          ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE);
     }
     return preferenceFilters;
   }
@@ -152,7 +162,9 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     if (referentProjects == null)
     {
-      referentProjects = new EObjectWithInverseResolvingEList.ManyInverse<Project>(Project.class, this, ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES);
+      referentProjects = new EObjectWithInverseResolvingEList.ManyInverse<Project>(Project.class, this,
+          ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS,
+          ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES);
     }
     return referentProjects;
   }
@@ -177,7 +189,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_PROFILE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_PROFILE__NAME, oldName,
+          name));
   }
 
   /**
@@ -187,7 +200,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
    */
   public Project getProject()
   {
-    if (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT) return null;
+    if (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT)
+      return null;
     return (Project)eInternalContainer();
   }
 
@@ -209,7 +223,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
    */
   public void setProject(Project newProject)
   {
-    if (newProject != eInternalContainer() || (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT && newProject != null))
+    if (newProject != eInternalContainer()
+        || (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT && newProject != null))
     {
       if (EcoreUtil.isAncestor(this, newProject))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -217,12 +232,15 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
       if (newProject != null)
-        msgs = ((InternalEObject)newProject).eInverseAdd(this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES, Project.class, msgs);
+        msgs = ((InternalEObject)newProject).eInverseAdd(this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES,
+            Project.class, msgs);
       msgs = basicSetProject(newProject, msgs);
-      if (msgs != null) msgs.dispatch();
+      if (msgs != null)
+        msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT, newProject, newProject));
+      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT,
+          newProject, newProject));
   }
 
   /**
@@ -234,7 +252,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     if (predicates == null)
     {
-      predicates = new EObjectContainmentEList<Predicate>(Predicate.class, this, ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES);
+      predicates = new EObjectContainmentEList<Predicate>(Predicate.class, this,
+          ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES);
     }
     return predicates;
   }
@@ -248,7 +267,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     if (prerequisites == null)
     {
-      prerequisites = new EObjectResolvingEList<PreferenceProfile>(PreferenceProfile.class, this, ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES);
+      prerequisites = new EObjectResolvingEList<PreferenceProfile>(PreferenceProfile.class, this,
+          ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES);
     }
     return prerequisites;
   }
@@ -291,14 +311,14 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceFilters()).basicAdd(otherEnd, msgs);
-      case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getReferentProjects()).basicAdd(otherEnd, msgs);
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        if (eInternalContainer() != null)
-          msgs = eBasicRemoveFromContainer(msgs);
-        return basicSetProject((Project)otherEnd, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceFilters()).basicAdd(otherEnd, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getReferentProjects()).basicAdd(otherEnd, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      if (eInternalContainer() != null)
+        msgs = eBasicRemoveFromContainer(msgs);
+      return basicSetProject((Project)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -313,14 +333,14 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
-        return ((InternalEList<?>)getPreferenceFilters()).basicRemove(otherEnd, msgs);
-      case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
-        return ((InternalEList<?>)getReferentProjects()).basicRemove(otherEnd, msgs);
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        return basicSetProject(null, msgs);
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
-        return ((InternalEList<?>)getPredicates()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
+      return ((InternalEList<?>)getPreferenceFilters()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
+      return ((InternalEList<?>)getReferentProjects()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      return basicSetProject(null, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
+      return ((InternalEList<?>)getPredicates()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -335,8 +355,9 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (eContainerFeatureID())
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        return eInternalContainer().eInverseRemove(this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES, Project.class, msgs);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      return eInternalContainer().eInverseRemove(this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES,
+          Project.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -351,18 +372,18 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
-        return getPreferenceFilters();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
-        return getReferentProjects();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
-        return getName();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        return getProject();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
-        return getPredicates();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-        return getPrerequisites();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
+      return getPreferenceFilters();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
+      return getReferentProjects();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
+      return getName();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      return getProject();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
+      return getPredicates();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
+      return getPrerequisites();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -378,28 +399,28 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
-        getPreferenceFilters().clear();
-        getPreferenceFilters().addAll((Collection<? extends PreferenceFilter>)newValue);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
-        getReferentProjects().clear();
-        getReferentProjects().addAll((Collection<? extends Project>)newValue);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
-        setName((String)newValue);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        setProject((Project)newValue);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
-        getPredicates().clear();
-        getPredicates().addAll((Collection<? extends Predicate>)newValue);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-        getPrerequisites().clear();
-        getPrerequisites().addAll((Collection<? extends PreferenceProfile>)newValue);
-        return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
+      getPreferenceFilters().clear();
+      getPreferenceFilters().addAll((Collection<? extends PreferenceFilter>)newValue);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
+      getReferentProjects().clear();
+      getReferentProjects().addAll((Collection<? extends Project>)newValue);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
+      setName((String)newValue);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      setProject((Project)newValue);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
+      getPredicates().clear();
+      getPredicates().addAll((Collection<? extends Predicate>)newValue);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
+      getPrerequisites().clear();
+      getPrerequisites().addAll((Collection<? extends PreferenceProfile>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -414,24 +435,24 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
-        getPreferenceFilters().clear();
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
-        getReferentProjects().clear();
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        setProject((Project)null);
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
-        getPredicates().clear();
-        return;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-        getPrerequisites().clear();
-        return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
+      getPreferenceFilters().clear();
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
+      getReferentProjects().clear();
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
+      setName(NAME_EDEFAULT);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      setProject((Project)null);
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
+      getPredicates().clear();
+      return;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
+      getPrerequisites().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -446,18 +467,18 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (featureID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
-        return preferenceFilters != null && !preferenceFilters.isEmpty();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
-        return referentProjects != null && !referentProjects.isEmpty();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
-        return getProject() != null;
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
-        return predicates != null && !predicates.isEmpty();
-      case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-        return prerequisites != null && !prerequisites.isEmpty();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS:
+      return preferenceFilters != null && !preferenceFilters.isEmpty();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__REFERENT_PROJECTS:
+      return referentProjects != null && !referentProjects.isEmpty();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__NAME:
+      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
+      return getProject() != null;
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
+      return predicates != null && !predicates.isEmpty();
+    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
+      return prerequisites != null && !prerequisites.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -472,8 +493,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (operationID)
     {
-      case ProjectConfigPackage.PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE:
-        return requires((PreferenceProfile)arguments.get(0));
+    case ProjectConfigPackage.PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE:
+      return requires((PreferenceProfile)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -486,7 +507,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

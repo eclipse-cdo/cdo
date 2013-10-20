@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
@@ -93,7 +101,10 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
     String oldBuilder = builder;
     builder = newBuilder;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.BUILDER_PREDICATE__BUILDER, oldBuilder, builder));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.BUILDER_PREDICATE__BUILDER, oldBuilder,
+          builder));
+    }
   }
 
   /**
@@ -135,8 +146,8 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
-        return getBuilder();
+    case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
+      return getBuilder();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -151,9 +162,9 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
-        setBuilder((String)newValue);
-        return;
+    case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
+      setBuilder((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -168,9 +179,9 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
-        setBuilder(BUILDER_EDEFAULT);
-        return;
+    case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
+      setBuilder(BUILDER_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -185,8 +196,8 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
   {
     switch (featureID)
     {
-      case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
-        return BUILDER_EDEFAULT == null ? builder != null : !BUILDER_EDEFAULT.equals(builder);
+    case PredicatesPackage.BUILDER_PREDICATE__BUILDER:
+      return BUILDER_EDEFAULT == null ? builder != null : !BUILDER_EDEFAULT.equals(builder);
     }
     return super.eIsSet(featureID);
   }
@@ -201,8 +212,8 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
   {
     switch (operationID)
     {
-      case PredicatesPackage.BUILDER_PREDICATE___MATCHES__IPROJECT:
-        return matches((IProject)arguments.get(0));
+    case PredicatesPackage.BUILDER_PREDICATE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -215,7 +226,10 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (builder: ");

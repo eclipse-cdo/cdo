@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.util;
 
-import org.eclipse.emf.cdo.releng.workingsets.*;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;

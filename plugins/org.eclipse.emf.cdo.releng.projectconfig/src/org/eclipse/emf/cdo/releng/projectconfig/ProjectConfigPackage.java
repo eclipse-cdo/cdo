@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig;
 
@@ -360,7 +368,6 @@ public interface ProjectConfigPackage extends EPackage
    */
   int PREFERENCE_FILTER_OPERATION_COUNT = 1;
 
-
   /**
    * The meta object id for the '<em>Pattern</em>' data type.
    * <!-- begin-user-doc -->
@@ -370,7 +377,6 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    */
   int PATTERN = 4;
-
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration <em>Workspace Configuration</em>}'.
@@ -698,7 +704,8 @@ public interface ProjectConfigPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE = eINSTANCE.getWorkspaceConfiguration_DefaultPreferenceNode();
+    EReference WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE = eINSTANCE
+        .getWorkspaceConfiguration_DefaultPreferenceNode();
 
     /**
      * The meta object literal for the '<em><b>Instance Preference Node</b></em>' reference feature.
@@ -706,7 +713,8 @@ public interface ProjectConfigPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE = eINSTANCE.getWorkspaceConfiguration_InstancePreferenceNode();
+    EReference WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE = eINSTANCE
+        .getWorkspaceConfiguration_InstancePreferenceNode();
 
     /**
      * The meta object literal for the '<em><b>Apply Preference Profiles</b></em>' operation.
@@ -714,7 +722,8 @@ public interface ProjectConfigPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation WORKSPACE_CONFIGURATION___APPLY_PREFERENCE_PROFILES = eINSTANCE.getWorkspaceConfiguration__ApplyPreferenceProfiles();
+    EOperation WORKSPACE_CONFIGURATION___APPLY_PREFERENCE_PROFILES = eINSTANCE
+        .getWorkspaceConfiguration__ApplyPreferenceProfiles();
 
     /**
      * The meta object literal for the '<em><b>Update Preference Profile References</b></em>' operation.
@@ -722,7 +731,8 @@ public interface ProjectConfigPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation WORKSPACE_CONFIGURATION___UPDATE_PREFERENCE_PROFILE_REFERENCES = eINSTANCE.getWorkspaceConfiguration__UpdatePreferenceProfileReferences();
+    EOperation WORKSPACE_CONFIGURATION___UPDATE_PREFERENCE_PROFILE_REFERENCES = eINSTANCE
+        .getWorkspaceConfiguration__UpdatePreferenceProfileReferences();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectImpl <em>Project</em>}' class.
@@ -830,7 +840,8 @@ public interface ProjectConfigPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE = eINSTANCE.getPreferenceProfile__Requires__PreferenceProfile();
+    EOperation PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE = eINSTANCE
+        .getPreferenceProfile__Requires__PreferenceProfile();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl <em>Preference Filter</em>}' class.
@@ -894,4 +905,4 @@ public interface ProjectConfigPackage extends EPackage
 
   }
 
-} //ProjectConfigPackage
+} // ProjectConfigPackage

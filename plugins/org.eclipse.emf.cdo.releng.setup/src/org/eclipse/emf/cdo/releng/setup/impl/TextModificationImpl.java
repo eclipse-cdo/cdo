@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -101,8 +109,10 @@ public class TextModificationImpl extends MinimalEObjectImpl.Container implement
     String oldPattern = pattern;
     pattern = newPattern;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TEXT_MODIFICATION__PATTERN, oldPattern,
           pattern));
+    }
   }
 
   /**
@@ -207,7 +217,9 @@ public class TextModificationImpl extends MinimalEObjectImpl.Container implement
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (pattern: ");
@@ -218,4 +230,4 @@ public class TextModificationImpl extends MinimalEObjectImpl.Container implement
     return result.toString();
   }
 
-} //TextModificationImpl
+} // TextModificationImpl

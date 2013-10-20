@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.preferences.provider;
 
@@ -69,19 +77,12 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Property_name_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Property_name_feature", "_UI_Property_type"),
-         PreferencesPackage.Literals.PROPERTY__NAME,
-         true,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Property_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Property_name_feature", "_UI_Property_type"),
+        PreferencesPackage.Literals.PROPERTY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -92,19 +93,12 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addValuePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Property_value_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Property_value_feature", "_UI_Property_type"),
-         PreferencesPackage.Literals.PROPERTY__VALUE,
-         true,
-         false,
-         false,
-         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-         null,
-         null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Property_value_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Property_value_feature", "_UI_Property_type"),
+        PreferencesPackage.Literals.PROPERTY__VALUE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -158,10 +152,10 @@ public class PropertyItemProvider extends ItemProviderAdapter implements IEditin
 
     switch (notification.getFeatureID(Property.class))
     {
-      case PreferencesPackage.PROPERTY__NAME:
-      case PreferencesPackage.PROPERTY__VALUE:
-        fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-        return;
+    case PreferencesPackage.PROPERTY__NAME:
+    case PreferencesPackage.PROPERTY__VALUE:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
     }
     super.notifyChanged(notification);
   }

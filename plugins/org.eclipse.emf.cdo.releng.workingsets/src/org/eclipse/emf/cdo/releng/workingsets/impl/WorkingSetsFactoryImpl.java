@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
-import org.eclipse.emf.cdo.releng.workingsets.*;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;

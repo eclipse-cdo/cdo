@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -273,7 +275,8 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
   private static void initPackageExplorer()
   {
     final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
-    workbenchWindow.getShell().getDisplay().asyncExec(new Runnable()
+    final Display display = workbenchWindow.getShell().getDisplay();
+    display.asyncExec(new Runnable()
     {
       public void run()
       {
@@ -283,6 +286,38 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
               IWorkbenchPage.VIEW_CREATE);
           if (view != null)
           {
+            // Dismiss the WorkingSetConfigurationDialog that comes up the very first time the root mode changes in
+            // a new workspace just as if the OK button was pressed.
+            display.asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                Shell finalActiveShell = display.getActiveShell();
+                if (finalActiveShell != null)
+                {
+                  Object data = finalActiveShell.getData();
+                  if (data != null)
+                  {
+                    Class<? extends Object> workingSetConfigurationDialogClass = data.getClass();
+                    if (workingSetConfigurationDialogClass.getName().equals(
+                        "org.eclipse.jdt.internal.ui.workingsets.WorkingSetConfigurationDialog"))
+                    {
+                      try
+                      {
+                        Method method = workingSetConfigurationDialogClass.getDeclaredMethod("okPressed");
+                        method.setAccessible(true);
+                        method.invoke(data);
+                      }
+                      catch (Exception ex)
+                      {
+                        Activator.log(ex);
+                      }
+                    }
+                  }
+                }
+              }
+            });
+
             Method method = view.getClass().getMethod("rootModeChanged", int.class);
             method.invoke(view, 2);
           }

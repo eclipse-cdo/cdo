@@ -263,7 +263,7 @@ public class LinkLocationTaskImpl extends SetupTaskImpl implements LinkLocationT
     }
 
     link = new File(links, name + ".link");
-    return link.isFile();
+    return !link.exists();
   }
 
   public void perform(SetupTaskContext context) throws Exception

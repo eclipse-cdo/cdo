@@ -58,6 +58,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 {
   private static final String RELENG_URL = System.getProperty("releng.url",
       "http://download.eclipse.org/modeling/emf/cdo/updates/integration").replace('\\', '/');
+      
+  private static boolean NEEDS_PATH_SEPARATOR_CONVERSION = File.pathSeparatorChar == '\\';
 
   private static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
       EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
@@ -164,6 +166,11 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     {
       result.append(string.substring(previous, matcher.start()));
       String key = matcher.group(1);
+      if (NEEDS_PATH_SEPARATOR_CONVERSION)
+      {
+        key = key.replace('/', File.pathSeparatorChar);
+      }
+
       String value = lookup(key);
       String filters = matcher.group(3);
       if (filters != null)

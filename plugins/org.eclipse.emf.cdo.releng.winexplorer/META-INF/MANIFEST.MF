@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.releng.winexplorer;singleton:=true
-Bundle-Version: 1.0.100.qualifier
+Bundle-Version: 1.0.200.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.cdo.releng.winexplorer;version="1.0.100";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.releng.winexplorer;version="1.0.200";x-internal:=true

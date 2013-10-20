@@ -56,6 +56,17 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
   private static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+  private static final String[] IGNORED_PREFIXES = { "Scanning Git", "Re-indexing", "Calculating Decorations",
+  "Decorating", "http://", "The user operation is waiting", "Git repository changed", "Refreshing ", "Opening ",
+  "Connecting project ", "Searching for associated repositories.", "Preparing type ",
+  "Loading project description", "Generating cspec from PDE artifacts", "Reporting encoding changes", "Saving",
+  "Downloading software", "Java indexing...", "Computing Git status for ", "Configuring Plug-in Dependencies",
+  "Configuring JRE System Library", "Invoking builder on ", "Invoking '", "Verifying ", "Updating ...",
+  "Reading saved build state for project ", "Reading resource change information for ",
+  "Cleaning output folder for ", "Copying resources to the output folder", " adding component ",
+  "Preparing to build", "Compiling ", "Analyzing ", "Comparing ", "Checking ", "Build done",
+  "Processing API deltas..." };
+
   private PrintStream logStream;
 
   private Text text;
@@ -180,14 +191,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     }
 
     if (line == null || line.length() == 0 || Character.isLowerCase(line.charAt(0)) || line.equals("Updating")
-        || line.startsWith("Scanning Git") || line.startsWith("Re-indexing") || line.endsWith(" remaining.")
-        || line.startsWith("Calculating Decorations") || line.startsWith("Decorating") || line.startsWith("http://")
-        || line.startsWith("The user operation is waiting") || line.startsWith("Git repository changed")
-        || line.startsWith("Refreshing ") || line.startsWith("Opening ") || line.startsWith("Connecting project ")
-        || line.startsWith("Searching for associated repositories.") || line.startsWith("Preparing type ")
-        || line.startsWith("Loading project description") || line.startsWith("Generating cspec from PDE artifacts")
-        || line.startsWith("Reporting encoding changes") || line.startsWith("Saving")
-        || line.startsWith("Downloading software") || line.startsWith("Java indexing..."))
+        || line.endsWith(" remaining.") || startsWithIgnoredPrefix(line))
     {
       return;
     }
@@ -280,6 +284,20 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
       //$FALL-THROUGH$
     }
+  }
+
+  private static boolean startsWithIgnoredPrefix(String line)
+  {
+    for (int i = 0; i < IGNORED_PREFIXES.length; i++)
+    {
+      String prefix = IGNORED_PREFIXES[i];
+      if (line.startsWith(prefix))
+      {
+        return true;
+      }
+    }
+  
+    return false;
   }
 
   public static void run(Shell shell, File logFile, final String jobName, final ProgressLogRunnable runnable)

@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ImportResourceAction extends ViewAction
+public class ImportResourceAction extends AbstractViewAction
 {
   public static final String ID = "import-resource"; //$NON-NLS-1$
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
@@ -168,5 +169,32 @@ public final class FSMUtil
   public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final InternalCDOView view)
   {
     return iterator(instances.iterator(), view);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static String toString(Object object)
+  {
+    if (object instanceof CDOObject)
+    {
+      CDOObject cdoObject = (CDOObject)object;
+
+      CDORevision revision = cdoObject.cdoRevision();
+      if (revision != null)
+      {
+        String string = revision.toString();
+
+        CDOState cdoState = cdoObject.cdoState();
+        if (cdoState != CDOState.CLEAN)
+        {
+          string += "[" + cdoState + "]";
+        }
+
+        return string;
+      }
+    }
+
+    return String.valueOf(object);
   }
 }

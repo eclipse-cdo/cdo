@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class RollbackTransactionAction extends ViewAction
+public final class RollbackTransactionAction extends AbstractViewAction
 {
   private static final String TITLE = Messages.getString("RollbackTransactionAction.0"); //$NON-NLS-1$
 

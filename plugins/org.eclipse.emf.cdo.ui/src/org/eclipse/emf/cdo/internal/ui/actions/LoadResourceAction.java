@@ -26,7 +26,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public final class LoadResourceAction extends ViewAction
+public final class LoadResourceAction extends AbstractViewAction
 {
   private static final String TITLE = Messages.getString("LoadResourceAction.0"); //$NON-NLS-1$
 
@@ -40,7 +40,7 @@ public final class LoadResourceAction extends ViewAction
   @Override
   protected void preRun() throws Exception
   {
-    String uri = ViewAction.lastResourceNumber == 0 ? "" : "/res" + ViewAction.lastResourceNumber; //$NON-NLS-1$ //$NON-NLS-2$
+    String uri = AbstractViewAction.lastResourceNumber == 0 ? "" : "/res" + AbstractViewAction.lastResourceNumber; //$NON-NLS-1$ //$NON-NLS-2$
     InputDialog dialog = new InputDialog(getShell(), TITLE, Messages.getString("LoadResourceAction.4"), uri, null); //$NON-NLS-1$
     if (dialog.open() == InputDialog.OK)
     {

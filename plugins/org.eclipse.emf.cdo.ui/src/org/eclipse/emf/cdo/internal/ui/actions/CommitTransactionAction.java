@@ -21,7 +21,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class CommitTransactionAction extends ViewAction
+public final class CommitTransactionAction extends AbstractViewAction
 {
   private static final String TITLE = Messages.getString("CommitTransactionAction.0"); //$NON-NLS-1$
 

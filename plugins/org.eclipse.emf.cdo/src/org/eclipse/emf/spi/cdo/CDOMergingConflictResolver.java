@@ -83,12 +83,12 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     CDOChangeSet remoteChangeSet = getRemoteChangeSet();
     while (remoteChangeSet != null)
     {
-      resolveConflicts(remoteChangeSet);
+      resolveConflicts(conflicts, remoteChangeSet);
       remoteChangeSet = getRemoteChangeSet();
     }
   }
 
-  private void resolveConflicts(CDOChangeSet remoteChangeSet)
+  private void resolveConflicts(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet)
   {
     CDOChangeSet localChangeSet = getLocalChangeSet();
     CDOChangeSetData result;
@@ -117,11 +117,14 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     {
       InternalCDORevisionDelta resultDelta = (InternalCDORevisionDelta)key;
       CDOID id = resultDelta.getID();
+
       InternalCDOObject object = (InternalCDOObject)transaction.getObject(id, false);
-      if (object != null)
+      if (object != null && conflicts.contains(object))
       {
+        // TODO Should the merge result be compared to non-conflicting revisions, too?
+
         int newVersion = computeNewVersion(object);
-        InternalCDORevision cleanRevision = computeOldCleanRevision(object, cleanRevisions);
+        InternalCDORevision cleanRevision = cleanRevisions.get(object);
         InternalCDORevision newLocalRevision = computeNewLocalRevision(resultDelta, newVersion, cleanRevision);
 
         // Adjust local object
@@ -147,64 +150,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
           cleanRevisions.put(object, newCleanRevision);
           dirtyObjects.put(id, object);
 
-          newLocalDelta.accept(new CDOFeatureDeltaVisitorImpl()
-          {
-            @Override
-            public void visit(CDOAddFeatureDelta delta)
-            {
-              // recurse(newObjectsUpdater, (CDOID)delta.getValue());
-            }
-
-            @Override
-            public void visit(CDOClearFeatureDelta delta)
-            {
-              // TODO Only for reference features?
-              CDOList list = newCleanRevision.getList(delta.getFeature());
-              for (Object id : list)
-              {
-                recurse(detachedObjectsUpdater, (CDOID)id);
-              }
-            }
-
-            @Override
-            public void visit(CDORemoveFeatureDelta delta)
-            {
-              // TODO Only for reference features?
-              recurse(detachedObjectsUpdater, (CDOID)delta.getValue());
-            }
-
-            @Override
-            public void visit(CDOSetFeatureDelta delta)
-            {
-              // recurse(detachedObjectsUpdater, (CDOID)delta.getOldValue());
-              // recurse(newObjectsUpdater, (CDOID)delta.getValue());
-            }
-
-            @Override
-            public void visit(CDOUnsetFeatureDelta delta)
-            {
-              // TODO: implement CDOMergingConflictResolver.resolveConflicts(...).new CDOFeatureDeltaVisitorImpl()
-            }
-
-            private void recurse(final ObjectsMapUpdater objectsUpdater, CDOID id)
-            {
-              CDOObject object = objectsUpdater.update(id);
-              if (object != null)
-              {
-                InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-                if (revision != null)
-                {
-                  revision.accept(new CDORevisionValueVisitor()
-                  {
-                    public void visit(EStructuralFeature feature, Object value, int index)
-                    {
-                      recurse(objectsUpdater, (CDOID)value);
-                    }
-                  }, EMFUtil.CONTAINMENT_REFERENCES);
-                }
-              }
-            }
-          }, EMFUtil.CONTAINMENT_REFERENCES);
+          updateObjects(newCleanRevision, newLocalDelta, detachedObjectsUpdater);
         }
       }
     }
@@ -215,18 +161,6 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     InternalCDORevision localRevision = object.cdoRevision();
     int newVersion = localRevision.getVersion() + 1;
     return newVersion;
-  }
-
-  private InternalCDORevision computeOldCleanRevision(InternalCDOObject object,
-      Map<InternalCDOObject, InternalCDORevision> cleanRevisions)
-  {
-    InternalCDORevision cleanRevision = cleanRevisions.get(object);
-    if (cleanRevision == null)
-    {
-      // In this case the object revision *is clean*
-      cleanRevision = object.cdoRevision();
-    }
-    return cleanRevision;
   }
 
   private InternalCDORevision computeNewLocalRevision(InternalCDORevisionDelta resultDelta, int newVersion,
@@ -251,6 +185,69 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     }
 
     return cleanRevision;
+  }
+
+  private void updateObjects(final InternalCDORevision newCleanRevision, InternalCDORevisionDelta newLocalDelta,
+      final ObjectsMapUpdater detachedObjectsUpdater)
+  {
+    newLocalDelta.accept(new CDOFeatureDeltaVisitorImpl()
+    {
+      @Override
+      public void visit(CDOAddFeatureDelta delta)
+      {
+        // recurse(newObjectsUpdater, (CDOID)delta.getValue());
+      }
+
+      @Override
+      public void visit(CDOClearFeatureDelta delta)
+      {
+        // TODO Only for reference features?
+        CDOList list = newCleanRevision.getList(delta.getFeature());
+        for (Object id : list)
+        {
+          recurse(detachedObjectsUpdater, (CDOID)id);
+        }
+      }
+
+      @Override
+      public void visit(CDORemoveFeatureDelta delta)
+      {
+        // TODO Only for reference features?
+        recurse(detachedObjectsUpdater, (CDOID)delta.getValue());
+      }
+
+      @Override
+      public void visit(CDOSetFeatureDelta delta)
+      {
+        // recurse(detachedObjectsUpdater, (CDOID)delta.getOldValue());
+        // recurse(newObjectsUpdater, (CDOID)delta.getValue());
+      }
+
+      @Override
+      public void visit(CDOUnsetFeatureDelta delta)
+      {
+        // TODO: implement CDOMergingConflictResolver.resolveConflicts(...).new CDOFeatureDeltaVisitorImpl()
+      }
+
+      private void recurse(final ObjectsMapUpdater objectsUpdater, CDOID id)
+      {
+        CDOObject object = objectsUpdater.update(id);
+        if (object != null)
+        {
+          InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+          if (revision != null)
+          {
+            revision.accept(new CDORevisionValueVisitor()
+            {
+              public void visit(EStructuralFeature feature, Object value, int index)
+              {
+                recurse(objectsUpdater, (CDOID)value);
+              }
+            }, EMFUtil.CONTAINMENT_REFERENCES);
+          }
+        }
+      }
+    }, EMFUtil.CONTAINMENT_REFERENCES);
   }
 
   private Map<CDOID, CDORevisionDelta> getRemoteDeltas(CDOChangeSet remoteChangeSet)

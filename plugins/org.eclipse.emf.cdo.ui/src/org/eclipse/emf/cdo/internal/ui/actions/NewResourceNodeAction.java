@@ -30,7 +30,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewResourceNodeAction extends ViewAction
+public class NewResourceNodeAction extends AbstractViewAction
 {
   private CDOItemProvider itemProvider;
 
@@ -53,12 +53,12 @@ public class NewResourceNodeAction extends ViewAction
   protected void preRun() throws Exception
   {
     InputDialog dialog = new InputDialog(getShell(), type.getTitle(), Messages.getString("NewResourceNodeAction.8"),
-        (type == Type.FOLDER ? "folder" : "resource") + (ViewAction.lastResourceNumber + 1),
+        (type == Type.FOLDER ? "folder" : "resource") + (AbstractViewAction.lastResourceNumber + 1),
         new ResourceNodeNameInputValidator(selectedNode));
 
     if (dialog.open() == InputDialog.OK)
     {
-      ++ViewAction.lastResourceNumber;
+      ++AbstractViewAction.lastResourceNumber;
       resourceNodeName = dialog.getValue();
     }
     else

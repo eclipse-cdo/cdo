@@ -23,7 +23,7 @@ import org.eclipse.ui.IWorkbenchPage;
  * @deprecated As of 4.2
  */
 @Deprecated
-public final class OpenViewEditorAction extends ViewAction
+public final class OpenViewEditorAction extends AbstractViewAction
 {
   private static final String TITLE = Messages.getString("OpenViewEditorAction.0"); //$NON-NLS-1$
 

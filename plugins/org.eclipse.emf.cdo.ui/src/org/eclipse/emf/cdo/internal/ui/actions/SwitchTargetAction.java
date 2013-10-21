@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Victor Roldan Betancort
  */
-public class SwitchTargetAction extends ViewAction
+public class SwitchTargetAction extends AbstractViewAction
 {
   public static final String ID = "switch-target"; //$NON-NLS-1$
 

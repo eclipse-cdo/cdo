@@ -20,7 +20,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class DisableViewDurabilityAction extends ViewAction
+public final class DisableViewDurabilityAction extends AbstractViewAction
 {
   private static final String TITLE = Messages.getString("DisableViewDurabilityAction.0"); //$NON-NLS-1$
 

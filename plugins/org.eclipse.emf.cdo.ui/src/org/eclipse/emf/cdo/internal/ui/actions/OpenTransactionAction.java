@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
-import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -52,7 +50,6 @@ public final class OpenTransactionAction extends AbstractOpenViewAction
 
   public static void configureTransaction(CDOTransaction transaction)
   {
-    transaction.options().addConflictResolver(new CDOMergingConflictResolver());
     new CDOTransactionCommentator(transaction);
   }
 }

@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ExportResourceAction extends ViewAction
+public class ExportResourceAction extends AbstractViewAction
 {
   public static final String ID = "export-resource"; //$NON-NLS-1$
 

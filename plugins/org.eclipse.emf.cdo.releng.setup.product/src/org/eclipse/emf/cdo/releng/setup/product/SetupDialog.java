@@ -643,8 +643,7 @@ public class SetupDialog extends TitleAreaDialog
     File folder = new File(installFolder);
     folder.mkdirs();
 
-    File logFile = new File(installFolder, "setup.log");
-    ProgressLogDialog.run(getShell(), logFile, "Setting up IDE", new ProgressLogRunnable()
+    ProgressLogDialog.run(getShell(), "Setting up IDE", new ProgressLogRunnable()
     {
       public boolean run(ProgressLog log) throws Exception
       {

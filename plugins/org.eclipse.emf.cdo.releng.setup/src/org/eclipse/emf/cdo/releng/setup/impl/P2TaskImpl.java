@@ -29,9 +29,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
 import org.eclipse.equinox.internal.p2.ui.ProvUI;
@@ -416,7 +418,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         }
         else
         {
-          context.log(status.toString());
+          context.log(status);
+          throw new CoreException(Status.CANCEL_STATUS);
         }
       }
     }
@@ -492,7 +495,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       public void log(IStatus status)
       {
-        log(status.getMessage());
+        context.log(status);
       }
 
       public void close()
@@ -500,8 +503,14 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       }
     });
 
-    app.run(args);
+    Object exitCode = app.run(args);
+    if (EXIT_ERROR.equals(exitCode))
+    {
+      throw new CoreException(Status.CANCEL_STATUS);
+    }
   }
+
+  private static final Integer EXIT_ERROR = 13;
 
   private String makeList(SetupTaskContext context, EList<? extends EObject> objects, EAttribute attribute)
   {

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util.log;
 
+import org.eclipse.core.runtime.IStatus;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -22,4 +24,6 @@ public interface ProgressLog
   public boolean isCancelled();
 
   public void log(String line);
+
+  public void log(IStatus status);
 }

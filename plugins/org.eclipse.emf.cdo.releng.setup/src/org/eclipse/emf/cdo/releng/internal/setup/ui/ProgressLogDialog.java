@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -41,10 +42,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.progress.ProgressManager;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -244,6 +247,11 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     });
   }
 
+  public void log(IStatus status)
+  {
+    log(toString(status));
+  }
+
   public void setFinished()
   {
     Job.getJobManager().setProgressProvider(ProgressManager.getInstance());
@@ -363,4 +371,74 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       Activator.log(ex);
     }
   }
+
+  public static String toString(IStatus status)
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    PrintStream printStream;
+    try
+    {
+      printStream = new PrintStream(out, false, "UTF-8");
+      deeplyPrint(status, printStream, 0);
+      printStream.close();
+      return new String(out.toByteArray(), "UTF-8");
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      return status.getMessage();
+    }
+  }
+
+  private static void deeplyPrint(IStatus status, PrintStream strm, int level)
+  {
+    appendLevelPrefix(strm, level);
+    String msg = status.getMessage();
+    strm.println(msg);
+    Throwable cause = status.getException();
+    if (cause != null)
+    {
+      strm.print("Caused by: ");
+      if (!(msg.equals(cause.getMessage()) || msg.equals(cause.toString())))
+      {
+        deeplyPrint(cause, strm, level);
+      }
+    }
+
+    if (status.isMultiStatus())
+    {
+      IStatus[] children = status.getChildren();
+      for (int i = 0; i < children.length; i++)
+      {
+        deeplyPrint(children[i], strm, level + 1);
+      }
+    }
+  }
+
+  private static void deeplyPrint(Throwable t, PrintStream strm, int level)
+  {
+    if (t instanceof CoreException)
+    {
+      deeplyPrint(t, strm, level);
+    }
+    else
+    {
+      appendLevelPrefix(strm, level);
+      strm.println(t.toString());
+      Throwable cause = t.getCause();
+      if (cause != null)
+      {
+        strm.print("Caused by: "); //$NON-NLS-1$
+        deeplyPrint(cause, strm, level);
+      }
+    }
+  }
+
+  private static void appendLevelPrefix(PrintStream strm, int level)
+  {
+    for (int idx = 0; idx < level; ++idx)
+    {
+      strm.print(' ');
+    }
+  }
+
 }

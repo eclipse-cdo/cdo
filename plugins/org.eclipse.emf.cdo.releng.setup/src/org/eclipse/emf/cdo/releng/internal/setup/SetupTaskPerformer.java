@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -58,7 +59,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 {
   private static final String RELENG_URL = System.getProperty("releng.url",
       "http://download.eclipse.org/modeling/emf/cdo/updates/integration").replace('\\', '/');
-      
+
   private static boolean NEEDS_PATH_SEPARATOR_CONVERSION = File.pathSeparatorChar == '\\';
 
   private static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
@@ -131,6 +132,11 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
       logMessageBuffer.add(line);
     }
+  }
+
+  public void log(IStatus status)
+  {
+    log(ProgressLogDialog.toString(status));
   }
 
   public boolean isCancelled()

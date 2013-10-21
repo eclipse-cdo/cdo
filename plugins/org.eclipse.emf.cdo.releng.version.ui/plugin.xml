@@ -93,6 +93,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="org.eclipse.emf.cdo.releng.ui.preferences.RelengPreferencePage"
             class="org.eclipse.emf.cdo.releng.version.ui.preferences.VersionBuilderPreferencePage"
             id="org.eclipse.emf.cdo.releng.version.ui.preferences.VersionBuilderPreferencePage"
             name="Version Management">

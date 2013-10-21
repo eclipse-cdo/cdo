@@ -421,13 +421,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           context.log(status);
           throw new CoreException(Status.CANCEL_STATUS);
         }
+        context.setRestartNeeded();
       }
     }
     else
     {
       callDirectorApp(context);
     }
-    context.setRestartNeeded();
   }
 
   private ProvisioningContext makeProvisioningContext(ProvisioningSession session, Collection<URI> repositories)

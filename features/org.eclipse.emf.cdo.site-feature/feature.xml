@@ -30,54 +30,205 @@
       %license
    </license>
 
-   <includes id="org.eclipse.emf.cdo.compare" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.codegen.gmf" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.tests" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.epp" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.examples" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.examples.hibernate" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.explorer.product" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.apireports" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.buildstamp" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.gitbash" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.help" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.launches" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.manifests" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.projectcopy" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.relativepaths" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.setup.editor" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.setup" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.setup.product" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.version" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.version.doc" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.version.headless" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.version.sdk" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.version.tests" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.windowtitle" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.winexplorer" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.releng.workingsets" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.sdk" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.db4o" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.hibernate" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.lissome" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.mongodb" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.objectivity" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.product" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.tests" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.tests.hibernate" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.db.derby" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.db.h2" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.db.hsqldb" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.db.mysql" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.db.oracle" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.db.postgresql" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.examples" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.sdk" version="0.0.0"/>
-   <includes id="org.eclipse.net4j.tests" version="0.0.0"/>
-   <includes id="org.gastro" version="0.0.0"/>
+   <includes
+         id="org.eclipse.emf.cdo.compare"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.dawn.codegen.gmf"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.dawn.sdk"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.dawn.tests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.epp"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.examples"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.examples.hibernate"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.explorer.product"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.apireports"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.buildstamp"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.gitbash"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.help"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.launches"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.manifests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.projectcopy"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.relativepaths"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.editor"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.product"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.tasks"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version.doc"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version.headless"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version.sdk"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version.tests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.windowtitle"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.winexplorer"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.workingsets"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.sdk"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.db4o"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.hibernate"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.lissome"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.mongodb"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.objectivity"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.product"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.tests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.tests.hibernate"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.derby"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.h2"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.hsqldb"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.mysql"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.oracle"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.postgresql"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.examples"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.sdk"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.tests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.gastro"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.projectconfig"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.preferences"
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.cdo.tests.objectivity"

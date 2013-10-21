@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            name="CDO Release Engineering"
+            name="Release Engineering"
             id="org.eclipse.emf.cdo.releng">
       </category>
       <command

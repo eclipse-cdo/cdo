@@ -10,9 +10,9 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.releng.workingsets"
+      id="org.eclipse.emf.cdo.releng.projectconfig"
       label="%featureName"
-      version="1.2.0.qualifier"
+      version="1.0.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -36,21 +36,28 @@
    </url>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.workingsets"
+         id="org.eclipse.emf.cdo.releng.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.workingsets.edit"
+         id="org.eclipse.emf.cdo.releng.projectconfig"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.workingsets.editor"
+         id="org.eclipse.emf.cdo.releng.projectconfig.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.projectconfig.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -65,13 +72,6 @@
 
    <plugin
          id="org.eclipse.emf.cdo.releng.predicates.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

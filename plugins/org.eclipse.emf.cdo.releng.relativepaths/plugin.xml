@@ -21,7 +21,7 @@
             objectClass="org.eclipse.core.resources.IResource">
          <menu
                id="org.eclipse.emf.cdo.releng"
-               label="CDO Release Engineering"
+               label="Release Engineering"
                path="additions">
             <separator
                   name="group1">

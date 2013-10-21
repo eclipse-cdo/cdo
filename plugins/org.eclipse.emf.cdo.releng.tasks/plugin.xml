@@ -59,7 +59,7 @@
          point="org.eclipse.ui.commands">
       <category
             id="org.eclipse.emf.cdo.releng"
-            name="CDO Release Engineering">
+            name="Release Engineering">
       </category>
       <command
             categoryId="org.eclipse.emf.cdo.releng"

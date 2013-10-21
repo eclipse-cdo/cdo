@@ -10,9 +10,9 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.releng.workingsets"
+      id="org.eclipse.emf.cdo.releng.preferences"
       label="%featureName"
-      version="1.2.0.qualifier"
+      version="1.0.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -36,42 +36,28 @@
    </url>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.workingsets"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.workingsets.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.workingsets.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.predicates"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.predicates.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.cdo.releng.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.preferences"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.preferences.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.preferences.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"

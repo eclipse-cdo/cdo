@@ -16,11 +16,13 @@ import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +31,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl#getValue <em>Value</em>}</li>
  * </ul>
@@ -37,28 +38,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @generated
  */
-public class PropertyImpl extends MinimalEObjectImpl.Container implements Property
+public class PropertyImpl extends PreferenceItemImpl implements Property
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -105,33 +86,13 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, PreferencesPackage.PROPERTY__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  @Override
   public PreferenceNode getParent()
   {
     if (eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT)
+    {
       return null;
+    }
     return (PreferenceNode)eInternalContainer();
   }
 
@@ -153,23 +114,33 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    */
   public void setParent(PreferenceNode newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != PreferencesPackage.PROPERTY__PARENT
+        && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, PreferencesPackage.PREFERENCE_NODE__PROPERTIES,
             PreferenceNode.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, PreferencesPackage.PROPERTY__PARENT, newParent, newParent));
+    }
   }
 
   /**
@@ -192,7 +163,31 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, PreferencesPackage.PROPERTY__VALUE, oldValue, value));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Property getInScope(String scopeName)
+  {
+    return (Property)super.getInScope(scopeName);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Property getInScope()
+  {
+    return (Property)super.getInScope();
   }
 
   /**
@@ -207,7 +202,9 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
     {
     case PreferencesPackage.PROPERTY__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((PreferenceNode)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -256,8 +253,6 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-    case PreferencesPackage.PROPERTY__NAME:
-      return getName();
     case PreferencesPackage.PROPERTY__PARENT:
       return getParent();
     case PreferencesPackage.PROPERTY__VALUE:
@@ -276,9 +271,6 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-    case PreferencesPackage.PROPERTY__NAME:
-      setName((String)newValue);
-      return;
     case PreferencesPackage.PROPERTY__PARENT:
       setParent((PreferenceNode)newValue);
       return;
@@ -299,9 +291,6 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-    case PreferencesPackage.PROPERTY__NAME:
-      setName(NAME_EDEFAULT);
-      return;
     case PreferencesPackage.PROPERTY__PARENT:
       setParent((PreferenceNode)null);
       return;
@@ -322,8 +311,6 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
   {
     switch (featureID)
     {
-    case PreferencesPackage.PROPERTY__NAME:
-      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case PreferencesPackage.PROPERTY__PARENT:
       return getParent() != null;
     case PreferencesPackage.PROPERTY__VALUE:
@@ -338,15 +325,33 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    * @generated
    */
   @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case PreferencesPackage.PROPERTY___GET_IN_SCOPE__STRING:
+      return getInScope((String)arguments.get(0));
+    case PreferencesPackage.PROPERTY___GET_IN_SCOPE:
+      return getInScope();
+    }
+    return super.eInvoke(operationID, arguments);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", value: ");
+    result.append(" (value: ");
     result.append(value);
     result.append(')');
     return result.toString();

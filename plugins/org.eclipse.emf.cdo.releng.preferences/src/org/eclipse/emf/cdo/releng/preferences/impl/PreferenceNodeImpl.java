@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -44,17 +43,16 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl#getProperties <em>Properties</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl#getLocation <em>Location</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements PreferenceNode
+public class PreferenceNodeImpl extends PreferenceItemImpl implements PreferenceNode
 {
   /**
    * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
@@ -75,26 +73,6 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected EList<Property> properties;
-
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
 
   /**
    * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
@@ -147,6 +125,7 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PreferenceNode getParent()
   {
     if (eContainerFeatureID() != PreferencesPackage.PREFERENCE_NODE__PARENT)
@@ -222,32 +201,7 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, PreferencesPackage.PREFERENCE_NODE__NAME, oldName, name));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public String getLocation()
   {
@@ -278,6 +232,7 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
         return node;
       }
     }
+
     return null;
   }
 
@@ -295,7 +250,30 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
         return property;
       }
     }
+
     return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public PreferenceNode getInScope(String scopeName)
+  {
+    return (PreferenceNode)super.getInScope(scopeName);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public PreferenceNode getInScope()
+  {
+    return (PreferenceNode)super.getInScope();
   }
 
   /**
@@ -309,14 +287,14 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case PreferencesPackage.PREFERENCE_NODE__PARENT:
       if (eInternalContainer() != null)
       {
         msgs = eBasicRemoveFromContainer(msgs);
       }
       return basicSetParent((PreferenceNode)otherEnd, msgs);
+    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getProperties()).basicAdd(otherEnd, msgs);
     }
@@ -333,10 +311,10 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
-      return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
     case PreferencesPackage.PREFERENCE_NODE__PARENT:
       return basicSetParent(null, msgs);
+    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
+      return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
     case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
       return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
     }
@@ -370,14 +348,12 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
-      return getChildren();
     case PreferencesPackage.PREFERENCE_NODE__PARENT:
       return getParent();
+    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
+      return getChildren();
     case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
       return getProperties();
-    case PreferencesPackage.PREFERENCE_NODE__NAME:
-      return getName();
     case PreferencesPackage.PREFERENCE_NODE__LOCATION:
       return getLocation();
     }
@@ -395,19 +371,16 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+    case PreferencesPackage.PREFERENCE_NODE__PARENT:
+      setParent((PreferenceNode)newValue);
+      return;
     case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
       getChildren().clear();
       getChildren().addAll((Collection<? extends PreferenceNode>)newValue);
       return;
-    case PreferencesPackage.PREFERENCE_NODE__PARENT:
-      setParent((PreferenceNode)newValue);
-      return;
     case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
       getProperties().clear();
       getProperties().addAll((Collection<? extends Property>)newValue);
-      return;
-    case PreferencesPackage.PREFERENCE_NODE__NAME:
-      setName((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -423,17 +396,14 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
-      getChildren().clear();
-      return;
     case PreferencesPackage.PREFERENCE_NODE__PARENT:
       setParent((PreferenceNode)null);
       return;
+    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
+      getChildren().clear();
+      return;
     case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
       getProperties().clear();
-      return;
-    case PreferencesPackage.PREFERENCE_NODE__NAME:
-      setName(NAME_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -449,14 +419,12 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
-    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
-      return children != null && !children.isEmpty();
     case PreferencesPackage.PREFERENCE_NODE__PARENT:
       return getParent() != null;
+    case PreferencesPackage.PREFERENCE_NODE__CHILDREN:
+      return children != null && !children.isEmpty();
     case PreferencesPackage.PREFERENCE_NODE__PROPERTIES:
       return properties != null && !properties.isEmpty();
-    case PreferencesPackage.PREFERENCE_NODE__NAME:
-      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case PreferencesPackage.PREFERENCE_NODE__LOCATION:
       return LOCATION_EDEFAULT == null ? getLocation() != null : !LOCATION_EDEFAULT.equals(getLocation());
     }
@@ -477,6 +445,10 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
       return getNode((String)arguments.get(0));
     case PreferencesPackage.PREFERENCE_NODE___GET_PROPERTY__STRING:
       return getProperty((String)arguments.get(0));
+    case PreferencesPackage.PREFERENCE_NODE___GET_IN_SCOPE__STRING:
+      return getInScope((String)arguments.get(0));
+    case PreferencesPackage.PREFERENCE_NODE___GET_IN_SCOPE:
+      return getInScope();
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -526,26 +498,6 @@ public class PreferenceNodeImpl extends MinimalEObjectImpl.Container implements 
       return getNode(preferenceNodeName);
     }
     return super.eObjectForURIFragmentSegment(uriFragmentSegment);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy())
-    {
-      return super.toString();
-    }
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } // PreferenceNodeImpl

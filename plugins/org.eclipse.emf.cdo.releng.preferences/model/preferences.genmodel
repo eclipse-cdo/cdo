@@ -2,16 +2,25 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.releng.preferences/src" creationIcons="false"
     modelPluginID="org.eclipse.emf.cdo.releng.preferences" modelName="Preferences"
-    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" testsDirectory=""
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
   <foreignModel>preferences.ecore</foreignModel>
   <genPackages prefix="Preferences" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
       multipleEditorPages="false" ecorePackage="preferences.ecore#/">
+    <genDataTypes ecoreDataType="preferences.ecore#//EscapedString"/>
     <genClasses ecoreClass="preferences.ecore#//PreferenceNode">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference preferences.ecore#//PreferenceNode/children"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference preferences.ecore#//PreferenceNode/parent"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference preferences.ecore#//PreferenceNode/properties"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute preferences.ecore#//PreferenceNode/name"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute preferences.ecore#//PreferenceNode/location"/>
+      <genOperations ecoreOperation="preferences.ecore#//PreferenceNode/getNode">
+        <genParameters ecoreParameter="preferences.ecore#//PreferenceNode/getNode/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="preferences.ecore#//PreferenceNode/getProperty">
+        <genParameters ecoreParameter="preferences.ecore#//PreferenceNode/getProperty/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="preferences.ecore#//Property">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute preferences.ecore#//Property/name"/>

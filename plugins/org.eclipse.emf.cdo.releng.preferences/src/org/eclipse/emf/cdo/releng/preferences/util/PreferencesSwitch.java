@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.preferences.util;
 
+import org.eclipse.emf.cdo.releng.preferences.PreferenceItem;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
@@ -81,12 +82,28 @@ public class PreferencesSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
+    case PreferencesPackage.PREFERENCE_ITEM:
+    {
+      PreferenceItem preferenceItem = (PreferenceItem)theEObject;
+      T result = casePreferenceItem(preferenceItem);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case PreferencesPackage.PREFERENCE_NODE:
     {
       PreferenceNode preferenceNode = (PreferenceNode)theEObject;
       T result = casePreferenceNode(preferenceNode);
       if (result == null)
+      {
+        result = casePreferenceItem(preferenceNode);
+      }
+      if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case PreferencesPackage.PROPERTY:
@@ -94,12 +111,34 @@ public class PreferencesSwitch<T> extends Switch<T>
       Property property = (Property)theEObject;
       T result = caseProperty(property);
       if (result == null)
+      {
+        result = casePreferenceItem(property);
+      }
+      if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
       return defaultCase(theEObject);
     }
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Preference Item</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Preference Item</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePreferenceItem(PreferenceItem object)
+  {
+    return null;
   }
 
   /**

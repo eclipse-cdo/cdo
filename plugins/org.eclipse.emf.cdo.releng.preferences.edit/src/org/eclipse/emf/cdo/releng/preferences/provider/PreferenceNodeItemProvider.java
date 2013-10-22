@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -26,7 +25,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -38,7 +36,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class PreferenceNodeItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class PreferenceNodeItemProvider extends PreferenceItemItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -65,26 +63,9 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
     {
       super.getPropertyDescriptors(object);
 
-      addNamePropertyDescriptor(object);
       addLocationPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
-  }
-
-  /**
-   * This adds a property descriptor for the Name feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addNamePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_PreferenceNode_name_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceNode_name_feature", "_UI_PreferenceNode_type"),
-        PreferencesPackage.Literals.PREFERENCE_NODE__NAME, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -188,7 +169,6 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
 
     switch (notification.getFeatureID(PreferenceNode.class))
     {
-    case PreferencesPackage.PREFERENCE_NODE__NAME:
     case PreferencesPackage.PREFERENCE_NODE__LOCATION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
@@ -217,18 +197,6 @@ public class PreferenceNodeItemProvider extends ItemProviderAdapter implements I
 
     newChildDescriptors.add(createChildParameter(PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES,
         PreferencesFactory.eINSTANCE.createProperty()));
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return PreferencesEditPlugin.INSTANCE;
   }
 
 }

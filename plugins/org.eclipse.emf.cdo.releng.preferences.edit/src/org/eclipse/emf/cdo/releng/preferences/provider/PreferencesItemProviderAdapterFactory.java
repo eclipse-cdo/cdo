@@ -187,7 +187,7 @@ public class PreferencesItemProviderAdapterFactory extends PreferencesAdapterFac
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -243,9 +243,13 @@ public class PreferencesItemProviderAdapterFactory extends PreferencesAdapterFac
   public void dispose()
   {
     if (preferenceNodeItemProvider != null)
+    {
       preferenceNodeItemProvider.dispose();
+    }
     if (propertyItemProvider != null)
+    {
       propertyItemProvider.dispose();
+    }
   }
 
 }

@@ -596,7 +596,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
           if (target instanceof Property)
           {
             Property property = (Property)target;
-            String absolutePath = PreferencesUtil.getAbsolutePath(property);
+            String absolutePath = property.getAbsolutePath();
             if (absolutePath.startsWith("/instance/"))
             {
               map.put(property, absolutePath);

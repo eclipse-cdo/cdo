@@ -28,14 +28,11 @@
       <category
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
-      <category
-            id="org.eclipse.emf.cdo.releng"
-            name="%_UI_Wizard_category"/>
       <wizard
             id="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesModelWizardID"
             name="%_UI_PreferencesModelWizard_label"
             class="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesModelWizard"
-            category="org.eclipse.emf.cdo.releng"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
             icon="icons/full/obj16/PreferencesModelFile.gif">
          <description>%_UI_PreferencesModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>

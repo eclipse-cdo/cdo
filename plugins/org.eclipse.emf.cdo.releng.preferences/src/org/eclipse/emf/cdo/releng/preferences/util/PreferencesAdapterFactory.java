@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.preferences.util;
 
+import org.eclipse.emf.cdo.releng.preferences.PreferenceItem;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
@@ -82,6 +83,12 @@ public class PreferencesAdapterFactory extends AdapterFactoryImpl
   protected PreferencesSwitch<Adapter> modelSwitch = new PreferencesSwitch<Adapter>()
   {
     @Override
+    public Adapter casePreferenceItem(PreferenceItem object)
+    {
+      return createPreferenceItemAdapter();
+    }
+
+    @Override
     public Adapter casePreferenceNode(PreferenceNode object)
     {
       return createPreferenceNodeAdapter();
@@ -112,6 +119,21 @@ public class PreferencesAdapterFactory extends AdapterFactoryImpl
   public Adapter createAdapter(Notifier target)
   {
     return modelSwitch.doSwitch((EObject)target);
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem <em>Preference Item</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem
+   * @generated
+   */
+  public Adapter createPreferenceItemAdapter()
+  {
+    return null;
   }
 
   /**

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -127,7 +129,9 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_PREFERENCE_TASK__KEY, oldKey, key));
+    }
   }
 
   /**
@@ -150,8 +154,10 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_PREFERENCE_TASK__VALUE, oldValue,
           value));
+    }
   }
 
   /**
@@ -239,7 +245,9 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -277,7 +285,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     expandedValue = context.expandString(getValue());
 
     String oldValue = node.get(property, null);
-    if (expandedValue.equals(oldValue))
+    if (ObjectUtil.equals(expandedValue, oldValue))
     {
       return false;
     }
@@ -298,7 +306,15 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
         try
         {
           org.osgi.service.prefs.Preferences node = (org.osgi.service.prefs.Preferences)cachedNode;
-          node.put(property, expandedValue);
+          if (expandedValue != null)
+          {
+            node.put(property, expandedValue);
+          }
+          else
+          {
+            node.remove(property);
+          }
+
           node.flush();
         }
         catch (Exception ex)

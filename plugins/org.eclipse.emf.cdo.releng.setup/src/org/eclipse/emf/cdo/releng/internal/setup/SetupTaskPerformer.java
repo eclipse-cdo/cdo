@@ -192,6 +192,11 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public String expandString(String string)
   {
+    if (string == null)
+    {
+      return null;
+    }
+
     StringBuilder result = new StringBuilder();
     int previous = 0;
     for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)

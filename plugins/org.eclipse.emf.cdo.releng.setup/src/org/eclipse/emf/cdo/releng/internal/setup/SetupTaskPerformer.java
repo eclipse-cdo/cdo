@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -41,7 +43,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -81,6 +87,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private transient boolean restartNeeded;
 
+  private PrintStream logStream;
+
   private List<String> logMessageBuffer;
 
   public SetupTaskPerformer(File branchDir)
@@ -115,13 +123,13 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       {
         for (String value : logMessageBuffer)
         {
-          progress.log(value);
+          doLog(value);
         }
 
         logMessageBuffer = null;
       }
 
-      progress.log(line);
+      doLog(line);
     }
     else
     {
@@ -132,6 +140,24 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
       logMessageBuffer.add(line);
     }
+  }
+
+  private void doLog(String line)
+  {
+    if (logStream != null)
+    {
+      try
+      {
+        logStream.println("[" + ProgressLogDialog.DATE_TIME.format(new Date()) + "] " + line);
+        logStream.flush();
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+    }
+
+    progress.log(line);
   }
 
   public void log(IStatus status)
@@ -172,9 +198,17 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     {
       result.append(string.substring(previous, matcher.start()));
       String key = matcher.group(1);
-      if (NEEDS_PATH_SEPARATOR_CONVERSION)
+      String suffix = "";
+
+      int prefixIndex = key.indexOf('/');
+      if (prefixIndex != -1)
       {
-        key = key.replace('/', File.pathSeparatorChar);
+        suffix = key.substring(prefixIndex);
+        key = key.substring(0, prefixIndex);
+        if (NEEDS_PATH_SEPARATOR_CONVERSION)
+        {
+          suffix = suffix.replace('/', File.pathSeparatorChar);
+        }
       }
 
       String value = lookup(key);
@@ -188,6 +222,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       }
 
       result.append(value);
+      result.append(suffix);
       previous = matcher.end();
     }
 
@@ -277,6 +312,15 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
     reorder(setupTasks);
     perform(setupTasks);
+
+    if (logStream != null)
+    {
+      logStream.println();
+      logStream.println();
+      logStream.println();
+      logStream.println();
+      IOUtil.closeSilent(logStream);
+    }
   }
 
   protected String lookup(String key)
@@ -327,6 +371,17 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     put("setup.project.name", projectName);
     put("setup.branch.name", branchName);
     put("releng.url", RELENG_URL);
+
+    try
+    {
+      File logFile = new File(getBranchDir(), "setup.log");
+      logFile.getParentFile().mkdirs();
+      logStream = new PrintStream(new FileOutputStream(logFile, true));
+    }
+    catch (FileNotFoundException ex)
+    {
+      throw new RuntimeException(ex);
+    }
   }
 
   private void reorder(EList<SetupTask> setupTasks)
@@ -372,10 +427,9 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
     if (Activator.SETUP_IDE && trigger != Trigger.MANUAL)
     {
-      File logFile = new File(getInstallDir(), "setup.log");
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
 
-      ProgressLogDialog.run(shell, logFile, "Setting up IDE", new ProgressLogRunnable()
+      ProgressLogDialog.run(shell, "Setting up IDE", new ProgressLogRunnable()
       {
         public boolean run(ProgressLog log) throws Exception
         {

@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogProvider;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
-import org.eclipse.net4j.util.io.IOUtil;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -43,9 +41,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.progress.ProgressManager;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -55,9 +50,9 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 {
   public static final String TITLE = "Setup Development Environment";
 
-  private static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
+  public static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-  private static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  private static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
 
   private static final String[] IGNORED_PREFIXES = { "Scanning Git", "Re-indexing", "Calculating Decorations",
       "Decorating", "http://", "The user operation is waiting", "Git repository changed", "Refreshing ", "Opening ",
@@ -70,8 +65,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       "Preparing to build", "Compiling ", "Analyzing ", "Comparing ", "Checking ", "Build done",
       "Processing API deltas..." };
 
-  private PrintStream logStream;
-
   private Text text;
 
   private Button okButton;
@@ -82,21 +75,9 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
   private String lastLine;
 
-  private ProgressLogDialog(Shell parentShell, File logFile)
+  private ProgressLogDialog(Shell parentShell)
   {
     super(parentShell);
-    if (logFile != null)
-    {
-      try
-      {
-        logFile.getParentFile().mkdirs();
-        logStream = new PrintStream(new FileOutputStream(logFile, true));
-      }
-      catch (FileNotFoundException ex)
-      {
-        throw new RuntimeException(ex);
-      }
-    }
 
     setHelpAvailable(false);
     setShellStyle(SWT.BORDER | SWT.MAX | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
@@ -160,15 +141,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   {
     SetupTaskPerformer.setProgress(null);
 
-    if (logStream != null)
-    {
-      logStream.println();
-      logStream.println();
-      logStream.println();
-      logStream.println();
-      IOUtil.closeSilent(logStream);
-    }
-
     return super.close();
   }
 
@@ -218,19 +190,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     final String message = line + "\n";
     final Date date = new Date();
 
-    if (logStream != null)
-    {
-      try
-      {
-        logStream.print("[" + DATE_TIME.format(date) + "] " + message);
-        logStream.flush();
-      }
-      catch (Exception ex)
-      {
-        Activator.log(ex);
-      }
-    }
-
     asyncExec(new Runnable()
     {
       public void run()
@@ -255,7 +214,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   public void setFinished()
   {
     Job.getJobManager().setProgressProvider(ProgressManager.getInstance());
-
     asyncExec(new Runnable()
     {
       public void run()
@@ -263,7 +221,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
         try
         {
           okButton.setEnabled(true);
-          cancelButton.setEnabled(false);
         }
         catch (Exception ex)
         {
@@ -308,12 +265,12 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     return false;
   }
 
-  public static void run(Shell shell, File logFile, final String jobName, final ProgressLogRunnable runnable)
+  public static void run(Shell shell, final String jobName, final ProgressLogRunnable runnable)
   {
     try
     {
       final boolean[] restart = { false };
-      final ProgressLogDialog dialog = new ProgressLogDialog(shell, logFile);
+      final ProgressLogDialog dialog = new ProgressLogDialog(shell);
       Runnable jobRunnable = new Runnable()
       {
         public void run()

@@ -23,8 +23,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import java.io.File;
-
 /**
  * @author Eike Stepper
  */
@@ -66,10 +64,8 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
       // return;
       // }
 
-      File logFile = new File(setupTaskPerformer.getInstallDir(), "setup.log");
-      IWorkbenchWindow window = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
-      final Shell shell = window.getShell();
-      ProgressLogDialog.run(shell, logFile, "Setting up IDE", new ProgressLogRunnable()
+      Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
+      ProgressLogDialog.run(shell, "Setting up IDE", new ProgressLogRunnable()
       {
         public boolean run(ProgressLog log) throws Exception
         {

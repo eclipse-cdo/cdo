@@ -136,7 +136,13 @@ public class EclipsePreferenceTaskItemProvider extends SetupTaskItemProvider imp
       return getString("_UI_EclipsePreferenceTask_type");
     }
 
-    return "" + key + " = " + value;
+    String label = "" + key;
+    if (value != null)
+    {
+      label += " = " + value;
+    }
+
+    return label;
   }
 
   /**

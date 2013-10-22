@@ -233,6 +233,22 @@ public final class PreferencesUtil
     return null;
   }
 
+  public static String getAbsolutePath(Property property)
+  {
+    return getAbsolutePath(property.getParent()) + "/" + property.getName();
+  }
+
+  public static String getAbsolutePath(PreferenceNode node)
+  {
+    PreferenceNode parent = node.getParent();
+    if (parent == null)
+    {
+      return node.getName();
+    }
+
+    return getAbsolutePath(parent) + "/" + node.getName();
+  }
+
   public static IPath getLocation(Preferences preferences)
   {
     if (preferences == null)

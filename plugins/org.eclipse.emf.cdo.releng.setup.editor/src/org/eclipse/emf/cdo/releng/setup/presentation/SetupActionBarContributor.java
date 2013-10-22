@@ -10,7 +10,24 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
+import org.eclipse.emf.cdo.releng.preferences.Property;
+import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
+import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
+
+import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.ControlAction;
@@ -31,17 +48,22 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubContributionItem;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This is the action bar contributor for the Setup model editor.
@@ -154,6 +176,8 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    */
   protected IMenuManager createSiblingMenuManager;
 
+  private PreferenceRecorderAction recordPreferencesAction = new PreferenceRecorderAction();
+
   /**
    * This creates an instance of the contributor.
    * <!-- begin-user-doc -->
@@ -172,12 +196,13 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    * This adds Separators for editor additions to the tool bar.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void contributeToToolBar(IToolBarManager toolBarManager)
   {
     toolBarManager.add(new Separator("setup-settings"));
+    toolBarManager.add(recordPreferencesAction);
     toolBarManager.add(new Separator("setup-additions"));
   }
 
@@ -268,7 +293,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    * <!-- end-user-doc -->
    * @generated
    */
-  public void selectionChanged(SelectionChangedEvent event)
+  public void selectionChangedGen(SelectionChangedEvent event)
   {
     // Remove any menu items for old selection.
     //
@@ -312,6 +337,12 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
       populateManager(createSiblingMenuManager, createSiblingActions, null);
       createSiblingMenuManager.update(true);
     }
+  }
+
+  public void selectionChanged(SelectionChangedEvent event)
+  {
+    selectionChangedGen(event);
+    recordPreferencesAction.selectionChanged(event);
   }
 
   /**
@@ -469,4 +500,169 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
     return true;
   }
 
+  /**
+   * @author Eike Stepper
+   */
+  private class PreferenceRecorderAction extends Action
+  {
+    private SetupTaskContainer container;
+
+    private PreferenceNode rootPreferenceNode;
+
+    private EContentAdapter preferenceAdapter;
+
+    public PreferenceRecorderAction()
+    {
+      super("Record", AS_CHECK_BOX);
+      setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "icons/recorder.gif"));
+      setToolTipText("Record preference changes into the selected setup task container");
+    }
+
+    public void selectionChanged(SelectionChangedEvent event)
+    {
+      if (!isChecked())
+      {
+        ISelection selection = event.getSelection();
+        if (selection instanceof IStructuredSelection)
+        {
+          IStructuredSelection structuredSelection = (IStructuredSelection)selection;
+          if (structuredSelection.size() == 1)
+          {
+            Object element = structuredSelection.getFirstElement();
+            if (element instanceof SetupTaskContainer)
+            {
+              container = (SetupTaskContainer)element;
+              setEnabled(true);
+              return;
+            }
+          }
+        }
+
+        container = null;
+        setEnabled(false);
+      }
+    }
+
+    @Override
+    public void run()
+    {
+      if (isChecked())
+      {
+        if (activeEditorPart instanceof IViewerProvider)
+        {
+          Viewer viewer = ((IViewerProvider)activeEditorPart).getViewer();
+          if (viewer instanceof TreeViewer)
+          {
+            ((TreeViewer)viewer).setExpandedState(container, true);
+          }
+        }
+
+        preferenceAdapter = createPreferenceAdapter();
+        rootPreferenceNode = PreferencesUtil.getRootPreferenceNode(true);
+        rootPreferenceNode.eAdapters().add(preferenceAdapter);
+
+        ChangeCommand command = new ChangeCommand(container)
+        {
+          @Override
+          protected void doExecute()
+          {
+            PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(null, null, null,
+                null);
+            dialog.open();
+          }
+        };
+
+        EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(container);
+        CommandStack commandStack = editingDomain.getCommandStack();
+        commandStack.execute(command);
+
+        rootPreferenceNode.eAdapters().remove(preferenceAdapter);
+        rootPreferenceNode = null;
+        preferenceAdapter = null;
+        setChecked(false);
+      }
+    }
+
+    private EContentAdapter createPreferenceAdapter()
+    {
+      return new EContentAdapter()
+      {
+        private Map<Property, String> map = new HashMap<Property, String>();
+
+        @Override
+        protected void setTarget(EObject target)
+        {
+          super.setTarget(target);
+          if (target instanceof Property)
+          {
+            Property property = (Property)target;
+            String absolutePath = PreferencesUtil.getAbsolutePath(property);
+            if (absolutePath.startsWith("/instance/"))
+            {
+              map.put(property, absolutePath);
+            }
+          }
+        }
+
+        @Override
+        public void notifyChanged(Notification notification)
+        {
+          super.notifyChanged(notification);
+          switch (notification.getEventType())
+          {
+          case Notification.SET:
+            if (notification.getFeature() == PreferencesPackage.Literals.PROPERTY__VALUE)
+            {
+              Property property = (Property)notification.getNotifier();
+              setPreference(property, property.getValue());
+            }
+            break;
+
+          case Notification.ADD:
+            if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
+            {
+              Property property = (Property)notification.getNewValue();
+              setPreference(property, property.getValue());
+            }
+            break;
+
+          case Notification.REMOVE:
+            if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
+            {
+              Property property = (Property)notification.getOldValue();
+              setPreference(property, null);
+            }
+            break;
+          }
+        }
+
+        private void setPreference(Property property, String value)
+        {
+          String absolutePath = map.get(property);
+          if (absolutePath != null)
+          {
+            EList<SetupTask> setupTasks = container.getSetupTasks();
+            for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
+            {
+              SetupTask setupTask = it.next();
+              if (setupTask instanceof EclipsePreferenceTask)
+              {
+                EclipsePreferenceTask preferenceTask = (EclipsePreferenceTask)setupTask;
+                if (absolutePath.equals(preferenceTask.getKey()))
+                {
+                  it.remove();
+                }
+              }
+            }
+
+            EclipsePreferenceTask task = SetupFactory.eINSTANCE.createEclipsePreferenceTask();
+            task.setKey(absolutePath);
+            task.setValue(value);
+
+            setupTasks.add(task);
+          }
+        }
+      };
+    }
+  }
 }

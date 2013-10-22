@@ -12,16 +12,16 @@ package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
 
 /**
  * @author Eike Stepper
  */
-public class Activator extends Plugin
+public class Activator extends AbstractUIPlugin
 {
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.setup";
 
@@ -31,8 +31,6 @@ public class Activator extends Plugin
   private static Activator plugin;
 
   private static BundleContext bundleContext;
-
-  private SetupTaskPerformer setupTaskPerformer;
 
   public Activator()
   {
@@ -49,8 +47,9 @@ public class Activator extends Plugin
     {
       if (SETUP_IDE)
       {
-        setupTaskPerformer = new SetupTaskPerformer(false);
+        SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
         setupTaskPerformer.perform();
+        setupTaskPerformer.dispose();
       }
     }
     catch (Exception ex)
@@ -62,19 +61,6 @@ public class Activator extends Plugin
   @Override
   public void stop(BundleContext context) throws Exception
   {
-    try
-    {
-      if (setupTaskPerformer != null)
-      {
-        setupTaskPerformer.dispose();
-        setupTaskPerformer = null;
-      }
-    }
-    catch (Exception ex)
-    {
-      log(ex);
-    }
-
     plugin = null;
     super.stop(context);
   }

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.util.TargetPlatformUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.io.FileLock;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -36,20 +37,26 @@ import org.eclipse.buckminster.core.resolver.IResolver;
 import org.eclipse.buckminster.core.resolver.MainResolver;
 import org.eclipse.buckminster.core.resolver.ResolutionContext;
 import org.eclipse.buckminster.download.DownloadManager;
+import org.eclipse.buckminster.runtime.Logger;
 import org.eclipse.buckminster.runtime.MonitorUtils;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
 import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * <!-- begin-user-doc -->
@@ -68,6 +75,8 @@ import java.util.Set;
  */
 public class BuckminsterImportTaskImpl extends SetupTaskImpl implements BuckminsterImportTask
 {
+  private static final Pattern LINE_FEED = Pattern.compile("\n|\n\r|\r\n|\r");
+
   /**
    * The default value of the '{@link #getMspec() <em>Mspec</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -169,8 +178,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldMspec = mspec;
     mspec = newMspec;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__MSPEC, oldMspec,
           mspec));
+    }
   }
 
   /**
@@ -193,8 +204,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldTargetPlatform = targetPlatform;
     targetPlatform = newTargetPlatform;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM,
           oldTargetPlatform, targetPlatform));
+    }
   }
 
   /**
@@ -217,8 +230,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldBundlePool = bundlePool;
     bundlePool = newBundlePool;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL,
           oldBundlePool, bundlePool));
+    }
   }
 
   /**
@@ -317,7 +332,9 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (mspec: ");
@@ -483,11 +500,10 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
   {
     private static MaterializationSpec getMSpec(URL mspecURL, IProgressMonitor monitor) throws Exception
     {
-      monitor.subTask("Downloading MSpec");
+      monitor.subTask("Downloading MSpec " + mspecURL);
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       DownloadManager.readInto(mspecURL, null, baos, MonitorUtils.subMonitor(monitor, 20));
 
-      monitor.subTask("Parsing MSpec");
       IParser<MaterializationSpec> parser = CorePlugin.getDefault().getParserFactory()
           .getMaterializationSpecParser(true);
       return parser.parse(mspecURL.toString(), new ByteArrayInputStream(baos.toByteArray()));
@@ -495,15 +511,14 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
 
     private static ComponentQuery getCQuery(URL cqueryURL, IProgressMonitor monitor) throws Exception
     {
-      monitor.subTask("Downloading CQuery");
+      monitor.subTask("Downloading CQuery " + cqueryURL);
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       DownloadManager.readInto(cqueryURL, null, baos, MonitorUtils.subMonitor(monitor, 20));
 
-      monitor.subTask("Parsing CQuery");
       return ComponentQuery.fromStream(cqueryURL, null, new ByteArrayInputStream(baos.toByteArray()), true);
     }
 
-    private static void materialize(SetupTaskContext context, String mSpec, IProgressMonitor monitor)
+    private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
     {
       URL mSpecURL = new URL(context.expandString(mSpec));
@@ -526,7 +541,74 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
       MaterializationContext materializationContext = new MaterializationContext(bom, mspec, resolutionContext);
 
       monitor.subTask("Materializing components");
-      MaterializationJob job = new MaterializationJob(materializationContext);
+      MaterializationJob job = new MaterializationJob(materializationContext)
+      {
+        @Override
+        public IStatus run(IProgressMonitor monitor)
+        {
+          PrintStream errStream = Logger.getErrStream();
+          PrintStream outStream = Logger.getOutStream();
+          PrintStream printStream = null;
+          try
+          {
+            printStream = new PrintStream(new ByteArrayOutputStream()
+            {
+              String string = "";
+
+              @Override
+              public void flush() throws IOException
+              {
+                if (count != 0)
+                {
+                  String line = string + new String(toByteArray(), "UTF-8");
+                  String[] split = LINE_FEED.split(line);
+                  int limit = split.length - 1;
+                  if (limit >= 0)
+                  {
+                    string = split[limit];
+                    if (string.length() != line.length())
+                    {
+                      if (limit == 0)
+                      {
+                        context.log(string);
+                        string = "";
+                      }
+                      else
+                      {
+                        for (int i = 0; i < limit; ++i)
+                        {
+                          context.log(split[i]);
+                        }
+                      }
+                    }
+                  }
+                  reset();
+                }
+              }
+
+              @Override
+              public void close() throws IOException
+              {
+                flush();
+              }
+            }, true, "UTF-8");
+            Logger.setErrStream(printStream);
+            Logger.setOutStream(printStream);
+            return super.run(monitor);
+          }
+          catch (UnsupportedEncodingException ex)
+          {
+            // UTF-8 is always supported so this can't happen.
+            throw new RuntimeException(ex);
+          }
+          finally
+          {
+            Logger.setErrStream(errStream);
+            Logger.setOutStream(outStream);
+            IOUtil.close(printStream);
+          }
+        }
+      };
       job.run(MonitorUtils.subMonitor(monitor, 80));
     }
   }

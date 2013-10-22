@@ -56,7 +56,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
   private static final String[] IGNORED_PREFIXES = { "Scanning Git", "Re-indexing", "Calculating Decorations",
       "Decorating", "http://", "The user operation is waiting", "Git repository changed", "Refreshing ", "Opening ",
-      "Connecting project ", "Searching for associated repositories.", "Preparing type ",
+      "Connecting project ", "Connected project ", "Searching for associated repositories.", "Preparing type ",
       "Loading project description", "Generating cspec from PDE artifacts", "Reporting encoding changes", "Saving",
       "Downloading software", "Java indexing...", "Computing Git status for ", "Configuring Plug-in Dependencies",
       "Configuring JRE System Library", "Invoking builder on ", "Invoking '", "Verifying ", "Updating ...",

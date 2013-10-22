@@ -157,9 +157,27 @@ public interface SetupFactory extends EFactory
   TextModification createTextModification();
 
   /**
+   * Returns a new object of class '<em>Key Binding Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Key Binding Task</em>'.
+   * @generated
+   */
+  KeyBindingTask createKeyBindingTask();
+
+  /**
+   * Returns a new object of class '<em>Command Parameter</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Command Parameter</em>'.
+   * @generated
+   */
+  CommandParameter createCommandParameter();
+
+  /**
    * Returns a new object of class '<em>Eclipse Ini Task</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @return a new object of class '<em>Eclipse Ini Task</em>'.
    * @generated
    */

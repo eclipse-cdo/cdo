@@ -149,9 +149,7 @@ public class StringVariableTaskImpl extends SetupTaskImpl implements StringVaria
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.STRING_VARIABLE_TASK__NAME, oldName, name));
-    }
   }
 
   /**
@@ -174,9 +172,7 @@ public class StringVariableTaskImpl extends SetupTaskImpl implements StringVaria
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.STRING_VARIABLE_TASK__VALUE, oldValue, value));
-    }
   }
 
   /**
@@ -199,10 +195,8 @@ public class StringVariableTaskImpl extends SetupTaskImpl implements StringVaria
     String oldDescription = description;
     description = newDescription;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.STRING_VARIABLE_TASK__DESCRIPTION,
           oldDescription, description));
-    }
   }
 
   /**
@@ -300,9 +294,7 @@ public class StringVariableTaskImpl extends SetupTaskImpl implements StringVaria
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

@@ -1359,12 +1359,12 @@ public interface SetupPackage extends EPackage
   int WORKING_SET_TASK__WORKING_SETS = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-  	 * The number of structural features of the '<em>Working Set Task</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Working Set Task</em>' class.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int WORKING_SET_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
@@ -1551,14 +1551,169 @@ public interface SetupPackage extends EPackage
   int TEXT_MODIFICATION_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
+   * @generated
+   */
+  int KEY_BINDING_TASK = 25;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Scheme</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__SCHEME = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Context</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__CONTEXT = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Platform</b></em>' attribute.
+   * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__PLATFORM = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Locale</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__LOCALE = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Keys</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__KEYS = SETUP_TASK_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Command</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__COMMAND = SETUP_TASK_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Command Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__COMMAND_PARAMETERS = SETUP_TASK_FEATURE_COUNT + 6;
+
+  /**
+   * The number of structural features of the '<em>Key Binding Task</em>' class.
+   * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 7;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
+   * @generated
+   */
+  int COMMAND_PARAMETER = 26;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMAND_PARAMETER__ID = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMAND_PARAMETER__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Command Parameter</em>' class.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMAND_PARAMETER_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 25;
+  int SETUP_TASK_SCOPE = 27;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -1568,7 +1723,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 26;
+  int TRIGGER = 28;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -1578,7 +1733,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 27;
+  int URI = 31;
 
   /**
    * The meta object id for the '<em>Exception</em>' data type.
@@ -1588,7 +1743,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 28;
+  int EXCEPTION = 30;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -2083,13 +2238,13 @@ public interface SetupPackage extends EPackage
   EReference getWorkingSetTask_WorkingSets();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask <em>Resource Copy Task</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask <em>Resource Copy Task</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Resource Copy Task</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ResourceCopyTask
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Resource Copy Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCopyTask
+   * @generated
+   */
   EClass getResourceCopyTask();
 
   /**
@@ -2179,9 +2334,128 @@ public interface SetupPackage extends EPackage
   EAttribute getTextModification_Substitutions();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask <em>Key Binding Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Key Binding Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask
+   * @generated
+   */
+  EClass getKeyBindingTask();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getScheme <em>Scheme</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Scheme</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getScheme()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EAttribute getKeyBindingTask_Scheme();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getContext <em>Context</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Context</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getContext()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EAttribute getKeyBindingTask_Context();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getPlatform <em>Platform</em>}'.
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Platform</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getPlatform()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EAttribute getKeyBindingTask_Platform();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getLocale <em>Locale</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Locale</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getLocale()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EAttribute getKeyBindingTask_Locale();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getKeys <em>Keys</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Keys</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getKeys()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EAttribute getKeyBindingTask_Keys();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommand <em>Command</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Command</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommand()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EAttribute getKeyBindingTask_Command();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommandParameters <em>Command Parameters</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Command Parameters</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommandParameters()
+   * @see #getKeyBindingTask()
+   * @generated
+   */
+  EReference getKeyBindingTask_CommandParameters();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter <em>Command Parameter</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Command Parameter</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter
+   * @generated
+   */
+  EClass getCommandParameter();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter#getId()
+   * @see #getCommandParameter()
+   * @generated
+   */
+  EAttribute getCommandParameter_Id();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue()
+   * @see #getCommandParameter()
+   * @generated
+   */
+  EAttribute getCommandParameter_Value();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+             * <!-- end-user-doc -->
    * @return the meta object for class '<em>Eclipse Ini Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
    * @generated
@@ -2908,13 +3182,13 @@ public interface SetupPackage extends EPackage
     EReference WORKING_SET_TASK__WORKING_SETS = eINSTANCE.getWorkingSetTask_WorkingSets();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl <em>Resource Copy Task</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl <em>Resource Copy Task</em>}' class.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
+     * @generated
+     */
     EClass RESOURCE_COPY_TASK = eINSTANCE.getResourceCopyTask();
 
     /**
@@ -2986,9 +3260,101 @@ public interface SetupPackage extends EPackage
     EAttribute TEXT_MODIFICATION__SUBSTITUTIONS = eINSTANCE.getTextModification_Substitutions();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
+     * @generated
+     */
+    EClass KEY_BINDING_TASK = eINSTANCE.getKeyBindingTask();
+
+    /**
+     * The meta object literal for the '<em><b>Scheme</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KEY_BINDING_TASK__SCHEME = eINSTANCE.getKeyBindingTask_Scheme();
+
+    /**
+     * The meta object literal for the '<em><b>Context</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KEY_BINDING_TASK__CONTEXT = eINSTANCE.getKeyBindingTask_Context();
+
+    /**
+     * The meta object literal for the '<em><b>Platform</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KEY_BINDING_TASK__PLATFORM = eINSTANCE.getKeyBindingTask_Platform();
+
+    /**
+     * The meta object literal for the '<em><b>Locale</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KEY_BINDING_TASK__LOCALE = eINSTANCE.getKeyBindingTask_Locale();
+
+    /**
+     * The meta object literal for the '<em><b>Keys</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KEY_BINDING_TASK__KEYS = eINSTANCE.getKeyBindingTask_Keys();
+
+    /**
+     * The meta object literal for the '<em><b>Command</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KEY_BINDING_TASK__COMMAND = eINSTANCE.getKeyBindingTask_Command();
+
+    /**
+     * The meta object literal for the '<em><b>Command Parameters</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference KEY_BINDING_TASK__COMMAND_PARAMETERS = eINSTANCE.getKeyBindingTask_CommandParameters();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
+     * @generated
+     */
+    EClass COMMAND_PARAMETER = eINSTANCE.getCommandParameter();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMMAND_PARAMETER__ID = eINSTANCE.getCommandParameter_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMMAND_PARAMETER__VALUE = eINSTANCE.getCommandParameter_Value();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+               * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
      * @generated

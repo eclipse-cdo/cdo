@@ -113,9 +113,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     String oldUrl = url;
     url = newUrl;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TEXT_MODIFY_TASK__URL, oldUrl, url));
-    }
   }
 
   /**
@@ -236,9 +234,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

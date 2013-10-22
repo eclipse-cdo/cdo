@@ -447,9 +447,59 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected KeyBindingTaskItemProvider keyBindingTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createKeyBindingTaskAdapter()
+  {
+    if (keyBindingTaskItemProvider == null)
+    {
+      keyBindingTaskItemProvider = new KeyBindingTaskItemProvider(this);
+    }
+
+    return keyBindingTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.CommandParameter} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected CommandParameterItemProvider commandParameterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.CommandParameter}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createCommandParameterAdapter()
+  {
+    if (commandParameterItemProvider == null)
+    {
+      commandParameterItemProvider = new CommandParameterItemProvider(this);
+    }
+
+    return commandParameterItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    */
   protected EclipseIniTaskItemProvider eclipseIniTaskItemProvider;
@@ -804,6 +854,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       textModifyTaskItemProvider.dispose();
     if (textModificationItemProvider != null)
       textModificationItemProvider.dispose();
+    if (keyBindingTaskItemProvider != null)
+      keyBindingTaskItemProvider.dispose();
+    if (commandParameterItemProvider != null)
+      commandParameterItemProvider.dispose();
   }
 
 }

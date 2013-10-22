@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -141,6 +143,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createTextModifyTask();
     case SetupPackage.TEXT_MODIFICATION:
       return createTextModification();
+    case SetupPackage.KEY_BINDING_TASK:
+      return createKeyBindingTask();
+    case SetupPackage.COMMAND_PARAMETER:
+      return createCommandParameter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -160,12 +166,12 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createSetupTaskScopeFromString(eDataType, initialValue);
     case SetupPackage.TRIGGER:
       return createTriggerFromString(eDataType, initialValue);
-    case SetupPackage.URI:
-      return createURIFromString(eDataType, initialValue);
-    case SetupPackage.EXCEPTION:
-      return createExceptionFromString(eDataType, initialValue);
     case SetupPackage.TRIGGER_SET:
       return createTriggerSetFromString(eDataType, initialValue);
+    case SetupPackage.EXCEPTION:
+      return createExceptionFromString(eDataType, initialValue);
+    case SetupPackage.URI:
+      return createURIFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -185,12 +191,12 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return convertSetupTaskScopeToString(eDataType, instanceValue);
     case SetupPackage.TRIGGER:
       return convertTriggerToString(eDataType, instanceValue);
-    case SetupPackage.URI:
-      return convertURIToString(eDataType, instanceValue);
-    case SetupPackage.EXCEPTION:
-      return convertExceptionToString(eDataType, instanceValue);
     case SetupPackage.TRIGGER_SET:
       return convertTriggerSetToString(eDataType, instanceValue);
+    case SetupPackage.EXCEPTION:
+      return convertExceptionToString(eDataType, instanceValue);
+    case SetupPackage.URI:
+      return convertURIToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -352,7 +358,29 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public KeyBindingTask createKeyBindingTask()
+  {
+    KeyBindingTaskImpl keyBindingTask = new KeyBindingTaskImpl();
+    return keyBindingTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CommandParameter createCommandParameter()
+  {
+    CommandParameterImpl commandParameter = new CommandParameterImpl();
+    return commandParameter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    */
   public EclipseIniTask createEclipseIniTask()

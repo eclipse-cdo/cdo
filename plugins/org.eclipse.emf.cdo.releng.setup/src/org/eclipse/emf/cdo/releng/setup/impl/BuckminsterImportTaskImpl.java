@@ -169,10 +169,8 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldMspec = mspec;
     mspec = newMspec;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__MSPEC, oldMspec,
           mspec));
-    }
   }
 
   /**
@@ -195,10 +193,8 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldTargetPlatform = targetPlatform;
     targetPlatform = newTargetPlatform;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM,
           oldTargetPlatform, targetPlatform));
-    }
   }
 
   /**
@@ -221,10 +217,8 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
     String oldBundlePool = bundlePool;
     bundlePool = newBundlePool;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL,
           oldBundlePool, bundlePool));
-    }
   }
 
   /**
@@ -323,9 +317,7 @@ public class BuckminsterImportTaskImpl extends SetupTaskImpl implements Buckmins
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (mspec: ");

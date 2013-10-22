@@ -109,10 +109,8 @@ public class TextModificationImpl extends MinimalEObjectImpl.Container implement
     String oldPattern = pattern;
     pattern = newPattern;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TEXT_MODIFICATION__PATTERN, oldPattern,
           pattern));
-    }
   }
 
   /**
@@ -217,9 +215,7 @@ public class TextModificationImpl extends MinimalEObjectImpl.Container implement
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (pattern: ");

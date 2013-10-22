@@ -1,40 +1,30 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
+import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>One Time Setup Task</b></em>'.
+ * An implementation of the model object '<em><b>Command Parameter</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.OneTimeSetupTaskImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneTimeSetupTask
+public class CommandParameterImpl extends MinimalEObjectImpl.Container implements CommandParameter
 {
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -57,11 +47,31 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   protected String id = ID_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValue()
+   * @generated
+   * @ordered
+   */
+  protected static final String VALUE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValue()
+   * @generated
+   * @ordered
+   */
+  protected String value = VALUE_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected OneTimeSetupTaskImpl()
+  protected CommandParameterImpl()
   {
     super();
   }
@@ -74,7 +84,7 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   @Override
   protected EClass eStaticClass()
   {
-    return SetupPackage.Literals.ONE_TIME_SETUP_TASK;
+    return SetupPackage.Literals.COMMAND_PARAMETER;
   }
 
   /**
@@ -97,7 +107,30 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ONE_TIME_SETUP_TASK__ID, oldId, id));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__ID, oldId, id));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getValue()
+  {
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValue(String newValue)
+  {
+    String oldValue = value;
+    value = newValue;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__VALUE, oldValue, value));
   }
 
   /**
@@ -110,8 +143,10 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   {
     switch (featureID)
     {
-    case SetupPackage.ONE_TIME_SETUP_TASK__ID:
+    case SetupPackage.COMMAND_PARAMETER__ID:
       return getId();
+    case SetupPackage.COMMAND_PARAMETER__VALUE:
+      return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,8 +161,11 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   {
     switch (featureID)
     {
-    case SetupPackage.ONE_TIME_SETUP_TASK__ID:
+    case SetupPackage.COMMAND_PARAMETER__ID:
       setId((String)newValue);
+      return;
+    case SetupPackage.COMMAND_PARAMETER__VALUE:
+      setValue((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -143,8 +181,11 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   {
     switch (featureID)
     {
-    case SetupPackage.ONE_TIME_SETUP_TASK__ID:
+    case SetupPackage.COMMAND_PARAMETER__ID:
       setId(ID_EDEFAULT);
+      return;
+    case SetupPackage.COMMAND_PARAMETER__VALUE:
+      setValue(VALUE_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -160,8 +201,10 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   {
     switch (featureID)
     {
-    case SetupPackage.ONE_TIME_SETUP_TASK__ID:
+    case SetupPackage.COMMAND_PARAMETER__ID:
       return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+    case SetupPackage.COMMAND_PARAMETER__VALUE:
+      return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
     }
     return super.eIsSet(featureID);
   }
@@ -180,45 +223,10 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");
     result.append(id);
+    result.append(", value: ");
+    result.append(value);
     result.append(')');
     return result.toString();
   }
 
-  public final boolean isNeeded(SetupTaskContext context) throws Exception
-  {
-    return !isPerformed();
-  }
-
-  public final void perform(SetupTaskContext context) throws Exception
-  {
-    doPerform(context);
-    setPerformed(true);
-  }
-
-  protected abstract void doPerform(SetupTaskContext context) throws Exception;
-
-  /**
-   * TODO Use a persistent mechansim
-   */
-  private static final Set<String> PERFORMED = new HashSet<String>();
-
-  protected boolean isPerformed()
-  {
-    String id = getId();
-    return PERFORMED.contains(id);
-  }
-
-  protected void setPerformed(boolean performed)
-  {
-    String id = getId();
-    if (performed)
-    {
-      PERFORMED.add(id);
-    }
-    else
-    {
-      PERFORMED.remove(id);
-    }
-  }
-
-} // OneTimeSetupTaskImpl
+} // CommandParameterImpl

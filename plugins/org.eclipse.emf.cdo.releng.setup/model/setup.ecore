@@ -122,15 +122,6 @@
         eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.ecore#//WorkingSet"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
-    <eLiterals name="None"/>
-    <eLiterals name="Configuration" value="1"/>
-    <eLiterals name="Project" value="2"/>
-    <eLiterals name="Branch" value="3"/>
-    <eLiterals name="User" value="4"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Exception" instanceClassName="java.lang.Exception"/>
   <eClassifiers xsi:type="ecore:EClass" name="ResourceCopyTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -145,10 +136,35 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="substitutions" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="TriggerSet" instanceTypeName="java.util.Set&lt;org.eclipse.emf.cdo.releng.setup.Trigger>"/>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyBindingTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scheme" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="context" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="org.eclipse.ui.contexts.window"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="platform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="locale" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keys" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="command" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="commandParameters" upperBound="-1"
+        eType="#//CommandParameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CommandParameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
+    <eLiterals name="None"/>
+    <eLiterals name="Configuration" value="1"/>
+    <eLiterals name="Project" value="2"/>
+    <eLiterals name="Branch" value="3"/>
+    <eLiterals name="User" value="4"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Trigger">
     <eLiterals name="BOOTSTRAP"/>
     <eLiterals name="STARTUP" value="1"/>
     <eLiterals name="MANUAL" value="2"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TriggerSet" instanceTypeName="java.util.Set&lt;org.eclipse.emf.cdo.releng.setup.Trigger>"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Exception" instanceClassName="java.lang.Exception"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
 </ecore:EPackage>

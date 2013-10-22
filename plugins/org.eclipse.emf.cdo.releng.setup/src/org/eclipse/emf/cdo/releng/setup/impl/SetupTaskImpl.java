@@ -171,10 +171,8 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     Set<Trigger> oldExcludedTriggers = excludedTriggers;
     excludedTriggers = newExcludedTriggers;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS,
           oldExcludedTriggers, excludedTriggers));
-    }
   }
 
   public void setExcludedTriggers(Set<Trigger> newExcludedTriggers)
@@ -397,9 +395,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (excludedTriggers: ");

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -174,7 +176,21 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass keyBindingTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commandParameterEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
    * @generated
    */
   private EClass eclipseIniTaskEClass = null;
@@ -788,10 +804,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getResourceCopyTask()
   {
     return resourceCopyTaskEClass;
@@ -879,7 +895,117 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getKeyBindingTask()
+  {
+    return keyBindingTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getKeyBindingTask_Scheme()
+  {
+    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getKeyBindingTask_Context()
+  {
+    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getKeyBindingTask_Platform()
+  {
+    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getKeyBindingTask_Locale()
+  {
+    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getKeyBindingTask_Keys()
+  {
+    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getKeyBindingTask_Command()
+  {
+    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKeyBindingTask_CommandParameters()
+  {
+    return (EReference)keyBindingTaskEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCommandParameter()
+  {
+    return commandParameterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCommandParameter_Id()
+  {
+    return (EAttribute)commandParameterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCommandParameter_Value()
+  {
+    return (EAttribute)commandParameterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
    * @generated
    */
   public EClass getEclipseIniTask()
@@ -1312,14 +1438,27 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(textModificationEClass, TEXT_MODIFICATION__PATTERN);
     createEAttribute(textModificationEClass, TEXT_MODIFICATION__SUBSTITUTIONS);
 
+    keyBindingTaskEClass = createEClass(KEY_BINDING_TASK);
+    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__SCHEME);
+    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__CONTEXT);
+    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__PLATFORM);
+    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__LOCALE);
+    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__KEYS);
+    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__COMMAND);
+    createEReference(keyBindingTaskEClass, KEY_BINDING_TASK__COMMAND_PARAMETERS);
+
+    commandParameterEClass = createEClass(COMMAND_PARAMETER);
+    createEAttribute(commandParameterEClass, COMMAND_PARAMETER__ID);
+    createEAttribute(commandParameterEClass, COMMAND_PARAMETER__VALUE);
+
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
 
     // Create data types
-    uriEDataType = createEDataType(URI);
-    exceptionEDataType = createEDataType(EXCEPTION);
     triggerSetEDataType = createEDataType(TRIGGER_SET);
+    exceptionEDataType = createEDataType(EXCEPTION);
+    uriEDataType = createEDataType(URI);
   }
 
   /**
@@ -1375,6 +1514,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     workingSetTaskEClass.getESuperTypes().add(this.getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(this.getSetupTask());
     textModifyTaskEClass.getESuperTypes().add(this.getSetupTask());
+    keyBindingTaskEClass.getESuperTypes().add(this.getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1603,6 +1743,34 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         TextModification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    initEClass(keyBindingTaskEClass, KeyBindingTask.class, "KeyBindingTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getKeyBindingTask_Scheme(), ecorePackage.getEString(), "scheme",
+        "org.eclipse.ui.defaultAcceleratorConfiguration", 0, 1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getKeyBindingTask_Context(), ecorePackage.getEString(), "context", "org.eclipse.ui.contexts.window",
+        0, 1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getKeyBindingTask_Platform(), ecorePackage.getEString(), "platform", null, 0, 1,
+        KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getKeyBindingTask_Locale(), ecorePackage.getEString(), "locale", null, 0, 1, KeyBindingTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getKeyBindingTask_Keys(), ecorePackage.getEString(), "keys", null, 0, 1, KeyBindingTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getKeyBindingTask_Command(), ecorePackage.getEString(), "command", null, 0, 1, KeyBindingTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKeyBindingTask_CommandParameters(), this.getCommandParameter(), null, "commandParameters", null,
+        0, -1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commandParameterEClass, CommandParameter.class, "CommandParameter", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCommandParameter_Id(), ecorePackage.getEString(), "id", null, 0, 1, CommandParameter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCommandParameter_Value(), ecorePackage.getEString(), "value", null, 0, 1, CommandParameter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.NONE);
@@ -1617,11 +1785,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addEEnumLiteral(triggerEEnum, Trigger.MANUAL);
 
     // Initialize data types
-    initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,
-        !IS_GENERATED_INSTANCE_CLASS);
-    initEDataType(exceptionEDataType, Exception.class, "Exception", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(triggerSetEDataType, Set.class, "TriggerSet", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS,
         "java.util.Set<org.eclipse.emf.cdo.releng.setup.Trigger>");
+    initEDataType(exceptionEDataType, Exception.class, "Exception", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,
+        !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

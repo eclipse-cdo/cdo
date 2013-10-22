@@ -192,6 +192,9 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createTextModifyTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createKeyBindingTask()));
   }
 
   /**

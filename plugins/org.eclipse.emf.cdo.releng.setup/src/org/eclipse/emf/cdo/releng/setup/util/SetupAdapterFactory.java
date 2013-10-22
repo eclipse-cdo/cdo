@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.util;
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -252,6 +254,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseTextModification(TextModification object)
     {
       return createTextModificationAdapter();
+    }
+
+    @Override
+    public Adapter caseKeyBindingTask(KeyBindingTask object)
+    {
+      return createKeyBindingTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseCommandParameter(CommandParameter object)
+    {
+      return createCommandParameterAdapter();
     }
 
     @Override
@@ -516,11 +530,41 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask <em>Key Binding Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask
+   * @generated
+   */
+  public Adapter createKeyBindingTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter <em>Command Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter
+   * @generated
+   */
+  public Adapter createCommandParameterAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
    * <!-- begin-user-doc -->
-       * This default implementation returns null so that we can easily ignore cases;
-       * it's useful to ignore a case when inheritance will catch all the cases anyway.
-       * <!-- end-user-doc -->
+           * This default implementation returns null so that we can easily ignore cases;
+           * it's useful to ignore a case when inheritance will catch all the cases anyway.
+           * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
    * @generated

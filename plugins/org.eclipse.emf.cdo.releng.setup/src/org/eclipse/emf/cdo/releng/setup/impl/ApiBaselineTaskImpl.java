@@ -137,10 +137,8 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     String oldVersion = version;
     version = newVersion;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.API_BASELINE_TASK__VERSION, oldVersion,
           version));
-    }
   }
 
   /**
@@ -163,10 +161,8 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     String oldZipLocation = zipLocation;
     zipLocation = newZipLocation;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.API_BASELINE_TASK__ZIP_LOCATION,
           oldZipLocation, zipLocation));
-    }
   }
 
   /**
@@ -254,9 +250,7 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (version: ");

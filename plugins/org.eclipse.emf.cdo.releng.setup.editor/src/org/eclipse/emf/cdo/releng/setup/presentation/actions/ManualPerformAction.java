@@ -51,6 +51,21 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
     try
     {
       final SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(true);
+
+      // if (true)
+      // {
+      // KeyBindingTask task = SetupFactory.eINSTANCE.createKeyBindingTask();
+      // task.setKeys("F12");
+      // task.setCommand("org.eclipse.emf.cdo.releng.OpenManifest");
+      //
+      // if (task.isNeeded(setupTaskPerformer))
+      // {
+      // task.perform(setupTaskPerformer);
+      // }
+      //
+      // return;
+      // }
+
       File logFile = new File(setupTaskPerformer.getInstallDir(), "setup.log");
       IWorkbenchWindow window = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
       final Shell shell = window.getShell();

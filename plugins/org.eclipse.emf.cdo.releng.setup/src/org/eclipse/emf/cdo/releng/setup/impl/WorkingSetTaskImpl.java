@@ -108,10 +108,10 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {

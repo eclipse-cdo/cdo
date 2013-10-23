@@ -49,9 +49,27 @@ public interface WorkingSetsFactory extends EFactory
   WorkingSetGroup createWorkingSetGroup();
 
   /**
-   * Returns the package supported by this factory.
+   * Returns a new object of class '<em>Exclusion Predicate</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return a new object of class '<em>Exclusion Predicate</em>'.
+   * @generated
+   */
+  ExclusionPredicate createExclusionPredicate();
+
+  /**
+   * Returns a new object of class '<em>Inclusion Predicate</em>'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return a new object of class '<em>Inclusion Predicate</em>'.
+   * @generated
+   */
+  InclusionPredicate createInclusionPredicate();
+
+  /**
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

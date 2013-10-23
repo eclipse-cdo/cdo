@@ -10,15 +10,27 @@
     operationReflection="true" importOrganizing="true" decoration="Live">
   <foreignModel>workingsets.ecore</foreignModel>
   <genPackages prefix="WorkingSets" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
-      multipleEditorPages="false" ecorePackage="workingsets.ecore#/">
+      multipleEditorPages="false" childCreationExtenders="true" ecorePackage="workingsets.ecore#/">
     <genDataTypes ecoreDataType="workingsets.ecore#//Project"/>
     <genClasses ecoreClass="workingsets.ecore#//WorkingSet">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workingsets.ecore#//WorkingSet/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference workingsets.ecore#//WorkingSet/predicates"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute workingsets.ecore#//WorkingSet/id"/>
+      <genOperations ecoreOperation="workingsets.ecore#//WorkingSet/matches">
+        <genParameters ecoreParameter="workingsets.ecore#//WorkingSet/matches/project"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="workingsets.ecore#//WorkingSetGroup">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference workingsets.ecore#//WorkingSetGroup/workingSets"/>
+      <genOperations ecoreOperation="workingsets.ecore#//WorkingSetGroup/getWorkingSet">
+        <genParameters ecoreParameter="workingsets.ecore#//WorkingSetGroup/getWorkingSet/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="workingsets.ecore#//ExclusionPredicate">
+      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference workingsets.ecore#//ExclusionPredicate/excludedWorkingSets"/>
+    </genClasses>
+    <genClasses ecoreClass="workingsets.ecore#//InclusionPredicate">
+      <genFeatures createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference workingsets.ecore#//InclusionPredicate/includedWorkingSets"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

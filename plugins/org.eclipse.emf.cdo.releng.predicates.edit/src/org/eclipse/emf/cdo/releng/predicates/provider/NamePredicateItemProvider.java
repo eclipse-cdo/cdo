@@ -13,9 +13,15 @@ package org.eclipse.emf.cdo.releng.predicates.provider;
 import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.DragAndDropCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -27,6 +33,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import org.eclipse.core.resources.IProject;
 
 import java.util.Collection;
 import java.util.List;
@@ -140,6 +148,66 @@ public class NamePredicateItemProvider extends ItemProviderAdapter implements IE
       return;
     }
     super.notifyChanged(notification);
+  }
+
+  @Override
+  protected Command createDragAndDropCommand(EditingDomain domain, Object owner, float location, int operations,
+      int operation, Collection<?> collection)
+  {
+    return new DragAndDropCommand(domain, owner, location, operations, operation, collection)
+    {
+      @Override
+      protected boolean analyzeForNonContainment(Command command)
+      {
+        return true;
+      }
+    };
+  }
+
+  @Override
+  protected Command createSetCommand(EditingDomain domain, EObject owner, EStructuralFeature feature, Object value)
+  {
+    if (feature == null)
+    {
+      if (value instanceof Collection<?>)
+      {
+        NamePredicate namePredicate = (NamePredicate)owner;
+        String pattern = namePredicate.getPattern();
+        StringBuilder projectPattern = new StringBuilder();
+        if (pattern != null)
+        {
+          projectPattern.append(pattern);
+        }
+
+        boolean hasNonProject = false;
+        for (Object item : (Collection<?>)value)
+        {
+          if (item instanceof IProject)
+          {
+            IProject project = (IProject)item;
+            String name = project.getName();
+            if (projectPattern.length() != 0)
+            {
+              projectPattern.append('|');
+            }
+            projectPattern.append(name.replaceAll("\\.", "\\\\."));
+          }
+          else
+          {
+            hasNonProject = true;
+            break;
+          }
+        }
+
+        if (!hasNonProject)
+        {
+          return new SetCommand(domain, owner, PredicatesPackage.Literals.NAME_PREDICATE__PATTERN,
+              projectPattern.toString());
+
+        }
+      }
+    }
+    return super.createSetCommand(domain, owner, feature, value);
   }
 
   /**

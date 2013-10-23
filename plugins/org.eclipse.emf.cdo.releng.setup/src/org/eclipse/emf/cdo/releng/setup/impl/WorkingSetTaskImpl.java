@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -31,14 +30,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -68,8 +59,6 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
    * @ordered
    */
   protected EList<WorkingSet> workingSets;
-
-  private static final String PACKAGE_EXPLORER_ID = "org.eclipse.jdt.ui.PackageExplorer";
 
   /**
    * <!-- begin-user-doc -->
@@ -236,8 +225,6 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    initPackageExplorer();
-
     WorkingSetGroup defaultWorkingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
     Set<String> existingIds = new HashSet<String>();
     EList<WorkingSet> workingSets = defaultWorkingSetGroup.getWorkingSets();
@@ -270,63 +257,5 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
 
     Resource resource = defaultWorkingSetGroup.eResource();
     resource.save(null);
-  }
-
-  private static void initPackageExplorer()
-  {
-    final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
-    final Display display = workbenchWindow.getShell().getDisplay();
-    display.asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        try
-        {
-          IViewPart view = workbenchWindow.getActivePage().showView(PACKAGE_EXPLORER_ID, null,
-              IWorkbenchPage.VIEW_CREATE);
-          if (view != null)
-          {
-            // Dismiss the WorkingSetConfigurationDialog that comes up the very first time the root mode changes in
-            // a new workspace just as if the OK button was pressed.
-            display.asyncExec(new Runnable()
-            {
-              public void run()
-              {
-                Shell finalActiveShell = display.getActiveShell();
-                if (finalActiveShell != null)
-                {
-                  Object data = finalActiveShell.getData();
-                  if (data != null)
-                  {
-                    Class<? extends Object> workingSetConfigurationDialogClass = data.getClass();
-                    if (workingSetConfigurationDialogClass.getName().equals(
-                        "org.eclipse.jdt.internal.ui.workingsets.WorkingSetConfigurationDialog"))
-                    {
-                      try
-                      {
-                        Method method = workingSetConfigurationDialogClass.getDeclaredMethod("okPressed");
-                        method.setAccessible(true);
-                        method.invoke(data);
-                      }
-                      catch (Exception ex)
-                      {
-                        Activator.log(ex);
-                      }
-                    }
-                  }
-                }
-              }
-            });
-
-            Method method = view.getClass().getMethod("rootModeChanged", int.class);
-            method.invoke(view, 2);
-          }
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
-      }
-    });
   }
 } // SetWorkingTaskImpl

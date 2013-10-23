@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
-import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.util.WorkingSetsUtil;
@@ -32,12 +31,21 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,6 +55,8 @@ import java.util.Set;
 public class WorkingSetManager
 {
   private static final String WORKING_SET_PAGE = "org.eclipse.jdt.ui.JavaWorkingSetPage";
+
+  private static final String PACKAGE_EXPLORER_ID = "org.eclipse.jdt.ui.PackageExplorer";
 
   private static final IWorkingSetManager MANAGER = PlatformUI.getWorkbench().getWorkingSetManager();
 
@@ -62,16 +72,20 @@ public class WorkingSetManager
 
         // Compute the working sets for the new working group.
         workingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
-        EMap<String, Set<IAdaptable>> workingSets = getWorkingSets();
+        EMap<String, Set<IAdaptable>> workingSets = new BasicEMap<String, Set<IAdaptable>>();
 
-        // Update the map to include null (to cause a delete) for any old working set that isn't in the new working set.
+        // Update the map to include null (to cause an delete) for any old working set not present in the new ones
         for (WorkingSet workingSet : oldWorkingSetGroup.getWorkingSets())
         {
           String name = workingSet.getName();
-          if (!workingSets.containsKey(name))
-          {
-            workingSets.put(name, null);
-          }
+          workingSets.put(name, null);
+        }
+
+        // Update the map to include empty sets (to cause an add) for any new working set not already present.
+        for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
+        {
+          String name = workingSet.getName();
+          workingSets.put(name, new LinkedHashSet<IAdaptable>());
         }
 
         // Update the working sets for all the projects in the workspace and apply the result to the real working sets.
@@ -137,12 +151,6 @@ public class WorkingSetManager
   {
     workingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
 
-    // Compute the working sets, update them for the projects in the workspace, and apply those results to the real
-    // working sets.
-    EMap<String, Set<IAdaptable>> workingSets = getWorkingSets();
-    updateProjects(workingSets);
-    apply(workingSets);
-
     // Listen for projects being added or removed from the workspace and for preferences changing.
     WORKSPACE.addResourceChangeListener(resourceChangeListener);
     WorkingSetsUtil.WORKING_SET_GROUP_PREFERENCES.addPreferenceChangeListener(preferencesListener);
@@ -168,8 +176,8 @@ public class WorkingSetManager
     {
       String name = workingSet.getName();
       IWorkingSet iWorkingSet = MANAGER.getWorkingSet(name);
-      workingSets.put(name,
-          iWorkingSet == null ? null : new LinkedHashSet<IAdaptable>(Arrays.asList(iWorkingSet.getElements())));
+      workingSets.put(name, iWorkingSet == null ? new LinkedHashSet<IAdaptable>() : new LinkedHashSet<IAdaptable>(
+          Arrays.asList(iWorkingSet.getElements())));
     }
 
     return workingSets;
@@ -213,8 +221,110 @@ public class WorkingSetManager
             }
           }
         }
+
+        managePackageExplorer();
       }
     });
+  }
+
+  private void managePackageExplorer()
+  {
+    try
+    {
+      for (IWorkbenchWindow workbenchWindow : PlatformUI.getWorkbench().getWorkbenchWindows())
+      {
+        for (IWorkbenchPage workbenchPage : workbenchWindow.getPages())
+        {
+          IViewPart view = workbenchPage.findView(PACKAGE_EXPLORER_ID);
+          if (view != null)
+          {
+            Method getWorkingSetModelMethod = view.getClass().getMethod("getWorkingSetModel");
+            Object workingSetModel = getWorkingSetModelMethod.invoke(view);
+            if (workingSetModel != null)
+            {
+              Class<?> workingSetModelClass = workingSetModel.getClass();
+              Method getAllWorkingSetsMethod = workingSetModelClass.getMethod("getAllWorkingSets");
+              IWorkingSet[] allWorkingSets = (IWorkingSet[])getAllWorkingSetsMethod.invoke(workingSetModel);
+
+              Map<WorkingSet, IWorkingSet> managedWorkingSets = new HashMap<WorkingSet, IWorkingSet>();
+              for (int i = 0; i < allWorkingSets.length; ++i)
+              {
+                IWorkingSet iWorkingSet = allWorkingSets[i];
+                WorkingSet workingSet = workingSetGroup.getWorkingSet(iWorkingSet.getName());
+                if (workingSet != null)
+                {
+                  managedWorkingSets.put(workingSet, iWorkingSet);
+                }
+              }
+
+              Map<IWorkingSet, List<IWorkingSet>> orderedWorkingSetGroups = new LinkedHashMap<IWorkingSet, List<IWorkingSet>>();
+              for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
+              {
+                IWorkingSet iWorkingSet = managedWorkingSets.get(workingSet);
+                List<IWorkingSet> group = new ArrayList<IWorkingSet>();
+                group.add(iWorkingSet);
+                orderedWorkingSetGroups.put(iWorkingSet, group);
+              }
+
+              Method getActiveWorkingSetsMethod = workingSetModelClass.getMethod("getActiveWorkingSets");
+              List<IWorkingSet> activeWorkingSets = Arrays.asList((IWorkingSet[])getActiveWorkingSetsMethod
+                  .invoke(workingSetModel));
+
+              List<IWorkingSet> newActiveWorkingSets = new ArrayList<IWorkingSet>();
+              List<IWorkingSet> group = newActiveWorkingSets;
+              for (IWorkingSet iWorkingSet : activeWorkingSets)
+              {
+                List<IWorkingSet> targetGroup = orderedWorkingSetGroups.get(iWorkingSet);
+                if (targetGroup == null)
+                {
+                  group.add(iWorkingSet);
+                }
+                else
+                {
+                  group = targetGroup;
+                }
+              }
+
+              for (List<IWorkingSet> workingSets : orderedWorkingSetGroups.values())
+              {
+                newActiveWorkingSets.addAll(workingSets);
+              }
+
+              IWorkingSet[] orderedActiveWorkingSetsArray = newActiveWorkingSets
+                  .toArray(new IWorkingSet[newActiveWorkingSets.size()]);
+
+              Method setWorkingSetsMethod = workingSetModelClass.getMethod("setActiveWorkingSets", IWorkingSet[].class);
+
+              setWorkingSetsMethod.invoke(workingSetModel, new Object[] { orderedActiveWorkingSetsArray });
+
+              Method getRootModeMethod = view.getClass().getMethod("getRootMode");
+              if (!getRootModeMethod.invoke(view).equals(2))
+              {
+                Method method = view.getClass().getMethod("rootModeChanged", int.class);
+                method.invoke(view, 2);
+              }
+            }
+            return;
+          }
+        }
+      }
+    }
+    catch (NoSuchMethodException ex)
+    {
+      WorkingSetsEditorPlugin.INSTANCE.log(ex);
+    }
+    catch (SecurityException ex)
+    {
+      WorkingSetsEditorPlugin.INSTANCE.log(ex);
+    }
+    catch (IllegalAccessException ex)
+    {
+      WorkingSetsEditorPlugin.INSTANCE.log(ex);
+    }
+    catch (InvocationTargetException ex)
+    {
+      WorkingSetsEditorPlugin.INSTANCE.log(ex);
+    }
   }
 
   /**
@@ -235,23 +345,17 @@ public class WorkingSetManager
   {
     for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
     {
-      for (Predicate predicate : workingSet.getPredicates())
+      if (workingSet.matches(project))
       {
-        if (predicate.matches(project))
+        String name = workingSet.getName();
+        Set<IAdaptable> elements = workingSets.get(name);
+        if (elements == null)
         {
-          String name = workingSet.getName();
-          Set<IAdaptable> elements = workingSets.get(name);
-          if (elements == null)
-          {
-            elements = new LinkedHashSet<IAdaptable>();
-            workingSets.put(name, elements);
-          }
-
-          elements.add(project);
-
-          // Add the element only to the first matchinging working set.
-          return;
+          elements = new LinkedHashSet<IAdaptable>();
+          workingSets.put(name, elements);
         }
+
+        elements.add(project);
       }
     }
   }
@@ -263,18 +367,13 @@ public class WorkingSetManager
   {
     for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
     {
-      for (Predicate predicate : workingSet.getPredicates())
+      if (workingSet.matches(project))
       {
-        if (predicate.matches(project))
+        String name = workingSet.getName();
+        Set<IAdaptable> elements = workingSets.get(name);
+        if (elements != null)
         {
-          String name = workingSet.getName();
-          Set<IAdaptable> elements = workingSets.get(name);
-          if (elements != null)
-          {
-            elements.remove(name);
-          }
-
-          return;
+          elements.remove(name);
         }
       }
     }

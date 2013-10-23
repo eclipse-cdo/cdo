@@ -53,17 +53,22 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -89,6 +94,8 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -932,7 +939,7 @@ public class WorkingSetsEditor extends MultiPageEditorPart implements IEditingDo
    * This creates a context menu for the viewer and adds a listener as well registering the menu for extension.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void createContextMenuFor(StructuredViewer viewer)
   {
@@ -948,7 +955,79 @@ public class WorkingSetsEditor extends MultiPageEditorPart implements IEditingDo
     Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer(),
         FileTransfer.getInstance() };
     viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
-    viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer));
+    viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer)
+    {
+      @Override
+      protected Collection<?> extractDragSource(Object object)
+      {
+        List<Object> dragSource = new ArrayList<Object>(super.extractDragSource(object));
+        List<Object> result = new ArrayList<Object>();
+        for (Object value : dragSource)
+        {
+          if (value instanceof URI)
+          {
+            URI uri = (URI)value;
+            if (uri.isPlatformResource())
+            {
+              IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+
+              Path path = new Path(uri.toPlatformString(true));
+              if (path.segmentCount() == 1)
+              {
+                IProject project = root.getProject(path.segment(0));
+                result.add(project);
+                continue;
+              }
+
+              IFile file = root.getFile(path);
+              if (file.exists())
+              {
+                result.add(file);
+                continue;
+              }
+
+              IFolder folder = root.getFolder(path);
+              if (folder.exists())
+              {
+                result.add(folder);
+                continue;
+              }
+            }
+          }
+          else if (value instanceof IAdaptable)
+          {
+            IResource resource = (IResource)((IAdaptable)value).getAdapter(IResource.class);
+            if (resource != null)
+            {
+              result.add(resource);
+              continue;
+            }
+          }
+
+          result.add(value);
+        }
+        return result;
+      }
+    });
+
+    viewer.getControl().addMouseListener(new MouseAdapter()
+    {
+      @Override
+      public void mouseDoubleClick(MouseEvent event)
+      {
+        if (event.button == 1)
+        {
+          try
+          {
+            getEditorSite().getPage().showView("org.eclipse.ui.views.PropertySheet");
+          }
+          catch (PartInitException exception)
+          {
+            WorkingSetsEditorPlugin.INSTANCE.log(exception);
+          }
+        }
+      }
+    });
   }
 
   public void createModel()
@@ -1482,7 +1561,7 @@ public class WorkingSetsEditor extends MultiPageEditorPart implements IEditingDo
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
+    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

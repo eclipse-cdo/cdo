@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
 
 import org.eclipse.emf.common.util.EList;
@@ -68,29 +69,37 @@ public interface WorkingSet extends EObject
   String getId();
 
   /**
-  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet#getId <em>Id</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet#getId <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @param value the new value of the '<em>Id</em>' attribute.
-  	 * @see #getId()
-  	 * @generated
-  	 */
+   * @param value the new value of the '<em>Id</em>' attribute.
+   * @see #getId()
+   * @generated
+   */
   void setId(String value);
 
   /**
-  	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-  	 * @return the value of the '<em>Name</em>' attribute.
-  	 * @see #setName(String)
-  	 * @see org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage#getWorkingSet_Name()
-  	 * @model required="true"
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model projectDataType="org.eclipse.emf.cdo.releng.workingsets.Project"
+   * @generated
+   */
+  boolean matches(IProject project);
+
+  /**
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+       * <p>
+       * If the meaning of the '<em>Name</em>' attribute isn't clear,
+       * there really should be more of a description here...
+       * </p>
+       * <!-- end-user-doc -->
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage#getWorkingSet_Name()
+   * @model required="true"
+   * @generated
+   */
   String getName();
 
   /**

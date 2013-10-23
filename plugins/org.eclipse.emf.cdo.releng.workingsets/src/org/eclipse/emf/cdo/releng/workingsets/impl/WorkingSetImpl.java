@@ -24,6 +24,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.core.resources.IProject;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -84,20 +87,20 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   protected static final String ID_EDEFAULT = null;
 
   /**
-  	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getId()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
   protected String id = ID_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected WorkingSetImpl()
   {
     super();
@@ -140,10 +143,10 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setId(String newId)
   {
     String oldId = id;
@@ -153,10 +156,28 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean matches(IProject project)
+  {
+    for (Predicate predicate : getPredicates())
+    {
+      if (predicate.matches(project))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+   * @generated
+   */
   public String getName()
   {
     return name;
@@ -282,6 +303,22 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case WorkingSetsPackage.WORKING_SET___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
+    }
+    return super.eInvoke(operationID, arguments);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override

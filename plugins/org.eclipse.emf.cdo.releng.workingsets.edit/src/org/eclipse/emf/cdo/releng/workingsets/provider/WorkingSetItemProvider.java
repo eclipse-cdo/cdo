@@ -12,12 +12,15 @@ package org.eclipse.emf.cdo.releng.workingsets.provider;
 
 import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,6 +33,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -160,7 +164,7 @@ public class WorkingSetItemProvider extends ItemProviderAdapter implements IEdit
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void notifyChanged(Notification notification)
@@ -170,12 +174,36 @@ public class WorkingSetItemProvider extends ItemProviderAdapter implements IEdit
     switch (notification.getFeatureID(WorkingSet.class))
     {
     case WorkingSetsPackage.WORKING_SET__NAME:
+    {
+      EObject notifier = (EObject)notification.getNotifier();
+
+      for (Iterator<EObject> it = EcoreUtil.getRootContainer(notifier).eAllContents(); it.hasNext();)
+      {
+        EObject child = it.next();
+        for (EObject reference : child.eCrossReferences())
+        {
+          if (reference == notifier)
+          {
+            fireNotifyChanged(new ViewerNotification(notification, child, false, true));
+          }
+        }
+      }
+
+      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
+      return;
+    }
     case WorkingSetsPackage.WORKING_SET__ID:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+    {
+      Object notifier = notification.getNotifier();
+      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
       return;
+    }
     case WorkingSetsPackage.WORKING_SET__PREDICATES:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+    {
+      Object notifier = notification.getNotifier();
+      fireNotifyChanged(new ViewerNotification(notification, notifier, true, false));
       return;
+    }
     }
     super.notifyChanged(notification);
   }
@@ -191,6 +219,12 @@ public class WorkingSetItemProvider extends ItemProviderAdapter implements IEdit
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
 
     newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
         PredicatesFactory.eINSTANCE.createNamePredicate()));

@@ -10,11 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
+import org.eclipse.emf.cdo.releng.workingsets.*;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -79,6 +79,10 @@ public class WorkingSetsFactoryImpl extends EFactoryImpl implements WorkingSetsF
       return createWorkingSet();
     case WorkingSetsPackage.WORKING_SET_GROUP:
       return createWorkingSetGroup();
+    case WorkingSetsPackage.EXCLUSION_PREDICATE:
+      return createExclusionPredicate();
+    case WorkingSetsPackage.INCLUSION_PREDICATE:
+      return createInclusionPredicate();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -139,6 +143,28 @@ public class WorkingSetsFactoryImpl extends EFactoryImpl implements WorkingSetsF
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExclusionPredicate createExclusionPredicate()
+  {
+    ExclusionPredicateImpl exclusionPredicate = new ExclusionPredicateImpl();
+    return exclusionPredicate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public InclusionPredicate createInclusionPredicate()
+  {
+    InclusionPredicateImpl inclusionPredicate = new InclusionPredicateImpl();
+    return inclusionPredicate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public WorkingSetsPackage getWorkingSetsPackage()

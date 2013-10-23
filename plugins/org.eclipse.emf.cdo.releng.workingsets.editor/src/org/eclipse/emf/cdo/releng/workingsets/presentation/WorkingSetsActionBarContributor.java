@@ -10,17 +10,34 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
+import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsEditPlugin;
+
+import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.action.ControlAction;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -32,17 +49,39 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubContributionItem;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.EventObject;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * This is the action bar contributor for the WorkingSets model editor.
@@ -53,6 +92,241 @@ import java.util.Collection;
 public class WorkingSetsActionBarContributor extends EditingDomainActionBarContributor implements
     ISelectionChangedListener
 {
+  /**
+   * @author Ed Merks
+   */
+  public static final class PreviewDialog extends Dialog
+  {
+    protected static class Input extends ItemProvider
+    {
+      public EList<WorkingSetPresentation> getWorkingSets()
+      {
+        @SuppressWarnings("unchecked")
+        EList<WorkingSetPresentation> result = (EList<WorkingSetPresentation>)(EList<?>)getChildren();
+        return result;
+      }
+    }
+
+    protected static class WorkingSetPresentation extends ItemProvider
+    {
+      private WorkingSet workingSet;
+
+      public WorkingSetPresentation(WorkingSet workingSet)
+      {
+        super(workingSet.getName(), WorkingSetsEditPlugin.INSTANCE.getImage("full/obj16/WorkingSet"));
+
+        this.workingSet = workingSet;
+      }
+
+      public EList<ProjectPresentation> getProjects()
+      {
+        @SuppressWarnings("unchecked")
+        EList<ProjectPresentation> result = (EList<ProjectPresentation>)(EList<?>)getChildren();
+        return result;
+      }
+
+      public WorkingSet getWorkingSet()
+      {
+        return workingSet;
+      }
+    }
+
+    protected static class ProjectPresentation extends ItemProvider
+    {
+      private IProject project;
+
+      public ProjectPresentation(IProject project)
+      {
+        super(project.getName(), ExtendedImageRegistry.INSTANCE.getImage(((IWorkbenchAdapter)project
+            .getAdapter(IWorkbenchAdapter.class)).getImageDescriptor(project)));
+
+        this.project = project;
+      }
+
+      public IProject getProject()
+      {
+        return project;
+      }
+    }
+
+    private TreeViewer tree;
+
+    private IEditorPart activeEditorPart;
+
+    private Input input = new Input();
+
+    private ISelectionListener selectionListener = new ISelectionListener()
+    {
+      public void selectionChanged(IWorkbenchPart part, ISelection selection)
+      {
+        if (selection instanceof IStructuredSelection)
+        {
+          Set<Object> selectedObjects = new HashSet<Object>();
+          for (Object value : ((IStructuredSelection)selection).toArray())
+          {
+            if (value instanceof EObject)
+            {
+              for (EObject eObject = (EObject)value; eObject != null; eObject = eObject.eContainer())
+              {
+                for (WorkingSetPresentation workingSet : input.getWorkingSets())
+                {
+                  if (eObject == workingSet.getWorkingSet())
+                  {
+                    selectedObjects.add(workingSet);
+                  }
+                }
+              }
+            }
+            if (value instanceof IAdaptable)
+            {
+              IProject project = (IProject)((IAdaptable)value).getAdapter(IProject.class);
+              if (project != null)
+              {
+                for (WorkingSetPresentation workingSet : input.getWorkingSets())
+                {
+                  for (ProjectPresentation p : workingSet.getProjects())
+                  {
+                    if (project.equals(p.getProject()))
+                    {
+                      selectedObjects.add(p);
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          if (!selectedObjects.isEmpty())
+          {
+            tree.setSelection(new StructuredSelection(new ArrayList<Object>(selectedObjects)));
+          }
+        }
+      }
+    };
+
+    private IWorkbenchWindow workbenchWindow;
+
+    private CommandStackListener commandStackListener = new CommandStackListener()
+    {
+      public void commandStackChanged(EventObject event)
+      {
+        reconcile();
+        tree.expandAll();
+      }
+    };
+
+    public PreviewDialog(Shell parentShell, IEditorPart activeEditorPart)
+    {
+      super(parentShell);
+
+      setActiveEditorPart(activeEditorPart);
+      setShellStyle(getShellStyle() ^ SWT.APPLICATION_MODAL | SWT.MODELESS | SWT.RESIZE);
+      setBlockOnOpen(false);
+
+      workbenchWindow = activeEditorPart.getEditorSite().getWorkbenchWindow();
+      ISelectionService selectionService = workbenchWindow.getSelectionService();
+      selectionService.addPostSelectionListener(selectionListener);
+    }
+
+    @Override
+    public boolean close()
+    {
+      setActiveEditorPart(null);
+      ISelectionService selectionService = workbenchWindow.getSelectionService();
+      selectionService.removePostSelectionListener(selectionListener);
+
+      return super.close();
+    }
+
+    public void setActiveEditorPart(IEditorPart activeEditorPart)
+    {
+      if (this.activeEditorPart != null)
+      {
+        ((IEditingDomainProvider)this.activeEditorPart).getEditingDomain().getCommandStack()
+            .removeCommandStackListener(commandStackListener);
+      }
+
+      this.activeEditorPart = activeEditorPart;
+
+      if (activeEditorPart != null)
+      {
+        ((IEditingDomainProvider)activeEditorPart).getEditingDomain().getCommandStack()
+            .addCommandStackListener(commandStackListener);
+      }
+    }
+
+    @Override
+    protected Control createDialogArea(Composite parent)
+    {
+      getShell().setText("Working Sets Preview");
+
+      tree = new TreeViewer(parent);
+      reconcile();
+      tree.setInput(input);
+      tree.expandAll();
+
+      GridLayout layout = new GridLayout();
+      layout.marginHeight = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
+      layout.marginWidth = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
+      layout.verticalSpacing = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
+      layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
+
+      Tree treeControl = tree.getTree();
+      treeControl.setLayout(layout);
+
+      GridData layoutData = new GridData(GridData.FILL_BOTH);
+      layoutData.heightHint = 800;
+      layoutData.widthHint = 400;
+      treeControl.setLayoutData(layoutData);
+
+      applyDialogFont(treeControl);
+
+      return treeControl;
+    }
+
+    protected void reconcile()
+    {
+      EList<Object> children = input.getChildren();
+      children.clear();
+
+      AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain)((IEditingDomainProvider)activeEditorPart)
+          .getEditingDomain();
+      tree.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()));
+      DecoratingColumLabelProvider labelProvider = new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(
+          editingDomain.getAdapterFactory()), new DiagnosticDecorator(editingDomain, tree, WorkingSetsEditorPlugin
+          .getPlugin().getDialogSettings()));
+      tree.setLabelProvider(labelProvider);
+
+      Resource resource = editingDomain.getResourceSet().getResources().get(0);
+      WorkingSetGroup workingSetGroup = (WorkingSetGroup)resource.getContents().get(0);
+
+      Set<IProject> projects = new LinkedHashSet<IProject>(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot()
+          .getProjects()));
+      for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
+      {
+        ItemProvider child = new WorkingSetPresentation(workingSet);
+        EList<Object> contents = child.getChildren();
+        for (Iterator<IProject> it = projects.iterator(); it.hasNext();)
+        {
+          IProject project = it.next();
+          if (workingSet.matches(project))
+          {
+            ItemProvider childProject = new ProjectPresentation(project);
+            contents.add(childProject);
+          }
+        }
+
+        children.add(child);
+      }
+    }
+
+    @Override
+    protected Control createButtonBar(Composite parent)
+    {
+      return null;
+    }
+  }
+
   /**
    * This keeps track of the active editor.
    * <!-- begin-user-doc -->
@@ -430,8 +704,7 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void menuAboutToShow(IMenuManager menuManager)
+  public void menuAboutToShowGen(IMenuManager menuManager)
   {
     super.menuAboutToShow(menuManager);
     MenuManager submenuManager = null;
@@ -443,6 +716,27 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
     submenuManager = new MenuManager(WorkingSetsEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
     populateManager(submenuManager, createSiblingActions, null);
     menuManager.insertBefore("edit", submenuManager);
+  }
+
+  @Override
+  public void menuAboutToShow(IMenuManager menuManager)
+  {
+    menuAboutToShowGen(menuManager);
+    menuManager.insertBefore("ui-actions", new Action()
+    {
+      @Override
+      public String getText()
+      {
+        return "Preview";
+      }
+
+      @Override
+      public void run()
+      {
+        Dialog dialog = new PreviewDialog(activeEditorPart.getSite().getShell(), activeEditorPart);
+        dialog.open();
+      }
+    });
   }
 
   /**

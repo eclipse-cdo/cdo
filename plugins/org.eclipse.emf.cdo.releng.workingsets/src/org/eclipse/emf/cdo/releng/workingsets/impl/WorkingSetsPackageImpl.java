@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
+import org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate;
+import org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
@@ -19,6 +21,7 @@ import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -50,6 +53,20 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass exclusionPredicateEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass inclusionPredicateEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   private EDataType projectEDataType = null;
@@ -152,10 +169,20 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getWorkingSet__Matches__IProject()
+  {
+    return workingSetEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getWorkingSet_Name()
   {
     return (EAttribute)workingSetEClass.getEStructuralFeatures().get(0);
@@ -184,6 +211,56 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getWorkingSetGroup__GetWorkingSet__String()
+  {
+    return workingSetGroupEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExclusionPredicate()
+  {
+    return exclusionPredicateEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExclusionPredicate_ExcludedWorkingSets()
+  {
+    return (EReference)exclusionPredicateEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInclusionPredicate()
+  {
+    return inclusionPredicateEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInclusionPredicate_IncludedWorkingSets()
+  {
+    return (EReference)inclusionPredicateEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EDataType getProject()
@@ -226,9 +303,17 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
     createEAttribute(workingSetEClass, WORKING_SET__NAME);
     createEReference(workingSetEClass, WORKING_SET__PREDICATES);
     createEAttribute(workingSetEClass, WORKING_SET__ID);
+    createEOperation(workingSetEClass, WORKING_SET___MATCHES__IPROJECT);
 
     workingSetGroupEClass = createEClass(WORKING_SET_GROUP);
     createEReference(workingSetGroupEClass, WORKING_SET_GROUP__WORKING_SETS);
+    createEOperation(workingSetGroupEClass, WORKING_SET_GROUP___GET_WORKING_SET__STRING);
+
+    exclusionPredicateEClass = createEClass(EXCLUSION_PREDICATE);
+    createEReference(exclusionPredicateEClass, EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS);
+
+    inclusionPredicateEClass = createEClass(INCLUSION_PREDICATE);
+    createEReference(inclusionPredicateEClass, INCLUSION_PREDICATE__INCLUDED_WORKING_SETS);
 
     // Create data types
     projectEDataType = createEDataType(PROJECT);
@@ -268,6 +353,8 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    exclusionPredicateEClass.getESuperTypes().add(thePredicatesPackage.getPredicate());
+    inclusionPredicateEClass.getESuperTypes().add(thePredicatesPackage.getPredicate());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(workingSetEClass, WorkingSet.class, "WorkingSet", !IS_ABSTRACT, !IS_INTERFACE,
@@ -280,12 +367,32 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
     initEAttribute(getWorkingSet_Id(), ecorePackage.getEString(), "id", null, 0, 1, WorkingSet.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    EOperation op = initEOperation(getWorkingSet__Matches__IProject(), ecorePackage.getEBoolean(), "matches", 0, 1,
+        IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     initEClass(workingSetGroupEClass, WorkingSetGroup.class, "WorkingSetGroup", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getWorkingSetGroup_WorkingSets(), this.getWorkingSet(), null, "workingSets", null, 0, -1,
         WorkingSetGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     getWorkingSetGroup_WorkingSets().getEKeys().add(this.getWorkingSet_Name());
+
+    op = initEOperation(getWorkingSetGroup__GetWorkingSet__String(), this.getWorkingSet(), "getWorkingSet", 0, 1,
+        IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(exclusionPredicateEClass, ExclusionPredicate.class, "ExclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExclusionPredicate_ExcludedWorkingSets(), this.getWorkingSet(), null, "excludedWorkingSets",
+        null, 0, -1, ExclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(inclusionPredicateEClass, InclusionPredicate.class, "InclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getInclusionPredicate_IncludedWorkingSets(), this.getWorkingSet(), null, "includedWorkingSets",
+        null, 0, -1, InclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(projectEDataType, IProject.class, "Project", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

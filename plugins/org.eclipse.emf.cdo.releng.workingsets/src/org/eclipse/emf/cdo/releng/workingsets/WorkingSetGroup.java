@@ -47,4 +47,12 @@ public interface WorkingSetGroup extends EObject
    */
   EList<WorkingSet> getWorkingSets();
 
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  WorkingSet getWorkingSet(String name);
+
 } // WorkingSetGroup

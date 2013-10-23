@@ -10,10 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.util;
 
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.workingsets.*;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -94,6 +95,24 @@ public class WorkingSetsAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseExclusionPredicate(ExclusionPredicate object)
+    {
+      return createExclusionPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseInclusionPredicate(InclusionPredicate object)
+    {
+      return createInclusionPredicateAdapter();
+    }
+
+    @Override
+    public Adapter casePredicate(Predicate object)
+    {
+      return createPredicateAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -145,10 +164,55 @@ public class WorkingSetsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate <em>Exclusion Predicate</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate
+   * @generated
+   */
+  public Adapter createExclusionPredicateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate <em>Inclusion Predicate</em>}'.
+   * <!-- begin-user-doc -->
+  	 * This default implementation returns null so that we can easily ignore cases;
+  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+  	 * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate
+   * @generated
+   */
+  public Adapter createInclusionPredicateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.predicates.Predicate <em>Predicate</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.predicates.Predicate
+   * @generated
+   */
+  public Adapter createPredicateAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for the default case.
    * <!-- begin-user-doc -->
-   * This default implementation returns null.
-   * <!-- end-user-doc -->
+       * This default implementation returns null.
+       * <!-- end-user-doc -->
    * @return the new adapter.
    * @generated
    */

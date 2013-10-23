@@ -15,10 +15,15 @@ import org.eclipse.emf.cdo.releng.workingsets.util.WorkingSetsAdapterFactory;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,6 +34,13 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
+import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
+import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
+import org.eclipse.emf.cdo.releng.predicates.util.PredicatesSwitch;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -132,9 +144,59 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   }
 
   /**
-   * This returns the root adapter factory that contains this factory.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ExclusionPredicateItemProvider exclusionPredicateItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createExclusionPredicateAdapter()
+  {
+    if (exclusionPredicateItemProvider == null)
+    {
+      exclusionPredicateItemProvider = new ExclusionPredicateItemProvider(this);
+    }
+
+    return exclusionPredicateItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected InclusionPredicateItemProvider inclusionPredicateItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createInclusionPredicateAdapter()
+  {
+    if (inclusionPredicateItemProvider == null)
+    {
+      inclusionPredicateItemProvider = new InclusionPredicateItemProvider(this);
+    }
+
+    return inclusionPredicateItemProvider;
+  }
+
+  /**
+   * This returns the root adapter factory that contains this factory.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -246,6 +308,140 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
       workingSetItemProvider.dispose();
     if (workingSetGroupItemProvider != null)
       workingSetGroupItemProvider.dispose();
+    if (exclusionPredicateItemProvider != null)
+      exclusionPredicateItemProvider.dispose();
+    if (inclusionPredicateItemProvider != null)
+      inclusionPredicateItemProvider.dispose();
+  }
+
+  /**
+   * A child creation extender for the {@link PredicatesPackage}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public static class PredicatesChildCreationExtender implements IChildCreationExtender
+  {
+    /**
+     * The switch for creating child descriptors specific to each extended class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected static class CreationSwitch extends PredicatesSwitch<Object>
+    {
+      /**
+       * The child descriptors being populated.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      protected List<Object> newChildDescriptors;
+
+      /**
+       * The domain in which to create the children.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      protected EditingDomain editingDomain;
+
+      /**
+       * Creates the a switch for populating child descriptors in the given domain.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain)
+      {
+        this.newChildDescriptors = newChildDescriptors;
+        this.editingDomain = editingDomain;
+      }
+
+      /**
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      @Override
+      public Object caseAndPredicate(AndPredicate object)
+      {
+        newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
+            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+        newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
+            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+
+        return null;
+      }
+
+      /**
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      @Override
+      public Object caseOrPredicate(OrPredicate object)
+      {
+        newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.OR_PREDICATE__OPERANDS,
+            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+        newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.OR_PREDICATE__OPERANDS,
+            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+
+        return null;
+      }
+
+      /**
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      @Override
+      public Object caseNotPredicate(NotPredicate object)
+      {
+        newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
+            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+        newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
+            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+
+        return null;
+      }
+
+      /**
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      protected CommandParameter createChildParameter(Object feature, Object child)
+      {
+        return new CommandParameter(null, feature, child);
+      }
+
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
+    {
+      ArrayList<Object> result = new ArrayList<Object>();
+      new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
+      return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ResourceLocator getResourceLocator()
+    {
+      return WorkingSetsEditPlugin.INSTANCE;
+    }
   }
 
 }

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -88,6 +89,24 @@ public class WorkingSetGroupImpl extends MinimalEObjectImpl.Container implements
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public WorkingSet getWorkingSet(String name)
+  {
+    for (WorkingSet workingSet : getWorkingSets())
+    {
+      if (name.equals(workingSet.getName()))
+      {
+        return workingSet;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -167,6 +186,22 @@ public class WorkingSetGroupImpl extends MinimalEObjectImpl.Container implements
       return workingSets != null && !workingSets.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case WorkingSetsPackage.WORKING_SET_GROUP___GET_WORKING_SET__STRING:
+      return getWorkingSet((String)arguments.get(0));
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
 } // WorkingSetGroupImpl

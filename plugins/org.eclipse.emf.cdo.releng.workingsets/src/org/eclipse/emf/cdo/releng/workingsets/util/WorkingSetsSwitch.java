@@ -10,10 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.util;
 
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.workingsets.*;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -97,6 +98,26 @@ public class WorkingSetsSwitch<T> extends Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case WorkingSetsPackage.EXCLUSION_PREDICATE:
+    {
+      ExclusionPredicate exclusionPredicate = (ExclusionPredicate)theEObject;
+      T result = caseExclusionPredicate(exclusionPredicate);
+      if (result == null)
+        result = casePredicate(exclusionPredicate);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case WorkingSetsPackage.INCLUSION_PREDICATE:
+    {
+      InclusionPredicate inclusionPredicate = (InclusionPredicate)theEObject;
+      T result = caseInclusionPredicate(inclusionPredicate);
+      if (result == null)
+        result = casePredicate(inclusionPredicate);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -135,11 +156,59 @@ public class WorkingSetsSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Exclusion Predicate</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
-   * returning a non-null result will terminate the switch, but this is the last case anyway.
+   * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Exclusion Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExclusionPredicate(ExclusionPredicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Inclusion Predicate</em>'.
+   * <!-- begin-user-doc -->
+  	 * This implementation returns null;
+  	 * returning a non-null result will terminate the switch.
+  	 * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Inclusion Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInclusionPredicate(InclusionPredicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePredicate(Predicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc -->
+       * This implementation returns null;
+       * returning a non-null result will terminate the switch, but this is the last case anyway.
+       * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)

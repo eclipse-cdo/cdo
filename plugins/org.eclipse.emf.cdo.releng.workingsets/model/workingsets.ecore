@@ -3,6 +3,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="workingsets" nsURI="http://www.eclipse.org/CDO/releng/workingsets/1.0"
     nsPrefix="workingsets">
   <eClassifiers xsi:type="ecore:EClass" name="WorkingSet">
+    <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="project" eType="#//Project"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="predicates" upperBound="-1"
         eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Predicate"
@@ -10,9 +13,20 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WorkingSetGroup">
+    <eOperations name="getWorkingSet" eType="#//WorkingSet">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="workingSets" upperBound="-1"
         eType="#//WorkingSet" containment="true" eKeys="#//WorkingSet/name"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Project" instanceClassName="org.eclipse.core.resources.IProject"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExclusionPredicate" eSuperTypes="../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Predicate">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="excludedWorkingSets" upperBound="-1"
+        eType="#//WorkingSet"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InclusionPredicate" eSuperTypes="../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Predicate">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="includedWorkingSets" upperBound="-1"
+        eType="#//WorkingSet"/>
+  </eClassifiers>
 </ecore:EPackage>

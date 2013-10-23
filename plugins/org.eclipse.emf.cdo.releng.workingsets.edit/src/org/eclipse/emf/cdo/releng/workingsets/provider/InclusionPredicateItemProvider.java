@@ -1,29 +1,20 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
-package org.eclipse.emf.cdo.releng.predicates.provider;
+package org.eclipse.emf.cdo.releng.workingsets.provider;
 
-import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
-import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
+import org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.command.DragAndDropCommand;
-import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -34,32 +25,25 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RepositoryPredicateItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class InclusionPredicateItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
-  private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
-
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public RepositoryPredicateItemProvider(AdapterFactory adapterFactory)
+  public InclusionPredicateItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -77,40 +61,38 @@ public class RepositoryPredicateItemProvider extends ItemProviderAdapter impleme
     {
       super.getPropertyDescriptors(object);
 
-      addProjectPropertyDescriptor(object);
+      addIncludedWorkingSetsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Project feature.
+   * This adds a property descriptor for the Included Working Sets feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  protected void addProjectPropertyDescriptor(Object object)
+  protected void addIncludedWorkingSetsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_RepositoryPredicate_project_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_RepositoryPredicate_project_feature",
-            "_UI_RepositoryPredicate_type"), PredicatesPackage.Literals.REPOSITORY_PREDICATE__PROJECT, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null)
+        .getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_InclusionPredicate_includedWorkingSets_feature"), getString(
+            "_UI_PropertyDescriptor_description", "_UI_InclusionPredicate_includedWorkingSets_feature",
+            "_UI_InclusionPredicate_type"), WorkingSetsPackage.Literals.INCLUSION_PREDICATE__INCLUDED_WORKING_SETS,
+        true, false, true, null, null, null)
     {
       @Override
       public Collection<?> getChoiceOfValues(Object object)
       {
-        List<IProject> result = new ArrayList<IProject>();
-        for (IProject project : WORKSPACE_ROOT.getProjects())
-        {
-          result.add(project);
-        }
+        Collection<?> result = super.getChoiceOfValues(object);
+        ExclusionPredicateItemProvider.filterCircularWorkingSets((EObject)object, result);
         return result;
       }
     });
   }
 
   /**
-   * This returns RepositoryPredicate.gif.
+   * This returns InclusionPredicate.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -118,7 +100,7 @@ public class RepositoryPredicateItemProvider extends ItemProviderAdapter impleme
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/RepositoryPredicate"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/InclusionPredicate"));
   }
 
   /**
@@ -141,8 +123,17 @@ public class RepositoryPredicateItemProvider extends ItemProviderAdapter impleme
   @Override
   public String getText(Object object)
   {
-    IProject project = ((RepositoryPredicate)object).getProject();
-    return project == null ? "" : project.getName();
+    InclusionPredicate inclusionPredicate = (InclusionPredicate)object;
+    StringBuilder result = new StringBuilder();
+    for (WorkingSet workingSet : inclusionPredicate.getIncludedWorkingSets())
+    {
+      if (result.length() != 0)
+      {
+        result.append(", ");
+      }
+      result.append(workingSet.getName());
+    }
+    return result.toString();
   }
 
   /**
@@ -150,54 +141,32 @@ public class RepositoryPredicateItemProvider extends ItemProviderAdapter impleme
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(RepositoryPredicate.class))
+    switch (notification.getFeatureID(InclusionPredicate.class))
     {
-    case PredicatesPackage.REPOSITORY_PREDICATE__PROJECT:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+    case WorkingSetsPackage.INCLUSION_PREDICATE__INCLUDED_WORKING_SETS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, true));
       return;
     }
     super.notifyChanged(notification);
   }
 
   @Override
-  protected Command createDragAndDropCommand(EditingDomain domain, Object owner, float location, int operations,
-      int operation, Collection<?> collection)
+  protected Command factorAddCommand(EditingDomain domain, CommandParameter commandParameter)
   {
-    return new DragAndDropCommand(domain, owner, location, operations, operation, collection)
+    if (commandParameter.getFeature() == null)
     {
-      @Override
-      protected boolean analyzeForNonContainment(Command command)
-      {
-        return true;
-      }
-    };
-  }
-
-  @Override
-  protected Command createSetCommand(EditingDomain domain, EObject owner, EStructuralFeature feature, Object value)
-  {
-    if (feature == null)
-    {
-      if (value instanceof Collection<?>)
-      {
-        for (Object item : (Collection<?>)value)
-        {
-          if (item instanceof IProject)
-          {
-            IProject project = (IProject)item;
-            return new SetCommand(domain, owner, PredicatesPackage.Literals.REPOSITORY_PREDICATE__PROJECT, project);
-          }
-        }
-      }
+      return new AddCommand(domain, commandParameter.getEOwner(),
+          WorkingSetsPackage.Literals.INCLUSION_PREDICATE__INCLUDED_WORKING_SETS, commandParameter.getCollection());
     }
-    return super.createSetCommand(domain, owner, feature, value);
+
+    return super.factorAddCommand(domain, commandParameter);
   }
 
   /**
@@ -222,7 +191,7 @@ public class RepositoryPredicateItemProvider extends ItemProviderAdapter impleme
   @Override
   public ResourceLocator getResourceLocator()
   {
-    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
+    return WorkingSetsEditPlugin.INSTANCE;
   }
 
 }

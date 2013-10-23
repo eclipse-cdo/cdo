@@ -4,6 +4,7 @@
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.releng.release" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.releng.version.tests" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.client" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.client.offline" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.master" componentType="osgi.bundle"/>
@@ -25,11 +26,11 @@
 
 		<cs:dependency name="org.eclipse.jgit" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
-		
+
 		<cs:dependency name="org.eclipse.buckminster.core.feature.feature.group" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.buckminster.git.feature.feature.group" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.buckminster.pde.feature.feature.group" componentType="eclipse.feature"/>
-		
+
 		<cs:dependency name="org.eclipse.swtbot" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse.gef" componentType="eclipse.feature"/>

@@ -95,10 +95,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.setup.editor"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.setup"
          version="0.0.0"/>
 
@@ -115,23 +111,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.version.doc"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.version.headless"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.version.sdk"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.version.tests"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.windowtitle"
          version="0.0.0"/>
 
    <includes

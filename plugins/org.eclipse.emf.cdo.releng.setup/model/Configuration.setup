@@ -7,7 +7,7 @@
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/3.8"/>
       <p2Repositories url="${releng.url}"/>
       <installableUnits id="org.eclipse.sdk.ide"/>
-      <installableUnits id="org.eclipse.emf.cdo.releng.setup.editor.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.setup.feature.group"/>
     </setupTasks>
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.0/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
     <setupTasks xsi:type="setup:EclipseIniTask" option="-data" value="${setup.branch.dir/ws}"/>
@@ -19,7 +19,7 @@
       <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
       <p2Repositories url="${releng.url}"/>
       <installableUnits id="org.eclipse.sdk.ide"/>
-      <installableUnits id="org.eclipse.emf.cdo.releng.setup.editor.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.setup.feature.group"/>
     </setupTasks>
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.1/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
     <setupTasks xsi:type="setup:EclipseIniTask" option="-data" value="${setup.branch.dir/ws}"/>
@@ -31,7 +31,7 @@
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="${releng.url}"/>
       <installableUnits id="org.eclipse.sdk.ide"/>
-      <installableUnits id="org.eclipse.emf.cdo.releng.setup.editor.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.setup.feature.group"/>
     </setupTasks>
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@eclipseVersions.2/@setupTasks.0" option="--launcher.XXMaxPermSize" value="512m"/>
     <setupTasks xsi:type="setup:EclipseIniTask" option="-data" value="${setup.branch.dir/ws}"/>

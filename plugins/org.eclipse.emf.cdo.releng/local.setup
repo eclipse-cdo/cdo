@@ -3,24 +3,18 @@
   <setupTasks xsi:type="setup:P2Task">
     <p2Repositories url="http://download.eclipse.org/releases/luna"/>
     <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
-    <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
-    <p2Repositories url="http://download.eclipse.org/egit/github/updates-nightly"/>
     <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.manifests.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
-    <installableUnits id="org.eclipse.emf.cdo.releng.tasks.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
-    <installableUnits id="org.eclipse.emf.cdo.releng.workingsets.feature.group"/>
     <installableUnits id="org.eclipse.egit.feature.group"/>
-    <installableUnits id="org.eclipse.egit.mylyn.feature.group"/>
     <installableUnits id="org.eclipse.buckminster.core.feature.feature.group"/>
     <installableUnits id="org.eclipse.buckminster.git.feature.feature.group"/>
     <installableUnits id="org.eclipse.buckminster.pde.feature.feature.group"/>
-    <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
   </setupTasks>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-data" value="${setup.branch.dir}/ws"/>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Djgit.gitprefix" value="=${setup.git.prefix}" vm="true"/>

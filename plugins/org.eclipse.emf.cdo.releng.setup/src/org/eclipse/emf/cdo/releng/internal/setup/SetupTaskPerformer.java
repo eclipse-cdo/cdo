@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -592,6 +593,22 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       public String filter(String value)
       {
         return value.toLowerCase();
+      }
+    });
+
+    STRING_FILTER_REGISTRY.put("cap", new StringFilter()
+    {
+      public String filter(String value)
+      {
+        return StringUtil.cap(value);
+      }
+    });
+
+    STRING_FILTER_REGISTRY.put("allcap", new StringFilter()
+    {
+      public String filter(String value)
+      {
+        return StringUtil.capAll(value);
       }
     });
   }

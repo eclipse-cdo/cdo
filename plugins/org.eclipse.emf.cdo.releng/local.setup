@@ -6,17 +6,13 @@
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
     <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
-    <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
-    <installableUnits id="org.eclipse.emf.cdo.releng.manifests.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
-    <installableUnits id="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
     <installableUnits id="org.eclipse.egit.feature.group"/>
     <installableUnits id="org.eclipse.buckminster.core.feature.feature.group"/>
     <installableUnits id="org.eclipse.buckminster.git.feature.feature.group"/>
     <installableUnits id="org.eclipse.buckminster.pde.feature.feature.group"/>
   </setupTasks>
-  <setupTasks xsi:type="setup:EclipseIniTask" option="-data" value="${setup.branch.dir}/ws"/>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Djgit.gitprefix" value="=${setup.git.prefix}" vm="true"/>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Dorg.eclipse.buckminster.core.bundle.pool" value="=${setup.install.dir}/.p2pool-tp" vm="true"/>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Xmx" value="2048m" vm="true"/>

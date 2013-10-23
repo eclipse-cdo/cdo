@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.command.ChangeCommand;
@@ -37,6 +39,7 @@ import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -529,11 +532,14 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
           if (structuredSelection.size() == 1)
           {
             Object element = structuredSelection.getFirstElement();
-            if (element instanceof SetupTaskContainer)
+            if (element instanceof EObject)
             {
-              container = (SetupTaskContainer)element;
-              setEnabled(true);
-              return;
+              container = getSetupTaskContainer((EObject)element);
+              if (container != null)
+              {
+                setEnabled(true);
+                return;
+              }
             }
           }
         }
@@ -548,20 +554,13 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
     {
       if (isChecked())
       {
-        if (activeEditorPart instanceof IViewerProvider)
-        {
-          Viewer viewer = ((IViewerProvider)activeEditorPart).getViewer();
-          if (viewer instanceof TreeViewer)
-          {
-            ((TreeViewer)viewer).setExpandedState(container, true);
-          }
-        }
+        expandItem(container);
 
         preferenceAdapter = createPreferenceAdapter();
         rootPreferenceNode = PreferencesUtil.getRootPreferenceNode(true);
         rootPreferenceNode.eAdapters().add(preferenceAdapter);
 
-        ChangeCommand command = new ChangeCommand(container)
+        ChangeCommand command = new ChangeCommand(container.eResource())
         {
           @Override
           protected void doExecute()
@@ -583,11 +582,88 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
       }
     }
 
+    protected void updatePreference(String key, String value)
+    {
+      for (TreeIterator<EObject> it = container.eResource().getAllContents(); it.hasNext();)
+      {
+        EObject object = it.next();
+        if (object instanceof EclipsePreferenceTask)
+        {
+          EclipsePreferenceTask preferenceTask = (EclipsePreferenceTask)object;
+          if (key.equals(preferenceTask.getKey()))
+          {
+            preferenceTask.setValue(value);
+            expandItem(preferenceTask.eContainer());
+            return;
+          }
+        }
+      }
+
+      EclipsePreferenceTask task = SetupFactory.eINSTANCE.createEclipsePreferenceTask();
+      task.setKey(key);
+      task.setValue(value);
+
+      String pluginID = new Path(key).segment(1).toString();
+      CompoundSetupTask compoundTask = getCompoundTask(pluginID);
+      compoundTask.getSetupTasks().add(task);
+      expandItem(compoundTask);
+    }
+
+    private void expandItem(final EObject object)
+    {
+      if (activeEditorPart instanceof IViewerProvider)
+      {
+        activeEditor.getSite().getShell().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            Viewer viewer = ((IViewerProvider)activeEditorPart).getViewer();
+            if (viewer instanceof TreeViewer)
+            {
+              ((TreeViewer)viewer).setExpandedState(object, true);
+            }
+          }
+        });
+      }
+    }
+
+    private CompoundSetupTask getCompoundTask(String pluginID)
+    {
+      EList<SetupTask> setupTasks = container.getSetupTasks();
+      for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
+      {
+        SetupTask setupTask = it.next();
+        if (setupTask instanceof CompoundSetupTask)
+        {
+          CompoundSetupTask compoundTask = (CompoundSetupTask)setupTask;
+          if (pluginID.equals(compoundTask.getName()))
+          {
+            return compoundTask;
+          }
+        }
+      }
+
+      CompoundSetupTask compoundTask = SetupFactory.eINSTANCE.createCompoundSetupTask();
+      compoundTask.setName(pluginID);
+      setupTasks.add(compoundTask);
+      return compoundTask;
+    }
+
+    private SetupTaskContainer getSetupTaskContainer(EObject object)
+    {
+      while (object != null && !(object instanceof SetupTaskContainer))
+      {
+        object = object.eContainer();
+      }
+
+      return (SetupTaskContainer)object;
+    }
+
     private EContentAdapter createPreferenceAdapter()
     {
       return new EContentAdapter()
       {
-        private Map<Property, String> map = new HashMap<Property, String>();
+        private Map<Property, String> paths = new HashMap<Property, String>();
 
         @Override
         protected void setTarget(EObject target)
@@ -599,7 +675,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
             String absolutePath = property.getAbsolutePath();
             if (absolutePath.startsWith("/instance/"))
             {
-              map.put(property, absolutePath);
+              paths.put(property, absolutePath);
             }
           }
         }
@@ -614,7 +690,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
             if (notification.getFeature() == PreferencesPackage.Literals.PROPERTY__VALUE)
             {
               Property property = (Property)notification.getNotifier();
-              setPreference(property, property.getValue());
+              notifyChanged(property, property.getValue());
             }
             break;
 
@@ -622,7 +698,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
             if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
             {
               Property property = (Property)notification.getNewValue();
-              setPreference(property, property.getValue());
+              notifyChanged(property, property.getValue());
             }
             break;
 
@@ -630,36 +706,18 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
             if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
             {
               Property property = (Property)notification.getOldValue();
-              setPreference(property, null);
+              notifyChanged(property, null);
             }
             break;
           }
         }
 
-        private void setPreference(Property property, String value)
+        private void notifyChanged(Property property, String value)
         {
-          String absolutePath = map.get(property);
+          String absolutePath = paths.get(property);
           if (absolutePath != null)
           {
-            EList<SetupTask> setupTasks = container.getSetupTasks();
-            for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
-            {
-              SetupTask setupTask = it.next();
-              if (setupTask instanceof EclipsePreferenceTask)
-              {
-                EclipsePreferenceTask preferenceTask = (EclipsePreferenceTask)setupTask;
-                if (absolutePath.equals(preferenceTask.getKey()))
-                {
-                  it.remove();
-                }
-              }
-            }
-
-            EclipsePreferenceTask task = SetupFactory.eINSTANCE.createEclipsePreferenceTask();
-            task.setKey(absolutePath);
-            task.setValue(value);
-
-            setupTasks.add(task);
+            updatePreference(absolutePath, value);
           }
         }
       };

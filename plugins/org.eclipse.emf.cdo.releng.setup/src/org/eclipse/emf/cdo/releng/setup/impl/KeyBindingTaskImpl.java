@@ -598,7 +598,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
         }
 
         ParameterizedCommand parameterizedCommand = keyBinding.getParameterizedCommand();
-        if (!ObjectUtil.equals(parameterizedCommand.getId(), getCommand()))
+        if (parameterizedCommand == null || !ObjectUtil.equals(parameterizedCommand.getId(), getCommand()))
         {
           continue;
         }

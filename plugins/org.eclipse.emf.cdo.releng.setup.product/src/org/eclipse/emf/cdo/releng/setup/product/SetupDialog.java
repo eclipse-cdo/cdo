@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -616,7 +616,7 @@ public class SetupDialog extends TitleAreaDialog
   private URI getSetupURI(Branch branch, String installFolder)
   {
     File projectFolder = new File(installFolder, branch.getProject().getName().toLowerCase());
-    File branchFolder = new File(projectFolder, branch.getName());
+    File branchFolder = new File(projectFolder, branch.getName().toLowerCase());
     File setupFile = new File(branchFolder, "setup.xmi");
     return URI.createFileURI(setupFile.getAbsolutePath());
   }
@@ -676,9 +676,14 @@ public class SetupDialog extends TitleAreaDialog
   {
     saveEObject(setup);
 
-    SetupTaskPerformer performer = new SetupTaskPerformer(new File(installFolder, setup.getBranch().getProject()
-        .getName()
-        + "/" + setup.getBranch().getName()));
+    Branch branch = setup.getBranch();
+    Project project = branch.getProject();
+
+    String branchFolder = branch.getName().toLowerCase();
+    String projectFolder = project.getName().toLowerCase();
+    File branchDir = new File(installFolder, projectFolder + "/" + branchFolder);
+
+    SetupTaskPerformer performer = new SetupTaskPerformer(branchDir);
     performer.getWorkspaceDir().mkdirs();
     performer.perform();
 

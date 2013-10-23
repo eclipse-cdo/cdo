@@ -487,6 +487,13 @@
             </fileset>
           </delete>
 
+          <if>
+            <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
+            <then>
+              <chmod perm="700" file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
+            </then>
+          </if>
+
           <copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
             <fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
               <include name="epl-v10.html" />

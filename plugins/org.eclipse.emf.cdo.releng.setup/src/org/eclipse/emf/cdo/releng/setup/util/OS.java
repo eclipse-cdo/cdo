@@ -194,7 +194,7 @@ public abstract class OS
     @Override
     public String getEclipseIni()
     {
-      return "Contents/MacOS/eclipse.ini";
+      return "Eclipse.app/Contents/MacOS/eclipse.ini";
     }
 
     @Override

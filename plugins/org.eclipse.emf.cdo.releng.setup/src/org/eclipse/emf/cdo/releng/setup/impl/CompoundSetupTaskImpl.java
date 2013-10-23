@@ -129,7 +129,9 @@ public class CompoundSetupTaskImpl extends SetupTaskImpl implements CompoundSetu
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMPOUND_SETUP_TASK__NAME, oldName, name));
+    }
   }
 
   /**
@@ -277,7 +279,9 @@ public class CompoundSetupTaskImpl extends SetupTaskImpl implements CompoundSetu
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -289,26 +293,17 @@ public class CompoundSetupTaskImpl extends SetupTaskImpl implements CompoundSetu
   @Override
   public Object getOverrideToken()
   {
-    return createToken(getName());
+    throw new UnsupportedOperationException();
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    boolean needed = false;
-    for (SetupTask setupTask : getSetupTasks())
-    {
-      needed |= setupTask.isNeeded(context);
-    }
-
-    return needed;
+    throw new UnsupportedOperationException();
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    for (SetupTask setupTask : getSetupTasks())
-    {
-      setupTask.perform(context);
-    }
+    throw new UnsupportedOperationException();
   }
 
 } // CompoundSetupTaskImpl

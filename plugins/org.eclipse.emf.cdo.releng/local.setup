@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <setup:Project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" name="CDO">
   <setupTasks xsi:type="setup:P2Task">
-    <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+    <p2Repositories url="http://download.eclipse.org/releases/luna"/>
     <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
     <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
@@ -72,7 +72,7 @@
   </setupTasks>
   <branches name="master">
     <setupTasks xsi:type="setup:P2Task">
-      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
       <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
@@ -86,7 +86,7 @@
   </branches>
   <branches name="4.2">
     <setupTasks xsi:type="setup:P2Task">
-      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>

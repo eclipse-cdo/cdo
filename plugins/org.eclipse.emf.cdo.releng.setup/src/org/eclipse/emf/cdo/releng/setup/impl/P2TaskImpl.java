@@ -348,6 +348,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       {
         String url = context.expandString(p2Repository.getUrl());
         URI uri = new URI(url);
+        context.log("Using repository " + uri);
         if (neededInstallableUnits == null)
         {
           if (!knownRepositories.contains(url))
@@ -474,6 +475,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     new File(destination).mkdirs();
 
     String repositories = makeList(context, p2Repositories, SetupPackage.Literals.P2_REPOSITORY__URL);
+    for (String repository : repositories.split(","))
+    {
+      context.log("Using repository " + repository);
+    }
+
     String ius = makeList(context, installableUnits, SetupPackage.Literals.INSTALLABLE_UNIT__ID);
 
     String[] args = { "-destination", destination, "-repository", repositories, "-installIU", ius, "-profile",

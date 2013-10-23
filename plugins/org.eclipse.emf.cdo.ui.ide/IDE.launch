@@ -5,7 +5,7 @@
 <booleanAttribute key="automaticAdd" value="false"/>
 <booleanAttribute key="automaticValidate" value="false"/>
 <stringAttribute key="bootstrap" value=""/>
-<stringAttribute key="checked" value="org.eclipse.emf.cdo,org.eclipse.emf.cdo.common,org.eclipse.emf.cdo.team,org.eclipse.emf.cdo.ui,org.eclipse.emf.cdo.ui.ide,org.eclipse.net4j.util,org.eclipse.net4j.util.ui"/>
+<stringAttribute key="checked" value="[NONE]"/>
 <booleanAttribute key="clearConfig" value="false"/>
 <booleanAttribute key="clearws" value="false"/>
 <booleanAttribute key="clearwslog" value="false"/>
@@ -14,7 +14,7 @@
 <booleanAttribute key="includeOptional" value="true"/>
 <stringAttribute key="location" value="${workspace_loc}/../ws-IDE"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -nosplash"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -nosplash -consoleLog"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms256m -Xmx2048m -XX:MaxPermSize=512m&#13;&#10;-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog&#13;&#10;-Dorg.apache.commons.logging.simplelog.showlogname=true&#13;&#10;-Dorg.apache.commons.logging.simplelog.defaultlog=off&#13;&#10;-Dorg.apache.commons.logging.simplelog.log.httpclient.wire.header=debug&#13;&#10;-Dorg.apache.commons.logging.simplelog.log.org.apache.commons.httpclient=off&#13;&#10;-Dorg.apache.commons.logging.simplelog.log.org.apache.axis.message=debug&#13;&#10;-Dorg.apache.commons.logging.simplelog.log.httpclient.wire.content=debug&#13;&#10;-Dorg.eclipse.emf.cdo.releng.version.debug=false"/>
 <stringAttribute key="pde.version" value="3.3"/>

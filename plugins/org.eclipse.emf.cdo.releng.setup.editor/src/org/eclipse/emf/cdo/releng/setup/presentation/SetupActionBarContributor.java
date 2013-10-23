@@ -39,6 +39,9 @@ import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -51,6 +54,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubContributionItem;
+import org.eclipse.jface.bindings.Binding;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -59,13 +64,27 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.keys.IBindingService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -181,6 +200,8 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
 
   private PreferenceRecorderAction recordPreferencesAction = new PreferenceRecorderAction();
 
+  private CommandTableAction commandTableAction = new CommandTableAction();
+
   /**
    * This creates an instance of the contributor.
    * <!-- begin-user-doc -->
@@ -206,6 +227,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
   {
     toolBarManager.add(new Separator("setup-settings"));
     toolBarManager.add(recordPreferencesAction);
+    toolBarManager.add(commandTableAction);
     toolBarManager.add(new Separator("setup-additions"));
   }
 
@@ -517,7 +539,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
     public PreferenceRecorderAction()
     {
       super("Record", AS_CHECK_BOX);
-      setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "icons/recorder.gif"));
+      setImageDescriptor(Activator.imageDescriptorFromPlugin(SetupEditorPlugin.PLUGIN_ID, "icons/recorder.gif"));
       setToolTipText("Record preference changes into the selected setup task container");
     }
 
@@ -721,6 +743,164 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
           }
         }
       };
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CommandTableAction extends Action
+  {
+    public CommandTableAction()
+    {
+      super("Command Table");
+      setImageDescriptor(Activator.imageDescriptorFromPlugin(SetupEditorPlugin.PLUGIN_ID, "icons/commands.gif"));
+      setToolTipText("Show a table of all available commands");
+    }
+
+    @Override
+    public void run()
+    {
+      Dialog dialog = new CommandTableDialog(activeEditorPart.getSite().getShell());
+      dialog.open();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CommandTableDialog extends Dialog
+    {
+      public CommandTableDialog(Shell parentShell)
+      {
+        super(parentShell);
+        setShellStyle(getShellStyle() ^ SWT.APPLICATION_MODAL | SWT.MODELESS | SWT.RESIZE | SWT.MIN | SWT.MAX
+            | SWT.DIALOG_TRIM);
+        setBlockOnOpen(false);
+      }
+
+      @Override
+      protected Control createDialogArea(Composite parent)
+      {
+        getShell().setText("Command Table");
+
+        Browser browser = new Browser(parent, SWT.NONE);
+        browser.setText(render());
+
+        GridData layoutData = new GridData(GridData.FILL_BOTH);
+        layoutData.heightHint = 800;
+        layoutData.widthHint = 1000;
+        browser.setLayoutData(layoutData);
+
+        applyDialogFont(browser);
+
+        return browser;
+      }
+
+      @Override
+      protected Control createButtonBar(Composite parent)
+      {
+        return null;
+      }
+
+      @SuppressWarnings("unchecked")
+      private String render()
+      {
+        IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
+        Binding[] bindings = bindingService.getBindings();
+        Map<String, List<Command>> map = new HashMap<String, List<Command>>();
+
+        ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+        for (Command command : commandService.getDefinedCommands())
+        {
+          try
+          {
+            String category = command.getCategory().getName();
+            if (category == null || category.length() == 0)
+            {
+              category = command.getCategory().getId();
+            }
+
+            List<Command> commands = map.get(category);
+            if (commands == null)
+            {
+              commands = new ArrayList<Command>();
+              map.put(category, commands);
+            }
+
+            commands.add(command);
+          }
+          catch (NotDefinedException ex)
+          {
+            SetupEditorPlugin.getPlugin().log(ex);
+          }
+        }
+
+        List<String> categories = new ArrayList<String>(map.keySet());
+        Collections.sort(categories);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(baos);
+        out.println("<table border=\"1\">");
+
+        for (String category : categories)
+        {
+          out.println("<tr><td colspan=\"3\" bgcolor=\"eae6ff\"><br><h2>" + category + "</h2></td></tr>");
+
+          List<Command> commands = map.get(category);
+          Collections.sort(commands);
+
+          for (Command command : commands)
+          {
+            StringBuilder keys = new StringBuilder();
+            for (Binding binding : bindings)
+            {
+              ParameterizedCommand parameterizedCommand = binding.getParameterizedCommand();
+              if (parameterizedCommand != null)
+              {
+                if (parameterizedCommand.getId().equals(command.getId()))
+                {
+                  if (keys.length() != 0)
+                  {
+                    keys.append("<br>");
+                  }
+
+                  keys.append(binding.getTriggerSequence());
+                }
+              }
+            }
+
+            if (keys.length() == 0)
+            {
+              keys.append("&nbsp;");
+            }
+
+            String name;
+            try
+            {
+              name = command.getName();
+            }
+            catch (NotDefinedException ex)
+            {
+              name = command.getId();
+            }
+
+            out.println("<tr><td valign=\"top\" width=\"200\">" + name + "</td><td valign=\"top\" width=\"400\">"
+                + command.getId() + "</td><td valign=\"top\" width=\"100\">" + keys + "</td></tr>");
+          }
+        }
+
+        out.println("</table>");
+
+        try
+        {
+          out.flush();
+          return baos.toString("UTF-8");
+        }
+        catch (UnsupportedEncodingException ex)
+        {
+          return "UTF-8 is unsupported";
+        }
+      }
     }
   }
 }

@@ -29,6 +29,8 @@ import org.eclipse.core.runtime.Status;
  */
 public final class SetupEditorPlugin extends EMFPlugin
 {
+  public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.setup.editor";
+
   /**
    * Keep track of the singleton.
    * <!-- begin-user-doc -->

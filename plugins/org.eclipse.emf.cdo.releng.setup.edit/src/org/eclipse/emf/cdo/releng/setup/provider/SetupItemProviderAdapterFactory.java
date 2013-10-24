@@ -497,11 +497,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask} instances.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected ContextVariableTaskItemProvider contextVariableTaskItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createContextVariableTaskAdapter()
+  {
+    if (contextVariableTaskItemProvider == null)
+    {
+      contextVariableTaskItemProvider = new ContextVariableTaskItemProvider(this);
+    }
+
+    return contextVariableTaskItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected EclipseIniTaskItemProvider eclipseIniTaskItemProvider;
 
   /**
@@ -858,6 +883,8 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       keyBindingTaskItemProvider.dispose();
     if (commandParameterItemProvider != null)
       commandParameterItemProvider.dispose();
+    if (contextVariableTaskItemProvider != null)
+      contextVariableTaskItemProvider.dispose();
   }
 
 }

@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
+import org.eclipse.emf.cdo.releng.setup.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -379,6 +380,16 @@ public class SetupSwitch<T>
     {
       CommandParameter commandParameter = (CommandParameter)theEObject;
       T result = caseCommandParameter(commandParameter);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.CONTEXT_VARIABLE_TASK:
+    {
+      ContextVariableTask contextVariableTask = (ContextVariableTask)theEObject;
+      T result = caseContextVariableTask(contextVariableTask);
+      if (result == null)
+        result = caseSetupTask(contextVariableTask);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -725,16 +736,32 @@ public class SetupSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Context Variable Task</em>'.
    * <!-- begin-user-doc -->
-           * This implementation returns null;
-           * returning a non-null result will terminate the switch.
-           * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Context Variable Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
+  public T caseContextVariableTask(ContextVariableTask object)
+  {
+    return null;
+  }
+
+  /**
+  	 * Returns the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
+  	 * <!-- begin-user-doc -->
+             * This implementation returns null;
+             * returning a non-null result will terminate the switch.
+             * <!-- end-user-doc -->
+  	 * @param object the target of the switch.
+  	 * @return the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
+  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+  	 * @generated
+  	 */
   public T caseEclipseIniTask(EclipseIniTask object)
   {
     return null;

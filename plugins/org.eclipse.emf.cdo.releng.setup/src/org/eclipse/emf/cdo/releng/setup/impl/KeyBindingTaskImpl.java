@@ -234,9 +234,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldScheme = scheme;
     scheme = newScheme;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__SCHEME, oldScheme, scheme));
-    }
   }
 
   /**
@@ -259,9 +257,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldContext = context;
     context = newContext;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__CONTEXT, oldContext, context));
-    }
   }
 
   /**
@@ -284,10 +280,8 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldPlatform = platform;
     platform = newPlatform;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__PLATFORM, oldPlatform,
           platform));
-    }
   }
 
   /**
@@ -310,9 +304,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldLocale = locale;
     locale = newLocale;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__LOCALE, oldLocale, locale));
-    }
   }
 
   /**
@@ -335,9 +327,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldKeys = keys;
     keys = newKeys;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__KEYS, oldKeys, keys));
-    }
   }
 
   /**
@@ -360,9 +350,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldCommand = command;
     command = newCommand;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__COMMAND, oldCommand, command));
-    }
   }
 
   /**
@@ -533,9 +521,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (scheme: ");

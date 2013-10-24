@@ -27,9 +27,9 @@
     <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.ui.ide/WORKSPACE_NAME" value="${setup.project.name} ${setup.branch.name|cap}"/>
   </eclipseVersions>
   <eclipseVersions version="4.4">
-    <setupTasks xsi:type="setup:StringVariableTask" name="train.name" value="Luna" description="The name of the release train"/>
-    <setupTasks xsi:type="setup:StringVariableTask" requirements="//@eclipseVersions.2/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/${train.name|lower}" description="The URL of the release train p2 repository"/>
-    <setupTasks xsi:type="setup:StringVariableTask" requirements="//@eclipseVersions.2/@setupTasks.1" name="platform.url" value="${train.url}" description="The location of the Eclipse SDK's p2 repository"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Luna"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions.2/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/${train.name|lower}"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions.2/@setupTasks.1" name="platform.url" value="${train.url}"/>
     <setupTasks xsi:type="setup:P2Task" requirements="//@eclipseVersions.2/@setupTasks.2">
       <p2Repositories url="${platform.url}"/>
       <p2Repositories url="${releng.url}"/>

@@ -335,8 +335,6 @@ public class StringVariableTaskImpl extends SetupTaskImpl implements StringVaria
     cachedVariable = variable;
     expandedValue = context.expandString(getValue());
 
-    context.put(getName(), expandedValue);
-
     if (variable == null)
     {
       return true;

@@ -129,9 +129,7 @@ public class CompoundSetupTaskImpl extends SetupTaskImpl implements CompoundSetu
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMPOUND_SETUP_TASK__NAME, oldName, name));
-    }
   }
 
   /**
@@ -279,9 +277,7 @@ public class CompoundSetupTaskImpl extends SetupTaskImpl implements CompoundSetu
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

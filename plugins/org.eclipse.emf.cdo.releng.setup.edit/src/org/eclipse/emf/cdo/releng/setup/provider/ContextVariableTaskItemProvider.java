@@ -1,38 +1,34 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import org.eclipse.core.runtime.Path;
+
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class ContextVariableTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -41,7 +37,7 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public WorkingSetTaskItemProvider(AdapterFactory adapterFactory)
+  public ContextVariableTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -59,45 +55,48 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
     {
       super.getPropertyDescriptors(object);
 
+      addNamePropertyDescriptor(object);
+      addValuePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * This adds a property descriptor for the Name feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+  protected void addNamePropertyDescriptor(Object object)
   {
-    if (childrenFeatures == null)
-    {
-      super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.WORKING_SET_TASK__WORKING_SETS);
-    }
-    return childrenFeatures;
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_ContextVariableTask_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ContextVariableTask_name_feature",
+            "_UI_ContextVariableTask_type"), SetupPackage.Literals.CONTEXT_VARIABLE_TASK__NAME, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
+   * This adds a property descriptor for the Value feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  protected EStructuralFeature getChildFeature(Object object, Object child)
+  protected void addValuePropertyDescriptor(Object object)
   {
-    // Check the type of the specified child object and return the proper feature to use for
-    // adding (see {@link AddCommand}) it as a child.
-
-    return super.getChildFeature(object, child);
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_ContextVariableTask_value_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ContextVariableTask_value_feature",
+            "_UI_ContextVariableTask_type"), SetupPackage.Literals.CONTEXT_VARIABLE_TASK__VALUE, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This returns WorkingSetTask.gif.
+   * This returns ContextVariableTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -105,7 +104,7 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/WorkingSetTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/ContextVariableTask"));
   }
 
   /**
@@ -117,7 +116,19 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_WorkingSetTask_type");
+    String name = ((ContextVariableTask)object).getName();
+    String value = ((ContextVariableTask)object).getValue();
+
+    if (name != null && name.length() != 0)
+    {
+      name = new Path(name).lastSegment();
+    }
+    else if (value == null || value.length() == 0)
+    {
+      return getString("_UI_ContextVariableTask_type");
+    }
+
+    return "" + name + " = " + value;
   }
 
   /**
@@ -132,10 +143,11 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(WorkingSetTask.class))
+    switch (notification.getFeatureID(ContextVariableTask.class))
     {
-    case SetupPackage.WORKING_SET_TASK__WORKING_SETS:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+    case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
+    case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }
     super.notifyChanged(notification);
@@ -152,9 +164,6 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.WORKING_SET_TASK__WORKING_SETS,
-        WorkingSetsFactory.eINSTANCE.createWorkingSet()));
   }
 
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
+import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
@@ -190,9 +191,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EClass contextVariableTaskEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EClass eclipseIniTaskEClass = null;
 
   /**
@@ -1005,9 +1013,39 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getContextVariableTask()
+  {
+    return contextVariableTaskEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getContextVariableTask_Name()
+  {
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getContextVariableTask_Value()
+  {
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+               * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getEclipseIniTask()
   {
     return eclipseIniTaskEClass;
@@ -1451,6 +1489,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__ID);
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__VALUE);
 
+    contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
+
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
@@ -1515,6 +1557,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     resourceCopyTaskEClass.getESuperTypes().add(this.getSetupTask());
     textModifyTaskEClass.getESuperTypes().add(this.getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(this.getSetupTask());
+    contextVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1770,6 +1813,15 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCommandParameter_Value(), ecorePackage.getEString(), "value", null, 0, 1, CommandParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 0, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");

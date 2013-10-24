@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
+import org.eclipse.emf.cdo.releng.setup.*;
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
@@ -266,6 +267,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseCommandParameter(CommandParameter object)
     {
       return createCommandParameterAdapter();
+    }
+
+    @Override
+    public Adapter caseContextVariableTask(ContextVariableTask object)
+    {
+      return createContextVariableTaskAdapter();
     }
 
     @Override
@@ -560,15 +567,30 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask <em>Context Variable Task</em>}'.
    * <!-- begin-user-doc -->
-           * This default implementation returns null so that we can easily ignore cases;
-           * it's useful to ignore a case when inheritance will catch all the cases anyway.
-           * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+   * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask
    * @generated
    */
+  public Adapter createContextVariableTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+  	 * <!-- begin-user-doc -->
+             * This default implementation returns null so that we can easily ignore cases;
+             * it's useful to ignore a case when inheritance will catch all the cases anyway.
+             * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+  	 * @generated
+  	 */
   public Adapter createEclipseIniTaskAdapter()
   {
     return null;

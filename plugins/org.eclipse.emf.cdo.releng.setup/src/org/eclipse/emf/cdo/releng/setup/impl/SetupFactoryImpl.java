@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.eclipse.emf.cdo.releng.setup.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -147,6 +148,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createKeyBindingTask();
     case SetupPackage.COMMAND_PARAMETER:
       return createCommandParameter();
+    case SetupPackage.CONTEXT_VARIABLE_TASK:
+      return createContextVariableTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -380,9 +383,20 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public ContextVariableTask createContextVariableTask()
+  {
+    ContextVariableTaskImpl contextVariableTask = new ContextVariableTaskImpl();
+    return contextVariableTask;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EclipseIniTask createEclipseIniTask()
   {
     EclipseIniTaskImpl eclipseIniTask = new EclipseIniTaskImpl();

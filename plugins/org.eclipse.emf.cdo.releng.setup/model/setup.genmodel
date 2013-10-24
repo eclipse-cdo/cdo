@@ -22,9 +22,9 @@
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//Trigger/STARTUP"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//Trigger/MANUAL"/>
     </genEnums>
-    <genDataTypes ecoreDataType="setup.ecore#//URI"/>
-    <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
     <genDataTypes ecoreDataType="setup.ecore#//TriggerSet"/>
+    <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
+    <genDataTypes ecoreDataType="setup.ecore#//URI"/>
     <genClasses ecoreClass="setup.ecore#//EclipseVersion">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//EclipseVersion/configuration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipseVersion/version"/>
@@ -138,6 +138,23 @@
     <genClasses ecoreClass="setup.ecore#//TextModification">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModification/pattern"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModification/substitutions"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//KeyBindingTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/scheme"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/platform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/locale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/keys"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/command"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//KeyBindingTask/commandParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//CommandParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/value"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

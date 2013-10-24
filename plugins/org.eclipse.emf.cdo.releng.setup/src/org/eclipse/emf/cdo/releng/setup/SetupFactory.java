@@ -175,12 +175,21 @@ public interface SetupFactory extends EFactory
   CommandParameter createCommandParameter();
 
   /**
-   * Returns a new object of class '<em>Eclipse Ini Task</em>'.
+   * Returns a new object of class '<em>Context Variable Task</em>'.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @return a new object of class '<em>Eclipse Ini Task</em>'.
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Context Variable Task</em>'.
    * @generated
    */
+  ContextVariableTask createContextVariableTask();
+
+  /**
+  	 * Returns a new object of class '<em>Eclipse Ini Task</em>'.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @return a new object of class '<em>Eclipse Ini Task</em>'.
+  	 * @generated
+  	 */
   EclipseIniTask createEclipseIniTask();
 
   /**

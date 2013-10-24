@@ -1706,14 +1706,87 @@ public interface SetupPackage extends EPackage
   int COMMAND_PARAMETER_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getContextVariableTask()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 27;
+  int CONTEXT_VARIABLE_TASK = 27;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Value</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__VALUE = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Context Variable Task</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
+  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+  	 * @generated
+  	 */
+  int SETUP_TASK_SCOPE = 28;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -1723,7 +1796,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 28;
+  int TRIGGER = 29;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -1733,7 +1806,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 31;
+  int URI = 32;
 
   /**
    * The meta object id for the '<em>Exception</em>' data type.
@@ -1743,7 +1816,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 30;
+  int EXCEPTION = 31;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -1753,7 +1826,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 29;
+  int TRIGGER_SET = 30;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -2453,13 +2526,45 @@ public interface SetupPackage extends EPackage
   EAttribute getCommandParameter_Value();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask <em>Context Variable Task</em>}'.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Eclipse Ini Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Context Variable Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask
    * @generated
    */
+  EClass getContextVariableTask();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName <em>Name</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Name</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName()
+  	 * @see #getContextVariableTask()
+  	 * @generated
+  	 */
+  EAttribute getContextVariableTask_Name();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue <em>Value</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Value</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue()
+  	 * @see #getContextVariableTask()
+  	 * @generated
+  	 */
+  EAttribute getContextVariableTask_Value();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+  	 * <!-- begin-user-doc -->
+               * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Eclipse Ini Task</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+  	 * @generated
+  	 */
   EClass getEclipseIniTask();
 
   /**
@@ -3352,13 +3457,39 @@ public interface SetupPackage extends EPackage
     EAttribute COMMAND_PARAMETER__VALUE = eINSTANCE.getCommandParameter_Value();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
      * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getContextVariableTask()
      * @generated
      */
+    EClass CONTEXT_VARIABLE_TASK = eINSTANCE.getContextVariableTask();
+
+    /**
+    	 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute CONTEXT_VARIABLE_TASK__NAME = eINSTANCE.getContextVariableTask_Name();
+
+    /**
+    	 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute CONTEXT_VARIABLE_TASK__VALUE = eINSTANCE.getContextVariableTask_Value();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
+    	 * <!-- begin-user-doc -->
+                 * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
+    	 * @generated
+    	 */
     EClass ECLIPSE_INI_TASK = eINSTANCE.getEclipseIniTask();
 
     /**

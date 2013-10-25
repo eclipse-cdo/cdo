@@ -122,8 +122,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     String oldSourceURL = sourceURL;
     sourceURL = newSourceURL;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL, oldSourceURL,
           sourceURL));
+    }
   }
 
   /**
@@ -146,8 +148,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     String oldTargetURL = targetURL;
     targetURL = newTargetURL;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_COPY_TASK__TARGET_URL, oldTargetURL,
           targetURL));
+    }
   }
 
   /**
@@ -235,7 +239,9 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (sourceURL: ");
@@ -273,6 +279,9 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   {
     URI sourceURI = URI.createURI(context.expandString(getSourceURL()));
     URI targetURI = URI.createURI(context.expandString(getTargetURL()));
+
+    context.log("Copying " + sourceURI + " to " + targetURI);
+
     if (targetURI.hasTrailingPathSeparator())
     {
       if (sourceURI.hasTrailingPathSeparator())

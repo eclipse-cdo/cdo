@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -162,8 +163,18 @@ public class InclusionPredicateItemProvider extends ItemProviderAdapter implemen
   {
     if (commandParameter.getFeature() == null)
     {
-      return new AddCommand(domain, commandParameter.getEOwner(),
-          WorkingSetsPackage.Literals.INCLUSION_PREDICATE__INCLUDED_WORKING_SETS, commandParameter.getCollection());
+      EObject eOwner = commandParameter.getEOwner();
+      Collection<?> collection = commandParameter.getCollection();
+      if (collection != null)
+      {
+        collection = new ArrayList<Object>(collection);
+        ExclusionPredicateItemProvider.filterCircularWorkingSets(eOwner, collection);
+        if (collection.size() == commandParameter.getCollection().size())
+        {
+          return new AddCommand(domain, commandParameter.getEOwner(),
+              WorkingSetsPackage.Literals.INCLUSION_PREDICATE__INCLUDED_WORKING_SETS, commandParameter.getCollection());
+        }
+      }
     }
 
     return super.factorAddCommand(domain, commandParameter);

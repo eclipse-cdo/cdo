@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -209,8 +210,18 @@ public class ExclusionPredicateItemProvider extends ItemProviderAdapter implemen
   {
     if (commandParameter.getFeature() == null)
     {
-      return new AddCommand(domain, commandParameter.getEOwner(),
-          WorkingSetsPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS, commandParameter.getCollection());
+      EObject eOwner = commandParameter.getEOwner();
+      Collection<?> collection = commandParameter.getCollection();
+      if (collection != null)
+      {
+        collection = new ArrayList<Object>(collection);
+        filterCircularWorkingSets(eOwner, collection);
+        if (collection.size() == commandParameter.getCollection().size())
+        {
+          return new AddCommand(domain, eOwner, WorkingSetsPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS,
+              collection);
+        }
+      }
     }
 
     return super.factorAddCommand(domain, commandParameter);

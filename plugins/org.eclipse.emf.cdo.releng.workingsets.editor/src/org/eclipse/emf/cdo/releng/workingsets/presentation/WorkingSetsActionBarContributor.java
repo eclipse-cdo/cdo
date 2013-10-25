@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.workingsets.presentation;
 
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsEditPlugin;
 
 import org.eclipse.emf.common.command.CommandStackListener;
@@ -79,7 +80,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -297,26 +297,47 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
           .getPlugin().getDialogSettings()));
       tree.setLabelProvider(labelProvider);
 
+      WorkingSet otherProjectsWorkingSet = WorkingSetsFactory.eINSTANCE.createWorkingSet();
+      otherProjectsWorkingSet.setName("Other Projects");
+      ItemProvider otherProjects = new WorkingSetPresentation(otherProjectsWorkingSet);
+      children.add(otherProjects);
+
       Resource resource = editingDomain.getResourceSet().getResources().get(0);
       WorkingSetGroup workingSetGroup = (WorkingSetGroup)resource.getContents().get(0);
 
       Set<IProject> projects = new LinkedHashSet<IProject>(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot()
           .getProjects()));
+      Set<IProject> unmatchedProjects = new LinkedHashSet<IProject>(projects);
       for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
       {
         ItemProvider child = new WorkingSetPresentation(workingSet);
         EList<Object> contents = child.getChildren();
-        for (Iterator<IProject> it = projects.iterator(); it.hasNext();)
+
+        for (IProject project : projects)
         {
-          IProject project = it.next();
-          if (workingSet.matches(project))
+          if (project.isHidden())
+          {
+            unmatchedProjects.remove(project);
+          }
+          else if (workingSet.matches(project))
           {
             ItemProvider childProject = new ProjectPresentation(project);
             contents.add(childProject);
+            unmatchedProjects.remove(project);
           }
         }
 
         children.add(child);
+      }
+
+      if (!unmatchedProjects.isEmpty())
+      {
+        EList<Object> contents = otherProjects.getChildren();
+        for (IProject project : unmatchedProjects)
+        {
+          ItemProvider childProject = new ProjectPresentation(project);
+          contents.add(childProject);
+        }
       }
     }
 

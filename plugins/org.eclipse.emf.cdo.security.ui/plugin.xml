@@ -14,21 +14,44 @@
 <plugin>
 
    <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.cdo.security.ui.UserActions"
-            objectClass="org.eclipse.emf.cdo.security.User">
-         <action
-               class="org.eclipse.emf.cdo.security.internal.ui.actions.ResetPasswordActionDelegate"
-               id="org.eclipse.emf.cdo.security.ui.ResetPassword"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               id="org.eclipse.emf.cdo.security.ui.ResetPasswordCommand"
+               commandId="org.eclipse.emf.cdo.security.ui.resetPassword"
                label="%action.label"
-               tooltip="%action.tooltip">
-         </action>
-         <enablement>
-            <test property="org.eclipse.emf.cdo.object.writable" value="true"/>
-         </enablement>
-      </objectContribution>
+               tooltip="%action.tooltip"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate >
+                     <adapt
+                           type="org.eclipse.emf.cdo.security.User">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
-
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.eclipse.emf.cdo.security.ui.management"
+            name="%category.name">
+      </category>
+      <command
+            id="org.eclipse.emf.cdo.security.ui.resetPassword"
+            categoryId="org.eclipse.emf.cdo.security.ui.management"
+            name="%command.name"
+            description="%command.description"
+            defaultHandler="org.eclipse.emf.cdo.security.internal.ui.handlers.ResetPasswordHandler">
+      </command>
+   </extension>
 </plugin>

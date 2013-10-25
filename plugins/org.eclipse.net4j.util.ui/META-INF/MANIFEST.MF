@@ -24,6 +24,7 @@ Export-Package: org.eclipse.net4j.util.internal.ui;version="3.4.0";x-internal:=t
  org.eclipse.net4j.util.ui.actions;version="3.4.0",
  org.eclipse.net4j.util.ui.container;version="3.4.0",
  org.eclipse.net4j.util.ui.dnd;version="3.4.0",
+ org.eclipse.net4j.util.ui.handlers;version="3.4.0",
  org.eclipse.net4j.util.ui.prefs;version="3.4.0",
  org.eclipse.net4j.util.ui.proposals;version="3.4.0",
  org.eclipse.net4j.util.ui.security;version="3.4.0",

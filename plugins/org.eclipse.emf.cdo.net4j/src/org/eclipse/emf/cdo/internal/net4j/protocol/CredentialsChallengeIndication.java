@@ -119,7 +119,7 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
         break;
       }
 
-      stream.flush();
+      stream.close();
       byte[] clearText = baos.toByteArray();
 
       DiffieHellman.Client client = new DiffieHellman.Client();

@@ -428,7 +428,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     if (Activator.SETUP_IDE && trigger != Trigger.MANUAL)
     {
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
-
       ProgressLogDialog.run(shell, "Setting up IDE", new ProgressLogRunnable()
       {
         public boolean run(ProgressLog log) throws Exception

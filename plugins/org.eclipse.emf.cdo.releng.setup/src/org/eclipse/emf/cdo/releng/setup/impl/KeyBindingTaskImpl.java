@@ -31,12 +31,15 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.bindings.Binding;
+import org.eclipse.jface.bindings.Scheme;
 import org.eclipse.jface.bindings.keys.KeyBinding;
 import org.eclipse.jface.bindings.keys.KeySequence;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.keys.IBindingService;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -234,7 +237,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldScheme = scheme;
     scheme = newScheme;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__SCHEME, oldScheme, scheme));
+    }
   }
 
   /**
@@ -257,7 +262,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldContext = context;
     context = newContext;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__CONTEXT, oldContext, context));
+    }
   }
 
   /**
@@ -280,8 +287,10 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldPlatform = platform;
     platform = newPlatform;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__PLATFORM, oldPlatform,
           platform));
+    }
   }
 
   /**
@@ -304,7 +313,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldLocale = locale;
     locale = newLocale;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__LOCALE, oldLocale, locale));
+    }
   }
 
   /**
@@ -327,7 +338,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldKeys = keys;
     keys = newKeys;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__KEYS, oldKeys, keys));
+    }
   }
 
   /**
@@ -350,7 +363,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     String oldCommand = command;
     command = newCommand;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__COMMAND, oldCommand, command));
+    }
   }
 
   /**
@@ -521,7 +536,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (scheme: ");
@@ -578,7 +595,8 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
           continue;
         }
 
-        if (!ObjectUtil.equals(keyBinding.getKeySequence(), KeySequence.getInstance(getKeys())))
+        KeySequence keySequence = KeySequence.getInstance(getKeys());
+        if (!ObjectUtil.equals(keyBinding.getKeySequence(), keySequence))
         {
           continue;
         }
@@ -606,14 +624,34 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     KeyBinding binding = new KeyBinding(KeySequence.getInstance(getKeys()), getParameterizedCommand(), getScheme(),
         getContext(), getLocale(), getPlatform(), null, Binding.USER);
 
-    IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
+    final IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
     Binding[] bindings = bindingService.getBindings();
 
-    Binding[] newBindings = new Binding[bindings.length + 1];
+    final Binding[] newBindings = new Binding[bindings.length + 1];
     System.arraycopy(bindings, 0, newBindings, 0, bindings.length);
     newBindings[bindings.length] = binding;
 
-    bindingService.savePreferences(bindingService.getActiveScheme(), newBindings);
+    final Exception[] exception = { null };
+    Display.getDefault().syncExec(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          Scheme activeScheme = bindingService.getActiveScheme();
+          bindingService.savePreferences(activeScheme, newBindings);
+        }
+        catch (IOException ex)
+        {
+          exception[0] = ex;
+        }
+      }
+    });
+
+    if (exception[0] != null)
+    {
+      throw exception[0];
+    }
   }
 
   private ParameterizedCommand getParameterizedCommand() throws NotDefinedException

@@ -14,10 +14,10 @@ package org.eclipse.net4j.util.security;
  * Default implementation of the {@link IPasswordCredentialsUpdate} interface.
  * 
  * @since 3.4
+ * @author Christian W. Damus (CEA LIST)
  */
 public class PasswordCredentialsUpdate extends PasswordCredentials implements IPasswordCredentialsUpdate
 {
-
   private char[] newPassword;
 
   public PasswordCredentialsUpdate(String userID, char[] oldPassword, char[] newPassword)

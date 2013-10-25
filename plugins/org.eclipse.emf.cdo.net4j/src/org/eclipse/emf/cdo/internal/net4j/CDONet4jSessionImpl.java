@@ -13,7 +13,7 @@
  *    Simon McDuff - bug 213402
  *    Victor Roldan Betancort - maintenance
  *    Andre Dietisheim - bug 256649
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
@@ -297,17 +297,15 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
   public void changeCredentials()
   {
-    // send a request to the server to initiate (from the server) the password change protocol
+    // Send a request to the server to initiate (from the server) the password change protocol
     CDOSessionProtocol sessionProtocol = getSessionProtocol();
-
     sessionProtocol.requestChangeCredentials();
   }
 
   public void resetCredentials(String userID)
   {
-    // send a request to the server to initiate (from the server) the password reset protocol
+    // Send a request to the server to initiate (from the server) the password reset protocol
     CDOSessionProtocol sessionProtocol = getSessionProtocol();
-
     sessionProtocol.requestResetCredentials(userID);
   }
 

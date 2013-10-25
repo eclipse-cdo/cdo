@@ -10,7 +10,7 @@
  *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - maintenance
  *    Andre Dietisheim - bug 256649
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.session;
 
@@ -64,7 +64,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * have been received and processed.
  * <li> {@link CDOSessionLocksChangedEvent} after {@link CDOLock locks} have been acquired or released.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -93,7 +93,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   /**
    * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession
    * session} is connected to.
-   * 
+   *
    * @since 3.0
    */
   public CDORepositoryInfo getRepositoryInfo();
@@ -112,7 +112,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   /**
    * Returns the CDO {@link CDOBranchManager branch manager} that manages the {@link CDOBranch branches} of the
    * repository of this session.
-   * 
+   *
    * @since 3.0
    */
   public CDOBranchManager getBranchManager();
@@ -120,46 +120,24 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   /**
    * Returns the CDO {@link CDORevisionManager revision manager} that manages the {@link CDORevision revisions} of the
    * repository of this session.
-   * 
+   *
    * @since 3.0
    */
   public CDORevisionManager getRevisionManager();
 
   /**
    * Returns the CDO {@link CDOFetchRuleManager fetch rule manager} of this session.
-   * 
+   *
    * @since 3.0
    */
   public CDOFetchRuleManager getFetchRuleManager();
 
   /**
    * Returns the {@link IPasswordCredentialsProvider credentials provider} of this session.
-   * 
+   *
    * @since 4.3
    */
   public IPasswordCredentialsProvider getCredentialsProvider();
-
-  /**
-   * Initiates interactive changing of credentials for the user logged in in this session.
-   * This is an optional operation of the session.
-   * 
-   * @since 4.3
-   * 
-   * @throws UnsupportedOperationException if the session implementation does not permit changing credentials
-   */
-  public void changeCredentials();
-
-  /**
-   * Initiates interactive reset of credentials for the specified user.
-   * This is an optional operation of the session.
-   * 
-   * @param userID the ID of the user for which to reset credentials
-   * 
-   * @since 4.3
-   * 
-   * @throws UnsupportedOperationException if the session implementation does not permit resetting user credentials
-   */
-  public void resetCredentials(String userID);
 
   /**
    * Returns the CDO {@link CDORemoteSessionManager remote session manager} that keeps track of the other remote
@@ -169,7 +147,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
 
   /**
    * Returns the CDO {@link CDOCommitInfoManager commit info manager} of this session.
-   * 
+   *
    * @since 3.0
    */
   public CDOCommitInfoManager getCommitInfoManager();
@@ -181,14 +159,14 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
 
   /**
    * Returns the CDO {@link CDOIDGenerator ID generator} of this session.
-   * 
+   *
    * @since 4.1
    */
   public CDOIDGenerator getIDGenerator();
 
   /**
    * Refreshes the object caches of all (non-historical) {@link CDOView views}.
-   * 
+   *
    * @since 3.0
    */
   public long refresh();
@@ -213,6 +191,17 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   public CDOChangeSetData compareRevisions(CDOBranchPoint source, CDOBranchPoint target);
 
   /**
+   * Initiates (possibly interactive) changing of credentials for the user logged in in this session.
+   * This is an optional operation of the session.
+   *
+   * @throws UnsupportedOperationException if the session implementation does not permit changing credentials
+   *
+   * @since 4.3
+   * @see #getCredentialsProvider()
+   */
+  public void changeCredentials();
+
+  /**
    * Returns the {@link Options options} of this session.
    */
   public Options options();
@@ -228,7 +217,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * collection loading policy} has changed.
    * <li> {@link LobCacheEvent} after the {@link #setLobCache(CDOLobStore) large object cache} has changed.
    * </ul>
-   * 
+   *
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -242,7 +231,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   {
     /**
      * Returns the {@link CDOSession session} of this options object.
-     * 
+     *
      * @since 4.0
      */
     public CDOSession getContainer();
@@ -277,28 +266,28 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
 
     /**
      * Returns the {@link CDOLobStore large object cache} currently being used by this session.
-     * 
+     *
      * @since 4.0
      */
     public CDOLobStore getLobCache();
 
     /**
      * Sets the {@link CDOLobStore large object cache} to be used by this session.
-     * 
+     *
      * @since 4.0
      */
     public void setLobCache(CDOLobStore lobCache);
 
     /**
      * Returns the {@link CDOPermissionUpdater permission updater} currently being used by this session.
-     * 
+     *
      * @since 4.3
      */
     public CDOPermissionUpdater getPermissionUpdater();
 
     /**
      * Sets the {@link CDOPermissionUpdater permission updater} to be used by this session.
-     * 
+     *
      * @since 4.3
      */
     public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater);
@@ -307,7 +296,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * An {@link IOptionsEvent options event} fired when the
      * {@link Options#setGeneratedPackageEmulationEnabled(boolean) generated package emulation enabled} option of a
      * {@link CDOSession session} has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -320,7 +309,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * An {@link IOptionsEvent options event} fired when the
      * {@link Options#setCollectionLoadingPolicy(CDOCollectionLoadingPolicy) collection loading policy} option of a
      * {@link CDOSession session} has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -332,7 +321,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
     /**
      * An {@link IOptionsEvent options event} fired when the {@link Options#setLobCache(CDOLobStore) large object cache}
      * option of a {@link CDOSession session} has changed.
-     * 
+     *
      * @author Eike Stepper
      * @since 4.0
      * @noextend This interface is not intended to be extended by clients.
@@ -345,7 +334,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
     /**
      * An {@link IOptionsEvent options event} fired when the {@link Options#setPermissionUpdater(CDOPermissionUpdater) permission updater}
      * option of a {@link CDOSession session} has changed.
-     * 
+     *
      * @author Eike Stepper
      * @since 4.3
      * @noextend This interface is not intended to be extended by clients.
@@ -360,7 +349,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * Handles {@link CDOSessionProtocol protocol} exceptions if
    * {@link CDOSessionConfiguration#setExceptionHandler(CDOSession.ExceptionHandler) configured} before the session has
    * been opened.
-   * 
+   *
    * @author Eike Stepper
    */
   public interface ExceptionHandler

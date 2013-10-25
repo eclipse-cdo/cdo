@@ -8,7 +8,7 @@
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
-	  Christian W. Damus (CEA LIST) - 399306
+	  Christian W. Damus (CEA LIST) - bug 399306
 -->
 <feature
       id="org.eclipse.emf.cdo"

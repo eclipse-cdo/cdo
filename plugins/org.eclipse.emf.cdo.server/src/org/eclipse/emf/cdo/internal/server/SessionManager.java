@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 201266
  *    Simon McDuff - bug 202725
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -37,6 +37,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
@@ -439,17 +440,18 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public void changeUserCredentials(ISessionProtocol sessionProtocol)
+  public void changeUserCredentials(ISessionProtocol sessionProtocol, String userID)
   {
-    changeUserCredentials(sessionProtocol, null, false);
+    changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.CHANGE_PASSWORD);
   }
 
   public void resetUserCredentials(ISessionProtocol sessionProtocol, String userID)
   {
-    changeUserCredentials(sessionProtocol, userID, true);
+    changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.RESET_PASSWORD);
   }
 
-  protected void changeUserCredentials(ISessionProtocol sessionProtocol, String userID, boolean isReset)
+  protected void changeUserCredentials(ISessionProtocol sessionProtocol, String userID,
+      CredentialsUpdateOperation operation)
   {
 
     if (sessionProtocol == null)
@@ -470,7 +472,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     try
     {
       Challenge challenge = authenticationServer.getChallenge();
-      Response response = sessionProtocol.sendChangeCredentialsChallenge(challenge, userID, isReset);
+      Response response = sessionProtocol.sendCredentialsChallenge(challenge, userID, operation);
       if (response == null)
       {
         throw new NotAuthenticatedException();
@@ -480,7 +482,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       @SuppressWarnings("resource")
       ExtendedDataInputStream stream = new ExtendedDataInputStream(baos);
 
-      if (isReset)
+      if (operation == CredentialsUpdateOperation.RESET_PASSWORD)
       {
         String adminID = stream.readString();
         char[] adminPassword = stream.readString().toCharArray();

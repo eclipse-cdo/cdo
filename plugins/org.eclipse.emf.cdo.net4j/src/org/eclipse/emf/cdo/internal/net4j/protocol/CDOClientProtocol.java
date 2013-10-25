@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
@@ -58,6 +58,7 @@ import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -492,8 +493,8 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     case SIGNAL_LOCK_NOTIFICATION:
       return new LockNotificationIndication(this);
 
-    case SIGNAL_CHANGE_CREDENTIALS:
-      return new ChangeCredentialsIndication(this);
+    case SIGNAL_CREDENTIALS_CHALLENGE:
+      return new CredentialsChallengeIndication(this);
 
     default:
       return super.createSignalReactor(signalID);
@@ -567,11 +568,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
   public void requestChangeCredentials()
   {
-    send(new RequestChangeCredentialsRequest(this, RequestChangeCredentialsRequest.Operation.CHANGE_PASSWORD, null));
+    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null));
   }
 
   public void requestResetCredentials(String userID)
   {
-    send(new RequestChangeCredentialsRequest(this, RequestChangeCredentialsRequest.Operation.RESET_PASSWORD, userID));
+    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID));
   }
 }

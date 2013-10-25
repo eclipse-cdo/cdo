@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.internal.net4j.protocol.RequestChangeCredentialsRequest.Operation;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -22,6 +21,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
@@ -35,18 +35,20 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * Implementation of the CDO client handler for the server-initiated change-credentials protocol.
+ *
+ * @author Christian W. Damus (CEA LIST)
  */
-public class ChangeCredentialsIndication extends IndicationWithMonitoring
+public class CredentialsChallengeIndication extends IndicationWithMonitoring
 {
   private Challenge challenge;
 
-  private Operation operation;
+  private CredentialsUpdateOperation operation;
 
   private String userID;
 
-  public ChangeCredentialsIndication(SignalProtocol<?> protocol)
+  public CredentialsChallengeIndication(SignalProtocol<?> protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_CREDENTIALS);
+    super(protocol, CDOProtocolConstants.SIGNAL_CREDENTIALS_CHALLENGE);
   }
 
   @Override
@@ -63,8 +65,8 @@ public class ChangeCredentialsIndication extends IndicationWithMonitoring
   @Override
   protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
-    operation = in.readEnum(Operation.class);
-    userID = in.readString(); // may be null if operation is not reset
+    operation = in.readEnum(CredentialsUpdateOperation.class);
+    userID = in.readString(); // May be null if operation is not reset
     challenge = new Challenge(in);
   }
 
@@ -83,23 +85,16 @@ public class ChangeCredentialsIndication extends IndicationWithMonitoring
       }
 
       IPasswordCredentialsUpdate credentials = ((IPasswordCredentialsUpdateProvider)credentialsProvider)
-          .getCredentialsUpdate(userID, operation == Operation.RESET_PASSWORD);
+          .getCredentialsUpdate(userID, operation);
       if (credentials == null)
       {
-        // user canceled. Fine
+        // User canceled. Fine
         out.writeBoolean(false);
         return;
       }
 
       String authUserID = credentials.getUserID();
-      // don't require the current credentials because the user may not have any, yet
-
       String authPassword = new String(credentials.getPassword());
-      if (StringUtil.isEmpty(authPassword))
-      {
-        throw new IllegalStateException("No password provided"); //$NON-NLS-1$
-      }
-
       String newPassword = new String(credentials.getNewPassword());
       if (StringUtil.isEmpty(newPassword))
       {
@@ -107,7 +102,6 @@ public class ChangeCredentialsIndication extends IndicationWithMonitoring
       }
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      @SuppressWarnings("resource")
       ExtendedDataOutputStream stream = new ExtendedDataOutputStream(baos);
 
       switch (operation)

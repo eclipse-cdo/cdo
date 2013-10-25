@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -17,24 +17,27 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 
 import java.io.IOException;
 
 /**
- * Request from the client to the server to initiate (from the server) the change-credentials protocol. 
+ * Request from the client to the server to initiate (from the server) the change-credentials protocol.
+ *
+ * @author Christian W. Damus (CEA LIST)
  */
-public class RequestChangeCredentialsRequest extends CDOClientRequestWithMonitoring<Boolean>
+public class ChangeCredentialsRequest extends CDOClientRequestWithMonitoring<Boolean>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      RequestChangeCredentialsRequest.class);
+      ChangeCredentialsRequest.class);
 
-  private final Operation operation;
+  private final CredentialsUpdateOperation operation;
 
   private final String userID;
 
-  public RequestChangeCredentialsRequest(CDOClientProtocol protocol, Operation operation, String userID)
+  public ChangeCredentialsRequest(CDOClientProtocol protocol, CredentialsUpdateOperation operation, String userID)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_REQUEST_CHANGE_CREDENTIALS);
+    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_CREDENTIALS);
 
     this.operation = operation;
     this.userID = userID;
@@ -56,28 +59,5 @@ public class RequestChangeCredentialsRequest extends CDOClientRequestWithMonitor
   protected Boolean confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     return in.readBoolean();
-  }
-
-  //
-  // Nested types
-  //
-
-  public static enum Operation
-  {
-    CHANGE_PASSWORD, RESET_PASSWORD;
-
-    @Override
-    public String toString()
-    {
-      switch (this)
-      {
-      case CHANGE_PASSWORD:
-        return "change"; //$NON-NLS-1$
-      case RESET_PASSWORD:
-        return "reset"; //$NON-NLS-1$
-      }
-
-      return super.toString();
-    }
   }
 }

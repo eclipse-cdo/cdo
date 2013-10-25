@@ -18,6 +18,8 @@ import org.eclipse.ui.IWorkbenchPage;
 
 /**
  * The "change password" action.
+ * 
+ * @author Christian W. Damus (CEA LIST)
  */
 public final class ChangePasswordAction extends SessionAction
 {

@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.net4j.util.ui.security;
 
@@ -44,7 +44,7 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private static final String MESSAGE = Messages.getString("CredentialsDialog_1"); //$NON-NLS-1$
 
-  private static final int WIDTH = 310;
+  private static final int WIDTH = 400;
 
   private static final int HEIGHT = 225;
 
@@ -99,7 +99,6 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-
     configureShell(newShell, WIDTH, HEIGHT);
   }
 
@@ -140,19 +139,7 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     composite.setLayout(new GridLayout(2, false));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_2")); //$NON-NLS-1$
-    if (users.isEmpty())
-    {
-      userIDControl = new Text(composite, SWT.BORDER);
-    }
-    else
-    {
-      Combo combo = new Combo(composite, SWT.BORDER);
-      combo.setItems(users.toArray(new String[users.size()]));
-      combo.setText(users.get(0));
-
-      userIDControl = combo;
-    }
-
+    userIDControl = createUserIDControl(composite);
     userIDControl.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_3")); //$NON-NLS-1$
@@ -165,6 +152,23 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     }
 
     return composite;
+  }
+
+  /**
+   * @since 3.4
+   */
+  protected Control createUserIDControl(Composite composite)
+  {
+    if (users.isEmpty())
+    {
+      return new Text(composite, SWT.BORDER);
+    }
+
+    Combo combo = new Combo(composite, SWT.BORDER);
+    combo.setItems(users.toArray(new String[users.size()]));
+    combo.setText(users.get(0));
+
+    return combo;
   }
 
   @Override

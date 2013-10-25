@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
- *    Christian W. Damus (CEA LIST) - 419805, 399306
+ *    Christian W. Damus (CEA LIST) - bug 419805, bug 399306
  */
 package org.eclipse.emf.cdo.ui;
 

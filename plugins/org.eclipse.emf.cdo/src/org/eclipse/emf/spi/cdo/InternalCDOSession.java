@@ -165,6 +165,18 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public void setLastUpdateTime(long lastUpdateTime);
 
+  /**
+   * Initiates (possibly interactive) reset of credentials for the specified user.
+   * This is an optional operation of the session and only available for administrators.
+   *
+   * @param userID the ID of the user for which to reset credentials
+   * @throws UnsupportedOperationException if the session implementation does not permit resetting user credentials
+   *
+   * @since 4.3
+   * @see #getCredentialsProvider()
+   */
+  public void resetCredentials(String userID);
+
   public void viewDetached(InternalCDOView view);
 
   /**

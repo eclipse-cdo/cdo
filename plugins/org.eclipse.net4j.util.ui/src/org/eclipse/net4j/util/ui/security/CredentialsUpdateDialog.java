@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.ui.security;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
@@ -21,12 +22,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
  * @since 3.4
+ * @author Christian W. Damus (CEA LIST)
  */
 public class CredentialsUpdateDialog extends CredentialsDialog
 {
@@ -36,18 +39,21 @@ public class CredentialsUpdateDialog extends CredentialsDialog
 
   private static final int HEIGHT = 275;
 
+  private String userID;
+
   private Text newPasswordControl;
 
   private Text repeatNewPasswordControl;
 
   public CredentialsUpdateDialog(Shell shell)
   {
-    this(shell, null);
+    this(shell, null, null);
   }
 
-  public CredentialsUpdateDialog(Shell shell, String realm)
+  public CredentialsUpdateDialog(Shell shell, String realm, String userID)
   {
     super(shell, realm, TITLE, MESSAGE);
+    this.userID = userID;
   }
 
   @Override
@@ -76,7 +82,6 @@ public class CredentialsUpdateDialog extends CredentialsDialog
 
     ModifyListener newPasswordListener = new ModifyListener()
     {
-
       public void modifyText(ModifyEvent e)
       {
         validateNewPassword();
@@ -97,10 +102,18 @@ public class CredentialsUpdateDialog extends CredentialsDialog
   }
 
   @Override
+  protected Control createUserIDControl(Composite composite)
+  {
+    Text text = new Text(composite, SWT.BORDER);
+    text.setText(StringUtil.safe(userID));
+    text.setEnabled(false);
+    return text;
+  }
+
+  @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
     super.createButtonsForButtonBar(parent);
-
     getButton(IDialogConstants.OK_ID).setEnabled(false);
   }
 
@@ -135,5 +148,4 @@ public class CredentialsUpdateDialog extends CredentialsDialog
     setErrorMessage(message);
     getButton(IDialogConstants.OK_ID).setEnabled(message == null);
   }
-
 }

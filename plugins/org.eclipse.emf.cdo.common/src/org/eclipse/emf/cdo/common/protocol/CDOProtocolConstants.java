@@ -10,7 +10,7 @@
  *    Simon McDuff - bug 230832
  *    Simon McDuff - bug 233490
  *    Simon McDuff - bug 213402
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.common.protocol;
 
@@ -261,22 +261,22 @@ public interface CDOProtocolConstants
   public static final short SIGNAL_LOAD_PERMISSIONS = 55;
 
   /**
-   * Server's request to the client for new credentials.
-   * 
+   * Client's request to the server to initiate a change-credentials operation.
+   *
    * @since 4.3
-   * 
-   * @see #SIGNAL_REQUEST_CHANGE_CREDENTIALS
+   *
+   * @see #SIGNAL_CREDENTIALS_CHALLENGE
    */
   public static final short SIGNAL_CHANGE_CREDENTIALS = 56;
 
   /**
-   * Client's request to the server to initiate a change-credentials operation.
-   * 
+   * Server's request to the client for new credentials.
+   *
    * @since 4.3
-   * 
+   *
    * @see #SIGNAL_CHANGE_CREDENTIALS
    */
-  public static final short SIGNAL_REQUEST_CHANGE_CREDENTIALS = 57;
+  public static final short SIGNAL_CREDENTIALS_CHALLENGE = 57;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

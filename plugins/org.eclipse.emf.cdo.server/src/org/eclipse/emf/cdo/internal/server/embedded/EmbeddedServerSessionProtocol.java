@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
@@ -71,7 +72,8 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     throw new UnsupportedOperationException();
   }
 
-  public Response sendChangeCredentialsChallenge(Challenge challenge, String userID, boolean isReset) throws Exception
+  public Response sendCredentialsChallenge(Challenge challenge, String userID,
+      CredentialsUpdateOperation operation) throws Exception
   {
     throw new UnsupportedOperationException();
   }

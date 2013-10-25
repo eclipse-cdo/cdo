@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -67,15 +67,15 @@ public interface InternalSessionManager extends ISessionManager
   /**
    * Initiates the change-credentials protocol with the client and processes the
    * client response to update the user's credentials.
-   * 
+   *
    * @since 4.3
    */
-  public void changeUserCredentials(ISessionProtocol sessionProtocol);
+  public void changeUserCredentials(ISessionProtocol sessionProtocol, String userID);
 
   /**
    * Initiates the administrative reset-credentials protocol with the client and
    * processes the client response to reset the specified {@code userID}'s credentials.
-   * 
+   *
    * @since 4.3
    */
   public void resetUserCredentials(ISessionProtocol sessionProtocol, String userID);

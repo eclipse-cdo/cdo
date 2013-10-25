@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 
 /**
  * @since 3.4
+ * @author Christian W. Damus (CEA LIST)
  */
 public class CredentialsResetDialog extends CredentialsDialog
 {
@@ -68,5 +69,4 @@ public class CredentialsResetDialog extends CredentialsDialog
 
     return result;
   }
-
 }

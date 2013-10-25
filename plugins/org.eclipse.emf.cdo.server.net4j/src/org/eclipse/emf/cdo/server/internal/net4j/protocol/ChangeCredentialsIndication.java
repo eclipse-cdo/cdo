@@ -20,33 +20,35 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 
 /**
  * Handles the request from a client to initiate the change-credentials protocol.
+ *
+ * @author Christian W. Damus (CEA LIST)
  */
-public class RequestChangeCredentialsIndication extends CDOServerIndicationWithMonitoring
+public class ChangeCredentialsIndication extends CDOServerIndicationWithMonitoring
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      RequestChangeCredentialsIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeCredentialsIndication.class);
 
-  private Operation operation;
+  private CredentialsUpdateOperation operation;
 
   private String userID;
 
-  public RequestChangeCredentialsIndication(CDOServerProtocol protocol)
+  public ChangeCredentialsIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_REQUEST_CHANGE_CREDENTIALS);
+    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_CREDENTIALS);
   }
 
   @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    operation = in.readEnum(Operation.class);
+    operation = in.readEnum(CredentialsUpdateOperation.class);
     userID = in.readString();
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Initiating %s of user credentials", operation); //$NON-NLS-1$
+      TRACER.format("Initiating {0} of user credentials", operation); //$NON-NLS-1$
     }
   }
 
@@ -65,8 +67,9 @@ public class RequestChangeCredentialsIndication extends CDOServerIndicationWithM
         switch (operation)
         {
         case CHANGE_PASSWORD:
-          sessionManager.changeUserCredentials(getProtocol());
+          sessionManager.changeUserCredentials(getProtocol(), getSession().getUserID());
           break;
+
         case RESET_PASSWORD:
           sessionManager.resetUserCredentials(getProtocol(), userID);
           break;
@@ -76,42 +79,19 @@ public class RequestChangeCredentialsIndication extends CDOServerIndicationWithM
         {
           TRACER.format("Credentials %s processed.", operation); //$NON-NLS-1$
         }
+
         out.writeBoolean(true);
       }
       catch (NotAuthenticatedException ex)
       {
-        // user has cancelled the authentication
+        // User has cancelled the authentication
         out.writeBoolean(false);
-        return;
       }
     }
     finally
     {
       async.stop();
       monitor.done();
-    }
-  }
-
-  //
-  // Nested types
-  //
-
-  public static enum Operation
-  {
-    CHANGE_PASSWORD, RESET_PASSWORD;
-
-    @Override
-    public String toString()
-    {
-      switch (this)
-      {
-      case CHANGE_PASSWORD:
-        return "change"; //$NON-NLS-1$
-      case RESET_PASSWORD:
-        return "reset"; //$NON-NLS-1$
-      }
-
-      return super.toString();
     }
   }
 }

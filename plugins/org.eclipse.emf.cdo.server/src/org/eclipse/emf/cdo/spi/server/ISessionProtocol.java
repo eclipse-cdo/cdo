@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
@@ -48,7 +49,8 @@ public interface ISessionProtocol extends CDOProtocol
   /**
    * @since 4.3
    */
-  public Response sendChangeCredentialsChallenge(Challenge challenge, String userID, boolean isReset) throws Exception;
+  public Response sendCredentialsChallenge(Challenge challenge, String userID,
+      CredentialsUpdateOperation operation) throws Exception;
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
       throws Exception;

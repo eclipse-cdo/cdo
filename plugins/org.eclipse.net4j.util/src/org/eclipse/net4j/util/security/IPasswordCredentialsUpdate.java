@@ -15,6 +15,7 @@ package org.eclipse.net4j.util.security;
  * user ID and password for authentication of the password change.
  * 
  * @since 3.4
+ * @author Christian W. Damus (CEA LIST)
  */
 public interface IPasswordCredentialsUpdate extends IPasswordCredentials
 {

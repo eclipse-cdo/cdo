@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
@@ -797,19 +797,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected final boolean isAdministrator(User user)
   {
-    // an administrator is one that has write permission on the realm resource
+    // An administrator is one that has write permission on the realm resource
     Realm realm = getRealm();
-
     if (realm != null)
     {
-      // can't be an administrator if there isn't a realm
+      // Can't be an administrator if there isn't a realm
       CDORevision revision = realm.cdoRevision();
       CDORevisionProvider revisionProvider = realm.cdoView();
       CDOBranchPoint securityContext = realm.cdoView();
 
-      for (Permission next : user.getAllPermissions())
+      for (Permission permission : user.getAllPermissions())
       {
-        if (next.getAccess() == Access.WRITE && next.isApplicable(revision, revisionProvider, securityContext))
+        if (permission.getAccess() == Access.WRITE
+            && permission.isApplicable(revision, revisionProvider, securityContext))
         {
           return true;
         }

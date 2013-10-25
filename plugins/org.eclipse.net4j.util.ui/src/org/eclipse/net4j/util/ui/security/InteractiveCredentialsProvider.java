@@ -7,11 +7,12 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306
  */
 package org.eclipse.net4j.util.ui.security;
 
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
 import org.eclipse.net4j.util.security.IPasswordCredentialsUpdate;
@@ -88,15 +89,16 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   /**
    * @since 3.4
    */
-  public IPasswordCredentialsUpdate getCredentialsUpdate(String userID, boolean isReset)
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String userID, CredentialsUpdateOperation operation)
   {
-    return getCredentialsUpdate(null, userID, isReset);
+    return getCredentialsUpdate(null, userID, operation);
   }
 
   /**
    * @since 3.4
    */
-  public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID, final boolean isReset)
+  public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID,
+      final CredentialsUpdateOperation operation)
   {
     final IPasswordCredentialsUpdate[] update = { null };
     final Display display = UIUtil.getDisplay();
@@ -116,10 +118,9 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
           shell = new Shell(display);
         }
 
-        if (!isReset)
+        if (operation == CredentialsUpdateOperation.CHANGE_PASSWORD)
         {
-          CredentialsUpdateDialog dialog = new CredentialsUpdateDialog(shell, realm);
-
+          CredentialsUpdateDialog dialog = new CredentialsUpdateDialog(shell, realm, userID);
           if (dialog.open() == Window.OK)
           {
             update[0] = dialog.getCredentials();
@@ -147,12 +148,11 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
                 if (buttonId == 0)
                 {
                   copyToClipboard();
-
-                  // don't close the dialog
+                  // Don't close the dialog
                 }
                 else
                 {
-                  // close the dialog in the usual way
+                  // Close the dialog in the usual way
                   super.buttonPressed(IDialogConstants.OK_ID);
                 }
               }

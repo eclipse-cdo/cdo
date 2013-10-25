@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -118,15 +117,13 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
-    SetupTaskScope labelValue = ((ResourceCopyTask)object).getScope();
-    String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_ResourceCopyTask_type")
-        : getString("_UI_ResourceCopyTask_type") + " " + label;
+    ResourceCopyTask resourceCopyTask = (ResourceCopyTask)object;
+    return "" + resourceCopyTask.getSourceURL() + " --> " + resourceCopyTask.getTargetURL();
   }
 
   /**

@@ -88,6 +88,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -643,36 +644,42 @@ public class SetupDialog extends TitleAreaDialog
     File folder = new File(installFolder);
     folder.mkdirs();
 
+    final List<SetupTaskPerformer> setupTaskPerformers = new ArrayList<SetupTaskPerformer>();
+    for (Object checkedElement : checkedElements)
+    {
+      if (checkedElement instanceof Branch)
+      {
+        Branch branch = (Branch)checkedElement;
+        Setup setup = setups.get(branch);
+        if (setup != null)
+        {
+          setupTaskPerformers.add(createTaskPerformer(setup, installFolder, gitPrefix));
+        }
+      }
+    }
+
     ProgressLogDialog.run(getShell(), "Setting up IDE", new ProgressLogRunnable()
     {
       public boolean run(ProgressLog log) throws Exception
       {
-        for (Object checkedElement : checkedElements)
+        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
         {
-          if (checkedElement instanceof Branch)
+          try
           {
-            Branch branch = (Branch)checkedElement;
-            Setup setup = setups.get(branch);
-            if (setup != null)
-            {
-              try
-              {
-                install(setup, installFolder, gitPrefix);
-              }
-              catch (IOException ex)
-              {
-                throw new RuntimeException(ex);
-              }
-            }
+            install(setupTaskPerformer);
+          }
+          catch (IOException ex)
+          {
+            throw new RuntimeException(ex);
           }
         }
 
         return false;
       }
-    });
+    }, setupTaskPerformers);
   }
 
-  private void install(Setup setup, String installFolder, String gitPrefix) throws Exception
+  private SetupTaskPerformer createTaskPerformer(Setup setup, String installFolder, String gitPrefix)
   {
     saveEObject(setup);
 
@@ -684,6 +691,11 @@ public class SetupDialog extends TitleAreaDialog
     File branchDir = new File(installFolder, projectFolder + "/" + branchFolder);
 
     SetupTaskPerformer performer = new SetupTaskPerformer(branchDir);
+    return performer;
+  }
+
+  private void install(SetupTaskPerformer performer) throws Exception
+  {
     performer.getWorkspaceDir().mkdirs();
     performer.perform();
 

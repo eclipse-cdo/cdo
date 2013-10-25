@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -47,7 +48,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -158,6 +161,14 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   public void log(IStatus status)
   {
     log(ProgressLogDialog.toString(status));
+  }
+
+  public void task(SetupTask setupTask)
+  {
+    if (progress instanceof ProgressLogDialog)
+    {
+      ((ProgressLogDialog)progress).task(setupTask);
+    }
   }
 
   public boolean isCancelled()
@@ -299,18 +310,30 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     return setup;
   }
 
-  public void perform() throws Exception
+  private EList<SetupTask> triggeredSetupTasks;
+
+  public synchronized EList<SetupTask> getTriggeredSetupTasks()
   {
-    EList<SetupTask> setupTasks = setup.getSetupTasks(true, trigger);
-    if (setupTasks.isEmpty())
+    if (triggeredSetupTasks == null)
     {
-      return;
+      triggeredSetupTasks = setup.getSetupTasks(true, trigger);
+      if (triggeredSetupTasks.isEmpty())
+      {
+        return triggeredSetupTasks;
+      }
+
+      Map<SetupTask, SetupTask> substitutions = getSubstitutions(triggeredSetupTasks);
+      setup = copySetup(triggeredSetupTasks, substitutions);
+
+      reorder(triggeredSetupTasks);
     }
 
-    Map<SetupTask, SetupTask> substitutions = getSubstitutions(setupTasks);
-    setup = copySetup(setupTasks, substitutions);
+    return triggeredSetupTasks;
+  }
 
-    reorder(setupTasks);
+  public void perform() throws Exception
+  {
+    EList<SetupTask> setupTasks = getTriggeredSetupTasks();
     perform(setupTasks);
 
     if (logStream != null)
@@ -435,7 +458,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
           doPerform(neededTasks);
           return isRestartNeeded();
         }
-      });
+      }, Collections.singletonList(this));
     }
     else
     {
@@ -450,6 +473,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
     for (SetupTask neededTask : neededTasks)
     {
+      task(neededTask);
       log("Performing setup task " + getLabel(neededTask));
       neededTask.perform(this);
       neededTask.dispose();
@@ -553,10 +577,22 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     return result;
   }
 
-  private static String getLabel(Object object)
+  private static String getLabel(SetupTask setupTask)
   {
-    IItemLabelProvider labelProvider = (IItemLabelProvider)ADAPTER_FACTORY.adapt(object, IItemLabelProvider.class);
-    return labelProvider.getText(object);
+    IItemLabelProvider labelProvider = (IItemLabelProvider)ADAPTER_FACTORY.adapt(setupTask, IItemLabelProvider.class);
+    String type;
+    try
+    {
+      Method getTypeTextMethod = ReflectUtil.getMethod(labelProvider.getClass(), "getTypeText", Object.class);
+      getTypeTextMethod.setAccessible(true);
+      type = getTypeTextMethod.invoke(labelProvider, setupTask).toString();
+    }
+    catch (Exception ex)
+    {
+      type = setupTask.eClass().getName();
+    }
+    String label = labelProvider.getText(setupTask);
+    return label.startsWith(type) ? label : type + " " + label;
   }
 
   public static ProgressLog getProgress()

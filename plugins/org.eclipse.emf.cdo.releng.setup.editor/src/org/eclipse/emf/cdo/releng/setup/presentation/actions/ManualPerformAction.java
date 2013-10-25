@@ -23,6 +23,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
+import java.util.Collections;
+
 /**
  * @author Eike Stepper
  */
@@ -72,7 +74,7 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
           setupTaskPerformer.perform();
           return true;
         }
-      });
+      }, Collections.singletonList(setupTaskPerformer));
     }
     catch (Exception ex)
     {

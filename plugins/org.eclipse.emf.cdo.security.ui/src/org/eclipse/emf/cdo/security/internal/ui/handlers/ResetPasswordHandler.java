@@ -48,7 +48,7 @@ public class ResetPasswordHandler extends LongRunningHandler
   @Override
   protected boolean updateSelection(ISelection selection)
   {
-    user = UIUtil.getElement(getSelection(), User.class);
+    user = UIUtil.adaptElement(getSelection(), User.class);
     return user != null && canWrite(user);
   }
 

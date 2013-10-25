@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
- *    Christian W. Damus (CEA LIST) - 418452
+ *    Christian W. Damus (CEA LIST) - bug 418452
  */
 package org.eclipse.net4j.util.ui;
 
@@ -262,7 +262,7 @@ public final class UIUtil
   }
 
   /**
-   * Like {@link #getElement(ISelection, Class)} except that it attempts to adaptable
+   * Like {@link #getElement(ISelection, Class)} except that it attempts to adapt
    * {@link IAdaptable}s to the required {@code type}, if necessary.
    * 
    * @since 3.4

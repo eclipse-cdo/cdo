@@ -93,4 +93,5 @@
             defaultHandler="org.eclipse.emf.cdo.security.internal.ui.handlers.ManageSecurityHandler">
       </command>
    </extension>
+   
 </plugin>

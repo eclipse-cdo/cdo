@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * A utility that manages the propagation of global actions from
  * some nested part of an editor to the editor's action bars.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class ActionBarsHelper
@@ -63,7 +63,6 @@ public class ActionBarsHelper
   {
     control.addFocusListener(new FocusListener()
     {
-
       public void focusLost(FocusEvent e)
       {
         unsetGlobalActions();
@@ -91,6 +90,7 @@ public class ActionBarsHelper
               {
                 selectionEvent = new SelectionChangedEvent(selectionProvider, selectionProvider.getSelection());
               }
+
               ((ISelectionChangedListener)next).selectionChanged(selectionEvent);
             }
           }
@@ -100,7 +100,6 @@ public class ActionBarsHelper
 
     control.addDisposeListener(new DisposeListener()
     {
-
       public void widgetDisposed(DisposeEvent e)
       {
         globalActions.clear();
@@ -128,6 +127,7 @@ public class ActionBarsHelper
     {
       bars.setGlobalActionHandler(next.getKey(), next.getValue());
     }
+
     previousActions.clear();
   }
 }

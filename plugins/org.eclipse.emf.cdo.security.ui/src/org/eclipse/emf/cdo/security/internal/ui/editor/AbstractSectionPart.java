@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -41,12 +41,11 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 /**
  * Common framework for a part of a form page that is an SWT {@link Section}
  * presenting some object, list/table of objects, or attributes of an object.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public abstract class AbstractSectionPart<T extends EObject> extends AbstractFormPart
 {
-
   private final EditingDomain domain;
 
   private final AdapterFactory adapterFactory;
@@ -75,7 +74,6 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
   public void initialize(IManagedForm form)
   {
     super.initialize(form);
-
     initDatabindings();
   }
 
@@ -110,7 +108,6 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
   public boolean setFormInput(Object input)
   {
     boolean result = false;
-
     this.input = null;
 
     if (inputType.isInstance(input))
@@ -120,7 +117,6 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
     }
 
     value.setValue(this.input);
-
     return result;
   }
 
@@ -201,7 +197,6 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
     section.setClient(body);
 
     createContents(body, toolkit);
-
     createActionToolbar(section, toolkit);
   }
 

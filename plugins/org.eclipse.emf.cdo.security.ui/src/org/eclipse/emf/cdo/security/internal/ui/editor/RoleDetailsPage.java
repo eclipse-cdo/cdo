@@ -4,14 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
 package org.eclipse.emf.cdo.security.internal.ui.editor;
 
-import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityModelUtil.getTypeFilter;
-import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityModelUtil.viewerFilter;
+import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityUIUtil.getTypeFilter;
+import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityUIUtil.getViewerFilter;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -60,12 +60,11 @@ import java.util.Collections;
 /**
  * The details page for {@link Role} master selections.  Includes a table
  * that provides in-line editing of resource-based permissions.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class RoleDetailsPage extends AbstractDetailsPage<Role>
 {
-
   public RoleDetailsPage(EditingDomain domain, AdapterFactory adapterFactory)
   {
     super(Role.class, SecurityPackage.Literals.ROLE, domain, adapterFactory);
@@ -356,7 +355,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
               dlg.setMessage(Messages.RoleDetailsPage_4);
               dlg.setTitle(Messages.RoleDetailsPage_8);
               dlg.setDoubleClickSelects(true);
-              dlg.addFilter(viewerFilter(getTypeFilter(EresourcePackage.Literals.CDO_RESOURCE_NODE)));
+              dlg.addFilter(getViewerFilter(getTypeFilter(EresourcePackage.Literals.CDO_RESOURCE_NODE)));
               dlg.setBlockOnOpen(true);
 
               String current = (String)getValue();

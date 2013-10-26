@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -21,7 +21,6 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
  */
 public class SelectionListenerAction extends BaseSelectionListenerAction
 {
-
   private EObject selectedObject;
 
   public SelectionListenerAction(String text)
@@ -32,7 +31,6 @@ public class SelectionListenerAction extends BaseSelectionListenerAction
   public SelectionListenerAction(String text, ImageDescriptor imageDescriptor)
   {
     this(text);
-
     setImageDescriptor(imageDescriptor);
   }
 

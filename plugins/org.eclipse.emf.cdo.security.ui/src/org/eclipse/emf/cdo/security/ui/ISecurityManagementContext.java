@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -22,19 +22,18 @@ import org.eclipse.core.runtime.IAdaptable;
 /**
  * An optional security-management context that may be provided as an {@linkplain IAdaptable adapter}
  * by the view part to which the "Manage Security" command is contributed.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public interface ISecurityManagementContext
 {
-
   public static final ISecurityManagementContext DEFAULT = new Default();
 
   /**
    * Obtains a view in which to open the security resource for editing.  If at all possible, this
    * should be a writable {@linkplain CDOTransaction transaction}.  If necessary, implementors are
    * welcome to open a new session logged in as the Administrator for this purpose.
-   * 
+   *
    * @see #getSecurityResource(CDOView)
    * @see #disconnect(CDOView)
    */
@@ -44,7 +43,7 @@ public interface ISecurityManagementContext
    * Releases a {@code view} previously {@linkplain #connect(CDOSession) obtained} from this context.
    * The caller must not attempt to use the {@code view} after this point because in all likelihood
    * it will be closed.
-   * 
+   *
    * @see #connect(CDOSession)
    */
   public void disconnect(CDOView view);
@@ -55,10 +54,9 @@ public interface ISecurityManagementContext
    */
   public CDOResource getSecurityResource(CDOView view);
 
-  //
-  // Nested types
-  //
-
+  /**
+   * @author Christian W. Damus (CEA LIST)
+   */
   public static class Default implements ISecurityManagementContext
   {
     public CDOView connect(CDOSession session)
@@ -67,10 +65,12 @@ public interface ISecurityManagementContext
       {
         return null;
       }
+
       if (User.ADMINISTRATOR.equals(session.getUserID()))
       {
         return session.openTransaction();
       }
+
       return session.openView();
     }
 

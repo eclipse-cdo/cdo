@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -22,14 +22,13 @@ import java.util.Map;
 /**
  * A master/details-block details page provider that maps details pages
  * simply by {@link EClass}.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
- * 
+ *
  * @see #builder(IActionBars)
  */
 public class EClassDetailsPageProvider implements IDetailsPageProvider
 {
-
   private final Map<EClass, IDetailsPage> pages = new java.util.HashMap<EClass, IDetailsPage>();
 
   private EClassDetailsPageProvider()
@@ -51,10 +50,9 @@ public class EClassDetailsPageProvider implements IDetailsPageProvider
     return pages.get(key);
   }
 
-  //
-  // Nested types
-  //
-
+  /**
+   * @author Christian W. Damus (CEA LIST)
+   */
   public static class Builder
   {
     private final Map<EClass, IDetailsPage> pages = new java.util.HashMap<EClass, IDetailsPage>();
@@ -74,7 +72,6 @@ public class EClassDetailsPageProvider implements IDetailsPageProvider
       }
 
       pages.put(eclass, page);
-
       return this;
     }
 

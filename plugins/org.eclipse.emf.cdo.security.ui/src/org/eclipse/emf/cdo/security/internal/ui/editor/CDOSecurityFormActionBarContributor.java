@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -24,7 +24,7 @@ import org.eclipse.ui.part.EditorActionBarContributor;
 
 /**
  * The editor action-bar contributor for the Security Manager editor.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class CDOSecurityFormActionBarContributor extends EditorActionBarContributor implements IPropertyListener
@@ -79,6 +79,7 @@ public class CDOSecurityFormActionBarContributor extends EditorActionBarContribu
     {
       undoAction.setActiveWorkbenchPart(activeEditor);
     }
+
     if (redoAction != null)
     {
       redoAction.setActiveWorkbenchPart(activeEditor);
@@ -95,6 +96,7 @@ public class CDOSecurityFormActionBarContributor extends EditorActionBarContribu
     {
       undoAction.setActiveWorkbenchPart(null);
     }
+
     if (redoAction != null)
     {
       redoAction.setActiveWorkbenchPart(null);
@@ -109,6 +111,7 @@ public class CDOSecurityFormActionBarContributor extends EditorActionBarContribu
     {
       undoAction.update();
     }
+
     if (redoAction != null)
     {
       redoAction.update();

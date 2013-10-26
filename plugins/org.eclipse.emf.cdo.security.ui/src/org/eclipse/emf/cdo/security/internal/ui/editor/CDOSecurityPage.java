@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -59,12 +59,11 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 /**
  * The main page of the "Security Manager" form editor.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class CDOSecurityPage extends FormPage
 {
-
   private static final Object NO_INPUT = new Object();
 
   private IListener viewTargetListener;
@@ -197,7 +196,6 @@ public class CDOSecurityPage extends FormPage
     // ensure the heading's summary of problems is up-to-date
     Display.getCurrent().asyncExec(new Runnable()
     {
-
       public void run()
       {
         getManagedForm().getMessageManager().update();

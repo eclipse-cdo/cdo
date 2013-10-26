@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -21,12 +21,11 @@ import org.eclipse.jface.viewers.IFilter;
 /**
  * A UI filter that selects {@link Permission}s that are
  * resource-based permissions.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class ResourceBasedPermissionFilter implements IFilter
 {
-
   public ResourceBasedPermissionFilter()
   {
   }
@@ -34,7 +33,6 @@ public class ResourceBasedPermissionFilter implements IFilter
   public boolean select(Object element)
   {
     boolean result = element instanceof FilterPermission;
-
     if (result)
     {
       FilterPermission perm = (FilterPermission)element;
@@ -43,6 +41,7 @@ public class ResourceBasedPermissionFilter implements IFilter
         if (!isResourceFilter(filter))
         {
           result = false;
+          // TODO Should we break here?
         }
       }
     }
@@ -53,7 +52,6 @@ public class ResourceBasedPermissionFilter implements IFilter
   protected boolean isResourceFilter(PermissionFilter filter)
   {
     boolean result = filter instanceof ResourceFilter;
-
     if (!result && filter instanceof CombinedFilter)
     {
       result = true; // Assume all permission filters are OK

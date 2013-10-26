@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.security.internal.ui.actions.SelectionListenerAction;
 import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.security.internal.ui.util.ActionBarsHelper;
 import org.eclipse.emf.cdo.security.internal.ui.util.ObjectExistsConverter.ObjectWritableConverter;
-import org.eclipse.emf.cdo.security.internal.ui.util.SecurityModelUtil;
+import org.eclipse.emf.cdo.security.internal.ui.util.SecurityUIUtil;
 import org.eclipse.emf.cdo.security.internal.ui.util.TableLabelProvider;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
@@ -81,12 +81,11 @@ import java.util.Collections;
  * objects in the list.  The objects presented are the contents
  * (of the appropriate type) of some {@link Directory} in the security
  * realm model.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public abstract class TableSection<T extends EObject> extends AbstractSectionPart<Directory>
 {
-
   private final Class<T> elementType;
 
   private final EClass elementEClass;
@@ -96,7 +95,6 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   public TableSection(Class<T> elementType, EClass elementEClass, EditingDomain domain, AdapterFactory adapterFactory)
   {
     super(Directory.class, SecurityPackage.Literals.DIRECTORY, domain, adapterFactory);
-
     this.elementType = elementType;
     this.elementEClass = elementEClass;
   }
@@ -136,14 +134,13 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   protected void addFilters(TableViewer viewer)
   {
     viewer.addFilter(createTypeFilter(elementEClass));
-    SecurityModelUtil.applyDefaultFilters(viewer, elementEClass);
+    SecurityUIUtil.applyDefaultFilters(viewer, elementEClass);
   }
 
   protected ViewerFilter createTypeFilter(final EClassifier type)
   {
     return new ViewerFilter()
     {
-
       @Override
       public boolean select(Viewer viewer, Object parentElement, Object element)
       {
@@ -164,9 +161,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     {
       // It's my directory
       boolean result = super.setFormInput(input);
-
       checkForUnsupportedModelContent();
-
       return result;
     }
     else if (input instanceof Realm)
@@ -179,7 +174,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
 
   protected Directory getDirectory(Realm realm)
   {
-    return SecurityModelUtil.getDirectory(realm, elementEClass);
+    return SecurityUIUtil.getDirectory(realm, elementEClass);
   }
 
   @Override
@@ -203,8 +198,9 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     mgr.update(true);
     section.setTextClient(toolbar);
 
-    new ActionBarsHelper(getEditorActionBars()).addGlobalAction(ActionFactory.DELETE.getId(), deleteAction).install(
-        viewer);
+    ActionBarsHelper actionBarsHelper = new ActionBarsHelper(getEditorActionBars());
+    ActionBarsHelper globalAction = actionBarsHelper.addGlobalAction(ActionFactory.DELETE.getId(), deleteAction);
+    globalAction.install(viewer);
   }
 
   protected IAction createAddNewAction()
@@ -228,7 +224,6 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
           getEditingDomain().getCommandStack().execute(command);
           viewer.getControl().getDisplay().asyncExec(new Runnable()
           {
-
             public void run()
             {
               viewer.getControl().setFocus();
@@ -273,7 +268,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
       @Override
       protected boolean updateSelection(IStructuredSelection selection)
       {
-        return super.updateSelection(selection) && SecurityModelUtil.isEditable(getInput());
+        return super.updateSelection(selection) && SecurityUIUtil.isEditable(getInput());
       }
     };
   }
@@ -287,7 +282,6 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   {
     viewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
-
       public void selectionChanged(SelectionChangedEvent event)
       {
         IManagedForm form = getManagedForm();
@@ -330,7 +324,6 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     viewer.addDropSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
         new Transfer[] { LocalSelectionTransfer.getTransfer() }, new ViewerDropAdapter(viewer)
         {
-
           {
             // We don't want it to look like you can insert new elements, only drop onto existing elements
             setFeedbackEnabled(false);
@@ -393,7 +386,6 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   protected boolean execute(Command command)
   {
     boolean result = command.canExecute();
-
     if (result)
     {
       getEditingDomain().getCommandStack().execute(command);

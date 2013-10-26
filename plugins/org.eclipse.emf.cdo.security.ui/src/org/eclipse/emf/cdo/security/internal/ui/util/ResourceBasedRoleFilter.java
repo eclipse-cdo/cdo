@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -18,12 +18,11 @@ import org.eclipse.jface.viewers.IFilter;
 /**
  * A UI filter that selects {@link Role}s that have only
  * {@linkplain ResourceBasedPermissionFilter resource-based} permissions.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class ResourceBasedRoleFilter implements IFilter
 {
-
   private final ResourceBasedPermissionFilter permFilter = new ResourceBasedPermissionFilter();
 
   public ResourceBasedRoleFilter()
@@ -33,7 +32,6 @@ public class ResourceBasedRoleFilter implements IFilter
   public boolean select(Object element)
   {
     boolean result = element instanceof Role;
-
     if (result)
     {
       Role role = (Role)element;
@@ -42,6 +40,7 @@ public class ResourceBasedRoleFilter implements IFilter
         if (!permFilter.select(next))
         {
           result = false;
+          // TODO Should we break here?
         }
       }
     }

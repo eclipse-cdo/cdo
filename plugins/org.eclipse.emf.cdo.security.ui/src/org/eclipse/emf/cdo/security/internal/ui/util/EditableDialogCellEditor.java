@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -23,12 +23,11 @@ import java.text.MessageFormat;
 /**
  * A dialog cell editor in which the text field is editable: the user
  * can directly edit the value without opening the dialog.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public abstract class EditableDialogCellEditor extends DialogCellEditor
 {
-
   private Text text;
 
   public EditableDialogCellEditor()
@@ -68,6 +67,7 @@ public abstract class EditableDialogCellEditor extends DialogCellEditor
         {
           setErrorMessage(MessageFormat.format(getErrorMessage(), new Object[] { newValue.toString() }));
         }
+
         fireApplyEditorValue();
         deactivate();
       }
@@ -87,5 +87,4 @@ public abstract class EditableDialogCellEditor extends DialogCellEditor
   {
     text.setFocus();
   }
-
 }

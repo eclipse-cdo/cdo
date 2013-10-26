@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -20,12 +20,11 @@ import org.eclipse.swt.graphics.Image;
  * An {@link AdapterFactory}-based table label provider that defaults
  * {@linkplain #defaultColumnIndex() some column}'s labels to the
  * object's {@link IItemLabelProvider}.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class TableLabelProvider extends AdapterFactoryLabelProvider
 {
-
   private int defaultColumnIndex;
 
   public TableLabelProvider(AdapterFactory adapterFactory)
@@ -55,5 +54,4 @@ public class TableLabelProvider extends AdapterFactoryLabelProvider
   {
     return columnIndex == defaultColumnIndex ? getImage(object) : super.getColumnImage(object, columnIndex);
   }
-
 }

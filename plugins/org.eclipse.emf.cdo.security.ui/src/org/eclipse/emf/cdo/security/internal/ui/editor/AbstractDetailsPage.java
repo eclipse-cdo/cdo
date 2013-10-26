@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -58,12 +58,11 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
 /**
  * Common framework for the right-hand side object details pages of the
  * master/detail form.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSectionPart<T> implements IDetailsPage
 {
-
   public AbstractDetailsPage(Class<T> elementType, EClass elementEClass, EditingDomain domain,
       AdapterFactory adapterFactory)
   {
@@ -113,7 +112,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
         ObjectWritableConverter.createUpdateValueStrategy());
 
     addRevertDecoration(result, attribute);
-
     return result;
   }
 
@@ -185,35 +183,23 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
 
   protected static Object layoutData(Composite parent, int horzAlign, boolean horzGrab, int horzSpan)
   {
-    Object result;
-
     if (parent.getLayout() instanceof GridLayout)
     {
-      result = horzAlign(new GridData(), horzAlign, horzGrab, horzSpan);
-    }
-    else
-    {
-      result = horzAlign(new TableWrapData(), horzAlign, horzGrab, horzSpan);
+      return horzAlign(new GridData(), horzAlign, horzGrab, horzSpan);
     }
 
-    return result;
+    return horzAlign(new TableWrapData(), horzAlign, horzGrab, horzSpan);
   }
 
   protected static Object layoutData(Composite parent, int horzAlign, boolean horzGrab, int horzSpan, int vertAlign,
       boolean vertGrab, int vertSpan)
   {
-    Object result;
-
     if (parent.getLayout() instanceof GridLayout)
     {
-      result = vertAlign(horzAlign(new GridData(), horzAlign, horzGrab, horzSpan), vertAlign, vertGrab, vertSpan);
-    }
-    else
-    {
-      result = vertAlign(horzAlign(new TableWrapData(), horzAlign, horzGrab, horzSpan), vertAlign, vertGrab, vertSpan);
+      return vertAlign(horzAlign(new GridData(), horzAlign, horzGrab, horzSpan), vertAlign, vertGrab, vertSpan);
     }
 
-    return result;
+    return vertAlign(horzAlign(new TableWrapData(), horzAlign, horzGrab, horzSpan), vertAlign, vertGrab, vertSpan);
   }
 
   protected static <T> T heightHint(T layoutData, int hint)
@@ -289,7 +275,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
         ObjectWritableConverter.createUpdateValueStrategy());
 
     addRevertDecoration(result, attribute);
-
     return result;
   }
 
@@ -302,7 +287,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
         ObjectWritableConverter.createUpdateValueStrategy());
 
     result.addSelectionListener(selectionListener);
-
     return result;
   }
 
@@ -321,7 +305,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
         ObjectWritableConverter.createUpdateValueStrategy());
 
     addRevertDecoration(result.getControl(), attribute);
-
     return result;
   }
 
@@ -390,11 +373,12 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
             }
           }
         };
+
         control.getDisplay().timerExec(1000, hideRunnable);
       }
     };
+
     control.addMouseTrackListener(showHideListener);
     control.getParent().addMouseTrackListener(showHideListener);
   }
-
 }

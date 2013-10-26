@@ -4,14 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
 package org.eclipse.emf.cdo.security.internal.ui.util;
 
-import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityModelUtil.applyTypeFilter;
-import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityModelUtil.viewerFilter;
+import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityUIUtil.applyTypeFilter;
+import static org.eclipse.emf.cdo.security.internal.ui.util.SecurityUIUtil.getViewerFilter;
 
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Realm;
@@ -81,12 +81,11 @@ import java.util.List;
 /**
  * An encapsulation of a block of controls in a form that edits a one-to-many
  * reference in the security model.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class OneToManyBlock
 {
-
   private final EditingDomain domain;
 
   private final AdapterFactory adapterFactory;
@@ -114,7 +113,6 @@ public class OneToManyBlock
   public OneToManyBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory,
       EReference reference, EClass itemType)
   {
-
     this(context, domain, adapterFactory, new OneToManyConfiguration(reference, itemType));
   }
 
@@ -180,14 +178,15 @@ public class OneToManyBlock
     }
 
     viewer.setContentProvider(new ObservableListContentProvider());
-    SecurityModelUtil.applyDefaultFilters(viewer, itemType);
+    SecurityUIUtil.applyDefaultFilters(viewer, itemType);
     if (itemType != reference.getEReferenceType())
     {
       applyTypeFilter(viewer, itemType);
     }
+
     if (getConfiguration().getItemFilter() != null)
     {
-      viewer.addFilter(viewerFilter(getConfiguration().getItemFilter()));
+      viewer.addFilter(getViewerFilter(getConfiguration().getItemFilter()));
     }
 
     viewer.setInput(value);
@@ -215,6 +214,7 @@ public class OneToManyBlock
     {
       addButton = toolkit.createButton(buttons, Messages.OneToManyBlock_1, SWT.PUSH);
     }
+
     removeButton = toolkit.createButton(buttons, Messages.OneToManyBlock_2, SWT.PUSH);
 
     final IObservableValue selection = ViewersObservables.observeSingleSelection(viewer);
@@ -226,6 +226,7 @@ public class OneToManyBlock
       context.bindValue(SWTObservables.observeEnabled(addButton), input, null,
           ObjectWritableConverter.createUpdateValueStrategy());
     }
+
     context.bindValue(SWTObservables.observeEnabled(removeButton), selection, null,
         ObjectWritableConverter.createUpdateValueStrategy());
 
@@ -243,7 +244,7 @@ public class OneToManyBlock
         }
         else
         {
-          owner = SecurityModelUtil.getDirectory(realm, itemType);
+          owner = SecurityUIUtil.getDirectory(realm, itemType);
         }
 
         if (owner != null)
@@ -292,20 +293,22 @@ public class OneToManyBlock
         public void widgetSelected(SelectionEvent e)
         {
           Realm realm = ((SecurityItem)input.getValue()).getRealm();
-          Directory directory = SecurityModelUtil.getDirectory(realm, itemType);
+          Directory directory = SecurityUIUtil.getDirectory(realm, itemType);
           if (directory != null)
           {
             // Get the available items not already in our input's reference list
             List<?> available = new java.util.ArrayList<Object>(EcoreUtil.getObjectsByType(directory.getItems(),
                 itemType));
             available.removeAll(value);
-            SecurityModelUtil.applyDefaultFilters(available, itemType);
+            SecurityUIUtil.applyDefaultFilters(available, itemType);
 
             String label = NLS.bind(Messages.OneToManyBlock_3, SecurityEditPlugin.INSTANCE.getString(String.format(
                 "_UI_%s_%s_feature", reference.getEContainingClass().getName(), reference.getName()))); //$NON-NLS-1$
+
             FeatureEditorDialog dlg = new FeatureEditorDialog(viewer.getControl().getShell(), new TableLabelProvider(
                 adapterFactory), input.getValue(), reference.getEContainingClass(), Collections.EMPTY_LIST, label,
                 available, false, true, true);
+
             if (dlg.open() == Window.OK && !dlg.getResult().isEmpty())
             {
               Command command = AddCommand.create(domain, input.getValue(), reference, dlg.getResult());
@@ -347,9 +350,10 @@ public class OneToManyBlock
       @Override
       protected boolean updateSelection(IStructuredSelection selection)
       {
-        return super.updateSelection(selection) && SecurityModelUtil.isEditable(input.getValue());
+        return super.updateSelection(selection) && SecurityUIUtil.isEditable(input.getValue());
       }
     };
+
     removeButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
@@ -361,6 +365,7 @@ public class OneToManyBlock
         }
       }
     });
+
     viewer.addSelectionChangedListener(removeAction);
 
     new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
@@ -379,6 +384,7 @@ public class OneToManyBlock
       {
         viewer.setInput(null);
       }
+
       value.dispose();
     }
 
@@ -516,13 +522,9 @@ public class OneToManyBlock
         });
   }
 
-  //
-  // Nested types
-  //
-
   /**
    * Specification of the configuration of a one-to-many block's contents.
-   * 
+   *
    * @author Christian W. Damus (CEA LIST)
    */
   public static interface IOneToManyConfiguration
@@ -536,7 +538,7 @@ public class OneToManyBlock
 
   /**
    * Default one-to-many block configuration implementation.
-   * 
+   *
    * @author Christian W. Damus (CEA LIST)
    */
   public static class OneToManyConfiguration implements IOneToManyConfiguration

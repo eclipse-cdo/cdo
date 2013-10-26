@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -30,12 +30,11 @@ import org.eclipse.swt.SWT;
  * A specialization of the encapsulated UI for one-to-many reference
  * editing that presents a table with multiple columns and in-line
  * editing support.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class OneToManyTableBlock extends OneToManyBlock
 {
-
   public OneToManyTableBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory,
       ITableConfiguration tableConfig)
   {
@@ -81,7 +80,6 @@ public class OneToManyTableBlock extends OneToManyBlock
 
       column.setEditingSupport(new EditingSupport(viewer)
       {
-
         @Override
         protected void setValue(Object element, Object value)
         {
@@ -109,14 +107,10 @@ public class OneToManyTableBlock extends OneToManyBlock
     }
   }
 
-  //
-  // Nested types
-  //
-
   /**
    * Specialized one-to-many configuration that describes a multiple
    * column presentation with in-line editing support.
-   * 
+   *
    * @author Christian W. Damus (CEA LIST)
    */
   public static interface ITableConfiguration extends IOneToManyConfiguration
@@ -142,12 +136,11 @@ public class OneToManyTableBlock extends OneToManyBlock
 
   /**
    * Partial implementation of the table configuration interface.
-   * 
+   *
    * @author Christian W. Damus (CEA LIST)
    */
   public static abstract class TableConfiguration extends OneToManyConfiguration implements ITableConfiguration
   {
-
     public TableConfiguration(EReference reference, EClass itemType, IFilter filter)
     {
       super(reference, itemType, filter);
@@ -167,6 +160,5 @@ public class OneToManyTableBlock extends OneToManyBlock
     {
       super(reference);
     }
-
   }
 }

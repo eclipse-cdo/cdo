@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.ISelection;
 
 /**
  * Administrative password reset command handler on users in the security model.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class ResetPasswordHandler extends LongRunningHandler
@@ -55,7 +55,6 @@ public class ResetPasswordHandler extends LongRunningHandler
   private boolean canWrite(CDOObject object)
   {
     CDOView view = object.cdoView();
-
     return (view == null || !view.isReadOnly()) && object.cdoPermission().isWritable();
   }
 }

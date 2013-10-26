@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -31,14 +31,18 @@ import java.util.List;
 
 /**
  * Various static utilities for working with the security model.
- * 
+ *
+ * TODO Are there methods in here that should be moved to, e.g., CDOUtil, SecurityManagerUtil, UIUtil, etc?
+ *
  * @author Christian W. Damus (CEA LIST)
  */
-public class SecurityModelUtil
+public final class SecurityUIUtil
 {
+  private static final IFilter[] RESOURCE_BASED_ROLE_FILTERS = { new ResourceBasedRoleFilter() };
 
-  // Not instantiable by clients
-  private SecurityModelUtil()
+  private static final IFilter[] NO_FILTERS = new IFilter[0];
+
+  private SecurityUIUtil()
   {
   }
 
@@ -77,18 +81,12 @@ public class SecurityModelUtil
 
   private static IFilter[] getDefaultFilters(EClass itemType)
   {
-    IFilter[] result;
-
     if (itemType == SecurityPackage.Literals.ROLE)
     {
-      result = new IFilter[] { new ResourceBasedRoleFilter() };
-    }
-    else
-    {
-      result = new IFilter[0];
+      return RESOURCE_BASED_ROLE_FILTERS;
     }
 
-    return result;
+    return NO_FILTERS;
   }
 
   private static IFilter filter(EClass itemType)
@@ -99,13 +97,25 @@ public class SecurityModelUtil
     {
       public boolean select(Object toTest)
       {
-        boolean result = true;
+        // boolean result = true;
+        //
+        // for (int i = 0; i < filters.length && result; i++)
+        // {
+        // result = filters[i].select(toTest);
+        // }
+        //
+        // return result;
 
-        for (int i = 0; i < filters.length && result; i++)
+        // TODO I generally don't like array iterations with extra conditions. Isn't this easier to recognize?
+        for (int i = 0; i < filters.length; i++)
         {
-          result = filters[i].select(toTest);
+          if (!filters[i].select(toTest))
+          {
+            return false;
+          }
         }
-        return result;
+
+        return true;
       }
     };
   }
@@ -117,17 +127,16 @@ public class SecurityModelUtil
     ViewerFilter[] result = new ViewerFilter[filters.length];
     for (int i = 0; i < filters.length; i++)
     {
-      result[i] = viewerFilter(filters[i]);
+      result[i] = getViewerFilter(filters[i]);
     }
 
     return Arrays.asList(result);
   }
 
-  public static ViewerFilter viewerFilter(final IFilter filter)
+  public static ViewerFilter getViewerFilter(final IFilter filter)
   {
     return new ViewerFilter()
     {
-
       @Override
       public boolean select(Viewer viewer, Object parentElement, Object element)
       {
@@ -166,7 +175,6 @@ public class SecurityModelUtil
   {
     viewer.addFilter(new ViewerFilter()
     {
-
       @Override
       public boolean select(Viewer viewer, Object parentElement, Object element)
       {
@@ -177,13 +185,15 @@ public class SecurityModelUtil
 
   public static boolean isEditable(Object object)
   {
+    // TODO What about "unmanaged" EObjects?
+    // TODO What about managed legacy objects? --> CDOUtil.getCDOObject()?
     return object instanceof CDOObject && isEditable((CDOObject)object);
   }
 
   public static boolean isEditable(CDOObject object)
   {
+    // TODO What about object.cdoPermission()?
     CDOView view = object.cdoView();
     return view == null || !view.isReadOnly();
   }
-
 }

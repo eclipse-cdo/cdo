@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -30,12 +30,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
  * Details page for selected {@link User} master objects.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class UserDetailsPage extends AbstractDetailsPage<User>
 {
-
   public UserDetailsPage(EditingDomain domain, AdapterFactory adapterFactory)
   {
     super(User.class, SecurityPackage.Literals.USER, domain, adapterFactory);
@@ -80,7 +79,6 @@ public class UserDetailsPage extends AbstractDetailsPage<User>
   {
     new Job(Messages.UserDetailsPage_9)
     {
-
       @Override
       public IStatus run(IProgressMonitor monitor)
       {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -22,12 +22,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
  * The details page for a {@link Group} selection.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class GroupDetailsPage extends AbstractDetailsPage<Group>
 {
-
   public GroupDetailsPage(EditingDomain domain, AdapterFactory adapterFactory)
   {
     super(Group.class, SecurityPackage.Literals.GROUP, domain, adapterFactory);
@@ -46,5 +45,4 @@ public class GroupDetailsPage extends AbstractDetailsPage<Group>
 
     oneToMany(parent, toolkit, Messages.GroupDetailsPage_2, SecurityPackage.Literals.ASSIGNEE__ROLES);
   }
-
 }

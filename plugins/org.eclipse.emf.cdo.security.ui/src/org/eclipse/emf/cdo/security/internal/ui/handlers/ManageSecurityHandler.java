@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -42,12 +42,11 @@ import java.util.Set;
  * "Manage Security" command handler, which opens the Security Manager editor
  * in the context of the currently selected {@link CDOSession}, with the help
  * of an optional {@link ISecurityManagementContext} adapter.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class ManageSecurityHandler extends AbstractHandler
 {
-
   public ManageSecurityHandler()
   {
   }
@@ -125,33 +124,27 @@ public class ManageSecurityHandler extends AbstractHandler
 
   IEditorPart findEditor(IWorkbenchPage page, CDOSession session)
   {
-    IEditorPart result = null;
-
     for (IEditorReference next : page.getEditorReferences())
     {
       if (CDOSecurityFormEditor.ID.equals(next.getId()))
       {
         IEditorPart candidate = next.getEditor(false);
-
         if (candidate != null)
         {
           IEditorInput input = candidate.getEditorInput();
-
           if (input instanceof CDOEditorInput)
           {
             CDOView view = ((CDOEditorInput)input).getView();
-
             if (view != null && !view.isClosed() && session.equals(view.getSession()))
             {
-              result = candidate;
-              break;
+              return candidate;
             }
           }
         }
       }
     }
 
-    return result;
+    return null;
   }
 
   ISecurityManagementContext getContext(ExecutionEvent event)
@@ -175,10 +168,8 @@ public class ManageSecurityHandler extends AbstractHandler
   private void hookCloseListener(final IEditorPart editor, final ISecurityManagementContext context, final CDOView view)
   {
     final IWorkbenchPage page = editor.getSite().getPage();
-
     page.addPartListener(new IPartListener()
     {
-
       private final IEditorInput input = editor.getEditorInput();
 
       private final Set<IEditorPart> openEditors = new java.util.HashSet<IEditorPart>();

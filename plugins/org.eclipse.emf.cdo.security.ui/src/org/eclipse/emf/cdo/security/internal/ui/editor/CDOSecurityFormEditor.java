@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -51,12 +51,11 @@ import java.util.EventObject;
 
 /**
  * The "Security Manager" editor.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainProvider
 {
-
   public static final String ID = "org.eclipse.emf.cdo.security.ui.CDOSecurityFormEditor"; //$NON-NLS-1$
 
   private ComposedAdapterFactory adapterFactory;
@@ -152,7 +151,6 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
   public void init(IEditorSite site, IEditorInput input) throws PartInitException
   {
     super.init(site, input);
-
     initializeEditingDomain();
   }
 
@@ -201,7 +199,6 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
     CDOResource result = null;
 
     IEditorInput input = getEditorInput();
-
     if (input instanceof CDOEditorInput)
     {
       CDOEditorInput cdoInput = (CDOEditorInput)input;

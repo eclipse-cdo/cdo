@@ -12,6 +12,7 @@
  */
 package org.eclipse.net4j.util.ui;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
@@ -264,24 +265,13 @@ public final class UIUtil
   /**
    * Like {@link #getElement(ISelection, Class)} except that it attempts to adapt
    * {@link IAdaptable}s to the required {@code type}, if necessary.
-   * 
+   *
    * @since 3.4
    */
   public static <T> T adaptElement(ISelection selection, Class<T> type)
   {
-    T result = null;
-
     Object element = getElement(selection);
-    if (type.isInstance(element))
-    {
-      result = type.cast(element);
-    }
-    else if (element instanceof IAdaptable)
-    {
-      result = type.cast(((IAdaptable)element).getAdapter(type));
-    }
-
-    return result;
+    return AdapterUtil.adapt(element, type);
   }
 
   /**

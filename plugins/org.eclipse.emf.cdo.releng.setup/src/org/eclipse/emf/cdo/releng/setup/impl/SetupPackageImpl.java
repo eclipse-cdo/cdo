@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
+import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -197,10 +198,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EClass contextVariableTaskEClass = null;
 
   /**
-  	 * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass resourceCreationTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+               * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass eclipseIniTaskEClass = null;
 
   /**
@@ -793,7 +801,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSetupTask_Documentation()
+  {
+    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EClass getWorkingSetTask()
@@ -1022,30 +1040,70 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getContextVariableTask_Name()
   {
     return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getContextVariableTask_Value()
   {
     return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getResourceCreationTask()
+  {
+    return resourceCreationTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getResourceCreationTask_Content()
+  {
+    return (EAttribute)resourceCreationTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getResourceCreationTask_TargetURL()
+  {
+    return (EAttribute)resourceCreationTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getResourceCreationTask_Encoding()
+  {
+    return (EAttribute)resourceCreationTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+                   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getEclipseIniTask()
   {
     return eclipseIniTaskEClass;
@@ -1406,6 +1464,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(setupTaskEClass, SETUP_TASK__RESTRICTIONS);
     createEAttribute(setupTaskEClass, SETUP_TASK__SCOPE);
     createEAttribute(setupTaskEClass, SETUP_TASK__EXCLUDED_TRIGGERS);
+    createEAttribute(setupTaskEClass, SETUP_TASK__DOCUMENTATION);
 
     setupTaskContainerEClass = createEClass(SETUP_TASK_CONTAINER);
     createEReference(setupTaskContainerEClass, SETUP_TASK_CONTAINER__SETUP_TASKS);
@@ -1493,6 +1552,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
 
+    resourceCreationTaskEClass = createEClass(RESOURCE_CREATION_TASK);
+    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__CONTENT);
+    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__TARGET_URL);
+    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__ENCODING);
+
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
@@ -1558,6 +1622,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     textModifyTaskEClass.getESuperTypes().add(this.getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(this.getSetupTask());
     contextVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
+    resourceCreationTaskEClass.getESuperTypes().add(this.getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1633,6 +1698,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getSetupTask_Scope(), this.getSetupTaskScope(), "scope", null, 0, 1, SetupTask.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getSetupTask_ExcludedTriggers(), this.getTriggerSet(), "excludedTriggers", "", 1, 1,
+        SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEAttribute(getSetupTask_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1,
         SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -1821,6 +1889,18 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
         ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(resourceCreationTaskEClass, ResourceCreationTask.class, "ResourceCreationTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getResourceCreationTask_Content(), ecorePackage.getEString(), "content", null, 0, 1,
+        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceCreationTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 0, 1,
+        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceCreationTask_Encoding(), ecorePackage.getEString(), "encoding", null, 0, 1,
+        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

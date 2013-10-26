@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
@@ -332,10 +333,13 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
 
     public String getText(Object object)
     {
-      StringBuilder builder = new StringBuilder();
-      while (object != null && !(object instanceof Configuration))
+      StringBuilder builder = new StringBuilder(itemDelegator.getText(object));
+      builder.append(" ~ ");
+      int index = builder.length();
+      object = itemDelegator.getParent(object);
+      while (object != null && !(object instanceof Configuration) && !(object instanceof Resource))
       {
-        if (builder.length() != 0)
+        if (builder.length() != index)
         {
           builder.insert(0, " - ");
         }

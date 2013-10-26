@@ -150,6 +150,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createCommandParameter();
     case SetupPackage.CONTEXT_VARIABLE_TASK:
       return createContextVariableTask();
+    case SetupPackage.RESOURCE_CREATION_TASK:
+      return createResourceCreationTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -393,10 +395,21 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ResourceCreationTask createResourceCreationTask()
+  {
+    ResourceCreationTaskImpl resourceCreationTask = new ResourceCreationTaskImpl();
+    return resourceCreationTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+   * @generated
+   */
   public EclipseIniTask createEclipseIniTask()
   {
     EclipseIniTaskImpl eclipseIniTask = new EclipseIniTaskImpl();

@@ -525,13 +525,22 @@ public interface SetupPackage extends EPackage
   int SETUP_TASK__EXCLUDED_TRIGGERS = 3;
 
   /**
-   * The number of structural features of the '<em>Task</em>' class.
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SETUP_TASK_FEATURE_COUNT = 4;
+  int SETUP_TASK__DOCUMENTATION = 4;
+
+  /**
+   * The number of structural features of the '<em>Task</em>' class.
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETUP_TASK_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl <em>Working Set Task</em>}' class.
@@ -590,9 +599,18 @@ public interface SetupPackage extends EPackage
   int COMPOUND_SETUP_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOUND_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -663,9 +681,18 @@ public interface SetupPackage extends EPackage
   int ONE_TIME_SETUP_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ONE_TIME_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -747,9 +774,18 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_INI_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ECLIPSE_INI_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Option</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -819,9 +855,18 @@ public interface SetupPackage extends EPackage
   int LINK_LOCATION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINK_LOCATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Path</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -882,9 +927,18 @@ public interface SetupPackage extends EPackage
   int P2_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int P2_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -999,9 +1053,18 @@ public interface SetupPackage extends EPackage
   int BUCKMINSTER_IMPORT_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BUCKMINSTER_IMPORT_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Mspec</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1071,9 +1134,18 @@ public interface SetupPackage extends EPackage
   int API_BASELINE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Version</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1134,9 +1206,18 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1215,9 +1296,18 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_PREFERENCE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ECLIPSE_PREFERENCE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Key</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1278,9 +1368,18 @@ public interface SetupPackage extends EPackage
   int STRING_VARIABLE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1350,9 +1449,18 @@ public interface SetupPackage extends EPackage
   int WORKING_SET_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
-   * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int WORKING_SET_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1414,9 +1522,18 @@ public interface SetupPackage extends EPackage
   int RESOURCE_COPY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_COPY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Source URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+      	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1487,9 +1604,18 @@ public interface SetupPackage extends EPackage
   int TEXT_MODIFY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_MODIFY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
    * The feature id for the '<em><b>Url</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+      	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1597,9 +1723,18 @@ public interface SetupPackage extends EPackage
   int KEY_BINDING_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
-   * The feature id for the '<em><b>Scheme</b></em>' attribute.
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Scheme</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1716,77 +1851,177 @@ public interface SetupPackage extends EPackage
   int CONTEXT_VARIABLE_TASK = 27;
 
   /**
-  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
 
   /**
-  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK__SCOPE = SETUP_TASK__SCOPE;
 
   /**
-  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
-  	 * The feature id for the '<em><b>Name</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTEXT_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-  	 * The feature id for the '<em><b>Value</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK__VALUE = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-  	 * The number of structural features of the '<em>Context Variable Task</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Context Variable Task</em>' class.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
-  	 * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
-  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
-  	 * @generated
-  	 */
-  int SETUP_TASK_SCOPE = 28;
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
+   * @generated
+   */
+  int RESOURCE_CREATION_TASK = 28;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Content</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__CONTENT = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Target URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Encoding</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__ENCODING = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Resource Creation Task</em>' class.
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+   * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+   * @generated
+   */
+  int SETUP_TASK_SCOPE = 29;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -1796,7 +2031,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 29;
+  int TRIGGER = 30;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -1806,7 +2041,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 32;
+  int URI = 33;
 
   /**
    * The meta object id for the '<em>Exception</em>' data type.
@@ -1816,7 +2051,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 31;
+  int EXCEPTION = 32;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -1826,7 +2061,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 30;
+  int TRIGGER_SET = 31;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -2290,9 +2525,20 @@ public interface SetupPackage extends EPackage
   EAttribute getSetupTask_ExcludedTriggers();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation <em>Documentation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Documentation</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation()
+   * @see #getSetupTask()
+   * @generated
+   */
+  EAttribute getSetupTask_Documentation();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask <em>Working Set Task</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @return the meta object for class '<em>Working Set Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.WorkingSetTask
    * @generated
@@ -2536,35 +2782,78 @@ public interface SetupPackage extends EPackage
   EClass getContextVariableTask();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName <em>Name</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Name</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName()
-  	 * @see #getContextVariableTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName()
+   * @see #getContextVariableTask()
+   * @generated
+   */
   EAttribute getContextVariableTask_Name();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue <em>Value</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Value</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue()
-  	 * @see #getContextVariableTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue()
+   * @see #getContextVariableTask()
+   * @generated
+   */
   EAttribute getContextVariableTask_Value();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
-  	 * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Eclipse Ini Task</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
-  	 * @generated
-  	 */
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Resource Creation Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask
+   * @generated
+   */
+  EClass getResourceCreationTask();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getContent <em>Content</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Content</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getContent()
+   * @see #getResourceCreationTask()
+   * @generated
+   */
+  EAttribute getResourceCreationTask_Content();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getTargetURL <em>Target URL</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Target URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getTargetURL()
+   * @see #getResourceCreationTask()
+   * @generated
+   */
+  EAttribute getResourceCreationTask_TargetURL();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getEncoding <em>Encoding</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Encoding</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getEncoding()
+   * @see #getResourceCreationTask()
+   * @generated
+   */
+  EAttribute getResourceCreationTask_Encoding();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+   * <!-- begin-user-doc -->
+                   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eclipse Ini Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+   * @generated
+   */
   EClass getEclipseIniTask();
 
   /**
@@ -3269,9 +3558,17 @@ public interface SetupPackage extends EPackage
     EAttribute SETUP_TASK__EXCLUDED_TRIGGERS = eINSTANCE.getSetupTask_ExcludedTriggers();
 
     /**
+     * The meta object literal for the '<em><b>Documentation</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SETUP_TASK__DOCUMENTATION = eINSTANCE.getSetupTask_Documentation();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl <em>Working Set Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
      * @generated
@@ -3467,29 +3764,63 @@ public interface SetupPackage extends EPackage
     EClass CONTEXT_VARIABLE_TASK = eINSTANCE.getContextVariableTask();
 
     /**
-    	 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute CONTEXT_VARIABLE_TASK__NAME = eINSTANCE.getContextVariableTask_Name();
 
     /**
-    	 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute CONTEXT_VARIABLE_TASK__VALUE = eINSTANCE.getContextVariableTask_Value();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
-    	 * <!-- begin-user-doc -->
-                 * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
-    	 * @generated
-    	 */
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
+     * @generated
+     */
+    EClass RESOURCE_CREATION_TASK = eINSTANCE.getResourceCreationTask();
+
+    /**
+     * The meta object literal for the '<em><b>Content</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_CREATION_TASK__CONTENT = eINSTANCE.getResourceCreationTask_Content();
+
+    /**
+     * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_CREATION_TASK__TARGET_URL = eINSTANCE.getResourceCreationTask_TargetURL();
+
+    /**
+     * The meta object literal for the '<em><b>Encoding</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_CREATION_TASK__ENCODING = eINSTANCE.getResourceCreationTask_Encoding();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
+     * <!-- begin-user-doc -->
+                     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
+     * @generated
+     */
     EClass ECLIPSE_INI_TASK = eINSTANCE.getEclipseIniTask();
 
     /**

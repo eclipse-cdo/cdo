@@ -220,7 +220,7 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
       super(parentShell);
 
       setActiveEditorPart(activeEditorPart);
-      setShellStyle(getShellStyle() ^ SWT.APPLICATION_MODAL | SWT.MODELESS | SWT.RESIZE);
+      setShellStyle(getShellStyle() ^ SWT.APPLICATION_MODAL | SWT.MODELESS | SWT.RESIZE | SWT.MAX | SWT.MIN);
       setBlockOnOpen(false);
 
       workbenchWindow = activeEditorPart.getEditorSite().getWorkbenchWindow();

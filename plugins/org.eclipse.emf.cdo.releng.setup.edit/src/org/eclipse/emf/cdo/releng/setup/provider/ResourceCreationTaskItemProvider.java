@@ -1,17 +1,10 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
+import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -23,16 +16,17 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class ResourceCreationTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -41,7 +35,7 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public ResourceCopyTaskItemProvider(AdapterFactory adapterFactory)
+  public ResourceCreationTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -59,26 +53,27 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
     {
       super.getPropertyDescriptors(object);
 
-      addSourceURLPropertyDescriptor(object);
+      addContentPropertyDescriptor(object);
       addTargetURLPropertyDescriptor(object);
+      addEncodingPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Source URL feature.
+   * This adds a property descriptor for the Content feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addSourceURLPropertyDescriptor(Object object)
+  protected void addContentPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ResourceCopyTask_sourceURL_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCopyTask_sourceURL_feature",
-            "_UI_ResourceCopyTask_type"), SetupPackage.Literals.RESOURCE_COPY_TASK__SOURCE_URL, true, false, false,
+        getString("_UI_ResourceCreationTask_content_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCreationTask_content_feature",
+            "_UI_ResourceCreationTask_type"), SetupPackage.Literals.RESOURCE_CREATION_TASK__CONTENT, true, true, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -93,14 +88,31 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ResourceCopyTask_targetURL_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCopyTask_targetURL_feature",
-            "_UI_ResourceCopyTask_type"), SetupPackage.Literals.RESOURCE_COPY_TASK__TARGET_URL, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        getString("_UI_ResourceCreationTask_targetURL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCreationTask_targetURL_feature",
+            "_UI_ResourceCreationTask_type"), SetupPackage.Literals.RESOURCE_CREATION_TASK__TARGET_URL, true, false,
+        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This returns ResourceCopyTask.gif.
+   * This adds a property descriptor for the Encoding feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addEncodingPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_ResourceCreationTask_encoding_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCreationTask_encoding_feature",
+            "_UI_ResourceCreationTask_type"), SetupPackage.Literals.RESOURCE_CREATION_TASK__ENCODING, true, false,
+        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This returns ResourceCreationTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -108,7 +120,7 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceCopyTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceCreationTask"));
   }
 
   /**
@@ -120,8 +132,8 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
   @Override
   public String getText(Object object)
   {
-    ResourceCopyTask resourceCopyTask = (ResourceCopyTask)object;
-    return "" + resourceCopyTask.getSourceURL() + " --> " + resourceCopyTask.getTargetURL();
+    ResourceCreationTask resourceCreationTask = (ResourceCreationTask)object;
+    return "" + resourceCreationTask.getTargetURL();
   }
 
   /**
@@ -136,10 +148,11 @@ public class ResourceCopyTaskItemProvider extends SetupTaskItemProvider implemen
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(ResourceCopyTask.class))
+    switch (notification.getFeatureID(ResourceCreationTask.class))
     {
-    case SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL:
-    case SetupPackage.RESOURCE_COPY_TASK__TARGET_URL:
+    case SetupPackage.RESOURCE_CREATION_TASK__CONTENT:
+    case SetupPackage.RESOURCE_CREATION_TASK__TARGET_URL:
+    case SetupPackage.RESOURCE_CREATION_TASK__ENCODING:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

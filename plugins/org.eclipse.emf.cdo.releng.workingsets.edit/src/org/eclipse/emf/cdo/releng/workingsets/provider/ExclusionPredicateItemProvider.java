@@ -49,8 +49,16 @@ public class ExclusionPredicateItemProvider extends ItemProviderAdapter implemen
       {
         for (Iterator<?> it = objects.iterator(); it.hasNext();)
         {
-          WorkingSet workingSet = (WorkingSet)it.next();
-          if (workingSet == eObject || getReachableWorkingSets(workingSet).contains(eObject))
+          Object value = it.next();
+          if (value instanceof WorkingSet)
+          {
+            WorkingSet workingSet = (WorkingSet)value;
+            if (workingSet == eObject || getReachableWorkingSets(workingSet).contains(eObject))
+            {
+              it.remove();
+            }
+          }
+          else
           {
             it.remove();
           }

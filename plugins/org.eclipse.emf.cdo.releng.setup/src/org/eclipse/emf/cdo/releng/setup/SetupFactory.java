@@ -184,12 +184,21 @@ public interface SetupFactory extends EFactory
   ContextVariableTask createContextVariableTask();
 
   /**
-  	 * Returns a new object of class '<em>Eclipse Ini Task</em>'.
-  	 * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Eclipse Ini Task</em>'.
-  	 * @generated
-  	 */
+   * Returns a new object of class '<em>Resource Creation Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Resource Creation Task</em>'.
+   * @generated
+   */
+  ResourceCreationTask createResourceCreationTask();
+
+  /**
+   * Returns a new object of class '<em>Eclipse Ini Task</em>'.
+   * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eclipse Ini Task</em>'.
+   * @generated
+   */
   EclipseIniTask createEclipseIniTask();
 
   /**

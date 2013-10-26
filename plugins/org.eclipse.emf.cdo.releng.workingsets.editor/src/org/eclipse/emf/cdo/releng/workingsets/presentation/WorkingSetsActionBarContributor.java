@@ -81,6 +81,7 @@ import java.util.Collection;
 import java.util.EventObject;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -95,7 +96,7 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
   /**
    * @author Ed Merks
    */
-  public static final class PreviewDialog extends Dialog
+  public static class PreviewDialog extends Dialog
   {
     protected static class Input extends ItemProvider
     {
@@ -149,58 +150,17 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
       }
     }
 
-    private TreeViewer tree;
+    protected TreeViewer tree;
 
     private IEditorPart activeEditorPart;
 
-    private Input input = new Input();
+    protected Input input = new Input();
 
     private ISelectionListener selectionListener = new ISelectionListener()
     {
       public void selectionChanged(IWorkbenchPart part, ISelection selection)
       {
-        if (selection instanceof IStructuredSelection)
-        {
-          Set<Object> selectedObjects = new HashSet<Object>();
-          for (Object value : ((IStructuredSelection)selection).toArray())
-          {
-            if (value instanceof EObject)
-            {
-              for (EObject eObject = (EObject)value; eObject != null; eObject = eObject.eContainer())
-              {
-                for (WorkingSetPresentation workingSet : input.getWorkingSets())
-                {
-                  if (eObject == workingSet.getWorkingSet())
-                  {
-                    selectedObjects.add(workingSet);
-                  }
-                }
-              }
-            }
-            if (value instanceof IAdaptable)
-            {
-              IProject project = (IProject)((IAdaptable)value).getAdapter(IProject.class);
-              if (project != null)
-              {
-                for (WorkingSetPresentation workingSet : input.getWorkingSets())
-                {
-                  for (ProjectPresentation p : workingSet.getProjects())
-                  {
-                    if (project.equals(p.getProject()))
-                    {
-                      selectedObjects.add(p);
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          if (!selectedObjects.isEmpty())
-          {
-            tree.setSelection(new StructuredSelection(new ArrayList<Object>(selectedObjects)));
-          }
-        }
+        PreviewDialog.this.selectionChanged(part, selection);
       }
     };
 
@@ -210,8 +170,7 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
     {
       public void commandStackChanged(EventObject event)
       {
-        reconcile();
-        tree.expandAll();
+        PreviewDialog.this.commandStackChanged(event);
       }
     };
 
@@ -226,6 +185,58 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
       workbenchWindow = activeEditorPart.getEditorSite().getWorkbenchWindow();
       ISelectionService selectionService = workbenchWindow.getSelectionService();
       selectionService.addPostSelectionListener(selectionListener);
+    }
+
+    protected void selectionChanged(IWorkbenchPart part, ISelection selection)
+    {
+      if (selection instanceof IStructuredSelection)
+      {
+        Set<Object> selectedObjects = new HashSet<Object>();
+        for (Object value : ((IStructuredSelection)selection).toArray())
+        {
+          if (value instanceof EObject)
+          {
+            for (EObject eObject = (EObject)value; eObject != null; eObject = eObject.eContainer())
+            {
+              for (WorkingSetPresentation workingSet : input.getWorkingSets())
+              {
+                if (eObject == workingSet.getWorkingSet())
+                {
+                  selectedObjects.add(workingSet);
+                }
+              }
+            }
+          }
+          if (value instanceof IAdaptable)
+          {
+            IProject project = (IProject)((IAdaptable)value).getAdapter(IProject.class);
+            if (project != null)
+            {
+              for (WorkingSetPresentation workingSet : input.getWorkingSets())
+              {
+                for (ProjectPresentation p : workingSet.getProjects())
+                {
+                  if (project.equals(p.getProject()))
+                  {
+                    selectedObjects.add(p);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        if (!selectedObjects.isEmpty())
+        {
+          tree.setSelection(new StructuredSelection(new ArrayList<Object>(selectedObjects)));
+        }
+      }
+    }
+
+    protected void commandStackChanged(EventObject event)
+    {
+      reconcile();
+      tree.expandAll();
     }
 
     @Override
@@ -302,13 +313,10 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
       ItemProvider otherProjects = new WorkingSetPresentation(otherProjectsWorkingSet);
       children.add(otherProjects);
 
-      Resource resource = editingDomain.getResourceSet().getResources().get(0);
-      WorkingSetGroup workingSetGroup = (WorkingSetGroup)resource.getContents().get(0);
-
       Set<IProject> projects = new LinkedHashSet<IProject>(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot()
           .getProjects()));
       Set<IProject> unmatchedProjects = new LinkedHashSet<IProject>(projects);
-      for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
+      for (WorkingSet workingSet : getWorkingSets())
       {
         ItemProvider child = new WorkingSetPresentation(workingSet);
         EList<Object> contents = child.getChildren();
@@ -339,6 +347,14 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
           contents.add(childProject);
         }
       }
+    }
+
+    protected List<WorkingSet> getWorkingSets()
+    {
+      EditingDomain editingDomain = ((IEditingDomainProvider)activeEditorPart).getEditingDomain();
+      Resource resource = editingDomain.getResourceSet().getResources().get(0);
+      WorkingSetGroup workingSetGroup = (WorkingSetGroup)resource.getContents().get(0);
+      return workingSetGroup.getWorkingSets();
     }
 
     @Override
@@ -748,7 +764,7 @@ public class WorkingSetsActionBarContributor extends EditingDomainActionBarContr
       @Override
       public String getText()
       {
-        return "Preview";
+        return "Preview...";
       }
 
       @Override

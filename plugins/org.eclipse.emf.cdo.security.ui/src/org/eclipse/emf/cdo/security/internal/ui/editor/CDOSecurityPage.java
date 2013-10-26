@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -43,7 +44,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.AbstractFormPart;
@@ -344,13 +345,10 @@ public class CDOSecurityPage extends FormPage
       {
         try
         {
-          IEditorPart advancedEditor = getSite().getPage().openEditor(getEditorInput(), CDOEditorUtil.getEditorID(),
-              true, IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
-          if (advancedEditor != null)
-          {
-            // Close me
-            closeEditor();
-          }
+          IEditorInput newEditorInput = CDOEditorUtil.createCDOEditorInputWithEditingDomain(
+              (CDOEditorInput)getEditorInput(), getEditingDomain());
+          getSite().getPage().openEditor(newEditorInput, CDOEditorUtil.getEditorID(), true,
+              IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
         }
         catch (PartInitException e)
         {

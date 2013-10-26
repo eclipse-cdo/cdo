@@ -49,9 +49,7 @@ public final class AdapterUtil
       }
     }
 
-    @SuppressWarnings("unchecked")
-    TYPE result = (TYPE)adapter;
-    return result;
+    return type.cast(adapter);
   }
 
   /**

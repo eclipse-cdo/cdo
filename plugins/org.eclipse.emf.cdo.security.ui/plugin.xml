@@ -65,6 +65,7 @@
                   <iterate >
                      <adapt
                            type="org.eclipse.emf.cdo.session.CDOSession">
+                        <test property="org.eclipse.emf.cdo.session.userAuthenticated" />
                      </adapt>
                   </iterate>
                </with>

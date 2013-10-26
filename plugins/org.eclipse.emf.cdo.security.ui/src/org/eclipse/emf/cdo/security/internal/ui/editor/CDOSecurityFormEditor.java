@@ -35,6 +35,7 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -75,6 +76,9 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
   {
     try
     {
+      // Don't show tabs because we have only the one
+      ((CTabFolder)getContainer()).setTabHeight(0);
+
       mainPage = new CDOSecurityPage(this);
       addPage(mainPage);
     }

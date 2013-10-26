@@ -10,14 +10,14 @@
  */
 package org.eclipse.emf.cdo.security.internal.ui.util;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
-import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -31,8 +31,6 @@ import java.util.List;
 
 /**
  * Various static utilities for working with the security model.
- *
- * TODO Are there methods in here that should be moved to, e.g., CDOUtil, SecurityManagerUtil, UIUtil, etc?
  *
  * @author Christian W. Damus (CEA LIST)
  */
@@ -97,16 +95,6 @@ public final class SecurityUIUtil
     {
       public boolean select(Object toTest)
       {
-        // boolean result = true;
-        //
-        // for (int i = 0; i < filters.length && result; i++)
-        // {
-        // result = filters[i].select(toTest);
-        // }
-        //
-        // return result;
-
-        // TODO I generally don't like array iterations with extra conditions. Isn't this easier to recognize?
         for (int i = 0; i < filters.length; i++)
         {
           if (!filters[i].select(toTest))
@@ -185,15 +173,6 @@ public final class SecurityUIUtil
 
   public static boolean isEditable(Object object)
   {
-    // TODO What about "unmanaged" EObjects?
-    // TODO What about managed legacy objects? --> CDOUtil.getCDOObject()?
-    return object instanceof CDOObject && isEditable((CDOObject)object);
-  }
-
-  public static boolean isEditable(CDOObject object)
-  {
-    // TODO What about object.cdoPermission()?
-    CDOView view = object.cdoView();
-    return view == null || !view.isReadOnly();
+    return !(object instanceof EObject) || CDOUtil.isWritable((EObject)object);
   }
 }

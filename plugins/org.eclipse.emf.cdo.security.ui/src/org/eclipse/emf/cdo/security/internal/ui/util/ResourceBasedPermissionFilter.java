@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.security.internal.ui.util;
 
-import org.eclipse.emf.cdo.security.CombinedFilter;
 import org.eclipse.emf.cdo.security.FilterPermission;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.PermissionFilter;
@@ -32,41 +31,24 @@ public class ResourceBasedPermissionFilter implements IFilter
 
   public boolean select(Object element)
   {
-    boolean result = element instanceof FilterPermission;
-    if (result)
+    if (!(element instanceof FilterPermission))
+    {
+      return false;
+    }
+
     {
       FilterPermission perm = (FilterPermission)element;
       for (PermissionFilter filter : perm.getFilters())
       {
-        if (!isResourceFilter(filter))
+        // We cannot edit CombinedFilters even if they comprise
+        // only ResourceFilters
+        if (!(filter instanceof ResourceFilter))
         {
-          result = false;
-          // TODO Should we break here?
+          return false;
         }
       }
     }
 
-    return result;
-  }
-
-  protected boolean isResourceFilter(PermissionFilter filter)
-  {
-    boolean result = filter instanceof ResourceFilter;
-    if (!result && filter instanceof CombinedFilter)
-    {
-      result = true; // Assume all permission filters are OK
-
-      CombinedFilter combined = (CombinedFilter)filter;
-      for (PermissionFilter next : combined.getOperands())
-      {
-        result = isResourceFilter(next);
-        if (!result)
-        {
-          break;
-        }
-      }
-    }
-
-    return result;
+    return true;
   }
 }

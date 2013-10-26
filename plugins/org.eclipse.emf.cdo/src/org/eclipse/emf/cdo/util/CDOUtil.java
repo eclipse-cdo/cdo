@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -702,4 +703,32 @@ public final class CDOUtil
   {
     return setAnnotation(modelElement, CDO_ANNOTATION_URI, DOCUMENTATION_KEY, value);
   }
+
+  /**
+   * Queries whether an object is writable (is permitted to be modified in the
+   * current view context).
+   * 
+   * @param eObject an object
+   * @return {@code false} if the {@code eObject} is managed by CDO and does not
+   *         have {@linkplain CDOPermission#WRITE write permission};
+   *         {@code true}, otherwise
+   *  
+   * @since 4.3
+   */
+  public static boolean isWritable(EObject eObject)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+
+    if (cdoObject != null)
+    {
+      CDOView view = cdoObject.cdoView();
+
+      // If the object is not in a view, then permissions aren't applicable
+      return view == null || !view.isReadOnly() && cdoObject.cdoPermission().isWritable();
+    }
+
+    // If there is no CDOObject, then this object is implicitly writable
+    return true;
+  }
+
 }

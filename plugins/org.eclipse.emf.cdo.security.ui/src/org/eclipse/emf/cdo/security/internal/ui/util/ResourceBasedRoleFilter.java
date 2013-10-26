@@ -31,20 +31,20 @@ public class ResourceBasedRoleFilter implements IFilter
 
   public boolean select(Object element)
   {
-    boolean result = element instanceof Role;
-    if (result)
+    if (!(element instanceof Role))
     {
-      Role role = (Role)element;
-      for (Permission next : role.getPermissions())
+      return false;
+    }
+
+    Role role = (Role)element;
+    for (Permission next : role.getPermissions())
+    {
+      if (!permFilter.select(next))
       {
-        if (!permFilter.select(next))
-        {
-          result = false;
-          // TODO Should we break here?
-        }
+        return false;
       }
     }
 
-    return result;
+    return true;
   }
 }

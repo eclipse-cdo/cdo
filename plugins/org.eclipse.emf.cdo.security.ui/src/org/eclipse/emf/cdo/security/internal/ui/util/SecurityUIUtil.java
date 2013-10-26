@@ -24,10 +24,8 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Various static utilities for working with the security model.
@@ -36,7 +34,7 @@ import java.util.List;
  */
 public final class SecurityUIUtil
 {
-  private static final IFilter[] RESOURCE_BASED_ROLE_FILTERS = { new ResourceBasedRoleFilter() };
+  private static final IFilter[] RESOURCE_BASED_PERMISSION_FILTERS = { new ResourceBasedPermissionFilter() };
 
   private static final IFilter[] NO_FILTERS = new IFilter[0];
 
@@ -69,27 +67,29 @@ public final class SecurityUIUtil
     return result;
   }
 
-  public static void applyDefaultFilters(StructuredViewer viewer, EClass itemType)
+  public static void applySupportedElementFilter(StructuredViewer viewer, EClass itemType)
   {
-    for (ViewerFilter next : getDefaultViewerFilters(itemType))
+    ViewerFilter filter = getSupportedElementViewerFilter(itemType);
+
+    if (filter != null)
     {
-      viewer.addFilter(next);
+      viewer.addFilter(filter);
     }
   }
 
-  private static IFilter[] getDefaultFilters(EClass itemType)
+  private static IFilter[] getSupportedElementFilters(EClass itemType)
   {
-    if (itemType == SecurityPackage.Literals.ROLE)
+    if (itemType == SecurityPackage.Literals.PERMISSION)
     {
-      return RESOURCE_BASED_ROLE_FILTERS;
+      return RESOURCE_BASED_PERMISSION_FILTERS;
     }
 
     return NO_FILTERS;
   }
 
-  private static IFilter filter(EClass itemType)
+  public static IFilter getSupportedElementFilter(EClass itemType)
   {
-    final IFilter[] filters = getDefaultFilters(itemType);
+    final IFilter[] filters = getSupportedElementFilters(itemType);
 
     return filters.length == 0 ? null : new IFilter()
     {
@@ -108,17 +108,11 @@ public final class SecurityUIUtil
     };
   }
 
-  private static List<ViewerFilter> getDefaultViewerFilters(EClass itemType)
+  public static ViewerFilter getSupportedElementViewerFilter(EClass itemType)
   {
-    IFilter[] filters = getDefaultFilters(itemType);
+    IFilter filter = getSupportedElementFilter(itemType);
 
-    ViewerFilter[] result = new ViewerFilter[filters.length];
-    for (int i = 0; i < filters.length; i++)
-    {
-      result[i] = getViewerFilter(filters[i]);
-    }
-
-    return Arrays.asList(result);
+    return filter == null ? null : getViewerFilter(filter);
   }
 
   public static ViewerFilter getViewerFilter(final IFilter filter)
@@ -133,9 +127,9 @@ public final class SecurityUIUtil
     };
   }
 
-  public static void applyDefaultFilters(Collection<?> elements, EClass itemType)
+  public static void applySupportedElementFilter(Collection<?> elements, EClass itemType)
   {
-    IFilter filter = filter(itemType);
+    IFilter filter = getSupportedElementFilter(itemType);
     if (filter != null)
     {
       for (Iterator<?> iter = elements.iterator(); iter.hasNext();)

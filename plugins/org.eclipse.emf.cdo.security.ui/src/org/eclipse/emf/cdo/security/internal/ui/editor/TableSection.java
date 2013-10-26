@@ -27,7 +27,6 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -54,9 +53,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
@@ -133,20 +130,8 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
 
   protected void addFilters(TableViewer viewer)
   {
-    viewer.addFilter(createTypeFilter(elementEClass));
-    SecurityUIUtil.applyDefaultFilters(viewer, elementEClass);
-  }
-
-  protected ViewerFilter createTypeFilter(final EClassifier type)
-  {
-    return new ViewerFilter()
-    {
-      @Override
-      public boolean select(Viewer viewer, Object parentElement, Object element)
-      {
-        return type.isInstance(element);
-      }
-    };
+    SecurityUIUtil.applyTypeFilter(viewer, elementEClass);
+    SecurityUIUtil.applySupportedElementFilter(viewer, elementEClass);
   }
 
   @Override

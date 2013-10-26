@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.ui.forms.IManagedForm;
 
 /**
  * A specialization of the encapsulated UI for one-to-many reference
@@ -141,24 +142,24 @@ public class OneToManyTableBlock extends OneToManyBlock
    */
   public static abstract class TableConfiguration extends OneToManyConfiguration implements ITableConfiguration
   {
-    public TableConfiguration(EReference reference, EClass itemType, IFilter filter)
+    public TableConfiguration(IManagedForm managedForm, EReference reference, EClass itemType, IFilter filter)
     {
-      super(reference, itemType, filter);
+      super(managedForm, reference, itemType, filter);
     }
 
-    public TableConfiguration(EReference reference, EClass itemType)
+    public TableConfiguration(IManagedForm managedForm, EReference reference, EClass itemType)
     {
-      super(reference, itemType);
+      super(managedForm, reference, itemType);
     }
 
-    public TableConfiguration(EReference reference, IFilter filter)
+    public TableConfiguration(IManagedForm managedForm, EReference reference, IFilter filter)
     {
-      super(reference, filter);
+      super(managedForm, reference, filter);
     }
 
-    public TableConfiguration(EReference reference)
+    public TableConfiguration(IManagedForm managedForm, EReference reference)
     {
-      super(reference);
+      super(managedForm, reference);
     }
   }
 }

@@ -242,7 +242,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     blockParent.setLayoutData(layoutData(parent, SWT.FILL, true, 2, SWT.FILL, true, 1));
 
     OneToManyBlock result = new OneToManyBlock(getContext(), getEditingDomain(), getAdapterFactory(),
-        new OneToManyBlock.OneToManyConfiguration(reference, itemType, itemFilter));
+        new OneToManyBlock.OneToManyConfiguration(getManagedForm(), reference, itemType, itemFilter));
 
     result.setEditorActionBars(getEditorActionBars());
     result.setInput(getValue());

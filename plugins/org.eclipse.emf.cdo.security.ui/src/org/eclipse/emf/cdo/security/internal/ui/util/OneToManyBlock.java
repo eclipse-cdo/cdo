@@ -41,10 +41,13 @@ import org.eclipse.emf.edit.ui.celleditor.FeatureEditorDialog;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.ChangeEvent;
+import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
@@ -72,6 +75,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import java.util.Collections;
@@ -96,6 +100,8 @@ public class OneToManyBlock
 
   private final IOneToManyConfiguration configuration;
 
+  private final IFilter supportedContentFilter;
+
   private IObservableList value;
 
   private TableViewer viewer;
@@ -104,16 +110,16 @@ public class OneToManyBlock
 
   private IActionBars editorActionBars;
 
-  public OneToManyBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory,
-      EReference reference)
+  public OneToManyBlock(IManagedForm managedForm, DataBindingContext context, EditingDomain domain,
+      AdapterFactory adapterFactory, EReference reference)
   {
-    this(context, domain, adapterFactory, new OneToManyConfiguration(reference));
+    this(context, domain, adapterFactory, new OneToManyConfiguration(managedForm, reference));
   }
 
-  public OneToManyBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory,
-      EReference reference, EClass itemType)
+  public OneToManyBlock(IManagedForm managedForm, DataBindingContext context, EditingDomain domain,
+      AdapterFactory adapterFactory, EReference reference, EClass itemType)
   {
-    this(context, domain, adapterFactory, new OneToManyConfiguration(reference, itemType));
+    this(context, domain, adapterFactory, new OneToManyConfiguration(managedForm, reference, itemType));
   }
 
   public OneToManyBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory,
@@ -124,6 +130,7 @@ public class OneToManyBlock
     this.adapterFactory = adapterFactory;
     configuration = blockConfig;
     input = new WritableValue(context.getValidationRealm());
+    supportedContentFilter = SecurityUIUtil.getSupportedElementFilter(configuration.getItemType());
   }
 
   protected IOneToManyConfiguration getConfiguration()
@@ -178,7 +185,7 @@ public class OneToManyBlock
     }
 
     viewer.setContentProvider(new ObservableListContentProvider());
-    SecurityUIUtil.applyDefaultFilters(viewer, itemType);
+    SecurityUIUtil.applySupportedElementFilter(viewer, itemType);
     if (itemType != reference.getEReferenceType())
     {
       applyTypeFilter(viewer, itemType);
@@ -190,6 +197,7 @@ public class OneToManyBlock
     }
 
     viewer.setInput(value);
+    hookUnsupportedModelContentValidation(value);
 
     if (!reference.isContainment())
     {
@@ -300,7 +308,7 @@ public class OneToManyBlock
             List<?> available = new java.util.ArrayList<Object>(EcoreUtil.getObjectsByType(directory.getItems(),
                 itemType));
             available.removeAll(value);
-            SecurityUIUtil.applyDefaultFilters(available, itemType);
+            SecurityUIUtil.applySupportedElementFilter(available, itemType);
 
             String label = NLS.bind(Messages.OneToManyBlock_3, SecurityEditPlugin.INSTANCE.getString(String.format(
                 "_UI_%s_%s_feature", reference.getEContainingClass().getName(), reference.getName()))); //$NON-NLS-1$
@@ -394,6 +402,7 @@ public class OneToManyBlock
     if (viewer != null)
     {
       viewer.setInput(value);
+      hookUnsupportedModelContentValidation(value);
     }
   }
 
@@ -522,6 +531,41 @@ public class OneToManyBlock
         });
   }
 
+  protected void hookUnsupportedModelContentValidation(IObservableList observableList)
+  {
+    // No need to hook a listener if there is no supported-content filter to check
+    if (observableList != null && supportedContentFilter != null)
+    {
+      observableList.addChangeListener(new IChangeListener()
+      {
+
+        public void handleChange(ChangeEvent event)
+        {
+          checkUnsupportedModelContent((IObservableList)event.getObservable());
+        }
+      });
+
+      // Initialize the validation state
+      checkUnsupportedModelContent(observableList);
+    }
+  }
+
+  protected void checkUnsupportedModelContent(IObservableList observableList)
+  {
+    // Anything not matching the supported-content filter?
+    for (Object element : observableList)
+    {
+      if (!supportedContentFilter.select(element))
+      {
+        configuration.getManagedForm().getMessageManager()
+            .addMessage(this, Messages.TableSection_3, null, IStatus.WARNING, viewer.getControl());
+        return;
+      }
+    }
+
+    configuration.getManagedForm().getMessageManager().removeMessage(this, viewer.getControl());
+  }
+
   /**
    * Specification of the configuration of a one-to-many block's contents.
    *
@@ -529,6 +573,8 @@ public class OneToManyBlock
    */
   public static interface IOneToManyConfiguration
   {
+    public IManagedForm getManagedForm();
+
     public EReference getModelReference();
 
     public EClass getItemType();
@@ -543,32 +589,41 @@ public class OneToManyBlock
    */
   public static class OneToManyConfiguration implements IOneToManyConfiguration
   {
+    private final IManagedForm managedForm;
+
     private final EReference reference;
 
     private final EClass itemType;
 
     private final IFilter filter;
 
-    public OneToManyConfiguration(EReference reference)
+    public OneToManyConfiguration(IManagedForm managedForm, EReference reference)
     {
-      this(reference, reference.getEReferenceType(), null);
+      this(managedForm, reference, reference.getEReferenceType(), SecurityUIUtil.getSupportedElementFilter(reference
+          .getEReferenceType()));
     }
 
-    public OneToManyConfiguration(EReference reference, EClass itemType)
+    public OneToManyConfiguration(IManagedForm managedForm, EReference reference, EClass itemType)
     {
-      this(reference, itemType, null);
+      this(managedForm, reference, itemType, SecurityUIUtil.getSupportedElementFilter(itemType));
     }
 
-    public OneToManyConfiguration(EReference reference, IFilter filter)
+    public OneToManyConfiguration(IManagedForm managedForm, EReference reference, IFilter filter)
     {
-      this(reference, reference.getEReferenceType(), filter);
+      this(managedForm, reference, reference.getEReferenceType(), filter);
     }
 
-    public OneToManyConfiguration(EReference reference, EClass itemType, IFilter filter)
+    public OneToManyConfiguration(IManagedForm managedForm, EReference reference, EClass itemType, IFilter filter)
     {
+      this.managedForm = managedForm;
       this.reference = reference;
       this.itemType = itemType;
       this.filter = filter;
+    }
+
+    public IManagedForm getManagedForm()
+    {
+      return managedForm;
     }
 
     public EReference getModelReference()

@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.security.internal.ui.util.EditableDialogCellEditor;
 import org.eclipse.emf.cdo.security.internal.ui.util.INewObjectConfigurator;
 import org.eclipse.emf.cdo.security.internal.ui.util.OneToManyTableBlock;
-import org.eclipse.emf.cdo.security.internal.ui.util.ResourceBasedPermissionFilter;
 import org.eclipse.emf.cdo.security.provider.SecurityEditPlugin;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -110,8 +109,8 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
 
   protected OneToManyTableBlock.ITableConfiguration createTableConfiguration()
   {
-    return new OneToManyTableBlock.TableConfiguration(SecurityPackage.Literals.ROLE__PERMISSIONS,
-        SecurityPackage.Literals.FILTER_PERMISSION, new ResourceBasedPermissionFilter())
+    return new OneToManyTableBlock.TableConfiguration(getManagedForm(), SecurityPackage.Literals.ROLE__PERMISSIONS,
+        SecurityPackage.Literals.PERMISSION)
     {
       private static final int COL_ACCESS = 0;
 

@@ -1102,9 +1102,8 @@ public class WorkingSetsEditor extends MultiPageEditorPart implements IEditingDo
     if (!getEditingDomain().getResourceSet().getResources().isEmpty())
     {
       selectionViewer.setInput(editingDomain.getResourceSet().getResources().get(0));
-      selectionViewer.expandToLevel(2);
+      selectionViewer.expandToLevel(3);
     }
-
   }
 
   /**

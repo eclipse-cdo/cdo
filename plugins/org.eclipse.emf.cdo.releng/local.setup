@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<setup:Project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" name="CDO">
+<setup:Project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" xmlns:workingsets="http://www.eclipse.org/CDO/releng/workingsets/1.0" name="CDO">
   <setupTasks xsi:type="setup:P2Task">
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
@@ -20,44 +20,72 @@
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.pde/compilers.f.unresolved-features" value="2"/>
   <setupTasks xsi:type="setup:WorkingSetTask">
-    <workingSets name="Features">
+    <workingSets name="CDO" id="CDO CDO">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.1 //@setupTasks.7/@workingSets.2 //@setupTasks.7/@workingSets.3 //@setupTasks.7/@workingSets.7 //@setupTasks.7/@workingSets.8"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="CDO Tests" id="CDO CDO Tests">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="CDO Examples" id="CDO CDO Examples">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:OrPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.examples.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.gastro.*"/>
+        </operands>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="CDO Dawn" id="CDO CDO Dawn">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="Net4j" id="CDO Net4j">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.5 //@setupTasks.7/@workingSets.6 //@setupTasks.7/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="Net4j DB" id="CDO Net4j DB">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.db.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="Net4j Examples" id="CDO Net4j Examples">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:OrPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.examples.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.buddies.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.jms.*"/>
+        </operands>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="Features" id="CDO Features">
       <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo.*-feature"/>
       <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j.*-feature"/>
       <predicates xsi:type="predicates:NamePredicate" pattern="org\.gastro.*-feature"/>
     </workingSets>
-    <workingSets name="Infrastructure">
+    <workingSets name="Releng" id="CDO Releng">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7 //@setupTasks.7/@workingSets.9"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="Infrastructure" id="CDO Infrastructure">
       <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
       <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
       <predicates xsi:type="predicates:NamePredicate" pattern="cdo\.www.*"/>
       <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.simrel\.build.*"/>
       <predicates xsi:type="predicates:NamePredicate" pattern="com\.ibm\.db2\.jcc.*"/>
-    </workingSets>
-    <workingSets name="Releng">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
-    </workingSets>
-    <workingSets name="CDO Dawn">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
-    </workingSets>
-    <workingSets name="CDO Tests">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf.cdo\.tests.*"/>
-    </workingSets>
-    <workingSets name="CDO Examples">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.examples.*"/>
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.gastro.*"/>
-    </workingSets>
-    <workingSets name="CDO">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo.*"/>
-    </workingSets>
-    <workingSets name="Net4j DB">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.db.*"/>
-    </workingSets>
-    <workingSets name="Net4j Examples">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.examples.*"/>
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.buddies.*"/>
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.jms.*"/>
-    </workingSets>
-    <workingSets name="Net4j">
-      <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j.*"/>
     </workingSets>
   </setupTasks>
   <branches name="master">
@@ -69,10 +97,10 @@
       <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
     </setupTasks>
+    <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:StringVariableTask" requirements="//@branches.0/@setupTasks.1" name="git.clone" value="${setup.branch.dir/git/cdo}" description="Location of CDO's Git clone."/>
-    <setupTasks xsi:type="setup:BuckminsterImportTask" requirements="//@branches.0/@setupTasks.2" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp"/>
-    <setupTasks xsi:type="setup:ApiBaselineTask" requirements="//@branches.0/@setupTasks.3" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
+    <setupTasks xsi:type="setup:StringVariableTask" requirements="//@branches.0/@setupTasks.2" name="git.clone" value="${setup.branch.dir/git/cdo}" description="Location of CDO's Git clone."/>
+    <setupTasks xsi:type="setup:BuckminsterImportTask" requirements="//@branches.1/@setupTasks.1 //@branches.0/@setupTasks.3" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp"/>
   </branches>
   <branches name="4.2">
     <setupTasks xsi:type="setup:P2Task">
@@ -82,9 +110,9 @@
       <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
     </setupTasks>
+    <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="streams/4.2-maintenance"/>
-    <setupTasks xsi:type="setup:StringVariableTask" requirements="//@branches.1/@setupTasks.1" name="git.clone" value="${setup.branch.dir/git/cdo}" description="Location of CDO's Git clone."/>
-    <setupTasks xsi:type="setup:BuckminsterImportTask" requirements="//@branches.1/@setupTasks.2" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp"/>
-    <setupTasks xsi:type="setup:ApiBaselineTask" requirements="//@branches.1/@setupTasks.3" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
+    <setupTasks xsi:type="setup:StringVariableTask" requirements="//@branches.1/@setupTasks.2" name="git.clone" value="${setup.branch.dir/git/cdo}" description="Location of CDO's Git clone."/>
+    <setupTasks xsi:type="setup:BuckminsterImportTask" requirements="//@branches.1/@setupTasks.1 //@branches.1/@setupTasks.3" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp"/>
   </branches>
 </setup:Project>

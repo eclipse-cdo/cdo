@@ -64,6 +64,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//SetupTask/restrictions"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/scope"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/excludedTriggers"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/documentation"/>
       <genOperations ecoreOperation="setup.ecore#//SetupTask/requires">
         <genParameters ecoreParameter="setup.ecore#//SetupTask/requires/setupTask"/>
       </genOperations>
@@ -155,6 +156,11 @@
     <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ResourceCreationTask" labelFeature="#//setup/ResourceCreationTask/targetURL">
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/content"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/targetURL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/encoding"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -44,6 +44,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getRestrictions <em>Restrictions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getExcludedTriggers <em>Excluded Triggers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,8 +93,28 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   protected Set<Trigger> excludedTriggers;
 
   /**
+   * The default value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDocumentation()
+   * @generated
+   * @ordered
+   */
+  protected static final String DOCUMENTATION_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @see #getDocumentation()
+   * @generated
+   * @ordered
+   */
+  protected String documentation = DOCUMENTATION_EDEFAULT;
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   protected SetupTaskImpl()
@@ -178,6 +199,30 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   public void setExcludedTriggers(Set<Trigger> newExcludedTriggers)
   {
     setExcludedTriggersGen(newExcludedTriggers == null || newExcludedTriggers.isEmpty() ? null : newExcludedTriggers);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getDocumentation()
+  {
+    return documentation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDocumentation(String newDocumentation)
+  {
+    String oldDocumentation = documentation;
+    documentation = newDocumentation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP_TASK__DOCUMENTATION, oldDocumentation,
+          documentation));
   }
 
   private SetupTaskScope getScope(EObject object)
@@ -311,6 +356,8 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       return getScope();
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       return getExcludedTriggers();
+    case SetupPackage.SETUP_TASK__DOCUMENTATION:
+      return getDocumentation();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -337,6 +384,9 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       setExcludedTriggers((Set<Trigger>)newValue);
       return;
+    case SetupPackage.SETUP_TASK__DOCUMENTATION:
+      setDocumentation((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -360,6 +410,9 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       setExcludedTriggers((Set<Trigger>)null);
       return;
+    case SetupPackage.SETUP_TASK__DOCUMENTATION:
+      setDocumentation(DOCUMENTATION_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -382,6 +435,8 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       return getScope() != SCOPE_EDEFAULT;
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       return excludedTriggers != null;
+    case SetupPackage.SETUP_TASK__DOCUMENTATION:
+      return DOCUMENTATION_EDEFAULT == null ? documentation != null : !DOCUMENTATION_EDEFAULT.equals(documentation);
     }
     return super.eIsSet(featureID);
   }
@@ -400,6 +455,8 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (excludedTriggers: ");
     result.append(excludedTriggers);
+    result.append(", documentation: ");
+    result.append(documentation);
     result.append(')');
     return result.toString();
   }

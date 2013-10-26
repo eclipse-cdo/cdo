@@ -130,9 +130,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_PREFERENCE_TASK__KEY, oldKey, key));
-    }
   }
 
   /**
@@ -155,10 +153,8 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_PREFERENCE_TASK__VALUE, oldValue,
           value));
-    }
   }
 
   /**
@@ -246,9 +242,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");

@@ -107,9 +107,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.CONTEXT_VARIABLE_TASK__NAME, oldName, name));
-    }
   }
 
   /**
@@ -132,9 +130,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.CONTEXT_VARIABLE_TASK__VALUE, oldValue, value));
-    }
   }
 
   /**
@@ -222,9 +218,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

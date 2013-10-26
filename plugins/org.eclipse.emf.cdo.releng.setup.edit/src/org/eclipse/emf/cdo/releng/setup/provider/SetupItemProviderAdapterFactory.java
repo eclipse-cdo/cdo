@@ -505,11 +505,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   protected ContextVariableTaskItemProvider contextVariableTaskItemProvider;
 
   /**
-  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask}.
-  	 * <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask}.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Adapter createContextVariableTaskAdapter()
   {
@@ -522,11 +522,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
-  	 * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ResourceCreationTaskItemProvider resourceCreationTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createResourceCreationTaskAdapter()
+  {
+    if (resourceCreationTaskItemProvider == null)
+    {
+      resourceCreationTaskItemProvider = new ResourceCreationTaskItemProvider(this);
+    }
+
+    return resourceCreationTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
+   * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+   * @generated
+   */
   protected EclipseIniTaskItemProvider eclipseIniTaskItemProvider;
 
   /**
@@ -885,6 +910,8 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       commandParameterItemProvider.dispose();
     if (contextVariableTaskItemProvider != null)
       contextVariableTaskItemProvider.dispose();
+    if (resourceCreationTaskItemProvider != null)
+      resourceCreationTaskItemProvider.dispose();
   }
 
 }

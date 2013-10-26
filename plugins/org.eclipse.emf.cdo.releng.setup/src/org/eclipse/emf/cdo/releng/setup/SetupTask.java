@@ -27,6 +27,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getRestrictions <em>Restrictions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getExcludedTriggers <em>Excluded Triggers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  * </p>
  *
@@ -113,8 +114,34 @@ public interface SetupTask extends EObject
   void setExcludedTriggers(Set<Trigger> value);
 
   /**
+   * Returns the value of the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Documentation</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Documentation</em>' attribute.
+   * @see #setDocumentation(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetupTask_Documentation()
+   * @model
+   * @generated
+   */
+  String getDocumentation();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation <em>Documentation</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Documentation</em>' attribute.
+   * @see #getDocumentation()
+   * @generated
+   */
+  void setDocumentation(String value);
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @model
    * @generated
    */

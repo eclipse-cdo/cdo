@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -187,7 +188,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         return NO_ELEMENTS;
       }
-      
+
       return folder.getNodes().toArray();
     }
 
@@ -527,7 +528,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     manager.add(new Separator());
-    manager.add(new ChangePasswordAction(page, session));
+
+    if (!StringUtil.isEmpty(session.getUserID()))
+    {
+      manager.add(new ChangePasswordAction(page, session));
+    }
+
     manager.add(new CloseSessionAction(page, session));
   }
 

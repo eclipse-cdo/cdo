@@ -33,8 +33,6 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChange
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IAggregateWorkingSet;
 import org.eclipse.ui.IPageLayout;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -77,6 +75,7 @@ public class WorkingSetManager
 
         // Compute the working sets for the new working group.
         workingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
+
         EMap<String, Set<IAdaptable>> workingSets = new BasicEMap<String, Set<IAdaptable>>();
 
         // Update the map to include null (to cause an delete) for any old working set not present in the new ones
@@ -118,9 +117,9 @@ public class WorkingSetManager
             // removed projects.
             class ResourceDeltaVisitor implements IResourceDeltaVisitor
             {
-              public boolean isChanged;
+              List<IProject> addedProjects = new ArrayList<IProject>();
 
-              public EMap<String, Set<IAdaptable>> workingSets = null;
+              List<IProject> removedProjects = new ArrayList<IProject>();
 
               public boolean visit(IResourceDelta delta) throws CoreException
               {
@@ -138,14 +137,8 @@ public class WorkingSetManager
                     IProject project = (IProject)resource;
                     if (!project.isHidden())
                     {
-                      if (workingSets == null)
-                      {
-                        workingSets = getWorkingSets();
-                      }
-                      if (addProject(project, workingSets))
-                      {
-                        isChanged = true;
-                      }
+                      System.err.println(">" + project.getName());
+                      addedProjects.add(project);
                     }
                   }
                   else if (kind == IResourceDelta.REMOVED)
@@ -153,14 +146,7 @@ public class WorkingSetManager
                     IProject project = (IProject)resource;
                     if (!project.isHidden())
                     {
-                      if (workingSets == null)
-                      {
-                        workingSets = getWorkingSets();
-                      }
-                      if (removeProject(project, workingSets))
-                      {
-                        isChanged = true;
-                      }
+                      removedProjects.remove(project);
                     }
                   }
                 }
@@ -172,10 +158,7 @@ public class WorkingSetManager
             ResourceDeltaVisitor resourceDeltaVisitor = new ResourceDeltaVisitor();
 
             delta.accept(resourceDeltaVisitor);
-            if (resourceDeltaVisitor.isChanged)
-            {
-              apply(resourceDeltaVisitor.workingSets);
-            }
+            updateProjects(resourceDeltaVisitor.addedProjects, resourceDeltaVisitor.removedProjects);
           }
           catch (CoreException ex)
           {
@@ -230,197 +213,165 @@ public class WorkingSetManager
    */
   private void apply(final EMap<String, Set<IAdaptable>> workingSets)
   {
-    // Do this on the UI thread to avoid problems with JDT's getting out of sync with respect to our updates.
-    Display.getDefault().asyncExec(new Runnable()
+    for (Map.Entry<String, Set<IAdaptable>> entry : workingSets)
     {
-      public void run()
+      String key = entry.getKey();
+      Set<IAdaptable> value = entry.getValue();
+      IWorkingSet workingSet = MANAGER.getWorkingSet(key);
+      if (workingSet == null)
       {
-        for (Map.Entry<String, Set<IAdaptable>> entry : workingSets)
+        if (value != null)
         {
-          String key = entry.getKey();
-          Set<IAdaptable> value = entry.getValue();
-          IWorkingSet workingSet = MANAGER.getWorkingSet(key);
-          if (workingSet == null)
-          {
-            if (value != null)
-            {
-              workingSet = MANAGER.createWorkingSet(key, value.toArray(new IAdaptable[value.size()]));
-              workingSet.setLabel(key);
-              workingSet.setId(WORKING_SET_PAGE);
-              MANAGER.addWorkingSet(workingSet);
-            }
-          }
-          else
-          {
-            if (value == null)
-            {
-              MANAGER.removeWorkingSet(workingSet);
-            }
-            else
-            {
-              workingSet.setElements(value.toArray(new IAdaptable[value.size()]));
-            }
-          }
+          workingSet = MANAGER.createWorkingSet(key, value.toArray(new IAdaptable[value.size()]));
+          workingSet.setLabel(key);
+          workingSet.setId(WORKING_SET_PAGE);
+          MANAGER.addWorkingSet(workingSet);
         }
-
-        managePackageExplorer(true);
       }
-    });
+      else
+      {
+        if (value == null)
+        {
+          MANAGER.removeWorkingSet(workingSet);
+        }
+        else
+        {
+          workingSet.setElements(value.toArray(new IAdaptable[value.size()]));
+        }
+      }
+    }
+
+    managePackageExplorer(true);
   }
 
   private void managePackageExplorer(boolean addListener)
   {
-    try
+    if (WORKSPACE.getRoot().getProjects().length != 0)
     {
-      boolean handledNavigator = false;
-      boolean handledPackageExplorer = false;
-
-      for (IWorkbenchWindow workbenchWindow : PlatformUI.getWorkbench().getWorkbenchWindows())
+      try
       {
-        for (IWorkbenchPage workbenchPage : workbenchWindow.getPages())
+        boolean handledNavigator = false;
+        boolean handledPackageExplorer = false;
+
+        for (IWorkbenchWindow workbenchWindow : PlatformUI.getWorkbench().getWorkbenchWindows())
         {
-          if (!handledNavigator)
+          for (IWorkbenchPage workbenchPage : workbenchWindow.getPages())
           {
-            Object commonNavigator = workbenchPage.findView(IPageLayout.ID_PROJECT_EXPLORER);
-            if (commonNavigator != null)
+            if (!handledNavigator)
             {
-              handledNavigator = true;
-
-              Method getNavigatorActionServiceMethod = commonNavigator.getClass()
-                  .getMethod("getNavigatorActionService");
-              Object navigatorActionService = getNavigatorActionServiceMethod.invoke(commonNavigator);
-              Field actionProviderInstancesField = navigatorActionService.getClass().getDeclaredField(
-                  "actionProviderInstances");
-              actionProviderInstancesField.setAccessible(true);
-              HashMap<?, ?> object = (HashMap<?, ?>)actionProviderInstancesField.get(navigatorActionService);
-              if (object != null)
+              Object commonNavigator = workbenchPage.findView(IPageLayout.ID_PROJECT_EXPLORER);
+              if (commonNavigator != null)
               {
-                for (Object value : object.values())
+                handledNavigator = true;
+
+                Method getNavigatorActionServiceMethod = commonNavigator.getClass().getMethod(
+                    "getNavigatorActionService");
+                Object navigatorActionService = getNavigatorActionServiceMethod.invoke(commonNavigator);
+                Field actionProviderInstancesField = navigatorActionService.getClass().getDeclaredField(
+                    "actionProviderInstances");
+                actionProviderInstancesField.setAccessible(true);
+                HashMap<?, ?> object = (HashMap<?, ?>)actionProviderInstancesField.get(navigatorActionService);
+                if (object != null)
                 {
-                  Class<? extends Object> theClass = value.getClass();
-                  if ("org.eclipse.ui.internal.navigator.resources.actions.WorkingSetActionProvider".equals(theClass
-                      .getName()))
+                  for (Object value : object.values())
                   {
-
-                    Field workingSetField = theClass.getDeclaredField("workingSet");
-                    workingSetField.setAccessible(true);
-                    IWorkingSet oldWorkingSet = (IWorkingSet)workingSetField.get(value);
-
-                    IWorkingSet[] activeWorkingSets = oldWorkingSet == null ? new IWorkingSet[0] : oldWorkingSet
-                        .isAggregateWorkingSet() ? ((IAggregateWorkingSet)oldWorkingSet).getComponents()
-                        : new IWorkingSet[] { oldWorkingSet };
-
-                    Set<IWorkingSet> allWorkingSets = new LinkedHashSet<IWorkingSet>(Arrays.asList(activeWorkingSets));
-                    allWorkingSets.addAll(Arrays.asList(MANAGER.getAllWorkingSets()));
-
-                    List<IWorkingSet> newActiveWorkingSets = getActiveWorkingSets(
-                        allWorkingSets.toArray(new IWorkingSet[allWorkingSets.size()]), activeWorkingSets);
-                    StringBuilder id = new StringBuilder("Aggregate:");
-                    for (IWorkingSet iWorkingSet : newActiveWorkingSets)
+                    Class<? extends Object> theClass = value.getClass();
+                    if ("org.eclipse.ui.internal.navigator.resources.actions.WorkingSetActionProvider".equals(theClass
+                        .getName()))
                     {
-                      id.append(iWorkingSet.getName());
-                      id.append(":");
-                    }
 
-                    IWorkingSet aggregateWorkingSet = MANAGER.getWorkingSet(id.toString());
-                    if (aggregateWorkingSet == null)
-                    {
-                      aggregateWorkingSet = MANAGER.createAggregateWorkingSet(id.toString(), "Multiple Working Sets",
-                          newActiveWorkingSets.toArray(new IWorkingSet[newActiveWorkingSets.size()]));
-                      MANAGER.addWorkingSet(aggregateWorkingSet);
-                    }
-                    MANAGER.addRecentWorkingSet(aggregateWorkingSet);
+                      Field workingSetField = theClass.getDeclaredField("workingSet");
+                      workingSetField.setAccessible(true);
+                      IWorkingSet oldWorkingSet = (IWorkingSet)workingSetField.get(value);
 
-                    Method setWorkingSetMethod = theClass.getDeclaredMethod("setWorkingSet", IWorkingSet.class);
-                    setWorkingSetMethod.setAccessible(true);
-                    setWorkingSetMethod.invoke(value, aggregateWorkingSet);
+                      IWorkingSet[] activeWorkingSets = oldWorkingSet == null ? new IWorkingSet[0] : oldWorkingSet
+                          .isAggregateWorkingSet() ? ((IAggregateWorkingSet)oldWorkingSet).getComponents()
+                          : new IWorkingSet[] { oldWorkingSet };
+
+                      Set<IWorkingSet> allWorkingSets = new LinkedHashSet<IWorkingSet>(Arrays.asList(activeWorkingSets));
+                      allWorkingSets.addAll(Arrays.asList(MANAGER.getAllWorkingSets()));
+
+                      List<IWorkingSet> newActiveWorkingSets = getActiveWorkingSets(
+                          allWorkingSets.toArray(new IWorkingSet[allWorkingSets.size()]), activeWorkingSets);
+                      StringBuilder id = new StringBuilder("Aggregate:");
+                      for (IWorkingSet iWorkingSet : newActiveWorkingSets)
+                      {
+                        id.append(iWorkingSet.getName());
+                        id.append(":");
+                      }
+
+                      IWorkingSet aggregateWorkingSet = MANAGER.getWorkingSet(id.toString());
+                      if (aggregateWorkingSet == null)
+                      {
+                        aggregateWorkingSet = MANAGER.createAggregateWorkingSet(id.toString(), "Multiple Working Sets",
+                            newActiveWorkingSets.toArray(new IWorkingSet[newActiveWorkingSets.size()]));
+                        MANAGER.addWorkingSet(aggregateWorkingSet);
+                      }
+                      MANAGER.addRecentWorkingSet(aggregateWorkingSet);
+
+                      Method setWorkingSetMethod = theClass.getDeclaredMethod("setWorkingSet", IWorkingSet.class);
+                      setWorkingSetMethod.setAccessible(true);
+                      setWorkingSetMethod.invoke(value, aggregateWorkingSet);
+                    }
                   }
                 }
               }
             }
-          }
 
-          if (!handledPackageExplorer)
-          {
-            IViewPart packageExplorer = workbenchPage.findView(PACKAGE_EXPLORER_ID);
-            if (packageExplorer != null)
+            if (!handledPackageExplorer)
             {
-              handledPackageExplorer = true;
-
-              Method getWorkingSetModelMethod = packageExplorer.getClass().getMethod("getWorkingSetModel");
-              Object workingSetModel = getWorkingSetModelMethod.invoke(packageExplorer);
-              if (workingSetModel != null)
+              IViewPart packageExplorer = workbenchPage.findView(PACKAGE_EXPLORER_ID);
+              if (packageExplorer != null)
               {
-                Class<?> workingSetModelClass = workingSetModel.getClass();
-                Method getAllWorkingSetsMethod = workingSetModelClass.getMethod("getAllWorkingSets");
-                IWorkingSet[] allWorkingSets = (IWorkingSet[])getAllWorkingSetsMethod.invoke(workingSetModel);
+                handledPackageExplorer = true;
 
-                Method getActiveWorkingSetsMethod = workingSetModelClass.getMethod("getActiveWorkingSets");
-                IWorkingSet[] activeWorkingSets = (IWorkingSet[])getActiveWorkingSetsMethod.invoke(workingSetModel);
-
-                List<IWorkingSet> newActiveWorkingSets = getActiveWorkingSets(allWorkingSets, activeWorkingSets);
-
-                IWorkingSet[] orderedActiveWorkingSetsArray = newActiveWorkingSets
-                    .toArray(new IWorkingSet[newActiveWorkingSets.size()]);
-
-                Method setWorkingSetsMethod = workingSetModelClass.getMethod("setActiveWorkingSets",
-                    IWorkingSet[].class);
-
-                setWorkingSetsMethod.invoke(workingSetModel, new Object[] { orderedActiveWorkingSetsArray });
-
-                Method getRootModeMethod = packageExplorer.getClass().getMethod("getRootMode");
-                if (!getRootModeMethod.invoke(packageExplorer).equals(2))
+                Class<? extends IViewPart> packageExplorerClass = packageExplorer.getClass();
+                Method getWorkingSetModelMethod = packageExplorerClass.getMethod("getWorkingSetModel");
+                Object workingSetModel = getWorkingSetModelMethod.invoke(packageExplorer);
+                if (workingSetModel != null)
                 {
-                  Method method = packageExplorer.getClass().getMethod("rootModeChanged", int.class);
-                  method.invoke(packageExplorer, 2);
+                  Class<?> workingSetModelClass = workingSetModel.getClass();
+                  Method getAllWorkingSetsMethod = workingSetModelClass.getMethod("getAllWorkingSets");
+                  IWorkingSet[] allWorkingSets = (IWorkingSet[])getAllWorkingSetsMethod.invoke(workingSetModel);
+
+                  Method getActiveWorkingSetsMethod = workingSetModelClass.getMethod("getActiveWorkingSets");
+                  IWorkingSet[] activeWorkingSets = (IWorkingSet[])getActiveWorkingSetsMethod.invoke(workingSetModel);
+
+                  List<IWorkingSet> newActiveWorkingSets = getActiveWorkingSets(allWorkingSets, activeWorkingSets);
+
+                  IWorkingSet[] orderedActiveWorkingSetsArray = newActiveWorkingSets
+                      .toArray(new IWorkingSet[newActiveWorkingSets.size()]);
+
+                  Method setWorkingSetsMethod = workingSetModelClass.getMethod("setActiveWorkingSets",
+                      IWorkingSet[].class);
+
+                  setWorkingSetsMethod.invoke(workingSetModel, new Object[] { orderedActiveWorkingSetsArray });
                 }
               }
             }
           }
         }
       }
-
-      if (addListener && !handledNavigator && !handledPackageExplorer)
+      catch (NoSuchMethodException ex)
       {
-        final IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        if (activeWorkbenchWindow != null)
-        {
-          IPerspectiveListener perspectiveListener = new IPerspectiveListener()
-          {
-            public void perspectiveChanged(IWorkbenchPage page, IPerspectiveDescriptor perspective, String changeId)
-            {
-            }
-
-            public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor perspective)
-            {
-              activeWorkbenchWindow.removePerspectiveListener(this);
-              managePackageExplorer(false);
-            }
-          };
-
-          activeWorkbenchWindow.addPerspectiveListener(perspectiveListener);
-        }
+        WorkingSetsEditorPlugin.INSTANCE.log(ex);
       }
-    }
-    catch (NoSuchMethodException ex)
-    {
-      WorkingSetsEditorPlugin.INSTANCE.log(ex);
-    }
-    catch (SecurityException ex)
-    {
-      WorkingSetsEditorPlugin.INSTANCE.log(ex);
-    }
-    catch (IllegalAccessException ex)
-    {
-      WorkingSetsEditorPlugin.INSTANCE.log(ex);
-    }
-    catch (InvocationTargetException ex)
-    {
-      WorkingSetsEditorPlugin.INSTANCE.log(ex);
-    }
-    catch (NoSuchFieldException ex)
-    {
-      WorkingSetsEditorPlugin.INSTANCE.log(ex);
+      catch (SecurityException ex)
+      {
+        WorkingSetsEditorPlugin.INSTANCE.log(ex);
+      }
+      catch (IllegalAccessException ex)
+      {
+        WorkingSetsEditorPlugin.INSTANCE.log(ex);
+      }
+      catch (InvocationTargetException ex)
+      {
+        WorkingSetsEditorPlugin.INSTANCE.log(ex);
+      }
+      catch (NoSuchFieldException ex)
+      {
+        WorkingSetsEditorPlugin.INSTANCE.log(ex);
+      }
     }
   }
 
@@ -466,6 +417,38 @@ public class WorkingSetManager
       newActiveWorkingSets.addAll(workingSets);
     }
     return newActiveWorkingSets;
+  }
+
+  private void updateProjects(final List<IProject> addedProjects, final List<IProject> removedProjects)
+  {
+    // Do this on the UI thread to avoid problems with JDT's getting out of sync with respect to our updates.
+    Display.getDefault().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        EMap<String, Set<IAdaptable>> workingSets = getWorkingSets();
+        boolean isChanged = false;
+        for (IProject project : addedProjects)
+        {
+          if (addProject(project, workingSets))
+          {
+            isChanged = true;
+          }
+        }
+        for (IProject project : removedProjects)
+        {
+          if (removeProject(project, workingSets))
+          {
+            isChanged = true;
+          }
+        }
+
+        if (isChanged)
+        {
+          apply(workingSets);
+        }
+      }
+    });
   }
 
   /**

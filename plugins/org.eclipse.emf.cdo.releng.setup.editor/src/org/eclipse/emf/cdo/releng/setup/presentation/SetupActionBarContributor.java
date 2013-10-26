@@ -20,6 +20,9 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
+import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
+import org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsActionBarContributor.PreviewDialog;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
@@ -71,6 +74,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -480,8 +484,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void menuAboutToShow(IMenuManager menuManager)
+  public void menuAboutToShowGen(IMenuManager menuManager)
   {
     super.menuAboutToShow(menuManager);
     MenuManager submenuManager = null;
@@ -493,6 +496,72 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
     submenuManager = new MenuManager(SetupEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
     populateManager(submenuManager, createSiblingActions, null);
     menuManager.insertBefore("edit", submenuManager);
+  }
+
+  @Override
+  public void menuAboutToShow(IMenuManager menuManager)
+  {
+    menuAboutToShowGen(menuManager);
+    menuManager.insertBefore("ui-actions", new Action()
+    {
+      @Override
+      public String getText()
+      {
+        return "Working Sets Preview...";
+      }
+
+      @Override
+      public void run()
+      {
+        Dialog dialog = new PreviewDialog(activeEditorPart.getSite().getShell(), activeEditorPart)
+        {
+          private List<WorkingSet> workingSets = new ArrayList<WorkingSet>();
+
+          @Override
+          protected void selectionChanged(IWorkbenchPart part, ISelection selection)
+          {
+            if (part == activeEditorPart)
+            {
+              List<WorkingSet> oldWorkingSets = workingSets;
+              workingSets = getWorkingSets();
+              if (workingSets != oldWorkingSets)
+              {
+                reconcile();
+                tree.setInput(input);
+                tree.expandAll();
+              }
+            }
+
+            super.selectionChanged(part, selection);
+          }
+
+          @Override
+          protected List<WorkingSet> getWorkingSets()
+          {
+            IStructuredSelection selection = (IStructuredSelection)((ISelectionProvider)activeEditorPart)
+                .getSelection();
+            LOOP: for (Object object : selection.toArray())
+            {
+              if (object instanceof EObject)
+              {
+                for (EObject eObject = (EObject)object; eObject != null; eObject = eObject.eContainer())
+                {
+                  if (eObject instanceof WorkingSetTask)
+                  {
+                    workingSets = ((WorkingSetTask)eObject).getWorkingSets();
+                    break LOOP;
+                  }
+                }
+              }
+            }
+
+            return workingSets;
+          }
+        };
+
+        dialog.open();
+      }
+    });
   }
 
   /**

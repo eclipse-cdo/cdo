@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <setup:Project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" xmlns:workingsets="http://www.eclipse.org/CDO/releng/workingsets/1.0" name="CDO">
+  <setupTasks xsi:type="setup:ResourceCreationTask" excludedTriggers="STARTUP MANUAL" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;section name=&quot;Workbench&quot;>&#xD;&#xA;&#x9;&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>&#xD;&#xA;&#x9;&lt;/section>&#xD;&#xA;&lt;/section>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" encoding="UTF-8"/>
   <setupTasks xsi:type="setup:P2Task">
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
@@ -23,13 +24,13 @@
     <workingSets name="CDO" id="CDO CDO">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.1 //@setupTasks.7/@workingSets.2 //@setupTasks.7/@workingSets.3 //@setupTasks.7/@workingSets.7 //@setupTasks.7/@workingSets.8"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.1 //@setupTasks.8/@workingSets.2 //@setupTasks.8/@workingSets.3 //@setupTasks.8/@workingSets.7 //@setupTasks.8/@workingSets.8"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Tests" id="CDO CDO Tests">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Examples" id="CDO CDO Examples">
@@ -38,25 +39,25 @@
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.examples.*"/>
           <operands xsi:type="predicates:NamePredicate" pattern="org\.gastro.*"/>
         </operands>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Dawn" id="CDO CDO Dawn">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Net4j" id="CDO Net4j">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.5 //@setupTasks.7/@workingSets.6 //@setupTasks.7/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.5 //@setupTasks.8/@workingSets.6 //@setupTasks.8/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Net4j DB" id="CDO Net4j DB">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.db.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Net4j Examples" id="CDO Net4j Examples">
@@ -66,7 +67,7 @@
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.buddies.*"/>
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.jms.*"/>
         </operands>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Features" id="CDO Features">
@@ -77,7 +78,7 @@
     <workingSets name="Releng" id="CDO Releng">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.7/@workingSets.7 //@setupTasks.7/@workingSets.9"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7 //@setupTasks.8/@workingSets.9"/>
       </predicates>
     </workingSets>
     <workingSets name="Infrastructure" id="CDO Infrastructure">

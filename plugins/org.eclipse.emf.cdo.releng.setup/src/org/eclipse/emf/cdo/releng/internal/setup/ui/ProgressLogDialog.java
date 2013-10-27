@@ -503,7 +503,8 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
               {
                 long seconds = (System.currentTimeMillis() - start) / 1000;
                 dialog.log("Took " + seconds + " seconds.");
-                dialog.log("Press OK to close the dialog" + (restart[0] ? " and restart Eclipse" : "") + "...");
+                dialog.log("Press OK to close the dialog"
+                    + (restart[0] && Activator.SETUP_IDE ? " and restart Eclipse" : "") + "...");
                 dialog.setFinished();
               }
 
@@ -519,7 +520,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
             }
           });
 
-          if (dialog.open() == ProgressLogDialog.OK && restart[0])
+          if (dialog.open() == ProgressLogDialog.OK && restart[0] && Activator.SETUP_IDE)
           {
             PlatformUI.getWorkbench().restart();
           }

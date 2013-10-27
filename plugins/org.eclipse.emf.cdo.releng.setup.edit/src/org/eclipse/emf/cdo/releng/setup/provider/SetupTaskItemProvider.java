@@ -336,12 +336,16 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
       StringBuilder builder = new StringBuilder(itemDelegator.getText(object));
       if (!(object instanceof Collection<?>))
       {
-        builder.append(" ~ ");
         int index = builder.length();
         object = itemDelegator.getParent(object);
         while (object != null && !(object instanceof Configuration) && !(object instanceof Resource))
         {
-          if (builder.length() != index)
+          if (builder.length() == index)
+          {
+            builder.insert(index, " (");
+            index += 2;
+          }
+          else
           {
             builder.insert(index, " - ");
           }
@@ -350,6 +354,11 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
           builder.insert(index, text);
 
           object = itemDelegator.getParent(object);
+        }
+
+        if (builder.length() != index)
+        {
+          builder.append(")");
         }
       }
 

@@ -185,7 +185,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__NAME, oldName, name));
+    }
   }
 
   /**
@@ -208,8 +210,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldRemoteName = remoteName;
     remoteName = newRemoteName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__REMOTE_NAME, oldRemoteName,
           remoteName));
+    }
   }
 
   /**
@@ -232,8 +236,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldRemoteURI = remoteURI;
     remoteURI = newRemoteURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__REMOTE_URI, oldRemoteURI,
           remoteURI));
+    }
   }
 
   /**
@@ -256,8 +262,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldCheckoutBranch = checkoutBranch;
     checkoutBranch = newCheckoutBranch;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH,
           oldCheckoutBranch, checkoutBranch));
+    }
   }
 
   /**
@@ -366,7 +374,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -411,6 +421,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     }
   }
 
+  /**
+   * @author Ed Merks
+   */
   private interface GitDelegate
   {
     public boolean isNeeded(SetupTaskContext context, String name, String checkoutBranch, String remoteName)
@@ -422,6 +435,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     public void dispose();
   }
 
+  /**
+   * @author Ed Merks
+   */
   private static class GitUtil implements GitDelegate
   {
     private File workDir;

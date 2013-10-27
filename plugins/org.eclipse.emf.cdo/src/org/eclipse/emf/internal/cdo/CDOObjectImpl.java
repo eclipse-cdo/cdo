@@ -181,6 +181,11 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    */
   public final CDOPermission cdoPermission()
   {
+    if (FSMUtil.isTransient(this))
+    {
+      return CDOPermission.WRITE;
+    }
+
     return cdoRevision(true).getPermission();
   }
 

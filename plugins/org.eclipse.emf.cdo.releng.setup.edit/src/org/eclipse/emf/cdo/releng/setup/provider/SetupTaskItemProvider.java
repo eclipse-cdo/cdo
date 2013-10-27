@@ -334,20 +334,23 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
     public String getText(Object object)
     {
       StringBuilder builder = new StringBuilder(itemDelegator.getText(object));
-      builder.append(" ~ ");
-      int index = builder.length();
-      object = itemDelegator.getParent(object);
-      while (object != null && !(object instanceof Configuration) && !(object instanceof Resource))
+      if (!(object instanceof Collection<?>))
       {
-        if (builder.length() != index)
-        {
-          builder.insert(0, " - ");
-        }
-
-        String text = itemDelegator.getText(object);
-        builder.insert(0, text);
-
+        builder.append(" ~ ");
+        int index = builder.length();
         object = itemDelegator.getParent(object);
+        while (object != null && !(object instanceof Configuration) && !(object instanceof Resource))
+        {
+          if (builder.length() != index)
+          {
+            builder.insert(index, " - ");
+          }
+
+          String text = itemDelegator.getText(object);
+          builder.insert(index, text);
+
+          object = itemDelegator.getParent(object);
+        }
       }
 
       return builder.toString();

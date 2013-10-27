@@ -487,14 +487,17 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return false;
     }
 
-    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String removeURI)
+    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI)
         throws Exception
     {
       if (cachedGit == null)
       {
-        cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, removeURI);
+        cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, remoteURI);
         cachedRepository = cachedGit.getRepository();
-        GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName);
+        if (!URI.createURI(remoteURI).isFile())
+        {
+          GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName);
+        }
       }
 
       if (!hasCheckout)
@@ -537,7 +540,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         String remoteName, String remoteURI) throws Exception
     {
       URI baseURI = URI.createURI(remoteURI);
-      String remote = URI.createHierarchicalURI(baseURI.scheme(),
+      String remote = baseURI.isFile() ? baseURI.toString() : URI.createHierarchicalURI(baseURI.scheme(),
           context.getSetup().getPreferences().getUserName() + "@" + baseURI.authority(), baseURI.device(),
           baseURI.segments(), baseURI.query(), baseURI.fragment()).toString();
 

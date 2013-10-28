@@ -7,9 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 420528
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -161,6 +163,15 @@ public class ViewProperties extends Properties<CDOView>
       protected Object eval(CDOView view)
       {
         return !StringUtil.isEmpty(view.getSession().getUserID());
+      }
+    });
+
+    add(new Property<CDOView>("historical") //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(CDOView view)
+      {
+        return view.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
       }
     });
   }

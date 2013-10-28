@@ -9,6 +9,7 @@
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
+	  Christian W. Damus (CEA LIST) - bug 420528
 -->
 
 <plugin>
@@ -202,7 +203,10 @@
                tooltip="%action.tooltip.1">
          </action>
 	       <enablement>
-	        		<test property="org.eclipse.emf.cdo.object.writableContainer" value="true"/>
+              <and>
+                 <test property="org.eclipse.emf.cdo.object.permissionContainer" value="WRITE"/>
+                 <test property="org.eclipse.emf.cdo.object.viewHistorical" value="false"/>
+              </and>
 	       </enablement>
       </objectContribution>
       <objectContribution
@@ -216,7 +220,10 @@
                tooltip="%action.tooltip.11">
          </action>
 	       <enablement>
-	        		<test property="org.eclipse.emf.cdo.object.writable" value="true"/>
+              <and>
+                 <test property="org.eclipse.emf.cdo.object.permission" value="WRITE"/>
+                 <test property="org.eclipse.emf.cdo.object.viewHistorical" value="false"/>
+              </and>
 	       </enablement>
       </objectContribution>
       <objectContribution
@@ -252,7 +259,10 @@
                tooltip="%action.tooltip.3">
          </action>
 	       <enablement>
-	        		<test property="org.eclipse.emf.cdo.object.writable" value="true"/>
+              <and>
+                 <test property="org.eclipse.emf.cdo.object.permission" value="WRITE"/>
+                 <test property="org.eclipse.emf.cdo.object.viewHistorical" value="false"/>
+              </and>
 	       </enablement>
       </objectContribution>
       <objectContribution

@@ -49,13 +49,13 @@
          id="org.eclipse.emf.cdo.view.properties"
          type="org.eclipse.emf.cdo.view.CDOView"
          namespace="org.eclipse.emf.cdo.view"
-         properties="open,viewID,branchName,branch,timeStamp,lastUpdateTime,readOnly,dirty,durable,sessionID,userID,userAuthenticated"
+         properties="open,viewID,branchName,branch,timeStamp,lastUpdateTime,readOnly,dirty,durable,sessionID,userID,userAuthenticated,historical"
          class="org.eclipse.emf.internal.cdo.view.ViewProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.object.properties"
          type="org.eclipse.emf.ecore.EObject"
          namespace="org.eclipse.emf.cdo.object"
-         properties="id,state,transactional,readable,writable,writableContainer,permission,permissionContainer,readLocks,writeLock,writeOption"
+         properties="id,state,transactional,readable,writable,writableContainer,permission,permissionContainer,readLocks,writeLock,writeOption,viewHistorical"
          class="org.eclipse.emf.internal.cdo.object.ObjectProperties$Tester"/>
    </extension>
 

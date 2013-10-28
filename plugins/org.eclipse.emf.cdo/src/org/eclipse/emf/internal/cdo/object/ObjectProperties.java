@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 420528
  */
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -184,7 +186,23 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object.eContainer());
+        CDOObject cdoObject = null;
+
+        EObject eContainer = object.eContainer();
+        if (eContainer != null)
+        {
+          cdoObject = CDOUtil.getCDOObject(eContainer);
+        }
+
+        if (cdoObject == null)
+        {
+          Resource resource = object.eResource();
+          if (resource instanceof CDOObject)
+          {
+            cdoObject = (CDOObject)resource;
+          }
+        }
+
         if (cdoObject == null)
         {
           return null;
@@ -257,6 +275,27 @@ public class ObjectProperties extends Properties<EObject>
         }
 
         return lockState.getWriteOptionOwner();
+      }
+    });
+
+    add(new Property<EObject>("viewHistorical") //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
+        {
+          return false;
+        }
+
+        return view.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
       }
     });
 

@@ -76,7 +76,7 @@ public class WorkingSetManager
         // Compute the working sets for the new working group.
         workingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
 
-        EMap<String, Set<IAdaptable>> workingSets = new BasicEMap<String, Set<IAdaptable>>();
+        final EMap<String, Set<IAdaptable>> workingSets = new BasicEMap<String, Set<IAdaptable>>();
 
         // Update the map to include null (to cause an delete) for any old working set not present in the new ones
         for (WorkingSet workingSet : oldWorkingSetGroup.getWorkingSets())
@@ -95,8 +95,14 @@ public class WorkingSetManager
         // Update the working sets for all the projects in the workspace and apply the result to the real working sets.
         if (!workingSets.isEmpty())
         {
-          updateProjects(workingSets);
-          apply(workingSets);
+          Display.getDefault().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              updateProjects(workingSets);
+              apply(workingSets);
+            }
+          });
         }
       }
     }

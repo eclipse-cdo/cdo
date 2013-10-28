@@ -57,6 +57,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -96,6 +97,8 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       "Processing API deltas..." };
 
   private Text text;
+
+  private ScrollBarListener scrollBarListener = new ScrollBarListener();
 
   private Button okButton;
 
@@ -288,6 +291,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     text.setEditable(false);
     text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+    text.getVerticalBar().addSelectionListener(scrollBarListener);
 
     return area;
   }
@@ -376,25 +380,21 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
     asyncExec(new Runnable()
     {
+
       public void run()
       {
-        try
+        if (!okButton.isEnabled())
         {
           String string = "[" + TIME.format(date) + "] " + message;
-          int visibleLines = text.getClientArea().height / text.getLineHeight();
-          int topVisibleLine = text.getLineCount() - visibleLines;
-          if (topVisibleLine - text.getTopIndex() <= 1)
+
+          if (scrollBarListener.isDragging())
           {
-            text.append(string);
+            scrollBarListener.appendText(string);
           }
           else
           {
-            text.setText(text.getText() + text.getLineDelimiter() + string);
+            appendText(string);
           }
-        }
-        catch (Exception ex)
-        {
-          //$FALL-THROUGH$
         }
       }
     });
@@ -453,6 +453,26 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       }
 
       //$FALL-THROUGH$
+    }
+  }
+
+  private void appendText(String string)
+  {
+    Rectangle clientArea = text.getClientArea();
+    int visibleLines = clientArea.height / text.getLineHeight();
+    int topVisibleLine = text.getLineCount() - visibleLines;
+    int topIndex = text.getTopIndex();
+    int delta = topVisibleLine - topIndex;
+    if (delta <= 2)
+    {
+      text.append(string);
+    }
+    else
+    {
+      text.setRedraw(false);
+      text.setText(text.getText().trim() + text.getLineDelimiter() + string);
+      text.setTopIndex(topIndex);
+      text.setRedraw(true);
     }
   }
 
@@ -611,4 +631,46 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     }
   }
 
+  protected class ScrollBarListener extends SelectionAdapter
+  {
+    private boolean isDragging;
+
+    private String pendingLines;
+
+    @Override
+    public void widgetSelected(SelectionEvent event)
+    {
+      if (event.detail == SWT.NONE)
+      {
+        isDragging = false;
+        if (pendingLines != null)
+        {
+          ProgressLogDialog.this.appendText(pendingLines);
+          pendingLines = null;
+        }
+      }
+      else if (event.detail == SWT.DRAG)
+      {
+        isDragging = true;
+      }
+    }
+
+    public boolean isDragging()
+    {
+      return isDragging;
+    }
+
+    public void appendText(String line)
+    {
+      if (pendingLines == null)
+      {
+        pendingLines = line;
+      }
+      else
+      {
+        pendingLines = pendingLines.trim() + text.getLineDelimiter() + line;
+      }
+    }
+
+  }
 }

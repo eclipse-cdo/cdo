@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 420644
  */
 package org.eclipse.emf.cdo.server.spi.security;
 
@@ -14,6 +15,8 @@ import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager.CommitHandler;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -67,15 +70,22 @@ public abstract class SecurityManagerFactory extends Factory
     public ISecurityManager create(String description) throws ProductCreationException
     {
       List<String> tokens = StringUtil.split(description, ":", "()");
-      String realmPath = tokens.get(0);
+      String repositoryName = tokens.get(0);
+      String realmPath = tokens.get(1);
 
       ISecurityManager securityManager = SecurityManagerUtil.createSecurityManager(realmPath);
 
-      for (int i = 1; i < tokens.size(); i++)
+      for (int i = 2; i < tokens.size(); i++)
       {
         String token = tokens.get(i);
         CommitHandler handler = getHandler(container, token);
         ((InternalSecurityManager)securityManager).addCommitHandler(handler);
+      }
+
+      if (securityManager instanceof InternalSecurityManager)
+      {
+        ((InternalSecurityManager)securityManager).setRepository((InternalRepository)RepositoryFactory.get(container,
+            repositoryName));
       }
 
       return securityManager;

@@ -7,11 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 420644
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
-import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -109,9 +109,8 @@ public class SecurityExtension implements IAppExtension
         description = DEFAULT_REALM_PATH;
       }
 
-      InternalSecurityManager securityManager = (InternalSecurityManager)container.getElement(
-          SecurityManagerFactory.PRODUCT_GROUP, type, description);
-      securityManager.setRepository(repository);
+      String qualifiedDescription = String.format("%s:%s", name, description); //$NON-NLS-1$
+      container.getElement(SecurityManagerFactory.PRODUCT_GROUP, type, qualifiedDescription);
     }
   }
 

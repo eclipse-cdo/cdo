@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 420540
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
@@ -104,15 +105,8 @@ public class CDOCommandProvider implements CommandProvider
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
     {
-      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-      for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
-      {
-        println(packageUnit);
-        for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
-        {
-          println(CDOCommand.INDENT + packageInfo);
-        }
-      }
+      LifecycleUtil.deactivate(repository);
+      println("Repository stopped");
     }
   };
 

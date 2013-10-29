@@ -7,16 +7,21 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
 import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerRepository;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
+import org.eclipse.emf.cdo.spi.server.AuthenticationUtil;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
+
+import java.util.concurrent.Callable;
 
 /**
  * @author Eike Stepper
@@ -42,19 +47,35 @@ public class DeleteRepositoryIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws Exception
   {
-    CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)getProtocol();
-    CDOAdminServer admin = protocol.getInfraStructure();
-
-    CDOAdminServerRepository repository = (CDOAdminServerRepository)admin.getRepository(name);
-    if (repository != null)
+    try
     {
-      if (admin.deleteRepository(repository, type))
-      {
-        out.writeBoolean(true);
-        return;
-      }
+      CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)getProtocol();
+      out.writeBoolean(deleteRepository(protocol));
     }
+    catch (NotAuthenticatedException ex)
+    {
+      // The user has canceled the authentication
+      out.writeBoolean(false);
+      return;
+    }
+  }
 
-    out.writeBoolean(false);
+  protected boolean deleteRepository(CDOAdminServerProtocol protocol) throws Exception
+  {
+    final CDOAdminServer admin = protocol.getInfraStructure();
+
+    return AuthenticationUtil.authenticatingOperation(protocol, new Callable<Boolean>()
+    {
+      public Boolean call() throws Exception
+      {
+        CDOAdminServerRepository repository = (CDOAdminServerRepository)admin.getRepository(name);
+        if (repository != null)
+        {
+          return admin.deleteRepository(repository, type);
+        }
+
+        return false;
+      }
+    }).call();
   }
 }

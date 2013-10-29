@@ -10,6 +10,7 @@
  *    Simon McDuff - bug 201266
  *    Simon McDuff - bug 202725
  *    Christian W. Damus (CEA LIST) - bug 399306
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -21,12 +22,12 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -394,7 +395,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     OM.LOG.warn("A problem occured while notifying session " + session, t);
   }
 
-  protected String authenticateUser(ISessionProtocol protocol) throws SecurityException
+  public String authenticateUser(IAuthenticationProtocol protocol) throws SecurityException
   {
     if (protocol == null)
     {
@@ -412,7 +413,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       Response response = protocol.sendAuthenticationChallenge(challenge);
       if (response == null)
       {
-        throw new NotAuthenticatedException();
+        throw notAuthenticated();
       }
 
       ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
@@ -440,17 +441,17 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public void changeUserCredentials(ISessionProtocol sessionProtocol, String userID)
+  public void changeUserCredentials(IAuthenticationProtocol sessionProtocol, String userID)
   {
     changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.CHANGE_PASSWORD);
   }
 
-  public void resetUserCredentials(ISessionProtocol sessionProtocol, String userID)
+  public void resetUserCredentials(IAuthenticationProtocol sessionProtocol, String userID)
   {
     changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.RESET_PASSWORD);
   }
 
-  protected void changeUserCredentials(ISessionProtocol sessionProtocol, String userID,
+  protected void changeUserCredentials(IAuthenticationProtocol sessionProtocol, String userID,
       CredentialsUpdateOperation operation)
   {
 
@@ -475,7 +476,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       Response response = sessionProtocol.sendCredentialsChallenge(challenge, userID, operation);
       if (response == null)
       {
-        throw new NotAuthenticatedException();
+        throw notAuthenticated();
       }
 
       ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
@@ -554,5 +555,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
 
     super.doDeactivate();
+  }
+
+  @SuppressWarnings("deprecation")
+  private SecurityException notAuthenticated()
+  {
+    // Existing clients may expect this deprecated exception type
+    return new org.eclipse.emf.cdo.common.util.NotAuthenticatedException();
   }
 }

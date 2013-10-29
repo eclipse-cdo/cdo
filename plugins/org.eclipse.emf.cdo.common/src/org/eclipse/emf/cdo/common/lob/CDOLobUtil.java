@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.common.lob;
 
@@ -50,6 +51,22 @@ public final class CDOLobUtil
   public static CDOClob createClob(byte[] id, long size)
   {
     return new CDOClob(id, size);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static CDOBlobOutputStream createBlobOutputStream()
+  {
+    return new CDOBlobOutputStream();
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static CDOClobWriter createClobWriter()
+  {
+    return new CDOClobWriter();
   }
 
   public static void setStore(CDOLobStore store, CDOLob<?> lob) throws IOException

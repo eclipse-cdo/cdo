@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Lothar Werzinger - support for configuring user managers
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -40,6 +41,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -48,6 +50,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,8 +105,30 @@ public class RepositoryConfigurator
       TRACER.trace("Configuring CDO server from " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
+    return configure(getDocument(configFile));
+  }
+
+  /**
+   * @since 4.3
+   */
+  public IRepository[] configure(Reader configReader) throws ParserConfigurationException, SAXException, IOException,
+      CoreException
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Configuring CDO server from dynamic configuration"); //$NON-NLS-1$
+    }
+
+    return configure(getDocument(configReader));
+  }
+
+  /**
+   * @since 4.3
+   */
+  protected IRepository[] configure(Document document) throws ParserConfigurationException, SAXException, IOException,
+      CoreException
+  {
     List<IRepository> repositories = new ArrayList<IRepository>();
-    Document document = getDocument(configFile);
     NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
     for (int i = 0; i < elements.getLength(); i++)
     {
@@ -125,6 +150,16 @@ public class RepositoryConfigurator
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     return builder.parse(configFile);
+  }
+
+  /**
+   * @since 4.3
+   */
+  protected Document getDocument(Reader configReader) throws ParserConfigurationException, SAXException, IOException
+  {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    return builder.parse(new InputSource(configReader));
   }
 
   protected IRepositoryFactory getRepositoryFactory(String type) throws CoreException

@@ -7,18 +7,22 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
+import org.eclipse.emf.cdo.spi.server.AuthenticationUtil;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Eike Stepper
@@ -48,10 +52,30 @@ public class CreateRepositoryIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws Exception
   {
-    CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)getProtocol();
-    CDOAdminServer admin = protocol.getInfraStructure();
+    try
+    {
+      CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)getProtocol();
+      out.writeBoolean(createRepository(protocol));
+    }
+    catch (NotAuthenticatedException ex)
+    {
+      // The user has canceled the authentication
+      out.writeBoolean(false);
+      return;
+    }
+  }
 
-    CDOAdminRepository repository = admin.createRepository(name, type, properties);
-    out.writeBoolean(repository != null);
+  protected boolean createRepository(CDOAdminServerProtocol protocol) throws Exception
+  {
+    final CDOAdminServer admin = protocol.getInfraStructure();
+
+    return AuthenticationUtil.authenticatingOperation(protocol, new Callable<Boolean>()
+    {
+      public Boolean call() throws Exception
+      {
+        CDOAdminRepository repository = admin.createRepository(name, type, properties);
+        return repository != null;
+      }
+    }).call();
   }
 }

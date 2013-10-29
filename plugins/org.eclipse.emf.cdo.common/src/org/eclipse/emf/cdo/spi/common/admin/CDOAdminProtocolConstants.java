@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.spi.common.admin;
 
@@ -40,4 +41,9 @@ public interface CDOAdminProtocolConstants
   public static final short SIGNAL_REPOSITORY_STATE_CHANGED = 7;
 
   public static final short SIGNAL_REPOSITORY_REPLICATION_PROGRESSED = 8;
+
+  /**
+   * @since 4.3
+   */
+  public static final short SIGNAL_AUTHENTICATION = 9;
 }

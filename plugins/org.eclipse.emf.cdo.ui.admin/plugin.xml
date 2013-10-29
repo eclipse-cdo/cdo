@@ -9,6 +9,7 @@
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
+	  Christian W. Damus (CEA LIST) - bug 418454
 -->
 
 <plugin>
@@ -18,7 +19,7 @@
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.ui.internal.admin.CDOAdminView"
-            icon="icons/admin_view.gif"
+            icon="icons/full/view16/admin_view.gif"
             id="org.eclipse.emf.cdo.ui.admin.CDOAdminView"
             name="%view.name.0">
       </view>

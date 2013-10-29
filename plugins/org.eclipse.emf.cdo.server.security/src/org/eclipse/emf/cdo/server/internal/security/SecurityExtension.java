@@ -8,12 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 420644
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
-import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.IAppExtension2;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -23,6 +24,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,11 +33,12 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 
 /**
  * @author Eike Stepper
  */
-public class SecurityExtension implements IAppExtension
+public class SecurityExtension implements IAppExtension2
 {
   public static final String DEFAULT_REALM_PATH = "security";
 
@@ -45,9 +48,18 @@ public class SecurityExtension implements IAppExtension
 
   public void start(File configFile) throws Exception
   {
+    start(getDocument(configFile));
+  }
+
+  public void startDynamic(Reader xmlConfigReader) throws Exception
+  {
+    start(getDocument(xmlConfigReader));
+  }
+
+  protected void start(Document document) throws Exception
+  {
     OM.LOG.info("Security extension starting"); //$NON-NLS-1$
 
-    Document document = getDocument(configFile);
     NodeList repositoryConfigs = document.getElementsByTagName("repository"); //$NON-NLS-1$
     for (int i = 0; i < repositoryConfigs.getLength(); i++)
     {
@@ -70,6 +82,13 @@ public class SecurityExtension implements IAppExtension
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     return builder.parse(configFile);
+  }
+
+  protected Document getDocument(Reader configReader) throws ParserConfigurationException, SAXException, IOException
+  {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    return builder.parse(new InputSource(configReader));
   }
 
   protected void configureRepository(Element repositoryConfig)

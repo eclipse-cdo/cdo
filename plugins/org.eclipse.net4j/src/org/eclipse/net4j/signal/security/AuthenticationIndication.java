@@ -7,14 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454: adapted from CDO Server
  */
-package org.eclipse.emf.cdo.internal.net4j.protocol;
-
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+package org.eclipse.net4j.signal.security;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -26,37 +23,49 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.ByteArrayOutputStream;
 
 /**
  * @author Eike Stepper
+ * 
+ * @since 4.3
  */
 public class AuthenticationIndication extends IndicationWithMonitoring
 {
   private Challenge challenge;
 
-  public AuthenticationIndication(SignalProtocol<?> protocol)
+  public AuthenticationIndication(AuthenticatingSignalProtocol<?> protocol, short id, String name)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_AUTHENTICATION);
+    super(protocol, id, name);
+  }
+
+  public AuthenticationIndication(AuthenticatingSignalProtocol<?> protocol, short signalID)
+  {
+    super(protocol, signalID);
+  }
+
+  public AuthenticationIndication(AuthenticatingSignalProtocol<?> protocol, Enum<?> literal)
+  {
+    super(protocol, literal);
   }
 
   @Override
-  public CDOClientProtocol getProtocol()
+  public AuthenticatingSignalProtocol<?> getProtocol()
   {
-    return (CDOClientProtocol)super.getProtocol();
-  }
-
-  protected InternalCDOSession getSession()
-  {
-    return (InternalCDOSession)getProtocol().getSession();
+    return (AuthenticatingSignalProtocol<?>)super.getProtocol();
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     challenge = new Challenge(in);
+  }
+
+  protected final Challenge getChallenge()
+  {
+    return challenge;
   }
 
   @Override
@@ -67,7 +76,7 @@ public class AuthenticationIndication extends IndicationWithMonitoring
 
     try
     {
-      IPasswordCredentialsProvider credentialsProvider = getSession().getCredentialsProvider();
+      IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider();
       if (credentialsProvider == null)
       {
         throw new IllegalStateException("No credentials provider configured"); //$NON-NLS-1$
@@ -86,10 +95,6 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       }
 
       String password = new String(credentials.getPassword());
-      if (StringUtil.isEmpty(userID))
-      {
-        throw new IllegalStateException("No password provided"); //$NON-NLS-1$
-      }
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       @SuppressWarnings("resource")
@@ -114,5 +119,11 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       async.stop();
       monitor.done();
     }
+  }
+
+  protected IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    AuthenticatingSignalProtocol<?> protocol = getProtocol();
+    return protocol.getCredentialsProvider();
   }
 }

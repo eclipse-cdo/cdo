@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -94,11 +96,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
-    return new AuthenticationRequest(this, challenge).send(negotiationTimeout);
+    return new AuthenticationRequest(this, CDOProtocolConstants.SIGNAL_AUTHENTICATION, challenge)
+        .send(negotiationTimeout);
   }
 
-  public Response sendCredentialsChallenge(Challenge challenge, String userID,
-      CredentialsUpdateOperation operation) throws Exception
+  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
+      throws Exception
   {
     return new CredentialsChallengeRequest(this, challenge, userID, operation).send(negotiationTimeout);
   }

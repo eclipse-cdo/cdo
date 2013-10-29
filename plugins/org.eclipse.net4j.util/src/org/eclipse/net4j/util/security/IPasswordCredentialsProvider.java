@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.net4j.util.security;
 
@@ -16,4 +17,16 @@ package org.eclipse.net4j.util.security;
 public interface IPasswordCredentialsProvider extends ICredentialsProvider
 {
   public IPasswordCredentials getCredentials();
+
+  /**
+   * Interface implemented by protocol objects that can supply an
+   * {@link IPasswordCredentialsProvider}.
+   * 
+   * @author Christian W. Damus (CEA LIST)
+   * @since 3.4
+   */
+  public static interface Provider
+  {
+    public IPasswordCredentialsProvider getCredentialsProvider();
+  }
 }

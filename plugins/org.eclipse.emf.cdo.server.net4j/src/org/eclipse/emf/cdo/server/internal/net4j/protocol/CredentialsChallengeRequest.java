@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
@@ -21,6 +20,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
 /**
  * Server-initiated request to change the user's password.  It incorporates and extends the

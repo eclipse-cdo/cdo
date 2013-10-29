@@ -26,6 +26,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
 
@@ -36,7 +38,8 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClient
+public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClient,
+    IPasswordCredentialsProvider.Provider
 {
   private static final String URL_SEPARATOR = "://";
 
@@ -150,6 +153,19 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     if (repository != null)
     {
       repository.replicationProgressed(totalWork, work);
+    }
+  }
+
+  public IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    try
+    {
+      return (IPasswordCredentialsProvider)container.getElement(CredentialsProviderFactory.PRODUCT_GROUP,
+          "interactive", null); //$NON-NLS-1$
+    }
+    catch (Exception ex)
+    {
+      return null;
     }
   }
 

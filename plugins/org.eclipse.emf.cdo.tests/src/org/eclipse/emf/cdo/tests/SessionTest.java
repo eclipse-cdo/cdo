@@ -7,11 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bgu 418454
  */
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
@@ -34,6 +34,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.UserManager;

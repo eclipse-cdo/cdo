@@ -9,6 +9,7 @@
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
+	  Christian W. Damus (CEA LIST) - bug 418454
 -->
 
 <plugin>
@@ -22,6 +23,26 @@
         	productGroup="org.eclipse.emf.cdo.server.admin.adminServers"
           type="default"
           class="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer$Factory$Plugin"/>
+        <factory
+            productGroup="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers"
+          type="default"
+          class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDORepositoryConfigurationManager$Factory"/>
+        <factory
+            productGroup="org.eclipse.emf.cdo.server.admin.adminHandlers"
+          type="default"
+          class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDOAdminHandler$Factory"/>
  	</extension>
+
+   <extension point="org.eclipse.emf.cdo.server.appExtensions">
+      <appExtension class="org.eclipse.emf.cdo.server.internal.admin.RepositoryConfigurationManagerExtension"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated catalog -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/admin/RepositoryCatalog/4.3.0"
+            class="org.eclipse.emf.cdo.server.internal.admin.catalog.CatalogPackage"
+            genModel="model/catalog.genmodel"/>
+   </extension>
 
 </plugin>

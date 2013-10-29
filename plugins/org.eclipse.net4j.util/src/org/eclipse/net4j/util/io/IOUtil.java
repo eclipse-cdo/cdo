@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.net4j.util.io;
 
@@ -32,10 +33,14 @@ import java.io.FileWriter;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -629,6 +634,54 @@ public final class IOUtil
     {
       closeSilent(input);
       closeSilent(output);
+    }
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static String readText(URL url) throws IORuntimeException
+  {
+    Reader input = null;
+
+    try
+    {
+      URLConnection connection = url.openConnection();
+      connection.setDoInput(true);
+      connection.setUseCaches(true);
+      connection.connect();
+
+      Charset charset;
+      String encoding = connection.getContentEncoding();
+      if (encoding == null)
+      {
+        charset = Charset.defaultCharset();
+      }
+      else
+      {
+        charset = Charset.forName(encoding);
+      }
+
+      input = new InputStreamReader(connection.getInputStream(), charset);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+
+    try
+    {
+      CharArrayWriter output = new CharArrayWriter();
+      copyCharacter(input, output);
+      return output.toString();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      closeSilent(input);
     }
   }
 

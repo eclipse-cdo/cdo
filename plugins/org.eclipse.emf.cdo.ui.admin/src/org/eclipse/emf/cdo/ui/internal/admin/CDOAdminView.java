@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.ui.internal.admin;
 
@@ -15,22 +16,23 @@ import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
-import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
+import org.eclipse.emf.cdo.ui.internal.admin.actions.AdminAction;
+import org.eclipse.emf.cdo.ui.internal.admin.actions.CreateRepositoryAction;
+import org.eclipse.emf.cdo.ui.internal.admin.actions.DeleteRepositoryAction;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.admin.messages.Messages;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -45,6 +47,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -91,7 +95,8 @@ public class CDOAdminView extends ContainerView
         if (obj instanceof CDOAdminRepository)
         {
           CDOAdminRepository repository = (CDOAdminRepository)obj;
-          return repository.getName() + " [" + repository.getType() + ", " + repository.getState() + "]";
+          return MessageFormat.format(Messages.CDOAdminView_0, repository.getName(), repository.getType(),
+              repository.getState());
         }
 
         return super.getText(obj);
@@ -159,12 +164,14 @@ public class CDOAdminView extends ContainerView
       if (obj instanceof CDOAdminClient)
       {
         CDOAdminClient admin = (CDOAdminClient)obj;
+        manager.add(new CreateRepositoryAction(admin));
         manager.add(new RemoveConnectionAction(adminManager, admin));
       }
       else if (obj instanceof CDOAdminClientRepository)
       {
         CDOAdminClientRepository repository = (CDOAdminClientRepository)obj;
         manager.add(new OpenSessionAction(repository));
+        manager.add(new DeleteRepositoryAction(repository));
       }
     }
   }
@@ -180,7 +187,7 @@ public class CDOAdminView extends ContainerView
         public void run()
         {
           String lastURL = OM.getLastURL();
-          InputDialog dialog = new InputDialog(getShell(), getText(), "Enter the connection URL:", lastURL, null);
+          InputDialog dialog = new InputDialog(getShell(), getText(), Messages.CDOAdminView_1, lastURL, null);
           if (dialog.open() == InputDialog.OK)
           {
             String url = dialog.getValue();
@@ -190,8 +197,8 @@ public class CDOAdminView extends ContainerView
         }
       };
 
-      addConnectionAction.setText("Add Connection");
-      addConnectionAction.setToolTipText("Add a new connection");
+      addConnectionAction.setText(Messages.CDOAdminView_2);
+      addConnectionAction.setToolTipText(Messages.CDOAdminView_3);
       addConnectionAction.setImageDescriptor(org.eclipse.net4j.ui.shared.SharedIcons
           .getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD));
     }
@@ -204,7 +211,7 @@ public class CDOAdminView extends ContainerView
   {
     IManagedContainer container = adminManager.getContainer();
     String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
-    String factoryType = "interactive";
+    String factoryType = "interactive"; //$NON-NLS-1$
     IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(productGroup,
         factoryType, null);
 
@@ -255,58 +262,31 @@ public class CDOAdminView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  public class OpenSessionAction extends LongRunningAction implements CDOAdminClientRepository.SessionConfigurator
+  public class OpenSessionAction extends AdminAction<CDOAdminClientRepository> implements
+      CDOAdminClientRepository.SessionConfigurator
   {
-    private CDOAdminClientRepository repository;
-
     public OpenSessionAction(CDOAdminClientRepository repository)
     {
-      super("Open Session", "Open a new session to this repository", SharedIcons
-          .getDescriptor(SharedIcons.ETOOL_OPEN_SESSION));
-      this.repository = repository;
+      super(Messages.CDOAdminView_4, Messages.CDOAdminView_5,
+          SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_SESSION), repository);
     }
 
     public CDOAdminClientRepository getRepository()
     {
-      return repository;
+      return target;
     }
 
     @Override
-    protected void doRun(IProgressMonitor progressMonitor) throws Exception
+    protected void safeRun(IProgressMonitor progressMonitor) throws Exception
     {
-      try
+      CDONet4jSession session = target.openSession(this);
+      if (session != null)
       {
-        CDONet4jSession session = repository.openSession(this);
-        if (session != null)
-        {
-          CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
+        CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
 
-          IManagedContainer container = adminManager.getContainer();
-          String description = "session" + getNextSessionNumber();
-          container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session);
-        }
-      }
-      catch (RemoteException ex)
-      {
-        if (ex.getCause() instanceof NotAuthenticatedException)
-        {
-          // Skip silently because user has canceled the authentication
-        }
-        else
-        {
-          throw ex;
-        }
-      }
-      catch (Exception ex)
-      {
-        if (ex instanceof NotAuthenticatedException)
-        {
-          // Skip silently because user has canceled the authentication
-        }
-        else
-        {
-          throw ex;
-        }
+        IManagedContainer container = adminManager.getContainer();
+        String description = "session" + getNextSessionNumber(); //$NON-NLS-1$
+        container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session); //$NON-NLS-1$
       }
     }
 
@@ -314,6 +294,12 @@ public class CDOAdminView extends ContainerView
     {
       IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider();
       configuration.setCredentialsProvider(credentialsProvider);
+    }
+
+    @Override
+    protected String getErrorPattern()
+    {
+      return Messages.CDOAdminView_6;
     }
   }
 }

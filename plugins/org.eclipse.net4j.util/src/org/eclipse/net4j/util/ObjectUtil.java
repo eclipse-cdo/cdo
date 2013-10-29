@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.net4j.util;
 
@@ -147,5 +148,24 @@ public final class ObjectUtil
     }
 
     return object;
+  }
+
+  /**
+   * Attempts to cast an {@code object} as an instance of the given {@code type}.
+   * 
+   * @param object an object to cast to some {@code type}
+   * @param type the type to cast the {@code object} to
+   * @return the {@code object} or {@code null} if it is not of the required {@code type}
+   * 
+   * @since 3.4
+   */
+  public static <T> T tryCast(Object object, Class<T> type)
+  {
+    if (type.isInstance(object))
+    {
+      return type.cast(object);
+    }
+
+    return null;
   }
 }

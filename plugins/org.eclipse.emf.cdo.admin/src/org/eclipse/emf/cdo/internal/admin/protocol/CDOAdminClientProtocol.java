@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
@@ -16,8 +17,9 @@ import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol;
+import org.eclipse.net4j.signal.security.AuthenticationIndication;
 
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +27,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
+public class CDOAdminClientProtocol extends AuthenticatingSignalProtocol<CDOAdminClientImpl>
 {
   public CDOAdminClientProtocol(CDOAdminClientImpl admin)
   {
@@ -40,12 +42,16 @@ public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
 
   public boolean createRepository(String name, String type, Map<String, Object> properties)
   {
-    return send(new CreateRepositoryRequest(this, name, type, properties));
+    // Do not apply a timeout to this request because it requires Administrator
+    // authentication to authorize, which is interactive with the user
+    return send(new CreateRepositoryRequest(this, name, type, properties), NO_TIMEOUT);
   }
 
   public boolean deleteRepository(String name, String type)
   {
-    return send(new DeleteRepositoryRequest(this, name, type));
+    // Do not apply a timeout to this request because it requires Administrator
+    // authentication to authorize, which is interactive with the user
+    return send(new DeleteRepositoryRequest(this, name, type), NO_TIMEOUT);
   }
 
   @Override
@@ -68,6 +74,9 @@ public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
     case CDOAdminProtocolConstants.SIGNAL_REPOSITORY_REPLICATION_PROGRESSED:
       return new RepositoryReplicationProgressedIndication(this);
 
+    case CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION:
+      return new AuthenticationIndication(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION);
+
     default:
       return super.createSignalReactor(signalID);
     }
@@ -75,9 +84,14 @@ public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
 
   private <RESULT> RESULT send(RequestWithConfirmation<RESULT> request)
   {
+    return send(request, getTimeout());
+  }
+
+  private <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout)
+  {
     try
     {
-      return request.send();
+      return request.send(timeout);
     }
     catch (RuntimeException ex)
     {

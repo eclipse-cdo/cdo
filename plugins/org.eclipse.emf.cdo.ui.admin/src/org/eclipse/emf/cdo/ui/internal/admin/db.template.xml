@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<store type="db">
+
+  <property name="connectionKeepAlivePeriod" value="{{keepAlive}}"/>
+  <property name="readerPoolCapacity" value="{{readerPool}}"/>
+  <property name="writerPoolCapacity" value="{{writerPool}}"/>
+
+  <mappingStrategy type="horizontal">
+    <property name="qualifiedNames" value="true"/>
+  </mappingStrategy>
+
+  <dbAdapter name="{{adapter}}"/>
+  <dataSource
+      class="{{dataSource.class}}"
+      uRL="{{dataSource.url}}"/>
+
+</store>

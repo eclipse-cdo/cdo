@@ -12,6 +12,7 @@
  *    Simon McDuff - bug 233490
  *    Simon McDuff - bug 213402
  *    Victor Roldan Betancort - maintenance
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.internal.cdo.session;
 

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.server.internal.admin;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol;
 import org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler;
+import org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler2;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -106,6 +108,12 @@ public class CDOAdminServer extends AbstractCDOAdmin
   protected boolean doCreateRepository(String name, String type, Map<String, Object> properties)
   {
     CDOAdminHandler handler = getAdminHandler(type);
+    if (handler instanceof CDOAdminHandler2)
+    {
+      // Must provide administrator credentials to create a repository
+      ((CDOAdminHandler2)handler).authenticateAdministrator();
+    }
+
     IRepository delegate = handler.createRepository(name, properties);
     CDOServerUtil.addRepository(container, delegate);
     return true;
@@ -122,9 +130,27 @@ public class CDOAdminServer extends AbstractCDOAdmin
     }
 
     IRepository delegate = repository.getDelegate();
+
+    // Can this handler delete the repository?
+    if (!canDelete(delegate, handler))
+    {
+      throw new IllegalStateException("The repository is permanently configured.");
+    }
+
+    if (handler instanceof CDOAdminHandler2)
+    {
+      // Must provide administrator credentials to delete a repository
+      ((CDOAdminHandler2)handler).authenticateAdministrator();
+    }
+
     LifecycleUtil.deactivate(delegate);
     handler.deleteRepository(delegate);
     return true;
+  }
+
+  protected boolean canDelete(IRepository repository, CDOAdminHandler handler)
+  {
+    return !(handler instanceof CDOAdminHandler2) || ((CDOAdminHandler2)handler).canDelete(repository);
   }
 
   @Override

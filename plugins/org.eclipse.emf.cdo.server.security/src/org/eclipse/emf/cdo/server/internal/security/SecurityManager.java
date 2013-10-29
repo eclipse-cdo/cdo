@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 399306
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
@@ -377,7 +378,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public void read(RealmOperation operation)
   {
-    checkActive();
+    checkReady();
     operation.execute(realm);
   }
 
@@ -388,7 +389,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public void modify(RealmOperation operation, boolean waitUntilReadable)
   {
-    checkActive();
+    checkReady();
     CDOTransaction transaction = systemSession.openTransaction();
 
     try
@@ -502,6 +503,20 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       {
         OM.LOG.error(ex);
       }
+    }
+  }
+
+  /**
+   * Commit-handlers can call back into the security manager to read/modify the realm
+   * while the security manager is in the process of initializing, so cannot strictly
+   * check for active state to assert that we are ready.
+   */
+  protected void checkReady()
+  {
+    if (realm == null || systemSession == null)
+    {
+      // If I have no realm or session, I am probably inactive, so this will throw
+      checkActive();
     }
   }
 
@@ -910,12 +925,26 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       authenticate(adminID, adminPassword);
 
       User admin = getUser(adminID);
-      if (!isAdministrator(admin))
+      if (!SecurityManager.this.isAdministrator(admin))
       {
         throw new SecurityException("Password reset requires administrator privilege"); //$NON-NLS-1$
       }
 
       setPassword(userID, new String(newPassword));
+    }
+
+    public boolean isAdministrator(String userID)
+    {
+      Realm realm = getRealm();
+      if (realm != null)
+      {
+        // Can't be an administrator if there isn't a realm
+        // (but then where did we get the user ID?)
+        User user = realm.getUser(userID);
+        return user != null && SecurityManager.this.isAdministrator(user);
+      }
+
+      return false;
     }
   }
 

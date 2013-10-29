@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  *    Christian W. Damus (CEA LIST) - bug 418452
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.net4j.util.ui;
 
@@ -350,6 +351,17 @@ public final class UIUtil
   public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)
   {
     return new GridData(SWT.FILL, SWT.FILL, grabHorizontal, grabVertical);
+  }
+
+  /**
+   * @since 3.4
+   */
+  public static GridData createGridData(int horizontalSpan, int verticalSpan)
+  {
+    GridData result = new GridData();
+    result.horizontalSpan = horizontalSpan;
+    result.verticalSpan = verticalSpan;
+    return result;
   }
 
   /**

@@ -49,7 +49,10 @@ public abstract class SecurityManagerFactory extends Factory
    */
   public static class Default extends SecurityManagerFactory implements ContainerAware
   {
-    private static final String TYPE = "default";
+    /**
+     * @since 4.3
+     */
+    public static final String TYPE = "default";
 
     private IManagedContainer container;
 

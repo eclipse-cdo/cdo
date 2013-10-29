@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
@@ -15,20 +16,29 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
 import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerRepository;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
+import org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
+import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
+import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper
  */
-public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>
+public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol
 {
+  public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
+
+  private long negotiationTimeout = DEFAULT_NEGOTIATION_TIMEOUT;
+
   private final IManagedContainer container;
 
   public CDOAdminServerProtocol(IManagedContainer container, CDOAdminServer admin)
@@ -82,6 +92,28 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>
     {
       new RepositoryReplicationPogressedRequest(this, name, totalWork, work).sendAsync();
     }
+  }
+
+  public long getNegotiationTimeout()
+  {
+    return negotiationTimeout;
+  }
+
+  public void setNegotiationTimeout(long negotiationTimeout)
+  {
+    this.negotiationTimeout = negotiationTimeout;
+  }
+
+  public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
+  {
+    return new AuthenticationRequest(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION, challenge)
+        .send(negotiationTimeout);
+  }
+
+  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
+      throws Exception
+  {
+    throw new UnsupportedOperationException("sendCredentialsChallenge"); //$NON-NLS-1$
   }
 
   @Override

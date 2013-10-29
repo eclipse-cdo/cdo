@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
-import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -25,6 +25,7 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.common.util;
 
@@ -15,8 +16,10 @@ package org.eclipse.emf.cdo.common.util;
  *
  * @author Eike Stepper
  * @since 4.1
+ * @deprecated As of 4.3 use {@link org.eclipse.net4j.util.security.NotAuthenticatedException}, instead.
  */
-public class NotAuthenticatedException extends SecurityException
+@Deprecated
+public class NotAuthenticatedException extends org.eclipse.net4j.util.security.NotAuthenticatedException
 {
   private static final long serialVersionUID = 1L;
 

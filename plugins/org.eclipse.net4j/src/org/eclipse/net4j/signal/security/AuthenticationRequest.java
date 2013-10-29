@@ -7,30 +7,44 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454: adapted from CDO Server
  */
-package org.eclipse.emf.cdo.server.internal.net4j.protocol;
-
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
+package org.eclipse.net4j.signal.security;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
 /**
  * @author Eike Stepper
+ * 
+ * @since 4.3
  */
 public class AuthenticationRequest extends RequestWithMonitoring<Response>
 {
-  private Challenge challenge;
+  private final Challenge challenge;
 
-  public AuthenticationRequest(CDOServerProtocol protocol, Challenge challenge)
+  public AuthenticationRequest(SignalProtocol<?> protocol, short id, String name, Challenge challenge)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_AUTHENTICATION);
+    super(protocol, id, name);
+    this.challenge = challenge;
+  }
+
+  public AuthenticationRequest(SignalProtocol<?> protocol, short signalID, Challenge challenge)
+  {
+    super(protocol, signalID);
+    this.challenge = challenge;
+  }
+
+  public AuthenticationRequest(SignalProtocol<?> protocol, Enum<?> literal, Challenge challenge)
+  {
+    super(protocol, literal);
     this.challenge = challenge;
   }
 

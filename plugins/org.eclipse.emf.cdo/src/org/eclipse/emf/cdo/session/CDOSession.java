@@ -88,7 +88,8 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * @apiviz.exclude .*\.CDOTransactionContainer
  * @apiviz.exclude .*\.CDOUpdatable
  */
-public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer
+public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer,
+    IPasswordCredentialsProvider.Provider
 {
   /**
    * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession
@@ -131,13 +132,6 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @since 3.0
    */
   public CDOFetchRuleManager getFetchRuleManager();
-
-  /**
-   * Returns the {@link IPasswordCredentialsProvider credentials provider} of this session.
-   *
-   * @since 4.3
-   */
-  public IPasswordCredentialsProvider getCredentialsProvider();
 
   /**
    * Returns the CDO {@link CDORemoteSessionManager remote session manager} that keeps track of the other remote

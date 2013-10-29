@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 399306
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -19,8 +20,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
-import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
-import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
@@ -31,7 +30,7 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ISessionProtocol extends CDOProtocol
+public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol
 {
   /**
    * @since 4.0
@@ -40,17 +39,6 @@ public interface ISessionProtocol extends CDOProtocol
   @Deprecated
   public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
       throws Exception;
-
-  /**
-   * @since 4.2
-   */
-  public Response sendAuthenticationChallenge(Challenge challenge) throws Exception;
-
-  /**
-   * @since 4.3
-   */
-  public Response sendCredentialsChallenge(Challenge challenge, String userID,
-      CredentialsUpdateOperation operation) throws Exception;
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
       throws Exception;

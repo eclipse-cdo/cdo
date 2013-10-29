@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.ui.internal.admin.bundle;
 
@@ -69,6 +70,8 @@ public abstract class OM
    */
   public static final class Activator extends UIActivator.WithState
   {
+    public static Activator INSTANCE;
+
     public Activator()
     {
       super(BUNDLE);
@@ -77,6 +80,8 @@ public abstract class OM
     @Override
     protected void doStartWithState(Object state) throws Exception
     {
+      INSTANCE = this;
+
       LifecycleUtil.activate(adminManager);
       if (state instanceof List<?>)
       {
@@ -98,6 +103,9 @@ public abstract class OM
       urls.add(0, lastURL);
 
       LifecycleUtil.deactivate(adminManager);
+
+      INSTANCE = null;
+
       return urls;
     }
   }

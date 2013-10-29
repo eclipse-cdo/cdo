@@ -16,4 +16,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/admin/protocol/CDOAdminServerProtocol.java" type="org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IAuthenticationProtocol"/>
+                <message_argument value="CDOAdminServerProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

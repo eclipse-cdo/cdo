@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 399306
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -70,7 +71,7 @@ public interface InternalSessionManager extends ISessionManager
    *
    * @since 4.3
    */
-  public void changeUserCredentials(ISessionProtocol sessionProtocol, String userID);
+  public void changeUserCredentials(IAuthenticationProtocol sessionProtocol, String userID);
 
   /**
    * Initiates the administrative reset-credentials protocol with the client and
@@ -78,7 +79,20 @@ public interface InternalSessionManager extends ISessionManager
    *
    * @since 4.3
    */
-  public void resetUserCredentials(ISessionProtocol sessionProtocol, String userID);
+  public void resetUserCredentials(IAuthenticationProtocol sessionProtocol, String userID);
+
+  /**
+   * Challenges the connected user to authenticate the connection.
+   * 
+   * @param sessionProtocol the authenticatable session protocol
+   * @return the user ID with which the user authenticated herself, or {@code null}
+   *         if the server does not require authentication for this connection
+   * 
+   * @throws SecurityException on failure to authenticate
+   * 
+   * @since 4.3
+   */
+  public String authenticateUser(IAuthenticationProtocol sessionProtocol) throws SecurityException;
 
   /**
    * @since 4.1

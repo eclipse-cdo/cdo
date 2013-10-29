@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.net4j.util.ui;
 
@@ -15,6 +16,8 @@ import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.OSGiActivator.StateHandler;
 
+import org.eclipse.jface.dialogs.DialogSettings;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -48,6 +51,22 @@ public class UIActivator extends AbstractUIPlugin
   public ImageDescriptor loadImageDescriptor(String path)
   {
     return imageDescriptorFromPlugin(omBundle.getBundleID(), path);
+  }
+
+  /**
+   * @since 3.4
+   */
+  public IDialogSettings getDialogSettings(Class<?> clazz)
+  {
+    return getDialogSettings(clazz.getName());
+  }
+
+  /**
+   * @since 3.4
+   */
+  public IDialogSettings getDialogSettings(String section)
+  {
+    return DialogSettings.getOrCreateSection(getDialogSettings(), section);
   }
 
   @Override

@@ -46,11 +46,14 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol;
+import org.eclipse.net4j.signal.security.AuthenticationIndication;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -79,7 +82,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDOSessionProtocol
+public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl> implements CDOSessionProtocol
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
@@ -470,7 +473,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     switch (signalID)
     {
     case SIGNAL_AUTHENTICATION:
-      return new AuthenticationIndication(this);
+      return new AuthenticationIndication(this, SIGNAL_AUTHENTICATION);
 
     case SIGNAL_BRANCH_NOTIFICATION:
       return new BranchNotificationIndication(this);

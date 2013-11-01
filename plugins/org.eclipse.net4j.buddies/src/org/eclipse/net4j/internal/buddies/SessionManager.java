@@ -109,6 +109,9 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
       {
         try
         {
+          String userID = getUserID();
+          String password = getPassword();
+
           setState(ISessionManager.State.CONNECTING);
           connecting = true;
           while (session == null && connecting)
@@ -119,7 +122,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
               throw new IllegalStateException("connector == null"); //$NON-NLS-1$
             }
 
-            session = BuddiesUtil.openSession(connector, getUserID(), getPassword(), 5000L);
+            session = BuddiesUtil.openSession(connector, userID, password, 5000L);
             if (session != null)
             {
               if (connecting)

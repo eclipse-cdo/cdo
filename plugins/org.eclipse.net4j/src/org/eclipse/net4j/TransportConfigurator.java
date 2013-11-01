@@ -41,7 +41,7 @@ import java.util.Map;
 
 /**
  * Reads an XML config file and creates, wires and starts the configured {@link IAcceptor acceptors}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -104,6 +104,7 @@ public class TransportConfigurator
       acceptor.getConfig().setNegotiator(negotiator);
     }
 
+    OM.LOG.info("Net4j acceptor starting: " + type + "://" + description);
     acceptor.activate();
     return acceptor;
   }

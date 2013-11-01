@@ -60,6 +60,9 @@ public class CDOSessionsView extends ContainerView
     Control control = super.createUI(parent);
 
     TreeViewer viewer = getViewer();
+
+    // CDOMergeDropAdapter.support(viewer);
+
     RepositoryTransferDragListener.support(viewer);
     TransferDropAdapter.support(viewer);
 

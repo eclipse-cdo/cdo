@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
+import org.eclipse.emf.cdo.internal.ui.actions.MergeBranchPointAction;
 import org.eclipse.emf.cdo.internal.ui.actions.MergeConflictsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.NewResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
@@ -604,6 +605,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       manager.add(new ImportResourceAction(page, view));
       manager.add(new Separator());
       manager.add(new MergeConflictsAction((CDOTransaction)view));
+      manager.add(new MergeBranchPointAction(page, view));
       manager.add(new CommitTransactionAction(page, view));
       manager.add(new RollbackTransactionAction(page, view));
     }

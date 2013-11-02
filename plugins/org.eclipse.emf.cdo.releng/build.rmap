@@ -7,7 +7,7 @@
 	<rm:property mutable="true" key="train" value="luna"/>
 	<rm:property mutable="true" key="platform.version" value="4.4milestones"/>
 	<rm:property mutable="true" key="emf.version" value="2.10milestones"/>
-	<rm:property mutable="true" key="orbit.version" value="S20130914154012"/>
+	<rm:property mutable="true" key="orbit.version" value="S20131024145017"/>
 
 	<!-- Locators -->
 
@@ -42,7 +42,7 @@
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
-	
+
 	<rm:searchPath name="p2">
 
 		<!-- RELEASE TRAIN -->

@@ -3,6 +3,7 @@
 
 <product name="Setup" id="org.eclipse.emf.cdo.releng.setup.product.ide" application="org.eclipse.emf.cdo.releng.setup.product.app" useFeatures="true" includeLaunchers="true">
 
+
    <configIni use="">
    </configIni>
 
@@ -17,7 +18,7 @@ configuration</programArgs>
 -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/org.eclipse.emf.cdo.releng.setup.product/icons/alt_window_16.gif" i32="/org.eclipse.emf.cdo.releng.setup.product/icons/alt_window_32.gif" i48="/org.eclipse.emf.cdo.releng.setup.product/icons/alt_window_48.gif" i64="/org.eclipse.emf.cdo.releng.setup.product/icons/alt_window_64.gif"/>
 
    <launcher name="setup-eclipse">
       <solaris/>
@@ -25,6 +26,7 @@ configuration</programArgs>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>

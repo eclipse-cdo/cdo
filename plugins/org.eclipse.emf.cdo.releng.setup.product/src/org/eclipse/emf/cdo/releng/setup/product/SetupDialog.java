@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.releng.setup.provider.ConfigurationItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ProjectItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
+import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
@@ -45,11 +46,23 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.equinox.p2.core.IProvisioningAgent;
+import org.eclipse.equinox.p2.operations.ProvisioningJob;
+import org.eclipse.equinox.p2.operations.ProvisioningSession;
+import org.eclipse.equinox.p2.operations.UpdateOperation;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -62,6 +75,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -79,12 +94,15 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -96,6 +114,10 @@ import java.util.Map;
  */
 public class SetupDialog extends TitleAreaDialog
 {
+  public static final int RETURN_WORKBENCH = -2;
+
+  public static final int RETURN_RESTART = -3;
+
   private static final String SETUP_URI = System.getProperty("setup.uri",
       "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.setup")
       .replace('\\', '/');
@@ -126,6 +148,7 @@ public class SetupDialog extends TitleAreaDialog
   {
     super(parentShell);
     setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE);
+    setHelpAvailable(true);
 
     resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
@@ -139,6 +162,15 @@ public class SetupDialog extends TitleAreaDialog
   {
     saveEObject(preferences);
     return super.close();
+  }
+
+  /**
+   * Return the initial size of the dialog.
+   */
+  @Override
+  protected Point getInitialSize()
+  {
+    return new Point(500, 550);
   }
 
   /**
@@ -336,7 +368,7 @@ public class SetupDialog extends TitleAreaDialog
       public void widgetSelected(SelectionEvent e)
       {
         close();
-        setReturnCode(-2);
+        setReturnCode(RETURN_WORKBENCH);
       }
     });
 
@@ -433,13 +465,121 @@ public class SetupDialog extends TitleAreaDialog
     validate();
   }
 
-  /**
-   * Return the initial size of the dialog.
-   */
   @Override
-  protected Point getInitialSize()
+  protected Control createHelpControl(Composite parent)
   {
-    return new Point(500, 550);
+    ToolBar toolBar = (ToolBar)super.createHelpControl(parent);
+
+    ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/dialog_update.gif");
+    final Image image = imageDescriptor.createImage(toolBar.getDisplay());
+
+    ToolItem updateButton = new ToolItem(toolBar, SWT.PUSH);
+    updateButton.setImage(image);
+    updateButton.setToolTipText("Update");
+    updateButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        updatePressed();
+      }
+    });
+
+    updateButton.addDisposeListener(new DisposeListener()
+    {
+      public void widgetDisposed(DisposeEvent e)
+      {
+        image.dispose();
+      }
+    });
+
+    return toolBar;
+  }
+
+  protected void updatePressed()
+  {
+    try
+    {
+      IRunnableWithProgress runnable = new IRunnableWithProgress()
+      {
+        public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+        {
+          IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
+
+          try
+          {
+            IStatus updateStatus = checkForUpdates(agent, monitor);
+            if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
+            {
+              // userNameText.getDisplay().asyncExec(new Runnable()
+              // {
+              // public void run()
+              // {
+              // MessageDialog.openInformation(null, "Update", "No updates were found");
+              // }
+              // });
+            }
+            else if (updateStatus.getSeverity() != IStatus.ERROR)
+            {
+              close();
+              setReturnCode(RETURN_RESTART);
+            }
+            else
+            {
+              throw new InvocationTargetException(new CoreException(updateStatus));
+            }
+          }
+          finally
+          {
+            ServiceUtil.ungetService(agent);
+          }
+        }
+
+        private IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor)
+        {
+          ProvisioningSession session = new ProvisioningSession(agent);
+          UpdateOperation operation = new UpdateOperation(session);
+          SubMonitor sub = SubMonitor.convert(monitor, "Checking for updates...", 200);
+          IStatus status = operation.resolveModal(sub.newChild(100));
+          if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
+          {
+            return status;
+          }
+
+          if (status.getSeverity() == IStatus.CANCEL)
+          {
+            throw new OperationCanceledException();
+          }
+
+          if (status.getSeverity() != IStatus.ERROR)
+          {
+            ProvisioningJob job = operation.getProvisioningJob(null);
+            status = job.runModal(sub.newChild(100));
+            if (status.getSeverity() == IStatus.CANCEL)
+            {
+              throw new OperationCanceledException();
+            }
+          }
+
+          return status;
+        }
+      };
+
+      ProgressMonitorDialog dialog = new ProgressMonitorDialog(null);
+      dialog.run(true, true, runnable);
+    }
+    catch (InterruptedException ex)
+    {
+      // Do nothing
+    }
+    catch (InvocationTargetException ex)
+    {
+      handleException(ex.getCause());
+    }
+    catch (Exception ex)
+    {
+      handleException(ex);
+    }
   }
 
   @Override
@@ -451,8 +591,7 @@ public class SetupDialog extends TitleAreaDialog
     }
     catch (Exception ex)
     {
-      Activator.log(ex);
-      MessageDialog.openError(getShell(), "Error", ex.getMessage());
+      handleException(ex);
     }
 
     super.okPressed();
@@ -721,6 +860,12 @@ public class SetupDialog extends TitleAreaDialog
     {
       Activator.log(ex);
     }
+  }
+
+  private void handleException(Throwable ex)
+  {
+    Activator.log(ex);
+    MessageDialog.openError(getShell(), "Error", ex.getMessage());
   }
 
   /**

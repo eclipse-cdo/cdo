@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -49,21 +48,27 @@ public class Application implements IApplication
     {
       final Display display = Display.getDefault();
 
+      int retcode;
       for (;;)
       {
         SetupDialog dialog = new SetupDialog(null);
-        dialog.open();
-        if (dialog.getReturnCode() != -2)
+        retcode = dialog.open();
+
+        if (retcode == SetupDialog.RETURN_RESTART)
         {
-          break;
+          return EXIT_RESTART;
+        }
+
+        if (retcode != SetupDialog.RETURN_WORKBENCH)
+        {
+          return EXIT_OK;
         }
 
         display.asyncExec(new Runnable()
         {
           public void run()
           {
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+            IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
             if (workbenchWindow == null)
             {
               display.asyncExec(this);
@@ -72,6 +77,7 @@ public class Application implements IApplication
             {
               URI uri = Preferences.PREFERENCES_URI;
               IEditorInput editorInput = new URIEditorInput(uri, uri.lastSegment());
+
               try
               {
                 IWorkbenchPage page = workbenchWindow.getActivePage();
@@ -87,8 +93,6 @@ public class Application implements IApplication
 
         PlatformUI.createAndRunWorkbench(display, new SetupEditorAdvisor());
       }
-
-      return 0;
     }
     catch (final Throwable ex)
     {
@@ -102,6 +106,9 @@ public class Application implements IApplication
   {
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static class InternalErrorDialog extends MessageDialog
   {
     private static int DETAILS_BUTTON_ID = 1;

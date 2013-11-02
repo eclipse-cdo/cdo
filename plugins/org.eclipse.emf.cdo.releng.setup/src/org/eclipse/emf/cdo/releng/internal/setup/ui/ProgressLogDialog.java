@@ -122,6 +122,15 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     setShellStyle(SWT.BORDER | SWT.MAX | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
   }
 
+  /**
+   * Return the initial size of the dialog.
+   */
+  @Override
+  protected Point getInitialSize()
+  {
+    return new Point(1000, 600);
+  }
+
   @Override
   protected Control createDialogArea(Composite parent)
   {
@@ -330,15 +339,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     SetupTaskPerformer.setProgress(null);
 
     return super.close();
-  }
-
-  /**
-   * Return the initial size of the dialog.
-   */
-  @Override
-  protected Point getInitialSize()
-  {
-    return new Point(1000, 600);
   }
 
   public boolean isCancelled()

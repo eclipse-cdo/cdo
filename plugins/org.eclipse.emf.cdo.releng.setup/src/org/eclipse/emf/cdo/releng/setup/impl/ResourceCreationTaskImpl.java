@@ -134,10 +134,8 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
     String oldContent = content;
     content = newContent;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_CREATION_TASK__CONTENT, oldContent,
           content));
-    }
   }
 
   /**
@@ -160,10 +158,8 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
     String oldTargetURL = targetURL;
     targetURL = newTargetURL;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_CREATION_TASK__TARGET_URL,
           oldTargetURL, targetURL));
-    }
   }
 
   /**
@@ -186,10 +182,8 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
     String oldEncoding = encoding;
     encoding = newEncoding;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_CREATION_TASK__ENCODING, oldEncoding,
           encoding));
-    }
   }
 
   /**
@@ -287,9 +281,7 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (content: ");

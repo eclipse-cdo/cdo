@@ -2,8 +2,11 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.CommandParameter;
+import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SourceLocator;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -24,12 +27,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.CommandParameter} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.SourceLocator} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CommandParameterItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class SourceLocatorItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -38,7 +41,7 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public CommandParameterItemProvider(AdapterFactory adapterFactory)
+  public SourceLocatorItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -56,44 +59,62 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
     {
       super.getPropertyDescriptors(object);
 
-      addIdPropertyDescriptor(object);
-      addValuePropertyDescriptor(object);
+      addLocationPropertyDescriptor(object);
+      addComponentNamePatternPropertyDescriptor(object);
+      addComponentTypesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Id feature.
+   * This adds a property descriptor for the Location feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addIdPropertyDescriptor(Object object)
+  protected void addLocationPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(
             ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(),
-            getString("_UI_CommandParameter_id_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_CommandParameter_id_feature",
-                "_UI_CommandParameter_type"), SetupPackage.Literals.COMMAND_PARAMETER__ID, true, false, false,
+            getString("_UI_SourceLocator_location_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_SourceLocator_location_feature",
+                "_UI_SourceLocator_type"), SetupPackage.Literals.SOURCE_LOCATOR__LOCATION, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This adds a property descriptor for the Value feature.
+   * This adds a property descriptor for the Component Name Pattern feature.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
-  protected void addValuePropertyDescriptor(Object object)
+  protected void addComponentNamePatternPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_CommandParameter_value_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_CommandParameter_value_feature",
-            "_UI_CommandParameter_type"), SetupPackage.Literals.COMMAND_PARAMETER__VALUE, true, false, false,
+        getString("_UI_SourceLocator_componentNamePattern_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_SourceLocator_componentNamePattern_feature",
+            "_UI_SourceLocator_type"), SetupPackage.Literals.SOURCE_LOCATOR__COMPONENT_NAME_PATTERN, true, false,
+        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Component Types feature.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addComponentTypesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_SourceLocator_componentTypes_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_SourceLocator_componentTypes_feature",
+            "_UI_SourceLocator_type"), SetupPackage.Literals.SOURCE_LOCATOR__COMPONENT_TYPES, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -109,7 +130,7 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
   }
 
   /**
-   * This returns CommandParameter.gif.
+   * This returns SourceLocator.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -117,7 +138,7 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/CommandParameter"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/SourceLocator"));
   }
 
   /**
@@ -132,16 +153,41 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public String getText(Object object)
   {
-    CommandParameter commandParameter = (CommandParameter)object;
-    return "" + commandParameter.getId() + " = " + commandParameter.getValue();
+    SourceLocator sourceLocator = (SourceLocator)object;
+    StringBuilder result = new StringBuilder();
+    result.append(sourceLocator.getLocation());
+    result.append(" --> ");
+
+    String componentNamePattern = sourceLocator.getComponentNamePattern();
+    if (StringUtil.isEmpty(componentNamePattern))
+    {
+      componentNamePattern = ".*";
+    }
+
+    result.append(componentNamePattern);
+
+    result.append(" (");
+    int index = result.length();
+    for (ComponentType componentType : sourceLocator.getComponentTypes())
+    {
+      if (result.length() != index)
+      {
+        result.append(',');
+      }
+
+      result.append(componentType.toString());
+    }
+    result.append(')');
+
+    return result.toString();
   }
 
   /**
@@ -156,10 +202,11 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(CommandParameter.class))
+    switch (notification.getFeatureID(SourceLocator.class))
     {
-    case SetupPackage.COMMAND_PARAMETER__ID:
-    case SetupPackage.COMMAND_PARAMETER__VALUE:
+    case SetupPackage.SOURCE_LOCATOR__LOCATION:
+    case SetupPackage.SOURCE_LOCATOR__COMPONENT_NAME_PATTERN:
+    case SetupPackage.SOURCE_LOCATOR__COMPONENT_TYPES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

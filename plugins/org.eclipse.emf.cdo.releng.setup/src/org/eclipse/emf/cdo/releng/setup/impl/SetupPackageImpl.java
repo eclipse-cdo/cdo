@@ -11,9 +11,12 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
+import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
+import org.eclipse.emf.cdo.releng.setup.Component;
+import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -25,6 +28,7 @@ import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
+import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -38,13 +42,13 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
+import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -53,7 +57,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import java.util.Set;
 
 /**
@@ -206,7 +209,35 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass materializationTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sourceLocatorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass basicMaterializationTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass componentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+                     * <!-- end-user-doc -->
    * @generated
    */
   private EClass eclipseIniTaskEClass = null;
@@ -227,7 +258,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum componentTypeEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   private EClass compoundSetupTaskEClass = null;
@@ -1101,7 +1139,147 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-                   * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMaterializationTask()
+  {
+    return materializationTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMaterializationTask_SourceLocators()
+  {
+    return (EReference)materializationTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMaterializationTask_RootComponents()
+  {
+    return (EReference)materializationTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSourceLocator()
+  {
+    return sourceLocatorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSourceLocator_Location()
+  {
+    return (EAttribute)sourceLocatorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSourceLocator_ComponentNamePattern()
+  {
+    return (EAttribute)sourceLocatorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSourceLocator_ComponentTypes()
+  {
+    return (EAttribute)sourceLocatorEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMaterializationTask_P2Repositories()
+  {
+    return (EReference)materializationTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBasicMaterializationTask()
+  {
+    return basicMaterializationTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBasicMaterializationTask_TargetPlatform()
+  {
+    return (EAttribute)basicMaterializationTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBasicMaterializationTask_BundlePool()
+  {
+    return (EAttribute)basicMaterializationTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getComponent()
+  {
+    return componentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponent_Name()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponent_Type()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+                         * <!-- end-user-doc -->
    * @generated
    */
   public EClass getEclipseIniTask()
@@ -1161,7 +1339,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getComponentType()
+  {
+    return componentTypeEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EClass getCompoundSetupTask()
@@ -1227,26 +1415,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public EAttribute getBuckminsterImportTask_Mspec()
   {
     return (EAttribute)buckminsterImportTaskEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBuckminsterImportTask_TargetPlatform()
-  {
-    return (EAttribute)buckminsterImportTaskEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBuckminsterImportTask_BundlePool()
-  {
-    return (EAttribute)buckminsterImportTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1496,10 +1664,30 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(p2RepositoryEClass, P2_REPOSITORY__P2_TASK);
     createEAttribute(p2RepositoryEClass, P2_REPOSITORY__URL);
 
+    basicMaterializationTaskEClass = createEClass(BASIC_MATERIALIZATION_TASK);
+    createEAttribute(basicMaterializationTaskEClass, BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM);
+    createEAttribute(basicMaterializationTaskEClass, BASIC_MATERIALIZATION_TASK__BUNDLE_POOL);
+
     buckminsterImportTaskEClass = createEClass(BUCKMINSTER_IMPORT_TASK);
     createEAttribute(buckminsterImportTaskEClass, BUCKMINSTER_IMPORT_TASK__MSPEC);
-    createEAttribute(buckminsterImportTaskEClass, BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM);
-    createEAttribute(buckminsterImportTaskEClass, BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL);
+
+    materializationTaskEClass = createEClass(MATERIALIZATION_TASK);
+    createEReference(materializationTaskEClass, MATERIALIZATION_TASK__ROOT_COMPONENTS);
+    createEReference(materializationTaskEClass, MATERIALIZATION_TASK__SOURCE_LOCATORS);
+    createEReference(materializationTaskEClass, MATERIALIZATION_TASK__P2_REPOSITORIES);
+
+    componentEClass = createEClass(COMPONENT);
+    createEAttribute(componentEClass, COMPONENT__NAME);
+    createEAttribute(componentEClass, COMPONENT__TYPE);
+
+    sourceLocatorEClass = createEClass(SOURCE_LOCATOR);
+    createEAttribute(sourceLocatorEClass, SOURCE_LOCATOR__LOCATION);
+    createEAttribute(sourceLocatorEClass, SOURCE_LOCATOR__COMPONENT_NAME_PATTERN);
+    createEAttribute(sourceLocatorEClass, SOURCE_LOCATOR__COMPONENT_TYPES);
+
+    contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
 
     apiBaselineTaskEClass = createEClass(API_BASELINE_TASK);
     createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__VERSION);
@@ -1527,6 +1715,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(resourceCopyTaskEClass, RESOURCE_COPY_TASK__SOURCE_URL);
     createEAttribute(resourceCopyTaskEClass, RESOURCE_COPY_TASK__TARGET_URL);
 
+    resourceCreationTaskEClass = createEClass(RESOURCE_CREATION_TASK);
+    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__CONTENT);
+    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__TARGET_URL);
+    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__ENCODING);
+
     textModifyTaskEClass = createEClass(TEXT_MODIFY_TASK);
     createEAttribute(textModifyTaskEClass, TEXT_MODIFY_TASK__URL);
     createEReference(textModifyTaskEClass, TEXT_MODIFY_TASK__MODIFICATIONS);
@@ -1548,18 +1741,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__ID);
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__VALUE);
 
-    contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
-    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
-    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
-
-    resourceCreationTaskEClass = createEClass(RESOURCE_CREATION_TASK);
-    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__CONTENT);
-    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__TARGET_URL);
-    createEAttribute(resourceCreationTaskEClass, RESOURCE_CREATION_TASK__ENCODING);
-
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
+    componentTypeEEnum = createEEnum(COMPONENT_TYPE);
 
     // Create data types
     triggerSetEDataType = createEDataType(TRIGGER_SET);
@@ -1612,17 +1797,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     eclipseIniTaskEClass.getESuperTypes().add(this.getSetupTask());
     linkLocationTaskEClass.getESuperTypes().add(this.getSetupTask());
     p2TaskEClass.getESuperTypes().add(this.getSetupTask());
-    buckminsterImportTaskEClass.getESuperTypes().add(this.getSetupTask());
+    basicMaterializationTaskEClass.getESuperTypes().add(this.getSetupTask());
+    buckminsterImportTaskEClass.getESuperTypes().add(this.getBasicMaterializationTask());
+    materializationTaskEClass.getESuperTypes().add(this.getBasicMaterializationTask());
+    contextVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
     apiBaselineTaskEClass.getESuperTypes().add(this.getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(this.getSetupTask());
     eclipsePreferenceTaskEClass.getESuperTypes().add(this.getSetupTask());
     stringVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
     workingSetTaskEClass.getESuperTypes().add(this.getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(this.getSetupTask());
+    resourceCreationTaskEClass.getESuperTypes().add(this.getSetupTask());
     textModifyTaskEClass.getESuperTypes().add(this.getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(this.getSetupTask());
-    contextVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
-    resourceCreationTaskEClass.getESuperTypes().add(this.getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1767,16 +1954,57 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getP2Repository_Url(), ecorePackage.getEString(), "url", null, 0, 1, P2Repository.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(basicMaterializationTaskEClass, BasicMaterializationTask.class, "BasicMaterializationTask", IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBasicMaterializationTask_TargetPlatform(), ecorePackage.getEString(), "targetPlatform", null, 0,
+        1, BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicMaterializationTask_BundlePool(), ecorePackage.getEString(), "bundlePool", null, 0, 1,
+        BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(buckminsterImportTaskEClass, BuckminsterImportTask.class, "BuckminsterImportTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBuckminsterImportTask_Mspec(), ecorePackage.getEString(), "mspec", null, 0, 1,
         BuckminsterImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBuckminsterImportTask_TargetPlatform(), ecorePackage.getEString(), "targetPlatform", null, 0, 1,
-        BuckminsterImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+
+    initEClass(materializationTaskEClass, MaterializationTask.class, "MaterializationTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMaterializationTask_RootComponents(), this.getComponent(), null, "rootComponents", null, 1, -1,
+        MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMaterializationTask_SourceLocators(), this.getSourceLocator(), null, "sourceLocators", null, 0,
+        -1, MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMaterializationTask_P2Repositories(), this.getP2Repository(), null, "p2Repositories", null, 0,
+        -1, MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 1, 1, Component.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_Type(), this.getComponentType(), "type", null, 1, 1, Component.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sourceLocatorEClass, SourceLocator.class, "SourceLocator", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSourceLocator_Location(), ecorePackage.getEString(), "location", null, 1, 1, SourceLocator.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSourceLocator_ComponentNamePattern(), ecorePackage.getEString(), "componentNamePattern", null, 0,
+        1, SourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBuckminsterImportTask_BundlePool(), ecorePackage.getEString(), "bundlePool", null, 0, 1,
-        BuckminsterImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+    initEAttribute(getSourceLocator_ComponentTypes(), this.getComponentType(), "componentTypes", null, 1, -1,
+        SourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 0, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(apiBaselineTaskEClass, ApiBaselineTask.class, "ApiBaselineTask", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1837,6 +2065,18 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         ResourceCopyTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    initEClass(resourceCreationTaskEClass, ResourceCreationTask.class, "ResourceCreationTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getResourceCreationTask_Content(), ecorePackage.getEString(), "content", null, 0, 1,
+        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceCreationTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 0, 1,
+        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceCreationTask_Encoding(), ecorePackage.getEString(), "encoding", null, 0, 1,
+        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(textModifyTaskEClass, TextModifyTask.class, "TextModifyTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getTextModifyTask_Url(), ecorePackage.getEString(), "url", null, 0, 1, TextModifyTask.class,
@@ -1882,27 +2122,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getCommandParameter_Value(), ecorePackage.getEString(), "value", null, 0, 1, CommandParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 0, 1,
-        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
-        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(resourceCreationTaskEClass, ResourceCreationTask.class, "ResourceCreationTask", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getResourceCreationTask_Content(), ecorePackage.getEString(), "content", null, 0, 1,
-        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceCreationTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 0, 1,
-        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceCreationTask_Encoding(), ecorePackage.getEString(), "encoding", null, 0, 1,
-        ResourceCreationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.NONE);
@@ -1915,6 +2134,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addEEnumLiteral(triggerEEnum, Trigger.BOOTSTRAP);
     addEEnumLiteral(triggerEEnum, Trigger.STARTUP);
     addEEnumLiteral(triggerEEnum, Trigger.MANUAL);
+
+    initEEnum(componentTypeEEnum, ComponentType.class, "ComponentType");
+    addEEnumLiteral(componentTypeEEnum, ComponentType.ECLIPSE_FEATURE);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.OSGI_BUNDLE);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.BUCKMINSTER);
 
     // Initialize data types
     initEDataType(triggerSetEDataType, Set.class, "TriggerSet", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS,

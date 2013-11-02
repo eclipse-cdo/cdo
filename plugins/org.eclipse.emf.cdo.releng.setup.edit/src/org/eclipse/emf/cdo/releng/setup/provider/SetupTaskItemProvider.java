@@ -110,6 +110,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
       addRestrictionsPropertyDescriptor(object);
       addScopePropertyDescriptor(object);
       addExcludedTriggersPropertyDescriptor(object);
+      addDocumentationPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -247,8 +248,24 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
   }
 
   /**
+   * This adds a property descriptor for the Documentation feature.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addDocumentationPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_SetupTask_documentation_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_SetupTask_documentation_feature", "_UI_SetupTask_type"),
+        SetupPackage.Literals.SETUP_TASK__DOCUMENTATION, true, true, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -258,9 +275,20 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
   }
 
   /**
-   * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected boolean shouldComposeCreationImage()
+  {
+    return true;
+  }
+
+  /**
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -288,6 +316,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
     {
     case SetupPackage.SETUP_TASK__SCOPE:
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
+    case SetupPackage.SETUP_TASK__DOCUMENTATION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

@@ -204,9 +204,39 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseBasicMaterializationTask(BasicMaterializationTask object)
+    {
+      return createBasicMaterializationTaskAdapter();
+    }
+
+    @Override
     public Adapter caseBuckminsterImportTask(BuckminsterImportTask object)
     {
       return createBuckminsterImportTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseMaterializationTask(MaterializationTask object)
+    {
+      return createMaterializationTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseComponent(Component object)
+    {
+      return createComponentAdapter();
+    }
+
+    @Override
+    public Adapter caseSourceLocator(SourceLocator object)
+    {
+      return createSourceLocatorAdapter();
+    }
+
+    @Override
+    public Adapter caseContextVariableTask(ContextVariableTask object)
+    {
+      return createContextVariableTaskAdapter();
     }
 
     @Override
@@ -246,6 +276,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseResourceCreationTask(ResourceCreationTask object)
+    {
+      return createResourceCreationTaskAdapter();
+    }
+
+    @Override
     public Adapter caseTextModifyTask(TextModifyTask object)
     {
       return createTextModifyTaskAdapter();
@@ -267,18 +303,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseCommandParameter(CommandParameter object)
     {
       return createCommandParameterAdapter();
-    }
-
-    @Override
-    public Adapter caseContextVariableTask(ContextVariableTask object)
-    {
-      return createContextVariableTaskAdapter();
-    }
-
-    @Override
-    public Adapter caseResourceCreationTask(ResourceCreationTask object)
-    {
-      return createResourceCreationTaskAdapter();
     }
 
     @Override
@@ -603,11 +627,71 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MaterializationTask <em>Materialization Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.MaterializationTask
+   * @generated
+   */
+  public Adapter createMaterializationTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.SourceLocator <em>Source Locator</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.SourceLocator
+   * @generated
+   */
+  public Adapter createSourceLocatorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask <em>Basic Materialization Task</em>}'.
+   * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask
+   * @generated
+   */
+  public Adapter createBasicMaterializationTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Component <em>Component</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.Component
+   * @generated
+   */
+  public Adapter createComponentAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
    * <!-- begin-user-doc -->
-               * This default implementation returns null so that we can easily ignore cases;
-               * it's useful to ignore a case when inheritance will catch all the cases anyway.
-               * <!-- end-user-doc -->
+                     * This default implementation returns null so that we can easily ignore cases;
+                     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+                     * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
    * @generated

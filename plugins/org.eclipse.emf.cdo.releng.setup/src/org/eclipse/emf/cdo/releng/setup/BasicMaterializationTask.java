@@ -1,0 +1,76 @@
+/**
+ */
+package org.eclipse.emf.cdo.releng.setup;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Basic Materialization Task</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getTargetPlatform <em>Target Platform</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getBundlePool <em>Bundle Pool</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask()
+ * @model abstract="true"
+ * @generated
+ */
+public interface BasicMaterializationTask extends SetupTask
+{
+  /**
+   * Returns the value of the '<em><b>Target Platform</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Target Platform</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Target Platform</em>' attribute.
+   * @see #setTargetPlatform(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask_TargetPlatform()
+   * @model
+   * @generated
+   */
+  String getTargetPlatform();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getTargetPlatform <em>Target Platform</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Target Platform</em>' attribute.
+   * @see #getTargetPlatform()
+   * @generated
+   */
+  void setTargetPlatform(String value);
+
+  /**
+   * Returns the value of the '<em><b>Bundle Pool</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Bundle Pool</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Bundle Pool</em>' attribute.
+   * @see #setBundlePool(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask_BundlePool()
+   * @model
+   * @generated
+   */
+  String getBundlePool();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getBundlePool <em>Bundle Pool</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Bundle Pool</em>' attribute.
+   * @see #getBundlePool()
+   * @generated
+   */
+  void setBundlePool(String value);
+
+} // BasicMaterializationTask

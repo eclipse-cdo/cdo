@@ -193,9 +193,36 @@ public interface SetupFactory extends EFactory
   ResourceCreationTask createResourceCreationTask();
 
   /**
+   * Returns a new object of class '<em>Materialization Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Materialization Task</em>'.
+   * @generated
+   */
+  MaterializationTask createMaterializationTask();
+
+  /**
+   * Returns a new object of class '<em>Source Locator</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Source Locator</em>'.
+   * @generated
+   */
+  SourceLocator createSourceLocator();
+
+  /**
+   * Returns a new object of class '<em>Component</em>'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @return a new object of class '<em>Component</em>'.
+   * @generated
+   */
+  Component createComponent();
+
+  /**
    * Returns a new object of class '<em>Eclipse Ini Task</em>'.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+                   * <!-- end-user-doc -->
    * @return a new object of class '<em>Eclipse Ini Task</em>'.
    * @generated
    */

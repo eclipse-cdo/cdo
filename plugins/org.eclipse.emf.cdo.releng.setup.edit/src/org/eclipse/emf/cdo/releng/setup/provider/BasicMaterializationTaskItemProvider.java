@@ -2,11 +2,16 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -17,16 +22,13 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ResourceCreationTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class BasicMaterializationTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -35,7 +37,7 @@ public class ResourceCreationTaskItemProvider extends SetupTaskItemProvider impl
    * <!-- end-user-doc -->
    * @generated
    */
-  public ResourceCreationTaskItemProvider(AdapterFactory adapterFactory)
+  public BasicMaterializationTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -53,74 +55,44 @@ public class ResourceCreationTaskItemProvider extends SetupTaskItemProvider impl
     {
       super.getPropertyDescriptors(object);
 
-      addContentPropertyDescriptor(object);
-      addTargetURLPropertyDescriptor(object);
-      addEncodingPropertyDescriptor(object);
+      addTargetPlatformPropertyDescriptor(object);
+      addBundlePoolPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Content feature.
+   * This adds a property descriptor for the Target Platform feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addContentPropertyDescriptor(Object object)
+  protected void addTargetPlatformPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ResourceCreationTask_content_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCreationTask_content_feature",
-            "_UI_ResourceCreationTask_type"), SetupPackage.Literals.RESOURCE_CREATION_TASK__CONTENT, true, true, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        getString("_UI_BasicMaterializationTask_targetPlatform_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BasicMaterializationTask_targetPlatform_feature",
+            "_UI_BasicMaterializationTask_type"), SetupPackage.Literals.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM,
+        true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This adds a property descriptor for the Target URL feature.
+   * This adds a property descriptor for the Bundle Pool feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addTargetURLPropertyDescriptor(Object object)
+  protected void addBundlePoolPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ResourceCreationTask_targetURL_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCreationTask_targetURL_feature",
-            "_UI_ResourceCreationTask_type"), SetupPackage.Literals.RESOURCE_CREATION_TASK__TARGET_URL, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Encoding feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addEncodingPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_ResourceCreationTask_encoding_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCreationTask_encoding_feature",
-            "_UI_ResourceCreationTask_type"), SetupPackage.Literals.RESOURCE_CREATION_TASK__ENCODING, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This returns ResourceCreationTask.gif.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object getImage(Object object)
-  {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceCreationTask"));
+        getString("_UI_BasicMaterializationTask_bundlePool_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BasicMaterializationTask_bundlePool_feature",
+            "_UI_BasicMaterializationTask_type"), SetupPackage.Literals.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL, true,
+        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -135,16 +107,18 @@ public class ResourceCreationTaskItemProvider extends SetupTaskItemProvider impl
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String getText(Object object)
   {
-    ResourceCreationTask resourceCreationTask = (ResourceCreationTask)object;
-    return "" + resourceCreationTask.getTargetURL();
+    SetupTaskScope labelValue = ((BasicMaterializationTask)object).getScope();
+    String label = labelValue == null ? null : labelValue.toString();
+    return label == null || label.length() == 0 ? getString("_UI_BasicMaterializationTask_type")
+        : getString("_UI_BasicMaterializationTask_type") + " " + label;
   }
 
   /**
@@ -159,11 +133,10 @@ public class ResourceCreationTaskItemProvider extends SetupTaskItemProvider impl
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(ResourceCreationTask.class))
+    switch (notification.getFeatureID(BasicMaterializationTask.class))
     {
-    case SetupPackage.RESOURCE_CREATION_TASK__CONTENT:
-    case SetupPackage.RESOURCE_CREATION_TASK__TARGET_URL:
-    case SetupPackage.RESOURCE_CREATION_TASK__ENCODING:
+    case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
+    case SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

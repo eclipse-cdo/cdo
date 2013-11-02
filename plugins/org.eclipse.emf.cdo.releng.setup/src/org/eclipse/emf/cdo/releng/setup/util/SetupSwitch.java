@@ -38,11 +38,9 @@ import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import java.util.List;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.cdo.releng.setup.*;
 
 /**
@@ -58,7 +56,7 @@ import org.eclipse.emf.cdo.releng.setup.*;
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage
  * @generated
  */
-public class SetupSwitch<T>
+public class SetupSwitch<T> extends Switch<T>
 {
   /**
    * The cached model package
@@ -83,41 +81,27 @@ public class SetupSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * Checks whether this is a switch for the given package.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @parameter ePackage the package in question.
+   * @return whether this is a switch for the given package.
    * @generated
    */
-  public T doSwitch(EObject theEObject)
+  @Override
+  protected boolean isSwitchFor(EPackage ePackage)
   {
-    return doSwitch(theEObject.eClass(), theEObject);
+    return ePackage == modelPackage;
   }
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  protected T doSwitch(EClass theEClass, EObject theEObject)
-  {
-    if (theEClass.eContainer() == modelPackage)
-    {
-      return doSwitch(theEClass.getClassifierID(), theEObject);
-    }
-    List<EClass> eSuperTypes = theEClass.getESuperTypes();
-    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
-  }
-
-  /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated
-   */
+  @Override
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -278,12 +262,62 @@ public class SetupSwitch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case SetupPackage.BASIC_MATERIALIZATION_TASK:
+    {
+      BasicMaterializationTask basicMaterializationTask = (BasicMaterializationTask)theEObject;
+      T result = caseBasicMaterializationTask(basicMaterializationTask);
+      if (result == null)
+        result = caseSetupTask(basicMaterializationTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     case SetupPackage.BUCKMINSTER_IMPORT_TASK:
     {
       BuckminsterImportTask buckminsterImportTask = (BuckminsterImportTask)theEObject;
       T result = caseBuckminsterImportTask(buckminsterImportTask);
       if (result == null)
+        result = caseBasicMaterializationTask(buckminsterImportTask);
+      if (result == null)
         result = caseSetupTask(buckminsterImportTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.MATERIALIZATION_TASK:
+    {
+      MaterializationTask materializationTask = (MaterializationTask)theEObject;
+      T result = caseMaterializationTask(materializationTask);
+      if (result == null)
+        result = caseBasicMaterializationTask(materializationTask);
+      if (result == null)
+        result = caseSetupTask(materializationTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.COMPONENT:
+    {
+      Component component = (Component)theEObject;
+      T result = caseComponent(component);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.SOURCE_LOCATOR:
+    {
+      SourceLocator sourceLocator = (SourceLocator)theEObject;
+      T result = caseSourceLocator(sourceLocator);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SetupPackage.CONTEXT_VARIABLE_TASK:
+    {
+      ContextVariableTask contextVariableTask = (ContextVariableTask)theEObject;
+      T result = caseContextVariableTask(contextVariableTask);
+      if (result == null)
+        result = caseSetupTask(contextVariableTask);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -348,6 +382,16 @@ public class SetupSwitch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case SetupPackage.RESOURCE_CREATION_TASK:
+    {
+      ResourceCreationTask resourceCreationTask = (ResourceCreationTask)theEObject;
+      T result = caseResourceCreationTask(resourceCreationTask);
+      if (result == null)
+        result = caseSetupTask(resourceCreationTask);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     case SetupPackage.TEXT_MODIFY_TASK:
     {
       TextModifyTask textModifyTask = (TextModifyTask)theEObject;
@@ -380,26 +424,6 @@ public class SetupSwitch<T>
     {
       CommandParameter commandParameter = (CommandParameter)theEObject;
       T result = caseCommandParameter(commandParameter);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case SetupPackage.CONTEXT_VARIABLE_TASK:
-    {
-      ContextVariableTask contextVariableTask = (ContextVariableTask)theEObject;
-      T result = caseContextVariableTask(contextVariableTask);
-      if (result == null)
-        result = caseSetupTask(contextVariableTask);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case SetupPackage.RESOURCE_CREATION_TASK:
-    {
-      ResourceCreationTask resourceCreationTask = (ResourceCreationTask)theEObject;
-      T result = caseResourceCreationTask(resourceCreationTask);
-      if (result == null)
-        result = caseSetupTask(resourceCreationTask);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -778,11 +802,75 @@ public class SetupSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Materialization Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Materialization Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMaterializationTask(MaterializationTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Source Locator</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Source Locator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSourceLocator(SourceLocator object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Basic Materialization Task</em>'.
+   * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Basic Materialization Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBasicMaterializationTask(BasicMaterializationTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Component</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Component</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComponent(Component object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
    * <!-- begin-user-doc -->
-               * This implementation returns null;
-               * returning a non-null result will terminate the switch.
-               * <!-- end-user-doc -->
+                     * This implementation returns null;
+                     * returning a non-null result will terminate the switch.
+                     * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -884,6 +972,7 @@ public class SetupSwitch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
+  @Override
   public T defaultCase(EObject object)
   {
     return null;

@@ -547,9 +547,84 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MaterializationTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected MaterializationTaskItemProvider materializationTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MaterializationTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createMaterializationTaskAdapter()
+  {
+    if (materializationTaskItemProvider == null)
+    {
+      materializationTaskItemProvider = new MaterializationTaskItemProvider(this);
+    }
+
+    return materializationTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.SourceLocator} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected SourceLocatorItemProvider sourceLocatorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.SourceLocator}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createSourceLocatorAdapter()
+  {
+    if (sourceLocatorItemProvider == null)
+    {
+      sourceLocatorItemProvider = new SourceLocatorItemProvider(this);
+    }
+
+    return sourceLocatorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Component} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ComponentItemProvider componentItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Component}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createComponentAdapter()
+  {
+    if (componentItemProvider == null)
+    {
+      componentItemProvider = new ComponentItemProvider(this);
+    }
+
+    return componentItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+               * <!-- end-user-doc -->
    * @generated
    */
   protected EclipseIniTaskItemProvider eclipseIniTaskItemProvider;
@@ -888,6 +963,14 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       p2RepositoryItemProvider.dispose();
     if (buckminsterImportTaskItemProvider != null)
       buckminsterImportTaskItemProvider.dispose();
+    if (materializationTaskItemProvider != null)
+      materializationTaskItemProvider.dispose();
+    if (componentItemProvider != null)
+      componentItemProvider.dispose();
+    if (sourceLocatorItemProvider != null)
+      sourceLocatorItemProvider.dispose();
+    if (contextVariableTaskItemProvider != null)
+      contextVariableTaskItemProvider.dispose();
     if (apiBaselineTaskItemProvider != null)
       apiBaselineTaskItemProvider.dispose();
     if (gitCloneTaskItemProvider != null)
@@ -900,6 +983,8 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       workingSetTaskItemProvider.dispose();
     if (resourceCopyTaskItemProvider != null)
       resourceCopyTaskItemProvider.dispose();
+    if (resourceCreationTaskItemProvider != null)
+      resourceCreationTaskItemProvider.dispose();
     if (textModifyTaskItemProvider != null)
       textModifyTaskItemProvider.dispose();
     if (textModificationItemProvider != null)
@@ -908,10 +993,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       keyBindingTaskItemProvider.dispose();
     if (commandParameterItemProvider != null)
       commandParameterItemProvider.dispose();
-    if (contextVariableTaskItemProvider != null)
-      contextVariableTaskItemProvider.dispose();
-    if (resourceCreationTaskItemProvider != null)
-      resourceCreationTaskItemProvider.dispose();
   }
 
 }

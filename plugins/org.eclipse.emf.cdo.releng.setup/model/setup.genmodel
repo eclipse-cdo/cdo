@@ -4,8 +4,8 @@
     modelPluginID="org.eclipse.emf.cdo.releng.setup" modelName="Setup" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
     containmentProxies="true" complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true"
-    runtimeVersion="2.5" usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
-    importOrganizing="true">
+    runtimeVersion="2.9" usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
+    importOrganizing="true" decoration="Live">
   <foreignModel>setup.ecore</foreignModel>
   <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
       multipleEditorPages="false" extensibleProviderFactory="true" childCreationExtenders="true"
@@ -21,6 +21,11 @@
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//Trigger/BOOTSTRAP"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//Trigger/STARTUP"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//Trigger/MANUAL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="setup.ecore#//ComponentType">
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/ECLIPSE_FEATURE"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/OSGI_BUNDLE"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/BUCKMINSTER"/>
     </genEnums>
     <genDataTypes ecoreDataType="setup.ecore#//TriggerSet"/>
     <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
@@ -101,10 +106,30 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//P2Repository/p2Task"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Repository/url"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="setup.ecore#//BasicMaterializationTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BasicMaterializationTask/targetPlatform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BasicMaterializationTask/bundlePool"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//BuckminsterImportTask" labelFeature="#//setup/BuckminsterImportTask/mspec">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BuckminsterImportTask/mspec"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BuckminsterImportTask/targetPlatform"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BuckminsterImportTask/bundlePool"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//MaterializationTask">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MaterializationTask/rootComponents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MaterializationTask/sourceLocators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MaterializationTask/p2Repositories"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Component">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/type"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//SourceLocator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SourceLocator/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SourceLocator/componentNamePattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SourceLocator/componentTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ApiBaselineTask" labelFeature="#//setup/ApiBaselineTask/version">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/version"/>
@@ -132,6 +157,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCopyTask/sourceURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCopyTask/targetURL"/>
     </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ResourceCreationTask" labelFeature="#//setup/ResourceCreationTask/targetURL">
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/content"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/targetURL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/encoding"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//TextModifyTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModifyTask/url"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TextModifyTask/modifications"/>
@@ -152,15 +182,6 @@
     <genClasses ecoreClass="setup.ecore#//CommandParameter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/value"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//ResourceCreationTask" labelFeature="#//setup/ResourceCreationTask/targetURL">
-      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/content"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/targetURL"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/encoding"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

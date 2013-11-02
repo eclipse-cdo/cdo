@@ -128,6 +128,14 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createP2Repository();
     case SetupPackage.BUCKMINSTER_IMPORT_TASK:
       return createBuckminsterImportTask();
+    case SetupPackage.MATERIALIZATION_TASK:
+      return createMaterializationTask();
+    case SetupPackage.COMPONENT:
+      return createComponent();
+    case SetupPackage.SOURCE_LOCATOR:
+      return createSourceLocator();
+    case SetupPackage.CONTEXT_VARIABLE_TASK:
+      return createContextVariableTask();
     case SetupPackage.API_BASELINE_TASK:
       return createApiBaselineTask();
     case SetupPackage.GIT_CLONE_TASK:
@@ -140,6 +148,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createWorkingSetTask();
     case SetupPackage.RESOURCE_COPY_TASK:
       return createResourceCopyTask();
+    case SetupPackage.RESOURCE_CREATION_TASK:
+      return createResourceCreationTask();
     case SetupPackage.TEXT_MODIFY_TASK:
       return createTextModifyTask();
     case SetupPackage.TEXT_MODIFICATION:
@@ -148,10 +158,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createKeyBindingTask();
     case SetupPackage.COMMAND_PARAMETER:
       return createCommandParameter();
-    case SetupPackage.CONTEXT_VARIABLE_TASK:
-      return createContextVariableTask();
-    case SetupPackage.RESOURCE_CREATION_TASK:
-      return createResourceCreationTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -171,6 +177,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createSetupTaskScopeFromString(eDataType, initialValue);
     case SetupPackage.TRIGGER:
       return createTriggerFromString(eDataType, initialValue);
+    case SetupPackage.COMPONENT_TYPE:
+      return createComponentTypeFromString(eDataType, initialValue);
     case SetupPackage.TRIGGER_SET:
       return createTriggerSetFromString(eDataType, initialValue);
     case SetupPackage.EXCEPTION:
@@ -196,6 +204,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return convertSetupTaskScopeToString(eDataType, instanceValue);
     case SetupPackage.TRIGGER:
       return convertTriggerToString(eDataType, instanceValue);
+    case SetupPackage.COMPONENT_TYPE:
+      return convertComponentTypeToString(eDataType, instanceValue);
     case SetupPackage.TRIGGER_SET:
       return convertTriggerSetToString(eDataType, instanceValue);
     case SetupPackage.EXCEPTION:
@@ -407,7 +417,40 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MaterializationTask createMaterializationTask()
+  {
+    MaterializationTaskImpl materializationTask = new MaterializationTaskImpl();
+    return materializationTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SourceLocator createSourceLocator()
+  {
+    SourceLocatorImpl sourceLocator = new SourceLocatorImpl();
+    return sourceLocator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  public Component createComponent()
+  {
+    ComponentImpl component = new ComponentImpl();
+    return component;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+                   * <!-- end-user-doc -->
    * @generated
    */
   public EclipseIniTask createEclipseIniTask()
@@ -466,7 +509,31 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ComponentType createComponentTypeFromString(EDataType eDataType, String initialValue)
+  {
+    ComponentType result = ComponentType.get(initialValue);
+    if (result == null)
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
+          + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertComponentTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public CompoundSetupTask createCompoundSetupTask()

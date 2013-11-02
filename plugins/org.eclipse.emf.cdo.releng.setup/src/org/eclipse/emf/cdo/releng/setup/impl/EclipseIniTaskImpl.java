@@ -146,9 +146,7 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     String oldOption = option;
     option = newOption;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_INI_TASK__OPTION, oldOption, option));
-    }
   }
 
   /**
@@ -171,9 +169,7 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_INI_TASK__VALUE, oldValue, value));
-    }
   }
 
   /**
@@ -196,9 +192,7 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     boolean oldVm = vm;
     vm = newVm;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_INI_TASK__VM, oldVm, vm));
-    }
   }
 
   /**
@@ -296,9 +290,7 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (option: ");

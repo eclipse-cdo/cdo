@@ -1,18 +1,10 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -27,13 +19,14 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.MaterializationTask} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class MaterializationTaskItemProvider extends BasicMaterializationTaskItemProvider implements
+    IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+    IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -41,7 +34,7 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public WorkingSetTaskItemProvider(AdapterFactory adapterFactory)
+  public MaterializationTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -77,7 +70,9 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.WORKING_SET_TASK__WORKING_SETS);
+      childrenFeatures.add(SetupPackage.Literals.MATERIALIZATION_TASK__ROOT_COMPONENTS);
+      childrenFeatures.add(SetupPackage.Literals.MATERIALIZATION_TASK__SOURCE_LOCATORS);
+      childrenFeatures.add(SetupPackage.Literals.MATERIALIZATION_TASK__P2_REPOSITORIES);
     }
     return childrenFeatures;
   }
@@ -97,7 +92,7 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-   * This returns WorkingSetTask.gif.
+   * This returns MaterializationTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -105,7 +100,7 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/WorkingSetTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/MaterializationTask"));
   }
 
   /**
@@ -120,15 +115,15 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_WorkingSetTask_type");
+    return getString("_UI_MaterializationTask_type");
   }
 
   /**
@@ -143,9 +138,11 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(WorkingSetTask.class))
+    switch (notification.getFeatureID(MaterializationTask.class))
     {
-    case SetupPackage.WORKING_SET_TASK__WORKING_SETS:
+    case SetupPackage.MATERIALIZATION_TASK__ROOT_COMPONENTS:
+    case SetupPackage.MATERIALIZATION_TASK__SOURCE_LOCATORS:
+    case SetupPackage.MATERIALIZATION_TASK__P2_REPOSITORIES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -164,8 +161,14 @@ public class WorkingSetTaskItemProvider extends SetupTaskItemProvider implements
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.WORKING_SET_TASK__WORKING_SETS,
-        WorkingSetsFactory.eINSTANCE.createWorkingSet()));
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__ROOT_COMPONENTS,
+        SetupFactory.eINSTANCE.createComponent()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__SOURCE_LOCATORS,
+        SetupFactory.eINSTANCE.createSourceLocator()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__P2_REPOSITORIES,
+        SetupFactory.eINSTANCE.createP2Repository()));
   }
 
 }

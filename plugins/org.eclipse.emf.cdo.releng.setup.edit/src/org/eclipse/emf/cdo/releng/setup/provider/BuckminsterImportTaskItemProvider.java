@@ -34,8 +34,9 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class BuckminsterImportTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class BuckminsterImportTaskItemProvider extends BasicMaterializationTaskItemProvider implements
+    IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+    IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -62,8 +63,6 @@ public class BuckminsterImportTaskItemProvider extends SetupTaskItemProvider imp
       super.getPropertyDescriptors(object);
 
       addMspecPropertyDescriptor(object);
-      addTargetPlatformPropertyDescriptor(object);
-      addBundlePoolPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -86,40 +85,6 @@ public class BuckminsterImportTaskItemProvider extends SetupTaskItemProvider imp
   }
 
   /**
-   * This adds a property descriptor for the Target Platform feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addTargetPlatformPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_BuckminsterImportTask_targetPlatform_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_BuckminsterImportTask_targetPlatform_feature",
-            "_UI_BuckminsterImportTask_type"), SetupPackage.Literals.BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM, true,
-        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Bundle Pool feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addBundlePoolPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_BuckminsterImportTask_bundlePool_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_BuckminsterImportTask_bundlePool_feature",
-            "_UI_BuckminsterImportTask_type"), SetupPackage.Literals.BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
    * This returns BuckminsterImportTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -132,9 +97,20 @@ public class BuckminsterImportTaskItemProvider extends SetupTaskItemProvider imp
   }
 
   /**
-   * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected boolean shouldComposeCreationImage()
+  {
+    return true;
+  }
+
+  /**
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -160,8 +136,6 @@ public class BuckminsterImportTaskItemProvider extends SetupTaskItemProvider imp
     switch (notification.getFeatureID(BuckminsterImportTask.class))
     {
     case SetupPackage.BUCKMINSTER_IMPORT_TASK__MSPEC:
-    case SetupPackage.BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM:
-    case SetupPackage.BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

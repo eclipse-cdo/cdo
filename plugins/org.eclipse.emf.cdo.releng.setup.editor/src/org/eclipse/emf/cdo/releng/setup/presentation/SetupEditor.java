@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.ui.viewer.ColumnViewerInformationControlToolTipSupport;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -32,6 +33,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
+import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -73,6 +76,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -85,6 +89,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -427,14 +432,13 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
 
           protected Collection<Resource> removedResources = new ArrayList<Resource>();
 
-          public boolean visit(IResourceDelta delta)
+          public boolean visit(final IResourceDelta delta)
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
-                  && delta.getFlags() != IResourceDelta.MARKERS)
+              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED)
               {
-                Resource resource = resourceSet.getResource(
+                final Resource resource = resourceSet.getResource(
                     URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
@@ -442,9 +446,20 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
                   {
                     removedResources.add(resource);
                   }
-                  else if (!savedResources.remove(resource))
+                  else
                   {
-                    changedResources.add(resource);
+                    if ((delta.getFlags() & IResourceDelta.MARKERS) != 0)
+                    {
+                      DiagnosticDecorator.DiagnosticAdapter.update(resource,
+                          markerHelper.getMarkerDiagnostics(resource, (IFile)delta.getResource()));
+                    }
+                    if ((delta.getFlags() & IResourceDelta.CONTENT) != 0)
+                    {
+                      if (!savedResources.remove(resource))
+                      {
+                        changedResources.add(resource);
+                      }
+                    }
                   }
                 }
               }
@@ -943,7 +958,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
 
     int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
+    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer(),
+        FileTransfer.getInstance() };
     viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
     viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer));
   }
@@ -1030,11 +1046,15 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+      selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(
+          new AdapterFactoryLabelProvider(adapterFactory), new DiagnosticDecorator(editingDomain, selectionViewer,
+              SetupEditorPlugin.getPlugin().getDialogSettings())));
       selectionViewer.setInput(editingDomain.getResourceSet());
       selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 
       new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
+      new ColumnViewerInformationControlToolTipSupport(selectionViewer,
+          new DiagnosticDecorator.EditingDomainLocationListener(editingDomain, selectionViewer));
 
       createContextMenuFor(selectionViewer);
       int pageIndex = addPage(tree);
@@ -1370,6 +1390,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     //
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+    saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
 
     // Do the work within an operation because this is a long running activity that modifies the workbench.
     //

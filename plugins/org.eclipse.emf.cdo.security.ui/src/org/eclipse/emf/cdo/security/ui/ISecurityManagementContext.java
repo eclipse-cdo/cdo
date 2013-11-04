@@ -11,11 +11,17 @@
 package org.eclipse.emf.cdo.security.ui;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.runtime.IAdaptable;
 
@@ -89,7 +95,29 @@ public interface ISecurityManagementContext
       }
       catch (Exception e)
       {
-        OM.LOG.warn("Security model resource not available.", e); //$NON-NLS-1$
+        // OK, so it's not in the default location. Work a little harder to find it
+        CloseableIterator<EObject> realms = null;
+        try
+        {
+          realms = view.queryInstancesAsync(SecurityPackage.Literals.REALM);
+          if (realms.hasNext())
+          {
+            result = (CDOResource)realms.next().eResource();
+          }
+        }
+        catch (Exception e2)
+        {
+          OM.LOG.error(e2);
+        }
+        finally
+        {
+          IOUtil.closeSilent(realms);
+        }
+      }
+
+      if (result == null)
+      {
+        OM.LOG.warn("Security model resource not available."); //$NON-NLS-1$
       }
 
       return result;

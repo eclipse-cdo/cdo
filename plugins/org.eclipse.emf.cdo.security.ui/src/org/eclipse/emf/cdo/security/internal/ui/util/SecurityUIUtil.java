@@ -44,7 +44,13 @@ public final class SecurityUIUtil
 
   public static Directory getDirectory(Realm realm, EClass itemType)
   {
-    Directory result = null;
+    Directory explicitDefault = getDefaultDirectory(realm, itemType);
+    if (explicitDefault != null)
+    {
+      return explicitDefault;
+    }
+
+    // Name-based hack in case the default directory structure has been broken
 
     String preferredName = itemType == SecurityPackage.Literals.GROUP ? "Groups" //$NON-NLS-1$
         : itemType == SecurityPackage.Literals.USER ? "Users" //$NON-NLS-1$
@@ -58,13 +64,30 @@ public final class SecurityUIUtil
         Directory directory = (Directory)next;
         if (preferredName.equals(directory.getName()))
         {
-          result = (Directory)next;
-          break;
+          return directory;
         }
       }
     }
 
-    return result;
+    return null;
+  }
+
+  private static Directory getDefaultDirectory(Realm realm, EClass itemType)
+  {
+    if (itemType.getEPackage() == SecurityPackage.eINSTANCE)
+    {
+      switch (itemType.getClassifierID())
+      {
+      case SecurityPackage.ROLE:
+        return realm.getDefaultRoleDirectory();
+      case SecurityPackage.GROUP:
+        return realm.getDefaultGroupDirectory();
+      case SecurityPackage.USER:
+        return realm.getDefaultUserDirectory();
+      }
+    }
+
+    return null;
   }
 
   public static void applySupportedElementFilter(StructuredViewer viewer, EClass itemType)

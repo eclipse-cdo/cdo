@@ -93,6 +93,8 @@ public class Messages extends NLS
 
   public static String UserDetailsPage_1;
 
+  public static String UserDetailsPage_10;
+
   public static String UserDetailsPage_2;
 
   public static String UserDetailsPage_3;

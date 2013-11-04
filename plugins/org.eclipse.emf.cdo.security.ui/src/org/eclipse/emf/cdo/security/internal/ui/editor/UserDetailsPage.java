@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
@@ -66,7 +67,9 @@ public class UserDetailsPage extends AbstractDetailsPage<User>
 
     space(parent, toolkit);
 
-    combo(parent, toolkit, Messages.UserDetailsPage_6, SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE);
+    Control accessOverrideControl = combo(parent, toolkit, Messages.UserDetailsPage_6,
+        SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE).getControl();
+    accessOverrideControl.setToolTipText(Messages.UserDetailsPage_10);
 
     space(parent, toolkit);
 

@@ -227,11 +227,11 @@ public interface User extends Assignee
   /**
    * Returns the value of the '<em><b>Default Access Override</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Default Access Override</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
+   * <!-- begin-model-doc -->
+   * <p>Overrides the {@link Realm}'s {@linkplain Realm#getDefaultAccess() default access permission} for this user.
+   * When this attribute is set, its value establishes the minimum level of access for the user on all objects in the repository.  In particular, it is not the access permission that applies to objects that are not otherwise covered by some permission rule for the user.  All permissions are implicitly elevated at least to this override for the user.</p>
+   * <!-- end-model-doc -->
    * @return the value of the '<em>Default Access Override</em>' attribute.
    * @see #setDefaultAccessOverride(Access)
    * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultAccessOverride()
@@ -253,11 +253,11 @@ public interface User extends Assignee
   /**
    * Returns the value of the '<em><b>Default Access</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Default Access</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
+   * <!-- begin-model-doc -->
+   * <p>The minimum level of access for the user on all objects in the repository.
+   * This is either the default set for {@linkplain Realm#getDefaultAccess() all users} in the {@link Realm} or an {@linkplain #getDefaultAccessOverride() override} set specifically on this user.</p>
+   * <!-- end-model-doc -->
    * @return the value of the '<em>Default Access</em>' attribute.
    * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultAccess()
    * @model dataType="org.eclipse.emf.cdo.security.AccessObject" transient="true" changeable="false" volatile="true" derived="true"

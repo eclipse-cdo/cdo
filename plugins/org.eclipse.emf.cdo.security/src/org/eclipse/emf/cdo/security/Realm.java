@@ -151,11 +151,13 @@ public interface Realm extends SecurityElement, SecurityItemContainer
   /**
    * Returns the value of the '<em><b>Default Access</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Default Access</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
+   * <!-- begin-model-doc -->
+   * <p>The minimum level of access for all users on all objects in the repository.
+   * This is not the default level of access for a user on an object that is not otherwise covered by some permission rule; all permissions are implicitly elevated to this level.
+   * </p><p>
+   * This default/minimum can be overridden, even to a lesser access level, for specific {@linkplain User#setDefaultAccessOverride(Access) users} on a case-by-case basis.</p>
+   * <!-- end-model-doc -->
    * @return the value of the '<em>Default Access</em>' attribute.
    * @see #setDefaultAccess(Access)
    * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_DefaultAccess()

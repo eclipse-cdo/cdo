@@ -67,7 +67,7 @@ import java.util.regex.Pattern;
  */
 public class SetupTaskPerformer extends HashMap<Object, Object> implements SetupTaskContext
 {
-  private static final String RELENG_URL = System.getProperty("releng.url",
+  public static final String RELENG_URL = System.getProperty("releng.url",
       "http://download.eclipse.org/modeling/emf/cdo/updates/integration").replace('\\', '/');
 
   private static boolean NEEDS_PATH_SEPARATOR_CONVERSION = File.separatorChar == '\\';

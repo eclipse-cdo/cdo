@@ -53,9 +53,12 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
+import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.operations.ProvisioningJob;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
+import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
+import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -103,6 +106,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -117,6 +121,8 @@ public class SetupDialog extends TitleAreaDialog
   public static final int RETURN_WORKBENCH = -2;
 
   public static final int RETURN_RESTART = -3;
+
+  private static final String TRAIN_URL = "http://download.eclipse.org/releases/luna";
 
   private static final String SETUP_URI = System.getProperty("setup.uri",
       "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.setup")
@@ -532,15 +538,27 @@ public class SetupDialog extends TitleAreaDialog
           finally
           {
             ServiceUtil.ungetService(agent);
+            monitor.done();
           }
         }
 
         private IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor)
         {
+          SubMonitor sub = SubMonitor.convert(monitor, "Checking for updates...", 1000);
+
+          try
+          {
+            addRepository(agent, TRAIN_URL, sub.newChild(200));
+            addRepository(agent, SetupTaskPerformer.RELENG_URL, sub.newChild(200));
+          }
+          catch (ProvisionException ex)
+          {
+            return ex.getStatus();
+          }
+
           ProvisioningSession session = new ProvisioningSession(agent);
           UpdateOperation operation = new UpdateOperation(session);
-          SubMonitor sub = SubMonitor.convert(monitor, "Checking for updates...", 200);
-          IStatus status = operation.resolveModal(sub.newChild(100));
+          IStatus status = operation.resolveModal(sub.newChild(300));
           if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
           {
             return status;
@@ -554,7 +572,13 @@ public class SetupDialog extends TitleAreaDialog
           if (status.getSeverity() != IStatus.ERROR)
           {
             ProvisioningJob job = operation.getProvisioningJob(null);
-            status = job.runModal(sub.newChild(100));
+            if (job == null)
+            {
+              String resolutionDetails = operation.getResolutionDetails();
+              throw new IllegalStateException(resolutionDetails);
+            }
+
+            status = job.runModal(sub.newChild(300));
             if (status.getSeverity() == IStatus.CANCEL)
             {
               throw new OperationCanceledException();
@@ -562,6 +586,49 @@ public class SetupDialog extends TitleAreaDialog
           }
 
           return status;
+        }
+
+        private void addRepository(IProvisioningAgent agent, String location, IProgressMonitor monitor)
+            throws ProvisionException
+        {
+          SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 1000);
+
+          try
+          {
+            java.net.URI uri = new java.net.URI(location);
+            addMetadataRepository(agent, uri, sub.newChild(500));
+            addArtifactRepository(agent, uri, sub.newChild(500));
+          }
+          catch (URISyntaxException ex)
+          {
+            throw new IllegalArgumentException(ex);
+          }
+        }
+
+        private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
+            throws ProvisionException
+        {
+          IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
+              .getService(IMetadataRepositoryManager.SERVICE_NAME);
+          if (manager == null)
+          {
+            throw new IllegalStateException("No metadata repository manager found");
+          }
+
+          manager.loadRepository(location, monitor);
+        }
+
+        private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
+            throws ProvisionException
+        {
+          IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
+              .getService(IArtifactRepositoryManager.SERVICE_NAME);
+          if (manager == null)
+          {
+            throw new IllegalStateException("No metadata repository manager found");
+          }
+
+          manager.loadRepository(location, monitor);
         }
       };
 

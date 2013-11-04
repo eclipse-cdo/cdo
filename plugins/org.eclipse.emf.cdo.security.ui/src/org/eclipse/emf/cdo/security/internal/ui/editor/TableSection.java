@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
-import org.eclipse.emf.cdo.security.internal.ui.actions.SelectionListenerAction;
 import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.security.internal.ui.util.ActionBarsHelper;
 import org.eclipse.emf.cdo.security.internal.ui.util.ObjectExistsConverter.ObjectWritableConverter;
@@ -23,6 +22,7 @@ import org.eclipse.emf.cdo.security.internal.ui.util.TableLabelProvider;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.actions.SelectionListenerAction;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -238,7 +238,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   {
     Command dummy = createDeleteCommand(EcoreUtil.create(elementEClass));
 
-    return new SelectionListenerAction(dummy.getLabel(), SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
+    return new SelectionListenerAction<EObject>(dummy.getLabel(), SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
     {
       @Override
       public void run()
@@ -254,6 +254,12 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
       protected boolean updateSelection(IStructuredSelection selection)
       {
         return super.updateSelection(selection) && SecurityUIUtil.isEditable(getInput());
+      }
+
+      @Override
+      protected Class<EObject> getType()
+      {
+        return EObject.class;
       }
     };
   }

@@ -7,8 +7,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.security.internal.ui.actions;version="4.3.0";x-internal:=true,
- org.eclipse.emf.cdo.security.internal.ui.bundle;version="4.3.0";x-internal:=true,
+Export-Package: org.eclipse.emf.cdo.security.internal.ui.bundle;version="4.3.0";x-internal:=true,
  org.eclipse.emf.cdo.security.internal.ui.dialogs;version="4.3.0";x-internal:=true,
  org.eclipse.emf.cdo.security.internal.ui.editor;version="4.3.0";x-internal:=true,
  org.eclipse.emf.cdo.security.internal.ui.handlers;version="4.3.0";x-internal:=true,

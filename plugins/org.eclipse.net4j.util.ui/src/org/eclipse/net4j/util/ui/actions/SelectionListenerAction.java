@@ -8,9 +8,7 @@
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
-package org.eclipse.emf.cdo.security.internal.ui.actions;
-
-import org.eclipse.emf.ecore.EObject;
+package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -18,10 +16,11 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
 /**
  * @author Christian W. Damus (CEA LIST)
+ * @since 3.4
  */
-public class SelectionListenerAction extends BaseSelectionListenerAction
+public abstract class SelectionListenerAction<T> extends BaseSelectionListenerAction
 {
-  private EObject selectedObject;
+  private T selectedObject;
 
   public SelectionListenerAction(String text)
   {
@@ -38,22 +37,24 @@ public class SelectionListenerAction extends BaseSelectionListenerAction
   protected boolean updateSelection(IStructuredSelection selection)
   {
     boolean result = !selection.isEmpty();
-
     if (result)
     {
       Object first = selection.getFirstElement();
-      result = first instanceof EObject;
+      Class<T> type = getType();
+      result = type.isInstance(first);
       if (result)
       {
-        selectedObject = (EObject)first;
+        selectedObject = type.cast(first);
       }
     }
 
     return super.updateSelection(selection) && result;
   }
 
-  protected EObject getSelectedObject()
+  protected T getSelectedObject()
   {
     return selectedObject;
   }
+
+  protected abstract Class<T> getType();
 }

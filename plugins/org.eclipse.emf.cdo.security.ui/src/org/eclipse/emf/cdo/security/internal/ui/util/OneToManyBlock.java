@@ -17,17 +17,19 @@ import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
-import org.eclipse.emf.cdo.security.internal.ui.actions.SelectionListenerAction;
 import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.security.internal.ui.util.ObjectExistsConverter.ObjectWritableConverter;
 import org.eclipse.emf.cdo.security.provider.SecurityEditPlugin;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+
+import org.eclipse.net4j.util.ui.actions.SelectionListenerAction;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.IdentityCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -331,8 +333,8 @@ public class OneToManyBlock
       });
     }
 
-    final SelectionListenerAction removeAction = new SelectionListenerAction(Messages.OneToManyBlock_2,
-        SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
+    final SelectionListenerAction<EObject> removeAction = new SelectionListenerAction<EObject>(
+        Messages.OneToManyBlock_2, SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
     {
       @Override
       public void run()
@@ -359,6 +361,12 @@ public class OneToManyBlock
       protected boolean updateSelection(IStructuredSelection selection)
       {
         return super.updateSelection(selection) && SecurityUIUtil.isEditable(input.getValue());
+      }
+
+      @Override
+      protected Class<EObject> getType()
+      {
+        return EObject.class;
       }
     };
 

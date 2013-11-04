@@ -254,8 +254,7 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
       }
     });
 
-    add(new Property<CDOSession>("userAuthenticated", "User Authenticated",
-        "Indication of whether this session is authenticated under a defined user account ID.")
+    add(new Property<CDOSession>("userAuthenticated")
     {
       @Override
       protected Object eval(CDOSession session)

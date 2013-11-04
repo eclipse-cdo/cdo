@@ -70,7 +70,6 @@ public final class SecurityUIUtil
   public static void applySupportedElementFilter(StructuredViewer viewer, EClass itemType)
   {
     ViewerFilter filter = getSupportedElementViewerFilter(itemType);
-
     if (filter != null)
     {
       viewer.addFilter(filter);
@@ -111,7 +110,6 @@ public final class SecurityUIUtil
   public static ViewerFilter getSupportedElementViewerFilter(EClass itemType)
   {
     IFilter filter = getSupportedElementFilter(itemType);
-
     return filter == null ? null : getViewerFilter(filter);
   }
 
@@ -167,6 +165,6 @@ public final class SecurityUIUtil
 
   public static boolean isEditable(Object object)
   {
-    return !(object instanceof EObject) || CDOUtil.isWritable((EObject)object);
+    return !(object instanceof EObject) || CDOUtil.isWritableObject((EObject)object);
   }
 }

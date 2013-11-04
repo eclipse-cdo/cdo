@@ -608,6 +608,32 @@ public final class CDOUtil
   }
 
   /**
+   * Queries whether an object is writable (is permitted to be modified in the
+   * current view context).
+   *
+   * @param eObject an object
+   * @return {@code false} if the {@code eObject} is managed by CDO and does not
+   *         have {@linkplain CDOPermission#WRITE write permission};
+   *         {@code true}, otherwise
+   *
+   * @since 4.3
+   */
+  public static boolean isWritableObject(EObject eObject)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+    if (cdoObject != null)
+    {
+      CDOView view = cdoObject.cdoView();
+
+      // If the object is not in a view, then permissions aren't applicable
+      return view == null || !view.isReadOnly() && cdoObject.cdoPermission().isWritable();
+    }
+
+    // If there is no CDOObject, then this object is implicitly writable
+    return true;
+  }
+
+  /**
    * @since 3.0
    */
   public static boolean isLegacyObject(EObject object)
@@ -702,33 +728,6 @@ public final class CDOUtil
   public static Annotation setDocumentation(ModelElement modelElement, String value)
   {
     return setAnnotation(modelElement, CDO_ANNOTATION_URI, DOCUMENTATION_KEY, value);
-  }
-
-  /**
-   * Queries whether an object is writable (is permitted to be modified in the
-   * current view context).
-   * 
-   * @param eObject an object
-   * @return {@code false} if the {@code eObject} is managed by CDO and does not
-   *         have {@linkplain CDOPermission#WRITE write permission};
-   *         {@code true}, otherwise
-   *  
-   * @since 4.3
-   */
-  public static boolean isWritable(EObject eObject)
-  {
-    CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
-
-    if (cdoObject != null)
-    {
-      CDOView view = cdoObject.cdoView();
-
-      // If the object is not in a view, then permissions aren't applicable
-      return view == null || !view.isReadOnly() && cdoObject.cdoPermission().isWritable();
-    }
-
-    // If there is no CDOObject, then this object is implicitly writable
-    return true;
   }
 
 }

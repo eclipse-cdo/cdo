@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
@@ -151,6 +152,15 @@ public class ViewProperties extends Properties<CDOView>
       protected Object eval(CDOView view)
       {
         return view.getSession().getUserID();
+      }
+    });
+
+    add(new Property<CDOView>("userAuthenticated")
+    {
+      @Override
+      protected Object eval(CDOView view)
+      {
+        return !StringUtil.isEmpty(view.getSession().getUserID());
       }
     });
   }

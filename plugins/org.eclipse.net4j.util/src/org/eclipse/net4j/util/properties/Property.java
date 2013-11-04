@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418452
  */
 package org.eclipse.net4j.util.properties;
 
@@ -69,6 +70,14 @@ public abstract class Property<RECEIVER>
   public boolean testValue(RECEIVER receiver, Object[] args, Object expectedValue)
   {
     Object value = getValue(receiver);
+    if (value instanceof Boolean && expectedValue == null)
+    {
+      // Per the Expressions extension point spec, the 'value' attribute
+      // is optional for boolean-valued properties, in which case its
+      // default is true
+      expectedValue = Boolean.TRUE;
+    }
+
     return ObjectUtil.equals(value, expectedValue);
   }
 

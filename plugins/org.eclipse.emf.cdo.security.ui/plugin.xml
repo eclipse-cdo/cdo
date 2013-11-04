@@ -14,6 +14,18 @@
 <plugin>
 
    <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.emf.cdo.security.internal.ui.editor.CDOSecurityFormEditor"
+            contributorClass="org.eclipse.emf.cdo.security.internal.ui.editor.CDOSecurityFormActionBarContributor"
+            default="false"
+            icon="icons/full/obj16/SecurityRealmResource.png"
+            id="org.eclipse.emf.cdo.security.ui.CDOSecurityFormEditor"
+            name="%editor.name">
+      </editor>
+   </extension>
+   
+   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
@@ -38,8 +50,30 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.cdo.security.ui.openEditor"
+               icon="$nl$/icons/full/ctool16/ManageSecurity.png"
+               label="%action.label.1"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate >
+                     <adapt
+                           type="org.eclipse.emf.cdo.session.CDOSession">
+                        <test property="org.eclipse.emf.cdo.session.userAuthenticated" />
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
+   
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -53,5 +87,12 @@
             description="%command.description"
             defaultHandler="org.eclipse.emf.cdo.security.internal.ui.handlers.ResetPasswordHandler">
       </command>
+      <command
+            id="org.eclipse.emf.cdo.security.ui.openEditor"
+            name="%action.label.1"
+            categoryId="org.eclipse.emf.cdo.security.ui.management"
+            defaultHandler="org.eclipse.emf.cdo.security.internal.ui.handlers.ManageSecurityHandler">
+      </command>
    </extension>
+   
 </plugin>

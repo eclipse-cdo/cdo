@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418452
  */
 package org.eclipse.emf.internal.cdo.session;
 
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
@@ -249,6 +251,15 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
         }
 
         return builder;
+      }
+    });
+
+    add(new Property<CDOSession>("userAuthenticated")
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return !StringUtil.isEmpty(session.getUserID());
       }
     });
   }

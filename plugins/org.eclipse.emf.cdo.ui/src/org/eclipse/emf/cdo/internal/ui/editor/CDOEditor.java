@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
+ *    Christian W. Damus (CEA LIST) - bug 418452
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -1003,7 +1005,28 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       view = editorInput.getView();
       view.addListener(viewTargetListener);
 
-      BasicCommandStack commandStack = new BasicCommandStack();
+      CommandStack commandStack;
+
+      IEditingDomainProvider domainProvider = AdapterUtil.adapt(editorInput, IEditingDomainProvider.class);
+      if (domainProvider != null && domainProvider.getEditingDomain() instanceof AdapterFactoryEditingDomain)
+      {
+        editingDomain = (AdapterFactoryEditingDomain)domainProvider.getEditingDomain();
+        commandStack = editingDomain.getCommandStack();
+        if (editingDomain.getAdapterFactory() instanceof ComposedAdapterFactory)
+        {
+          adapterFactory = (ComposedAdapterFactory)editingDomain.getAdapterFactory();
+        }
+        else
+        {
+          adapterFactory.addAdapterFactory(editingDomain.getAdapterFactory());
+        }
+      }
+      else
+      {
+        commandStack = new BasicCommandStack();
+        editingDomain = createEditingDomain((BasicCommandStack)commandStack, view.getResourceSet());
+      }
+
       commandStack.addCommandStackListener(new CommandStackListener()
       {
         public void commandStackChanged(final EventObject event)
@@ -1039,7 +1062,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       });
 
       ResourceSet resourceSet = view.getResourceSet();
-      editingDomain = createEditingDomain(commandStack, resourceSet);
 
       // This adapter provides the EditingDomain of the Editor
       resourceSet.eAdapters().add(new EditingDomainProviderAdapter());

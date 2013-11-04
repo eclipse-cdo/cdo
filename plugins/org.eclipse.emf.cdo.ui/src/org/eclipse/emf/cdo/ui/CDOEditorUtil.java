@@ -8,6 +8,7 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Christian W. Damus (CEA LIST) - bug 418452
  */
 package org.eclipse.emf.cdo.ui;
 
@@ -20,6 +21,9 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -87,6 +91,69 @@ public final class CDOEditorUtil
   public static CDOEditorInput createCDOEditorInput(CDOView view, String resourcePath, boolean viewOwned)
   {
     return new CDOEditorInputImpl(view, resourcePath, viewOwned);
+  }
+
+  /**
+   * Creates a {@link CDOEditorInput} based on the given {@code input} that adapts to
+   * the {@link IEditingDomainProvider} interface to provide a particular {@code editingDomain}.
+   * 
+   * @param input an editor input to copy
+   * @param editingDomain the editing domain to associate with the editor input
+   * 
+   * @return the editing-domain-providing editor input
+   * 
+   * @since 4.3
+   */
+  public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOEditorInput input, EditingDomain editingDomain)
+  {
+    return createCDOEditorInputWithEditingDomain(input.getView(), input.getResourcePath(), input.isViewOwned(),
+        editingDomain);
+  }
+
+  /**
+   * Creates a {@link CDOEditorInput} that adapts to the {@link IEditingDomainProvider} interface
+   * to provide a particular {@code editingDomain}.
+   * 
+   * @param view the CDO view of the editor input
+   * @param resourcePath the path to the resource to edit
+   * @param viewOwned whether the opened editor should assume ownership of the {@code view}
+   * @param editingDomain the editing domain to associate with the editor input
+   * 
+   * @return the editing-domain-providing editor input
+   * 
+   * @since 4.3
+   */
+  public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOView view, String resourcePath,
+      boolean viewOwned, EditingDomain editingDomain)
+  {
+    class CDOEditorInputWithEditingDomain extends CDOEditorInputImpl implements IEditingDomainProvider
+    {
+      private final EditingDomain editingDomain;
+
+      CDOEditorInputWithEditingDomain(CDOView view, String resourcePath, boolean viewOwned, EditingDomain editingDomain)
+      {
+        super(view, resourcePath, viewOwned);
+        this.editingDomain = editingDomain;
+      }
+
+      public EditingDomain getEditingDomain()
+      {
+        return editingDomain;
+      }
+
+      @Override
+      public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+      {
+        if (adapter == IEditingDomainProvider.class)
+        {
+          return this;
+        }
+
+        return super.getAdapter(adapter);
+      }
+    }
+
+    return new CDOEditorInputWithEditingDomain(view, resourcePath, viewOwned, editingDomain);
   }
 
   /**

@@ -50,8 +50,8 @@ public class UserDetailsPage extends AbstractDetailsPage<User>
 
     text(parent, toolkit, Messages.UserDetailsPage_1, SecurityPackage.Literals.USER__FIRST_NAME);
     text(parent, toolkit, Messages.UserDetailsPage_2, SecurityPackage.Literals.USER__LAST_NAME);
-    text(parent, toolkit, Messages.UserDetailsPage_3, SecurityPackage.Literals.USER__LABEL);
     text(parent, toolkit, Messages.UserDetailsPage_4, SecurityPackage.Literals.USER__EMAIL);
+    text(parent, toolkit, Messages.UserDetailsPage_3, SecurityPackage.Literals.USER__LABEL);
 
     space(parent, toolkit);
 

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.security.internal.ui.util;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.Converter;
 
@@ -37,28 +39,50 @@ public class ObjectExistsConverter extends Converter
     return fromObject != null;
   }
 
-  // public static UpdateValueStrategy createUpdateValueStrategy()
-  // {
-  // UpdateValueStrategy result = new UpdateValueStrategy();
-  // result.setConverter(new ObjectExistsConverter());
-  // return result;
-  // }
+  public static UpdateValueStrategy createUpdateValueStrategy()
+  {
+    UpdateValueStrategy result = new UpdateValueStrategy();
+    result.setConverter(new ObjectExistsConverter());
+    return result;
+  }
 
   /**
    * @author Christian W. Damus (CEA LIST)
    */
   public static class ObjectWritableConverter extends ObjectExistsConverter
   {
+    private EStructuralFeature feature;
+
+    public ObjectWritableConverter(EStructuralFeature feature)
+    {
+      this.feature = feature;
+    }
+
+    public ObjectWritableConverter()
+    {
+      this(null);
+    }
+
     @Override
     protected boolean doConvert(Object fromObject)
     {
-      return super.doConvert(fromObject) && SecurityUIUtil.isEditable(fromObject);
+      return super.doConvert(fromObject) && SecurityUIUtil.isEditable(fromObject) && isFeatureWritable(fromObject);
+    }
+
+    protected boolean isFeatureWritable(Object fromObject)
+    {
+      return feature == null || feature.isChangeable() && feature.getEContainingClass().isInstance(fromObject);
     }
 
     public static UpdateValueStrategy createUpdateValueStrategy()
     {
+      return createUpdateValueStrategy(null);
+    }
+
+    public static UpdateValueStrategy createUpdateValueStrategy(EStructuralFeature feature)
+    {
       UpdateValueStrategy result = new UpdateValueStrategy();
-      result.setConverter(new ObjectWritableConverter());
+      result.setConverter(new ObjectWritableConverter(feature));
       return result;
     }
   }

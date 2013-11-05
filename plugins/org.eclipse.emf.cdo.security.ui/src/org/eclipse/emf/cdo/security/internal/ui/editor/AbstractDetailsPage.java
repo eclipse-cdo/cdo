@@ -109,7 +109,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     getContext().bindValue(observeText(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
     getContext().bindValue(SWTObservables.observeEnabled(result), getValue(), null,
-        ObjectWritableConverter.createUpdateValueStrategy());
+        ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result, attribute);
     return result;
@@ -272,7 +272,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     getContext().bindValue(SWTObservables.observeSelection(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
     getContext().bindValue(SWTObservables.observeEnabled(result), getValue(), null,
-        ObjectWritableConverter.createUpdateValueStrategy());
+        ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result, attribute);
     return result;
@@ -302,7 +302,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     getContext().bindValue(ViewersObservables.observeSingleSelection(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
     getContext().bindValue(SWTObservables.observeEnabled(result.getControl()), getValue(), null,
-        ObjectWritableConverter.createUpdateValueStrategy());
+        ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result.getControl(), attribute);
     return result;
@@ -355,26 +355,32 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
       public void mouseHover(MouseEvent e)
       {
         hideRunnable = null;
-        decoration.show();
+        if (control.isEnabled())
+        {
+          decoration.show();
+        }
       }
 
       @Override
       public void mouseExit(MouseEvent e)
       {
-        hideRunnable = new Runnable()
+        if (control.isEnabled())
         {
-
-          public void run()
+          hideRunnable = new Runnable()
           {
-            if (hideRunnable == this)
-            {
-              hideRunnable = null;
-              decoration.hide();
-            }
-          }
-        };
 
-        control.getDisplay().timerExec(1000, hideRunnable);
+            public void run()
+            {
+              if (hideRunnable == this)
+              {
+                hideRunnable = null;
+                decoration.hide();
+              }
+            }
+          };
+
+          control.getDisplay().timerExec(1000, hideRunnable);
+        }
       }
     };
 

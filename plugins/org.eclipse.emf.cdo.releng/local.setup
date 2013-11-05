@@ -24,7 +24,7 @@
     <workingSets name="CDO" id="CDO CDO">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.1 //@setupTasks.8/@workingSets.2 //@setupTasks.8/@workingSets.3 //@setupTasks.8/@workingSets.7 //@setupTasks.8/@workingSets.8"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.1 //@setupTasks.8/@workingSets.2 //@setupTasks.8/@workingSets.3 //@setupTasks.8/@workingSets.7 //@setupTasks.8/@workingSets.8 //@setupTasks.8/@workingSets.9"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Tests" id="CDO CDO Tests">

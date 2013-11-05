@@ -67,6 +67,8 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
 
   private CDOSecurityPage mainPage;
 
+  private CommandStackListener dirtyStackListener;
+
   public CDOSecurityFormEditor()
   {
   }
@@ -158,21 +160,43 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
     initializeEditingDomain();
   }
 
+  @Override
+  public void dispose()
+  {
+    try
+    {
+      if (dirtyStackListener != null)
+      {
+        if (editingDomain != null)
+        {
+          editingDomain.getCommandStack().removeCommandStackListener(dirtyStackListener);
+        }
+
+        dirtyStackListener = null;
+      }
+    }
+    finally
+    {
+      super.dispose();
+    }
+  }
+
   protected void initializeEditingDomain()
   {
     try
     {
       CDOResource resource = getResource();
       view = resource.cdoView();
-
-      BasicCommandStack commandStack = new BasicCommandStack();
-      commandStack.addCommandStackListener(new CommandStackListener()
+      dirtyStackListener = new CommandStackListener()
       {
         public void commandStackChanged(final EventObject event)
         {
           fireDirtyStateChanged();
         }
-      });
+      };
+
+      BasicCommandStack commandStack = new BasicCommandStack();
+      commandStack.addCommandStackListener(dirtyStackListener);
 
       ResourceSet resourceSet = view.getResourceSet();
       editingDomain = createEditingDomain(commandStack, resourceSet);

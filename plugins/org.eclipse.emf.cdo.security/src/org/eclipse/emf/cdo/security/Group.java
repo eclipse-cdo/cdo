@@ -32,7 +32,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getGroup()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='AcyclicInheritance'"
  * @generated
  */
 public interface Group extends Assignee

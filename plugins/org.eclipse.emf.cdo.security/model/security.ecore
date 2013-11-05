@@ -7,6 +7,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SecurityItem" abstract="true" eSuperTypes="#//SecurityElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Realm" eSuperTypes="#//SecurityElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="HasAdministrator"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
         eType="#//SecurityItem" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="allUsers" upperBound="-1"
@@ -47,6 +50,9 @@
         eType="#//Role" eOpposite="#//Role/assignees"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//Assignee">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="AcyclicInheritance"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
         eType="#//User" eOpposite="#//User/groups"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inheritedGroups" upperBound="-1"

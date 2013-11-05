@@ -10,7 +10,7 @@
  *    Simon McDuff - bug 230832
  *    Simon McDuff - bug 233490
  *    Simon McDuff - bug 213402
- *    Christian W. Damus (CEA LIST) - bug 399306
+ *    Christian W. Damus (CEA LIST) - bug 399306, bug 399487
  */
 package org.eclipse.emf.cdo.common.protocol;
 
@@ -423,4 +423,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    */
   public static final byte ROLLBACK_REASON_REFERENTIAL_INTEGRITY = 4;
+
+  /**
+   * @since 4.3
+   */
+  public static final byte ROLLBACK_REASON_VALIDATION_ERROR = 5;
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
- *    Christian W. Damus (CEA LIST) - bug 418452
+ *    Christian W. Damus (CEA LIST) - bug 418452, bug 399487
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ValidationException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
@@ -1901,7 +1902,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             {
               transaction.commit(monitor);
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
               OM.LOG.error(exception);
               final Shell shell = getSite().getShell();
@@ -1910,7 +1911,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 public void run()
                 {
                   String title = Messages.getString("CDOEditor.17"); //$NON-NLS-1$
-                  String message = Messages.getString("CDOEditor.18"); //$NON-NLS-1$
+                  String message;
+                  if (exception instanceof ValidationException)
+                  {
+                    message = MessageFormat.format(Messages.getString("CDOEditor.19"), //$NON-NLS-1$
+                        exception.getLocalizedMessage());
+                  }
+                  else
+                  {
+                    message = Messages.getString("CDOEditor.18"); //$NON-NLS-1$
+                  }
+
                   RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
                       message, transaction);
                   if (dialog.open() == RollbackTransactionDialog.OK)

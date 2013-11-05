@@ -37,7 +37,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='HasAdministrator'"
  * @generated
  */
 public interface Realm extends SecurityElement, SecurityItemContainer

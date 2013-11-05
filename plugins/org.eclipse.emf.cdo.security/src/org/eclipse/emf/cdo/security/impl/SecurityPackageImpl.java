@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 399487
  */
 package org.eclipse.emf.cdo.security.impl;
 
@@ -42,6 +43,7 @@ import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
+import org.eclipse.emf.cdo.security.util.SecurityValidator;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -49,6 +51,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
@@ -325,6 +328,15 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     // Initialize created meta-data
     theSecurityPackage.initializePackageContents();
+
+    // Register package validator
+    EValidator.Registry.INSTANCE.put(theSecurityPackage, new EValidator.Descriptor()
+    {
+      public EValidator getEValidator()
+      {
+        return SecurityValidator.INSTANCE;
+      }
+    });
 
     // Mark meta-data to indicate it can't be changed
     theSecurityPackage.freeze();
@@ -1805,8 +1817,26 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createResource(eNS_URI);
 
     // Create annotations
+    // http://www.eclipse.org/emf/2002/Ecore
+    createEcoreAnnotations();
     // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
     createExtendedMetaDataAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createEcoreAnnotations()
+  {
+    String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+    addAnnotation(realmEClass, source, new String[] { "constraints", "HasAdministrator" //$NON-NLS-1$ //$NON-NLS-2$
+    });
+    addAnnotation(groupEClass, source, new String[] { "constraints", "AcyclicInheritance" //$NON-NLS-1$ //$NON-NLS-2$
+    });
   }
 
   /**

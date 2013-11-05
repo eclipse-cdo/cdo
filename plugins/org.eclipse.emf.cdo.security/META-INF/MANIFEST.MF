@@ -24,3 +24,4 @@ Export-Package: org.eclipse.emf.cdo.internal.security;version="4.3.0";
 Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.expressions;bundle-version="[4.3.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipse.emf.cdo.internal.security.bundle.OM$Activator

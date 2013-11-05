@@ -7,14 +7,26 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 399487
  */
 package org.eclipse.emf.cdo.internal.security.bundle;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+
+import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.core.runtime.Platform;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -31,14 +43,87 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
+  public static final EMFPlugin EMF_PLUGIN = new EMFPlugin(new ResourceLocator[0])
+  {
+
+    @Override
+    public ResourceLocator getPluginResourceLocator()
+    {
+      return Activator.INSTANCE;
+    }
+  };
+
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  public static final class Activator extends OSGiActivator implements ResourceLocator
   {
+    public static Activator INSTANCE;
+
+    private ResourceBundle resourceBundle;
+
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      INSTANCE = this;
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      INSTANCE = null;
+    }
+
+    public URL getBaseURL()
+    {
+      return getOMBundle().getBaseURL();
+    }
+
+    public Object getImage(String key)
+    {
+      try
+      {
+        return new URL(getBaseURL() + "icons/" + key);
+      }
+      catch (MalformedURLException e)
+      {
+        throw WrappedException.wrap(e);
+      }
+    }
+
+    public String getString(String key)
+    {
+      return getString(key, true);
+    }
+
+    public String getString(String key, boolean translate)
+    {
+      if (!translate)
+      {
+        throw new IllegalArgumentException("translate"); //$NON-NLS-1$
+      }
+
+      if (resourceBundle == null)
+      {
+        resourceBundle = Platform.getResourceBundle(bundleContext.getBundle());
+      }
+
+      return resourceBundle.getString(key);
+    }
+
+    public String getString(String key, Object[] substitutions)
+    {
+      return getString(key, substitutions, true);
+    }
+
+    public String getString(String key, Object[] substitutions, boolean translate)
+    {
+      return MessageFormat.format(getString(key, translate), substitutions);
     }
   }
 }

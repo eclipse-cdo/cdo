@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 399306
  *    Christian W. Damus (CEA LIST) - bug 418454
+ *    Christian W. Damus (CEA LIST) - bug 399487
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
@@ -56,6 +57,7 @@ import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -81,7 +83,12 @@ import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IAuthenticator2;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 
 import java.util.Arrays;
@@ -1024,7 +1031,21 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    */
   private final class WriteAccessHandler implements IRepository.WriteAccessHandler
   {
+    private final IRepository.WriteAccessHandler realmValidationHandler = new RealmValidationHandler();
+
     public void handleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext,
+        OMMonitor monitor) throws RuntimeException
+    {
+      doHandleTransactionBeforeCommitting(transaction, commitContext, monitor);
+
+      if (commitContext.getSecurityImpact() == CommitNotificationInfo.IMPACT_REALM)
+      {
+        // Validate changes to the realm
+        realmValidationHandler.handleTransactionBeforeCommitting(transaction, commitContext, monitor);
+      }
+    }
+
+    protected void doHandleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
       if (transaction.getSessionID() == systemSession.getSessionID())
@@ -1152,6 +1173,90 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
 
       handleCommitted(commitContext);
+    }
+  }
+
+  /**
+   * A write-access handler that checks changes about to be committed to the security realm
+   * against its well-formedness rules, and rejects the commit if there are any integrity
+   * errors.
+   * 
+   * @author Christian W. Damus (CEA LIST)
+   */
+  private final class RealmValidationHandler extends ObjectWriteAccessHandler
+  {
+    private final EValidator realmValidator = EValidator.Registry.INSTANCE.getEValidator(SecurityPackage.eINSTANCE);
+
+    @Override
+    protected void handleTransactionBeforeCommitting(OMMonitor monitor) throws RuntimeException
+    {
+      final BasicDiagnostic diagnostic = new BasicDiagnostic();
+      final Map<Object, Object> context = createValidationContext();
+
+      boolean realmChecked = false;
+      for (EObject object : getDirtyObjects())
+      {
+        if (object.eClass().getEPackage() == SecurityPackage.eINSTANCE)
+        {
+          validate(object, diagnostic, context);
+          realmChecked = object instanceof Realm;
+        }
+      }
+
+      for (EObject object : getNewObjects())
+      {
+        if (object.eClass().getEPackage() == SecurityPackage.eINSTANCE)
+        {
+          validate(object, diagnostic, context);
+          // The realm cannot be new
+        }
+      }
+
+      if (!realmChecked)
+      {
+        // Check it, because it has some wide-ranging integrity constraints
+        validate(getView().getObject(realmID), diagnostic, context);
+      }
+    }
+
+    protected Map<Object, Object> createValidationContext()
+    {
+      Map<Object, Object> result = new java.util.HashMap<Object, Object>();
+      final CommitContext commitContext = getCommitContext();
+
+      // Supply the revision-provider and branch point required by realm validation
+      result.put(CDORevisionProvider.class, commitContext);
+      result.put(CDOBranchPoint.class, commitContext.getBranchPoint());
+
+      return result;
+    }
+
+    protected void validate(EObject object, DiagnosticChain diagnostics, Map<Object, Object> context)
+    {
+      realmValidator.validate(object, diagnostics, context);
+
+      Diagnostic error = getError(diagnostics);
+      if (error != null)
+      {
+        throw new TransactionValidationException("Security realm integrity violation: " + error.getMessage());
+      }
+    }
+
+    protected Diagnostic getError(DiagnosticChain diagnostics)
+    {
+      Diagnostic diagnostic = (Diagnostic)diagnostics;
+      if (diagnostic.getSeverity() >= Diagnostic.ERROR)
+      {
+        for (Diagnostic child : diagnostic.getChildren())
+        {
+          if (child.getSeverity() >= Diagnostic.ERROR)
+          {
+            return child;
+          }
+        }
+      }
+
+      return null;
     }
   }
 }

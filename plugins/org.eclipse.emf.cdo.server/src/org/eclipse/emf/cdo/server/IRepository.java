@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 399487
  */
 package org.eclipse.emf.cdo.server;
 
@@ -227,6 +228,10 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      *          internal state of the commit context in any way!</b>
      * @param monitor
      *          A monitor that should be used by the implementor to avoid timeouts.
+     * @throws TransactionValidationException
+     *           to indicate that the commit operation must not be executed against the backend store because some
+     *           semantic validation checks failed. The message should describe the validation failure and will be
+     *           passed through to the client
      * @throws RuntimeException
      *           to indicate that the commit operation must not be executed against the backend store. This exception
      *           will be visible at the client side!
@@ -249,6 +254,40 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      */
     public void handleTransactionAfterCommitted(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
         OMMonitor monitor);
+
+    /**
+     * An exception that a {@link WriteAccessHandler} may throw to indicate that a
+     * {@linkplain WriteAccessHandler#handleTransactionBeforeCommitting(ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, OMMonitor) transaction commit}
+     * was rejected because one or more semantic validation checks reported errors.
+     * 
+     * @author Christian W. Damus (CEA LIST)
+     * 
+     * @since 4.3
+     */
+    public static final class TransactionValidationException extends RuntimeException
+    {
+      private static final long serialVersionUID = 1L;
+
+      public TransactionValidationException()
+      {
+      }
+
+      public TransactionValidationException(String message, Throwable cause)
+      {
+        super(message, cause);
+      }
+
+      public TransactionValidationException(String message)
+      {
+        super(message);
+      }
+
+      public TransactionValidationException(Throwable cause)
+      {
+        super(cause);
+      }
+
+    }
   }
 
   /**

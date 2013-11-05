@@ -7,6 +7,7 @@
  *
  * Contributors:
  *   Simon McDuff - initial API and implementation
+ *   Christian W. Damus (CEA LIST) - bug 399487
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ContainmentCycleException;
 import org.eclipse.emf.cdo.util.OptimisticLockingException;
 import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
+import org.eclipse.emf.cdo.util.ValidationException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -90,6 +92,9 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
       case CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY:
         throw new ReferentialIntegrityException(rollbackMessage, result.getXRefs());
+
+      case CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR:
+        throw new ValidationException(rollbackMessage);
 
       case CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN:
         throw new CommitException(rollbackMessage);

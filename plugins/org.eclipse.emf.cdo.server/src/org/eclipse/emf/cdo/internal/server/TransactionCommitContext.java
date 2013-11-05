@@ -9,6 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  *    Martin Fluegge - maintenance, bug 318518
+ *    Christian W. Damus (CEA LIST) - bug 399487
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -48,6 +49,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -709,8 +711,16 @@ public class TransactionCommitContext implements InternalCommitContext
         TRACER.trace(ex);
       }
 
-      String storeClass = repository.getStore().getClass().getSimpleName();
-      rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
+      if (ex instanceof IRepository.WriteAccessHandler.TransactionValidationException)
+      {
+        rollbackReason = CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR;
+        rollback(ex.getLocalizedMessage());
+      }
+      else
+      {
+        String storeClass = repository.getStore().getClass().getSimpleName();
+        rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
+      }
     }
     catch (Exception ex1)
     {

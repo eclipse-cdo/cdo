@@ -34,6 +34,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -207,7 +208,7 @@ public abstract class AbstractCreateRepositoryWizardPage extends WizardPage
    */
   public static final class Whiteboard
   {
-    private List<Object> subscribers = new java.util.ArrayList<Object>();
+    private List<Object> subscribers = new ArrayList<Object>();
 
     /**
      * Publish a topic to interested subscribers.

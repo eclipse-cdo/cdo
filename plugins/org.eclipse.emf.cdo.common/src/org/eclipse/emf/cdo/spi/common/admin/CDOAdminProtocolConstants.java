@@ -46,4 +46,9 @@ public interface CDOAdminProtocolConstants
    * @since 4.3
    */
   public static final short SIGNAL_AUTHENTICATION = 9;
+
+  /**
+   * @since 4.3
+   */
+  public static final short SIGNAL_CONFIRMATION = 10;
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -29,6 +29,7 @@ import org.eclipse.ocl.ecore.TypeType;
 import org.eclipse.ocl.expressions.CollectionKind;
 import org.eclipse.ocl.utilities.TypedElement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -39,7 +40,7 @@ import java.util.regex.Pattern;
 
 /**
  * Additional operations for use in OCL queries in the CDO context.
- * 
+ *
  * @author Christian W. Damus
  * @since 4.2
  */
@@ -144,7 +145,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
    * The <tt>cdoAllContents</tt> operation that collects all of the proper (non-cross-resource-contained)
    * elements within a {@link CDOResource} or an {@link EObject}.  An optional argument filters the result
    * to instances of a particular model class.
-   * 
+   *
    *  @author Christian W. Damus
    */
   private static class AllProperContents extends CDOAdditionalOperation
@@ -174,7 +175,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
     @Override
     protected Object evaluate(CDOEvaluationEnvironment evalEnv, Object source, Object[] arguments)
     {
-      Collection<EObject> result = new java.util.ArrayList<EObject>();
+      Collection<EObject> result = new ArrayList<EObject>();
 
       // Only resources and EObjects have contents
       Iterator<EObject> iter;
@@ -237,9 +238,9 @@ abstract class CDOAdditionalOperation extends AdapterImpl
   }
 
   /**
-   * The <tt>cdoMatches</tt> operation queries whether a regular expression matches aany string-valued  
+   * The <tt>cdoMatches</tt> operation queries whether a regular expression matches aany string-valued
    * attribute of an {@link EObject}.
-   * 
+   *
    * @author Christian W. Damus
    */
   private static class MatchesAnyStringAttribute extends CDOAdditionalOperation
@@ -323,7 +324,6 @@ abstract class CDOAdditionalOperation extends AdapterImpl
       }
 
       Matcher result = matcherCache.get(regex);
-
       if (result == null)
       {
         result = Pattern.compile(regex).matcher(""); //$NON-NLS-1$
@@ -341,7 +341,6 @@ abstract class CDOAdditionalOperation extends AdapterImpl
       }
 
       List<EAttribute> result = stringAttributes.get(eClass);
-
       if (result == null)
       {
         for (EAttribute next : eClass.getEAllAttributes())
@@ -351,7 +350,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
           {
             if (result == null)
             {
-              result = new java.util.ArrayList<EAttribute>();
+              result = new ArrayList<EAttribute>();
             }
             result.add(next);
           }

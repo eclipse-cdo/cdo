@@ -63,10 +63,15 @@
                         value="1">
                   </count>
                   <iterate >
-                     <adapt
-                           type="org.eclipse.emf.cdo.session.CDOSession">
-                        <test property="org.eclipse.emf.cdo.session.userAuthenticated" />
-                     </adapt>
+                     <or>
+                        <adapt
+                              type="org.eclipse.emf.cdo.session.CDOSession">
+                           <test property="org.eclipse.emf.cdo.session.userAuthenticated" />
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.emf.cdo.admin.CDOAdminClientRepository">
+                        </adapt>
+                     </or>
                   </iterate>
                </with>
             </visibleWhen>
@@ -95,4 +100,21 @@
       </command>
    </extension>
    
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.eclipse.emf.cdo.security.ui.openEditor"
+            class="org.eclipse.emf.cdo.security.internal.ui.handlers.ManageSecurityHandler$Sessionless">
+         <activeWhen>
+            <with
+                  variable="activeMenuSelection">
+               <iterate >
+                  <adapt
+                        type="org.eclipse.emf.cdo.admin.CDOAdminClientRepository">
+                  </adapt>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+   </extension>
 </plugin>

@@ -69,6 +69,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -339,7 +340,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
 
   private void startExtensions(IRepository repository, RepositoryConfiguration configuration)
   {
-    final List<IAppExtension2> extensions = new java.util.ArrayList<IAppExtension2>(3);
+    final List<IAppExtension2> extensions = new ArrayList<IAppExtension2>(3);
 
     IExtensionRegistry registry = Platform.getExtensionRegistry();
     @SuppressWarnings("restriction")

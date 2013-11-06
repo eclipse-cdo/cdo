@@ -37,6 +37,7 @@ Export-Package: org.eclipse.internal.net4j;version="4.3.0";
  org.eclipse.net4j.connector;version="4.3.0",
  org.eclipse.net4j.protocol;version="4.3.0",
  org.eclipse.net4j.signal;version="4.3.0",
+ org.eclipse.net4j.signal.confirmation;version="4.3.0",
  org.eclipse.net4j.signal.heartbeat;version="4.3.0",
  org.eclipse.net4j.signal.security;version="4.3.0",
  org.eclipse.net4j.signal.wrapping;version="4.3.0",

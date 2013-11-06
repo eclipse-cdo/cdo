@@ -20,7 +20,10 @@ import org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.signal.confirmation.ConfirmationPrompt;
+import org.eclipse.net4j.signal.confirmation.ConfirmationRequest;
 import org.eclipse.net4j.signal.security.AuthenticationRequest;
+import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -114,6 +117,13 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
       throws Exception
   {
     throw new UnsupportedOperationException("sendCredentialsChallenge"); //$NON-NLS-1$
+  }
+
+  public Confirmation sendConfirmationRequest(String subject, String message, Confirmation suggestion,
+      Confirmation acceptable, Confirmation... more) throws Exception
+  {
+    return new ConfirmationRequest(this, CDOAdminProtocolConstants.SIGNAL_CONFIRMATION, new ConfirmationPrompt(subject,
+        message, suggestion, acceptable, more)).send(negotiationTimeout);
   }
 
   @Override

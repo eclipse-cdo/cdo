@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.internal.admin;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
+import org.eclipse.net4j.util.confirmation.IConfirmationProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -39,7 +41,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  */
 public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClient,
-    IPasswordCredentialsProvider.Provider
+    IPasswordCredentialsProvider.Provider, IConfirmationProvider.Provider
 {
   private static final String URL_SEPARATOR = "://";
 
@@ -162,6 +164,19 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     {
       return (IPasswordCredentialsProvider)container.getElement(CredentialsProviderFactory.PRODUCT_GROUP,
           "interactive", null); //$NON-NLS-1$
+    }
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
+  public IConfirmationProvider getConfirmationProvider()
+  {
+    try
+    {
+      return (IConfirmationProvider)container.getElement(IConfirmationProvider.Factory.PRODUCT_GROUP,
+          IConfirmationProvider.Factory.INTERACTIVE_TYPE, null);
     }
     catch (Exception ex)
     {

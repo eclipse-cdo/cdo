@@ -15,14 +15,21 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol;
 import org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler;
 import org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler2;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
+import org.eclipse.emf.cdo.spi.server.AuthenticationUtil;
+import org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol;
+import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.jvm.IJVMChannel;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -32,6 +39,9 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.spi.net4j.Protocol;
+
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -41,6 +51,8 @@ import java.util.Set;
  */
 public class CDOAdminServer extends AbstractCDOAdmin
 {
+  private static Class<?> IJVMCHANNEL_CLASS;
+
   private final IManagedContainer container;
 
   private final IListener containerListener = new ContainerEventAdapter<Object>(true)
@@ -143,6 +155,12 @@ public class CDOAdminServer extends AbstractCDOAdmin
       ((CDOAdminHandler2)handler).authenticateAdministrator();
     }
 
+    // Do we have any connected users? If so, prompt for confirmation
+    if (hasConnections(delegate) && !confirmDeletion(delegate))
+    {
+      return false;
+    }
+
     LifecycleUtil.deactivate(delegate);
     handler.deleteRepository(delegate);
     return true;
@@ -151,6 +169,55 @@ public class CDOAdminServer extends AbstractCDOAdmin
   protected boolean canDelete(IRepository repository, CDOAdminHandler handler)
   {
     return !(handler instanceof CDOAdminHandler2) || ((CDOAdminHandler2)handler).canDelete(repository);
+  }
+
+  protected boolean hasConnections(IRepository delegate)
+  {
+    ISession[] sessions = delegate.getSessionManager().getSessions();
+    if (sessions != null)
+    {
+      for (int i = 0; i < sessions.length; i++)
+      {
+        ISessionProtocol protocol = sessions[i].getProtocol();
+        if (protocol instanceof Protocol<?>)
+        {
+          // Connections from within this JVM do not count
+          IChannel channel = ((Protocol<?>)protocol).getChannel();
+          if (channel != null && !isJVMChannel(channel))
+          {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  protected boolean confirmDeletion(IRepository delegate)
+  {
+    IAuthenticationProtocol authProtocol = AuthenticationUtil.getAuthenticationProtocol();
+    if (authProtocol instanceof CDOAdminServerProtocol)
+    {
+      CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)authProtocol;
+      String message = MessageFormat.format(
+          "The repository \"{0}\" has connected users. Proceed with deletion anyways?", delegate.getName());
+      try
+      {
+        if (protocol.sendConfirmationRequest("Repository In Use", message, Confirmation.NO, Confirmation.YES,
+            Confirmation.NO) != Confirmation.YES)
+        {
+          return false;
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @Override
@@ -280,6 +347,36 @@ public class CDOAdminServer extends AbstractCDOAdmin
     {
       return protocols.toArray(new CDOAdminServerProtocol[protocols.size()]);
     }
+  }
+
+  private static boolean isJVMChannel(IChannel channel)
+  {
+    return getIJVMChannelClass().isInstance(channel);
+  }
+
+  private static Class<?> getIJVMChannelClass()
+  {
+    if (IJVMCHANNEL_CLASS == null)
+    {
+      // Try to load the class, but the plug-in may not be installed
+      try
+      {
+        new Runnable()
+        {
+          public void run()
+          {
+            IJVMCHANNEL_CLASS = IJVMChannel.class;
+          }
+        }.run();
+      }
+      catch (LinkageError er)
+      {
+        // The class is not available, so no channel can be an IJVMChannel
+        IJVMCHANNEL_CLASS = Void.class;
+      }
+    }
+
+    return IJVMCHANNEL_CLASS;
   }
 
   /**

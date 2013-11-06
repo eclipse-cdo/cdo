@@ -18,8 +18,10 @@ import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.signal.confirmation.ConfirmationIndication;
 import org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol;
 import org.eclipse.net4j.signal.security.AuthenticationIndication;
+import org.eclipse.net4j.util.confirmation.IConfirmationProvider;
 
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +29,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientProtocol extends AuthenticatingSignalProtocol<CDOAdminClientImpl>
+public class CDOAdminClientProtocol extends AuthenticatingSignalProtocol<CDOAdminClientImpl> implements
+    IConfirmationProvider.Provider
 {
   public CDOAdminClientProtocol(CDOAdminClientImpl admin)
   {
@@ -77,9 +80,17 @@ public class CDOAdminClientProtocol extends AuthenticatingSignalProtocol<CDOAdmi
     case CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION:
       return new AuthenticationIndication(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION);
 
+    case CDOAdminProtocolConstants.SIGNAL_CONFIRMATION:
+      return new ConfirmationIndication<CDOAdminClientProtocol>(this, CDOAdminProtocolConstants.SIGNAL_CONFIRMATION);
+
     default:
       return super.createSignalReactor(signalID);
     }
+  }
+
+  public IConfirmationProvider getConfirmationProvider()
+  {
+    return getInfraStructure().getConfirmationProvider();
   }
 
   private <RESULT> RESULT send(RequestWithConfirmation<RESULT> request)

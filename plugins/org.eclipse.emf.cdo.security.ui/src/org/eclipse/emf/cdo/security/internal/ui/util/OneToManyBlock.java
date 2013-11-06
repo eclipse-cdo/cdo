@@ -80,6 +80,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -307,8 +308,7 @@ public class OneToManyBlock
           if (directory != null)
           {
             // Get the available items not already in our input's reference list
-            List<?> available = new java.util.ArrayList<Object>(EcoreUtil.getObjectsByType(directory.getItems(),
-                itemType));
+            List<?> available = new ArrayList<Object>(EcoreUtil.getObjectsByType(directory.getItems(), itemType));
             available.removeAll(value);
             SecurityUIUtil.applySupportedElementFilter(available, itemType);
 

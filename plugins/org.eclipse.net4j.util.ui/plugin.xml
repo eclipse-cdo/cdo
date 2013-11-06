@@ -9,6 +9,7 @@
 	
 	Contributors:
 	  Eike Stepper - initial API and implementation
+	  Christian W. Damus (CEA LIST) - bug 418454
 -->
 
 <plugin>
@@ -38,6 +39,11 @@
       <factory
             class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory"
             productGroup="org.eclipse.net4j.util.security.credentialsProviders"
+            type="interactive">
+      </factory>
+      <factory
+            class="org.eclipse.net4j.util.ui.confirmation.InteractiveConfirmationProvider$Factory"
+            productGroup="org.eclipse.net4j.util.confirmationProviders"
             type="interactive">
       </factory>
    </extension>

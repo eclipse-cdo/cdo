@@ -9,6 +9,7 @@
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
+      Christian W. Damus (CEA LIST) - bug 418454
 -->
 
 <plugin>
@@ -38,6 +39,11 @@
             productGroup="org.eclipse.net4j.authenticators"
             type="file"
             class="org.eclipse.net4j.util.security.FileAuthenticatorFactory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.confirmationProviders"
+            type="default"
+            class="org.eclipse.net4j.util.confirmation.IConfirmationProvider.Factory.Default">
+      </factory>
    </extension>
 
 </plugin>

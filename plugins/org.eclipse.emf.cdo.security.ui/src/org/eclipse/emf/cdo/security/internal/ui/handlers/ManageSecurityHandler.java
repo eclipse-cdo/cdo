@@ -10,7 +10,12 @@
  */
 package org.eclipse.emf.cdo.security.internal.ui.handlers;
 
+import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
+import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.internal.ui.editor.CDOSecurityFormEditor;
 import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.security.ui.ISecurityManagementContext;
@@ -19,6 +24,15 @@ import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.handlers.LongRunningHandler;
 
@@ -36,6 +50,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * "Manage Security" command handler, which opens the Security Manager editor
@@ -75,7 +90,7 @@ public class ManageSecurityHandler extends LongRunningHandler
       return;
     }
 
-    session = getSession();
+    setSession(getSession());
     if (session != null && !session.isClosed())
     {
       final IWorkbenchPage page = part.getSite().getPage();
@@ -93,6 +108,11 @@ public class ManageSecurityHandler extends LongRunningHandler
   protected CDOSession getSession()
   {
     return UIUtil.adaptElement(getSelection(), CDOSession.class);
+  }
+
+  protected void setSession(CDOSession session)
+  {
+    this.session = session;
   }
 
   @Override
@@ -255,5 +275,108 @@ public class ManageSecurityHandler extends LongRunningHandler
         // Pass
       }
     });
+  }
+
+  /**
+   * A specialized handler that gets or creates a session in the context of a repository in the
+   * CDO Administration view.
+   * 
+   * @author Christian W. Damus (CEA LIST)
+   */
+  public static class Sessionless extends ManageSecurityHandler implements CDOAdminClientRepository.SessionConfigurator
+  {
+    private static final AtomicInteger NEXT_SESSION_NUMBER = new AtomicInteger();
+
+    public void prepare(CDONet4jSessionConfiguration configuration)
+    {
+      IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider();
+      configuration.setCredentialsProvider(credentialsProvider);
+    }
+
+    @Override
+    protected CDOSession getSession()
+    {
+      return getExistingAdminSession(getRepository());
+    }
+
+    @Override
+    protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+    {
+      CDOAdminClientRepository repository = getRepository();
+      CDOSession session = getExistingAdminSession(repository);
+      if (session == null)
+      {
+        session = openSession(getRepository());
+        setSession(session);
+      }
+
+      if (session != null)
+      {
+        super.doExecute(progressMonitor);
+      }
+    }
+
+    protected CDOAdminClientRepository getRepository()
+    {
+      return UIUtil.adaptElement(getSelection(), CDOAdminClientRepository.class);
+    }
+
+    protected CDOSession getExistingAdminSession(CDOAdminClientRepository repository)
+    {
+      for (Object element : IPluginContainer.INSTANCE.getElements(CDOSessionFactory.PRODUCT_GROUP))
+      {
+        CDONet4jSession session = ObjectUtil.tryCast(element, CDONet4jSession.class);
+
+        // If there's no user ID, then the repository doesn't require authentication,
+        // so we can use that session
+        if (session != null && !session.isClosed()
+            && (User.ADMINISTRATOR.equals(session.getUserID()) || StringUtil.isEmpty(session.getUserID()))
+            && ObjectUtil.equals(session.getRepositoryInfo().getUUID(), repository.getUUID()))
+        {
+          return session;
+        }
+      }
+
+      return null;
+    }
+
+    protected CDOSession openSession(CDOAdminClientRepository repository)
+    {
+      try
+      {
+        CDONet4jSession result = repository.openSession(this);
+        if (result != null)
+        {
+          CDOPackageRegistryPopulator.populate(result.getPackageRegistry());
+
+          // Add this session to the shared container so that it may appear in the CDO Sessions view
+          String description = "session" + NEXT_SESSION_NUMBER.incrementAndGet(); //$NON-NLS-1$
+          IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "security", description, result); //$NON-NLS-1$
+        }
+
+        return result;
+      }
+      catch (NotAuthenticatedException e)
+      {
+        // User cancelled authentication
+        return null;
+      }
+    }
+
+    protected IPasswordCredentialsProvider getCredentialsProvider()
+    {
+      IManagedContainer container = IPluginContainer.INSTANCE;
+      String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
+      String factoryType = "interactive"; //$NON-NLS-1$
+      IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(
+          productGroup, factoryType, null);
+
+      if (credentialsProvider == null)
+      {
+        credentialsProvider = UIUtil.createInteractiveCredentialsProvider();
+      }
+
+      return credentialsProvider;
+    }
   }
 }

@@ -1,23 +1,27 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
-
-import java.util.Collection;
 
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
@@ -127,8 +131,10 @@ public class SourceLocatorImpl extends MinimalEObjectImpl.Container implements S
     String oldLocation = location;
     location = newLocation;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SOURCE_LOCATOR__LOCATION, oldLocation,
           location));
+    }
   }
 
   /**
@@ -151,8 +157,10 @@ public class SourceLocatorImpl extends MinimalEObjectImpl.Container implements S
     String oldComponentNamePattern = componentNamePattern;
     componentNamePattern = newComponentNamePattern;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SOURCE_LOCATOR__COMPONENT_NAME_PATTERN,
           oldComponentNamePattern, componentNamePattern));
+    }
   }
 
   /**
@@ -268,7 +276,9 @@ public class SourceLocatorImpl extends MinimalEObjectImpl.Container implements S
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (location: ");
@@ -281,4 +291,4 @@ public class SourceLocatorImpl extends MinimalEObjectImpl.Container implements S
     return result.toString();
   }
 
-} //SourceLocatorImpl
+} // SourceLocatorImpl

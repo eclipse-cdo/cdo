@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -107,7 +115,9 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__ID, oldId, id));
+    }
   }
 
   /**
@@ -130,7 +140,9 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -218,7 +230,9 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");

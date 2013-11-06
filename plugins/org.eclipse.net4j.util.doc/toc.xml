@@ -34,6 +34,7 @@
         <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.util.ui.handlers" href="javadoc/org/eclipse/net4j/util/ui/handlers/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.prefs" href="javadoc/org/eclipse/net4j/util/ui/prefs/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.proposals" href="javadoc/org/eclipse/net4j/util/ui/proposals/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.security" href="javadoc/org/eclipse/net4j/util/ui/security/package-summary.html" icon="package" />

@@ -1,352 +1,319 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-CDOTransactionStrategy (CDO Model Repository Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>CDOTransactionStrategy (CDO Model Repository Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="CDOTransactionStrategy (CDO Model Repository Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOTransactionStrategy.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CDOTransactionStrategy.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/CDOTransactionStrategy.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" target="_top">Frames</a></li>
+<li><a href="CDOTransactionStrategy.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.emf.spi.cdo</FONT>
-<BR>
-Interface CDOTransactionStrategy</H2>
-<HR>
-<DL>
-  <DT>public interface <B>CDOTransactionStrategy</B>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.emf.spi.cdo</div>
+<h2 title="Interface CDOTransactionStrategy" class="title">Interface CDOTransactionStrategy</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="CDOTransactionStrategy.html" title="&#171;interface&#187; CDOTransactionStrategy" alt="" coords="5,5,171,45"/>
 </map>
-
-<CENTER><IMG SRC="CDOTransactionStrategy.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-If the meaning of this type isn't clear, there really should be more of a description here...
-<P>
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-<DT><B>No Implement</B></DT>
-  <DD>This interface is not intended to be implemented by clients.</DD>
-<DT><B>No Extend</B></DT>
-  <DD>This interface is not intended to be extended by clients.</DD>
-</DL>
-<HR>
-
-<P>
+<div id="apivizContainer" style="text-align: center;"><img src="CDOTransactionStrategy.png" usemap="#APIVIZ" border="0"></div>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public interface <span class="strong">CDOTransactionStrategy</span></pre>
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd>
+<dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
-
-<A NAME="field_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Field Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" title="interface in org.eclipse.emf.spi.cdo">CDOTransactionStrategy</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#DEFAULT">DEFAULT</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" title="interface in org.eclipse.emf.spi.cdo">CDOTransactionStrategy</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#DEFAULT">DEFAULT</a></strong></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#commit(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.core.runtime.IProgressMonitor)">commit</A></B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction,
-       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Better use an <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor"><CODE>OMMonitor</CODE></A>?</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#rollback(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)">rollback</A></B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction,
-         <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</A>&nbsp;savepoint)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#setSavepoint(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">setSavepoint</A></B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#setTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">setTarget</A></B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#unsetTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">unsetTarget</A></B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#commit(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.core.runtime.IProgressMonitor)">commit</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)</code>
+<div class="block">TODO Better use an <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor"><code>OMMonitor</code></a>?</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#rollback(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)">rollback</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction,
+        <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;savepoint)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#setSavepoint(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">setSavepoint</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#setTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">setTarget</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#unsetTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">unsetTarget</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-
-<A NAME="field_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Field Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="DEFAULT"><!-- --></A><H3>
-DEFAULT</H3>
-<PRE>
-static final <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" title="interface in org.eclipse.emf.spi.cdo">CDOTransactionStrategy</A> <B>DEFAULT</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="DEFAULT">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DEFAULT</h4>
+<pre>static final&nbsp;<a href="../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" title="interface in org.eclipse.emf.spi.cdo">CDOTransactionStrategy</a> DEFAULT</pre>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="setTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)"><!-- --></A><H3>
-setTarget</H3>
-<PRE>
-void <B>setTarget</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="unsetTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)"><!-- --></A><H3>
-unsetTarget</H3>
-<PRE>
-void <B>unsetTarget</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="commit(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
-commit</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>commit</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction,
-                     <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)
-                     throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
-<DL>
-<DD>TODO Better use an <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor"><CODE>OMMonitor</CODE></A>?
-<P>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE><DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="rollback(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)"><!-- --></A><H3>
-rollback</H3>
-<PRE>
-void <B>rollback</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction,
-              <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</A>&nbsp;savepoint)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setSavepoint(org.eclipse.emf.spi.cdo.InternalCDOTransaction)"><!-- --></A><H3>
-setSavepoint</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</A> <B>setSavepoint</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;transaction)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="setTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTarget</h4>
+<pre>void&nbsp;setTarget(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</pre>
+</li>
+</ul>
+<a name="unsetTarget(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>unsetTarget</h4>
+<pre>void&nbsp;unsetTarget(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</pre>
+</li>
+</ul>
+<a name="commit(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.core.runtime.IProgressMonitor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>commit</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commit(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction,
+                   <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)
+                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+<div class="block">TODO Better use an <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor"><code>OMMonitor</code></a>?</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="rollback(org.eclipse.emf.spi.cdo.InternalCDOTransaction, org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rollback</h4>
+<pre>void&nbsp;rollback(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction,
+            <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;savepoint)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="setSavepoint(org.eclipse.emf.spi.cdo.InternalCDOTransaction)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setSavepoint</h4>
+<pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;setSavepoint(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOTransactionStrategy.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CDOTransactionStrategy.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/CDOTransactionStrategy.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html" target="_top">Frames</a></li>
+<li><a href="CDOTransactionStrategy.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

@@ -1,816 +1,598 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-IIDHandler (CDO Model Repository Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>IIDHandler (CDO Model Repository Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="IIDHandler (CDO Model Repository Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IIDHandler.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.db"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html" title="interface in org.eclipse.emf.cdo.server.db"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/server/db/IIDHandler.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="IIDHandler.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/IIDHandler.html">Use</a></li>
+<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/server/db/IIDHandler.html" target="_top">Frames</a></li>
+<li><a href="IIDHandler.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.emf.cdo.server.db</FONT>
-<BR>
-Interface IIDHandler</H2>
-<DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;</DD>
-</DL>
-<HR>
-<DL>
-  <DT>public interface <B>IIDHandler</B>
-  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.emf.cdo.server.db</div>
+<h2 title="Interface IIDHandler" class="title">Interface IIDHandler</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="IIDHandler.html" title="&#171;interface&#187; IIDHandler" alt="" coords="7,100,92,140"/>
 <area shape="rect" id="node2" title="&#171;interface&#187; Comparator (java.util)" alt="" coords="5,6,93,61"/>
 </map>
-
-<CENTER><IMG SRC="IIDHandler.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-Abstracts the handling of <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>IDs</CODE></A> of different <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id"><CODE>ID types</CODE></A>.
-<P>
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-<DT><B>No Implement</B></DT>
-  <DD>This interface is not intended to be implemented by clients.</DD>
-<DT><B>No Extend</B></DT>
-  <DD>This interface is not intended to be extended by clients.</DD>
-</DL>
-<HR>
-
-<P>
-
+<div id="apivizContainer" style="text-align: center;"><img src="IIDHandler.png" usemap="#APIVIZ" border="0"></div>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</dd>
+</dl>
+<hr>
+<br>
+<pre>public interface <span class="strong">IIDHandler</span>
+extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</pre>
+<div class="block">Abstracts the handling of <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> of different <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id"><code>ID types</code></a>.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd>
+<dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#adjustLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)">adjustLastObjectID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;maxID)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#appendCDOID(java.lang.StringBuilder, org.eclipse.emf.cdo.common.id.CDOID)">appendCDOID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder,
-            <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#createCDOID(java.lang.String)">createCDOID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;val)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getCDOID(java.sql.ResultSet, int)">getCDOID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-         int&nbsp;column)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getCDOID(java.sql.ResultSet, java.lang.String)">getCDOID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/DBType.html?is-external=true" title="class or interface in org.eclipse.net4j.db">DBType</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getDBType()">getDBType</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getLastObjectID()">getLastObjectID</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getMaxCDOID()">getMaxCDOID</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getMinCDOID()">getMinCDOID</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getNextCDOID(org.eclipse.emf.cdo.common.revision.CDORevision)">getNextCDOID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getNextLocalObjectID()">getNextLocalObjectID</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getObjectIDTypes()">getObjectIDTypes</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getObjectTypeMapping()">getObjectTypeMapping</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getStore()">getStore</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)">isLocalCDOID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not used anymore.</I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#mapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, java.lang.String, long)">mapURI</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;uri,
-       long&nbsp;commitTime)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#rawExport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataOutput, long, long)">rawExport</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
-          <A HREF="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</A>&nbsp;out,
-          long&nbsp;fromCommitTime,
-          long&nbsp;toCommitTime)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#rawImport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
-          <A HREF="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</A>&nbsp;in,
-          long&nbsp;fromCommitTime,
-          long&nbsp;toCommitTime,
-          <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;fork)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID)">setCDOID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
-         int&nbsp;column,
-         <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID, long)">setCDOID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
-         int&nbsp;column,
-         <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id,
-         long&nbsp;commitTime)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setCDOIDRaw(java.sql.PreparedStatement, int, java.lang.Object)">setCDOIDRaw</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
-            int&nbsp;column,
-            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;id)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)">setLastObjectID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;lastObjectID)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setNextLocalObjectID(org.eclipse.emf.cdo.common.id.CDOID)">setNextLocalObjectID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;nextLocalObjectID)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#unmapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.id.CDOID)">unmapURI</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-         <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.util.Comparator"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true#compare(T, T)" title="class or interface in java.util">compare</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#adjustLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)">adjustLastObjectID</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;maxID)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#appendCDOID(java.lang.StringBuilder, org.eclipse.emf.cdo.common.id.CDOID)">appendCDOID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder,
+           <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#createCDOID(java.lang.String)">createCDOID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;val)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getCDOID(java.sql.ResultSet, int)">getCDOID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+        int&nbsp;column)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getCDOID(java.sql.ResultSet, java.lang.String)">getCDOID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/DBType.html?is-external=true" title="class or interface in org.eclipse.net4j.db">DBType</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getDBType()">getDBType</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getLastObjectID()">getLastObjectID</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getMaxCDOID()">getMaxCDOID</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getMinCDOID()">getMinCDOID</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getNextCDOID(org.eclipse.emf.cdo.common.revision.CDORevision)">getNextCDOID</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getNextLocalObjectID()">getNextLocalObjectID</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getObjectIDTypes()">getObjectIDTypes</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getObjectTypeMapping()">getObjectTypeMapping</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#getStore()">getStore</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)">isLocalCDOID</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>Not used anymore.</i></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#mapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, java.lang.String, long)">mapURI</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri,
+      long&nbsp;commitTime)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#rawExport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataOutput, long, long)">rawExport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+         <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+         long&nbsp;fromCommitTime,
+         long&nbsp;toCommitTime)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#rawImport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+         <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+         long&nbsp;fromCommitTime,
+         long&nbsp;toCommitTime,
+         <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;fork)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID)">setCDOID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+        int&nbsp;column,
+        <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID, long)">setCDOID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+        int&nbsp;column,
+        <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+        long&nbsp;commitTime)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setCDOIDRaw(java.sql.PreparedStatement, int, java.lang.Object)">setCDOIDRaw</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+           int&nbsp;column,
+           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)">setLastObjectID</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;lastObjectID)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#setNextLocalObjectID(org.eclipse.emf.cdo.common.id.CDOID)">setNextLocalObjectID</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;nextLocalObjectID)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html#unmapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.id.CDOID)">unmapURI</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+        <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.Comparator">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true#compare(T, T)" title="class or interface in java.util">compare</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Comparator.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getStore()"><!-- --></A><H3>
-getStore</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</A> <B>getStore</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getDBType()"><!-- --></A><H3>
-getDBType</H3>
-<PRE>
-<A HREF="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/DBType.html?is-external=true" title="class or interface in org.eclipse.net4j.db">DBType</A> <B>getDBType</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getObjectIDTypes()"><!-- --></A><H3>
-getObjectIDTypes</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt; <B>getObjectIDTypes</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getObjectTypeMapping()"><!-- --></A><H3>
-getObjectTypeMapping</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</A> <B>getObjectTypeMapping</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createCDOID(java.lang.String)"><!-- --></A><H3>
-createCDOID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>createCDOID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;val)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-isLocalCDOID</H3>
-<PRE>
-<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>boolean <B>isLocalCDOID</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
-<DL>
-<DD><B>Deprecated.</B>&nbsp;<I>Not used anymore.</I>
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getLastObjectID()"><!-- --></A><H3>
-getLastObjectID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getLastObjectID</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-setLastObjectID</H3>
-<PRE>
-void <B>setLastObjectID</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;lastObjectID)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="adjustLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-adjustLastObjectID</H3>
-<PRE>
-void <B>adjustLastObjectID</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;maxID)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.1</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getNextLocalObjectID()"><!-- --></A><H3>
-getNextLocalObjectID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getNextLocalObjectID</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setNextLocalObjectID(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-setNextLocalObjectID</H3>
-<PRE>
-void <B>setNextLocalObjectID</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;nextLocalObjectID)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getNextCDOID(org.eclipse.emf.cdo.common.revision.CDORevision)"><!-- --></A><H3>
-getNextCDOID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getNextCDOID</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="appendCDOID(java.lang.StringBuilder, org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-appendCDOID</H3>
-<PRE>
-void <B>appendCDOID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</A>&nbsp;builder,
-                 <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setCDOIDRaw(java.sql.PreparedStatement, int, java.lang.Object)"><!-- --></A><H3>
-setCDOIDRaw</H3>
-<PRE>
-void <B>setCDOIDRaw</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
-                 int&nbsp;column,
-                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;id)
-                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE><DT><B>Since:</B></DT>
-  <DD>4.1</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-setCDOID</H3>
-<PRE>
-void <B>setCDOID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
-              int&nbsp;column,
-              <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)
-              throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID, long)"><!-- --></A><H3>
-setCDOID</H3>
-<PRE>
-void <B>setCDOID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
-              int&nbsp;column,
-              <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id,
-              long&nbsp;commitTime)
-              throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCDOID(java.sql.ResultSet, int)"><!-- --></A><H3>
-getCDOID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getCDOID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-               int&nbsp;column)
-               throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCDOID(java.sql.ResultSet, java.lang.String)"><!-- --></A><H3>
-getCDOID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getCDOID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)
-               throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getMinCDOID()"><!-- --></A><H3>
-getMinCDOID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getMinCDOID</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getMaxCDOID()"><!-- --></A><H3>
-getMaxCDOID</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>getMaxCDOID</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="mapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, java.lang.String, long)"><!-- --></A><H3>
-mapURI</H3>
-<PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>mapURI</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;uri,
-             long&nbsp;commitTime)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="unmapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
-unmapURI</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>unmapURI</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="rawExport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataOutput, long, long)"><!-- --></A><H3>
-rawExport</H3>
-<PRE>
-void <B>rawExport</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
-               <A HREF="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</A>&nbsp;out,
-               long&nbsp;fromCommitTime,
-               long&nbsp;toCommitTime)
-               throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="rawImport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)"><!-- --></A><H3>
-rawImport</H3>
-<PRE>
-void <B>rawImport</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
-               <A HREF="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</A>&nbsp;in,
-               long&nbsp;fromCommitTime,
-               long&nbsp;toCommitTime,
-               <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;fork)
-               throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE></DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getStore()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getStore</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;getStore()</pre>
+</li>
+</ul>
+<a name="getDBType()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDBType</h4>
+<pre><a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/DBType.html?is-external=true" title="class or interface in org.eclipse.net4j.db">DBType</a>&nbsp;getDBType()</pre>
+</li>
+</ul>
+<a name="getObjectIDTypes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectIDTypes</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;getObjectIDTypes()</pre>
+</li>
+</ul>
+<a name="getObjectTypeMapping()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectTypeMapping</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&nbsp;getObjectTypeMapping()</pre>
+</li>
+</ul>
+<a name="createCDOID(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createCDOID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;createCDOID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;val)</pre>
+</li>
+</ul>
+<a name="isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isLocalCDOID</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+boolean&nbsp;isLocalCDOID(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>Not used anymore.</i></div>
+</li>
+</ul>
+<a name="getLastObjectID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastObjectID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getLastObjectID()</pre>
+</li>
+</ul>
+<a name="setLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLastObjectID</h4>
+<pre>void&nbsp;setLastObjectID(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;lastObjectID)</pre>
+</li>
+</ul>
+<a name="adjustLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>adjustLastObjectID</h4>
+<pre>void&nbsp;adjustLastObjectID(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;maxID)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.1</dd></dl>
+</li>
+</ul>
+<a name="getNextLocalObjectID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNextLocalObjectID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getNextLocalObjectID()</pre>
+</li>
+</ul>
+<a name="setNextLocalObjectID(org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setNextLocalObjectID</h4>
+<pre>void&nbsp;setNextLocalObjectID(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;nextLocalObjectID)</pre>
+</li>
+</ul>
+<a name="getNextCDOID(org.eclipse.emf.cdo.common.revision.CDORevision)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNextCDOID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getNextCDOID(<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+</li>
+</ul>
+<a name="appendCDOID(java.lang.StringBuilder, org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendCDOID</h4>
+<pre>void&nbsp;appendCDOID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder,
+               <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+</li>
+</ul>
+<a name="setCDOIDRaw(java.sql.PreparedStatement, int, java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCDOIDRaw</h4>
+<pre>void&nbsp;setCDOIDRaw(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+               int&nbsp;column,
+               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)
+                 throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.1</dd></dl>
+</li>
+</ul>
+<a name="setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCDOID</h4>
+<pre>void&nbsp;setCDOID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+            int&nbsp;column,
+            <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)
+              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd></dl>
+</li>
+</ul>
+<a name="setCDOID(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.common.id.CDOID, long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCDOID</h4>
+<pre>void&nbsp;setCDOID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+            int&nbsp;column,
+            <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+            long&nbsp;commitTime)
+              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getCDOID(java.sql.ResultSet, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCDOID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getCDOID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+             int&nbsp;column)
+               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getCDOID(java.sql.ResultSet, java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCDOID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getCDOID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)
+               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getMinCDOID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMinCDOID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getMinCDOID()</pre>
+</li>
+</ul>
+<a name="getMaxCDOID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMaxCDOID</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getMaxCDOID()</pre>
+</li>
+</ul>
+<a name="mapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, java.lang.String, long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mapURI</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;mapURI(<a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri,
+           long&nbsp;commitTime)</pre>
+</li>
+</ul>
+<a name="unmapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.id.CDOID)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>unmapURI</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;unmapURI(<a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+              <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+</li>
+</ul>
+<a name="rawExport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataOutput, long, long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rawExport</h4>
+<pre>void&nbsp;rawExport(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+             <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+             long&nbsp;fromCommitTime,
+             long&nbsp;toCommitTime)
+               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+</li>
+</ul>
+<a name="rawImport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>rawImport</h4>
+<pre>void&nbsp;rawImport(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+             <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+             long&nbsp;fromCommitTime,
+             long&nbsp;toCommitTime,
+             <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;fork)
+               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IIDHandler.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.db"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html" title="interface in org.eclipse.emf.cdo.server.db"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/server/db/IIDHandler.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="IIDHandler.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/IIDHandler.html">Use</a></li>
+<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../../index.html?org/eclipse/emf/cdo/server/db/IIDHandler.html" target="_top">Frames</a></li>
+<li><a href="IIDHandler.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

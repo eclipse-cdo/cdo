@@ -22,6 +22,9 @@
       <topic label="Net4j DB Framework HSQLDB Adapter" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.db.hsqldb" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="package" />
       </topic>
+      <topic label="Net4j DB Framework JDBC Support" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.net4j.db.jdbc" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="package" />
+      </topic>
       <topic label="Net4j DB Framework MYSQL Adapter" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.db.mysql" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="package" />
       </topic>

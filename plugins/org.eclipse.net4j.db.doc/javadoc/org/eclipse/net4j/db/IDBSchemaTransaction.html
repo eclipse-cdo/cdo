@@ -1,408 +1,344 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-IDBSchemaTransaction (Net4j DB Framework Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>IDBSchemaTransaction (Net4j DB Framework Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="IDBSchemaTransaction (Net4j DB Framework Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IDBSchemaTransaction.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../index.html?org/eclipse/net4j/db/IDBSchemaTransaction.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="IDBSchemaTransaction.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/IDBSchemaTransaction.html">Use</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db"><span class="strong">Prev Class</span></a></li>
+<li>Next Class</li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/eclipse/net4j/db/IDBSchemaTransaction.html" target="_top">Frames</a></li>
+<li><a href="IDBSchemaTransaction.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.net4j.db</FONT>
-<BR>
-Interface IDBSchemaTransaction</H2>
-<DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></DD>
-</DL>
-<HR>
-<DL>
-  <DT>public interface <B>IDBSchemaTransaction</B>
-  <DD>extends <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.net4j.db</div>
+<h2 title="Interface IDBSchemaTransaction" class="title">Interface IDBSchemaTransaction</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="IDBSchemaTransaction.html" title="&#171;interface&#187; IDBSchemaTransaction" alt="" coords="29,100,187,140"/>
 <area shape="rect" id="node2" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="5,6,211,61"/>
 </map>
-
-<CENTER><IMG SRC="IDBSchemaTransaction.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-<DT><B>No Implement</B></DT>
-  <DD>This interface is not intended to be implemented by clients.</DD>
-<DT><B>No Extend</B></DT>
-  <DD>This interface is not intended to be extended by clients.</DD>
-</DL>
-<HR>
-
-<P>
+<div id="apivizContainer" style="text-align: center;"><img src="IDBSchemaTransaction.png" usemap="#APIVIZ" border="0"></div>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public interface <span class="strong">IDBSchemaTransaction</span>
+extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd>
+<dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
-
-<A NAME="field_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Field Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#DEFAULT_ENSURE_SCHEMA_POLICY">DEFAULT_ENSURE_SCHEMA_POLICY</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#DEFAULT_ENSURE_SCHEMA_POLICY">DEFAULT_ENSURE_SCHEMA_POLICY</a></strong></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#commit()">commit</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)">ensureSchema</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)">ensureSchema</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema,
-             <A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A>&nbsp;policy)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getConnection()">getConnection</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getDatabase()">getDatabase</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()">getSchemaDelta</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getWorkingCopy()">getWorkingCopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.collection.Closeable"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.collection.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#commit()">commit</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)">ensureSchema</a></strong>(<a href="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)">ensureSchema</a></strong>(<a href="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
+            <a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a>&nbsp;policy)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getConnection()">getConnection</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getDatabase()">getDatabase</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()">getSchemaDelta</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html#getWorkingCopy()">getWorkingCopy</a></strong>()</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.collection.Closeable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.collection.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></h3>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-
-<A NAME="field_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Field Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="DEFAULT_ENSURE_SCHEMA_POLICY"><!-- --></A><H3>
-DEFAULT_ENSURE_SCHEMA_POLICY</H3>
-<PRE>
-static final <A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>DEFAULT_ENSURE_SCHEMA_POLICY</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="DEFAULT_ENSURE_SCHEMA_POLICY">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DEFAULT_ENSURE_SCHEMA_POLICY</h4>
+<pre>static final&nbsp;<a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a> DEFAULT_ENSURE_SCHEMA_POLICY</pre>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getDatabase()"><!-- --></A><H3>
-getDatabase</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</A> <B>getDatabase</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getConnection()"><!-- --></A><H3>
-getConnection</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</A> <B>getConnection</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getWorkingCopy()"><!-- --></A><H3>
-getWorkingCopy</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A> <B>getWorkingCopy</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)"><!-- --></A><H3>
-ensureSchema</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A> <B>ensureSchema</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema,
-                            <A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A>&nbsp;policy)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)"><!-- --></A><H3>
-ensureSchema</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A> <B>ensureSchema</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSchemaDelta()"><!-- --></A><H3>
-getSchemaDelta</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A> <B>getSchemaDelta</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="commit()"><!-- --></A><H3>
-commit</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A> <B>commit</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getDatabase()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDatabase</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;getDatabase()</pre>
+</li>
+</ul>
+<a name="getConnection()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getConnection</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;getConnection()</pre>
+</li>
+</ul>
+<a name="getWorkingCopy()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getWorkingCopy</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;getWorkingCopy()</pre>
+</li>
+</ul>
+<a name="ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ensureSchema</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;ensureSchema(<a href="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
+                          <a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a>&nbsp;policy)</pre>
+</li>
+</ul>
+<a name="ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ensureSchema</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;ensureSchema(<a href="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</pre>
+</li>
+</ul>
+<a name="getSchemaDelta()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSchemaDelta</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;getSchemaDelta()</pre>
+</li>
+</ul>
+<a name="commit()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>commit</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;commit()</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IDBSchemaTransaction.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../index.html?org/eclipse/net4j/db/IDBSchemaTransaction.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="IDBSchemaTransaction.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/IDBSchemaTransaction.html">Use</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db"><span class="strong">Prev Class</span></a></li>
+<li>Next Class</li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/eclipse/net4j/db/IDBSchemaTransaction.html" target="_top">Frames</a></li>
+<li><a href="IDBSchemaTransaction.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

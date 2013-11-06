@@ -1,481 +1,416 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-InternalCDOSession.MergeData (CDO Model Repository Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>InternalCDOSession.MergeData (CDO Model Repository Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="InternalCDOSession.MergeData (CDO Model Repository Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/InternalCDOSession.MergeData.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="InternalCDOSession.MergeData.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/InternalCDOSession.MergeData.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" target="_top">Frames</a></li>
+<li><a href="InternalCDOSession.MergeData.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.emf.spi.cdo</FONT>
-<BR>
-Class InternalCDOSession.MergeData</H2>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData</B>
-</PRE>
-<DL>
-<DT><B>Enclosing interface:</B><DD><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</A></DD>
-</DL>
-<HR>
-<DL>
-  <DT>public static final class <B>InternalCDOSession.MergeData</B>
-  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.emf.spi.cdo</div>
+<h2 title="Class InternalCDOSession.MergeData" class="title">Class InternalCDOSession.MergeData</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="InternalCDOSession.MergeData.html" title="InternalCDOSession.MergeData" alt="" coords="5,6,211,31"/>
 </map>
-
-<CENTER><IMG SRC="InternalCDOSession.MergeData.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-A data structure that holds all input and output values of <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>InternalCDOSession.getMergeData()</CODE></A>.
-<P>
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-</DL>
-<HR>
-
-<P>
-
+<div id="apivizContainer" style="text-align: center;"><img src="InternalCDOSession.MergeData.png" usemap="#APIVIZ" border="0"></div>
+<ul class="inheritance">
+<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>Enclosing interface:</dt>
+<dd><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public static final class <span class="strong">InternalCDOSession.MergeData</span>
+extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">A data structure that holds all input and output values of <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><code>InternalCDOSession.getMergeData()</code></a>.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-
-<A NAME="constructor_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Constructor Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#InternalCDOSession.MergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, java.util.Set, org.eclipse.emf.cdo.common.commit.CDOChangeSet, org.eclipse.emf.cdo.common.commit.CDOChangeSet)">InternalCDOSession.MergeData</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;target,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;sourceBase,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;ancestor,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;targetInfo,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;sourceInfo,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;baseInfo,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;ancestorInfo,
-                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;targetChanges,
-                             <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;sourceChanges)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#InternalCDOSession.MergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, java.util.Set, org.eclipse.emf.cdo.common.commit.CDOChangeSet, org.eclipse.emf.cdo.common.commit.CDOChangeSet)">InternalCDOSession.MergeData</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;ancestor,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;targetInfo,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;sourceInfo,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;baseInfo,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;ancestorInfo,
+                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;targetChanges,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;sourceChanges)</code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestor()">getAncestor</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestorInfo()">getAncestorInfo</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getBaseInfo()">getBaseInfo</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getIDs()">getIDs</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSource()">getSource</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceBase()">getSourceBase</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceChanges()">getSourceChanges</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceInfo()">getSourceInfo</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTarget()">getTarget</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTargetChanges()">getTargetChanges</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTargetInfo()">getTargetInfo</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestor()">getAncestor</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestorInfo()">getAncestorInfo</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getBaseInfo()">getBaseInfo</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getIDs()">getIDs</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSource()">getSource</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceBase()">getSourceBase</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceChanges()">getSourceChanges</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceInfo()">getSourceInfo</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTarget()">getTarget</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTargetChanges()">getTargetChanges</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTargetInfo()">getTargetInfo</a></strong>()</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-
-<A NAME="constructor_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Constructor Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="InternalCDOSession.MergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, java.util.Set, org.eclipse.emf.cdo.common.commit.CDOChangeSet, org.eclipse.emf.cdo.common.commit.CDOChangeSet)"><!-- --></A><H3>
-InternalCDOSession.MergeData</H3>
-<PRE>
-public <B>InternalCDOSession.MergeData</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;target,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;sourceBase,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;ancestor,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;targetInfo,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;sourceInfo,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;baseInfo,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;ancestorInfo,
-                                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;targetChanges,
-                                    <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;sourceChanges)</PRE>
-<DL>
-</DL>
-
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="InternalCDOSession.MergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo, java.util.Set, org.eclipse.emf.cdo.common.commit.CDOChangeSet, org.eclipse.emf.cdo.common.commit.CDOChangeSet)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>InternalCDOSession.MergeData</h4>
+<pre>public&nbsp;InternalCDOSession.MergeData(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;ancestor,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;targetInfo,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;sourceInfo,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;baseInfo,
+                            <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;ancestorInfo,
+                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;targetChanges,
+                            <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;sourceChanges)</pre>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getTarget()"><!-- --></A><H3>
-getTarget</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A> <B>getTarget</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSource()"><!-- --></A><H3>
-getSource</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A> <B>getSource</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSourceBase()"><!-- --></A><H3>
-getSourceBase</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A> <B>getSourceBase</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getAncestor()"><!-- --></A><H3>
-getAncestor</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A> <B>getAncestor</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getTargetInfo()"><!-- --></A><H3>
-getTargetInfo</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A> <B>getTargetInfo</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSourceInfo()"><!-- --></A><H3>
-getSourceInfo</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A> <B>getSourceInfo</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getBaseInfo()"><!-- --></A><H3>
-getBaseInfo</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A> <B>getBaseInfo</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getAncestorInfo()"><!-- --></A><H3>
-getAncestorInfo</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A> <B>getAncestorInfo</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getIDs()"><!-- --></A><H3>
-getIDs</H3>
-<PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt; <B>getIDs</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getTargetChanges()"><!-- --></A><H3>
-getTargetChanges</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A> <B>getTargetChanges</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSourceChanges()"><!-- --></A><H3>
-getSourceChanges</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A> <B>getSourceChanges</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getTarget()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTarget</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getTarget()</pre>
+</li>
+</ul>
+<a name="getSource()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSource</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getSource()</pre>
+</li>
+</ul>
+<a name="getSourceBase()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSourceBase</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getSourceBase()</pre>
+</li>
+</ul>
+<a name="getAncestor()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAncestor</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getAncestor()</pre>
+</li>
+</ul>
+<a name="getTargetInfo()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTargetInfo</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;getTargetInfo()</pre>
+</li>
+</ul>
+<a name="getSourceInfo()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSourceInfo</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;getSourceInfo()</pre>
+</li>
+</ul>
+<a name="getBaseInfo()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBaseInfo</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;getBaseInfo()</pre>
+</li>
+</ul>
+<a name="getAncestorInfo()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAncestorInfo</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;getAncestorInfo()</pre>
+</li>
+</ul>
+<a name="getIDs()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIDs</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;getIDs()</pre>
+</li>
+</ul>
+<a name="getTargetChanges()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTargetChanges</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;getTargetChanges()</pre>
+</li>
+</ul>
+<a name="getSourceChanges()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getSourceChanges</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;getSourceChanges()</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/InternalCDOSession.MergeData.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="InternalCDOSession.MergeData.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/InternalCDOSession.MergeData.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" target="_top">Frames</a></li>
+<li><a href="InternalCDOSession.MergeData.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

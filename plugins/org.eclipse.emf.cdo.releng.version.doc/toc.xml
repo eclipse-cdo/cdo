@@ -21,7 +21,7 @@
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="Version Management Tool" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
+      <topic label="Version Management" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
       </topic>
     </topic>

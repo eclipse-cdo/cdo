@@ -24,6 +24,7 @@ org.eclipse.net4j.util.ui
 org.eclipse.net4j.util.ui.actions
 org.eclipse.net4j.util.ui.container
 org.eclipse.net4j.util.ui.dnd
+org.eclipse.net4j.util.ui.handlers
 org.eclipse.net4j.util.ui.prefs
 org.eclipse.net4j.util.ui.proposals
 org.eclipse.net4j.util.ui.security

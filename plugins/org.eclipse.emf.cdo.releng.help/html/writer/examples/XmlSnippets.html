@@ -2,7 +2,7 @@
 <HTML>
 
 <HEAD>
-<TITLE>Embedding XML Snippets (CDO Release Engineering Documentation)</TITLE>
+<TITLE>Embedding XML Snippets (Documentation)</TITLE>
 
 <LINK REL="STYLESHEET" HREF="../../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
 
@@ -10,7 +10,7 @@
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Embedding XML Snippets (CDO Release Engineering Documentation)";
+        parent.document.title="Embedding XML Snippets (Documentation)";
     }
 }
 </SCRIPT>
@@ -18,7 +18,7 @@ function windowTitle()
 </HEAD>
 
 <BODY BGCOLOR="white" onload="windowTitle();">
-<!-- <div class="help_breadcrumbs"><a href="../../Overview.html" title="CDO Release Engineering Documentation">CDO Release Engineering Documentation</a> > <a href="../index.html" title="Category in CDO Release Engineering Documentation">Technical Writer's Guide</a> > <a href="index.html" title="Category in CDO Release Engineering Documentation">Examples</a></div> -->
+<!-- <div class="help_breadcrumbs"><a href="../../Overview.html" title="Documentation">Documentation</a> > <a href="../index.html" title="Category in Documentation">Technical Writer's Guide</a> > <a href="index.html" title="Category in Documentation">Examples</a></div> -->
 
 <table border="0">
 	<tr>
@@ -29,8 +29,8 @@ function windowTitle()
 <p>
  <p>
 <table border="0">
-<tr><td>1&nbsp;</td><td colspan="3"><a href="XmlSnippets.html#XmlExample" title="Chapter in CDO Release Engineering Documentation">XML Example with a Callout</a></td></tr>
-<tr><td>2&nbsp;</td><td colspan="3"><a href="XmlSnippets.html#XmiExample" title="Chapter in CDO Release Engineering Documentation">XMI Example</a></td></tr>
+<tr><td>1&nbsp;</td><td colspan="3"><a href="XmlSnippets.html#XmlExample" title="Chapter in Documentation">XML Example with a Callout</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="3"><a href="XmlSnippets.html#XmiExample" title="Chapter in Documentation">XMI Example</a></td></tr>
 </table>
 </p>
 
@@ -79,9 +79,8 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="serializeCommits"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="optimisticLockingTimeout"</font>&nbsp;value<font color="#000080">="10000"</font>/&gt;</font><br/>
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/380629<br/>
-			&lt;securityManager&nbsp;type="default"&nbsp;realmPath="/security"/&gt;<br/>
-			&lt;securityManager&nbsp;type="annotation"&nbsp;realmPath="/security"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://wiki.eclipse.org/CDO/Security_Manager<br/>
+		&nbsp;&nbsp;&lt;securityManager&nbsp;type="default"&nbsp;description="/security:annotation:home(/home)"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/302775<br/>
@@ -163,11 +162,11 @@ function windowTitle()
 			&lt;dbAdapter&nbsp;name="oracle"/&gt;<br/>
 			&lt;dataSource&nbsp;class="oracle.jdbc.pool.OracleDataSource"<br/>
 				driverType="thin"<br/>
-				serverName="serverURL"<br/>
+				serverName="localhost"<br/>
 				portNumber="1521"<br/>
-				databaseName="SID"<br/>
-				user="user"<br/>
-				password="passwd"/&gt;<br/>
+				databaseName="TEST"<br/>
+				user="cdotest"<br/>
+				password="oracle"/&gt;<br/>
 			--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/store&gt;</font><br/>

@@ -1,108 +1,87 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-ISynchronizableRepository (CDO Model Repository Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>ISynchronizableRepository (CDO Model Repository Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="ISynchronizableRepository (CDO Model Repository Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ISynchronizableRepository.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/server/ISynchronizableRepository.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="ISynchronizableRepository.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ISynchronizableRepository.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/ISynchronizableRepository.html" target="_top">Frames</a></li>
+<li><a href="ISynchronizableRepository.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.emf.cdo.server</FONT>
-<BR>
-Interface ISynchronizableRepository</H2>
-<DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A>, <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></DD>
-</DL>
-<DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</A>, <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</A></DD>
-</DL>
-<HR>
-<DL>
-  <DT>public interface <B>ISynchronizableRepository</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.emf.cdo.server</div>
+<h2 title="Interface ISynchronizableRepository" class="title">Interface ISynchronizableRepository</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../spi/server/InternalSynchronizableRepository.html" title="&#171;interface&#187; InternalSynchronizableRepository (org.eclipse.emf.cdo.spi.server)" alt="" coords="5,185,219,239"/>
 <area shape="rect" id="node2" href="ISynchronizableRepository.html" title="&#171;interface&#187; ISynchronizableRepository" alt="" coords="204,88,380,128"/>
@@ -110,407 +89,332 @@ Interface ISynchronizableRepository</H2>
 <area shape="rect" id="node4" href="IRepositorySynchronizer.html" title="&#171;interface&#187; IRepositorySynchronizer" alt="" coords="364,192,527,232"/>
 <area shape="rect" id="node5" href="IRepository.html" title="&#171;interface&#187; IRepository" alt="" coords="249,5,335,45"/>
 </map>
-
-<CENTER><IMG SRC="ISynchronizableRepository.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-A repository with the ability to <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><CODE>synchronize</CODE></A> its content with another repository.
-<P>
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-<DT><B>No Implement</B></DT>
-  <DD>This interface is not intended to be implemented by clients.</DD>
-<DT><B>No Extend</B></DT>
-  <DD>This interface is not intended to be extended by clients.</DD>
-</DL>
-<HR>
-
-<P>
+<div id="apivizContainer" style="text-align: center;"><img src="ISynchronizableRepository.png" usemap="#APIVIZ" border="0"></div>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></dd>
+</dl>
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public interface <span class="strong">ISynchronizableRepository</span>
+extends <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></pre>
+<div class="block">A repository with the ability to <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronize</code></a> its content with another repository.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd>
+<dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-
-<A NAME="nested_class_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Nested Class Summary</B></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.server.IRepository"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Handler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Props</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.ReadAccessHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonRepository"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.cdo.common.<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.cdo.server.IRepository">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Handler</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Props</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.ReadAccessHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonRepository">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- =========== FIELD SUMMARY =========== -->
-
-<A NAME="field_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Field Summary</B></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.cdo.server.IRepository"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#SYSTEM_USER_ID">SYSTEM_USER_ID</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.server.IRepository">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#SYSTEM_USER_ID">SYSTEM_USER_ID</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getLastReplicatedBranchID()">getLastReplicatedBranchID</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;long</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getLastReplicatedCommitTime()">getLastReplicatedCommitTime</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getReplicatorSession()">getReplicatorSession</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getSynchronizer()">getSynchronizer</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#goOffline()">goOffline</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#goOnline()">goOnline</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#hasBeenReplicated()">hasBeenReplicated</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.server.IRepository"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#addHandler(org.eclipse.emf.cdo.server.IRepository.Handler)">addHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getBranchManager()">getBranchManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoHandlers()">getCommitInfoHandlers</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoManager()">getCommitInfoManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getHandlers()">getHandlers</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLastCommitTimeStamp()">getLastCommitTimeStamp</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()">getLockingManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockManager()">getLockManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getPackageRegistry()">getPackageRegistry</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getProperties()">getProperties</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getQueryHandlerProvider()">getQueryHandlerProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getRevisionManager()">getRevisionManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getSessionManager()">getSessionManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getStore()">getStore</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#removeHandler(org.eclipse.emf.cdo.server.IRepository.Handler)">removeHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#setInitialPackages(org.eclipse.emf.ecore.EPackage...)">setInitialPackages</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#validateTimeStamp(long)">validateTimeStamp</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#waitForCommit(long)">waitForCommit</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonRepository"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime()">getCreationTime</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName()">getName</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()">getState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType()">getStoreType</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()">getType</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()">getUUID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits()">isSerializingCommits</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.util.CDOTimeProvider"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.util.<A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.core.runtime.IAdaptable"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.core.runtime.<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime">getAdapter</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.server.IQueryHandlerProvider"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html#getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo)">getQueryHandler</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getLastReplicatedBranchID()">getLastReplicatedBranchID</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getLastReplicatedCommitTime()">getLastReplicatedCommitTime</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getReplicatorSession()">getReplicatorSession</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#getSynchronizer()">getSynchronizer</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#goOffline()">goOffline</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#goOnline()">goOnline</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html#hasBeenReplicated()">hasBeenReplicated</a></strong>()</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.server.IRepository">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#addHandler(org.eclipse.emf.cdo.server.IRepository.Handler)">addHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getBranchManager()">getBranchManager</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoHandlers()">getCommitInfoHandlers</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoManager()">getCommitInfoManager</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getHandlers()">getHandlers</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLastCommitTimeStamp()">getLastCommitTimeStamp</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()">getLockingManager</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockManager()">getLockManager</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getPackageRegistry()">getPackageRegistry</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getProperties()">getProperties</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getQueryHandlerProvider()">getQueryHandlerProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getRevisionManager()">getRevisionManager</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getSessionManager()">getSessionManager</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getStore()">getStore</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#removeHandler(org.eclipse.emf.cdo.server.IRepository.Handler)">removeHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#setInitialPackages(org.eclipse.emf.ecore.EPackage...)">setInitialPackages</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#validateTimeStamp(long)">validateTimeStamp</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html#waitForCommit(long)">waitForCommit</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonRepository">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime()">getCreationTime</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName()">getName</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()">getState</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType()">getStoreType</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()">getType</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()">getUUID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits()">isSerializingCommits</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.util.CDOTimeProvider">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.util.<a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.core.runtime.IAdaptable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.server.IQueryHandlerProvider">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html#getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo)">getQueryHandler</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getSynchronizer()"><!-- --></A><H3>
-getSynchronizer</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A> <B>getSynchronizer</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getReplicatorSession()"><!-- --></A><H3>
-getReplicatorSession</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A> <B>getReplicatorSession</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getLastReplicatedBranchID()"><!-- --></A><H3>
-getLastReplicatedBranchID</H3>
-<PRE>
-int <B>getLastReplicatedBranchID</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getLastReplicatedCommitTime()"><!-- --></A><H3>
-getLastReplicatedCommitTime</H3>
-<PRE>
-long <B>getLastReplicatedCommitTime</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="hasBeenReplicated()"><!-- --></A><H3>
-hasBeenReplicated</H3>
-<PRE>
-boolean <B>hasBeenReplicated</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="goOnline()"><!-- --></A><H3>
-goOnline</H3>
-<PRE>
-void <B>goOnline</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.1</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="goOffline()"><!-- --></A><H3>
-goOffline</H3>
-<PRE>
-void <B>goOffline</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.1</DD>
-</DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getSynchronizer()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSynchronizer</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;getSynchronizer()</pre>
+</li>
+</ul>
+<a name="getReplicatorSession()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getReplicatorSession</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;getReplicatorSession()</pre>
+</li>
+</ul>
+<a name="getLastReplicatedBranchID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastReplicatedBranchID</h4>
+<pre>int&nbsp;getLastReplicatedBranchID()</pre>
+</li>
+</ul>
+<a name="getLastReplicatedCommitTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastReplicatedCommitTime</h4>
+<pre>long&nbsp;getLastReplicatedCommitTime()</pre>
+</li>
+</ul>
+<a name="hasBeenReplicated()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasBeenReplicated</h4>
+<pre>boolean&nbsp;hasBeenReplicated()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+<a name="goOnline()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>goOnline</h4>
+<pre>void&nbsp;goOnline()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.1</dd></dl>
+</li>
+</ul>
+<a name="goOffline()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>goOffline</h4>
+<pre>void&nbsp;goOffline()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.1</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ISynchronizableRepository.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/server/ISynchronizableRepository.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="ISynchronizableRepository.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ISynchronizableRepository.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/ISynchronizableRepository.html" target="_top">Frames</a></li>
+<li><a href="ISynchronizableRepository.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

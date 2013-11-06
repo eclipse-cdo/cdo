@@ -1,104 +1,87 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-IBuffer (Net4j Signalling Platform Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>IBuffer (Net4j Signalling Platform Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="IBuffer (Net4j Signalling Platform Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IBuffer.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../index.html?org/eclipse/net4j/buffer/IBuffer.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="IBuffer.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/IBuffer.html">Use</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/eclipse/net4j/buffer/IBuffer.html" target="_top">Frames</a></li>
+<li><a href="IBuffer.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.net4j.buffer</FONT>
-<BR>
-Interface IBuffer</H2>
-<DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../org/eclipse/spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</A></DD>
-</DL>
-<HR>
-<DL>
-  <DT>public interface <B>IBuffer</B>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.net4j.buffer</div>
+<h2 title="Interface IBuffer" class="title">Interface IBuffer</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../../spi/net4j/InternalBuffer.html" title="&#171;interface&#187; InternalBuffer (org.eclipse.spi.net4j)" alt="" coords="5,102,152,157"/>
 <area shape="rect" id="node2" href="../channel/IChannel.html" title="&#171;interface&#187; IChannel (org.eclipse.net4j.channel)" alt="" coords="182,102,356,157"/>
@@ -106,23 +89,28 @@ Interface IBuffer</H2>
 <area shape="rect" id="node4" href="IBufferHandler.html" title="&#171;interface&#187; IBufferHandler" alt="" coords="521,109,623,149"/>
 <area shape="rect" id="node5" href="IBuffer.html" title="&#171;interface&#187; IBuffer" alt="" coords="311,5,396,45"/>
 </map>
-
-<CENTER><IMG SRC="IBuffer.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-Basic <b>unit of transport</b> in Net4j.
+<div id="apivizContainer" style="text-align: center;"><img src="IBuffer.png" usemap="#APIVIZ" border="0"></div>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../org/eclipse/spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public interface <span class="strong">IBuffer</span></pre>
+<div class="block">Basic <b>unit of transport</b> in Net4j.
  <p>
- A buffer is well prepared for the usage with asynchronous <A HREF="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><CODE>IChannel</CODE></A>s but can also be used with pure
- <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A>s. All methods of <code>IBuffer</code> are non-blocking.
+ A buffer is well prepared for the usage with asynchronous <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a>s but can also be used with pure
+ <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>s. All methods of <code>IBuffer</code> are non-blocking.
  <p>
- Usually buffers are obtained from a <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A>. Buffers can be accessed, passed around and finally
- <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()"><CODE>released</CODE></A> to their original provider. The capacity of a buffer is determined by its provider.
+ Usually buffers are obtained from a <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>. Buffers can be accessed, passed around and finally
+ <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()"><code>released</code></a> to their original provider. The capacity of a buffer is determined by its provider.
  <p>
  In addition to its payload data each buffer contains an internal header of four bytes, two of them representing a
  channel identifier the other two of them denoting the length of the payload data. The payload data may be accessed
- through a <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer()"><CODE>ByteBuffer</CODE></A>.
+ through a <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer()"><code>ByteBuffer</code></a>.
  <p>
  This interface is <b>not</b> intended to be implemented by clients.
  <p>
@@ -143,7 +131,7 @@ Basic <b>unit of transport</b> in Net4j.
  <AREA SHAPE="RECT" COORDS="533,271,680,295" HREF="BufferState.html#READING_BODY"> <AREA SHAPE="RECT"
  COORDS="532,428,682,451" HREF="BufferState.html#GETTING"> </MAP>
  <p>
- An example for <b>putting</b> values into a buffer and writing it to a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A>:
+ An example for <b>putting</b> values into a buffer and writing it to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>:
  <p>
  
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
@@ -153,7 +141,7 @@ Basic <b>unit of transport</b> in Net4j.
  without blocking while (!buffer.write(socketChannel)) { // Do something else }
  </pre>
  
- An example for reading a buffer from a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A> and <b>getting</b> values from it:
+ An example for reading a buffer from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a> and <b>getting</b> values from it:
  <p>
  
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
@@ -170,628 +158,548 @@ Basic <b>unit of transport</b> in Net4j.
  // Access the contents of the buffer and release it to its provider
  double value = byteBuffer.getDouble();
  buffer.release();
- </pre>
-<P>
-
-<P>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)"><CODE>IChannel.sendBuffer(IBuffer)</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)"><CODE>IChannel.setReceiveHandler(IBufferHandler)</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)"><CODE>IBufferHandler.handleBuffer(IBuffer)</CODE></A><DT><B>No Implement</B></DT>
-  <DD>This interface is not intended to be implemented by clients.</DD>
-<DT><B>No Extend</B></DT>
-  <DD>This interface is not intended to be extended by clients.</DD>
-</DL>
-<HR>
-
-<P>
+ </pre></div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>, 
+<a href="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>IChannel.sendBuffer(IBuffer)</code></a>, 
+<a href="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)"><code>IChannel.setReceiveHandler(IBufferHandler)</code></a>, 
+<a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>IBufferHandler.handleBuffer(IBuffer)</code></a></dd><dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
-
-<A NAME="field_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Field Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;short</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#HEADER_SIZE">HEADER_SIZE</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;short</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#MAX_CHANNEL">MAX_CHANNEL</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;short</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#MIN_CHANNEL">MIN_CHANNEL</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;short</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#NO_CHANNEL">NO_CHANNEL</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Possible argument value of <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting(short)"><CODE>startPutting(short)</CODE></A> and possible return value of <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID()"><CODE>getChannelID()</CODE></A> that
- indicates that this buffer is not intended to be passed to a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A>.</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static short</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#HEADER_SIZE">HEADER_SIZE</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static short</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#MAX_CHANNEL">MAX_CHANNEL</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static short</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#MIN_CHANNEL">MIN_CHANNEL</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static short</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#NO_CHANNEL">NO_CHANNEL</a></strong></code>
+<div class="block">Possible argument value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting(short)"><code>startPutting(short)</code></a> and possible return value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID()"><code>getChannelID()</code></a> that
+ indicates that this buffer is not intended to be passed to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#clear()">clear</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turns the state of this buffer from any state into <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><CODE>INITIAL</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#flip()">flip</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turns the state of this buffer from <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A> into <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><CODE>GETTING</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#formatContent(boolean)">formatContent</A></B>(boolean&nbsp;showHeader)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getBufferProvider()">getBufferProvider</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A> that has provided this buffer and that this buffer will be returned to when its
- <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()"><CODE>release()</CODE></A> method is called.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer()">getByteBuffer</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;short</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getCapacity()">getCapacity</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the capacity of this buffer.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;short</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID()">getChannelID</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the channel index value stored in the header of this buffer.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getErrorHandler()">getErrorHandler</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState()">getState</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the internal state of this buffer.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#isEOS()">isEOS</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()">release</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Releases this buffer to its original <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#setEOS(boolean)">setEOS</A></B>(boolean&nbsp;eos)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#setErrorHandler(org.eclipse.net4j.util.IErrorHandler)">setErrorHandler</A></B>(<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</A>&nbsp;errorHandler)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting(java.nio.channels.SocketChannel)">startGetting</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</A>&nbsp;socketChannel)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tries to read a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> from a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A> that can be used for getting data.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting(short)">startPutting</A></B>(short&nbsp;channelID)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> that can be used for putting data.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#write(java.nio.channels.SocketChannel)">write</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</A>&nbsp;socketChannel)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tries to write the data of this buffer to a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A>.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#clear()">clear</a></strong>()</code>
+<div class="block">Turns the state of this buffer from any state into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#flip()">flip</a></strong>()</code>
+<div class="block">Turns the state of this buffer from <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#formatContent(boolean)">formatContent</a></strong>(boolean&nbsp;showHeader)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getBufferProvider()">getBufferProvider</a></strong>()</code>
+<div class="block">Returns the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
+ <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()"><code>release()</code></a> method is called.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer()">getByteBuffer</a></strong>()</code>
+<div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>short</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getCapacity()">getCapacity</a></strong>()</code>
+<div class="block">Returns the capacity of this buffer.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>short</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID()">getChannelID</a></strong>()</code>
+<div class="block">Returns the channel index value stored in the header of this buffer.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getErrorHandler()">getErrorHandler</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState()">getState</a></strong>()</code>
+<div class="block">Returns the internal state of this buffer.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isEOS()">isEOS</a></strong>()</code>
+<div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()">release</a></strong>()</code>
+<div class="block">Releases this buffer to its original <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setEOS(boolean)">setEOS</a></strong>(boolean&nbsp;eos)</code>
+<div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setErrorHandler(org.eclipse.net4j.util.IErrorHandler)">setErrorHandler</a></strong>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;errorHandler)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting(java.nio.channels.SocketChannel)">startGetting</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</a>&nbsp;socketChannel)</code>
+<div class="block">Tries to read a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a> that can be used for getting data.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting(short)">startPutting</a></strong>(short&nbsp;channelID)</code>
+<div class="block">Returns a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for putting data.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#write(java.nio.channels.SocketChannel)">write</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</a>&nbsp;socketChannel)</code>
+<div class="block">Tries to write the data of this buffer to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-
-<A NAME="field_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Field Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="NO_CHANNEL"><!-- --></A><H3>
-NO_CHANNEL</H3>
-<PRE>
-static final short <B>NO_CHANNEL</B></PRE>
-<DL>
-<DD>Possible argument value of <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting(short)"><CODE>startPutting(short)</CODE></A> and possible return value of <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID()"><CODE>getChannelID()</CODE></A> that
- indicates that this buffer is not intended to be passed to a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A>.
-<P>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.NO_CHANNEL">Constant Field Values</A></DL>
-</DL>
-<HR>
-
-<A NAME="MIN_CHANNEL"><!-- --></A><H3>
-MIN_CHANNEL</H3>
-<PRE>
-static final short <B>MIN_CHANNEL</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-<DT><B>See Also:</B><DD><A HREF="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MIN_CHANNEL">Constant Field Values</A></DL>
-</DL>
-<HR>
-
-<A NAME="MAX_CHANNEL"><!-- --></A><H3>
-MAX_CHANNEL</H3>
-<PRE>
-static final short <B>MAX_CHANNEL</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-<DT><B>See Also:</B><DD><A HREF="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MAX_CHANNEL">Constant Field Values</A></DL>
-</DL>
-<HR>
-
-<A NAME="HEADER_SIZE"><!-- --></A><H3>
-HEADER_SIZE</H3>
-<PRE>
-static final short <B>HEADER_SIZE</B></PRE>
-<DL>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.HEADER_SIZE">Constant Field Values</A></DL>
-</DL>
-
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="NO_CHANNEL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>NO_CHANNEL</h4>
+<pre>static final&nbsp;short NO_CHANNEL</pre>
+<div class="block">Possible argument value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting(short)"><code>startPutting(short)</code></a> and possible return value of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID()"><code>getChannelID()</code></a> that
+ indicates that this buffer is not intended to be passed to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.</div>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.NO_CHANNEL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="MIN_CHANNEL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MIN_CHANNEL</h4>
+<pre>static final&nbsp;short MIN_CHANNEL</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MIN_CHANNEL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="MAX_CHANNEL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MAX_CHANNEL</h4>
+<pre>static final&nbsp;short MAX_CHANNEL</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MAX_CHANNEL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="HEADER_SIZE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>HEADER_SIZE</h4>
+<pre>static final&nbsp;short HEADER_SIZE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.HEADER_SIZE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getBufferProvider()"><!-- --></A><H3>
-getBufferProvider</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A> <B>getBufferProvider</B>()</PRE>
-<DL>
-<DD>Returns the <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A> that has provided this buffer and that this buffer will be returned to when its
- <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()"><CODE>release()</CODE></A> method is called.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getChannelID()"><!-- --></A><H3>
-getChannelID</H3>
-<PRE>
-short <B>getChannelID</B>()</PRE>
-<DL>
-<DD>Returns the channel index value stored in the header of this buffer.
-<P>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCapacity()"><!-- --></A><H3>
-getCapacity</H3>
-<PRE>
-short <B>getCapacity</B>()</PRE>
-<DL>
-<DD>Returns the capacity of this buffer.
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getBufferProvider()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBufferProvider</h4>
+<pre><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>&nbsp;getBufferProvider()</pre>
+<div class="block">Returns the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
+ <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()"><code>release()</code></a> method is called.</div>
+</li>
+</ul>
+<a name="getChannelID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getChannelID</h4>
+<pre>short&nbsp;getChannelID()</pre>
+<div class="block">Returns the channel index value stored in the header of this buffer.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd></dl>
+</li>
+</ul>
+<a name="getCapacity()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCapacity</h4>
+<pre>short&nbsp;getCapacity()</pre>
+<div class="block">Returns the capacity of this buffer.
  <p>
- The capacity of this buffer is equal to the <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity()"><CODE>capacity</CODE></A> of the
- <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A> that has provided this buffer.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getState()"><!-- --></A><H3>
-getState</H3>
-<PRE>
-<A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</A> <B>getState</B>()</PRE>
-<DL>
-<DD>Returns the internal state of this buffer.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="startGetting(java.nio.channels.SocketChannel)"><!-- --></A><H3>
-startGetting</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</A> <B>startGetting</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</A>&nbsp;socketChannel)
-                        throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A>,
-                               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
-<DL>
-<DD>Tries to read a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> from a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A> that can be used for getting data.
+ The capacity of this buffer is equal to the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity()"><code>capacity</code></a> of the
+ <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer.</div>
+</li>
+</ul>
+<a name="getState()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getState</h4>
+<pre><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&nbsp;getState()</pre>
+<div class="block">Returns the internal state of this buffer.</div>
+</li>
+</ul>
+<a name="startGetting(java.nio.channels.SocketChannel)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>startGetting</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;startGetting(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</a>&nbsp;socketChannel)
+                        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
+                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Tries to read a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a> that can be used for getting data.
  <p>
  This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to read a
  complete header from the <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
- <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><CODE>READING_HEADER</CODE></A>. If it was not possible to read a complete body from the
+ <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><code>READING_HEADER</code></a>. If it was not possible to read a complete body from the
  <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
- <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><CODE>READING_BODY</CODE></A>.
+ <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><code>READING_BODY</code></a>.
  <p>
  If a <code>ByteBuffer</code> is returned it <b>may only</b> be used for getting data. It is left to the
  responsibility of the caller that only the following methods of that <code>ByteBuffer</code> are used:
  <ul>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get()" title="class or interface in java.nio"><CODE>ByteBuffer.get()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[])" title="class or interface in java.nio"><CODE>ByteBuffer.get(byte[])</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(int)" title="class or interface in java.nio"><CODE>ByteBuffer.get(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[], int, int)" title="class or interface in java.nio"><CODE>ByteBuffer.get(byte[], int, int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getChar()" title="class or interface in java.nio"><CODE>ByteBuffer.getChar()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getChar(int)" title="class or interface in java.nio"><CODE>ByteBuffer.getChar(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getDouble()" title="class or interface in java.nio"><CODE>ByteBuffer.getDouble()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getDouble(int)" title="class or interface in java.nio"><CODE>ByteBuffer.getDouble(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getFloat()" title="class or interface in java.nio"><CODE>ByteBuffer.getFloat()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getFloat(int)" title="class or interface in java.nio"><CODE>ByteBuffer.getFloat(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getInt()" title="class or interface in java.nio"><CODE>ByteBuffer.getInt()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getInt(int)" title="class or interface in java.nio"><CODE>ByteBuffer.getInt(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getLong()" title="class or interface in java.nio"><CODE>ByteBuffer.getLong()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getLong(int)" title="class or interface in java.nio"><CODE>ByteBuffer.getLong(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getShort()" title="class or interface in java.nio"><CODE>ByteBuffer.getShort()</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getShort(int)" title="class or interface in java.nio"><CODE>ByteBuffer.getShort(int)</CODE></A>
- <li>all other methods that do not influence <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#position()" title="class or interface in java.nio"><CODE>Buffer.position()</CODE></A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#limit()" title="class or interface in java.nio"><CODE>Buffer.limit()</CODE></A> and
- <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#capacity()" title="class or interface in java.nio"><CODE>Buffer.capacity()</CODE></A>
- </ul>
-<P>
-<DD><DL>
-<DT><B>Parameters:</B><DD><CODE>socketChannel</CODE> - The <code>socketChannel</code> to read the <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> from.
-<DT><B>Returns:</B><DD>A <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> that can be used for getting data if it was possible to completely read the data from
-         the given <code>SocketChannel</code>, <code>null</code> otherwise.
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - If the state of this buffer is not <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><CODE>INITIAL</CODE></A>,
-           <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><CODE>READING_HEADER</CODE></A> or <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><CODE>READING_BODY</CODE></A>.
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="startPutting(short)"><!-- --></A><H3>
-startPutting</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</A> <B>startPutting</B>(short&nbsp;channelID)
-                        throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></PRE>
-<DL>
-<DD>Returns a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> that can be used for putting data.
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get()" title="class or interface in java.nio"><code>ByteBuffer.get()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[])" title="class or interface in java.nio"><code>ByteBuffer.get(byte[])</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(int)" title="class or interface in java.nio"><code>ByteBuffer.get(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[], int, int)" title="class or interface in java.nio"><code>ByteBuffer.get(byte[], int, int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getChar()" title="class or interface in java.nio"><code>ByteBuffer.getChar()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getChar(int)" title="class or interface in java.nio"><code>ByteBuffer.getChar(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getDouble()" title="class or interface in java.nio"><code>ByteBuffer.getDouble()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getDouble(int)" title="class or interface in java.nio"><code>ByteBuffer.getDouble(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getFloat()" title="class or interface in java.nio"><code>ByteBuffer.getFloat()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getFloat(int)" title="class or interface in java.nio"><code>ByteBuffer.getFloat(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getInt()" title="class or interface in java.nio"><code>ByteBuffer.getInt()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getInt(int)" title="class or interface in java.nio"><code>ByteBuffer.getInt(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getLong()" title="class or interface in java.nio"><code>ByteBuffer.getLong()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getLong(int)" title="class or interface in java.nio"><code>ByteBuffer.getLong(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getShort()" title="class or interface in java.nio"><code>ByteBuffer.getShort()</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getShort(int)" title="class or interface in java.nio"><code>ByteBuffer.getShort(int)</code></a>
+ <li>all other methods that do not influence <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#position()" title="class or interface in java.nio"><code>Buffer.position()</code></a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#limit()" title="class or interface in java.nio"><code>Buffer.limit()</code></a> and
+ <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#capacity()" title="class or interface in java.nio"><code>Buffer.capacity()</code></a>
+ </ul></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>socketChannel</code> - The <code>socketChannel</code> to read the <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> from.</dd>
+<dt><span class="strong">Returns:</span></dt><dd>A <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for getting data if it was possible to completely read the data from
+         the given <code>SocketChannel</code>, <code>null</code> otherwise.</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a>,
+           <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><code>READING_HEADER</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><code>READING_BODY</code></a>.</dd>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd></dl>
+</li>
+</ul>
+<a name="startPutting(short)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>startPutting</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;startPutting(short&nbsp;channelID)
+                        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></pre>
+<div class="block">Returns a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for putting data.
  <p>
- Turns the <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState()"><CODE>state</CODE></A> of this buffer into <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A>.
+ Turns the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState()"><code>state</code></a> of this buffer into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a>.
  <p>
  The returned <code>ByteBuffer</code> <b>may only</b> be used for putting data. It is left to the responsibility of
  the caller that only the following methods of that <code>ByteBuffer</code> are used:
  <ul>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte)" title="class or interface in java.nio"><CODE>ByteBuffer.put(byte)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[])" title="class or interface in java.nio"><CODE>ByteBuffer.put(byte[])</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(java.nio.ByteBuffer)" title="class or interface in java.nio"><CODE>ByteBuffer.put(ByteBuffer)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(int, byte)" title="class or interface in java.nio"><CODE>ByteBuffer.put(int, byte)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[], int, int)" title="class or interface in java.nio"><CODE>ByteBuffer.put(byte[], int, int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(char)" title="class or interface in java.nio"><CODE>ByteBuffer.putChar(char)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(int, char)" title="class or interface in java.nio"><CODE>ByteBuffer.putChar(int, char)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(double)" title="class or interface in java.nio"><CODE>ByteBuffer.putDouble(double)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(int, double)" title="class or interface in java.nio"><CODE>ByteBuffer.putDouble(int, double)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(float)" title="class or interface in java.nio"><CODE>ByteBuffer.putFloat(float)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(int, float)" title="class or interface in java.nio"><CODE>ByteBuffer.putFloat(int, float)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int)" title="class or interface in java.nio"><CODE>ByteBuffer.putInt(int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int, int)" title="class or interface in java.nio"><CODE>ByteBuffer.putInt(int, int)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(long)" title="class or interface in java.nio"><CODE>ByteBuffer.putLong(long)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(int, long)" title="class or interface in java.nio"><CODE>ByteBuffer.putLong(int, long)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(short)" title="class or interface in java.nio"><CODE>ByteBuffer.putShort(short)</CODE></A>
- <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(int, short)" title="class or interface in java.nio"><CODE>ByteBuffer.putShort(int, short)</CODE></A>
- <li>all other methods that do not influence <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#position()" title="class or interface in java.nio"><CODE>Buffer.position()</CODE></A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#limit()" title="class or interface in java.nio"><CODE>Buffer.limit()</CODE></A> and
- <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#capacity()" title="class or interface in java.nio"><CODE>Buffer.capacity()</CODE></A>
- </ul>
-<P>
-<DD><DL>
-<DT><B>Parameters:</B><DD><CODE>channelID</CODE> - The index of an <A HREF="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><CODE>IChannel</CODE></A> that this buffer is intended to be passed to later or <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html#NO_CHANNEL"><CODE>NO_CHANNEL</CODE></A>
-          .
-<DT><B>Returns:</B><DD>A <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><CODE>ByteBuffer</CODE></A> that can be used for putting data.
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - If the state of this buffer is not <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><CODE>INITIAL</CODE></A> (<A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A> is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
-           existing <code>channelID</code> of this buffer).</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="write(java.nio.channels.SocketChannel)"><!-- --></A><H3>
-write</H3>
-<PRE>
-boolean <B>write</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</A>&nbsp;socketChannel)
-              throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A>,
-                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
-<DL>
-<DD>Tries to write the data of this buffer to a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><CODE>SocketChannel</CODE></A>.
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte)" title="class or interface in java.nio"><code>ByteBuffer.put(byte)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[])" title="class or interface in java.nio"><code>ByteBuffer.put(byte[])</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(java.nio.ByteBuffer)" title="class or interface in java.nio"><code>ByteBuffer.put(ByteBuffer)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(int, byte)" title="class or interface in java.nio"><code>ByteBuffer.put(int, byte)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[], int, int)" title="class or interface in java.nio"><code>ByteBuffer.put(byte[], int, int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(char)" title="class or interface in java.nio"><code>ByteBuffer.putChar(char)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(int, char)" title="class or interface in java.nio"><code>ByteBuffer.putChar(int, char)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(double)" title="class or interface in java.nio"><code>ByteBuffer.putDouble(double)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(int, double)" title="class or interface in java.nio"><code>ByteBuffer.putDouble(int, double)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(float)" title="class or interface in java.nio"><code>ByteBuffer.putFloat(float)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(int, float)" title="class or interface in java.nio"><code>ByteBuffer.putFloat(int, float)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int)" title="class or interface in java.nio"><code>ByteBuffer.putInt(int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int, int)" title="class or interface in java.nio"><code>ByteBuffer.putInt(int, int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(long)" title="class or interface in java.nio"><code>ByteBuffer.putLong(long)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(int, long)" title="class or interface in java.nio"><code>ByteBuffer.putLong(int, long)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(short)" title="class or interface in java.nio"><code>ByteBuffer.putShort(short)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(int, short)" title="class or interface in java.nio"><code>ByteBuffer.putShort(int, short)</code></a>
+ <li>all other methods that do not influence <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#position()" title="class or interface in java.nio"><code>Buffer.position()</code></a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#limit()" title="class or interface in java.nio"><code>Buffer.limit()</code></a> and
+ <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#capacity()" title="class or interface in java.nio"><code>Buffer.capacity()</code></a>
+ </ul></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>channelID</code> - The index of an <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> that this buffer is intended to be passed to later or <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#NO_CHANNEL"><code>NO_CHANNEL</code></a>
+          .</dd>
+<dt><span class="strong">Returns:</span></dt><dd>A <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for putting data.</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a> (<a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
+           existing <code>channelID</code> of this buffer).</dd></dl>
+</li>
+</ul>
+<a name="write(java.nio.channels.SocketChannel)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>boolean&nbsp;write(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</a>&nbsp;socketChannel)
+              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a>,
+                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Tries to write the data of this buffer to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.
  <p>
  This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to completely
  write the data to the <code>SocketChannel</code> <code>false</code> is returned and the state of this buffer
- remains <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><CODE>WRITING</CODE></A>.
-<P>
-<DD><DL>
-<DT><B>Parameters:</B><DD><CODE>socketChannel</CODE> - The <code>socketChannel</code> to write the data to.
-<DT><B>Returns:</B><DD><code>true</code> if it was possible to completely write the data to the <code>SocketChannel</code>,
-         <code>false</code> otherwise.
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - If the state of this buffer is not <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A> or <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><CODE>WRITING</CODE></A>.
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="flip()"><!-- --></A><H3>
-flip</H3>
-<PRE>
-void <B>flip</B>()
-          throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></PRE>
-<DL>
-<DD>Turns the state of this buffer from <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A> into <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><CODE>GETTING</CODE></A>.
-<P>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - If the state of this buffer is not <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A>.</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getByteBuffer()"><!-- --></A><H3>
-getByteBuffer</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</A> <B>getByteBuffer</B>()
-                         throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></PRE>
-<DL>
-<DD>Returns the <code>ByteBuffer</code> that can be used for putting or getting data.
-<P>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - If the state of this buffer is not <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><CODE>PUTTING</CODE></A> or <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><CODE>GETTING</CODE></A>.</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="isEOS()"><!-- --></A><H3>
-isEOS</H3>
-<PRE>
-boolean <B>isEOS</B>()</PRE>
-<DL>
-<DD>Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setEOS(boolean)"><!-- --></A><H3>
-setEOS</H3>
-<PRE>
-void <B>setEOS</B>(boolean&nbsp;eos)</PRE>
-<DL>
-<DD>Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="release()"><!-- --></A><H3>
-release</H3>
-<PRE>
-void <B>release</B>()</PRE>
-<DL>
-<DD>Releases this buffer to its original <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBufferProvider</CODE></A>.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="clear()"><!-- --></A><H3>
-clear</H3>
-<PRE>
-void <B>clear</B>()</PRE>
-<DL>
-<DD>Turns the state of this buffer from any state into <A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><CODE>INITIAL</CODE></A>.
-<P>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="formatContent(boolean)"><!-- --></A><H3>
-formatContent</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>formatContent</B>(boolean&nbsp;showHeader)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getErrorHandler()"><!-- --></A><H3>
-getErrorHandler</H3>
-<PRE>
-<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</A> <B>getErrorHandler</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setErrorHandler(org.eclipse.net4j.util.IErrorHandler)"><!-- --></A><H3>
-setErrorHandler</H3>
-<PRE>
-void <B>setErrorHandler</B>(<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</A>&nbsp;errorHandler)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-</DL>
-</DD>
-</DL>
+ remains <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><code>WRITING</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>socketChannel</code> - The <code>socketChannel</code> to write the data to.</dd>
+<dt><span class="strong">Returns:</span></dt><dd><code>true</code> if it was possible to completely write the data to the <code>SocketChannel</code>,
+         <code>false</code> otherwise.</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><code>WRITING</code></a>.</dd>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd></dl>
+</li>
+</ul>
+<a name="flip()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flip</h4>
+<pre>void&nbsp;flip()
+          throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></pre>
+<div class="block">Turns the state of this buffer from <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a>.</dd></dl>
+</li>
+</ul>
+<a name="getByteBuffer()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getByteBuffer</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;getByteBuffer()
+                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></pre>
+<div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - If the state of this buffer is not <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</dd></dl>
+</li>
+</ul>
+<a name="isEOS()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEOS</h4>
+<pre>boolean&nbsp;isEOS()</pre>
+<div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+</li>
+</ul>
+<a name="setEOS(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setEOS</h4>
+<pre>void&nbsp;setEOS(boolean&nbsp;eos)</pre>
+<div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+</li>
+</ul>
+<a name="release()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>release</h4>
+<pre>void&nbsp;release()</pre>
+<div class="block">Releases this buffer to its original <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
+</li>
+</ul>
+<a name="clear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre>void&nbsp;clear()</pre>
+<div class="block">Turns the state of this buffer from any state into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a>.</div>
+</li>
+</ul>
+<a name="formatContent(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>formatContent</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;formatContent(boolean&nbsp;showHeader)</pre>
+</li>
+</ul>
+<a name="getErrorHandler()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getErrorHandler</h4>
+<pre><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;getErrorHandler()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd></dl>
+</li>
+</ul>
+<a name="setErrorHandler(org.eclipse.net4j.util.IErrorHandler)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setErrorHandler</h4>
+<pre>void&nbsp;setErrorHandler(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;errorHandler)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IBuffer.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../index.html?org/eclipse/net4j/buffer/IBuffer.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="IBuffer.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/IBuffer.html">Use</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/eclipse/net4j/buffer/IBuffer.html" target="_top">Frames</a></li>
+<li><a href="IBuffer.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version" label="Version Management Tool">
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version" label="Version Management">
     <packages name="org.eclipse.emf.cdo.releng.version"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Version Management Tool Digest Validator"/>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version.ui" label="Version Management Tool UI"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Version Management Digest Validator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.ui" label="Version Management UI"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version.ui" label="Version Management UI"/>
 </xmi:XMI>

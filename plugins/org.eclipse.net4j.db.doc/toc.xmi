@@ -18,6 +18,9 @@
   <article:Plugin name="org.eclipse.net4j.db.hsqldb" label="Net4j DB Framework HSQLDB Adapter">
     <packages name="org.eclipse.net4j.db.hsqldb"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.db.jdbc" label="Net4j DB Framework JDBC Support">
+    <packages name="org.eclipse.net4j.db.jdbc"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.db.mysql" label="Net4j DB Framework MYSQL Adapter">
     <packages name="org.eclipse.net4j.db.mysql"/>
   </article:Plugin>

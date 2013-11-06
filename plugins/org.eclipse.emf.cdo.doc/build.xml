@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-	Copyright (c) 2006-2013 Eike Stepper (Berlin, Germany) and others.
+	Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
 	All rights reserved. This program and the accompanying materials
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
@@ -91,7 +91,7 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${project.path}/overview.html"
-		         bottom="&lt;i>Copyright (c) 2006-2013 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+		         bottom="&lt;i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<doclet name="org.jboss.apiviz.APIviz" path="${path.supplemental}/bin">
 				<param name="-nopackagediagram" />
@@ -128,9 +128,14 @@
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/eresource/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/etypes/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.expressions.edit/src/org/eclipse/emf/cdo/expressions/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/*.java" />
+				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/impl/*.java" />
+				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/util/*.java" />
 				<include name="org.eclipse.emf.cdo.location/src/org/eclipse/emf/cdo/location/*.java" />
 				<include name="org.eclipse.emf.cdo.net4j/src/org/eclipse/emf/cdo/net4j/*.java" />
 				<include name="org.eclipse.emf.cdo.security.edit/src/org/eclipse/emf/cdo/security/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.security.ui/src/org/eclipse/emf/cdo/security/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.security/src/org/eclipse/emf/cdo/security/*.java" />
 				<include name="org.eclipse.emf.cdo.security/src/org/eclipse/emf/cdo/security/impl/*.java" />
 				<include name="org.eclipse.emf.cdo.security/src/org/eclipse/emf/cdo/security/util/*.java" />
@@ -260,6 +265,14 @@
 				<package name="org.eclipse.emf.cdo.spi.common.protocol" />
 				<package name="org.eclipse.emf.cdo.spi.common.revision" />
 			</group>
+			<group title="CDO Model Repository Expressions">
+				<package name="org.eclipse.emf.cdo.expressions" />
+				<package name="org.eclipse.emf.cdo.expressions.impl" />
+				<package name="org.eclipse.emf.cdo.expressions.util" />
+			</group>
+			<group title="CDO Model Repository Expressions Edit Support">
+				<package name="org.eclipse.emf.cdo.expressions.provider" />
+			</group>
 			<group title="CDO Model Repository Security">
 				<package name="org.eclipse.emf.cdo.security" />
 				<package name="org.eclipse.emf.cdo.security.impl" />
@@ -267,6 +280,9 @@
 			</group>
 			<group title="CDO Model Repository Security Edit Support">
 				<package name="org.eclipse.emf.cdo.security.provider" />
+			</group>
+			<group title="CDO Model Repository Security UI">
+				<package name="org.eclipse.emf.cdo.security.ui" />
 			</group>
 			<group title="CDO Model Repository Server">
 				<package name="org.eclipse.emf.cdo.server" />

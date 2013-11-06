@@ -1,159 +1,80 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-org.eclipse.net4j.util.io (Net4j Utilities Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-
-</HEAD>
-
-<BODY BGCOLOR="white">
-<FONT size="+1" CLASS="FrameTitleFont">
-<A HREF="../../../../../org/eclipse/net4j/util/io/package-summary.html" target="classFrame">org.eclipse.net4j.util.io</A></FONT>
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Interfaces</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ExtendedDataInput</I></A>
-<BR>
-<A HREF="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ExtendedDataOutput</I></A>
-<BR>
-<A HREF="ExtendedInputHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ExtendedInputHandler</I></A>
-<BR>
-<A HREF="ExtendedIOHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ExtendedIOHandler</I></A>
-<BR>
-<A HREF="ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ExtendedIOUtil.ClassResolver</I></A>
-<BR>
-<A HREF="ExtendedOutputHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ExtendedOutputHandler</I></A>
-<BR>
-<A HREF="IOFilter.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>IOFilter</I></A>
-<BR>
-<A HREF="IORunnable.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>IORunnable</I></A>
-<BR>
-<A HREF="IOVisitor.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>IOVisitor</I></A>
-<BR>
-<A HREF="IStreamWrapper.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>IStreamWrapper</I></A>
-<BR>
-<A HREF="StringIO.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>StringIO</I></A>
-<BR>
-<A HREF="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ZIPUtil.UnzipHandler</I></A>
-<BR>
-<A HREF="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><I>ZIPUtil.ZipEntryHandler</I></A></FONT></TD>
-</TR>
-</TABLE>
-
-
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Classes</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="AsyncOutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">AsyncOutputStream</A>
-<BR>
-<A HREF="AsyncWriter.html" title="class in org.eclipse.net4j.util.io" target="classFrame">AsyncWriter</A>
-<BR>
-<A HREF="CachedFileMap.html" title="class in org.eclipse.net4j.util.io" target="classFrame">CachedFileMap</A>
-<BR>
-<A HREF="DataInputExtender.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DataInputExtender</A>
-<BR>
-<A HREF="DataInputOutputFile.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DataInputOutputFile</A>
-<BR>
-<A HREF="DataOutputExtender.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DataOutputExtender</A>
-<BR>
-<A HREF="DelegatingInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DelegatingInputStream</A>
-<BR>
-<A HREF="DelegatingOutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DelegatingOutputStream</A>
-<BR>
-<A HREF="DelegatingStreamWrapper.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DelegatingStreamWrapper</A>
-<BR>
-<A HREF="DigestWriter.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DigestWriter</A>
-<BR>
-<A HREF="ExpectedFileInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExpectedFileInputStream</A>
-<BR>
-<A HREF="ExpectedFileReader.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExpectedFileReader</A>
-<BR>
-<A HREF="ExtendedDataInput.Delegating.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataInput.Delegating</A>
-<BR>
-<A HREF="ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataInput.Stream</A>
-<BR>
-<A HREF="ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataInputStream</A>
-<BR>
-<A HREF="ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataOutput.Delegating</A>
-<BR>
-<A HREF="ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataOutput.Stream</A>
-<BR>
-<A HREF="ExtendedDataOutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataOutputStream</A>
-<BR>
-<A HREF="ExtendedIOAdapter.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedIOAdapter</A>
-<BR>
-<A HREF="ExtendedIOUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedIOUtil</A>
-<BR>
-<A HREF="ExtendedIOUtil.ClassLoaderClassResolver.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedIOUtil.ClassLoaderClassResolver</A>
-<BR>
-<A HREF="GZIPStreamWrapper.html" title="class in org.eclipse.net4j.util.io" target="classFrame">GZIPStreamWrapper</A>
-<BR>
-<A HREF="IOUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IOUtil</A>
-<BR>
-<A HREF="IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IOUtil.FileCollector</A>
-<BR>
-<A HREF="LimitedInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">LimitedInputStream</A>
-<BR>
-<A HREF="LimitedReader.html" title="class in org.eclipse.net4j.util.io" target="classFrame">LimitedReader</A>
-<BR>
-<A HREF="NIOUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">NIOUtil</A>
-<BR>
-<A HREF="SortedFileMap.html" title="class in org.eclipse.net4j.util.io" target="classFrame">SortedFileMap</A>
-<BR>
-<A HREF="StreamWrapperChain.html" title="class in org.eclipse.net4j.util.io" target="classFrame">StreamWrapperChain</A>
-<BR>
-<A HREF="StringCompressor.html" title="class in org.eclipse.net4j.util.io" target="classFrame">StringCompressor</A>
-<BR>
-<A HREF="StringCompressor.Counting.html" title="class in org.eclipse.net4j.util.io" target="classFrame">StringCompressor.Counting</A>
-<BR>
-<A HREF="TMPUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">TMPUtil</A>
-<BR>
-<A HREF="XMLOutput.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XMLOutput</A>
-<BR>
-<A HREF="XORInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XORInputStream</A>
-<BR>
-<A HREF="XOROutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XOROutputStream</A>
-<BR>
-<A HREF="XORStreamWrapper.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XORStreamWrapper</A>
-<BR>
-<A HREF="ZIPUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil</A>
-<BR>
-<A HREF="ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil.EntryContext</A>
-<BR>
-<A HREF="ZIPUtil.FileSystemUnzipHandler.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil.FileSystemUnzipHandler</A>
-<BR>
-<A HREF="ZIPUtil.FileSystemZipHandler.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil.FileSystemZipHandler</A></FONT></TD>
-</TR>
-</TABLE>
-
-
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Exceptions</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="IORuntimeException.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IORuntimeException</A>
-<BR>
-<A HREF="IOTimeoutException.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IOTimeoutException</A></FONT></TD>
-</TR>
-</TABLE>
-
-
-</BODY>
-</HTML>
+<title>org.eclipse.net4j.util.io (Net4j Utilities Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<h1 class="bar"><a href="../../../../../org/eclipse/net4j/util/io/package-summary.html" target="classFrame">org.eclipse.net4j.util.io</a></h1>
+<div class="indexContainer">
+<h2 title="Interfaces">Interfaces</h2>
+<ul title="Interfaces">
+<li><a href="ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ExtendedDataInput</i></a></li>
+<li><a href="ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ExtendedDataOutput</i></a></li>
+<li><a href="ExtendedInputHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ExtendedInputHandler</i></a></li>
+<li><a href="ExtendedIOHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ExtendedIOHandler</i></a></li>
+<li><a href="ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ExtendedIOUtil.ClassResolver</i></a></li>
+<li><a href="ExtendedOutputHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ExtendedOutputHandler</i></a></li>
+<li><a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>IOFilter</i></a></li>
+<li><a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>IORunnable</i></a></li>
+<li><a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>IOVisitor</i></a></li>
+<li><a href="IStreamWrapper.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>IStreamWrapper</i></a></li>
+<li><a href="StringIO.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>StringIO</i></a></li>
+<li><a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ZIPUtil.UnzipHandler</i></a></li>
+<li><a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io" target="classFrame"><i>ZIPUtil.ZipEntryHandler</i></a></li>
+</ul>
+<h2 title="Classes">Classes</h2>
+<ul title="Classes">
+<li><a href="AsyncOutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">AsyncOutputStream</a></li>
+<li><a href="AsyncWriter.html" title="class in org.eclipse.net4j.util.io" target="classFrame">AsyncWriter</a></li>
+<li><a href="CachedFileMap.html" title="class in org.eclipse.net4j.util.io" target="classFrame">CachedFileMap</a></li>
+<li><a href="DataInputExtender.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DataInputExtender</a></li>
+<li><a href="DataInputOutputFile.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DataInputOutputFile</a></li>
+<li><a href="DataOutputExtender.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DataOutputExtender</a></li>
+<li><a href="DelegatingInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DelegatingInputStream</a></li>
+<li><a href="DelegatingOutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DelegatingOutputStream</a></li>
+<li><a href="DelegatingStreamWrapper.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DelegatingStreamWrapper</a></li>
+<li><a href="DigestWriter.html" title="class in org.eclipse.net4j.util.io" target="classFrame">DigestWriter</a></li>
+<li><a href="ExpectedFileInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExpectedFileInputStream</a></li>
+<li><a href="ExpectedFileReader.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExpectedFileReader</a></li>
+<li><a href="ExtendedDataInput.Delegating.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataInput.Delegating</a></li>
+<li><a href="ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataInput.Stream</a></li>
+<li><a href="ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataInputStream</a></li>
+<li><a href="ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataOutput.Delegating</a></li>
+<li><a href="ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataOutput.Stream</a></li>
+<li><a href="ExtendedDataOutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedDataOutputStream</a></li>
+<li><a href="ExtendedIOAdapter.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedIOAdapter</a></li>
+<li><a href="ExtendedIOUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedIOUtil</a></li>
+<li><a href="ExtendedIOUtil.ClassLoaderClassResolver.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ExtendedIOUtil.ClassLoaderClassResolver</a></li>
+<li><a href="FileLock.html" title="class in org.eclipse.net4j.util.io" target="classFrame">FileLock</a></li>
+<li><a href="GZIPStreamWrapper.html" title="class in org.eclipse.net4j.util.io" target="classFrame">GZIPStreamWrapper</a></li>
+<li><a href="IOUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IOUtil</a></li>
+<li><a href="IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IOUtil.FileCollector</a></li>
+<li><a href="LimitedInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">LimitedInputStream</a></li>
+<li><a href="LimitedReader.html" title="class in org.eclipse.net4j.util.io" target="classFrame">LimitedReader</a></li>
+<li><a href="NIOUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">NIOUtil</a></li>
+<li><a href="SortedFileMap.html" title="class in org.eclipse.net4j.util.io" target="classFrame">SortedFileMap</a></li>
+<li><a href="StreamWrapperChain.html" title="class in org.eclipse.net4j.util.io" target="classFrame">StreamWrapperChain</a></li>
+<li><a href="StringCompressor.html" title="class in org.eclipse.net4j.util.io" target="classFrame">StringCompressor</a></li>
+<li><a href="StringCompressor.Counting.html" title="class in org.eclipse.net4j.util.io" target="classFrame">StringCompressor.Counting</a></li>
+<li><a href="TMPUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">TMPUtil</a></li>
+<li><a href="XMLOutput.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XMLOutput</a></li>
+<li><a href="XORInputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XORInputStream</a></li>
+<li><a href="XOROutputStream.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XOROutputStream</a></li>
+<li><a href="XORStreamWrapper.html" title="class in org.eclipse.net4j.util.io" target="classFrame">XORStreamWrapper</a></li>
+<li><a href="ZIPUtil.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil</a></li>
+<li><a href="ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil.EntryContext</a></li>
+<li><a href="ZIPUtil.FileSystemUnzipHandler.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil.FileSystemUnzipHandler</a></li>
+<li><a href="ZIPUtil.FileSystemZipHandler.html" title="class in org.eclipse.net4j.util.io" target="classFrame">ZIPUtil.FileSystemZipHandler</a></li>
+</ul>
+<h2 title="Exceptions">Exceptions</h2>
+<ul title="Exceptions">
+<li><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IORuntimeException</a></li>
+<li><a href="IOTimeoutException.html" title="class in org.eclipse.net4j.util.io" target="classFrame">IOTimeoutException</a></li>
+</ul>
+</div>
+</body>
+</html>

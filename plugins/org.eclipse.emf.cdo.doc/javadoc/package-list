@@ -24,11 +24,16 @@ org.eclipse.emf.cdo.etypes
 org.eclipse.emf.cdo.etypes.impl
 org.eclipse.emf.cdo.etypes.provider
 org.eclipse.emf.cdo.etypes.util
+org.eclipse.emf.cdo.expressions
+org.eclipse.emf.cdo.expressions.impl
+org.eclipse.emf.cdo.expressions.provider
+org.eclipse.emf.cdo.expressions.util
 org.eclipse.emf.cdo.location
 org.eclipse.emf.cdo.net4j
 org.eclipse.emf.cdo.security
 org.eclipse.emf.cdo.security.impl
 org.eclipse.emf.cdo.security.provider
+org.eclipse.emf.cdo.security.ui
 org.eclipse.emf.cdo.security.util
 org.eclipse.emf.cdo.server
 org.eclipse.emf.cdo.server.admin

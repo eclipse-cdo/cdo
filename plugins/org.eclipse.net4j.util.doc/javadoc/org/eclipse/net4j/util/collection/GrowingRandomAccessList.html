@@ -1,1108 +1,903 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-GrowingRandomAccessList (Net4j Utilities Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>GrowingRandomAccessList (Net4j Utilities Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="GrowingRandomAccessList (Net4j Utilities Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/GrowingRandomAccessList.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="GrowingRandomAccessList.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/GrowingRandomAccessList.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" target="_top">Frames</a></li>
+<li><a href="GrowingRandomAccessList.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_java.util.AbstractList">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.net4j.util.collection</FONT>
-<BR>
-Class GrowingRandomAccessList&lt;E&gt;</H2>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</A>&lt;E&gt;
-      <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">java.util.AbstractList</A>&lt;E&gt;
-          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.collection.GrowingRandomAccessList&lt;E&gt;</B>
-</PRE>
-<DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</A></DD>
-</DL>
-<HR>
-<DL>
-  <DT>public class <B>GrowingRandomAccessList&lt;E&gt;</B>
-  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;E&gt;
-  <DD>implements <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</A>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.net4j.util.collection</div>
+<h2 title="Class GrowingRandomAccessList" class="title">Class GrowingRandomAccessList&lt;E&gt;</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" title="&#171;interface&#187; RandomAccess (java.util)" alt="" coords="5,6,120,61"/>
 <area shape="rect" id="node2" title="&#171;interface&#187; Queue (java.util)" alt="" coords="149,6,235,61"/>
 <area shape="rect" id="node3" title="AbstractList (java.util)" alt="" coords="264,13,357,53"/>
 <area shape="rect" id="node4" href="GrowingRandomAccessList.html" title="GrowingRandomAccessList" alt="" coords="101,101,283,126"/>
 </map>
-
-<CENTER><IMG SRC="GrowingRandomAccessList.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.3</DD>
-</DL>
-<HR>
-
-<P>
+<div id="apivizContainer" style="text-align: center;"><img src="GrowingRandomAccessList.png" usemap="#APIVIZ" border="0"></div>
+<ul class="inheritance">
+<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
+<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">java.util.AbstractList</a>&lt;E&gt;</li>
+<li>
+<ul class="inheritance">
+<li>org.eclipse.net4j.util.collection.GrowingRandomAccessList&lt;E&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public class <span class="strong">GrowingRandomAccessList&lt;E&gt;</span>
+extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;E&gt;
+implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;E&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</a></pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.3</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
-
-<A NAME="field_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Field Summary</B></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;<A NAME="fields_inherited_from_class_java.util.AbstractList"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Fields inherited from class java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#modCount" title="class or interface in java.util">modCount</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_java.util.AbstractList">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#modCount" title="class or interface in java.util">modCount</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-
-<A NAME="constructor_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Constructor Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#GrowingRandomAccessList(java.lang.Class, int)">GrowingRandomAccessList</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;&nbsp;componentType,
-                        int&nbsp;pageCapacity)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#GrowingRandomAccessList(java.lang.Class, int)">GrowingRandomAccessList</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;componentType,
+                       int&nbsp;pageCapacity)</code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#add(E)">add</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#add(int, E)">add</A></B>(int&nbsp;index,
-    <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;element)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addAll(int, java.util.Collection)">addAll</A></B>(int&nbsp;index,
-       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;&nbsp;c)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addFirst(E)">addFirst</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addLast(E)">addLast</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#clear()">clear</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#createPage()">createPage</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#descendingIterator()">descendingIterator</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#element()">element</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#get(int)">get</A></B>(int&nbsp;index)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getFirst()">getFirst</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getLast()">getLast</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPage(int)">getPage</A></B>(int&nbsp;index)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPageIndex(int)">getPageIndex</A></B>(int&nbsp;index)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offer(E)">offer</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offerFirst(E)">offerFirst</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offerLast(E)">offerLast</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peek()">peek</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peekFirst()">peekFirst</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peekLast()">peekLast</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#poll()">poll</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pollFirst()">pollFirst</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pollLast()">pollLast</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pop()">pop</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#push(E)">push</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove()">remove</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove(int)">remove</A></B>(int&nbsp;index)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove(java.lang.Object)">remove</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeAll(java.util.Collection)">removeAll</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;?&gt;&nbsp;c)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeFirst()">removeFirst</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeFirstOccurrence(java.lang.Object)">removeFirstOccurrence</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeLast()">removeLast</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeLastOccurrence(java.lang.Object)">removeLastOccurrence</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#retainAll(java.util.Collection)">retainAll</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;?&gt;&nbsp;c)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#set(int, E)">set</A></B>(int&nbsp;index,
-    <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;element)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#size()">size</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.util.AbstractList"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#indexOf(java.lang.Object)" title="class or interface in java.util">indexOf</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#iterator()" title="class or interface in java.util">iterator</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#lastIndexOf(java.lang.Object)" title="class or interface in java.util">lastIndexOf</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#listIterator()" title="class or interface in java.util">listIterator</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#listIterator(int)" title="class or interface in java.util">listIterator</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#removeRange(int, int)" title="class or interface in java.util">removeRange</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#subList(int, int)" title="class or interface in java.util">subList</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.util.AbstractCollection"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toString()" title="class or interface in java.util">toString</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.util.Collection"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#iterator()" title="class or interface in java.util">iterator</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.util.List"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#toArray()" title="class or interface in java.util">toArray</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#add(E)">add</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#add(int, E)">add</a></strong>(int&nbsp;index,
+   <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addAll(int, java.util.Collection)">addAll</a></strong>(int&nbsp;index,
+      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;c)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addFirst(E)">addFirst</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#addLast(E)">addLast</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#clear()">clear</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#createPage()">createPage</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#descendingIterator()">descendingIterator</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#element()">element</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#get(int)">get</a></strong>(int&nbsp;index)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getFirst()">getFirst</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getLast()">getLast</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPage(int)">getPage</a></strong>(int&nbsp;index)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected int</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPageIndex(int)">getPageIndex</a></strong>(int&nbsp;index)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offer(E)">offer</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offerFirst(E)">offerFirst</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#offerLast(E)">offerLast</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peek()">peek</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peekFirst()">peekFirst</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#peekLast()">peekLast</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#poll()">poll</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pollFirst()">pollFirst</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pollLast()">pollLast</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#pop()">pop</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#push(E)">push</a></strong>(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove()">remove</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove(int)">remove</a></strong>(int&nbsp;index)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#remove(java.lang.Object)">remove</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeAll(java.util.Collection)">removeAll</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeFirst()">removeFirst</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeFirstOccurrence(java.lang.Object)">removeFirstOccurrence</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeLast()">removeLast</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#removeLastOccurrence(java.lang.Object)">removeLastOccurrence</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#retainAll(java.util.Collection)">retainAll</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#set(int, E)">set</a></strong>(int&nbsp;index,
+   <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#size()">size</a></strong>()</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractList">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#indexOf(java.lang.Object)" title="class or interface in java.util">indexOf</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#lastIndexOf(java.lang.Object)" title="class or interface in java.util">lastIndexOf</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#listIterator()" title="class or interface in java.util">listIterator</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#listIterator(int)" title="class or interface in java.util">listIterator</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#removeRange(int, int)" title="class or interface in java.util">removeRange</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#subList(int, int)" title="class or interface in java.util">subList</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.AbstractCollection">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toString()" title="class or interface in java.util">toString</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.Collection">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#iterator()" title="class or interface in java.util">iterator</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.util.List">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#toArray()" title="class or interface in java.util">toArray</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-
-<A NAME="constructor_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Constructor Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="GrowingRandomAccessList(java.lang.Class, int)"><!-- --></A><H3>
-GrowingRandomAccessList</H3>
-<PRE>
-public <B>GrowingRandomAccessList</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;&nbsp;componentType,
-                               int&nbsp;pageCapacity)</PRE>
-<DL>
-</DL>
-
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="GrowingRandomAccessList(java.lang.Class, int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>GrowingRandomAccessList</h4>
+<pre>public&nbsp;GrowingRandomAccessList(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;componentType,
+                       int&nbsp;pageCapacity)</pre>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="get(int)"><!-- --></A><H3>
-get</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>get</B>(int&nbsp;index)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#get(int)" title="class or interface in java.util">get</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#get(int)" title="class or interface in java.util">get</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="size()"><!-- --></A><H3>
-size</H3>
-<PRE>
-public int <B>size</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="addFirst(java.lang.Object)"><!-- --></A><A NAME="addFirst(E)"><!-- --></A><H3>
-addFirst</H3>
-<PRE>
-public void <B>addFirst</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="addLast(java.lang.Object)"><!-- --></A><A NAME="addLast(E)"><!-- --></A><H3>
-addLast</H3>
-<PRE>
-public void <B>addLast</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="add(java.lang.Object)"><!-- --></A><A NAME="add(E)"><!-- --></A><H3>
-add</H3>
-<PRE>
-public boolean <B>add</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="set(int,java.lang.Object)"><!-- --></A><A NAME="set(int, E)"><!-- --></A><H3>
-set</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>set</B>(int&nbsp;index,
-             <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;element)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#set(int, E)" title="class or interface in java.util">set</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#set(int, E)" title="class or interface in java.util">set</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="add(int,java.lang.Object)"><!-- --></A><A NAME="add(int, E)"><!-- --></A><H3>
-add</H3>
-<PRE>
-public void <B>add</B>(int&nbsp;index,
-                <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;element)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#add(int, E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#add(int, E)" title="class or interface in java.util">add</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="remove(int)"><!-- --></A><H3>
-remove</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>remove</B>(int&nbsp;index)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#remove(int)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#remove(int)" title="class or interface in java.util">remove</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="clear()"><!-- --></A><H3>
-clear</H3>
-<PRE>
-public void <B>clear</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#clear()" title="class or interface in java.util">clear</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#clear()" title="class or interface in java.util">clear</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#clear()" title="class or interface in java.util">clear</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="addAll(int, java.util.Collection)"><!-- --></A><H3>
-addAll</H3>
-<PRE>
-public boolean <B>addAll</B>(int&nbsp;index,
-                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;&nbsp;c)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="remove(java.lang.Object)"><!-- --></A><H3>
-remove</H3>
-<PRE>
-public boolean <B>remove</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="removeAll(java.util.Collection)"><!-- --></A><H3>
-removeAll</H3>
-<PRE>
-public boolean <B>removeAll</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;?&gt;&nbsp;c)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="retainAll(java.util.Collection)"><!-- --></A><H3>
-retainAll</H3>
-<PRE>
-public boolean <B>retainAll</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;?&gt;&nbsp;c)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="offerFirst(java.lang.Object)"><!-- --></A><A NAME="offerFirst(E)"><!-- --></A><H3>
-offerFirst</H3>
-<PRE>
-public boolean <B>offerFirst</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="offerLast(java.lang.Object)"><!-- --></A><A NAME="offerLast(E)"><!-- --></A><H3>
-offerLast</H3>
-<PRE>
-public boolean <B>offerLast</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="removeFirst()"><!-- --></A><H3>
-removeFirst</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>removeFirst</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="removeLast()"><!-- --></A><H3>
-removeLast</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>removeLast</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="pollFirst()"><!-- --></A><H3>
-pollFirst</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>pollFirst</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="pollLast()"><!-- --></A><H3>
-pollLast</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>pollLast</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getFirst()"><!-- --></A><H3>
-getFirst</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>getFirst</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getLast()"><!-- --></A><H3>
-getLast</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>getLast</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="peekFirst()"><!-- --></A><H3>
-peekFirst</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>peekFirst</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="peekLast()"><!-- --></A><H3>
-peekLast</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>peekLast</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="removeFirstOccurrence(java.lang.Object)"><!-- --></A><H3>
-removeFirstOccurrence</H3>
-<PRE>
-public boolean <B>removeFirstOccurrence</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="removeLastOccurrence(java.lang.Object)"><!-- --></A><H3>
-removeLastOccurrence</H3>
-<PRE>
-public boolean <B>removeLastOccurrence</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="offer(java.lang.Object)"><!-- --></A><A NAME="offer(E)"><!-- --></A><H3>
-offer</H3>
-<PRE>
-public boolean <B>offer</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#offer(E)" title="class or interface in java.util">offer</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="remove()"><!-- --></A><H3>
-remove</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>remove</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#remove()" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="poll()"><!-- --></A><H3>
-poll</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>poll</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#poll()" title="class or interface in java.util">poll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="element()"><!-- --></A><H3>
-element</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>element</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#element()" title="class or interface in java.util">element</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="peek()"><!-- --></A><H3>
-peek</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>peek</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#peek()" title="class or interface in java.util">peek</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="push(java.lang.Object)"><!-- --></A><A NAME="push(E)"><!-- --></A><H3>
-push</H3>
-<PRE>
-public void <B>push</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="pop()"><!-- --></A><H3>
-pop</H3>
-<PRE>
-public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>pop</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="descendingIterator()"><!-- --></A><H3>
-descendingIterator</H3>
-<PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt; <B>descendingIterator</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createPage()"><!-- --></A><H3>
-createPage</H3>
-<PRE>
-protected <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[] <B>createPage</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPage(int)"><!-- --></A><H3>
-getPage</H3>
-<PRE>
-protected <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[] <B>getPage</B>(int&nbsp;index)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPageIndex(int)"><!-- --></A><H3>
-getPageIndex</H3>
-<PRE>
-protected int <B>getPageIndex</B>(int&nbsp;index)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="get(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;get(int&nbsp;index)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#get(int)" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#get(int)" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="size()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>size</h4>
+<pre>public&nbsp;int&nbsp;size()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#size()" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="addFirst(java.lang.Object)">
+<!--   -->
+</a><a name="addFirst(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addFirst</h4>
+<pre>public&nbsp;void&nbsp;addFirst(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+</li>
+</ul>
+<a name="addLast(java.lang.Object)">
+<!--   -->
+</a><a name="addLast(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addLast</h4>
+<pre>public&nbsp;void&nbsp;addLast(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+</li>
+</ul>
+<a name="add(java.lang.Object)">
+<!--   -->
+</a><a name="add(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add</h4>
+<pre>public&nbsp;boolean&nbsp;add(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#add(E)" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="set(int,java.lang.Object)">
+<!--   -->
+</a><a name="set(int, E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;set(int&nbsp;index,
+    <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#set(int, E)" title="class or interface in java.util">set</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#set(int, E)" title="class or interface in java.util">set</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="add(int,java.lang.Object)">
+<!--   -->
+</a><a name="add(int, E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add</h4>
+<pre>public&nbsp;void&nbsp;add(int&nbsp;index,
+       <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#add(int, E)" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#add(int, E)" title="class or interface in java.util">add</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="remove(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;remove(int&nbsp;index)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#remove(int)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#remove(int)" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="clear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;void&nbsp;clear()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#clear()" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="addAll(int, java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addAll</h4>
+<pre>public&nbsp;boolean&nbsp;addAll(int&nbsp;index,
+             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;c)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#addAll(int, java.util.Collection)" title="class or interface in java.util">addAll</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="remove(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre>public&nbsp;boolean&nbsp;remove(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="removeAll(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeAll</h4>
+<pre>public&nbsp;boolean&nbsp;removeAll(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll(java.util.Collection)" title="class or interface in java.util">removeAll</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="retainAll(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retainAll</h4>
+<pre>public&nbsp;boolean&nbsp;retainAll(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;c)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll(java.util.Collection)" title="class or interface in java.util">retainAll</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="offerFirst(java.lang.Object)">
+<!--   -->
+</a><a name="offerFirst(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>offerFirst</h4>
+<pre>public&nbsp;boolean&nbsp;offerFirst(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+</li>
+</ul>
+<a name="offerLast(java.lang.Object)">
+<!--   -->
+</a><a name="offerLast(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>offerLast</h4>
+<pre>public&nbsp;boolean&nbsp;offerLast(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+</li>
+</ul>
+<a name="removeFirst()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeFirst</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;removeFirst()</pre>
+</li>
+</ul>
+<a name="removeLast()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeLast</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;removeLast()</pre>
+</li>
+</ul>
+<a name="pollFirst()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pollFirst</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pollFirst()</pre>
+</li>
+</ul>
+<a name="pollLast()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pollLast</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pollLast()</pre>
+</li>
+</ul>
+<a name="getFirst()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFirst</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;getFirst()</pre>
+</li>
+</ul>
+<a name="getLast()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLast</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;getLast()</pre>
+</li>
+</ul>
+<a name="peekFirst()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>peekFirst</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peekFirst()</pre>
+</li>
+</ul>
+<a name="peekLast()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>peekLast</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peekLast()</pre>
+</li>
+</ul>
+<a name="removeFirstOccurrence(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeFirstOccurrence</h4>
+<pre>public&nbsp;boolean&nbsp;removeFirstOccurrence(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+</li>
+</ul>
+<a name="removeLastOccurrence(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeLastOccurrence</h4>
+<pre>public&nbsp;boolean&nbsp;removeLastOccurrence(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+</li>
+</ul>
+<a name="offer(java.lang.Object)">
+<!--   -->
+</a><a name="offer(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>offer</h4>
+<pre>public&nbsp;boolean&nbsp;offer(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#offer(E)" title="class or interface in java.util">offer</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="remove()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;remove()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#remove()" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="poll()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>poll</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;poll()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#poll()" title="class or interface in java.util">poll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="element()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>element</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;element()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#element()" title="class or interface in java.util">element</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="peek()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>peek</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;peek()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#peek()" title="class or interface in java.util">peek</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="push(java.lang.Object)">
+<!--   -->
+</a><a name="push(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>push</h4>
+<pre>public&nbsp;void&nbsp;push(<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;e)</pre>
+</li>
+</ul>
+<a name="pop()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pop</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&nbsp;pop()</pre>
+</li>
+</ul>
+<a name="descendingIterator()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingIterator</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>&gt;&nbsp;descendingIterator()</pre>
+</li>
+</ul>
+<a name="createPage()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createPage</h4>
+<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]&nbsp;createPage()</pre>
+</li>
+</ul>
+<a name="getPage(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPage</h4>
+<pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</a>[]&nbsp;getPage(int&nbsp;index)</pre>
+</li>
+</ul>
+<a name="getPageIndex(int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getPageIndex</h4>
+<pre>protected&nbsp;int&nbsp;getPageIndex(int&nbsp;index)</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/GrowingRandomAccessList.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="GrowingRandomAccessList.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/GrowingRandomAccessList.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/net4j/util/collection/FastList.html" title="class in org.eclipse.net4j.util.collection"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/collection/HashBag.html" title="class in org.eclipse.net4j.util.collection"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" target="_top">Frames</a></li>
+<li><a href="GrowingRandomAccessList.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_java.util.AbstractList">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_java.util.AbstractList">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

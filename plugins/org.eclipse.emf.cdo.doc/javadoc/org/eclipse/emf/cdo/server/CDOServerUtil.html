@@ -1,726 +1,626 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-CDOServerUtil (CDO Model Repository Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>CDOServerUtil (CDO Model Repository Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="CDOServerUtil (CDO Model Repository Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOServerUtil.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CDOServerUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/CDOServerUtil.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerUtil.html" target="_top">Frames</a></li>
+<li><a href="CDOServerUtil.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.emf.cdo.server</FONT>
-<BR>
-Class CDOServerUtil</H2>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.server.CDOServerUtil</B>
-</PRE>
-<HR>
-<DL>
-  <DT>public final class <B>CDOServerUtil</B>
-  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.emf.cdo.server</div>
+<h2 title="Class CDOServerUtil" class="title">Class CDOServerUtil</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="CDOServerUtil.html" title="&#171;static&#187; CDOServerUtil" alt="" coords="5,5,109,45"/>
 </map>
-
-<CENTER><IMG SRC="CDOServerUtil.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-Various static methods that may help with CDO <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><CODE>repositories</CODE></A> and server-side <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A>.
-<P>
-
-<P>
-<HR>
-
-<P>
+<div id="apivizContainer" style="text-align: center;"><img src="CDOServerUtil.png" usemap="#APIVIZ" border="0"></div>
+<ul class="inheritance">
+<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>org.eclipse.emf.cdo.server.CDOServerUtil</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public final class <span class="strong">CDOServerUtil</span>
+extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Various static methods that may help with CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> and server-side <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-
-<A NAME="nested_class_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Nested Class Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstract <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><CODE>read-access handler</CODE></A> that grants or denies access to single
- <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>.</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</a></strong></code>
+<div class="block">An abstract <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>read-access handler</code></a> that grants or denies access to single
+ <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#addRepository(org.eclipse.net4j.util.container.IManagedContainer, org.eclipse.emf.cdo.server.IRepository)">addRepository</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container,
-              <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)">createFailoverParticipant</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)">createFailoverParticipant</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean)">createFailoverParticipant</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer,
-                          boolean&nbsp;master)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean, boolean)">createFailoverParticipant</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                          <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer,
-                          boolean&nbsp;master,
-                          boolean&nbsp;allowBackupCommits)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)">createOfflineClone</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                   <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                   <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)">createRepository</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                 <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">createRepositorySynchronizer</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</A>&nbsp;remoteSessionConfigurationFactory)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionConfiguration()">createSessionConfiguration</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not yet supported.</I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionManager()">createSessionManager</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)">getRepository</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container,
-              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Element.html?is-external=true" title="class or interface in org.w3c.dom">Element</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepositoryConfig(java.lang.String)">getRepositoryConfig</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryName)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-         <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-         <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
-         boolean&nbsp;legacyModeEnabled)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>openView(ISession, CDOBranchPoint)</CODE></A>.</I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-         <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
-         boolean&nbsp;legacyModeEnabled,
-         <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><CODE>openView(ISession, CDOBranchPoint, CDORevisionProvider)</CODE></A>.</I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-         <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
-         <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>&nbsp;commitContext)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, boolean)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>&nbsp;commitContext,
-         boolean&nbsp;legacyModeEnabled)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><CODE>openView(IStoreAccessor.CommitContext)</CODE></A>.</I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&nbsp;view)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView, boolean)">openView</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&nbsp;view,
-         boolean&nbsp;legacyModeEnabled)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)"><CODE>openView(IView)</CODE></A>.</I></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#addRepository(org.eclipse.net4j.util.container.IManagedContainer, org.eclipse.emf.cdo.server.IRepository)">addRepository</a></strong>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+             <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)">createFailoverParticipant</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)">createFailoverParticipant</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean)">createFailoverParticipant</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+                         boolean&nbsp;master)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean, boolean)">createFailoverParticipant</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                         <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+                         boolean&nbsp;master,
+                         boolean&nbsp;allowBackupCommits)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)">createOfflineClone</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                  <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                  <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)">createRepository</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">createRepositorySynchronizer</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remoteSessionConfigurationFactory)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionConfiguration()">createSessionConfiguration</a></strong>()</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>Not yet supported.</i></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionManager()">createSessionManager</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)">getRepository</a></strong>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Element.html?is-external=true" title="class or interface in org.w3c.dom">Element</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepositoryConfig(java.lang.String)">getRepositoryConfig</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+        <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+        <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+        boolean&nbsp;legacyModeEnabled)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>openView(ISession, CDOBranchPoint)</code></a>.</i></div>
+</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+        <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+        boolean&nbsp;legacyModeEnabled,
+        <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</i></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+        <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+        <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, boolean)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+        boolean&nbsp;legacyModeEnabled)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><code>openView(IStoreAccessor.CommitContext)</code></a>.</i></div>
+</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView, boolean)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+        boolean&nbsp;legacyModeEnabled)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)"><code>openView(IView)</code></a>.</i></div>
+</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-                               <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
-                               <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-                               <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.IView)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&nbsp;view)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>&nbsp;commitContext)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-                                          <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
-                                          boolean&nbsp;legacyModeEnabled,
-                                          <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider)</PRE>
-<DL>
-<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><CODE>openView(ISession, CDOBranchPoint, CDORevisionProvider)</CODE></A>.</I>
-<P>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
-                                          <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
-                                          boolean&nbsp;legacyModeEnabled)</PRE>
-<DL>
-<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>openView(ISession, CDOBranchPoint)</CODE></A>.</I>
-<P>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.IView, boolean)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&nbsp;view,
-                                          boolean&nbsp;legacyModeEnabled)</PRE>
-<DL>
-<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)"><CODE>openView(IView)</CODE></A>.</I>
-<P>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, boolean)"><!-- --></A><H3>
-openView</H3>
-<PRE>
-<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>openView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>&nbsp;commitContext,
-                                          boolean&nbsp;legacyModeEnabled)</PRE>
-<DL>
-<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 the legacy mode is always enabled, use <A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><CODE>openView(IStoreAccessor.CommitContext)</CODE></A>.</I>
-<P>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createSessionConfiguration()"><!-- --></A><H3>
-createSessionConfiguration</H3>
-<PRE>
-<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
-</FONT>public static <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A> <B>createSessionConfiguration</B>()</PRE>
-<DL>
-<DD><B>Deprecated.</B>&nbsp;<I>Not yet supported.</I>
-<P>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createSessionManager()"><!-- --></A><H3>
-createSessionManager</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</A> <B>createSessionManager</B>()</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createRepository(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)"><!-- --></A><H3>
-createRepository</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A> <B>createRepository</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                           <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)"><!-- --></A><H3>
-createRepositorySynchronizer</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A> <B>createRepositorySynchronizer</B>(<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</A>&nbsp;remoteSessionConfigurationFactory)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createOfflineClone(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)"><!-- --></A><H3>
-createOfflineClone</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A> <B>createOfflineClone</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                                           <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                                                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                                                           <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean, boolean)"><!-- --></A><H3>
-createFailoverParticipant</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A> <B>createFailoverParticipant</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                                                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer,
-                                                                  boolean&nbsp;master,
-                                                                  boolean&nbsp;allowBackupCommits)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean)"><!-- --></A><H3>
-createFailoverParticipant</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A> <B>createFailoverParticipant</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                                                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer,
-                                                                  boolean&nbsp;master)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)"><!-- --></A><H3>
-createFailoverParticipant</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A> <B>createFailoverParticipant</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                                                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A>&nbsp;synchronizer)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)"><!-- --></A><H3>
-createFailoverParticipant</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A> <B>createFailoverParticipant</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                                                  <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>&nbsp;store,
-                                                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;props)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="addRepository(org.eclipse.net4j.util.container.IManagedContainer, org.eclipse.emf.cdo.server.IRepository)"><!-- --></A><H3>
-addRepository</H3>
-<PRE>
-public static void <B>addRepository</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container,
-                                 <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getRepository(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)"><!-- --></A><H3>
-getRepository</H3>
-<PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A> <B>getRepository</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container,
-                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getRepositoryConfig(java.lang.String)"><!-- --></A><H3>
-getRepositoryConfig</H3>
-<PRE>
-public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Element.html?is-external=true" title="class or interface in org.w3c.dom">Element</A> <B>getRepositoryConfig</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryName)
-                                   throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/xml/parsers/ParserConfigurationException.html?is-external=true" title="class or interface in javax.xml.parsers">ParserConfigurationException</A>,
-                                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/org/xml/sax/SAXException.html?is-external=true" title="class or interface in org.xml.sax">SAXException</A>,
-                                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
-<DL>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/xml/parsers/ParserConfigurationException.html?is-external=true" title="class or interface in javax.xml.parsers">ParserConfigurationException</A></CODE>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/org/xml/sax/SAXException.html?is-external=true" title="class or interface in org.xml.sax">SAXException</A></CODE>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE></DL>
-</DD>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+               <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+               <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+               <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.IView)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+                          <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                          boolean&nbsp;legacyModeEnabled,
+                          <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</i></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+                          <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                          boolean&nbsp;legacyModeEnabled)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>openView(ISession, CDOBranchPoint)</code></a>.</i></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.IView, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+                          boolean&nbsp;legacyModeEnabled)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)"><code>openView(IView)</code></a>.</i></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openView</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+                          boolean&nbsp;legacyModeEnabled)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><code>openView(IStoreAccessor.CommitContext)</code></a>.</i></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="createSessionConfiguration()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createSessionConfiguration</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</a>&nbsp;createSessionConfiguration()</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>Not yet supported.</i></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="createSessionManager()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createSessionManager</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a>&nbsp;createSessionManager()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="createRepository(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createRepository</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;createRepository(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                           <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props)</pre>
+</li>
+</ul>
+<a name="createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createRepositorySynchronizer</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;createRepositorySynchronizer(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remoteSessionConfigurationFactory)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="createOfflineClone(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createOfflineClone</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createOfflineClone(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                           <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                                           <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createFailoverParticipant</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                                                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+                                                  boolean&nbsp;master,
+                                                  boolean&nbsp;allowBackupCommits)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createFailoverParticipant</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                                                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+                                                  boolean&nbsp;master)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map, org.eclipse.emf.cdo.server.IRepositorySynchronizer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createFailoverParticipant</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                                                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="createFailoverParticipant(java.lang.String, org.eclipse.emf.cdo.server.IStore, java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createFailoverParticipant</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+                                                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="addRepository(org.eclipse.net4j.util.container.IManagedContainer, org.eclipse.emf.cdo.server.IRepository)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addRepository</h4>
+<pre>public static&nbsp;void&nbsp;addRepository(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+                 <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</pre>
+</li>
+</ul>
+<a name="getRepository(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRepository</h4>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+</li>
+</ul>
+<a name="getRepositoryConfig(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getRepositoryConfig</h4>
+<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Element.html?is-external=true" title="class or interface in org.w3c.dom">Element</a>&nbsp;getRepositoryConfig(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)
+                                   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/xml/parsers/ParserConfigurationException.html?is-external=true" title="class or interface in javax.xml.parsers">ParserConfigurationException</a>,
+                                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/org/xml/sax/SAXException.html?is-external=true" title="class or interface in org.xml.sax">SAXException</a>,
+                                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/xml/parsers/ParserConfigurationException.html?is-external=true" title="class or interface in javax.xml.parsers">ParserConfigurationException</a></code></dd>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/org/xml/sax/SAXException.html?is-external=true" title="class or interface in org.xml.sax">SAXException</a></code></dd>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOServerUtil.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server"><B>NEXT CLASS</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CDOServerUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/CDOServerUtil.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerUtil.html" target="_top">Frames</a></li>
+<li><a href="CDOServerUtil.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

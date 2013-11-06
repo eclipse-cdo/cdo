@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-	Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.
+	Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
 	All rights reserved. This program and the accompanying materials
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
@@ -92,7 +92,7 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${project.path}/overview.html"
-		         bottom="&lt;i>Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+		         bottom="&lt;i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<doclet name="org.jboss.apiviz.APIviz" path="${path.supplemental}/bin">
 				<param name="-nopackagediagram" />
@@ -116,6 +116,7 @@
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/protocol/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/heartbeat/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/security/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/wrapping/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
 			</fileset>
@@ -129,6 +130,7 @@
 				<package name="org.eclipse.net4j.protocol" />
 				<package name="org.eclipse.net4j.signal" />
 				<package name="org.eclipse.net4j.signal.heartbeat" />
+				<package name="org.eclipse.net4j.signal.security" />
 				<package name="org.eclipse.net4j.signal.wrapping" />
 				<package name="org.eclipse.spi.net4j" />
 			</group>

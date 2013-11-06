@@ -10,6 +10,7 @@ org.eclipse.net4j.jvm
 org.eclipse.net4j.protocol
 org.eclipse.net4j.signal
 org.eclipse.net4j.signal.heartbeat
+org.eclipse.net4j.signal.security
 org.eclipse.net4j.signal.wrapping
 org.eclipse.net4j.tcp
 org.eclipse.net4j.tcp.ssl

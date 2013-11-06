@@ -1,158 +1,84 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-org.eclipse.net4j.util.security (Net4j Utilities Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-
-</HEAD>
-
-<BODY BGCOLOR="white">
-<FONT size="+1" CLASS="FrameTitleFont">
-<A HREF="../../../../../org/eclipse/net4j/util/security/package-summary.html" target="classFrame">org.eclipse.net4j.util.security</A></FONT>
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Interfaces</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IAuthenticator</I></A>
-<BR>
-<A HREF="IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IChallengeResponse</I></A>
-<BR>
-<A HREF="ICredentials.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>ICredentials</I></A>
-<BR>
-<A HREF="ICredentialsProvider.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>ICredentialsProvider</I></A>
-<BR>
-<A HREF="ICredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>ICredentialsProvider2</I></A>
-<BR>
-<A HREF="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>INegotiationContext</I></A>
-<BR>
-<A HREF="INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>INegotiationContext.Receiver</I></A>
-<BR>
-<A HREF="INegotiator.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>INegotiator</I></A>
-<BR>
-<A HREF="INegotiatorAware.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>INegotiatorAware</I></A>
-<BR>
-<A HREF="IPasswordCredentials.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IPasswordCredentials</I></A>
-<BR>
-<A HREF="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IPasswordCredentialsProvider</I></A>
-<BR>
-<A HREF="IPasswordCredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IPasswordCredentialsProvider2</I></A>
-<BR>
-<A HREF="IRandomizer.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IRandomizer</I></A>
-<BR>
-<A HREF="IUserAware.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IUserAware</I></A>
-<BR>
-<A HREF="IUserManager.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><I>IUserManager</I></A></FONT></TD>
-</TR>
-</TABLE>
-
-
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Classes</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">AuthenticatorFactory</A>
-<BR>
-<A HREF="ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeNegotiator</A>
-<BR>
-<A HREF="ChallengeNegotiatorConfigurer.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeNegotiatorConfigurer</A>
-<BR>
-<A HREF="ChallengeNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeNegotiatorFactory</A>
-<BR>
-<A HREF="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeResponseNegotiator</A>
-<BR>
-<A HREF="Credentials.html" title="class in org.eclipse.net4j.util.security" target="classFrame">Credentials</A>
-<BR>
-<A HREF="CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">CredentialsProviderFactory</A>
-<BR>
-<A HREF="DiffieHellman.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman</A>
-<BR>
-<A HREF="DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Client</A>
-<BR>
-<A HREF="DiffieHellman.Client.Response.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Client.Response</A>
-<BR>
-<A HREF="DiffieHellman.ParameterSpecGenerator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.ParameterSpecGenerator</A>
-<BR>
-<A HREF="DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Server</A>
-<BR>
-<A HREF="DiffieHellman.Server.Challenge.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Server.Challenge</A>
-<BR>
-<A HREF="DiffieHellman.SkipParameterSpec.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.SkipParameterSpec</A>
-<BR>
-<A HREF="FileAuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">FileAuthenticatorFactory</A>
-<BR>
-<A HREF="FileUserManager.html" title="class in org.eclipse.net4j.util.security" target="classFrame">FileUserManager</A>
-<BR>
-<A HREF="FileUserManagerFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">FileUserManagerFactory</A>
-<BR>
-<A HREF="NegotiationContext.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NegotiationContext</A>
-<BR>
-<A HREF="Negotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">Negotiator</A>
-<BR>
-<A HREF="NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NegotiatorFactory</A>
-<BR>
-<A HREF="PasswordCredentials.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentials</A>
-<BR>
-<A HREF="PasswordCredentialsProvider.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentialsProvider</A>
-<BR>
-<A HREF="PasswordCredentialsProvider.Delegating.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentialsProvider.Delegating</A>
-<BR>
-<A HREF="Randomizer.html" title="class in org.eclipse.net4j.util.security" target="classFrame">Randomizer</A>
-<BR>
-<A HREF="RandomizerFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">RandomizerFactory</A>
-<BR>
-<A HREF="ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ResponseNegotiator</A>
-<BR>
-<A HREF="ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ResponseNegotiatorFactory</A>
-<BR>
-<A HREF="ResponseNegotiatorInjector.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ResponseNegotiatorInjector</A>
-<BR>
-<A HREF="SecurityUtil.html" title="class in org.eclipse.net4j.util.security" target="classFrame">SecurityUtil</A>
-<BR>
-<A HREF="UserManager.html" title="class in org.eclipse.net4j.util.security" target="classFrame">UserManager</A>
-<BR>
-<A HREF="UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">UserManagerAuthenticator</A>
-<BR>
-<A HREF="UserManagerFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">UserManagerFactory</A></FONT></TD>
-</TR>
-</TABLE>
-
-
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Enums</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security" target="classFrame">IChallengeResponse.Event</A>
-<BR>
-<A HREF="IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security" target="classFrame">IChallengeResponse.State</A></FONT></TD>
-</TR>
-</TABLE>
-
-
-<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
-<TR>
-<TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">
-Exceptions</FONT>&nbsp;
-<FONT CLASS="FrameItemFont">
-<BR>
-<A HREF="NegotiationException.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NegotiationException</A></FONT></TD>
-</TR>
-</TABLE>
-
-
-</BODY>
-</HTML>
+<title>org.eclipse.net4j.util.security (Net4j Utilities Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<h1 class="bar"><a href="../../../../../org/eclipse/net4j/util/security/package-summary.html" target="classFrame">org.eclipse.net4j.util.security</a></h1>
+<div class="indexContainer">
+<h2 title="Interfaces">Interfaces</h2>
+<ul title="Interfaces">
+<li><a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IAuthenticator</i></a></li>
+<li><a href="IAuthenticator2.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IAuthenticator2</i></a></li>
+<li><a href="IChallengeResponse.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IChallengeResponse</i></a></li>
+<li><a href="ICredentials.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>ICredentials</i></a></li>
+<li><a href="ICredentialsProvider.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>ICredentialsProvider</i></a></li>
+<li><a href="ICredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>ICredentialsProvider2</i></a></li>
+<li><a href="INegotiationContext.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>INegotiationContext</i></a></li>
+<li><a href="INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>INegotiationContext.Receiver</i></a></li>
+<li><a href="INegotiator.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>INegotiator</i></a></li>
+<li><a href="INegotiatorAware.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>INegotiatorAware</i></a></li>
+<li><a href="IPasswordCredentials.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IPasswordCredentials</i></a></li>
+<li><a href="IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IPasswordCredentialsProvider</i></a></li>
+<li><a href="IPasswordCredentialsProvider.Provider.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IPasswordCredentialsProvider.Provider</i></a></li>
+<li><a href="IPasswordCredentialsProvider2.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IPasswordCredentialsProvider2</i></a></li>
+<li><a href="IPasswordCredentialsUpdate.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IPasswordCredentialsUpdate</i></a></li>
+<li><a href="IPasswordCredentialsUpdateProvider.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IPasswordCredentialsUpdateProvider</i></a></li>
+<li><a href="IRandomizer.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IRandomizer</i></a></li>
+<li><a href="IUserAware.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IUserAware</i></a></li>
+<li><a href="IUserManager.html" title="interface in org.eclipse.net4j.util.security" target="classFrame"><i>IUserManager</i></a></li>
+</ul>
+<h2 title="Classes">Classes</h2>
+<ul title="Classes">
+<li><a href="AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">AuthenticatorFactory</a></li>
+<li><a href="ChallengeNegotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeNegotiator</a></li>
+<li><a href="ChallengeNegotiatorConfigurer.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeNegotiatorConfigurer</a></li>
+<li><a href="ChallengeNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeNegotiatorFactory</a></li>
+<li><a href="ChallengeResponseNegotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ChallengeResponseNegotiator</a></li>
+<li><a href="Credentials.html" title="class in org.eclipse.net4j.util.security" target="classFrame">Credentials</a></li>
+<li><a href="CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">CredentialsProviderFactory</a></li>
+<li><a href="DiffieHellman.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman</a></li>
+<li><a href="DiffieHellman.Client.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Client</a></li>
+<li><a href="DiffieHellman.Client.Response.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Client.Response</a></li>
+<li><a href="DiffieHellman.ParameterSpecGenerator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.ParameterSpecGenerator</a></li>
+<li><a href="DiffieHellman.Server.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Server</a></li>
+<li><a href="DiffieHellman.Server.Challenge.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.Server.Challenge</a></li>
+<li><a href="DiffieHellman.SkipParameterSpec.html" title="class in org.eclipse.net4j.util.security" target="classFrame">DiffieHellman.SkipParameterSpec</a></li>
+<li><a href="FileAuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">FileAuthenticatorFactory</a></li>
+<li><a href="FileUserManager.html" title="class in org.eclipse.net4j.util.security" target="classFrame">FileUserManager</a></li>
+<li><a href="FileUserManagerFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">FileUserManagerFactory</a></li>
+<li><a href="NegotiationContext.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NegotiationContext</a></li>
+<li><a href="Negotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">Negotiator</a></li>
+<li><a href="NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NegotiatorFactory</a></li>
+<li><a href="PasswordCredentials.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentials</a></li>
+<li><a href="PasswordCredentialsProvider.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentialsProvider</a></li>
+<li><a href="PasswordCredentialsProvider.Delegating.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentialsProvider.Delegating</a></li>
+<li><a href="PasswordCredentialsUpdate.html" title="class in org.eclipse.net4j.util.security" target="classFrame">PasswordCredentialsUpdate</a></li>
+<li><a href="Randomizer.html" title="class in org.eclipse.net4j.util.security" target="classFrame">Randomizer</a></li>
+<li><a href="RandomizerFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">RandomizerFactory</a></li>
+<li><a href="ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ResponseNegotiator</a></li>
+<li><a href="ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ResponseNegotiatorFactory</a></li>
+<li><a href="ResponseNegotiatorInjector.html" title="class in org.eclipse.net4j.util.security" target="classFrame">ResponseNegotiatorInjector</a></li>
+<li><a href="SecurityUtil.html" title="class in org.eclipse.net4j.util.security" target="classFrame">SecurityUtil</a></li>
+<li><a href="UserManager.html" title="class in org.eclipse.net4j.util.security" target="classFrame">UserManager</a></li>
+<li><a href="UserManagerAuthenticator.html" title="class in org.eclipse.net4j.util.security" target="classFrame">UserManagerAuthenticator</a></li>
+<li><a href="UserManagerFactory.html" title="class in org.eclipse.net4j.util.security" target="classFrame">UserManagerFactory</a></li>
+</ul>
+<h2 title="Enums">Enums</h2>
+<ul title="Enums">
+<li><a href="CredentialsUpdateOperation.html" title="enum in org.eclipse.net4j.util.security" target="classFrame">CredentialsUpdateOperation</a></li>
+<li><a href="IChallengeResponse.Event.html" title="enum in org.eclipse.net4j.util.security" target="classFrame">IChallengeResponse.Event</a></li>
+<li><a href="IChallengeResponse.State.html" title="enum in org.eclipse.net4j.util.security" target="classFrame">IChallengeResponse.State</a></li>
+</ul>
+<h2 title="Exceptions">Exceptions</h2>
+<ul title="Exceptions">
+<li><a href="NegotiationException.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NegotiationException</a></li>
+<li><a href="NotAuthenticatedException.html" title="class in org.eclipse.net4j.util.security" target="classFrame">NotAuthenticatedException</a></li>
+</ul>
+</div>
+</body>
+</html>

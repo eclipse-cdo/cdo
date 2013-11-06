@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="ASCII"?>
-<article:Plugin xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0" name="org.eclipse.emf.cdo.releng.doc" label="CDO Release Engineering Documentation Tool"/>
+<article:Plugin xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0" name="org.eclipse.emf.cdo.releng.doc" label="Documentation Tool"/>

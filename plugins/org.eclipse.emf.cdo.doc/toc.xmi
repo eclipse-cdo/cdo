@@ -81,6 +81,15 @@
     <packages name="org.eclipse.emf.cdo.spi.common.protocol"/>
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.expressions" label="CDO Model Repository Expressions">
+    <packages name="org.eclipse.emf.cdo.expressions"/>
+    <packages name="org.eclipse.emf.cdo.expressions.impl"/>
+    <packages name="org.eclipse.emf.cdo.expressions.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.expressions.edit" label="CDO Model Repository Expressions Edit Support">
+    <packages name="org.eclipse.emf.cdo.expressions.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.expressions.editor" label="CDO Model Repository Expressions Editor"/>
   <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security">
     <packages name="org.eclipse.emf.cdo.security"/>
     <packages name="org.eclipse.emf.cdo.security.impl"/>
@@ -90,6 +99,9 @@
     <packages name="org.eclipse.emf.cdo.security.provider"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.security.editor" label="CDO Model Repository Security Editor"/>
+  <article:Plugin name="org.eclipse.emf.cdo.security.ui" label="CDO Model Repository Security UI">
+    <packages name="org.eclipse.emf.cdo.security.ui"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">
     <packages name="org.eclipse.emf.cdo.server"/>
     <packages name="org.eclipse.emf.cdo.server.embedded"/>

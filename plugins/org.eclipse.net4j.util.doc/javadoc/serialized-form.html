@@ -1,1011 +1,691 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-Serialized Form (Net4j Utilities Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>Serialized Form (Net4j Utilities Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="Serialized Form (Net4j Utilities Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Package</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Use</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV&nbsp;
-&nbsp;NEXT</FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="index.html?serialized-form.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="serialized-form.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="overview-summary.html">Overview</a></li>
+<li>Package</li>
+<li>Class</li>
+<li>Use</li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
+<li><a href="index-all.html">Index</a></li>
+<li><a href="help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList">
+<li><a href="index.html?serialized-form.html" target="_top">Frames</a></li>
+<li><a href="serialized-form.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
-<CENTER>
-<H1>
-Serialized Form</H1>
-</CENTER>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.ImplementationError"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/ImplementationError.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.ImplementationError</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Error.html?is-external=true" title="class or interface in java.lang">Error</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.WrappedException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/WrappedException.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.WrappedException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.collection</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.collection.CaseInsensitiveStringSet"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/collection/CaseInsensitiveStringSet.html" title="class in org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection.CaseInsensitiveStringSet</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/HashSet.html?is-external=true" title="class or interface in java.util">HashSet</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.collection.MoveableArrayList"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/collection/MoveableArrayList.html" title="class in org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection.MoveableArrayList</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util">ArrayList</A>&lt;<A HREF="org/eclipse/net4j/util/collection/MoveableArrayList.html" title="type parameter in MoveableArrayList">E</A>&gt; implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.concurrent</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.concurrent.ParallelRunner"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.ParallelRunner</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util">ArrayList</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A>&gt; implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.concurrent.RoundRobinList"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.RoundRobinList</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/LinkedList.html?is-external=true" title="class or interface in java.util">LinkedList</A>&lt;<A HREF="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="type parameter in RoundRobinList">E</A>&gt; implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-lock</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/locks/ReadWriteLock.html?is-external=true" title="class or interface in java.util.concurrent.locks">ReadWriteLock</A> <B>lock</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-it</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">E</A>&gt; <B>it</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.concurrent.RWLock"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/concurrent/RWLock.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.RWLock</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html?is-external=true" title="class or interface in java.util.concurrent.locks">ReentrantReadWriteLock</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-timeoutMillis</H3>
-<PRE>
-long <B>timeoutMillis</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.concurrent.TimeoutRuntimeException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/concurrent/TimeoutRuntimeException.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.container</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.container.ContainerEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.ContainerEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-deltas</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">E</A>&gt; <B>deltas</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.container.FactoryNotFoundException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.FactoryNotFoundException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.container.SingleDeltaContainerEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.SingleDeltaContainerEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-deltas</H3>
-<PRE>
-<A HREF="org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</A>&lt;<A HREF="org/eclipse/net4j/util/container/IContainerDelta.html" title="type parameter in IContainerDelta">E</A>&gt;[] <B>deltas</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.event</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.event.Event"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Event</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventObject.html?is-external=true" title="class or interface in java.util">EventObject</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.event.ThrowableEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.ThrowableEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-throwable</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A> <B>throwable</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.event.ValueEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.ValueEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-oldValue</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>oldValue</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-newValue</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>newValue</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.factory</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.factory.FactoryCreationException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/factory/FactoryCreationException.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.FactoryCreationException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.factory.FactoryKey"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/factory/FactoryKey.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.FactoryKey</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-productGroup</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>productGroup</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-type</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>type</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.factory.ProductCreationException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.ProductCreationException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.io</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.io.IORuntimeException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">org.eclipse.net4j.util.io.IORuntimeException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.io.IOTimeoutException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/io/IOTimeoutException.html" title="class in org.eclipse.net4j.util.io">org.eclipse.net4j.util.io.IOTimeoutException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.lifecycle</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.lifecycle.LifecycleEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.LifecycleEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-kind</H3>
-<PRE>
-<A HREF="org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle">ILifecycleEvent.Kind</A> <B>kind</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.lifecycle.LifecycleException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/lifecycle/LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.LifecycleException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.om.monitor</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.om.monitor.MonitorCanceledException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/om/monitor/MonitorCanceledException.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.MonitorCanceledException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-
-<P>
-<A NAME="org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-totalWork</H3>
-<PRE>
-double <B>totalWork</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-work</H3>
-<PRE>
-double <B>work</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.om.trace</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventObject.html?is-external=true" title="class or interface in java.util">EventObject</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-id</H3>
-<PRE>
-long <B>id</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-timeStamp</H3>
-<PRE>
-long <B>timeStamp</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-agentID</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>agentID</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-<HR>
-<H3>
-bundleID</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>bundleID</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-<HR>
-<H3>
-tracerName</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>tracerName</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-<HR>
-<H3>
-context</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>context</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-<HR>
-<H3>
-message</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>message</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-<HR>
-<H3>
-throwable</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>throwable</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-<HR>
-<H3>
-stackTrace</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StackTraceElement.html?is-external=true" title="class or interface in java.lang">StackTraceElement</A>[] <B>stackTrace</B></PRE>
-<DL>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>3.2</DD>
-</DL>
-</DL>
-
-<P>
-<A NAME="org.eclipse.net4j.util.om.trace.TraceHandlerEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/om/trace/TraceHandlerEvent.html" title="class in org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace.TraceHandlerEvent</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-timeStamp</H3>
-<PRE>
-long <B>timeStamp</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-tracer</H3>
-<PRE>
-<A HREF="org/eclipse/net4j/util/om/trace/OMTracer.html" title="interface in org.eclipse.net4j.util.om.trace">OMTracer</A> <B>tracer</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-context</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">T</A>&gt; <B>context</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-message</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>message</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR>
-<H3>
-throwable</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A> <B>throwable</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.options</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.options.OptionsEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">org.eclipse.net4j.util.options.OptionsEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.security</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.security.NegotiationException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/security/NegotiationException.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.NegotiationException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.transaction</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.transaction.TransactionException"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/transaction/TransactionException.html" title="class in org.eclipse.net4j.util.transaction">org.eclipse.net4j.util.transaction.TransactionException</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<HR SIZE="4" NOSHADE>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="center"><FONT SIZE="+2">
-<B>Package</B> <B>org.eclipse.net4j.util.ui.widgets</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<A NAME="org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class <A HREF="org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent</A> extends <A HREF="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A> implements Serializable</B></FONT></TH>
-</TR>
-</TABLE>
-
-<P>
-<B>serialVersionUID:&nbsp;</B>1L
-
-<P>
-<A NAME="serializedForm"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Serialized Fields</B></FONT></TH>
-</TR>
-</TABLE>
-
-<H3>
-vertical</H3>
-<PRE>
-boolean <B>vertical</B></PRE>
-<DL>
-<DL>
-</DL>
-</DL>
-
-<P>
-<HR>
-
-
+<div class="header">
+<h1 title="Serialized Form" class="title">Serialized Form</h1>
+</div>
+<div class="serializedFormContainer">
+<ul class="blockList">
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.ImplementationError">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/ImplementationError.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.ImplementationError</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Error.html?is-external=true" title="class or interface in java.lang">Error</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.WrappedException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/WrappedException.html" title="class in org.eclipse.net4j.util">org.eclipse.net4j.util.WrappedException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.collection</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.collection.CaseInsensitiveStringSet">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/collection/CaseInsensitiveStringSet.html" title="class in org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection.CaseInsensitiveStringSet</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/HashSet.html?is-external=true" title="class or interface in java.util">HashSet</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt; implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.collection.MoveableArrayList">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/collection/MoveableArrayList.html" title="class in org.eclipse.net4j.util.collection">org.eclipse.net4j.util.collection.MoveableArrayList</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util">ArrayList</a>&lt;<a href="org/eclipse/net4j/util/collection/MoveableArrayList.html" title="type parameter in MoveableArrayList">E</a>&gt; implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.concurrent</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.ParallelRunner">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.ParallelRunner</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util">ArrayList</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt; implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.RoundRobinList">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.RoundRobinList</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/LinkedList.html?is-external=true" title="class or interface in java.util">LinkedList</a>&lt;<a href="org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="type parameter in RoundRobinList">E</a>&gt; implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>lock</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/locks/ReadWriteLock.html?is-external=true" title="class or interface in java.util.concurrent.locks">ReadWriteLock</a> lock</pre>
+</li>
+<li class="blockListLast">
+<h4>it</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">E</a>&gt; it</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.RWLock">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/concurrent/RWLock.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.RWLock</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html?is-external=true" title="class or interface in java.util.concurrent.locks">ReentrantReadWriteLock</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>timeoutMillis</h4>
+<pre>long timeoutMillis</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.concurrent.TimeoutRuntimeException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/concurrent/TimeoutRuntimeException.html" title="class in org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.container</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.container.ContainerEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.ContainerEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>deltas</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">E</a>&gt; deltas</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.container.FactoryNotFoundException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.FactoryNotFoundException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.container.SingleDeltaContainerEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.SingleDeltaContainerEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>deltas</h4>
+<pre><a href="org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="org/eclipse/net4j/util/container/IContainerDelta.html" title="type parameter in IContainerDelta">E</a>&gt;[] deltas</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.event</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.event.Event">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Event</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventObject.html?is-external=true" title="class or interface in java.util">EventObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.event.ThrowableEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.ThrowableEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>throwable</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a> throwable</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.event.ValueEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.ValueEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>oldValue</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> oldValue</pre>
+</li>
+<li class="blockListLast">
+<h4>newValue</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> newValue</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.factory</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.factory.FactoryCreationException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/factory/FactoryCreationException.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.FactoryCreationException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.factory.FactoryKey">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/factory/FactoryKey.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.FactoryKey</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>productGroup</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> productGroup</pre>
+</li>
+<li class="blockListLast">
+<h4>type</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> type</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.factory.ProductCreationException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory.ProductCreationException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.io</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.io.IORuntimeException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">org.eclipse.net4j.util.io.IORuntimeException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.io.IOTimeoutException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/io/IOTimeoutException.html" title="class in org.eclipse.net4j.util.io">org.eclipse.net4j.util.io.IOTimeoutException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.lifecycle</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.lifecycle.LifecycleEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.LifecycleEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>kind</h4>
+<pre><a href="org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle">ILifecycleEvent.Kind</a> kind</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.lifecycle.LifecycleException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/lifecycle/LifecycleException.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.LifecycleException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.om.monitor</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.om.monitor.MonitorCanceledException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/om/monitor/MonitorCanceledException.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.MonitorCanceledException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>totalWork</h4>
+<pre>double totalWork</pre>
+</li>
+<li class="blockListLast">
+<h4>work</h4>
+<pre>double work</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.om.trace</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventObject.html?is-external=true" title="class or interface in java.util">EventObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre>long id</pre>
+</li>
+<li class="blockList">
+<h4>timeStamp</h4>
+<pre>long timeStamp</pre>
+</li>
+<li class="blockList">
+<h4>agentID</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> agentID</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+<li class="blockList">
+<h4>bundleID</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> bundleID</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+<li class="blockList">
+<h4>tracerName</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> tracerName</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+<li class="blockList">
+<h4>context</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> context</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+<li class="blockList">
+<h4>message</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> message</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+<li class="blockList">
+<h4>throwable</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> throwable</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+<li class="blockListLast">
+<h4>stackTrace</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StackTraceElement.html?is-external=true" title="class or interface in java.lang">StackTraceElement</a>[] stackTrace</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.2</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.om.trace.TraceHandlerEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/om/trace/TraceHandlerEvent.html" title="class in org.eclipse.net4j.util.om.trace">org.eclipse.net4j.util.om.trace.TraceHandlerEvent</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>timeStamp</h4>
+<pre>long timeStamp</pre>
+</li>
+<li class="blockList">
+<h4>tracer</h4>
+<pre><a href="org/eclipse/net4j/util/om/trace/OMTracer.html" title="interface in org.eclipse.net4j.util.om.trace">OMTracer</a> tracer</pre>
+</li>
+<li class="blockList">
+<h4>context</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">T</a>&gt; context</pre>
+</li>
+<li class="blockList">
+<h4>message</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> message</pre>
+</li>
+<li class="blockListLast">
+<h4>throwable</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a> throwable</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.options</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.options.OptionsEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">org.eclipse.net4j.util.options.OptionsEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.security</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.security.NegotiationException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/security/NegotiationException.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.NegotiationException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.security.NotAuthenticatedException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/security/NotAuthenticatedException.html" title="class in org.eclipse.net4j.util.security">org.eclipse.net4j.util.security.NotAuthenticatedException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.transaction</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.transaction.TransactionException">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/transaction/TransactionException.html" title="class in org.eclipse.net4j.util.transaction">org.eclipse.net4j.util.transaction.TransactionException</a> extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li class="blockList">
+<h2 title="Package">Package&nbsp;org.eclipse.net4j.util.ui.widgets</h2>
+<ul class="blockList">
+<li class="blockList"><a name="org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent">
+<!--   -->
+</a>
+<h3>Class <a href="org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets.SashComposite.OrientationChangedEvent</a> extends <a href="org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>vertical</h4>
+<pre>boolean vertical</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Package</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Use</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV&nbsp;
-&nbsp;NEXT</FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="index.html?serialized-form.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="serialized-form.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="overview-summary.html">Overview</a></li>
+<li>Package</li>
+<li>Class</li>
+<li>Use</li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
+<li><a href="index-all.html">Index</a></li>
+<li><a href="help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList">
+<li><a href="index.html?serialized-form.html" target="_top">Frames</a></li>
+<li><a href="serialized-form.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

@@ -1,367 +1,370 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-org.eclipse.net4j.util.concurrent (Net4j Utilities Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>org.eclipse.net4j.util.concurrent (Net4j Utilities Documentation)</title>
+<meta name="date" content="2013-11-06">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="org.eclipse.net4j.util.concurrent (Net4j Utilities Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/container/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+<li><a href="package-use.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/net4j/util/collection/package-summary.html">Prev Package</a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">Next Package</a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/net4j/util/concurrent/package-summary.html" target="_top">Frames</a></li>
+<li><a href="package-summary.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
-<H2>
-Package org.eclipse.net4j.util.concurrent
-</H2>
-<A NAME="package_description"><!-- --></A>
-Utility interfaces and classes commonly useful in concurrent programming.
-
-<P>
-
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;org.eclipse.net4j.util.concurrent</h1>
+<div class="docSummary">
+<div class="block">Utility interfaces and classes commonly useful in concurrent programming.</div>
+</div>
+<p>See:&nbsp;<a href="#package_description">Description</a></p>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 </map>
-
-<CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-<BR>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Interface Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator&lt;CORRELATION,VALUE&gt;</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD>Support Multiple reads/no write and upgrade lock from read to write.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD>A <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent"><CODE>read/write lock manager</CODE></A> that supports <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html#OPTION"><CODE>write option</CODE></A>
- locks.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer&lt;RESULT&gt;</A></B></TD>
-<TD>Synchronizes a producer and a consumer thread letting the producer pass a value to the consumer.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html" title="interface in org.eclipse.net4j.util.concurrent">IWorkSerializer</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/MonitoredThread.ThreadMonitor.html" title="interface in org.eclipse.net4j.util.concurrent">MonitoredThread.ThreadMonitor</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A></I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockEntryHandler.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A></I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockStrategy.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A></I></TD>
-</TR>
-</TABLE>
-&nbsp;
-
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Class Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/AsynchronousWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">AsynchronousWorkSerializer</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/CompletionWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">CompletionWorkSerializer</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html" title="class in org.eclipse.net4j.util.concurrent">ConcurrencyUtil</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ConcurrentValue.html" title="class in org.eclipse.net4j.util.concurrent">ConcurrentValue&lt;T&gt;</A></B></TD>
-<TD>Allow synchronization between many threads for a specific value.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/MonitoredThread.html" title="class in org.eclipse.net4j.util.concurrent">MonitoredThread</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/MonitoredThread.MultiThreadMonitor.html" title="class in org.eclipse.net4j.util.concurrent">MonitoredThread.MultiThreadMonitor</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/NonBlockingIntCounter.html" title="class in org.eclipse.net4j.util.concurrent">NonBlockingIntCounter</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/NonBlockingLongCounter.html" title="class in org.eclipse.net4j.util.concurrent">NonBlockingLongCounter</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/OnePendingExecutor.html" title="class in org.eclipse.net4j.util.concurrent">OnePendingExecutor</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent">ParallelRunner</A></B></TD>
-<TD>A <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><CODE>list</CODE></A> of <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><CODE>runnables</CODE></A> that can be run in parallel.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/PriorityQueueRunnable.html" title="class in org.eclipse.net4j.util.concurrent">PriorityQueueRunnable</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/PriorityQueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">PriorityQueueRunner</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/QueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/QueueRunner2.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner2&lt;T extends Runnable&gt;</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/QueueWorker.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorker&lt;E&gt;</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/QueueWorkerWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorkerWorkSerializer</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ResultSynchronizer.html" title="class in org.eclipse.net4j.util.concurrent">ResultSynchronizer&lt;RESULT&gt;</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="class in org.eclipse.net4j.util.concurrent">RoundRobinList&lt;E&gt;</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLock.html" title="class in org.eclipse.net4j.util.concurrent">RWLock</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWLockManager&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A></I></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD>Keeps track of locks on objects.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState&lt;OBJECT,CONTEXT&gt;</A></B></TD>
-<TD>Represents a combination of locks for one OBJECT.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Sleeper.html" title="class in org.eclipse.net4j.util.concurrent">Sleeper</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html" title="class in org.eclipse.net4j.util.concurrent">Stoppable</A></B></TD>
-<TD>A <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><CODE>runnable</CODE></A> that can be <A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#stop()"><CODE>stopped</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="class in org.eclipse.net4j.util.concurrent">SynchronizingCorrelator&lt;CORRELATION,RESULT&gt;</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/SynchronousWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">SynchronousWorkSerializer</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Timeouter.html" title="class in org.eclipse.net4j.util.concurrent">Timeouter</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/TrackableTimerTask.html" title="class in org.eclipse.net4j.util.concurrent">TrackableTimerTask</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Enum Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Exception Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimeoutRuntimeException.html" title="class in org.eclipse.net4j.util.concurrent">TimeoutRuntimeException</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-
-<P>
-<P>
-
-<P>
-<DL>
-</DL>
-<HR>
-
-
+<div id="apivizContainer" style="text-align: center;margin-bottom: 1em;"><img src="package-summary.png" usemap="#APIVIZ" border="0"></div>
+<ul class="blockList">
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ICorrelator.html" title="interface in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;CORRELATION,VALUE&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">
+<div class="block">Support Multiple reads/no write and upgrade lock from read to write.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">
+<div class="block">A <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent"><code>read/write lock manager</code></a> that supports <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html#OPTION"><code>write option</code></a>
+ locks.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ISynchronizer.html" title="interface in org.eclipse.net4j.util.concurrent">ISynchronizer</a>&lt;RESULT&gt;</td>
+<td class="colLast">
+<div class="block">Synchronizes a producer and a consumer thread letting the producer pass a value to the consumer.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html" title="interface in org.eclipse.net4j.util.concurrent">IWorkSerializer</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/MonitoredThread.ThreadMonitor.html" title="interface in org.eclipse.net4j.util.concurrent">MonitoredThread.ThreadMonitor</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></i></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockEntryHandler.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></i></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockStrategy.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></i></div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/AsynchronousWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">AsynchronousWorkSerializer</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/CompletionWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">CompletionWorkSerializer</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html" title="class in org.eclipse.net4j.util.concurrent">ConcurrencyUtil</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrentValue.html" title="class in org.eclipse.net4j.util.concurrent">ConcurrentValue</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">Allow synchronization between many threads for a specific value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/MonitoredThread.html" title="class in org.eclipse.net4j.util.concurrent">MonitoredThread</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/MonitoredThread.MultiThreadMonitor.html" title="class in org.eclipse.net4j.util.concurrent">MonitoredThread.MultiThreadMonitor</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/NonBlockingIntCounter.html" title="class in org.eclipse.net4j.util.concurrent">NonBlockingIntCounter</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/NonBlockingLongCounter.html" title="class in org.eclipse.net4j.util.concurrent">NonBlockingLongCounter</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/OnePendingExecutor.html" title="class in org.eclipse.net4j.util.concurrent">OnePendingExecutor</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent">ParallelRunner</a></td>
+<td class="colLast">
+<div class="block">A <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>list</code></a> of <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>runnables</code></a> that can be run in parallel.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/PriorityQueueRunnable.html" title="class in org.eclipse.net4j.util.concurrent">PriorityQueueRunnable</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/PriorityQueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">PriorityQueueRunner</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/QueueRunner.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/QueueRunner2.html" title="class in org.eclipse.net4j.util.concurrent">QueueRunner2</a>&lt;T extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/QueueWorker.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorker</a>&lt;E&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/QueueWorkerWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorkerWorkSerializer</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/ResultSynchronizer.html" title="class in org.eclipse.net4j.util.concurrent">ResultSynchronizer</a>&lt;RESULT&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RoundRobinList.html" title="class in org.eclipse.net4j.util.concurrent">RoundRobinList</a>&lt;E&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWLock.html" title="class in org.eclipse.net4j.util.concurrent">RWLock</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWLockManager</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></i></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">
+<div class="block">Keeps track of locks on objects.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;OBJECT,CONTEXT&gt;</td>
+<td class="colLast">
+<div class="block">Represents a combination of locks for one OBJECT.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/Sleeper.html" title="class in org.eclipse.net4j.util.concurrent">Sleeper</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html" title="class in org.eclipse.net4j.util.concurrent">Stoppable</a></td>
+<td class="colLast">
+<div class="block">A <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><code>runnable</code></a> that can be <a href="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#stop()"><code>stopped</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="class in org.eclipse.net4j.util.concurrent">SynchronizingCorrelator</a>&lt;CORRELATION,RESULT&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronousWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">SynchronousWorkSerializer</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/Timeouter.html" title="class in org.eclipse.net4j.util.concurrent">Timeouter</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/TrackableTimerTask.html" title="class in org.eclipse.net4j.util.concurrent">TrackableTimerTask</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/Worker.html" title="class in org.eclipse.net4j.util.concurrent">Worker</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Exception</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/net4j/util/concurrent/TimeoutRuntimeException.html" title="class in org.eclipse.net4j.util.concurrent">TimeoutRuntimeException</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a name="package_description">
+<!--   -->
+</a>
+<h2 title="Package org.eclipse.net4j.util.concurrent Description">Package org.eclipse.net4j.util.concurrent Description</h2>
+<div class="block">Utility interfaces and classes commonly useful in concurrent programming.</div>
+</div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/container/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+<li><a href="package-use.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/net4j/util/collection/package-summary.html">Prev Package</a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/container/package-summary.html">Next Package</a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/net4j/util/concurrent/package-summary.html" target="_top">Frames</a></li>
+<li><a href="package-summary.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

@@ -480,7 +480,6 @@
 
           <delete includeemptydirs="true" failonerror="false" quiet="true">
             <fileset dir="${temp.products}/@{profile}-@{platform}">
-              <include name="p2/**" />
               <include name="artifacts.xml" />
               <include name="launcher.exe" />
               <include name="eclipsec.exe" />
@@ -490,7 +489,7 @@
           <if>
             <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
             <then>
-              <chmod perm="700" file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
+              <chmod perm="a+x" file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
             </then>
           </if>
 

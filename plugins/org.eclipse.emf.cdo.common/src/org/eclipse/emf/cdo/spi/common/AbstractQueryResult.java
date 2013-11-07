@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Christian W. Damus (CEA LIST) - bug 421287
  */
 package org.eclipse.emf.cdo.spi.common;
 
@@ -26,24 +27,29 @@ import org.eclipse.net4j.util.WrappedException;
  */
 public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
 {
-  private int queryID;
-
   private CDOCommonView view;
 
   private CDOQueryInfo queryInfo;
 
-  private CDOQueryQueue<Object> linkQueue = new CDOQueryQueue<Object>();
+  private int queryID;
 
-  private BlockingCloseableIterator<Object> queueItr = linkQueue.iterator();
+  private CDOQueryQueue<Object> queue = new CDOQueryQueue<Object>();
+
+  private BlockingCloseableIterator<Object> queueItr = queue.iterator();
 
   /**
    * @since 3.0
    */
   public AbstractQueryResult(CDOCommonView view, CDOQueryInfo queryInfo, int queryID)
   {
-    this.queryID = queryID;
     this.view = view;
     this.queryInfo = queryInfo;
+    this.queryID = queryID;
+  }
+
+  public CDOCommonView getView()
+  {
+    return view;
   }
 
   /**
@@ -54,19 +60,14 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
     return queryInfo;
   }
 
-  public CDOQueryQueue<Object> getQueue()
-  {
-    return linkQueue;
-  }
-
-  public CDOCommonView getView()
-  {
-    return view;
-  }
-
   public int getQueryID()
   {
     return queryID;
+  }
+
+  public CDOQueryQueue<Object> getQueue()
+  {
+    return queue;
   }
 
   public void setQueryID(int queryID)
@@ -89,7 +90,6 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
   public T next()
   {
     Object element = queueItr.next();
-
     if (element instanceof Throwable)
     {
       if (element instanceof Error)
@@ -111,6 +111,7 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
   public void close()
   {
     queueItr.close();
+    queue.close();
   }
 
   public boolean isClosed()

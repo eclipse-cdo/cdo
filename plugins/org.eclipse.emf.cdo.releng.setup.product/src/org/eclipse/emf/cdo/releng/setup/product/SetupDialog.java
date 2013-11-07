@@ -367,7 +367,7 @@ public class SetupDialog extends TitleAreaDialog
     Button editButton = new Button(grpPreferences, SWT.NONE);
     editButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     editButton.setBounds(0, 0, 75, 25);
-    editButton.setText("Edit...");
+    editButton.setText("Settings...");
     editButton.addSelectionListener(new SelectionAdapter()
     {
       @Override

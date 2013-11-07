@@ -20,12 +20,11 @@ import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.handlers.LongRunningHandler;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -45,81 +44,120 @@ import java.util.Set;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-public class ManageSecurityHandler extends AbstractHandler
+public class ManageSecurityHandler extends LongRunningHandler
 {
+  private IWorkbenchPart part;
+
+  private ISecurityManagementContext context;
+
+  private CDOSession session;
+
   public ManageSecurityHandler()
   {
   }
 
-  public Object execute(ExecutionEvent event) throws ExecutionException
+  @Override
+  protected void extractEventDetails(ExecutionEvent event)
   {
-    ISelection selection = HandlerUtil.getCurrentSelection(event);
-    CDOSession session = UIUtil.adaptElement(selection, CDOSession.class);
-    if (session != null && !session.isClosed())
+    super.extractEventDetails(event);
+
+    part = HandlerUtil.getActivePart(event);
+    context = getContext(event);
+  }
+
+  @Override
+  protected void preRun() throws Exception
+  {
+    if (part == null)
     {
-      IWorkbenchPart part = HandlerUtil.getActivePart(event);
-      if (part != null)
-      {
-        final IWorkbenchPage page = part.getSite().getPage();
-
-        IEditorPart existing = findEditor(page, session);
-        if (existing != null)
-        {
-          // Activate this editor
-          page.activate(existing);
-        }
-        else
-        {
-          // Open a new security editor
-          ISecurityManagementContext context = getContext(event);
-          CDOView view = context.connect(session);
-          if (view == null || view.isClosed())
-          {
-            MessageDialog.openWarning(HandlerUtil.getActiveShell(event), Messages.ManageSecurityHandler_0,
-                Messages.ManageSecurityHandler_1);
-          }
-          else
-          {
-            try
-            {
-              CDOResource resource = context.getSecurityResource(view);
-              if (resource == null)
-              {
-                MessageDialog.openWarning(HandlerUtil.getActiveShell(event), Messages.ManageSecurityHandler_0,
-                    Messages.ManageSecurityHandler_2);
-              }
-              else
-              {
-                IEditorInput input = CDOEditorUtil.createCDOEditorInput(view, resource.getPath(), false);
-
-                try
-                {
-                  IEditorPart editor = page.openEditor(input, CDOSecurityFormEditor.ID);
-                  if (editor != null)
-                  {
-                    hookCloseListener(editor, context, view);
-                    view = null; // Don't disconnect it until later
-                  }
-                }
-                catch (PartInitException e)
-                {
-                  StatusManager.getManager().handle(e.getStatus(), StatusManager.SHOW);
-                }
-              }
-            }
-            finally
-            {
-              if (view != null)
-              {
-                context.disconnect(view);
-              }
-            }
-          }
-        }
-      }
+      // No workbench page available in which to open the editor
+      cancel();
+      return;
     }
 
-    return null;
+    session = getSession();
+    if (session != null && !session.isClosed())
+    {
+      final IWorkbenchPage page = part.getSite().getPage();
+
+      IEditorPart existing = findEditor(page, session);
+      if (existing != null)
+      {
+        // Activate this editor and we're done
+        cancel();
+        page.activate(existing);
+      }
+    }
+  }
+
+  protected CDOSession getSession()
+  {
+    return UIUtil.adaptElement(getSelection(), CDOSession.class);
+  }
+
+  @Override
+  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  {
+    // Open a new security editor
+    final CDOView[] view = new CDOView[] { context.connect(session) };
+    if (view[0] == null || view[0].isClosed())
+    {
+      showWarning(Messages.ManageSecurityHandler_0, Messages.ManageSecurityHandler_1);
+      return;
+    }
+
+    try
+    {
+      final CDOResource resource = context.getSecurityResource(view[0]);
+      if (resource == null)
+      {
+        showWarning(Messages.ManageSecurityHandler_0, Messages.ManageSecurityHandler_2);
+      }
+      else
+      {
+        UIUtil.getDisplay().syncExec(new Runnable()
+        {
+
+          public void run()
+          {
+            IEditorInput input = CDOEditorUtil.createCDOEditorInput(view[0], resource.getPath(), false);
+
+            try
+            {
+              IEditorPart editor = part.getSite().getPage().openEditor(input, CDOSecurityFormEditor.ID);
+              if (editor != null)
+              {
+                hookCloseListener(editor, context, view[0]);
+                view[0] = null; // Don't disconnect it until later
+              }
+            }
+            catch (PartInitException e)
+            {
+              StatusManager.getManager().handle(e.getStatus(), StatusManager.SHOW);
+            }
+          }
+        });
+      }
+    }
+    finally
+    {
+      if (view[0] != null)
+      {
+        context.disconnect(view[0]);
+      }
+    }
+  }
+
+  protected void showWarning(final String title, final String message)
+  {
+    UIUtil.getDisplay().syncExec(new Runnable()
+    {
+
+      public void run()
+      {
+        MessageDialog.openWarning(part.getSite().getShell(), title, message);
+      }
+    });
   }
 
   IEditorPart findEditor(IWorkbenchPage page, CDOSession session)

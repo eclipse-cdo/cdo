@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.wb.swt;
 
+import org.eclipse.emf.cdo.releng.setup.product.Activator;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
@@ -430,7 +432,7 @@ public class SWTResourceManager
         }
         catch (Throwable e)
         {
-          System.err.println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
+          Activator.log(e);
         }
       }
       font = new Font(Display.getCurrent(), fontData);

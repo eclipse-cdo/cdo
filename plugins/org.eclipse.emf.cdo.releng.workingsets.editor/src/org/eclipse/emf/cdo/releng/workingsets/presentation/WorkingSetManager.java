@@ -143,7 +143,6 @@ public class WorkingSetManager
                     IProject project = (IProject)resource;
                     if (!project.isHidden())
                     {
-                      System.err.println(">" + project.getName());
                       addedProjects.add(project);
                     }
                   }

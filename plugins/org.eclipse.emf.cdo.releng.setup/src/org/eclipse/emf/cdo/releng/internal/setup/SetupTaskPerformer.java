@@ -41,6 +41,7 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -394,6 +395,10 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     put("setup.project.name", projectName);
     put("setup.branch.name", branchName);
     put("releng.url", RELENG_URL);
+
+    put("os", Platform.getOS());
+    put("os.arch", Platform.getOSArch());
+    put("ws", Platform.getWS());
 
     try
     {

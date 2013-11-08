@@ -132,8 +132,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createMaterializationTask();
     case SetupPackage.COMPONENT:
       return createComponent();
-    case SetupPackage.SOURCE_LOCATOR:
-      return createSourceLocator();
     case SetupPackage.CONTEXT_VARIABLE_TASK:
       return createContextVariableTask();
     case SetupPackage.API_BASELINE_TASK:
@@ -158,6 +156,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createKeyBindingTask();
     case SetupPackage.COMMAND_PARAMETER:
       return createCommandParameter();
+    case SetupPackage.MANUAL_SOURCE_LOCATOR:
+      return createManualSourceLocator();
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
+      return createAutomaticSourceLocator();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -398,6 +400,28 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public AutomaticSourceLocator createAutomaticSourceLocator()
+  {
+    AutomaticSourceLocatorImpl automaticSourceLocator = new AutomaticSourceLocatorImpl();
+    return automaticSourceLocator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public ManualSourceLocator createManualSourceLocator()
+  {
+    ManualSourceLocatorImpl manualSourceLocator = new ManualSourceLocatorImpl();
+    return manualSourceLocator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   public ContextVariableTask createContextVariableTask()
   {
     ContextVariableTaskImpl contextVariableTask = new ContextVariableTaskImpl();
@@ -424,17 +448,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     MaterializationTaskImpl materializationTask = new MaterializationTaskImpl();
     return materializationTask;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SourceLocator createSourceLocator()
-  {
-    SourceLocatorImpl sourceLocator = new SourceLocatorImpl();
-    return sourceLocator;
   }
 
   /**

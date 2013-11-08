@@ -306,6 +306,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseManualSourceLocator(ManualSourceLocator object)
+    {
+      return createManualSourceLocatorAdapter();
+    }
+
+    @Override
+    public Adapter caseAutomaticSourceLocator(AutomaticSourceLocator object)
+    {
+      return createAutomaticSourceLocatorAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -597,11 +609,41 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask <em>Context Variable Task</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * @generated
+   */
+  public Adapter createAutomaticSourceLocatorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
+   * <!-- begin-user-doc -->
+  	 * This default implementation returns null so that we can easily ignore cases;
+  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+  	 * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
+   * @generated
+   */
+  public Adapter createManualSourceLocatorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask <em>Context Variable Task</em>}'.
+   * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask
    * @generated

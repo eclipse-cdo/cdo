@@ -10,29 +10,31 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
-import org.eclipse.emf.cdo.releng.setup.SetupFactory;
+import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.MaterializationTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class MaterializationTaskItemProvider extends BasicMaterializationTaskItemProvider implements
+public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvider implements
     IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
     IItemPropertySource
 {
@@ -42,7 +44,7 @@ public class MaterializationTaskItemProvider extends BasicMaterializationTaskIte
    * <!-- end-user-doc -->
    * @generated
    */
-  public MaterializationTaskItemProvider(AdapterFactory adapterFactory)
+  public AutomaticSourceLocatorItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -60,55 +62,38 @@ public class MaterializationTaskItemProvider extends BasicMaterializationTaskIte
     {
       super.getPropertyDescriptors(object);
 
+      addRootFolderPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * This adds a property descriptor for the Root Folder feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+  protected void addRootFolderPropertyDescriptor(Object object)
   {
-    if (childrenFeatures == null)
-    {
-      super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.MATERIALIZATION_TASK__ROOT_COMPONENTS);
-      childrenFeatures.add(SetupPackage.Literals.MATERIALIZATION_TASK__SOURCE_LOCATORS);
-      childrenFeatures.add(SetupPackage.Literals.MATERIALIZATION_TASK__P2_REPOSITORIES);
-    }
-    return childrenFeatures;
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_AutomaticSourceLocator_rootFolder_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AutomaticSourceLocator_rootFolder_feature",
+            "_UI_AutomaticSourceLocator_type"), SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER, true,
+        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
+   * This returns AutomaticSourceLocator.gif.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EStructuralFeature getChildFeature(Object object, Object child)
-  {
-    // Check the type of the specified child object and return the proper feature to use for
-    // adding (see {@link AddCommand}) it as a child.
-
-    return super.getChildFeature(object, child);
-  }
-
-  /**
-   * This returns MaterializationTask.gif.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/MaterializationTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/AutomaticSourceLocator"));
   }
 
   /**
@@ -131,7 +116,8 @@ public class MaterializationTaskItemProvider extends BasicMaterializationTaskIte
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_MaterializationTask_type");
+    AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)object;
+    return "" + automaticSourceLocator.getRootFolder();
   }
 
   /**
@@ -146,12 +132,10 @@ public class MaterializationTaskItemProvider extends BasicMaterializationTaskIte
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(MaterializationTask.class))
+    switch (notification.getFeatureID(AutomaticSourceLocator.class))
     {
-    case SetupPackage.MATERIALIZATION_TASK__ROOT_COMPONENTS:
-    case SetupPackage.MATERIALIZATION_TASK__SOURCE_LOCATORS:
-    case SetupPackage.MATERIALIZATION_TASK__P2_REPOSITORIES:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }
     super.notifyChanged(notification);
@@ -168,18 +152,6 @@ public class MaterializationTaskItemProvider extends BasicMaterializationTaskIte
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__ROOT_COMPONENTS,
-        SetupFactory.eINSTANCE.createComponent()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__SOURCE_LOCATORS,
-        SetupFactory.eINSTANCE.createManualSourceLocator()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__SOURCE_LOCATORS,
-        SetupFactory.eINSTANCE.createAutomaticSourceLocator()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MATERIALIZATION_TASK__P2_REPOSITORIES,
-        SetupFactory.eINSTANCE.createP2Repository()));
   }
 
 }

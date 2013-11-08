@@ -497,9 +497,59 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  protected AutomaticSourceLocatorItemProvider automaticSourceLocatorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createAutomaticSourceLocatorAdapter()
+  {
+    if (automaticSourceLocatorItemProvider == null)
+    {
+      automaticSourceLocatorItemProvider = new AutomaticSourceLocatorItemProvider(this);
+    }
+
+    return automaticSourceLocatorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ManualSourceLocatorItemProvider manualSourceLocatorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createManualSourceLocatorAdapter()
+  {
+    if (manualSourceLocatorItemProvider == null)
+    {
+      manualSourceLocatorItemProvider = new ManualSourceLocatorItemProvider(this);
+    }
+
+    return manualSourceLocatorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask} instances.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected ContextVariableTaskItemProvider contextVariableTaskItemProvider;
@@ -569,31 +619,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     }
 
     return materializationTaskItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.SourceLocator} instances.
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  protected SourceLocatorItemProvider sourceLocatorItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.SourceLocator}.
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createSourceLocatorAdapter()
-  {
-    if (sourceLocatorItemProvider == null)
-    {
-      sourceLocatorItemProvider = new SourceLocatorItemProvider(this);
-    }
-
-    return sourceLocatorItemProvider;
   }
 
   /**
@@ -967,8 +992,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       materializationTaskItemProvider.dispose();
     if (componentItemProvider != null)
       componentItemProvider.dispose();
-    if (sourceLocatorItemProvider != null)
-      sourceLocatorItemProvider.dispose();
     if (contextVariableTaskItemProvider != null)
       contextVariableTaskItemProvider.dispose();
     if (apiBaselineTaskItemProvider != null)
@@ -993,6 +1016,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
       keyBindingTaskItemProvider.dispose();
     if (commandParameterItemProvider != null)
       commandParameterItemProvider.dispose();
+    if (manualSourceLocatorItemProvider != null)
+      manualSourceLocatorItemProvider.dispose();
+    if (automaticSourceLocatorItemProvider != null)
+      automaticSourceLocatorItemProvider.dispose();
   }
 
 }

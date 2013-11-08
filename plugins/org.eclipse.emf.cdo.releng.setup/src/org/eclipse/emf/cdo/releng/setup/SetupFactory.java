@@ -175,9 +175,27 @@ public interface SetupFactory extends EFactory
   CommandParameter createCommandParameter();
 
   /**
-   * Returns a new object of class '<em>Context Variable Task</em>'.
+   * Returns a new object of class '<em>Automatic Source Locator</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return a new object of class '<em>Automatic Source Locator</em>'.
+   * @generated
+   */
+  AutomaticSourceLocator createAutomaticSourceLocator();
+
+  /**
+   * Returns a new object of class '<em>Manual Source Locator</em>'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return a new object of class '<em>Manual Source Locator</em>'.
+   * @generated
+   */
+  ManualSourceLocator createManualSourceLocator();
+
+  /**
+   * Returns a new object of class '<em>Context Variable Task</em>'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return a new object of class '<em>Context Variable Task</em>'.
    * @generated
    */
@@ -200,15 +218,6 @@ public interface SetupFactory extends EFactory
    * @generated
    */
   MaterializationTask createMaterializationTask();
-
-  /**
-   * Returns a new object of class '<em>Source Locator</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Source Locator</em>'.
-   * @generated
-   */
-  SourceLocator createSourceLocator();
 
   /**
    * Returns a new object of class '<em>Component</em>'.

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
+import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
+import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -196,6 +198,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass automaticSourceLocatorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass manualSourceLocatorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   private EClass contextVariableTaskEClass = null;
@@ -1072,6 +1088,66 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getAutomaticSourceLocator()
+  {
+    return automaticSourceLocatorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAutomaticSourceLocator_RootFolder()
+  {
+    return (EAttribute)automaticSourceLocatorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getManualSourceLocator()
+  {
+    return manualSourceLocatorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getManualSourceLocator_Location()
+  {
+    return (EAttribute)manualSourceLocatorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getManualSourceLocator_ComponentNamePattern()
+  {
+    return (EAttribute)manualSourceLocatorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getManualSourceLocator_ComponentTypes()
+  {
+    return (EAttribute)manualSourceLocatorEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getContextVariableTask()
   {
     return contextVariableTaskEClass;
@@ -1175,36 +1251,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public EClass getSourceLocator()
   {
     return sourceLocatorEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSourceLocator_Location()
-  {
-    return (EAttribute)sourceLocatorEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSourceLocator_ComponentNamePattern()
-  {
-    return (EAttribute)sourceLocatorEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSourceLocator_ComponentTypes()
-  {
-    return (EAttribute)sourceLocatorEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1681,9 +1727,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(componentEClass, COMPONENT__TYPE);
 
     sourceLocatorEClass = createEClass(SOURCE_LOCATOR);
-    createEAttribute(sourceLocatorEClass, SOURCE_LOCATOR__LOCATION);
-    createEAttribute(sourceLocatorEClass, SOURCE_LOCATOR__COMPONENT_NAME_PATTERN);
-    createEAttribute(sourceLocatorEClass, SOURCE_LOCATOR__COMPONENT_TYPES);
 
     contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
@@ -1740,6 +1783,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     commandParameterEClass = createEClass(COMMAND_PARAMETER);
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__ID);
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__VALUE);
+
+    manualSourceLocatorEClass = createEClass(MANUAL_SOURCE_LOCATOR);
+    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__LOCATION);
+    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__COMPONENT_NAME_PATTERN);
+    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__COMPONENT_TYPES);
+
+    automaticSourceLocatorEClass = createEClass(AUTOMATIC_SOURCE_LOCATOR);
+    createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
 
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
@@ -1810,6 +1861,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     resourceCreationTaskEClass.getESuperTypes().add(this.getSetupTask());
     textModifyTaskEClass.getESuperTypes().add(this.getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(this.getSetupTask());
+    manualSourceLocatorEClass.getESuperTypes().add(this.getSourceLocator());
+    automaticSourceLocatorEClass.getESuperTypes().add(this.getSourceLocator());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1987,16 +2040,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getComponent_Type(), this.getComponentType(), "type", null, 1, 1, Component.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(sourceLocatorEClass, SourceLocator.class, "SourceLocator", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(sourceLocatorEClass, SourceLocator.class, "SourceLocator", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSourceLocator_Location(), ecorePackage.getEString(), "location", null, 1, 1, SourceLocator.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSourceLocator_ComponentNamePattern(), ecorePackage.getEString(), "componentNamePattern", null, 0,
-        1, SourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSourceLocator_ComponentTypes(), this.getComponentType(), "componentTypes", null, 1, -1,
-        SourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
 
     initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2121,6 +2166,24 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCommandParameter_Value(), ecorePackage.getEString(), "value", null, 0, 1, CommandParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(manualSourceLocatorEClass, ManualSourceLocator.class, "ManualSourceLocator", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getManualSourceLocator_Location(), ecorePackage.getEString(), "location", null, 1, 1,
+        ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getManualSourceLocator_ComponentNamePattern(), ecorePackage.getEString(), "componentNamePattern",
+        null, 0, 1, ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getManualSourceLocator_ComponentTypes(), this.getComponentType(), "componentTypes", null, 1, -1,
+        ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(automaticSourceLocatorEClass, AutomaticSourceLocator.class, "AutomaticSourceLocator", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAutomaticSourceLocator_RootFolder(), ecorePackage.getEString(), "rootFolder", null, 1, 1,
+        AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");

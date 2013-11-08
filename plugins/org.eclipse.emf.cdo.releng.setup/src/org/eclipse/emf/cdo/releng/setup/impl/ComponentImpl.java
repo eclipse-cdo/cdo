@@ -116,9 +116,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMPONENT__NAME, oldName, name));
-    }
   }
 
   /**
@@ -141,9 +139,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     ComponentType oldType = type;
     type = newType == null ? TYPE_EDEFAULT : newType;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMPONENT__TYPE, oldType, type));
-    }
   }
 
   /**
@@ -231,9 +227,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

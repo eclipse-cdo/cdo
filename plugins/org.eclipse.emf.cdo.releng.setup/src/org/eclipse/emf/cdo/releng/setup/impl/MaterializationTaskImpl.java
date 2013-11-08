@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
+import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -54,10 +57,22 @@ import org.eclipse.buckminster.sax.Utils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.equinox.p2.metadata.Version;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
 /**
@@ -88,23 +103,23 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
   protected EList<Component> rootComponents;
 
   /**
-  	 * The cached value of the '{@link #getSourceLocators() <em>Source Locators</em>}' containment reference list.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getSourceLocators() <em>Source Locators</em>}' containment reference list.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @see #getSourceLocators()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getSourceLocators()
+   * @generated
+   * @ordered
+   */
   protected EList<SourceLocator> sourceLocators;
 
   /**
-  	 * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @see #getP2Repositories()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getP2Repositories()
+   * @generated
+   * @ordered
+   */
   protected EList<P2Repository> p2Repositories;
 
   /**
@@ -398,58 +413,109 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
       if (!sourceLocators.isEmpty())
       {
-        SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
-        sourceSearchPath.setName("sources");
-        EList<Provider> sourceProviders = sourceSearchPath.getProviders();
+        int sourceProviderIndex = 0;
         for (SourceLocator sourceLocator : sourceLocators)
         {
-          String locationPattern = context.expandString(sourceLocator.getLocation());
-          locationPattern = locationPattern.replace("*", "{0}");
-          if (locationPattern.indexOf("{0}") == -1)
+          if (sourceLocator instanceof ManualSourceLocator)
           {
-            if (!locationPattern.endsWith("/") && !locationPattern.endsWith("\\"))
+            SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
+            sourceSearchPath.setName("sources_" + sourceProviderIndex++);
+            EList<Provider> sourceProviders = sourceSearchPath.getProviders();
+
+            ManualSourceLocator manualSourceLocator = (ManualSourceLocator)sourceLocator;
+            String locationPattern = context.expandString(manualSourceLocator.getLocation());
+            locationPattern = locationPattern.replace("*", "{0}");
+            if (locationPattern.indexOf("{0}") == -1)
             {
-              locationPattern += File.separator;
+              if (!locationPattern.endsWith("/") && !locationPattern.endsWith("\\"))
+              {
+                locationPattern += File.separator;
+              }
+
+              locationPattern += "{0}";
             }
 
-            locationPattern += "{0}";
-          }
+            Provider provider = RmapFactory.eINSTANCE.createProvider();
 
-          Provider provider = RmapFactory.eINSTANCE.createProvider();
-
-          StringBuilder componentTypes = new StringBuilder();
-          for (ComponentType componentType : sourceLocator.getComponentTypes())
-          {
-            if (componentTypes.length() != 0)
+            StringBuilder componentTypes = new StringBuilder();
+            for (ComponentType componentType : manualSourceLocator.getComponentTypes())
             {
-              componentTypes.append(',');
+              if (componentTypes.length() != 0)
+              {
+                componentTypes.append(',');
+              }
+
+              componentTypes.append(componentType.toString());
             }
 
-            componentTypes.append(componentType.toString());
+            provider.setComponentTypesAttr(componentTypes.toString());
+            provider.setReaderType("local");
+            provider.setSource(true);
+
+            Format format = CommonFactory.eINSTANCE.createFormat();
+            format.setFormat(locationPattern);
+            PropertyRef propertyRef = CommonFactory.eINSTANCE.createPropertyRef();
+            propertyRef.setKey("buckminster.component");
+            format.getValues().add(propertyRef);
+            provider.setURI(format);
+            sourceProviders.add(provider);
+
+            Locator locator = RmapFactory.eINSTANCE.createLocator();
+            String componentNamePattern = manualSourceLocator.getComponentNamePattern();
+            if (!StringUtil.isEmpty(componentNamePattern))
+            {
+              locator.setPattern(Pattern.compile(componentNamePattern));
+            }
+
+            locator.setSearchPath(sourceSearchPath);
+            locator.setFailOnError(p2Repositories.isEmpty()); // TODO
+            matchers.add(locator);
+
+            rmap.getSearchPaths().add(sourceSearchPath);
           }
-
-          provider.setComponentTypesAttr(componentTypes.toString());
-          provider.setReaderType("local");
-          provider.setSource(true);
-
-          Format format = CommonFactory.eINSTANCE.createFormat();
-          format.setFormat(locationPattern);
-          PropertyRef propertyRef = CommonFactory.eINSTANCE.createPropertyRef();
-          propertyRef.setKey("buckminster.component");
-          format.getValues().add(propertyRef);
-          provider.setURI(format);
-          sourceProviders.add(provider);
-
-          Locator locator = RmapFactory.eINSTANCE.createLocator();
-          String componentNamePattern = sourceLocator.getComponentNamePattern();
-          if (!StringUtil.isEmpty(componentNamePattern))
+          else
           {
-            locator.setPattern(Pattern.compile(componentNamePattern));
+            AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)sourceLocator;
+            automaticSourceLocator.getRootFolder();
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setNamespaceAware(true);
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            HashMap<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
+            analyze(componentMap, documentBuilder,
+                new File(context.expandString(automaticSourceLocator.getRootFolder())));
+            for (Map.Entry<String, List<ComponentLocation>> entry : componentMap.entrySet())
+            {
+              String componentName = entry.getKey();
+
+              SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
+              sourceSearchPath.setName("sources_" + componentName);
+              EList<Provider> sourceProviders = sourceSearchPath.getProviders();
+
+              for (ComponentLocation componentLocation : entry.getValue())
+              {
+                Provider provider = RmapFactory.eINSTANCE.createProvider();
+
+                provider.setComponentTypesAttr(componentLocation.componentType.toString());
+                provider.setReaderType("local");
+                provider.setSource(true);
+
+                Format format = CommonFactory.eINSTANCE.createFormat();
+                format.setFormat(componentLocation.location);
+                provider.setURI(format);
+
+                sourceProviders.add(provider);
+              }
+
+              Locator locator = RmapFactory.eINSTANCE.createLocator();
+              locator.setPattern(Pattern.compile("^" + Pattern.quote(componentName) + "$"));
+
+              locator.setSearchPath(sourceSearchPath);
+              locator.setFailOnError(true);
+              matchers.add(locator);
+
+              rmap.getSearchPaths().add(sourceSearchPath);
+            }
           }
-          locator.setSearchPath(sourceSearchPath);
-          locator.setFailOnError(p2Repositories.isEmpty());
-          matchers.add(locator);
-          rmap.getSearchPaths().add(sourceSearchPath);
         }
       }
 
@@ -484,6 +550,125 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       rmapResource.save(null);
 
       return mspecURI.toString();
+    }
+
+    private static class ComponentLocation
+    {
+      public ComponentType componentType;
+
+      public String location;
+
+      public ComponentLocation(ComponentType componentType, String location)
+      {
+        this.componentType = componentType;
+        this.location = location;
+      }
+    }
+
+    private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
+        File folder)
+    {
+      File projectFile = new File(folder, ".project");
+      if (projectFile.exists())
+      {
+        try
+        {
+          String componentName = null;
+          ComponentType componentType = null;
+
+          File manifestFile = new File(folder, "META-INF/MANIFEST.MF");
+          if (manifestFile.exists())
+          {
+            FileInputStream manifestFileInputStream = null;
+
+            try
+            {
+              manifestFileInputStream = new FileInputStream(manifestFile);
+              Manifest manifest = new Manifest(manifestFileInputStream);
+              String bundleSymbolicName = manifest.getMainAttributes().getValue("Bundle-SymbolicName").trim();
+              int index = bundleSymbolicName.indexOf(';');
+              if (index != -1)
+              {
+                bundleSymbolicName = bundleSymbolicName.substring(0, index).trim();
+              }
+
+              componentName = bundleSymbolicName;
+              componentType = ComponentType.OSGI_BUNDLE;
+            }
+            catch (IOException ex)
+            {
+              Activator.log(ex);
+            }
+            finally
+            {
+              IOUtil.close(manifestFileInputStream);
+            }
+          }
+          else
+          {
+            File featureXMLFile = new File(folder, "feature.xml");
+            if (featureXMLFile.exists())
+            {
+              try
+              {
+                Element rootElement = load(documentBuilder, featureXMLFile);
+                componentName = rootElement.getAttribute("id").trim();
+                componentType = ComponentType.ECLIPSE_FEATURE;
+              }
+              catch (Exception ex)
+              {
+                Activator.log(ex);
+              }
+            }
+            else
+            {
+              File cspecFile = new File(folder, "buckminster.cspec");
+              if (cspecFile.exists())
+              {
+                Element rootElement = load(documentBuilder, cspecFile);
+                componentName = rootElement.getAttribute("name").trim();
+                componentType = ComponentType.BUCKMINSTER;
+              }
+            }
+          }
+
+          if (componentName != null)
+          {
+            List<ComponentLocation> locations = componentMap.get(componentName);
+            if (locations == null)
+            {
+              locations = new ArrayList<ComponentLocation>();
+              componentMap.put(componentName, locations);
+            }
+
+            locations.add(new ComponentLocation(componentType, folder.toString()));
+          }
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+      else
+      {
+        File[] listFiles = folder.listFiles();
+        if (listFiles != null)
+        {
+          for (File file : listFiles)
+          {
+            if (file.isDirectory())
+            {
+              analyze(componentMap, documentBuilder, file);
+            }
+          }
+        }
+      }
+    }
+
+    private static Element load(DocumentBuilder documentBuilder, File file) throws Exception
+    {
+      Document document = documentBuilder.parse(file);
+      return document.getDocumentElement();
     }
   }
 } // MaterializationTaskImpl

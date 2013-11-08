@@ -122,11 +122,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/type"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//SourceLocator">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SourceLocator/location"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SourceLocator/componentNamePattern"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SourceLocator/componentTypes"/>
-    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//SourceLocator"/>
     <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
@@ -182,6 +178,14 @@
     <genClasses ecoreClass="setup.ecore#//CommandParameter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/value"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ManualSourceLocator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/componentNamePattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/componentTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//AutomaticSourceLocator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/rootFolder"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

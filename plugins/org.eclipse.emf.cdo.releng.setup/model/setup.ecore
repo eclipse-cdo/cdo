@@ -113,13 +113,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ComponentType"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SourceLocator">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentNamePattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentTypes" lowerBound="1"
-        upperBound="-1" eType="#//ComponentType"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SourceLocator" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="ContextVariableTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -203,5 +197,16 @@
     <eLiterals name="ECLIPSE_FEATURE" literal="eclipse.feature"/>
     <eLiterals name="OSGI_BUNDLE" value="1" literal="osgi.bundle"/>
     <eLiterals name="BUCKMINSTER" value="3" literal="buckminster"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManualSourceLocator" eSuperTypes="#//SourceLocator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentNamePattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentTypes" lowerBound="1"
+        upperBound="-1" eType="#//ComponentType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AutomaticSourceLocator" eSuperTypes="#//SourceLocator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rootFolder" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

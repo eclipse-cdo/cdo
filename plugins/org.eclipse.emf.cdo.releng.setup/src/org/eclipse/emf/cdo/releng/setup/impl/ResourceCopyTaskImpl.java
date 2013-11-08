@@ -261,9 +261,9 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
         return !URIConverter.INSTANCE.exists(targetURI.appendSegment(sourceURI.lastSegment()), null);
       }
     }
-    else
+    else if (URIConverter.INSTANCE.exists(sourceURI, null))
     {
-      // TODO
+      return !URIConverter.INSTANCE.exists(targetURI, null);
     }
 
     return false;
@@ -300,9 +300,22 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
         }
       }
     }
-    else
+    else if (URIConverter.INSTANCE.exists(sourceURI, null))
     {
-      // TODO
+      InputStream input = null;
+      OutputStream output = null;
+
+      try
+      {
+        input = URIConverter.INSTANCE.createInputStream(sourceURI);
+        output = URIConverter.INSTANCE.createOutputStream(targetURI, null);
+        IOUtil.copy(input, output);
+      }
+      finally
+      {
+        IOUtil.closeSilent(input);
+        IOUtil.closeSilent(output);
+      }
     }
   }
 

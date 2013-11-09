@@ -10,7 +10,6 @@
     <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
-    <installableUnits id="org.eclipse.emf.cdo.releng.tasks.feature.group"/>
     <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.github.feature.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.hudson.feature.group"/>
@@ -119,7 +118,7 @@
     <setupTasks xsi:type="setup:MylynQueryTask" excludedTriggers="BOOTSTRAP" summary="CDO_Legacy" url="${cdo.bugzilla.url}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
     <setupTasks xsi:type="setup:MylynQueryTask" excludedTriggers="BOOTSTRAP" summary="CDO_Releng" url="${cdo.bugzilla.url}&amp;component=cdo.releng&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
     <setupTasks xsi:type="setup:MylynQueryTask" excludedTriggers="BOOTSTRAP" summary="CDO_UI" url="${cdo.bugzilla.url}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" excludedTriggers="BOOTSTRAP" summary="TaskTable" url="${cdo.bugzilla.url}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" excludedTriggers="BOOTSTRAP" disabled="true" summary="TaskTable" url="${cdo.bugzilla.url}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
   </setupTasks>
   <branches name="master">
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.3" stringSubstitution="true"/>

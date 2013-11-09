@@ -4,7 +4,8 @@ package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -139,15 +140,21 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
-    SetupTaskScope labelValue = ((MylynQueryTask)object).getScope();
-    String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_MylynQueryTask_type")
-        : getString("_UI_MylynQueryTask_type") + " " + label;
+    MylynQueryTask mylynQuery = (MylynQueryTask)object;
+    String summary = mylynQuery.getSummary();
+    String url = mylynQuery.getUrl();
+
+    if (StringUtil.isEmpty(summary) && StringUtil.isEmpty(url))
+    {
+      return getString("_UI_MylynQueryTask_type");
+    }
+
+    return "" + summary + " + " + url;
   }
 
   /**

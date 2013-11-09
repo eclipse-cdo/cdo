@@ -191,7 +191,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/value"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//MylynQueryTask">
+    <genClasses ecoreClass="setup.ecore#//MylynQueryTask" labelFeature="#//setup/MylynQueryTask/summary">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/connectorKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/summary"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/url"/>

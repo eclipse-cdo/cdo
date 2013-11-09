@@ -5,12 +5,15 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
+import org.eclipse.emf.cdo.releng.setup.Trigger;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import java.util.Set;
 
 /**
  * <!-- begin-user-doc -->
@@ -294,6 +297,12 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     result.append(url);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public Set<Trigger> getValidTriggers()
+  {
+    return Trigger.IDE_TRIGGERS;
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.releng.setup.provider;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -108,10 +107,10 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
 
       addRequirementsPropertyDescriptor(object);
       addRestrictionsPropertyDescriptor(object);
+      addDisabledPropertyDescriptor(object);
       addScopePropertyDescriptor(object);
       addExcludedTriggersPropertyDescriptor(object);
       addDocumentationPropertyDescriptor(object);
-      addDisabledPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -311,10 +310,8 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
   @Override
   public String getText(Object object)
   {
-    SetupTaskScope labelValue = ((SetupTask)object).getScope();
-    String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_SetupTask_type") : getString("_UI_SetupTask_type")
-        + " " + label;
+    SetupTask setupTask = (SetupTask)object;
+    return getString("_UI_SetupTask_type") + " " + setupTask.isDisabled();
   }
 
   /**
@@ -331,10 +328,10 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
 
     switch (notification.getFeatureID(SetupTask.class))
     {
+    case SetupPackage.SETUP_TASK__DISABLED:
     case SetupPackage.SETUP_TASK__SCOPE:
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
     case SetupPackage.SETUP_TASK__DOCUMENTATION:
-    case SetupPackage.SETUP_TASK__DISABLED:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

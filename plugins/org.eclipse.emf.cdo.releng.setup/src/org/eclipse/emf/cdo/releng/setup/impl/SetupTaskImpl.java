@@ -42,10 +42,10 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getRestrictions <em>Restrictions</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#isDisabled <em>Disabled</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getExcludedTriggers <em>Excluded Triggers</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#getDocumentation <em>Documentation</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl#isDisabled <em>Disabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,46 +74,6 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   protected EList<ConfigurableItem> restrictions;
 
   /**
-   * The default value of the '{@link #getScope() <em>Scope</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getScope()
-   * @generated
-   * @ordered
-   */
-  protected static final SetupTaskScope SCOPE_EDEFAULT = SetupTaskScope.NONE;
-
-  /**
-   * The cached value of the '{@link #getExcludedTriggers() <em>Excluded Triggers</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExcludedTriggers()
-   * @generated
-   * @ordered
-   */
-  protected Set<Trigger> excludedTriggers;
-
-  /**
-   * The default value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDocumentation()
-   * @generated
-   * @ordered
-   */
-  protected static final String DOCUMENTATION_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @see #getDocumentation()
-   * @generated
-   * @ordered
-   */
-  protected String documentation = DOCUMENTATION_EDEFAULT;
-
-  /**
    * The default value of the '{@link #isDisabled() <em>Disabled</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -132,6 +92,46 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
    * @ordered
    */
   protected boolean disabled = DISABLED_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getScope() <em>Scope</em>}' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @see #getScope()
+   * @generated
+   * @ordered
+   */
+  protected static final SetupTaskScope SCOPE_EDEFAULT = SetupTaskScope.NONE;
+
+  /**
+   * The cached value of the '{@link #getExcludedTriggers() <em>Excluded Triggers</em>}' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @see #getExcludedTriggers()
+   * @generated
+   * @ordered
+   */
+  protected Set<Trigger> excludedTriggers;
+
+  /**
+   * The default value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @see #getDocumentation()
+   * @generated
+   * @ordered
+   */
+  protected static final String DOCUMENTATION_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+   * @see #getDocumentation()
+   * @generated
+   * @ordered
+   */
+  protected String documentation = DOCUMENTATION_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -402,14 +402,14 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       return getRequirements();
     case SetupPackage.SETUP_TASK__RESTRICTIONS:
       return getRestrictions();
+    case SetupPackage.SETUP_TASK__DISABLED:
+      return isDisabled();
     case SetupPackage.SETUP_TASK__SCOPE:
       return getScope();
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       return getExcludedTriggers();
     case SetupPackage.SETUP_TASK__DOCUMENTATION:
       return getDocumentation();
-    case SetupPackage.SETUP_TASK__DISABLED:
-      return isDisabled();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -433,14 +433,14 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       getRestrictions().clear();
       getRestrictions().addAll((Collection<? extends ConfigurableItem>)newValue);
       return;
+    case SetupPackage.SETUP_TASK__DISABLED:
+      setDisabled((Boolean)newValue);
+      return;
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       setExcludedTriggers((Set<Trigger>)newValue);
       return;
     case SetupPackage.SETUP_TASK__DOCUMENTATION:
       setDocumentation((String)newValue);
-      return;
-    case SetupPackage.SETUP_TASK__DISABLED:
-      setDisabled((Boolean)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -462,14 +462,14 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     case SetupPackage.SETUP_TASK__RESTRICTIONS:
       getRestrictions().clear();
       return;
+    case SetupPackage.SETUP_TASK__DISABLED:
+      setDisabled(DISABLED_EDEFAULT);
+      return;
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       setExcludedTriggers((Set<Trigger>)null);
       return;
     case SetupPackage.SETUP_TASK__DOCUMENTATION:
       setDocumentation(DOCUMENTATION_EDEFAULT);
-      return;
-    case SetupPackage.SETUP_TASK__DISABLED:
-      setDisabled(DISABLED_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -489,14 +489,14 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       return requirements != null && !requirements.isEmpty();
     case SetupPackage.SETUP_TASK__RESTRICTIONS:
       return restrictions != null && !restrictions.isEmpty();
+    case SetupPackage.SETUP_TASK__DISABLED:
+      return disabled != DISABLED_EDEFAULT;
     case SetupPackage.SETUP_TASK__SCOPE:
       return getScope() != SCOPE_EDEFAULT;
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
       return excludedTriggers != null;
     case SetupPackage.SETUP_TASK__DOCUMENTATION:
       return DOCUMENTATION_EDEFAULT == null ? documentation != null : !DOCUMENTATION_EDEFAULT.equals(documentation);
-    case SetupPackage.SETUP_TASK__DISABLED:
-      return disabled != DISABLED_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -515,12 +515,12 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (excludedTriggers: ");
+    result.append(" (disabled: ");
+    result.append(disabled);
+    result.append(", excludedTriggers: ");
     result.append(excludedTriggers);
     result.append(", documentation: ");
     result.append(documentation);
-    result.append(", disabled: ");
-    result.append(disabled);
     result.append(')');
     return result.toString();
   }

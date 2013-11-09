@@ -571,40 +571,40 @@ public interface SetupPackage extends EPackage
   int SETUP_TASK__RESTRICTIONS = 1;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SETUP_TASK__SCOPE = 2;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SETUP_TASK__EXCLUDED_TRIGGERS = 3;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SETUP_TASK__DOCUMENTATION = 4;
-
-  /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SETUP_TASK__DISABLED = 5;
+  int SETUP_TASK__DISABLED = 2;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETUP_TASK__SCOPE = 3;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETUP_TASK__EXCLUDED_TRIGGERS = 4;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETUP_TASK__DOCUMENTATION = 5;
 
   /**
    * The number of structural features of the '<em>Task</em>' class.
@@ -654,9 +654,18 @@ public interface SetupPackage extends EPackage
   int COMPOUND_SETUP_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOUND_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -665,7 +674,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -674,20 +683,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int COMPOUND_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPOUND_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -745,9 +745,18 @@ public interface SetupPackage extends EPackage
   int ONE_TIME_SETUP_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ONE_TIME_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -756,7 +765,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -765,20 +774,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ONE_TIME_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -837,9 +837,18 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_INI_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ECLIPSE_INI_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -848,7 +857,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -857,20 +866,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ECLIPSE_INI_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_INI_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Option</b></em>' attribute.
@@ -927,9 +927,18 @@ public interface SetupPackage extends EPackage
   int LINK_LOCATION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINK_LOCATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -938,7 +947,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -947,20 +956,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int LINK_LOCATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LINK_LOCATION_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Path</b></em>' attribute.
@@ -1008,9 +1008,18 @@ public interface SetupPackage extends EPackage
   int P2_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int P2_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1019,7 +1028,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1028,20 +1037,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int P2_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int P2_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
@@ -1153,9 +1153,18 @@ public interface SetupPackage extends EPackage
   int BASIC_MATERIALIZATION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BASIC_MATERIALIZATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1164,7 +1173,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1173,20 +1182,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int BASIC_MATERIALIZATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BASIC_MATERIALIZATION_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Target Platform</b></em>' attribute.
@@ -1234,9 +1234,18 @@ public interface SetupPackage extends EPackage
   int BUCKMINSTER_IMPORT_TASK__RESTRICTIONS = BASIC_MATERIALIZATION_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BUCKMINSTER_IMPORT_TASK__DISABLED = BASIC_MATERIALIZATION_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1245,7 +1254,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1254,20 +1263,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int BUCKMINSTER_IMPORT_TASK__DOCUMENTATION = BASIC_MATERIALIZATION_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BUCKMINSTER_IMPORT_TASK__DISABLED = BASIC_MATERIALIZATION_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Target Platform</b></em>' attribute.
@@ -1404,9 +1404,18 @@ public interface SetupPackage extends EPackage
   int MATERIALIZATION_TASK__RESTRICTIONS = BASIC_MATERIALIZATION_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MATERIALIZATION_TASK__DISABLED = BASIC_MATERIALIZATION_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1415,7 +1424,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1424,20 +1433,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int MATERIALIZATION_TASK__DOCUMENTATION = BASIC_MATERIALIZATION_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MATERIALIZATION_TASK__DISABLED = BASIC_MATERIALIZATION_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Target Platform</b></em>' attribute.
@@ -1662,9 +1662,18 @@ public interface SetupPackage extends EPackage
   int REDIRECTION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1673,7 +1682,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1682,20 +1691,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int REDIRECTION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Source URL</b></em>' attribute.
@@ -1743,9 +1743,18 @@ public interface SetupPackage extends EPackage
   int CONTEXT_VARIABLE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTEXT_VARIABLE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1754,7 +1763,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1763,20 +1772,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CONTEXT_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1833,9 +1833,18 @@ public interface SetupPackage extends EPackage
   int API_BASELINE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1844,7 +1853,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1853,20 +1862,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -1914,9 +1914,18 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1925,7 +1934,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1934,20 +1943,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2013,9 +2013,18 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_PREFERENCE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ECLIPSE_PREFERENCE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2024,7 +2033,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2033,20 +2042,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ECLIPSE_PREFERENCE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -2094,9 +2094,18 @@ public interface SetupPackage extends EPackage
   int WORKING_SET_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int WORKING_SET_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2105,7 +2114,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2114,20 +2123,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int WORKING_SET_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
@@ -2166,9 +2166,18 @@ public interface SetupPackage extends EPackage
   int RESOURCE_COPY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_COPY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2177,7 +2186,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2186,20 +2195,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int RESOURCE_COPY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Source URL</b></em>' attribute.
@@ -2247,9 +2247,18 @@ public interface SetupPackage extends EPackage
   int RESOURCE_CREATION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CREATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2258,7 +2267,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2267,20 +2276,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int RESOURCE_CREATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Content</b></em>' attribute.
@@ -2337,9 +2337,18 @@ public interface SetupPackage extends EPackage
   int TEXT_MODIFY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_MODIFY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2348,7 +2357,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2357,20 +2366,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TEXT_MODIFY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute.
@@ -2445,9 +2445,18 @@ public interface SetupPackage extends EPackage
   int KEY_BINDING_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEY_BINDING_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2456,7 +2465,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+        	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2465,20 +2474,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int KEY_BINDING_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Scheme</b></em>' attribute.
@@ -2598,9 +2598,18 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2609,7 +2618,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2618,20 +2627,11 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int MYLYN_QUERY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MYLYN_QUERY_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Connector Kind</b></em>' attribute.

@@ -25,10 +25,10 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getRestrictions <em>Restrictions</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getExcludedTriggers <em>Excluded Triggers</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation <em>Documentation</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}</li>
  * </ul>
  * </p>
  *

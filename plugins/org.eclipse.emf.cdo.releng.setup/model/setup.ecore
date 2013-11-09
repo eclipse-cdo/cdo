@@ -56,12 +56,12 @@
         eType="#//SetupTask"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="restrictions" upperBound="-1"
         eType="#//ConfigurableItem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="disabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="#//SetupTaskScope"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="excludedTriggers" lowerBound="1"
         eType="#//TriggerSet" defaultValueLiteral=""/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="disabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SetupTaskContainer" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="setupTasks" upperBound="-1"

@@ -70,10 +70,10 @@
     <genClasses image="false" ecoreClass="setup.ecore#//SetupTask">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//SetupTask/requirements"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//SetupTask/restrictions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/disabled"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/scope"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/excludedTriggers"/>
       <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/documentation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/disabled"/>
       <genOperations ecoreOperation="setup.ecore#//SetupTask/requires">
         <genParameters ecoreParameter="setup.ecore#//SetupTask/requires/setupTask"/>
       </genOperations>
@@ -110,7 +110,8 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//P2Repository/p2Task"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Repository/url"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="setup.ecore#//BasicMaterializationTask">
+    <genClasses image="false" ecoreClass="setup.ecore#//BasicMaterializationTask"
+        labelFeature="#//setup/BasicMaterializationTask/targetPlatform">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BasicMaterializationTask/targetPlatform"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BasicMaterializationTask/bundlePool"/>
     </genClasses>
@@ -170,7 +171,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/targetURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/encoding"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//TextModifyTask">
+    <genClasses ecoreClass="setup.ecore#//TextModifyTask" labelFeature="#//setup/TextModifyTask/url">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModifyTask/url"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TextModifyTask/modifications"/>
     </genClasses>

@@ -840,7 +840,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getSetupTask_Scope()
   {
-    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -850,7 +850,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getSetupTask_ExcludedTriggers()
   {
-    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -860,7 +860,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getSetupTask_Documentation()
   {
-    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -870,7 +870,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getSetupTask_Disabled()
   {
-    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1771,10 +1771,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     setupTaskEClass = createEClass(SETUP_TASK);
     createEReference(setupTaskEClass, SETUP_TASK__REQUIREMENTS);
     createEReference(setupTaskEClass, SETUP_TASK__RESTRICTIONS);
+    createEAttribute(setupTaskEClass, SETUP_TASK__DISABLED);
     createEAttribute(setupTaskEClass, SETUP_TASK__SCOPE);
     createEAttribute(setupTaskEClass, SETUP_TASK__EXCLUDED_TRIGGERS);
     createEAttribute(setupTaskEClass, SETUP_TASK__DOCUMENTATION);
-    createEAttribute(setupTaskEClass, SETUP_TASK__DISABLED);
 
     setupTaskContainerEClass = createEClass(SETUP_TASK_CONTAINER);
     createEReference(setupTaskContainerEClass, SETUP_TASK_CONTAINER__SETUP_TASKS);
@@ -2048,6 +2048,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getSetupTask_Restrictions(), getConfigurableItem(), null, "restrictions", null, 0, -1,
         SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSetupTask_Disabled(), ecorePackage.getEBoolean(), "disabled", null, 0, 1, SetupTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSetupTask_Scope(), getSetupTaskScope(), "scope", null, 0, 1, SetupTask.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getSetupTask_ExcludedTriggers(), getTriggerSet(), "excludedTriggers", "", 1, 1, SetupTask.class,
@@ -2055,8 +2057,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getSetupTask_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1,
         SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getSetupTask_Disabled(), ecorePackage.getEBoolean(), "disabled", null, 0, 1, SetupTask.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     op = addEOperation(setupTaskEClass, ecorePackage.getEBoolean(), "requires", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, getSetupTask(), "setupTask", 0, 1, IS_UNIQUE, IS_ORDERED);

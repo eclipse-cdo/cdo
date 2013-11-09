@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -122,8 +121,7 @@ public class BasicMaterializationTaskItemProvider extends SetupTaskItemProvider 
   @Override
   public String getText(Object object)
   {
-    SetupTaskScope labelValue = ((BasicMaterializationTask)object).getScope();
-    String label = labelValue == null ? null : labelValue.toString();
+    String label = ((BasicMaterializationTask)object).getTargetPlatform();
     return label == null || label.length() == 0 ? getString("_UI_BasicMaterializationTask_type")
         : getString("_UI_BasicMaterializationTask_type") + " " + label;
   }

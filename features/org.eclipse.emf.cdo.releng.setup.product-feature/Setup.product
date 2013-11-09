@@ -27,7 +27,6 @@ configuration</programArgs>
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -45,6 +44,5 @@ configuration</programArgs>
       <feature id="org.eclipse.rcp"/>
       <feature id="org.eclipse.equinox.p2.core.feature"/>
    </features>
-
 
 </product>

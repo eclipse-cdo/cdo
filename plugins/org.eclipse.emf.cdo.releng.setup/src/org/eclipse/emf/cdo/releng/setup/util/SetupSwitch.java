@@ -42,7 +42,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
-import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
@@ -449,20 +448,6 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseSetupTask(eclipsePreferenceTask);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.STRING_VARIABLE_TASK:
-    {
-      StringVariableTask stringVariableTask = (StringVariableTask)theEObject;
-      T result = caseStringVariableTask(stringVariableTask);
-      if (result == null)
-      {
-        result = caseSetupTask(stringVariableTask);
       }
       if (result == null)
       {
@@ -1133,22 +1118,6 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseBuckminsterImportTask(BuckminsterImportTask object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>String Variable Task</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>String Variable Task</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStringVariableTask(StringVariableTask object)
   {
     return null;
   }

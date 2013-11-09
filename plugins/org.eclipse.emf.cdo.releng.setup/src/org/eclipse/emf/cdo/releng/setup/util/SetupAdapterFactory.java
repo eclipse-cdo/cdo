@@ -42,7 +42,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
-import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
@@ -265,12 +264,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseStringVariableTask(StringVariableTask object)
-    {
-      return createStringVariableTaskAdapter();
-    }
-
-    @Override
     public Adapter caseWorkingSetTask(WorkingSetTask object)
     {
       return createWorkingSetTaskAdapter();
@@ -446,21 +439,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createP2TaskAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.StringVariableTask <em>String Variable Task</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.StringVariableTask
-   * @generated
-   */
-  public Adapter createStringVariableTaskAdapter()
   {
     return null;
   }

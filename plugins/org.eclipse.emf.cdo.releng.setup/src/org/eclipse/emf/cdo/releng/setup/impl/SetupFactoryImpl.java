@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
-import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -146,8 +145,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createGitCloneTask();
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
       return createEclipsePreferenceTask();
-    case SetupPackage.STRING_VARIABLE_TASK:
-      return createStringVariableTask();
     case SetupPackage.WORKING_SET_TASK:
       return createWorkingSetTask();
     case SetupPackage.RESOURCE_COPY_TASK:
@@ -576,17 +573,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     BuckminsterImportTaskImpl buckminsterImportTask = new BuckminsterImportTaskImpl();
     return buckminsterImportTask;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StringVariableTask createStringVariableTask()
-  {
-    StringVariableTaskImpl stringVariableTask = new StringVariableTaskImpl();
-    return stringVariableTask;
   }
 
   /**

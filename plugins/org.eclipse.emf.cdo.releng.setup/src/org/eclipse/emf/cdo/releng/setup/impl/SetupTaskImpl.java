@@ -124,20 +124,20 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   protected static final boolean DISABLED_EDEFAULT = false;
 
   /**
-  	 * The cached value of the '{@link #isDisabled() <em>Disabled</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #isDisabled() <em>Disabled</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #isDisabled()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #isDisabled()
+   * @generated
+   * @ordered
+   */
   protected boolean disabled = DISABLED_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected SetupTaskImpl()
   {
     super();
@@ -261,10 +261,10 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setDisabled(boolean newDisabled)
   {
     boolean oldDisabled = disabled;

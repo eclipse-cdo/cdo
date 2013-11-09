@@ -45,7 +45,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
-import org.eclipse.emf.cdo.releng.setup.StringVariableTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -119,13 +118,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass p2TaskEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass stringVariableTaskEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -672,46 +664,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getStringVariableTask()
-  {
-    return stringVariableTaskEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getStringVariableTask_Name()
-  {
-    return (EAttribute)stringVariableTaskEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getStringVariableTask_Value()
-  {
-    return (EAttribute)stringVariableTaskEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getStringVariableTask_Description()
-  {
-    return (EAttribute)stringVariableTaskEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getInstallableUnit()
   {
     return installableUnitEClass;
@@ -878,10 +830,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getWorkingSetTask()
   {
     return workingSetTaskEClass;
@@ -1192,6 +1144,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getContextVariableTask_StringSubstitution()
+  {
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getResourceCreationTask()
   {
     return resourceCreationTaskEClass;
@@ -1748,6 +1710,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION);
 
     apiBaselineTaskEClass = createEClass(API_BASELINE_TASK);
     createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__VERSION);
@@ -1762,11 +1725,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     eclipsePreferenceTaskEClass = createEClass(ECLIPSE_PREFERENCE_TASK);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__KEY);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__VALUE);
-
-    stringVariableTaskEClass = createEClass(STRING_VARIABLE_TASK);
-    createEAttribute(stringVariableTaskEClass, STRING_VARIABLE_TASK__NAME);
-    createEAttribute(stringVariableTaskEClass, STRING_VARIABLE_TASK__VALUE);
-    createEAttribute(stringVariableTaskEClass, STRING_VARIABLE_TASK__DESCRIPTION);
 
     workingSetTaskEClass = createEClass(WORKING_SET_TASK);
     createEReference(workingSetTaskEClass, WORKING_SET_TASK__WORKING_SETS);
@@ -1874,7 +1832,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
     eclipsePreferenceTaskEClass.getESuperTypes().add(getSetupTask());
-    stringVariableTaskEClass.getESuperTypes().add(getSetupTask());
     workingSetTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCreationTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2070,6 +2027,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
         ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_StringSubstitution(), ecorePackage.getEBoolean(), "stringSubstitution", null,
+        0, 1, ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(apiBaselineTaskEClass, ApiBaselineTask.class, "ApiBaselineTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2100,18 +2060,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEclipsePreferenceTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
         EclipsePreferenceTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(stringVariableTaskEClass, StringVariableTask.class, "StringVariableTask", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getStringVariableTask_Name(), ecorePackage.getEString(), "name", null, 0, 1,
-        StringVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStringVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
-        StringVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStringVariableTask_Description(), ecorePackage.getEString(), "description", null, 0, 1,
-        StringVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(workingSetTaskEClass, WorkingSetTask.class, "WorkingSetTask", !IS_ABSTRACT, !IS_INTERFACE,

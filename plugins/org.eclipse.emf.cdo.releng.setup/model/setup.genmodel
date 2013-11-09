@@ -70,6 +70,7 @@
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/scope"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/excludedTriggers"/>
       <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/documentation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/disabled"/>
       <genOperations ecoreOperation="setup.ecore#//SetupTask/requires">
         <genParameters ecoreParameter="setup.ecore#//SetupTask/requires/setupTask"/>
       </genOperations>
@@ -126,6 +127,7 @@
     <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/stringSubstitution"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ApiBaselineTask" labelFeature="#//setup/ApiBaselineTask/version">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/version"/>
@@ -140,11 +142,6 @@
     <genClasses ecoreClass="setup.ecore#//EclipsePreferenceTask" labelFeature="#//setup/EclipsePreferenceTask/key">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipsePreferenceTask/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipsePreferenceTask/value"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//StringVariableTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//StringVariableTask/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//StringVariableTask/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//StringVariableTask/description"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//WorkingSetTask">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//WorkingSetTask/workingSets"/>

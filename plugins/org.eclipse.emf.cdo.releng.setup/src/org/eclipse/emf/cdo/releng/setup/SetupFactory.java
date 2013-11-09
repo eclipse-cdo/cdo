@@ -256,15 +256,6 @@ public interface SetupFactory extends EFactory
   BuckminsterImportTask createBuckminsterImportTask();
 
   /**
-   * Returns a new object of class '<em>String Variable Task</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>String Variable Task</em>'.
-   * @generated
-   */
-  StringVariableTask createStringVariableTask();
-
-  /**
    * Returns a new object of class '<em>Preferences</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

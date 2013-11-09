@@ -13,10 +13,17 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
+import org.eclipse.emf.cdo.releng.setup.Trigger;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.core.variables.IStringVariableManager;
+import org.eclipse.core.variables.IValueVariable;
+import org.eclipse.core.variables.VariablesPlugin;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#isStringSubstitution <em>String Substitution</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,10 +83,34 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   protected String value = VALUE_EDEFAULT;
 
   /**
+   * The default value of the '{@link #isStringSubstitution() <em>String Substitution</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #isStringSubstitution()
    * @generated
+   * @ordered
    */
+  protected static final boolean STRING_SUBSTITUTION_EDEFAULT = false;
+
+  /**
+  	 * The cached value of the '{@link #isStringSubstitution() <em>String Substitution</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #isStringSubstitution()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected boolean stringSubstitution = STRING_SUBSTITUTION_EDEFAULT;
+
+  private IValueVariable cachedVariable;
+
+  private String expandedValue;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ContextVariableTaskImpl()
   {
     super();
@@ -150,6 +182,32 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isStringSubstitution()
+  {
+    return stringSubstitution;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setStringSubstitution(boolean newStringSubstitution)
+  {
+    boolean oldStringSubstitution = stringSubstitution;
+    stringSubstitution = newStringSubstitution;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION,
+          oldStringSubstitution, stringSubstitution));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -159,6 +217,8 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
       return getName();
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
       return getValue();
+    case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
+      return isStringSubstitution();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -178,6 +238,9 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
       return;
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
       setValue((String)newValue);
+      return;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
+      setStringSubstitution((Boolean)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -199,6 +262,9 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
       setValue(VALUE_EDEFAULT);
       return;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
+      setStringSubstitution(STRING_SUBSTITUTION_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -217,6 +283,8 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
       return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+    case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
+      return stringSubstitution != STRING_SUBSTITUTION_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -239,19 +307,59 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     result.append(name);
     result.append(", value: ");
     result.append(value);
+    result.append(", stringSubstitution: ");
+    result.append(stringSubstitution);
     result.append(')');
     return result.toString();
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    String expandedValue = context.expandString(getValue());
-    context.put(getName(), expandedValue);
+    if (!isStringSubstitution() || context.getTrigger() == Trigger.BOOTSTRAP)
+    {
+      String expandedValue = context.expandString(getValue());
+      context.put(getName(), expandedValue);
+      return false;
+    }
+
+    IStringVariableManager manager = VariablesPlugin.getDefault().getStringVariableManager();
+    IValueVariable variable = manager.getValueVariable(getName());
+
+    cachedVariable = variable;
+    expandedValue = context.expandString(getValue());
+
+    if (variable == null)
+    {
+      return true;
+    }
+
+    if (!expandedValue.equals(variable.getValue()))
+    {
+      return true;
+    }
+
+    if (!StringUtil.safe(getDocumentation()).equals(StringUtil.safe(variable.getDescription())))
+    {
+      return true;
+    }
+
     return false;
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    context.log("Setting string substitution variable " + getName() + " = " + expandedValue);
+
+    IValueVariable variable = cachedVariable;
+    if (variable == null)
+    {
+      IStringVariableManager manager = VariablesPlugin.getDefault().getStringVariableManager();
+      variable = manager.newValueVariable(getName(), null);
+      manager.addVariables(new IValueVariable[] { variable });
+    }
+
+    variable.setDescription(getDocumentation());
+    variable.setValue(expandedValue);
   }
 
 } // ContextVariableTaskImpl

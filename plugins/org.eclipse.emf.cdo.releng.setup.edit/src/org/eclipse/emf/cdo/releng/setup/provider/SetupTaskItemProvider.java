@@ -281,10 +281,10 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public boolean hasChildren(Object object)
   {

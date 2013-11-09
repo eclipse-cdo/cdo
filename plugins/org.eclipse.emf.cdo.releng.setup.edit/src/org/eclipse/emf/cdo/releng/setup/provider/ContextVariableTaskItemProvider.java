@@ -65,6 +65,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
 
       addNamePropertyDescriptor(object);
       addValuePropertyDescriptor(object);
+      addStringSubstitutionPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -104,11 +105,28 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-   * This returns ContextVariableTask.gif.
+   * This adds a property descriptor for the String Substitution feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected void addStringSubstitutionPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_ContextVariableTask_stringSubstitution_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ContextVariableTask_stringSubstitution_feature",
+            "_UI_ContextVariableTask_type"), SetupPackage.Literals.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION, true,
+        false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * This returns ContextVariableTask.gif.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object getImage(Object object)
   {
@@ -166,6 +184,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
     {
     case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
+    case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

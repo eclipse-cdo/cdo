@@ -722,31 +722,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.StringVariableTask} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected StringVariableTaskItemProvider stringVariableTaskItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.StringVariableTask}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createStringVariableTaskAdapter()
-  {
-    if (stringVariableTaskItemProvider == null)
-    {
-      stringVariableTaskItemProvider = new StringVariableTaskItemProvider(this);
-    }
-
-    return stringVariableTaskItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Preferences} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1037,10 +1012,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (eclipsePreferenceTaskItemProvider != null)
     {
       eclipsePreferenceTaskItemProvider.dispose();
-    }
-    if (stringVariableTaskItemProvider != null)
-    {
-      stringVariableTaskItemProvider.dispose();
     }
     if (workingSetTaskItemProvider != null)
     {

@@ -157,21 +157,21 @@ public interface SetupTask extends EObject
   boolean isDisabled();
 
   /**
-  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @param value the new value of the '<em>Disabled</em>' attribute.
-  	 * @see #isDisabled()
-  	 * @generated
-  	 */
+   * @param value the new value of the '<em>Disabled</em>' attribute.
+   * @see #isDisabled()
+   * @generated
+   */
   void setDisabled(boolean value);
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @model
-  	 * @generated
-  	 */
+   * @model
+   * @generated
+   */
   boolean requires(SetupTask setupTask);
 
   /**

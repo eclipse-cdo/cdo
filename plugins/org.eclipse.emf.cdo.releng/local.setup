@@ -11,8 +11,6 @@
     <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
     <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
-    <installableUnits id="org.eclipse.mylyn.github.feature.feature.group"/>
-    <installableUnits id="org.eclipse.mylyn.hudson.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.ide_feature.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.java_feature.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.pde_feature.feature.group"/>

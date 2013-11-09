@@ -33,7 +33,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Configuration</em>'.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @return a new object of class '<em>Configuration</em>'.
    * @generated
    */
@@ -184,12 +184,12 @@ public interface SetupFactory extends EFactory
   MylynQueryTask createMylynQueryTask();
 
   /**
-  	 * Returns a new object of class '<em>Automatic Source Locator</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Automatic Source Locator</em>'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Automatic Source Locator</em>'.
-  	 * @generated
-  	 */
+   * @return a new object of class '<em>Automatic Source Locator</em>'.
+   * @generated
+   */
   AutomaticSourceLocator createAutomaticSourceLocator();
 
   /**

@@ -30,6 +30,9 @@
     <genDataTypes ecoreDataType="setup.ecore#//TriggerSet"/>
     <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
+    <genClasses ecoreClass="setup.ecore#//TopLevelElement">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TopLevelElement/toolVersion"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//EclipseVersion">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//EclipseVersion/configuration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipseVersion/version"/>
@@ -124,6 +127,18 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/type"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//SourceLocator"/>
+    <genClasses ecoreClass="setup.ecore#//ManualSourceLocator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/componentNamePattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/componentTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//AutomaticSourceLocator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/rootFolder"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//RedirectionTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/sourceURL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/targetURL"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
@@ -176,17 +191,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/value"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//ManualSourceLocator">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/location"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/componentNamePattern"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ManualSourceLocator/componentTypes"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//AutomaticSourceLocator">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/rootFolder"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//RedirectionTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/sourceURL"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/targetURL"/>
+    <genClasses ecoreClass="setup.ecore#//MylynQueryTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/connectorKind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/summary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/url"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

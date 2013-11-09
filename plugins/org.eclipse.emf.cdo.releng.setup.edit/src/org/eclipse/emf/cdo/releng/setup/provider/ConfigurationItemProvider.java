@@ -116,7 +116,7 @@ public class ConfigurationItemProvider extends ItemProviderAdapter implements IE
   /**
    * This returns Configuration.gif.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -145,7 +145,8 @@ public class ConfigurationItemProvider extends ItemProviderAdapter implements IE
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_Configuration_type");
+    Configuration configuration = (Configuration)object;
+    return getString("_UI_Configuration_type") + " " + configuration.getToolVersion();
   }
 
   /**
@@ -192,7 +193,7 @@ public class ConfigurationItemProvider extends ItemProviderAdapter implements IE
   /**
    * Return the resource locator for this item provider's resources.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
   @Override

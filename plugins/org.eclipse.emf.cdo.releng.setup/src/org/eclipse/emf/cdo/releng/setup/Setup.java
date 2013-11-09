@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Setup extends EObject
+public interface Setup extends TopLevelElement
 {
   /**
    * Returns the value of the '<em><b>Branch</b></em>' reference.

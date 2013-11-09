@@ -99,7 +99,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Configuration} instances.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected ConfigurationItemProvider configurationItemProvider;
@@ -505,11 +505,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   protected MylynQueryTaskItemProvider mylynQueryTaskItemProvider;
 
   /**
-  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask}.
-  	 * <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask}.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Adapter createMylynQueryTaskAdapter()
   {
@@ -522,11 +522,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
-  	 * <!-- begin-user-doc -->
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected AutomaticSourceLocatorItemProvider automaticSourceLocatorItemProvider;
 
   /**

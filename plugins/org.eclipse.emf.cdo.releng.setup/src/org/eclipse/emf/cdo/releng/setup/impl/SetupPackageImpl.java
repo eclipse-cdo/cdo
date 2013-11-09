@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
@@ -75,6 +76,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass topLevelElementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   private EClass configurationEClass = null;
@@ -199,10 +207,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EClass mylynQueryTaskEClass = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EClass automaticSourceLocatorEClass = null;
 
   /**
@@ -438,6 +446,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTopLevelElement()
+  {
+    return topLevelElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTopLevelElement_ToolVersion()
+  {
+    return (EAttribute)topLevelElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EClass getConfiguration()
@@ -1076,40 +1104,40 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getMylynQueryTask_ConnectorKind()
   {
     return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getMylynQueryTask_Summary()
   {
     return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getMylynQueryTask_Url()
   {
     return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getAutomaticSourceLocator()
   {
     return automaticSourceLocatorEClass;
@@ -1708,6 +1736,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     isCreated = true;
 
     // Create classes and their features
+    topLevelElementEClass = createEClass(TOP_LEVEL_ELEMENT);
+    createEAttribute(topLevelElementEClass, TOP_LEVEL_ELEMENT__TOOL_VERSION);
+
     eclipseVersionEClass = createEClass(ECLIPSE_VERSION);
     createEReference(eclipseVersionEClass, ECLIPSE_VERSION__CONFIGURATION);
     createEAttribute(eclipseVersionEClass, ECLIPSE_VERSION__VERSION);
@@ -1910,10 +1941,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     // Add supertypes to classes
     eclipseVersionEClass.getESuperTypes().add(getConfigurableItem());
+    configurationEClass.getESuperTypes().add(getTopLevelElement());
     configurableItemEClass.getESuperTypes().add(getSetupTaskContainer());
     projectEClass.getESuperTypes().add(getConfigurableItem());
+    projectEClass.getESuperTypes().add(getTopLevelElement());
     branchEClass.getESuperTypes().add(getConfigurableItem());
     preferencesEClass.getESuperTypes().add(getSetupTaskContainer());
+    preferencesEClass.getESuperTypes().add(getTopLevelElement());
+    setupEClass.getESuperTypes().add(getTopLevelElement());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTask());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTaskContainer());
     oneTimeSetupTaskEClass.getESuperTypes().add(getSetupTask());
@@ -1938,6 +1973,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
+    initEClass(topLevelElementEClass, TopLevelElement.class, "TopLevelElement", IS_ABSTRACT, IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTopLevelElement_ToolVersion(), ecorePackage.getEInt(), "toolVersion", null, 1, 1,
+        TopLevelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEclipseVersion_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(),

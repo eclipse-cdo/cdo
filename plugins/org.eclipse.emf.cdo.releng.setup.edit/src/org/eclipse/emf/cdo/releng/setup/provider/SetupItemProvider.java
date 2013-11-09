@@ -150,7 +150,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   /**
    * This returns Setup.gif.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -179,7 +179,8 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_Setup_type");
+    Setup setup = (Setup)object;
+    return getString("_UI_Setup_type") + " " + setup.getToolVersion();
   }
 
   /**
@@ -222,7 +223,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   /**
    * Return the resource locator for this item provider's resources.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
   @Override

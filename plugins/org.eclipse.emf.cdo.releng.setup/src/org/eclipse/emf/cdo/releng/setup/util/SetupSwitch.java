@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.ecore.EObject;
@@ -115,6 +116,16 @@ public class SetupSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
+    case SetupPackage.TOP_LEVEL_ELEMENT:
+    {
+      TopLevelElement topLevelElement = (TopLevelElement)theEObject;
+      T result = caseTopLevelElement(topLevelElement);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.ECLIPSE_VERSION:
     {
       EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
@@ -137,6 +148,10 @@ public class SetupSwitch<T> extends Switch<T>
     {
       Configuration configuration = (Configuration)theEObject;
       T result = caseConfiguration(configuration);
+      if (result == null)
+      {
+        result = caseTopLevelElement(configuration);
+      }
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -164,6 +179,10 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseConfigurableItem(project);
+      }
+      if (result == null)
+      {
+        result = caseTopLevelElement(project);
       }
       if (result == null)
       {
@@ -203,6 +222,10 @@ public class SetupSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
+        result = caseTopLevelElement(preferences);
+      }
+      if (result == null)
+      {
         result = defaultCase(theEObject);
       }
       return result;
@@ -211,6 +234,10 @@ public class SetupSwitch<T> extends Switch<T>
     {
       Setup setup = (Setup)theEObject;
       T result = caseSetup(setup);
+      if (result == null)
+      {
+        result = caseTopLevelElement(setup);
+      }
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -609,11 +636,27 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Top Level Element</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Top Level Element</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTopLevelElement(TopLevelElement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
+   * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Preferences</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -961,16 +1004,16 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-  	 * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
-  	 * @param object the target of the switch.
-  	 * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
-  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-  	 * @generated
-  	 */
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
   public T caseAutomaticSourceLocator(AutomaticSourceLocator object)
   {
     return null;

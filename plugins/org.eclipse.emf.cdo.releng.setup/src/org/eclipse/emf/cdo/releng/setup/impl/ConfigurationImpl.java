@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -32,6 +34,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl#getToolVersion <em>Tool Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl#getEclipseVersions <em>Eclipse Versions</em>}</li>
  * </ul>
@@ -42,9 +45,29 @@ import java.util.Collection;
 public class ConfigurationImpl extends MinimalEObjectImpl.Container implements Configuration
 {
   /**
-   * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
+   * The default value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getToolVersion()
+   * @generated
+   * @ordered
+   */
+  protected static final int TOOL_VERSION_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getToolVersion()
+   * @generated
+   * @ordered
+   */
+  protected int toolVersion = TOOL_VERSION_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getProjects()
    * @generated
    * @ordered
@@ -85,6 +108,32 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public int getToolVersion()
+  {
+    return toolVersion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setToolVersion(int newToolVersion)
+  {
+    int oldToolVersion = toolVersion;
+    toolVersion = newToolVersion;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.CONFIGURATION__TOOL_VERSION, oldToolVersion,
+          toolVersion));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EList<Project> getProjects()
@@ -159,6 +208,8 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+    case SetupPackage.CONFIGURATION__TOOL_VERSION:
+      return getToolVersion();
     case SetupPackage.CONFIGURATION__PROJECTS:
       return getProjects();
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
@@ -178,6 +229,9 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+    case SetupPackage.CONFIGURATION__TOOL_VERSION:
+      setToolVersion((Integer)newValue);
+      return;
     case SetupPackage.CONFIGURATION__PROJECTS:
       getProjects().clear();
       getProjects().addAll((Collection<? extends Project>)newValue);
@@ -200,6 +254,9 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+    case SetupPackage.CONFIGURATION__TOOL_VERSION:
+      setToolVersion(TOOL_VERSION_EDEFAULT);
+      return;
     case SetupPackage.CONFIGURATION__PROJECTS:
       getProjects().clear();
       return;
@@ -220,12 +277,34 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+    case SetupPackage.CONFIGURATION__TOOL_VERSION:
+      return toolVersion != TOOL_VERSION_EDEFAULT;
     case SetupPackage.CONFIGURATION__PROJECTS:
       return projects != null && !projects.isEmpty();
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       return eclipseVersions != null && !eclipseVersions.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (toolVersion: ");
+    result.append(toolVersion);
+    result.append(')');
+    return result.toString();
   }
 
 } // ConfigurationImpl

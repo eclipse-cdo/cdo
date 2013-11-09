@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="setup" nsURI="http://www.eclipse.org/CDO/releng/setup/1.0" nsPrefix="setup">
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelElement" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolVersion" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EclipseVersion" eSuperTypes="#//ConfigurableItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
         eOpposite="#//Configuration/eclipseVersions"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Configuration">
+  <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//TopLevelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" lowerBound="1"
         upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
         upperBound="-1" eType="#//EclipseVersion" containment="true" eOpposite="#//EclipseVersion/configuration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//SetupTaskContainer"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem">
+  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem #//TopLevelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
         transient="true" eOpposite="#//Configuration/projects"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="branches" lowerBound="1"
@@ -25,12 +29,12 @@
         eOpposite="#//Project/branches"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Preferences" eSuperTypes="#//SetupTaskContainer">
+  <eClassifiers xsi:type="ecore:EClass" name="Preferences" eSuperTypes="#//SetupTaskContainer #//TopLevelElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="installFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="gitPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Setup">
+  <eClassifiers xsi:type="ecore:EClass" name="Setup" eSuperTypes="#//TopLevelElement">
     <eOperations name="getSetupTasks" upperBound="-1" eType="#//SetupTask">
       <eParameters name="filterRestrictions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eParameters name="trigger" eType="#//Trigger"/>

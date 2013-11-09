@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getToolVersion <em>Tool Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getGitPrefix <em>Git Prefix</em>}</li>
@@ -35,9 +37,29 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class PreferencesImpl extends SetupTaskContainerImpl implements Preferences
 {
   /**
-   * The default value of the '{@link #getUserName() <em>User Name</em>}' attribute.
+   * The default value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getToolVersion()
+   * @generated
+   * @ordered
+   */
+  protected static final int TOOL_VERSION_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getToolVersion()
+   * @generated
+   * @ordered
+   */
+  protected int toolVersion = TOOL_VERSION_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getUserName() <em>User Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getUserName()
    * @generated
    * @ordered
@@ -118,6 +140,32 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public int getToolVersion()
+  {
+    return toolVersion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setToolVersion(int newToolVersion)
+  {
+    int oldToolVersion = toolVersion;
+    toolVersion = newToolVersion;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__TOOL_VERSION, oldToolVersion,
+          toolVersion));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public String getUserName()
@@ -202,6 +250,8 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
+    case SetupPackage.PREFERENCES__TOOL_VERSION:
+      return getToolVersion();
     case SetupPackage.PREFERENCES__USER_NAME:
       return getUserName();
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
@@ -222,6 +272,9 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
+    case SetupPackage.PREFERENCES__TOOL_VERSION:
+      setToolVersion((Integer)newValue);
+      return;
     case SetupPackage.PREFERENCES__USER_NAME:
       setUserName((String)newValue);
       return;
@@ -245,6 +298,9 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
+    case SetupPackage.PREFERENCES__TOOL_VERSION:
+      setToolVersion(TOOL_VERSION_EDEFAULT);
+      return;
     case SetupPackage.PREFERENCES__USER_NAME:
       setUserName(USER_NAME_EDEFAULT);
       return;
@@ -268,6 +324,8 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
+    case SetupPackage.PREFERENCES__TOOL_VERSION:
+      return toolVersion != TOOL_VERSION_EDEFAULT;
     case SetupPackage.PREFERENCES__USER_NAME:
       return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
@@ -284,6 +342,48 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * @generated
    */
   @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == TopLevelElement.class)
+    {
+      switch (derivedFeatureID)
+      {
+      case SetupPackage.PREFERENCES__TOOL_VERSION:
+        return SetupPackage.TOP_LEVEL_ELEMENT__TOOL_VERSION;
+      default:
+        return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == TopLevelElement.class)
+    {
+      switch (baseFeatureID)
+      {
+      case SetupPackage.TOP_LEVEL_ELEMENT__TOOL_VERSION:
+        return SetupPackage.PREFERENCES__TOOL_VERSION;
+      default:
+        return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String toString()
   {
     if (eIsProxy())
@@ -292,7 +392,9 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (userName: ");
+    result.append(" (toolVersion: ");
+    result.append(toolVersion);
+    result.append(", userName: ");
     result.append(userName);
     result.append(", installFolder: ");
     result.append(installFolder);

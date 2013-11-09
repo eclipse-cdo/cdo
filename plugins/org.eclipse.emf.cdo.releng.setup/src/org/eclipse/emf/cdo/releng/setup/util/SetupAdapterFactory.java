@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -115,6 +116,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    */
   protected SetupSwitch<Adapter> modelSwitch = new SetupSwitch<Adapter>()
   {
+    @Override
+    public Adapter caseTopLevelElement(TopLevelElement object)
+    {
+      return createTopLevelElementAdapter();
+    }
+
     @Override
     public Adapter caseEclipseVersion(EclipseVersion object)
     {
@@ -353,11 +360,26 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TopLevelElement <em>Top Level Element</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.TopLevelElement
+   * @generated
+   */
+  public Adapter createTopLevelElementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
+   * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.Configuration
    * @generated
@@ -623,15 +645,15 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+   * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-  	 * @return the new adapter.
-  	 * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
-  	 * @generated
-  	 */
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * @generated
+   */
   public Adapter createAutomaticSourceLocatorAdapter()
   {
     return null;

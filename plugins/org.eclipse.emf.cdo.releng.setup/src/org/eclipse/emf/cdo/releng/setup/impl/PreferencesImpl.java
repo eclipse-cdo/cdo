@@ -135,7 +135,9 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     String oldUserName = userName;
     userName = newUserName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__USER_NAME, oldUserName, userName));
+    }
   }
 
   /**
@@ -158,8 +160,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     String oldInstallFolder = installFolder;
     installFolder = newInstallFolder;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__INSTALL_FOLDER, oldInstallFolder,
           installFolder));
+    }
   }
 
   /**
@@ -182,8 +186,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     String oldGitPrefix = gitPrefix;
     gitPrefix = newGitPrefix;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__GIT_PREFIX, oldGitPrefix,
           gitPrefix));
+    }
   }
 
   /**
@@ -281,7 +287,9 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userName: ");

@@ -157,8 +157,10 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     String oldTargetPlatform = targetPlatform;
     targetPlatform = newTargetPlatform;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM,
           oldTargetPlatform, targetPlatform));
+    }
   }
 
   /**
@@ -181,8 +183,10 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     String oldBundlePool = bundlePool;
     bundlePool = newBundlePool;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL,
           oldBundlePool, bundlePool));
+    }
   }
 
   /**
@@ -271,7 +275,9 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (targetPlatform: ");

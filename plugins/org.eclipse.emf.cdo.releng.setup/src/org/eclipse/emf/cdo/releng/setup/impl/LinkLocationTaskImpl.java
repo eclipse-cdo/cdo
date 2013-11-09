@@ -123,7 +123,9 @@ public class LinkLocationTaskImpl extends SetupTaskImpl implements LinkLocationT
     String oldPath = path;
     path = newPath;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.LINK_LOCATION_TASK__PATH, oldPath, path));
+    }
   }
 
   /**
@@ -146,7 +148,9 @@ public class LinkLocationTaskImpl extends SetupTaskImpl implements LinkLocationT
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.LINK_LOCATION_TASK__NAME, oldName, name));
+    }
   }
 
   /**
@@ -234,7 +238,9 @@ public class LinkLocationTaskImpl extends SetupTaskImpl implements LinkLocationT
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (path: ");

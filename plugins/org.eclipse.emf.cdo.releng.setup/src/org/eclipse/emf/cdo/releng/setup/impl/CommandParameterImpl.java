@@ -115,7 +115,9 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__ID, oldId, id));
+    }
   }
 
   /**
@@ -138,7 +140,9 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -226,7 +230,9 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");

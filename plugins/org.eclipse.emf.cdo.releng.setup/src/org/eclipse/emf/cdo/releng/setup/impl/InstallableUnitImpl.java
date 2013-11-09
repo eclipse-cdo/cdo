@@ -87,7 +87,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   public P2Task getP2Task()
   {
     if (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK)
+    {
       return null;
+    }
     return (P2Task)eContainer();
   }
 
@@ -99,7 +101,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   public P2Task basicGetP2Task()
   {
     if (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK)
+    {
       return null;
+    }
     return (P2Task)eInternalContainer();
   }
 
@@ -121,24 +125,34 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
    */
   public void setP2Task(P2Task newP2Task)
   {
-    if (newP2Task != eInternalContainer()
-        || (eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK && newP2Task != null))
+    if (newP2Task != eInternalContainer() || eContainerFeatureID() != SetupPackage.INSTALLABLE_UNIT__P2_TASK
+        && newP2Task != null)
     {
       if (EcoreUtil.isAncestor(this, newP2Task))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newP2Task != null)
+      {
         msgs = ((InternalEObject)newP2Task).eInverseAdd(this, SetupPackage.P2_TASK__INSTALLABLE_UNITS, P2Task.class,
             msgs);
+      }
       msgs = basicSetP2Task(newP2Task, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__P2_TASK, newP2Task,
           newP2Task));
+    }
   }
 
   /**
@@ -161,7 +175,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__ID, oldId, id));
+    }
   }
 
   /**
@@ -176,7 +192,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     {
     case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetP2Task((P2Task)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -226,7 +244,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     {
     case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
       if (resolve)
+      {
         return getP2Task();
+      }
       return basicGetP2Task();
     case SetupPackage.INSTALLABLE_UNIT__ID:
       return getId();
@@ -301,7 +321,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");

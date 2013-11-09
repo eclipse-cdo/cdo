@@ -28,6 +28,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getExcludedTriggers <em>Excluded Triggers</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation <em>Documentation</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -140,11 +141,37 @@ public interface SetupTask extends EObject
   void setDocumentation(String value);
 
   /**
+   * Returns the value of the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Disabled</em>' attribute.
+   * @see #setDisabled(boolean)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetupTask_Disabled()
    * @model
    * @generated
    */
+  boolean isDisabled();
+
+  /**
+  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @param value the new value of the '<em>Disabled</em>' attribute.
+  	 * @see #isDisabled()
+  	 * @generated
+  	 */
+  void setDisabled(boolean value);
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @model
+  	 * @generated
+  	 */
   boolean requires(SetupTask setupTask);
 
   /**

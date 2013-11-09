@@ -10,18 +10,17 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import java.util.Collection;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
@@ -131,8 +130,10 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
     String oldLocation = location;
     location = newLocation;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MANUAL_SOURCE_LOCATOR__LOCATION, oldLocation,
           location));
+    }
   }
 
   /**
@@ -155,8 +156,10 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
     String oldComponentNamePattern = componentNamePattern;
     componentNamePattern = newComponentNamePattern;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MANUAL_SOURCE_LOCATOR__COMPONENT_NAME_PATTERN,
           oldComponentNamePattern, componentNamePattern));
+    }
   }
 
   /**
@@ -272,7 +275,9 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (location: ");
@@ -285,4 +290,4 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
     return result.toString();
   }
 
-} //ManualSourceLocatorImpl
+} // ManualSourceLocatorImpl

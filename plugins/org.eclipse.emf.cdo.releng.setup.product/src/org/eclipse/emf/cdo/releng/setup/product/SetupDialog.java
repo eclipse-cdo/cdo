@@ -54,9 +54,14 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
+import org.eclipse.equinox.p2.engine.IProfile;
+import org.eclipse.equinox.p2.engine.IProfileRegistry;
+import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.operations.ProvisioningJob;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
+import org.eclipse.equinox.p2.query.IQueryResult;
+import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -121,8 +126,6 @@ public class SetupDialog extends TitleAreaDialog
   public static final int RETURN_WORKBENCH = -2;
 
   public static final int RETURN_RESTART = -3;
-
-  private static final String TRAIN_URL = "http://download.eclipse.org/releases/luna";
 
   private static final String SETUP_URI = System.getProperty("setup.uri",
       "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.setup")
@@ -338,13 +341,13 @@ public class SetupDialog extends TitleAreaDialog
     Group grpPreferences = new Group(container, SWT.NONE);
     grpPreferences.setLayout(new GridLayout(3, false));
     grpPreferences.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    grpPreferences.setText("Preferences");
+    // grpPreferences.setText("Preferences");
     grpPreferences.setBounds(0, 0, 70, 82);
 
     Label userNameLabel = new Label(grpPreferences, SWT.NONE);
     userNameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     userNameLabel.setBounds(0, 0, 55, 15);
-    userNameLabel.setText("User Name:");
+    userNameLabel.setText("Git User ID:");
 
     userNameText = new Text(grpPreferences, SWT.BORDER);
     userNameText
@@ -367,7 +370,7 @@ public class SetupDialog extends TitleAreaDialog
     Button editButton = new Button(grpPreferences, SWT.NONE);
     editButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     editButton.setBounds(0, 0, 75, 25);
-    editButton.setText("Settings...");
+    editButton.setText("Preferences...");
     editButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
@@ -438,6 +441,8 @@ public class SetupDialog extends TitleAreaDialog
     });
 
     Button gitPrefixButton = new Button(grpPreferences, SWT.NONE);
+    gitPrefixButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    gitPrefixButton.setBounds(0, 0, 75, 25);
     gitPrefixButton.setText("Browse...");
     gitPrefixButton.addSelectionListener(new SelectionAdapter()
     {
@@ -548,7 +553,6 @@ public class SetupDialog extends TitleAreaDialog
 
           try
           {
-            addRepository(agent, TRAIN_URL, sub.newChild(200));
             addRepository(agent, SetupTaskPerformer.RELENG_URL, sub.newChild(200));
           }
           catch (ProvisionException ex)
@@ -557,7 +561,21 @@ public class SetupDialog extends TitleAreaDialog
           }
 
           ProvisioningSession session = new ProvisioningSession(agent);
-          UpdateOperation operation = new UpdateOperation(session);
+          IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
+          IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
+          IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
+
+          List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
+          for (IInstallableUnit installableUnit : queryResult)
+          {
+            String id = installableUnit.getId();
+            if (id.startsWith("org.eclipse.emf.cdo") || id.startsWith("org.eclipse.net4j"))
+            {
+              ius.add(installableUnit);
+            }
+          }
+
+          UpdateOperation operation = new UpdateOperation(session, ius);
           IStatus status = operation.resolveModal(sub.newChild(300));
           if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
           {
@@ -687,7 +705,7 @@ public class SetupDialog extends TitleAreaDialog
 
       File rootFolder = new File(System.getProperty("user.home", "."));
 
-      userNameText.setText(safe(System.getProperty("user.name", "<username>")).toLowerCase());
+      userNameText.setText("anonymous");
       installFolderText.setText(safe(getAbsolutePath(rootFolder)));
       gitPrefixText.setText(safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix()))));
     }

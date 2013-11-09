@@ -86,7 +86,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   public Configuration getConfiguration()
   {
     if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
+    {
       return null;
+    }
     return (Configuration)eContainer();
   }
 
@@ -98,7 +100,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   public Configuration basicGetConfiguration()
   {
     if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
+    {
       return null;
+    }
     return (Configuration)eInternalContainer();
   }
 
@@ -121,23 +125,33 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   public void setConfiguration(Configuration newConfiguration)
   {
     if (newConfiguration != eInternalContainer()
-        || (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION && newConfiguration != null))
+        || eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION && newConfiguration != null)
     {
       if (EcoreUtil.isAncestor(this, newConfiguration))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newConfiguration != null)
+      {
         msgs = ((InternalEObject)newConfiguration).eInverseAdd(this, SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS,
             Configuration.class, msgs);
+      }
       msgs = basicSetConfiguration(newConfiguration, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__CONFIGURATION,
           newConfiguration, newConfiguration));
+    }
   }
 
   /**
@@ -160,7 +174,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
     String oldVersion = version;
     version = newVersion;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__VERSION, oldVersion, version));
+    }
   }
 
   /**
@@ -175,7 +191,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
     {
     case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetConfiguration((Configuration)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -226,7 +244,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
     {
     case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
       if (resolve)
+      {
         return getConfiguration();
+      }
       return basicGetConfiguration();
     case SetupPackage.ECLIPSE_VERSION__VERSION:
       return getVersion();
@@ -301,7 +321,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (version: ");

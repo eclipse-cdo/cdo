@@ -86,7 +86,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   public Project getProject()
   {
     if (eContainerFeatureID() != SetupPackage.BRANCH__PROJECT)
+    {
       return null;
+    }
     return (Project)eContainer();
   }
 
@@ -98,7 +100,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   public Project basicGetProject()
   {
     if (eContainerFeatureID() != SetupPackage.BRANCH__PROJECT)
+    {
       return null;
+    }
     return (Project)eInternalContainer();
   }
 
@@ -120,22 +124,32 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
    */
   public void setProject(Project newProject)
   {
-    if (newProject != eInternalContainer()
-        || (eContainerFeatureID() != SetupPackage.BRANCH__PROJECT && newProject != null))
+    if (newProject != eInternalContainer() || eContainerFeatureID() != SetupPackage.BRANCH__PROJECT
+        && newProject != null)
     {
       if (EcoreUtil.isAncestor(this, newProject))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newProject != null)
+      {
         msgs = ((InternalEObject)newProject).eInverseAdd(this, SetupPackage.PROJECT__BRANCHES, Project.class, msgs);
+      }
       msgs = basicSetProject(newProject, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__PROJECT, newProject, newProject));
+    }
   }
 
   /**
@@ -158,7 +172,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BRANCH__NAME, oldName, name));
+    }
   }
 
   /**
@@ -173,7 +189,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
     {
     case SetupPackage.BRANCH__PROJECT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetProject((Project)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -223,7 +241,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
     {
     case SetupPackage.BRANCH__PROJECT:
       if (resolve)
+      {
         return getProject();
+      }
       return basicGetProject();
     case SetupPackage.BRANCH__NAME:
       return getName();
@@ -298,7 +318,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

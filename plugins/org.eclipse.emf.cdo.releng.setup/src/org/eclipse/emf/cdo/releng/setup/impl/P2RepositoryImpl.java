@@ -87,7 +87,9 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
   public P2Task getP2Task()
   {
     if (eContainerFeatureID() != SetupPackage.P2_REPOSITORY__P2_TASK)
+    {
       return null;
+    }
     return (P2Task)eContainer();
   }
 
@@ -99,7 +101,9 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
   public P2Task basicGetP2Task()
   {
     if (eContainerFeatureID() != SetupPackage.P2_REPOSITORY__P2_TASK)
+    {
       return null;
+    }
     return (P2Task)eInternalContainer();
   }
 
@@ -121,23 +125,33 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
    */
   public void setP2Task(P2Task newP2Task)
   {
-    if (newP2Task != eInternalContainer()
-        || (eContainerFeatureID() != SetupPackage.P2_REPOSITORY__P2_TASK && newP2Task != null))
+    if (newP2Task != eInternalContainer() || eContainerFeatureID() != SetupPackage.P2_REPOSITORY__P2_TASK
+        && newP2Task != null)
     {
       if (EcoreUtil.isAncestor(this, newP2Task))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newP2Task != null)
+      {
         msgs = ((InternalEObject)newP2Task)
             .eInverseAdd(this, SetupPackage.P2_TASK__P2_REPOSITORIES, P2Task.class, msgs);
+      }
       msgs = basicSetP2Task(newP2Task, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_REPOSITORY__P2_TASK, newP2Task, newP2Task));
+    }
   }
 
   /**
@@ -160,7 +174,9 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     String oldUrl = url;
     url = newUrl;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_REPOSITORY__URL, oldUrl, url));
+    }
   }
 
   /**
@@ -175,7 +191,9 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     {
     case SetupPackage.P2_REPOSITORY__P2_TASK:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetP2Task((P2Task)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -225,7 +243,9 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     {
     case SetupPackage.P2_REPOSITORY__P2_TASK:
       if (resolve)
+      {
         return getP2Task();
+      }
       return basicGetP2Task();
     case SetupPackage.P2_REPOSITORY__URL:
       return getUrl();
@@ -300,7 +320,9 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

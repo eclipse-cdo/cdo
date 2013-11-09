@@ -111,6 +111,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
       addScopePropertyDescriptor(object);
       addExcludedTriggersPropertyDescriptor(object);
       addDocumentationPropertyDescriptor(object);
+      addDisabledPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -264,10 +265,26 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
   }
 
   /**
+   * This adds a property descriptor for the Disabled feature.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected void addDisabledPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_SetupTask_disabled_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_SetupTask_disabled_feature", "_UI_SetupTask_type"),
+        SetupPackage.Literals.SETUP_TASK__DISABLED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+        null, null));
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public boolean hasChildren(Object object)
   {
@@ -317,6 +334,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
     case SetupPackage.SETUP_TASK__SCOPE:
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
     case SetupPackage.SETUP_TASK__DOCUMENTATION:
+    case SetupPackage.SETUP_TASK__DISABLED:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

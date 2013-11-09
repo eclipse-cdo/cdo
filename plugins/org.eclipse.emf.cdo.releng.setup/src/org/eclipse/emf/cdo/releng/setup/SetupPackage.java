@@ -534,13 +534,22 @@ public interface SetupPackage extends EPackage
   int SETUP_TASK__DOCUMENTATION = 4;
 
   /**
-   * The number of structural features of the '<em>Task</em>' class.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SETUP_TASK_FEATURE_COUNT = 5;
+  int SETUP_TASK__DISABLED = 5;
+
+  /**
+  	 * The number of structural features of the '<em>Task</em>' class.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int SETUP_TASK_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl <em>Working Set Task</em>}' class.
@@ -608,12 +617,21 @@ public interface SetupPackage extends EPackage
   int COMPOUND_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int COMPOUND_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int COMPOUND_SETUP_TASK__SETUP_TASKS = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -690,12 +708,21 @@ public interface SetupPackage extends EPackage
   int ONE_TIME_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int ONE_TIME_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Id</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int ONE_TIME_SETUP_TASK__ID = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -783,12 +810,21 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_INI_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Option</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int ECLIPSE_INI_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Option</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int ECLIPSE_INI_TASK__OPTION = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -864,12 +900,21 @@ public interface SetupPackage extends EPackage
   int LINK_LOCATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int LINK_LOCATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Path</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int LINK_LOCATION_TASK__PATH = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -936,12 +981,21 @@ public interface SetupPackage extends EPackage
   int P2_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int P2_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int P2_TASK__P2_REPOSITORIES = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1072,12 +1126,21 @@ public interface SetupPackage extends EPackage
   int BASIC_MATERIALIZATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Target Platform</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int BASIC_MATERIALIZATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Target Platform</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1144,12 +1207,21 @@ public interface SetupPackage extends EPackage
   int BUCKMINSTER_IMPORT_TASK__DOCUMENTATION = BASIC_MATERIALIZATION_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Target Platform</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int BUCKMINSTER_IMPORT_TASK__DISABLED = BASIC_MATERIALIZATION_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Target Platform</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM = BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM;
 
   /**
@@ -1305,12 +1377,21 @@ public interface SetupPackage extends EPackage
   int MATERIALIZATION_TASK__DOCUMENTATION = BASIC_MATERIALIZATION_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Target Platform</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int MATERIALIZATION_TASK__DISABLED = BASIC_MATERIALIZATION_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Target Platform</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int MATERIALIZATION_TASK__TARGET_PLATFORM = BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM;
 
   /**
@@ -1460,12 +1541,21 @@ public interface SetupPackage extends EPackage
   int CONTEXT_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int CONTEXT_VARIABLE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int CONTEXT_VARIABLE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1532,12 +1622,21 @@ public interface SetupPackage extends EPackage
   int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Version</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Version</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int API_BASELINE_TASK__VERSION = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1604,12 +1703,21 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int GIT_CLONE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1694,12 +1802,21 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_PREFERENCE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int ECLIPSE_PREFERENCE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Key</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int ECLIPSE_PREFERENCE_TASK__KEY = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1766,12 +1883,21 @@ public interface SetupPackage extends EPackage
   int STRING_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int STRING_VARIABLE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int STRING_VARIABLE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1847,12 +1973,21 @@ public interface SetupPackage extends EPackage
   int WORKING_SET_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int WORKING_SET_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int WORKING_SET_TASK__WORKING_SETS = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1910,12 +2045,21 @@ public interface SetupPackage extends EPackage
   int RESOURCE_COPY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Source URL</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int RESOURCE_COPY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Source URL</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+          	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int RESOURCE_COPY_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -1982,12 +2126,21 @@ public interface SetupPackage extends EPackage
   int RESOURCE_CREATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Content</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int RESOURCE_CREATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Content</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int RESOURCE_CREATION_TASK__CONTENT = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -2063,12 +2216,21 @@ public interface SetupPackage extends EPackage
   int TEXT_MODIFY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Url</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int TEXT_MODIFY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Url</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+          	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int TEXT_MODIFY_TASK__URL = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -2162,12 +2324,21 @@ public interface SetupPackage extends EPackage
   int KEY_BINDING_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Scheme</b></em>' attribute.
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
+  int KEY_BINDING_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Scheme</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int KEY_BINDING_TASK__SCHEME = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
@@ -2867,13 +3038,24 @@ public interface SetupPackage extends EPackage
   EAttribute getSetupTask_Documentation();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask <em>Working Set Task</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Working Set Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.WorkingSetTask
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Disabled</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled()
+   * @see #getSetupTask()
    * @generated
    */
+  EAttribute getSetupTask_Disabled();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask <em>Working Set Task</em>}'.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Working Set Task</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.WorkingSetTask
+  	 * @generated
+  	 */
   EClass getWorkingSetTask();
 
   /**
@@ -4066,13 +4248,21 @@ public interface SetupPackage extends EPackage
     EAttribute SETUP_TASK__DOCUMENTATION = eINSTANCE.getSetupTask_Documentation();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl <em>Working Set Task</em>}' class.
+     * The meta object literal for the '<em><b>Disabled</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
+     * <!-- end-user-doc -->
      * @generated
      */
+    EAttribute SETUP_TASK__DISABLED = eINSTANCE.getSetupTask_Disabled();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl <em>Working Set Task</em>}' class.
+    	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
+    	 * @generated
+    	 */
     EClass WORKING_SET_TASK = eINSTANCE.getWorkingSetTask();
 
     /**

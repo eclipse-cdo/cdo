@@ -877,7 +877,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -963,63 +963,121 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   public void dispose()
   {
     if (eclipseVersionItemProvider != null)
+    {
       eclipseVersionItemProvider.dispose();
+    }
     if (configurationItemProvider != null)
+    {
       configurationItemProvider.dispose();
+    }
     if (projectItemProvider != null)
+    {
       projectItemProvider.dispose();
+    }
     if (branchItemProvider != null)
+    {
       branchItemProvider.dispose();
+    }
     if (preferencesItemProvider != null)
+    {
       preferencesItemProvider.dispose();
+    }
     if (setupItemProvider != null)
+    {
       setupItemProvider.dispose();
+    }
     if (compoundSetupTaskItemProvider != null)
+    {
       compoundSetupTaskItemProvider.dispose();
+    }
     if (eclipseIniTaskItemProvider != null)
+    {
       eclipseIniTaskItemProvider.dispose();
+    }
     if (linkLocationTaskItemProvider != null)
+    {
       linkLocationTaskItemProvider.dispose();
+    }
     if (p2TaskItemProvider != null)
+    {
       p2TaskItemProvider.dispose();
+    }
     if (installableUnitItemProvider != null)
+    {
       installableUnitItemProvider.dispose();
+    }
     if (p2RepositoryItemProvider != null)
+    {
       p2RepositoryItemProvider.dispose();
+    }
     if (buckminsterImportTaskItemProvider != null)
+    {
       buckminsterImportTaskItemProvider.dispose();
+    }
     if (materializationTaskItemProvider != null)
+    {
       materializationTaskItemProvider.dispose();
+    }
     if (componentItemProvider != null)
+    {
       componentItemProvider.dispose();
+    }
     if (contextVariableTaskItemProvider != null)
+    {
       contextVariableTaskItemProvider.dispose();
+    }
     if (apiBaselineTaskItemProvider != null)
+    {
       apiBaselineTaskItemProvider.dispose();
+    }
     if (gitCloneTaskItemProvider != null)
+    {
       gitCloneTaskItemProvider.dispose();
+    }
     if (eclipsePreferenceTaskItemProvider != null)
+    {
       eclipsePreferenceTaskItemProvider.dispose();
+    }
     if (stringVariableTaskItemProvider != null)
+    {
       stringVariableTaskItemProvider.dispose();
+    }
     if (workingSetTaskItemProvider != null)
+    {
       workingSetTaskItemProvider.dispose();
+    }
     if (resourceCopyTaskItemProvider != null)
+    {
       resourceCopyTaskItemProvider.dispose();
+    }
     if (resourceCreationTaskItemProvider != null)
+    {
       resourceCreationTaskItemProvider.dispose();
+    }
     if (textModifyTaskItemProvider != null)
+    {
       textModifyTaskItemProvider.dispose();
+    }
     if (textModificationItemProvider != null)
+    {
       textModificationItemProvider.dispose();
+    }
     if (keyBindingTaskItemProvider != null)
+    {
       keyBindingTaskItemProvider.dispose();
+    }
     if (commandParameterItemProvider != null)
+    {
       commandParameterItemProvider.dispose();
+    }
     if (manualSourceLocatorItemProvider != null)
+    {
       manualSourceLocatorItemProvider.dispose();
+    }
     if (automaticSourceLocatorItemProvider != null)
+    {
       automaticSourceLocatorItemProvider.dispose();
+    }
   }
 
 }

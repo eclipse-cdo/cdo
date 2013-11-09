@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -59,6 +60,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import java.util.Set;
 
 /**
@@ -398,7 +400,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public static SetupPackage init()
   {
     if (isInited)
+    {
       return (SetupPackage)EPackage.Registry.INSTANCE.getEPackage(SetupPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     SetupPackageImpl theSetupPackage = (SetupPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SetupPackageImpl ? EPackage.Registry.INSTANCE
@@ -865,9 +869,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getSetupTask_Disabled()
+  {
+    return (EAttribute)setupTaskEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getWorkingSetTask()
   {
     return workingSetTaskEClass;
@@ -1640,7 +1654,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -1679,6 +1695,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(setupTaskEClass, SETUP_TASK__SCOPE);
     createEAttribute(setupTaskEClass, SETUP_TASK__EXCLUDED_TRIGGERS);
     createEAttribute(setupTaskEClass, SETUP_TASK__DOCUMENTATION);
+    createEAttribute(setupTaskEClass, SETUP_TASK__DISABLED);
 
     setupTaskContainerEClass = createEClass(SETUP_TASK_CONTAINER);
     createEReference(setupTaskContainerEClass, SETUP_TASK_CONTAINER__SETUP_TASKS);
@@ -1820,7 +1837,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -1837,37 +1856,37 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    eclipseVersionEClass.getESuperTypes().add(this.getConfigurableItem());
-    configurableItemEClass.getESuperTypes().add(this.getSetupTaskContainer());
-    projectEClass.getESuperTypes().add(this.getConfigurableItem());
-    branchEClass.getESuperTypes().add(this.getConfigurableItem());
-    preferencesEClass.getESuperTypes().add(this.getSetupTaskContainer());
-    compoundSetupTaskEClass.getESuperTypes().add(this.getSetupTask());
-    compoundSetupTaskEClass.getESuperTypes().add(this.getSetupTaskContainer());
-    oneTimeSetupTaskEClass.getESuperTypes().add(this.getSetupTask());
-    eclipseIniTaskEClass.getESuperTypes().add(this.getSetupTask());
-    linkLocationTaskEClass.getESuperTypes().add(this.getSetupTask());
-    p2TaskEClass.getESuperTypes().add(this.getSetupTask());
-    basicMaterializationTaskEClass.getESuperTypes().add(this.getSetupTask());
-    buckminsterImportTaskEClass.getESuperTypes().add(this.getBasicMaterializationTask());
-    materializationTaskEClass.getESuperTypes().add(this.getBasicMaterializationTask());
-    contextVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
-    apiBaselineTaskEClass.getESuperTypes().add(this.getSetupTask());
-    gitCloneTaskEClass.getESuperTypes().add(this.getSetupTask());
-    eclipsePreferenceTaskEClass.getESuperTypes().add(this.getSetupTask());
-    stringVariableTaskEClass.getESuperTypes().add(this.getSetupTask());
-    workingSetTaskEClass.getESuperTypes().add(this.getSetupTask());
-    resourceCopyTaskEClass.getESuperTypes().add(this.getSetupTask());
-    resourceCreationTaskEClass.getESuperTypes().add(this.getSetupTask());
-    textModifyTaskEClass.getESuperTypes().add(this.getSetupTask());
-    keyBindingTaskEClass.getESuperTypes().add(this.getSetupTask());
-    manualSourceLocatorEClass.getESuperTypes().add(this.getSourceLocator());
-    automaticSourceLocatorEClass.getESuperTypes().add(this.getSourceLocator());
+    eclipseVersionEClass.getESuperTypes().add(getConfigurableItem());
+    configurableItemEClass.getESuperTypes().add(getSetupTaskContainer());
+    projectEClass.getESuperTypes().add(getConfigurableItem());
+    branchEClass.getESuperTypes().add(getConfigurableItem());
+    preferencesEClass.getESuperTypes().add(getSetupTaskContainer());
+    compoundSetupTaskEClass.getESuperTypes().add(getSetupTask());
+    compoundSetupTaskEClass.getESuperTypes().add(getSetupTaskContainer());
+    oneTimeSetupTaskEClass.getESuperTypes().add(getSetupTask());
+    eclipseIniTaskEClass.getESuperTypes().add(getSetupTask());
+    linkLocationTaskEClass.getESuperTypes().add(getSetupTask());
+    p2TaskEClass.getESuperTypes().add(getSetupTask());
+    basicMaterializationTaskEClass.getESuperTypes().add(getSetupTask());
+    buckminsterImportTaskEClass.getESuperTypes().add(getBasicMaterializationTask());
+    materializationTaskEClass.getESuperTypes().add(getBasicMaterializationTask());
+    contextVariableTaskEClass.getESuperTypes().add(getSetupTask());
+    apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
+    gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
+    eclipsePreferenceTaskEClass.getESuperTypes().add(getSetupTask());
+    stringVariableTaskEClass.getESuperTypes().add(getSetupTask());
+    workingSetTaskEClass.getESuperTypes().add(getSetupTask());
+    resourceCopyTaskEClass.getESuperTypes().add(getSetupTask());
+    resourceCreationTaskEClass.getESuperTypes().add(getSetupTask());
+    textModifyTaskEClass.getESuperTypes().add(getSetupTask());
+    keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
+    manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
+    automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEclipseVersion_Configuration(), this.getConfiguration(), this.getConfiguration_EclipseVersions(),
+    initEReference(getEclipseVersion_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(),
         "configuration", null, 0, 1, EclipseVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEclipseVersion_Version(), ecorePackage.getEString(), "version", null, 0, 1, EclipseVersion.class,
@@ -1875,31 +1894,30 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConfiguration_Projects(), this.getProject(), this.getProject_Configuration(), "projects", null,
-        1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 1, -1,
+        Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConfiguration_EclipseVersions(), this.getEclipseVersion(),
-        this.getEclipseVersion_Configuration(), "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getConfiguration_EclipseVersions(), getEclipseVersion(), getEclipseVersion_Configuration(),
+        "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configurableItemEClass, ConfigurableItem.class, "ConfigurableItem", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProject_Configuration(), this.getConfiguration(), this.getConfiguration_Projects(),
-        "configuration", null, 0, 1, Project.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProject_Branches(), this.getBranch(), this.getBranch_Project(), "branches", null, 1, -1,
-        Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_Configuration(), getConfiguration(), getConfiguration_Projects(), "configuration", null,
+        0, 1, Project.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_Branches(), getBranch(), getBranch_Project(), "branches", null, 1, -1, Project.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProject_Name(), ecorePackage.getEString(), "name", null, 0, 1, Project.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(branchEClass, Branch.class, "Branch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBranch_Project(), this.getProject(), this.getProject_Branches(), "project", null, 0, 1,
-        Branch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBranch_Project(), getProject(), getProject_Branches(), "project", null, 0, 1, Branch.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBranch_Name(), ecorePackage.getEString(), "name", null, 0, 1, Branch.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1914,46 +1932,47 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(setupEClass, Setup.class, "Setup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSetup_Branch(), this.getBranch(), null, "branch", null, 1, 1, Setup.class, !IS_TRANSIENT,
+    initEReference(getSetup_Branch(), getBranch(), null, "branch", null, 1, 1, Setup.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getSetup_EclipseVersion(), this.getEclipseVersion(), null, "eclipseVersion", null, 1, 1,
-        Setup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSetup_Preferences(), this.getPreferences(), null, "preferences", null, 1, 1, Setup.class,
+    initEReference(getSetup_EclipseVersion(), getEclipseVersion(), null, "eclipseVersion", null, 1, 1, Setup.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getSetup_Preferences(), getPreferences(), null, "preferences", null, 1, 1, Setup.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
-    EOperation op = addEOperation(setupEClass, this.getSetupTask(), "getSetupTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
+    EOperation op = addEOperation(setupEClass, getSetupTask(), "getSetupTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEBoolean(), "filterRestrictions", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getTrigger(), "trigger", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getTrigger(), "trigger", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(setupTaskEClass, SetupTask.class, "SetupTask", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSetupTask_Requirements(), this.getSetupTask(), null, "requirements", null, 0, -1,
+    initEReference(getSetupTask_Requirements(), getSetupTask(), null, "requirements", null, 0, -1, SetupTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getSetupTask_Restrictions(), getConfigurableItem(), null, "restrictions", null, 0, -1,
         SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSetupTask_Restrictions(), this.getConfigurableItem(), null, "restrictions", null, 0, -1,
-        SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSetupTask_Scope(), this.getSetupTaskScope(), "scope", null, 0, 1, SetupTask.class, IS_TRANSIENT,
+    initEAttribute(getSetupTask_Scope(), getSetupTaskScope(), "scope", null, 0, 1, SetupTask.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSetupTask_ExcludedTriggers(), this.getTriggerSet(), "excludedTriggers", "", 1, 1,
-        SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEAttribute(getSetupTask_ExcludedTriggers(), getTriggerSet(), "excludedTriggers", "", 1, 1, SetupTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSetupTask_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1,
         SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+    initEAttribute(getSetupTask_Disabled(), ecorePackage.getEBoolean(), "disabled", null, 0, 1, SetupTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     op = addEOperation(setupTaskEClass, ecorePackage.getEBoolean(), "requires", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getSetupTask(), "setupTask", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getSetupTask(), "setupTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    addEOperation(setupTaskEClass, this.getTriggerSet(), "getValidTriggers", 1, 1, IS_UNIQUE, IS_ORDERED);
+    addEOperation(setupTaskEClass, getTriggerSet(), "getValidTriggers", 1, 1, IS_UNIQUE, IS_ORDERED);
 
-    addEOperation(setupTaskEClass, this.getTriggerSet(), "getTriggers", 1, 1, IS_UNIQUE, IS_ORDERED);
+    addEOperation(setupTaskEClass, getTriggerSet(), "getTriggers", 1, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(setupTaskContainerEClass, SetupTaskContainer.class, "SetupTaskContainer", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSetupTaskContainer_SetupTasks(), this.getSetupTask(), null, "setupTasks", null, 0, -1,
+    initEReference(getSetupTaskContainer_SetupTasks(), getSetupTask(), null, "setupTasks", null, 0, -1,
         SetupTaskContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1984,24 +2003,24 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2TaskEClass, P2Task.class, "P2Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getP2Task_P2Repositories(), this.getP2Repository(), this.getP2Repository_P2Task(), "p2Repositories",
+    initEReference(getP2Task_P2Repositories(), getP2Repository(), getP2Repository_P2Task(), "p2Repositories", null, 1,
+        -1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getP2Task_InstallableUnits(), getInstallableUnit(), getInstallableUnit_P2Task(), "installableUnits",
         null, 1, -1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getP2Task_InstallableUnits(), this.getInstallableUnit(), this.getInstallableUnit_P2Task(),
-        "installableUnits", null, 1, -1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(installableUnitEClass, InstallableUnit.class, "InstallableUnit", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstallableUnit_P2Task(), this.getP2Task(), this.getP2Task_InstallableUnits(), "p2Task", null, 0,
-        1, InstallableUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getInstallableUnit_P2Task(), getP2Task(), getP2Task_InstallableUnits(), "p2Task", null, 0, 1,
+        InstallableUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInstallableUnit_Id(), ecorePackage.getEString(), "id", null, 0, 1, InstallableUnit.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2RepositoryEClass, P2Repository.class, "P2Repository", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getP2Repository_P2Task(), this.getP2Task(), this.getP2Task_P2Repositories(), "p2Task", null, 0, 1,
+    initEReference(getP2Repository_P2Task(), getP2Task(), getP2Task_P2Repositories(), "p2Task", null, 0, 1,
         P2Repository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getP2Repository_Url(), ecorePackage.getEString(), "url", null, 0, 1, P2Repository.class,
@@ -2024,20 +2043,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(materializationTaskEClass, MaterializationTask.class, "MaterializationTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMaterializationTask_RootComponents(), this.getComponent(), null, "rootComponents", null, 1, -1,
+    initEReference(getMaterializationTask_RootComponents(), getComponent(), null, "rootComponents", null, 1, -1,
         MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMaterializationTask_SourceLocators(), this.getSourceLocator(), null, "sourceLocators", null, 0,
-        -1, MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getMaterializationTask_SourceLocators(), getSourceLocator(), null, "sourceLocators", null, 0, -1,
+        MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMaterializationTask_P2Repositories(), this.getP2Repository(), null, "p2Repositories", null, 0,
-        -1, MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getMaterializationTask_P2Repositories(), getP2Repository(), null, "p2Repositories", null, 0, -1,
+        MaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 1, 1, Component.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getComponent_Type(), this.getComponentType(), "type", null, 1, 1, Component.class, !IS_TRANSIENT,
+    initEAttribute(getComponent_Type(), getComponentType(), "type", null, 1, 1, Component.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sourceLocatorEClass, SourceLocator.class, "SourceLocator", IS_ABSTRACT, !IS_INTERFACE,
@@ -2126,7 +2145,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getTextModifyTask_Url(), ecorePackage.getEString(), "url", null, 0, 1, TextModifyTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTextModifyTask_Modifications(), this.getTextModification(), null, "modifications", null, 0, -1,
+    initEReference(getTextModifyTask_Modifications(), getTextModification(), null, "modifications", null, 0, -1,
         TextModifyTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2156,8 +2175,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getKeyBindingTask_Command(), ecorePackage.getEString(), "command", null, 0, 1, KeyBindingTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getKeyBindingTask_CommandParameters(), this.getCommandParameter(), null, "commandParameters", null,
-        0, -1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getKeyBindingTask_CommandParameters(), getCommandParameter(), null, "commandParameters", null, 0,
+        -1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(commandParameterEClass, CommandParameter.class, "CommandParameter", !IS_ABSTRACT, !IS_INTERFACE,
@@ -2175,7 +2194,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getManualSourceLocator_ComponentNamePattern(), ecorePackage.getEString(), "componentNamePattern",
         null, 0, 1, ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getManualSourceLocator_ComponentTypes(), this.getComponentType(), "componentTypes", null, 1, -1,
+    initEAttribute(getManualSourceLocator_ComponentTypes(), getComponentType(), "componentTypes", null, 1, -1,
         ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 

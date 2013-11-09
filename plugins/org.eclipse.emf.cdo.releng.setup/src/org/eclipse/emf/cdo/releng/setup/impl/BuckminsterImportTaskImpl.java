@@ -97,8 +97,10 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
     String oldMspec = mspec;
     mspec = newMspec;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BUCKMINSTER_IMPORT_TASK__MSPEC, oldMspec,
           mspec));
+    }
   }
 
   /**
@@ -176,7 +178,9 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (mspec: ");

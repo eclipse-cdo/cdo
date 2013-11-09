@@ -185,7 +185,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__NAME, oldName, name));
+    }
   }
 
   /**
@@ -208,8 +210,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldRemoteName = remoteName;
     remoteName = newRemoteName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__REMOTE_NAME, oldRemoteName,
           remoteName));
+    }
   }
 
   /**
@@ -232,8 +236,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldRemoteURI = remoteURI;
     remoteURI = newRemoteURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__REMOTE_URI, oldRemoteURI,
           remoteURI));
+    }
   }
 
   /**
@@ -256,8 +262,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     String oldCheckoutBranch = checkoutBranch;
     checkoutBranch = newCheckoutBranch;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH,
           oldCheckoutBranch, checkoutBranch));
+    }
   }
 
   /**
@@ -366,7 +374,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -622,6 +632,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       command.setName(checkoutBranch);
       command.setStartPoint("refs/remotes/origin/" + checkoutBranch);
       command.call();
+
+      StoredConfig config = git.getRepository().getConfig();
+      config.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION, checkoutBranch, ConfigConstants.CONFIG_KEY_REBASE, true);
+      config.save();
     }
 
     private static void checkout(SetupTaskContext context, Git git, String checkoutBranch) throws Exception

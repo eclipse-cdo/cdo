@@ -97,7 +97,9 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ONE_TIME_SETUP_TASK__ID, oldId, id));
+    }
   }
 
   /**
@@ -175,7 +177,9 @@ public abstract class OneTimeSetupTaskImpl extends SetupTaskImpl implements OneT
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (id: ");

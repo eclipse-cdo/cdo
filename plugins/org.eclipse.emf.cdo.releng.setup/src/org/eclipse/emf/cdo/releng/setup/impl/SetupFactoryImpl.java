@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -163,6 +164,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createManualSourceLocator();
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
       return createAutomaticSourceLocator();
+    case SetupPackage.REDIRECTION_TASK:
+      return createRedirectionTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -411,9 +414,20 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public RedirectionTask createRedirectionTask()
+  {
+    RedirectionTaskImpl redirectionTask = new RedirectionTaskImpl();
+    return redirectionTask;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public ManualSourceLocator createManualSourceLocator()
   {
     ManualSourceLocatorImpl manualSourceLocator = new ManualSourceLocatorImpl();

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -25,18 +25,16 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.core.runtime.Path;
-
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ContextVariableTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class RedirectionTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -45,7 +43,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
    * <!-- end-user-doc -->
    * @generated
    */
-  public ContextVariableTaskItemProvider(AdapterFactory adapterFactory)
+  public RedirectionTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -63,66 +61,48 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
     {
       super.getPropertyDescriptors(object);
 
-      addNamePropertyDescriptor(object);
-      addValuePropertyDescriptor(object);
-      addStringSubstitutionPropertyDescriptor(object);
+      addSourceURLPropertyDescriptor(object);
+      addTargetURLPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Name feature.
+   * This adds a property descriptor for the Source URL feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addNamePropertyDescriptor(Object object)
+  protected void addSourceURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ContextVariableTask_name_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ContextVariableTask_name_feature",
-            "_UI_ContextVariableTask_type"), SetupPackage.Literals.CONTEXT_VARIABLE_TASK__NAME, true, false, false,
+        getString("_UI_RedirectionTask_sourceURL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_RedirectionTask_sourceURL_feature",
+            "_UI_RedirectionTask_type"), SetupPackage.Literals.REDIRECTION_TASK__SOURCE_URL, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This adds a property descriptor for the Value feature.
+   * This adds a property descriptor for the Target URL feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addValuePropertyDescriptor(Object object)
+  protected void addTargetURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ContextVariableTask_value_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ContextVariableTask_value_feature",
-            "_UI_ContextVariableTask_type"), SetupPackage.Literals.CONTEXT_VARIABLE_TASK__VALUE, true, false, false,
+        getString("_UI_RedirectionTask_targetURL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_RedirectionTask_targetURL_feature",
+            "_UI_RedirectionTask_type"), SetupPackage.Literals.REDIRECTION_TASK__TARGET_URL, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This adds a property descriptor for the String Substitution feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addStringSubstitutionPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_ContextVariableTask_stringSubstitution_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ContextVariableTask_stringSubstitution_feature",
-            "_UI_ContextVariableTask_type"), SetupPackage.Literals.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION, true,
-        false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This returns ContextVariableTask.gif.
+   * This returns RedirectionTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -130,7 +110,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/ContextVariableTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/RedirectionTask"));
   }
 
   /**
@@ -145,27 +125,16 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public String getText(Object object)
   {
-    String name = ((ContextVariableTask)object).getName();
-    String value = ((ContextVariableTask)object).getValue();
-
-    if (name != null && name.length() != 0)
-    {
-      name = new Path(name).lastSegment();
-    }
-    else if (value == null || value.length() == 0)
-    {
-      return getString("_UI_ContextVariableTask_type");
-    }
-
-    return "" + name + " = " + value;
+    RedirectionTask redirectionTask = (RedirectionTask)object;
+    return "" + redirectionTask.getSourceURL() + " --> " + redirectionTask.getTargetURL();
   }
 
   /**
@@ -180,11 +149,10 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(ContextVariableTask.class))
+    switch (notification.getFeatureID(RedirectionTask.class))
     {
-    case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
-    case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
-    case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
+    case SetupPackage.REDIRECTION_TASK__SOURCE_URL:
+    case SetupPackage.REDIRECTION_TASK__TARGET_URL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

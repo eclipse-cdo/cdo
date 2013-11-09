@@ -522,11 +522,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask} instances.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected RedirectionTaskItemProvider redirectionTaskItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createRedirectionTaskAdapter()
+  {
+    if (redirectionTaskItemProvider == null)
+    {
+      redirectionTaskItemProvider = new RedirectionTaskItemProvider(this);
+    }
+
+    return redirectionTaskItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator} instances.
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ManualSourceLocatorItemProvider manualSourceLocatorItemProvider;
 
   /**
@@ -1048,6 +1073,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (automaticSourceLocatorItemProvider != null)
     {
       automaticSourceLocatorItemProvider.dispose();
+    }
+    if (redirectionTaskItemProvider != null)
+    {
+      redirectionTaskItemProvider.dispose();
     }
   }
 

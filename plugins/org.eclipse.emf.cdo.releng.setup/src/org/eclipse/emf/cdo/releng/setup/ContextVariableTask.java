@@ -83,29 +83,29 @@ public interface ContextVariableTask extends SetupTask
   void setValue(String value);
 
   /**
-  	 * Returns the value of the '<em><b>String Substitution</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>String Substitution</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <p>
   	 * If the meaning of the '<em>String Substitution</em>' attribute isn't clear,
   	 * there really should be more of a description here...
   	 * </p>
   	 * <!-- end-user-doc -->
-  	 * @return the value of the '<em>String Substitution</em>' attribute.
-  	 * @see #setStringSubstitution(boolean)
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_StringSubstitution()
-  	 * @model
-  	 * @generated
-  	 */
+   * @return the value of the '<em>String Substitution</em>' attribute.
+   * @see #setStringSubstitution(boolean)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_StringSubstitution()
+   * @model
+   * @generated
+   */
   boolean isStringSubstitution();
 
   /**
-  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#isStringSubstitution <em>String Substitution</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#isStringSubstitution <em>String Substitution</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @param value the new value of the '<em>String Substitution</em>' attribute.
-  	 * @see #isStringSubstitution()
-  	 * @generated
-  	 */
+   * @param value the new value of the '<em>String Substitution</em>' attribute.
+   * @see #isStringSubstitution()
+   * @generated
+   */
   void setStringSubstitution(boolean value);
 
 } // ContextVariableTask

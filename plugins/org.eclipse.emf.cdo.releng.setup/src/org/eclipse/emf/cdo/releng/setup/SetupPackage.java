@@ -1567,12 +1567,12 @@ public interface SetupPackage extends EPackage
   int CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-  	 * The number of structural features of the '<em>Context Variable Task</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Context Variable Task</em>' class.
+   * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONTEXT_VARIABLE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
@@ -2415,14 +2415,105 @@ public interface SetupPackage extends EPackage
   int AUTOMATIC_SOURCE_LOCATOR_FEATURE_COUNT = SOURCE_LOCATOR_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
    * <!-- begin-user-doc -->
-                   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 34;
+  int REDIRECTION_TASK = 34;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Source URL</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Target URL</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Redirection Task</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int REDIRECTION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+  	 * <!-- begin-user-doc -->
+                     * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
+  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+  	 * @generated
+  	 */
+  int SETUP_TASK_SCOPE = 35;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -2432,7 +2523,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 35;
+  int TRIGGER = 36;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -2442,7 +2533,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 36;
+  int COMPONENT_TYPE = 37;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -2452,7 +2543,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 39;
+  int URI = 40;
 
   /**
    * The meta object id for the '<em>Exception</em>' data type.
@@ -2462,7 +2553,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 38;
+  int EXCEPTION = 39;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -2472,7 +2563,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 37;
+  int TRIGGER_SET = 38;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -3172,13 +3263,45 @@ public interface SetupPackage extends EPackage
   EAttribute getAutomaticSourceLocator_RootFolder();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask <em>Redirection Task</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Manual Source Locator</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Redirection Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask
    * @generated
    */
+  EClass getRedirectionTask();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL <em>Source URL</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Source URL</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL()
+  	 * @see #getRedirectionTask()
+  	 * @generated
+  	 */
+  EAttribute getRedirectionTask_SourceURL();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL <em>Target URL</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Target URL</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL()
+  	 * @see #getRedirectionTask()
+  	 * @generated
+  	 */
+  EAttribute getRedirectionTask_TargetURL();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Manual Source Locator</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
+  	 * @generated
+  	 */
   EClass getManualSourceLocator();
 
   /**
@@ -3258,13 +3381,13 @@ public interface SetupPackage extends EPackage
   EAttribute getContextVariableTask_StringSubstitution();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Resource Creation Task</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Resource Creation Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask
+   * @generated
+   */
   EClass getResourceCreationTask();
 
   /**
@@ -4305,13 +4428,39 @@ public interface SetupPackage extends EPackage
     EAttribute AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER = eINSTANCE.getAutomaticSourceLocator_RootFolder();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
      * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
      * @generated
      */
+    EClass REDIRECTION_TASK = eINSTANCE.getRedirectionTask();
+
+    /**
+    	 * The meta object literal for the '<em><b>Source URL</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute REDIRECTION_TASK__SOURCE_URL = eINSTANCE.getRedirectionTask_SourceURL();
+
+    /**
+    	 * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute REDIRECTION_TASK__TARGET_URL = eINSTANCE.getRedirectionTask_TargetURL();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
+    	 * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
+    	 * @generated
+    	 */
     EClass MANUAL_SOURCE_LOCATOR = eINSTANCE.getManualSourceLocator();
 
     /**
@@ -4373,13 +4522,13 @@ public interface SetupPackage extends EPackage
     EAttribute CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION = eINSTANCE.getContextVariableTask_StringSubstitution();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
+     * @generated
+     */
     EClass RESOURCE_CREATION_TASK = eINSTANCE.getResourceCreationTask();
 
     /**

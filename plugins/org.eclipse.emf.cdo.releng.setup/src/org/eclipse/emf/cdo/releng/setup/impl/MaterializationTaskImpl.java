@@ -526,7 +526,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         EList<Provider> p2Providers = p2SearchPath.getProviders();
         for (P2Repository p2Repository : p2Repositories)
         {
-          String url = context.expandString(p2Repository.getUrl());
+          String url = context.redirect(URI.createURI(context.expandString(p2Repository.getUrl()))).toString();
           Provider provider = RmapFactory.eINSTANCE.createProvider();
           provider.setComponentTypesAttr("eclipse.feature,osgi.bundle");
           provider.setReaderType("p2");

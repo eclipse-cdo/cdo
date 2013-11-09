@@ -93,13 +93,13 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   protected static final boolean STRING_SUBSTITUTION_EDEFAULT = false;
 
   /**
-  	 * The cached value of the '{@link #isStringSubstitution() <em>String Substitution</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #isStringSubstitution() <em>String Substitution</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #isStringSubstitution()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #isStringSubstitution()
+   * @generated
+   * @ordered
+   */
   protected boolean stringSubstitution = STRING_SUBSTITUTION_EDEFAULT;
 
   private IValueVariable cachedVariable;
@@ -107,10 +107,10 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   private String expandedValue;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ContextVariableTaskImpl()
   {
     super();
@@ -188,10 +188,10 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setStringSubstitution(boolean newStringSubstitution)
   {
     boolean oldStringSubstitution = stringSubstitution;
@@ -204,10 +204,10 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

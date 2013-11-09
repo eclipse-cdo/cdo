@@ -184,12 +184,21 @@ public interface SetupFactory extends EFactory
   AutomaticSourceLocator createAutomaticSourceLocator();
 
   /**
-   * Returns a new object of class '<em>Manual Source Locator</em>'.
+   * Returns a new object of class '<em>Redirection Task</em>'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @return a new object of class '<em>Manual Source Locator</em>'.
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Redirection Task</em>'.
    * @generated
    */
+  RedirectionTask createRedirectionTask();
+
+  /**
+  	 * Returns a new object of class '<em>Manual Source Locator</em>'.
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @return a new object of class '<em>Manual Source Locator</em>'.
+  	 * @generated
+  	 */
   ManualSourceLocator createManualSourceLocator();
 
   /**

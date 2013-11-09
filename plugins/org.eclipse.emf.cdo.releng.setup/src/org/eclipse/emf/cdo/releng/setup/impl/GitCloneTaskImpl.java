@@ -409,7 +409,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     if (gitDelegate != null)
     {
       gitDelegate.perform(context, context.expandString(getCheckoutBranch()), context.expandString(getRemoteName()),
-          context.expandString(getRemoteURI()));
+          context.redirect(URI.createURI(context.expandString(getRemoteURI()))).toString());
     }
   }
 

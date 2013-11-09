@@ -31,6 +31,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -95,6 +97,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   private PrintStream logStream;
 
   private List<String> logMessageBuffer;
+
+  private URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
   public SetupTaskPerformer(File branchDir)
   {
@@ -240,6 +244,16 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
     result.append(string.substring(previous));
     return result.toString();
+  }
+
+  public void redirect(URI sourceURI, URI targetURI)
+  {
+    uriConverter.getURIMap().put(sourceURI, targetURI);
+  }
+
+  public URI redirect(URI uri)
+  {
+    return uriConverter.normalize(uri);
   }
 
   public OS getOS()

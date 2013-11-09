@@ -326,7 +326,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     Set<String> knownRepositories = getKnownRepositories();
     for (P2Repository p2Repository : getP2Repositories())
     {
-      String url = context.expandString(p2Repository.getUrl());
+      String url = context.redirect(
+          org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getUrl()))).toString();
       if (!knownRepositories.contains(url))
       {
         return true;
@@ -353,7 +354,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       List<URI> repos = new ArrayList<URI>();
       for (P2Repository p2Repository : getP2Repositories())
       {
-        String url = context.expandString(p2Repository.getUrl());
+        String url = context.redirect(
+            org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getUrl()))).toString();
         URI uri = new URI(url);
         context.log("Using repository " + uri);
         if (neededInstallableUnits == null)
@@ -537,6 +539,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       String value = (String)object.eGet(attribute);
       value = context.expandString(value);
+      if (attribute == SetupPackage.Literals.P2_REPOSITORY__URL)
+      {
+        value = context.redirect(org.eclipse.emf.common.util.URI.createURI(value)).toString();
+      }
+
       builder.append(value);
     }
 

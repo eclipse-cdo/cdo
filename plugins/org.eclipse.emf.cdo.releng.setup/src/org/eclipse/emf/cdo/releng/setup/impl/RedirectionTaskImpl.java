@@ -10,36 +10,30 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
+import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
-
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.URIConverter;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Resource Copy Task</b></em>'.
+ * An implementation of the model object '<em><b>Redirection Task</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl#getSourceURL <em>Source URL</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl#getTargetURL <em>Target URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl#getSourceURL <em>Source URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl#getTargetURL <em>Target URL</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyTask
+public class RedirectionTaskImpl extends SetupTaskImpl implements RedirectionTask
 {
   /**
    * The default value of the '{@link #getSourceURL() <em>Source URL</em>}' attribute.
@@ -86,7 +80,7 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ResourceCopyTaskImpl()
+  protected RedirectionTaskImpl()
   {
     super();
   }
@@ -99,7 +93,7 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   @Override
   protected EClass eStaticClass()
   {
-    return SetupPackage.Literals.RESOURCE_COPY_TASK;
+    return SetupPackage.Literals.REDIRECTION_TASK;
   }
 
   /**
@@ -123,7 +117,7 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     sourceURL = newSourceURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL, oldSourceURL,
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.REDIRECTION_TASK__SOURCE_URL, oldSourceURL,
           sourceURL));
     }
   }
@@ -149,7 +143,7 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     targetURL = newTargetURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.RESOURCE_COPY_TASK__TARGET_URL, oldTargetURL,
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.REDIRECTION_TASK__TARGET_URL, oldTargetURL,
           targetURL));
     }
   }
@@ -164,9 +158,9 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   {
     switch (featureID)
     {
-    case SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL:
+    case SetupPackage.REDIRECTION_TASK__SOURCE_URL:
       return getSourceURL();
-    case SetupPackage.RESOURCE_COPY_TASK__TARGET_URL:
+    case SetupPackage.REDIRECTION_TASK__TARGET_URL:
       return getTargetURL();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -182,10 +176,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   {
     switch (featureID)
     {
-    case SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL:
+    case SetupPackage.REDIRECTION_TASK__SOURCE_URL:
       setSourceURL((String)newValue);
       return;
-    case SetupPackage.RESOURCE_COPY_TASK__TARGET_URL:
+    case SetupPackage.REDIRECTION_TASK__TARGET_URL:
       setTargetURL((String)newValue);
       return;
     }
@@ -202,10 +196,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   {
     switch (featureID)
     {
-    case SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL:
+    case SetupPackage.REDIRECTION_TASK__SOURCE_URL:
       setSourceURL(SOURCE_URL_EDEFAULT);
       return;
-    case SetupPackage.RESOURCE_COPY_TASK__TARGET_URL:
+    case SetupPackage.REDIRECTION_TASK__TARGET_URL:
       setTargetURL(TARGET_URL_EDEFAULT);
       return;
     }
@@ -222,9 +216,9 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
   {
     switch (featureID)
     {
-    case SetupPackage.RESOURCE_COPY_TASK__SOURCE_URL:
+    case SetupPackage.REDIRECTION_TASK__SOURCE_URL:
       return SOURCE_URL_EDEFAULT == null ? sourceURL != null : !SOURCE_URL_EDEFAULT.equals(sourceURL);
-    case SetupPackage.RESOURCE_COPY_TASK__TARGET_URL:
+    case SetupPackage.REDIRECTION_TASK__TARGET_URL:
       return TARGET_URL_EDEFAULT == null ? targetURL != null : !TARGET_URL_EDEFAULT.equals(targetURL);
     }
     return super.eIsSet(featureID);
@@ -254,75 +248,12 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    URI sourceURI = context.redirect(URI.createURI(context.expandString(getSourceURL())));
-    URI targetURI = context.redirect(URI.createURI(context.expandString(getTargetURL())));
-    if (targetURI.hasTrailingPathSeparator())
-    {
-      if (sourceURI.hasTrailingPathSeparator())
-      {
-        // TODO
-      }
-      else if (URIConverter.INSTANCE.exists(sourceURI, null))
-      {
-        return !URIConverter.INSTANCE.exists(targetURI.appendSegment(sourceURI.lastSegment()), null);
-      }
-    }
-    else if (URIConverter.INSTANCE.exists(sourceURI, null))
-    {
-      return !URIConverter.INSTANCE.exists(targetURI, null);
-    }
-
+    context.redirect(URI.createURI(context.expandString(getSourceURL())),
+        URI.createURI(context.expandString(getTargetURL())));
     return false;
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    URI sourceURI = context.redirect(URI.createURI(context.expandString(getSourceURL())));
-    URI targetURI = context.redirect(URI.createURI(context.expandString(getTargetURL())));
-
-    context.log("Copying " + sourceURI + " to " + targetURI);
-
-    if (targetURI.hasTrailingPathSeparator())
-    {
-      if (sourceURI.hasTrailingPathSeparator())
-      {
-        // TODO
-      }
-      else if (URIConverter.INSTANCE.exists(sourceURI, null))
-      {
-        InputStream input = null;
-        OutputStream output = null;
-
-        try
-        {
-          input = URIConverter.INSTANCE.createInputStream(sourceURI);
-          output = URIConverter.INSTANCE.createOutputStream(targetURI.appendSegment(sourceURI.lastSegment()), null);
-          IOUtil.copy(input, output);
-        }
-        finally
-        {
-          IOUtil.closeSilent(input);
-          IOUtil.closeSilent(output);
-        }
-      }
-    }
-    else if (URIConverter.INSTANCE.exists(sourceURI, null))
-    {
-      InputStream input = null;
-      OutputStream output = null;
-
-      try
-      {
-        input = URIConverter.INSTANCE.createInputStream(sourceURI);
-        output = URIConverter.INSTANCE.createOutputStream(targetURI, null);
-        IOUtil.copy(input, output);
-      }
-      finally
-      {
-        IOUtil.closeSilent(input);
-        IOUtil.closeSilent(output);
-      }
-    }
   }
-
-} // ResourceCopyTaskImpl
+} // RedirectionTaskImpl

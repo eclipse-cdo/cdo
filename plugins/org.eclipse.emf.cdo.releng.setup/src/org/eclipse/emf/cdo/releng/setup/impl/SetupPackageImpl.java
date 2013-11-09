@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -198,9 +199,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EClass redirectionTaskEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EClass manualSourceLocatorEClass = null;
 
   /**
@@ -1071,9 +1079,39 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getRedirectionTask()
+  {
+    return redirectionTaskEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getRedirectionTask_SourceURL()
+  {
+    return (EAttribute)redirectionTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getRedirectionTask_TargetURL()
+  {
+    return (EAttribute)redirectionTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getManualSourceLocator()
   {
     return manualSourceLocatorEClass;
@@ -1150,10 +1188,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getResourceCreationTask()
   {
     return resourceCreationTaskEClass;
@@ -1767,6 +1805,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     automaticSourceLocatorEClass = createEClass(AUTOMATIC_SOURCE_LOCATOR);
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
 
+    redirectionTaskEClass = createEClass(REDIRECTION_TASK);
+    createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__SOURCE_URL);
+    createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__TARGET_URL);
+
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
@@ -1839,6 +1881,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
     manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
+    redirectionTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -2150,6 +2193,15 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAutomaticSourceLocator_RootFolder(), ecorePackage.getEString(), "rootFolder", null, 1, 1,
         AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(redirectionTaskEClass, RedirectionTask.class, "RedirectionTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRedirectionTask_SourceURL(), ecorePackage.getEString(), "sourceURL", null, 1, 1,
+        RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRedirectionTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 1, 1,
+        RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -573,6 +574,20 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.REDIRECTION_TASK:
+    {
+      RedirectionTask redirectionTask = (RedirectionTask)theEObject;
+      T result = caseRedirectionTask(redirectionTask);
+      if (result == null)
+      {
+        result = caseSetupTask(redirectionTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -931,16 +946,32 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Redirection Task</em>'.
    * <!-- begin-user-doc -->
-  	 * This implementation returns null;
-  	 * returning a non-null result will terminate the switch.
-  	 * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Redirection Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
+  public T caseRedirectionTask(RedirectionTask object)
+  {
+    return null;
+  }
+
+  /**
+  	 * Returns the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
+  	 * <!-- begin-user-doc -->
+    	 * This implementation returns null;
+    	 * returning a non-null result will terminate the switch.
+    	 * <!-- end-user-doc -->
+  	 * @param object the target of the switch.
+  	 * @return the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
+  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+  	 * @generated
+  	 */
   public T caseManualSourceLocator(ManualSourceLocator object)
   {
     return null;

@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -400,6 +401,48 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.MANUAL_SOURCE_LOCATOR:
+    {
+      ManualSourceLocator manualSourceLocator = (ManualSourceLocator)theEObject;
+      T result = caseManualSourceLocator(manualSourceLocator);
+      if (result == null)
+      {
+        result = caseSourceLocator(manualSourceLocator);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
+    {
+      AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)theEObject;
+      T result = caseAutomaticSourceLocator(automaticSourceLocator);
+      if (result == null)
+      {
+        result = caseSourceLocator(automaticSourceLocator);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.REDIRECTION_TASK:
+    {
+      RedirectionTask redirectionTask = (RedirectionTask)theEObject;
+      T result = caseRedirectionTask(redirectionTask);
+      if (result == null)
+      {
+        result = caseSetupTask(redirectionTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.CONTEXT_VARIABLE_TASK:
     {
       ContextVariableTask contextVariableTask = (ContextVariableTask)theEObject;
@@ -546,41 +589,13 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
-    case SetupPackage.MANUAL_SOURCE_LOCATOR:
+    case SetupPackage.MYLYN_QUERY_TASK:
     {
-      ManualSourceLocator manualSourceLocator = (ManualSourceLocator)theEObject;
-      T result = caseManualSourceLocator(manualSourceLocator);
+      MylynQueryTask mylynQueryTask = (MylynQueryTask)theEObject;
+      T result = caseMylynQueryTask(mylynQueryTask);
       if (result == null)
       {
-        result = caseSourceLocator(manualSourceLocator);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
-    {
-      AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)theEObject;
-      T result = caseAutomaticSourceLocator(automaticSourceLocator);
-      if (result == null)
-      {
-        result = caseSourceLocator(automaticSourceLocator);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.REDIRECTION_TASK:
-    {
-      RedirectionTask redirectionTask = (RedirectionTask)theEObject;
-      T result = caseRedirectionTask(redirectionTask);
-      if (result == null)
-      {
-        result = caseSetupTask(redirectionTask);
+        result = caseSetupTask(mylynQueryTask);
       }
       if (result == null)
       {
@@ -930,16 +945,32 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Mylyn Query Task</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Mylyn Query Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
+  public T caseMylynQueryTask(MylynQueryTask object)
+  {
+    return null;
+  }
+
+  /**
+  	 * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+  	 * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+  	 * @param object the target of the switch.
+  	 * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+  	 * @generated
+  	 */
   public T caseAutomaticSourceLocator(AutomaticSourceLocator object)
   {
     return null;
@@ -962,16 +993,16 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-  	 * Returns the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
+   * <!-- begin-user-doc -->
     	 * This implementation returns null;
     	 * returning a non-null result will terminate the switch.
     	 * <!-- end-user-doc -->
-  	 * @param object the target of the switch.
-  	 * @return the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
-  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-  	 * @generated
-  	 */
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
   public T caseManualSourceLocator(ManualSourceLocator object)
   {
     return null;

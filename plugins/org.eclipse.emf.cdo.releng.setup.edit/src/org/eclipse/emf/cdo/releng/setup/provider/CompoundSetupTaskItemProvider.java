@@ -211,6 +211,9 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
         SetupFactory.eINSTANCE.createMaterializationTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createRedirectionTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createContextVariableTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
@@ -238,7 +241,7 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
         SetupFactory.eINSTANCE.createKeyBindingTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
-        SetupFactory.eINSTANCE.createRedirectionTask()));
+        SetupFactory.eINSTANCE.createMylynQueryTask()));
   }
 
 }

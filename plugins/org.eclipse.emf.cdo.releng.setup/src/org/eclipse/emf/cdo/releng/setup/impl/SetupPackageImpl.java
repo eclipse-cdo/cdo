@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -195,6 +196,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass mylynQueryTaskEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EClass automaticSourceLocatorEClass = null;
 
   /**
@@ -205,10 +213,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EClass redirectionTaskEClass = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EClass manualSourceLocatorEClass = null;
 
   /**
@@ -1062,6 +1070,46 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getMylynQueryTask()
+  {
+    return mylynQueryTaskEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getMylynQueryTask_ConnectorKind()
+  {
+    return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getMylynQueryTask_Summary()
+  {
+    return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getMylynQueryTask_Url()
+  {
+    return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getAutomaticSourceLocator()
   {
     return automaticSourceLocatorEClass;
@@ -1088,30 +1136,30 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getRedirectionTask_SourceURL()
   {
     return (EAttribute)redirectionTaskEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getRedirectionTask_TargetURL()
   {
     return (EAttribute)redirectionTaskEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getManualSourceLocator()
   {
     return manualSourceLocatorEClass;
@@ -1745,6 +1793,18 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     sourceLocatorEClass = createEClass(SOURCE_LOCATOR);
 
+    manualSourceLocatorEClass = createEClass(MANUAL_SOURCE_LOCATOR);
+    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__LOCATION);
+    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__COMPONENT_NAME_PATTERN);
+    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__COMPONENT_TYPES);
+
+    automaticSourceLocatorEClass = createEClass(AUTOMATIC_SOURCE_LOCATOR);
+    createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
+
+    redirectionTaskEClass = createEClass(REDIRECTION_TASK);
+    createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__SOURCE_URL);
+    createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__TARGET_URL);
+
     contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
     createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
@@ -1797,17 +1857,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__ID);
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__VALUE);
 
-    manualSourceLocatorEClass = createEClass(MANUAL_SOURCE_LOCATOR);
-    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__LOCATION);
-    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__COMPONENT_NAME_PATTERN);
-    createEAttribute(manualSourceLocatorEClass, MANUAL_SOURCE_LOCATOR__COMPONENT_TYPES);
-
-    automaticSourceLocatorEClass = createEClass(AUTOMATIC_SOURCE_LOCATOR);
-    createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
-
-    redirectionTaskEClass = createEClass(REDIRECTION_TASK);
-    createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__SOURCE_URL);
-    createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__TARGET_URL);
+    mylynQueryTaskEClass = createEClass(MYLYN_QUERY_TASK);
+    createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__CONNECTOR_KIND);
+    createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__SUMMARY);
+    createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__URL);
 
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
@@ -1870,6 +1923,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     basicMaterializationTaskEClass.getESuperTypes().add(getSetupTask());
     buckminsterImportTaskEClass.getESuperTypes().add(getBasicMaterializationTask());
     materializationTaskEClass.getESuperTypes().add(getBasicMaterializationTask());
+    manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
+    automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
+    redirectionTaskEClass.getESuperTypes().add(getSetupTask());
     contextVariableTaskEClass.getESuperTypes().add(getSetupTask());
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
@@ -1879,9 +1935,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     resourceCreationTaskEClass.getESuperTypes().add(getSetupTask());
     textModifyTaskEClass.getESuperTypes().add(getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
-    manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
-    automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
-    redirectionTaskEClass.getESuperTypes().add(getSetupTask());
+    mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
@@ -2062,6 +2116,33 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEClass(sourceLocatorEClass, SourceLocator.class, "SourceLocator", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(manualSourceLocatorEClass, ManualSourceLocator.class, "ManualSourceLocator", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getManualSourceLocator_Location(), ecorePackage.getEString(), "location", null, 1, 1,
+        ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getManualSourceLocator_ComponentNamePattern(), ecorePackage.getEString(), "componentNamePattern",
+        null, 0, 1, ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getManualSourceLocator_ComponentTypes(), getComponentType(), "componentTypes", null, 1, -1,
+        ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(automaticSourceLocatorEClass, AutomaticSourceLocator.class, "AutomaticSourceLocator", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAutomaticSourceLocator_RootFolder(), ecorePackage.getEString(), "rootFolder", null, 1, 1,
+        AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(redirectionTaskEClass, RedirectionTask.class, "RedirectionTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRedirectionTask_SourceURL(), ecorePackage.getEString(), "sourceURL", null, 1, 1,
+        RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRedirectionTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 1, 1,
+        RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 0, 1,
@@ -2177,32 +2258,15 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getCommandParameter_Value(), ecorePackage.getEString(), "value", null, 0, 1, CommandParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(manualSourceLocatorEClass, ManualSourceLocator.class, "ManualSourceLocator", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getManualSourceLocator_Location(), ecorePackage.getEString(), "location", null, 1, 1,
-        ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getManualSourceLocator_ComponentNamePattern(), ecorePackage.getEString(), "componentNamePattern",
-        null, 0, 1, ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getManualSourceLocator_ComponentTypes(), getComponentType(), "componentTypes", null, 1, -1,
-        ManualSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(automaticSourceLocatorEClass, AutomaticSourceLocator.class, "AutomaticSourceLocator", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAutomaticSourceLocator_RootFolder(), ecorePackage.getEString(), "rootFolder", null, 1, 1,
-        AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(redirectionTaskEClass, RedirectionTask.class, "RedirectionTask", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(mylynQueryTaskEClass, MylynQueryTask.class, "MylynQueryTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRedirectionTask_SourceURL(), ecorePackage.getEString(), "sourceURL", null, 1, 1,
-        RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+    initEAttribute(getMylynQueryTask_ConnectorKind(), ecorePackage.getEString(), "connectorKind", "bugzilla", 1, 1,
+        MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRedirectionTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 1, 1,
-        RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueryTask_Summary(), ecorePackage.getEString(), "summary", null, 1, 1, MylynQueryTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueryTask_Url(), ecorePackage.getEString(), "url", null, 1, 1, MylynQueryTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
@@ -138,6 +139,12 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createMaterializationTask();
     case SetupPackage.COMPONENT:
       return createComponent();
+    case SetupPackage.MANUAL_SOURCE_LOCATOR:
+      return createManualSourceLocator();
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
+      return createAutomaticSourceLocator();
+    case SetupPackage.REDIRECTION_TASK:
+      return createRedirectionTask();
     case SetupPackage.CONTEXT_VARIABLE_TASK:
       return createContextVariableTask();
     case SetupPackage.API_BASELINE_TASK:
@@ -160,12 +167,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createKeyBindingTask();
     case SetupPackage.COMMAND_PARAMETER:
       return createCommandParameter();
-    case SetupPackage.MANUAL_SOURCE_LOCATOR:
-      return createManualSourceLocator();
-    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
-      return createAutomaticSourceLocator();
-    case SetupPackage.REDIRECTION_TASK:
-      return createRedirectionTask();
+    case SetupPackage.MYLYN_QUERY_TASK:
+      return createMylynQueryTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -406,6 +409,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public MylynQueryTask createMylynQueryTask()
+  {
+    MylynQueryTaskImpl mylynQueryTask = new MylynQueryTaskImpl();
+    return mylynQueryTask;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public AutomaticSourceLocator createAutomaticSourceLocator()
   {
     AutomaticSourceLocatorImpl automaticSourceLocator = new AutomaticSourceLocatorImpl();
@@ -424,10 +438,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public ManualSourceLocator createManualSourceLocator()
   {
     ManualSourceLocatorImpl manualSourceLocator = new ManualSourceLocatorImpl();

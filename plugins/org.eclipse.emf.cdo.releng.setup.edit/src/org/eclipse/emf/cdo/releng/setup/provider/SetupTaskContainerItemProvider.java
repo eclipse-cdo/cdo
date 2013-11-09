@@ -187,6 +187,9 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
         SetupFactory.eINSTANCE.createMaterializationTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createRedirectionTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createContextVariableTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
@@ -214,7 +217,7 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
         SetupFactory.eINSTANCE.createKeyBindingTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
-        SetupFactory.eINSTANCE.createRedirectionTask()));
+        SetupFactory.eINSTANCE.createMylynQueryTask()));
   }
 
   /**

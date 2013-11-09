@@ -175,12 +175,21 @@ public interface SetupFactory extends EFactory
   CommandParameter createCommandParameter();
 
   /**
-   * Returns a new object of class '<em>Automatic Source Locator</em>'.
+   * Returns a new object of class '<em>Mylyn Query Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Automatic Source Locator</em>'.
+   * @return a new object of class '<em>Mylyn Query Task</em>'.
    * @generated
    */
+  MylynQueryTask createMylynQueryTask();
+
+  /**
+  	 * Returns a new object of class '<em>Automatic Source Locator</em>'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return a new object of class '<em>Automatic Source Locator</em>'.
+  	 * @generated
+  	 */
   AutomaticSourceLocator createAutomaticSourceLocator();
 
   /**
@@ -193,12 +202,12 @@ public interface SetupFactory extends EFactory
   RedirectionTask createRedirectionTask();
 
   /**
-  	 * Returns a new object of class '<em>Manual Source Locator</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Manual Source Locator</em>'.
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Manual Source Locator</em>'.
-  	 * @generated
-  	 */
+   * @return a new object of class '<em>Manual Source Locator</em>'.
+   * @generated
+   */
   ManualSourceLocator createManualSourceLocator();
 
   /**

@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -241,6 +242,24 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseManualSourceLocator(ManualSourceLocator object)
+    {
+      return createManualSourceLocatorAdapter();
+    }
+
+    @Override
+    public Adapter caseAutomaticSourceLocator(AutomaticSourceLocator object)
+    {
+      return createAutomaticSourceLocatorAdapter();
+    }
+
+    @Override
+    public Adapter caseRedirectionTask(RedirectionTask object)
+    {
+      return createRedirectionTaskAdapter();
+    }
+
+    @Override
     public Adapter caseContextVariableTask(ContextVariableTask object)
     {
       return createContextVariableTaskAdapter();
@@ -307,21 +326,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseManualSourceLocator(ManualSourceLocator object)
+    public Adapter caseMylynQueryTask(MylynQueryTask object)
     {
-      return createManualSourceLocatorAdapter();
-    }
-
-    @Override
-    public Adapter caseAutomaticSourceLocator(AutomaticSourceLocator object)
-    {
-      return createAutomaticSourceLocatorAdapter();
-    }
-
-    @Override
-    public Adapter caseRedirectionTask(RedirectionTask object)
-    {
-      return createRedirectionTaskAdapter();
+      return createMylynQueryTaskAdapter();
     }
 
     @Override
@@ -601,15 +608,30 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask <em>Mylyn Query Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask
    * @generated
    */
+  public Adapter createMylynQueryTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+  	 * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+  	 * @generated
+  	 */
   public Adapter createAutomaticSourceLocatorAdapter()
   {
     return null;
@@ -631,15 +653,15 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
+   * <!-- begin-user-doc -->
     	 * This default implementation returns null so that we can easily ignore cases;
     	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
     	 * <!-- end-user-doc -->
-  	 * @return the new adapter.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
-  	 * @generated
-  	 */
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
+   * @generated
+   */
   public Adapter createManualSourceLocatorAdapter()
   {
     return null;

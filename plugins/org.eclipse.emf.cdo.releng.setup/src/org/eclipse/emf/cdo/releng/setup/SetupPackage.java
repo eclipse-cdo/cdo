@@ -175,7 +175,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
    * @generated
    */
-  int ECLIPSE_PREFERENCE_TASK = 24;
+  int ECLIPSE_PREFERENCE_TASK = 27;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -440,7 +440,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
    * @generated
    */
-  int API_BASELINE_TASK = 22;
+  int API_BASELINE_TASK = 25;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl <em>Git Clone Task</em>}' class.
@@ -450,7 +450,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getGitCloneTask()
    * @generated
    */
-  int GIT_CLONE_TASK = 23;
+  int GIT_CLONE_TASK = 26;
 
   /**
    * The feature id for the '<em><b>Branch</b></em>' reference.
@@ -559,7 +559,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
    * @generated
    */
-  int WORKING_SET_TASK = 25;
+  int WORKING_SET_TASK = 28;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
@@ -1249,7 +1249,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
    * @generated
    */
-  int RESOURCE_COPY_TASK = 26;
+  int RESOURCE_COPY_TASK = 29;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
@@ -1259,7 +1259,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
    */
-  int TEXT_MODIFY_TASK = 28;
+  int TEXT_MODIFY_TASK = 31;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
@@ -1269,7 +1269,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
    */
-  int TEXT_MODIFICATION = 29;
+  int TEXT_MODIFICATION = 32;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
@@ -1279,7 +1279,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
    * @generated
    */
-  int KEY_BINDING_TASK = 30;
+  int KEY_BINDING_TASK = 33;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
@@ -1289,7 +1289,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
    * @generated
    */
-  int COMMAND_PARAMETER = 31;
+  int COMMAND_PARAMETER = 34;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
@@ -1299,7 +1299,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getContextVariableTask()
    * @generated
    */
-  int CONTEXT_VARIABLE_TASK = 21;
+  int CONTEXT_VARIABLE_TASK = 24;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
@@ -1309,7 +1309,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
    * @generated
    */
-  int RESOURCE_CREATION_TASK = 27;
+  int RESOURCE_CREATION_TASK = 30;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl <em>Materialization Task</em>}' class.
@@ -1486,869 +1486,24 @@ public interface SetupPackage extends EPackage
   int SOURCE_LOCATOR_FEATURE_COUNT = 0;
 
   /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl <em>Mylyn Query Task</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
    * @generated
-   * @ordered
    */
-  int CONTEXT_VARIABLE_TASK__DISABLED = SETUP_TASK__DISABLED;
+  int MYLYN_QUERY_TASK = 35;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__VALUE = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>String Substitution</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Context Variable Task</em>' class.
-   * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTEXT_VARIABLE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
+  	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Version</b></em>' attribute.
-   * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__VERSION = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Zip Location</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__ZIP_LOCATION = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Api Baseline Task</em>' class.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Remote Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__REMOTE_NAME = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Remote URI</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__REMOTE_URI = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 3;
-
-  /**
-   * The number of structural features of the '<em>Git Clone Task</em>' class.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Key</b></em>' attribute.
-   * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__KEY = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK__VALUE = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Eclipse Preference Task</em>' class.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_PREFERENCE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK__WORKING_SETS = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Working Set Task</em>' class.
-   * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKING_SET_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Source URL</b></em>' attribute.
-   * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Target URL</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Resource Copy Task</em>' class.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_COPY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Content</b></em>' attribute.
-   * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__CONTENT = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Target URL</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Encoding</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK__ENCODING = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Resource Creation Task</em>' class.
-   * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESOURCE_CREATION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Url</b></em>' attribute.
-   * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__URL = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Modifications</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK__MODIFICATIONS = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Text Modify Task</em>' class.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Pattern</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFICATION__PATTERN = 0;
-
-  /**
-   * The feature id for the '<em><b>Substitutions</b></em>' attribute list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFICATION__SUBSTITUTIONS = 1;
-
-  /**
-   * The number of structural features of the '<em>Text Modification</em>' class.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TEXT_MODIFICATION_FEATURE_COUNT = 2;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Scheme</b></em>' attribute.
-   * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__SCHEME = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Context</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__CONTEXT = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Platform</b></em>' attribute.
-   * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__PLATFORM = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Locale</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__LOCALE = SETUP_TASK_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Keys</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__KEYS = SETUP_TASK_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>Command</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__COMMAND = SETUP_TASK_FEATURE_COUNT + 5;
-
-  /**
-   * The feature id for the '<em><b>Command Parameters</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK__COMMAND_PARAMETERS = SETUP_TASK_FEATURE_COUNT + 6;
-
-  /**
-   * The number of structural features of the '<em>Key Binding Task</em>' class.
-   * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KEY_BINDING_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 7;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMAND_PARAMETER__ID = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMAND_PARAMETER__VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Command Parameter</em>' class.
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMAND_PARAMETER_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
-   * @generated
-   */
-  int AUTOMATIC_SOURCE_LOCATOR = 33;
+  	 * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
+  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
+  	 * @generated
+  	 */
+  int AUTOMATIC_SOURCE_LOCATOR = 22;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
@@ -2358,7 +1513,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
    * @generated
    */
-  int MANUAL_SOURCE_LOCATOR = 32;
+  int MANUAL_SOURCE_LOCATOR = 21;
 
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -2422,7 +1577,943 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
    * @generated
    */
-  int REDIRECTION_TASK = 34;
+  int REDIRECTION_TASK = 23;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Source URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Target URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Redirection Task</em>' class.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+          	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Value</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__VALUE = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The feature id for the '<em><b>String Substitution</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The number of structural features of the '<em>Context Variable Task</em>' class.
+  	 * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CONTEXT_VARIABLE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Version</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__VERSION = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Zip Location</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK__ZIP_LOCATION = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Api Baseline Task</em>' class.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int API_BASELINE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Remote Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__REMOTE_NAME = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The feature id for the '<em><b>Remote URI</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__REMOTE_URI = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+  	 * The number of structural features of the '<em>Git Clone Task</em>' class.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Key</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__KEY = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Value</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK__VALUE = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Eclipse Preference Task</em>' class.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_PREFERENCE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK__WORKING_SETS = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The number of structural features of the '<em>Working Set Task</em>' class.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int WORKING_SET_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Source URL</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+            	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Target URL</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Resource Copy Task</em>' class.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_COPY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Content</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__CONTENT = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Target URL</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The feature id for the '<em><b>Encoding</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK__ENCODING = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The number of structural features of the '<em>Resource Creation Task</em>' class.
+  	 * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int RESOURCE_CREATION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Url</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+            	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__URL = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Modifications</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK__MODIFICATIONS = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Text Modify Task</em>' class.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Pattern</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFICATION__PATTERN = 0;
+
+  /**
+  	 * The feature id for the '<em><b>Substitutions</b></em>' attribute list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFICATION__SUBSTITUTIONS = 1;
+
+  /**
+  	 * The number of structural features of the '<em>Text Modification</em>' class.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TEXT_MODIFICATION_FEATURE_COUNT = 2;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Scheme</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__SCHEME = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Context</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__CONTEXT = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The feature id for the '<em><b>Platform</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+          	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__PLATFORM = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Locale</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__LOCALE = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+  	 * The feature id for the '<em><b>Keys</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__KEYS = SETUP_TASK_FEATURE_COUNT + 4;
+
+  /**
+  	 * The feature id for the '<em><b>Command</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__COMMAND = SETUP_TASK_FEATURE_COUNT + 5;
+
+  /**
+  	 * The feature id for the '<em><b>Command Parameters</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK__COMMAND_PARAMETERS = SETUP_TASK_FEATURE_COUNT + 6;
+
+  /**
+  	 * The number of structural features of the '<em>Key Binding Task</em>' class.
+  	 * <!-- begin-user-doc -->
+            	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int KEY_BINDING_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 7;
+
+  /**
+  	 * The feature id for the '<em><b>Id</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int COMMAND_PARAMETER__ID = 0;
+
+  /**
+  	 * The feature id for the '<em><b>Value</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int COMMAND_PARAMETER__VALUE = 1;
+
+  /**
+  	 * The number of structural features of the '<em>Command Parameter</em>' class.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int COMMAND_PARAMETER_FEATURE_COUNT = 2;
 
   /**
   	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2431,7 +2522,7 @@ public interface SetupPackage extends EPackage
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+  int MYLYN_QUERY_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
 
   /**
   	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
@@ -2440,7 +2531,7 @@ public interface SetupPackage extends EPackage
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+  int MYLYN_QUERY_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
   	 * The feature id for the '<em><b>Scope</b></em>' attribute.
@@ -2449,7 +2540,7 @@ public interface SetupPackage extends EPackage
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__SCOPE = SETUP_TASK__SCOPE;
+  int MYLYN_QUERY_TASK__SCOPE = SETUP_TASK__SCOPE;
 
   /**
   	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
@@ -2458,7 +2549,7 @@ public interface SetupPackage extends EPackage
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+  int MYLYN_QUERY_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
   	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
@@ -2467,7 +2558,7 @@ public interface SetupPackage extends EPackage
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+  int MYLYN_QUERY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
   	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
@@ -2476,44 +2567,53 @@ public interface SetupPackage extends EPackage
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
+  int MYLYN_QUERY_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
-  	 * The feature id for the '<em><b>Source URL</b></em>' attribute.
+  	 * The feature id for the '<em><b>Connector Kind</b></em>' attribute.
   	 * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
+  int MYLYN_QUERY_TASK__CONNECTOR_KIND = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-  	 * The feature id for the '<em><b>Target URL</b></em>' attribute.
+  	 * The feature id for the '<em><b>Summary</b></em>' attribute.
   	 * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+  int MYLYN_QUERY_TASK__SUMMARY = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-  	 * The number of structural features of the '<em>Redirection Task</em>' class.
+  	 * The feature id for the '<em><b>Url</b></em>' attribute.
   	 * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
   	 * @generated
   	 * @ordered
   	 */
-  int REDIRECTION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+  int MYLYN_QUERY_TASK__URL = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+  	 * The number of structural features of the '<em>Mylyn Query Task</em>' class.
   	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int MYLYN_QUERY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+   * <!-- begin-user-doc -->
                      * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
-  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
-  	 * @generated
-  	 */
-  int SETUP_TASK_SCOPE = 35;
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+   * @generated
+   */
+  int SETUP_TASK_SCOPE = 36;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -2523,7 +2623,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 36;
+  int TRIGGER = 37;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -2533,7 +2633,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 37;
+  int COMPONENT_TYPE = 38;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -2543,7 +2643,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 40;
+  int URI = 41;
 
   /**
    * The meta object id for the '<em>Exception</em>' data type.
@@ -2553,7 +2653,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 39;
+  int EXCEPTION = 40;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -2563,7 +2663,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 38;
+  int TRIGGER_SET = 39;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -3242,13 +3342,56 @@ public interface SetupPackage extends EPackage
   EAttribute getCommandParameter_Value();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask <em>Mylyn Query Task</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Automatic Source Locator</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * @return the meta object for class '<em>Mylyn Query Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask
    * @generated
    */
+  EClass getMylynQueryTask();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getConnectorKind <em>Connector Kind</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Connector Kind</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getConnectorKind()
+  	 * @see #getMylynQueryTask()
+  	 * @generated
+  	 */
+  EAttribute getMylynQueryTask_ConnectorKind();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getSummary <em>Summary</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Summary</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getSummary()
+  	 * @see #getMylynQueryTask()
+  	 * @generated
+  	 */
+  EAttribute getMylynQueryTask_Summary();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getUrl <em>Url</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Url</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getUrl()
+  	 * @see #getMylynQueryTask()
+  	 * @generated
+  	 */
+  EAttribute getMylynQueryTask_Url();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Automatic Source Locator</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+  	 * @generated
+  	 */
   EClass getAutomaticSourceLocator();
 
   /**
@@ -3273,35 +3416,35 @@ public interface SetupPackage extends EPackage
   EClass getRedirectionTask();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL <em>Source URL</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL <em>Source URL</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Source URL</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL()
-  	 * @see #getRedirectionTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Source URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL()
+   * @see #getRedirectionTask()
+   * @generated
+   */
   EAttribute getRedirectionTask_SourceURL();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL <em>Target URL</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL <em>Target URL</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Target URL</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL()
-  	 * @see #getRedirectionTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Target URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL()
+   * @see #getRedirectionTask()
+   * @generated
+   */
   EAttribute getRedirectionTask_TargetURL();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
+   * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Manual Source Locator</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Manual Source Locator</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
+   * @generated
+   */
   EClass getManualSourceLocator();
 
   /**
@@ -4410,13 +4553,47 @@ public interface SetupPackage extends EPackage
     EAttribute COMMAND_PARAMETER__VALUE = eINSTANCE.getCommandParameter_Value();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl <em>Mylyn Query Task</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
+     * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
      * @generated
      */
+    EClass MYLYN_QUERY_TASK = eINSTANCE.getMylynQueryTask();
+
+    /**
+    	 * The meta object literal for the '<em><b>Connector Kind</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute MYLYN_QUERY_TASK__CONNECTOR_KIND = eINSTANCE.getMylynQueryTask_ConnectorKind();
+
+    /**
+    	 * The meta object literal for the '<em><b>Summary</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute MYLYN_QUERY_TASK__SUMMARY = eINSTANCE.getMylynQueryTask_Summary();
+
+    /**
+    	 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute MYLYN_QUERY_TASK__URL = eINSTANCE.getMylynQueryTask_Url();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
+    	 * @generated
+    	 */
     EClass AUTOMATIC_SOURCE_LOCATOR = eINSTANCE.getAutomaticSourceLocator();
 
     /**
@@ -4438,29 +4615,29 @@ public interface SetupPackage extends EPackage
     EClass REDIRECTION_TASK = eINSTANCE.getRedirectionTask();
 
     /**
-    	 * The meta object literal for the '<em><b>Source URL</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Source URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute REDIRECTION_TASK__SOURCE_URL = eINSTANCE.getRedirectionTask_SourceURL();
 
     /**
-    	 * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute REDIRECTION_TASK__TARGET_URL = eINSTANCE.getRedirectionTask_TargetURL();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
+     * <!-- begin-user-doc -->
         	 * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
+     * @generated
+     */
     EClass MANUAL_SOURCE_LOCATOR = eINSTANCE.getManualSourceLocator();
 
     /**

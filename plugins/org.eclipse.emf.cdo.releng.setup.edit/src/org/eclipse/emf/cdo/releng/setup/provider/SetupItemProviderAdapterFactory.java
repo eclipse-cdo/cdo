@@ -497,11 +497,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected MylynQueryTaskItemProvider mylynQueryTaskItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createMylynQueryTaskAdapter()
+  {
+    if (mylynQueryTaskItemProvider == null)
+    {
+      mylynQueryTaskItemProvider = new MylynQueryTaskItemProvider(this);
+    }
+
+    return mylynQueryTaskItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected AutomaticSourceLocatorItemProvider automaticSourceLocatorItemProvider;
 
   /**
@@ -530,11 +555,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   protected RedirectionTaskItemProvider redirectionTaskItemProvider;
 
   /**
-  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask}.
-  	 * <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask}.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Adapter createRedirectionTaskAdapter()
   {
@@ -547,11 +572,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator} instances.
-  	 * <!-- begin-user-doc -->
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator} instances.
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ManualSourceLocatorItemProvider manualSourceLocatorItemProvider;
 
   /**
@@ -1022,6 +1047,18 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       componentItemProvider.dispose();
     }
+    if (manualSourceLocatorItemProvider != null)
+    {
+      manualSourceLocatorItemProvider.dispose();
+    }
+    if (automaticSourceLocatorItemProvider != null)
+    {
+      automaticSourceLocatorItemProvider.dispose();
+    }
+    if (redirectionTaskItemProvider != null)
+    {
+      redirectionTaskItemProvider.dispose();
+    }
     if (contextVariableTaskItemProvider != null)
     {
       contextVariableTaskItemProvider.dispose();
@@ -1066,17 +1103,9 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       commandParameterItemProvider.dispose();
     }
-    if (manualSourceLocatorItemProvider != null)
+    if (mylynQueryTaskItemProvider != null)
     {
-      manualSourceLocatorItemProvider.dispose();
-    }
-    if (automaticSourceLocatorItemProvider != null)
-    {
-      automaticSourceLocatorItemProvider.dispose();
-    }
-    if (redirectionTaskItemProvider != null)
-    {
-      redirectionTaskItemProvider.dispose();
+      mylynQueryTaskItemProvider.dispose();
     }
   }
 

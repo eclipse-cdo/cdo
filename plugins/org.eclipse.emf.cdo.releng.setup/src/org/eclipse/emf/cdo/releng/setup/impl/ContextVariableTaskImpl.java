@@ -313,12 +313,19 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     return result.toString();
   }
 
+  @Override
+  public Object getOverrideToken()
+  {
+    return createToken(getName());
+  }
+
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
+    String expandedValue = context.expandString(getValue());
+    context.put(getName(), expandedValue);
+
     if (!isStringSubstitution() || context.getTrigger() == Trigger.BOOTSTRAP)
     {
-      String expandedValue = context.expandString(getValue());
-      context.put(getName(), expandedValue);
       return false;
     }
 
@@ -326,8 +333,6 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     IValueVariable variable = manager.getValueVariable(getName());
 
     cachedVariable = variable;
-    expandedValue = context.expandString(getValue());
-
     if (variable == null)
     {
       return true;

@@ -92,6 +92,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private Setup setup;
 
+  private EList<SetupTask> triggeredSetupTasks;
+
   private transient boolean restartNeeded;
 
   private PrintStream logStream;
@@ -324,8 +326,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   {
     return setup;
   }
-
-  private EList<SetupTask> triggeredSetupTasks;
 
   public synchronized EList<SetupTask> getTriggeredSetupTasks()
   {

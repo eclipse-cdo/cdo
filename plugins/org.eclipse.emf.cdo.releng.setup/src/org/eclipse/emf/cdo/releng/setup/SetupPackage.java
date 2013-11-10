@@ -136,16 +136,6 @@ public interface SetupPackage extends EPackage
   int BRANCH = 5;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl <em>Eclipse Version</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseVersion()
-   * @generated
-   */
-  int ECLIPSE_VERSION = 1;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl <em>Installable Unit</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -272,48 +262,58 @@ public interface SetupPackage extends EPackage
   int CONFIGURABLE_ITEM_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl <em>Eclipse</em>}' class.
    * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipse()
+   * @generated
+   */
+  int ECLIPSE = 1;
+
+  /**
+  	 * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_VERSION__SETUP_TASKS = CONFIGURABLE_ITEM__SETUP_TASKS;
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE__SETUP_TASKS = CONFIGURABLE_ITEM__SETUP_TASKS;
 
   /**
-   * The feature id for the '<em><b>Configuration</b></em>' container reference.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_VERSION__CONFIGURATION = CONFIGURABLE_ITEM_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Version</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_VERSION__VERSION = CONFIGURABLE_ITEM_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Eclipse Version</em>' class.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ECLIPSE_VERSION_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Tool Version</b></em>' attribute.
-   * <!-- begin-user-doc -->
+  	 * The feature id for the '<em><b>Configuration</b></em>' container reference.
+  	 * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE__CONFIGURATION = CONFIGURABLE_ITEM_FEATURE_COUNT + 0;
+
+  /**
+  	 * The feature id for the '<em><b>Version</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE__VERSION = CONFIGURABLE_ITEM_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Eclipse</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int ECLIPSE_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 2;
+
+  /**
+  	 * The feature id for the '<em><b>Tool Version</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int CONFIGURATION__TOOL_VERSION = TOP_LEVEL_ELEMENT__TOOL_VERSION;
 
   /**
@@ -1877,12 +1877,12 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__LOCATION = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-  	 * The feature id for the '<em><b>Remote Name</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Remote Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int GIT_CLONE_TASK__REMOTE_NAME = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
@@ -2649,13 +2649,45 @@ public interface SetupPackage extends EPackage
   EAttribute getTopLevelElement_ToolVersion();
 
   /**
-   * The meta object id for the '<em>Exception</em>' data type.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @see java.lang.Exception
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eclipse</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse
    * @generated
    */
+  EClass getEclipse();
+
+  /**
+  	 * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the container reference '<em>Configuration</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration()
+  	 * @see #getEclipse()
+  	 * @generated
+  	 */
+  EReference getEclipse_Configuration();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion <em>Version</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Version</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion()
+  	 * @see #getEclipse()
+  	 * @generated
+  	 */
+  EAttribute getEclipse_Version();
+
+  /**
+  	 * The meta object id for the '<em>Exception</em>' data type.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @see java.lang.Exception
+  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+  	 * @generated
+  	 */
   int EXCEPTION = 40;
 
   /**
@@ -2829,14 +2861,14 @@ public interface SetupPackage extends EPackage
   EAttribute getGitCloneTask_Location();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Remote Name</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName()
-  	 * @see #getGitCloneTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Remote Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName()
+   * @see #getGitCloneTask()
+   * @generated
+   */
   EAttribute getGitCloneTask_RemoteName();
 
   /**
@@ -2860,38 +2892,6 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getGitCloneTask_CheckoutBranch();
-
-  /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion <em>Eclipse Version</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Eclipse Version</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseVersion
-   * @generated
-   */
-  EClass getEclipseVersion();
-
-  /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration <em>Configuration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the container reference '<em>Configuration</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration()
-   * @see #getEclipseVersion()
-   * @generated
-   */
-  EReference getEclipseVersion_Configuration();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getVersion <em>Version</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Version</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseVersion#getVersion()
-   * @see #getEclipseVersion()
-   * @generated
-   */
-  EAttribute getEclipseVersion_Version();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Task <em>P2 Task</em>}'.
@@ -4015,13 +4015,39 @@ public interface SetupPackage extends EPackage
     EAttribute TOP_LEVEL_ELEMENT__TOOL_VERSION = eINSTANCE.getTopLevelElement_ToolVersion();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl <em>Configuration</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl <em>Eclipse</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfiguration()
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipse()
      * @generated
      */
+    EClass ECLIPSE = eINSTANCE.getEclipse();
+
+    /**
+    	 * The meta object literal for the '<em><b>Configuration</b></em>' container reference feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EReference ECLIPSE__CONFIGURATION = eINSTANCE.getEclipse_Configuration();
+
+    /**
+    	 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute ECLIPSE__VERSION = eINSTANCE.getEclipse_Version();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl <em>Configuration</em>}' class.
+    	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfiguration()
+    	 * @generated
+    	 */
     EClass CONFIGURATION = eINSTANCE.getConfiguration();
 
     /**
@@ -4145,11 +4171,11 @@ public interface SetupPackage extends EPackage
     EAttribute GIT_CLONE_TASK__LOCATION = eINSTANCE.getGitCloneTask_Location();
 
     /**
-    	 * The meta object literal for the '<em><b>Remote Name</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Remote Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute GIT_CLONE_TASK__REMOTE_NAME = eINSTANCE.getGitCloneTask_RemoteName();
 
     /**
@@ -4167,32 +4193,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute GIT_CLONE_TASK__CHECKOUT_BRANCH = eINSTANCE.getGitCloneTask_CheckoutBranch();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl <em>Eclipse Version</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseVersion()
-     * @generated
-     */
-    EClass ECLIPSE_VERSION = eINSTANCE.getEclipseVersion();
-
-    /**
-     * The meta object literal for the '<em><b>Configuration</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ECLIPSE_VERSION__CONFIGURATION = eINSTANCE.getEclipseVersion_Configuration();
-
-    /**
-     * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ECLIPSE_VERSION__VERSION = eINSTANCE.getEclipseVersion_Version();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl <em>P2 Task</em>}' class.

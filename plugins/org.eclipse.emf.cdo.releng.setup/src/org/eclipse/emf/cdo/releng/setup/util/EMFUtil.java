@@ -22,6 +22,8 @@ import org.eclipse.core.runtime.Plugin;
  */
 public final class EMFUtil extends Plugin
 {
+  public static final URI SETUP_URI = getSetupURI();
+
   public static final String EXAMPLE_URI = System.getProperty("example.uri");
 
   public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
@@ -54,5 +56,16 @@ public final class EMFUtil extends Plugin
     {
       return resourceSet.getResource(uri, false);
     }
+  }
+
+  private static URI getSetupURI()
+  {
+    String uri = System.getProperty("setup.uri");
+    if (uri == null || !uri.startsWith("file:"))
+    {
+      uri = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";
+    }
+
+    return URI.createURI(uri.replace('\\', '/'));
   }
 }

@@ -86,11 +86,11 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
   }
 
   /**
-  	 * This adds a property descriptor for the Remote Name feature.
-  	 * <!-- begin-user-doc -->
+   * This adds a property descriptor for the Remote Name feature.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected void addRemoteNamePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors

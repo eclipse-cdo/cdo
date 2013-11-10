@@ -10,14 +10,20 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
+import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -140,20 +146,123 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
       public Collection<?> getChoiceOfValues(Object object)
       {
         SetupTask setupTask = (SetupTask)object;
+        SetupTaskScope scope = setupTask.getScope();
+        Branch branch = getBranch(setupTask);
+        Project project = getProject(setupTask);
+        Eclipse eclipse = getEclipse(setupTask);
+
         Collection<?> result = new ArrayList<Object>(super.getChoiceOfValues(object));
         for (Iterator<?> it = result.iterator(); it.hasNext();)
         {
           Object value = it.next();
-          if (value instanceof SetupTask && ((SetupTask)value).requires(setupTask))
+          if (value instanceof SetupTask)
           {
-            // Remove items that would cause a circularity.
+            SetupTask requiredSetupTask = (SetupTask)value;
+            if (requiredSetupTask.requires(setupTask))
+            {
+              // Remove items that would cause a circularity.
+              it.remove();
+            }
+
+            switch (scope)
+            {
+            case USER:
+            {
+              continue;
+            }
+
+            case BRANCH:
+            {
+              Branch requiredBranch = getBranch(requiredSetupTask);
+              if (requiredBranch != null && requiredBranch != branch)
+              {
+                break;
+              }
+
+              Project requiredProject = getProject(requiredSetupTask);
+              if (requiredProject != project)
+              {
+                break;
+              }
+
+              continue;
+            }
+
+            case PROJECT:
+            {
+              Branch requiredBranch = getBranch(requiredSetupTask);
+              if (requiredBranch != null)
+              {
+                break;
+              }
+
+              Project requiredProject = getProject(requiredSetupTask);
+              if (requiredProject != project)
+              {
+                break;
+              }
+
+              continue;
+            }
+
+            case ECLIPSE:
+            {
+              Eclipse requiredEclipse = getEclipse(requiredSetupTask);
+              if (requiredEclipse != eclipse)
+              {
+                break;
+              }
+
+              continue;
+            }
+            }
+
             it.remove();
           }
         }
+
         return result;
       }
-
     });
+  }
+
+  private static Branch getBranch(SetupTask setupTask)
+  {
+    for (EObject eObject = setupTask.eContainer(); eObject != null; eObject = eObject.eContainer())
+    {
+      if (eObject instanceof Branch)
+      {
+        return (Branch)eObject;
+      }
+    }
+
+    return null;
+  }
+
+  private static Project getProject(SetupTask setupTask)
+  {
+    for (EObject eObject = setupTask.eContainer(); eObject != null; eObject = eObject.eContainer())
+    {
+      if (eObject instanceof Project)
+      {
+        return (Project)eObject;
+      }
+    }
+
+    return null;
+  }
+
+  private static Eclipse getEclipse(SetupTask setupTask)
+  {
+    for (EObject eObject = setupTask.eContainer(); eObject != null; eObject = eObject.eContainer())
+    {
+      if (eObject instanceof Eclipse)
+      {
+        return (Eclipse)eObject;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -175,6 +284,46 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
       public IItemLabelProvider getLabelProvider(Object object)
       {
         return labelProvider;
+      }
+
+      @Override
+      public Collection<?> getChoiceOfValues(Object object)
+      {
+        SetupTask setupTask = (SetupTask)object;
+        SetupTaskScope scope = setupTask.getScope();
+
+        Collection<?> result = new ArrayList<Object>(super.getChoiceOfValues(object));
+        for (Iterator<?> it = result.iterator(); it.hasNext();)
+        {
+          Object value = it.next();
+          if (value instanceof ConfigurableItem)
+          {
+            ConfigurableItem restriction = (ConfigurableItem)value;
+
+            switch (scope)
+            {
+            case USER:
+            {
+              continue;
+            }
+
+            case BRANCH:
+            case PROJECT:
+            {
+              if (!(restriction instanceof Eclipse))
+              {
+                break;
+              }
+
+              continue;
+            }
+            }
+
+            it.remove();
+          }
+        }
+
+        return result;
       }
     });
   }

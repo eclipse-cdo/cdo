@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -85,12 +85,12 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * @generated
    * @ordered
    */
-  protected EclipseVersion eclipseVersion;
+  protected Eclipse eclipseVersion;
 
   /**
    * The cached value of the '{@link #getPreferences() <em>Preferences</em>}' reference.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getPreferences()
    * @generated
    * @ordered
@@ -196,12 +196,12 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * <!-- end-user-doc -->
    * @generated
    */
-  public EclipseVersion getEclipseVersion()
+  public Eclipse getEclipseVersion()
   {
     if (eclipseVersion != null && eclipseVersion.eIsProxy())
     {
       InternalEObject oldEclipseVersion = (InternalEObject)eclipseVersion;
-      eclipseVersion = (EclipseVersion)eResolveProxy(oldEclipseVersion);
+      eclipseVersion = (Eclipse)eResolveProxy(oldEclipseVersion);
       if (eclipseVersion != oldEclipseVersion)
       {
         if (eNotificationRequired())
@@ -219,7 +219,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * <!-- end-user-doc -->
    * @generated
    */
-  public EclipseVersion basicGetEclipseVersion()
+  public Eclipse basicGetEclipseVersion()
   {
     return eclipseVersion;
   }
@@ -229,9 +229,9 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEclipseVersion(EclipseVersion newEclipseVersion)
+  public void setEclipseVersion(Eclipse newEclipseVersion)
   {
-    EclipseVersion oldEclipseVersion = eclipseVersion;
+    Eclipse oldEclipseVersion = eclipseVersion;
     eclipseVersion = newEclipseVersion;
     if (eNotificationRequired())
     {
@@ -241,10 +241,10 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public Preferences getPreferences()
   {
     if (preferences != null && preferences.eIsProxy())
@@ -298,8 +298,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   {
     EList<SetupTask> setupTasks = new BasicEList<SetupTask>();
 
-    EclipseVersion eclipseVersion = getEclipseVersion();
-    getSetupTasks(filterRestrictions, trigger, setupTasks, eclipseVersion);
+    Eclipse eclipse = getEclipseVersion();
+    getSetupTasks(filterRestrictions, trigger, setupTasks, eclipse);
 
     Project project = branch.getProject();
     getSetupTasks(filterRestrictions, trigger, setupTasks, project);
@@ -318,10 +318,23 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   {
     Branch branch = getBranch();
     Project project = branch.getProject();
+    Eclipse eclipse = getEclipseVersion();
 
     for (SetupTask setupTask : setupTaskContainer.getSetupTasks())
     {
       if (setupTask.isDisabled())
+      {
+        continue;
+      }
+
+      if (!setupTask.getTriggers().contains(trigger))
+      {
+        continue;
+      }
+
+      EList<ConfigurableItem> restrictions = setupTask.getRestrictions();
+      if (!restrictions.isEmpty() && !restrictions.contains(branch) && !restrictions.contains(project)
+          && !restrictions.contains(eclipse))
       {
         continue;
       }
@@ -331,17 +344,8 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
         SetupTaskContainer container = (SetupTaskContainer)setupTask;
         getSetupTasks(filterRestrictions, trigger, setupTasks, container);
       }
-      else if (setupTask.getTriggers().contains(trigger))
+      else
       {
-        EList<ConfigurableItem> restrictions = setupTask.getRestrictions();
-        if (!restrictions.isEmpty())
-        {
-          if (!restrictions.contains(branch) && !restrictions.contains(project))
-          {
-            continue;
-          }
-        }
-
         setupTasks.add(setupTask);
       }
     }
@@ -398,7 +402,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       setBranch((Branch)newValue);
       return;
     case SetupPackage.SETUP__ECLIPSE_VERSION:
-      setEclipseVersion((EclipseVersion)newValue);
+      setEclipseVersion((Eclipse)newValue);
       return;
     case SetupPackage.SETUP__PREFERENCES:
       setPreferences((Preferences)newValue);
@@ -424,7 +428,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       setBranch((Branch)null);
       return;
     case SetupPackage.SETUP__ECLIPSE_VERSION:
-      setEclipseVersion((EclipseVersion)null);
+      setEclipseVersion((Eclipse)null);
       return;
     case SetupPackage.SETUP__PREFERENCES:
       setPreferences((Preferences)null);

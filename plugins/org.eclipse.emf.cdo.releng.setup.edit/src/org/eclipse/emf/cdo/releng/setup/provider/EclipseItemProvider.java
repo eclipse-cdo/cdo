@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -29,12 +29,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.EclipseVersion} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.Eclipse} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EclipseVersionItemProvider extends ConfigurableItemItemProvider implements IEditingDomainItemProvider,
+public class EclipseItemProvider extends ConfigurableItemItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -43,7 +43,7 @@ public class EclipseVersionItemProvider extends ConfigurableItemItemProvider imp
    * <!-- end-user-doc -->
    * @generated
    */
-  public EclipseVersionItemProvider(AdapterFactory adapterFactory)
+  public EclipseItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -74,18 +74,16 @@ public class EclipseVersionItemProvider extends ConfigurableItemItemProvider imp
    */
   protected void addVersionPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(
-            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_EclipseVersion_version_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_EclipseVersion_version_feature",
-                "_UI_EclipseVersion_type"), SetupPackage.Literals.ECLIPSE_VERSION__VERSION, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Eclipse_version_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Eclipse_version_feature", "_UI_Eclipse_type"),
+        SetupPackage.Literals.ECLIPSE__VERSION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
   }
 
   /**
-   * This returns EclipseVersion.gif.
+   * This returns Eclipse.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -93,7 +91,7 @@ public class EclipseVersionItemProvider extends ConfigurableItemItemProvider imp
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/EclipseVersion"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/Eclipse"));
   }
 
   /**
@@ -116,9 +114,9 @@ public class EclipseVersionItemProvider extends ConfigurableItemItemProvider imp
   @Override
   public String getText(Object object)
   {
-    String label = ((EclipseVersion)object).getVersion();
-    return label == null || label.length() == 0 ? getString("_UI_EclipseVersion_type")
-        : getString("_UI_EclipseVersion_type") + " " + label;
+    String label = ((Eclipse)object).getVersion();
+    return label == null || label.length() == 0 ? getString("_UI_Eclipse_type") : getString("_UI_Eclipse_type") + " "
+        + label;
   }
 
   /**
@@ -133,9 +131,9 @@ public class EclipseVersionItemProvider extends ConfigurableItemItemProvider imp
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(EclipseVersion.class))
+    switch (notification.getFeatureID(Eclipse.class))
     {
-    case SetupPackage.ECLIPSE_VERSION__VERSION:
+    case SetupPackage.ECLIPSE__VERSION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

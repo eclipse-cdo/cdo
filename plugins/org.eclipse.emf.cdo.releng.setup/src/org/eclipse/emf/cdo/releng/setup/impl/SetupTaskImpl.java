@@ -279,7 +279,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   {
     if (object instanceof Configuration)
     {
-      return SetupTaskScope.CONFIGURATION;
+      return SetupTaskScope.ECLIPSE;
     }
 
     if (object instanceof Project)

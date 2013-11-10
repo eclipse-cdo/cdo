@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
@@ -82,11 +82,11 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
    * @generated
    * @ordered
    */
-  protected EList<EclipseVersion> eclipseVersions;
+  protected EList<Eclipse> eclipseVersions;
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected ConfigurationImpl()
@@ -151,12 +151,12 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EclipseVersion> getEclipseVersions()
+  public EList<Eclipse> getEclipseVersions()
   {
     if (eclipseVersions == null)
     {
-      eclipseVersions = new EObjectContainmentWithInverseEList.Resolving<EclipseVersion>(EclipseVersion.class, this,
-          SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS, SetupPackage.ECLIPSE_VERSION__CONFIGURATION);
+      eclipseVersions = new EObjectContainmentWithInverseEList.Resolving<Eclipse>(Eclipse.class, this,
+          SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS, SetupPackage.ECLIPSE__CONFIGURATION);
     }
     return eclipseVersions;
   }
@@ -238,7 +238,7 @@ public class ConfigurationImpl extends MinimalEObjectImpl.Container implements C
       return;
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       getEclipseVersions().clear();
-      getEclipseVersions().addAll((Collection<? extends EclipseVersion>)newValue);
+      getEclipseVersions().addAll((Collection<? extends Eclipse>)newValue);
       return;
     }
     super.eSet(featureID, newValue);

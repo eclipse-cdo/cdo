@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -186,8 +186,7 @@ public class SetupDialog extends TitleAreaDialog
     setTitle(ProgressLogDialog.TITLE);
     setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/install_wiz.gif"));
 
-    URI configurationURI = URI.createURI(getSetupURI());
-    Resource resource = EMFUtil.loadResourceSafe(resourceSet, configurationURI);
+    Resource resource = EMFUtil.loadResourceSafe(resourceSet, EMFUtil.SETUP_URI);
     configuration = (Configuration)resource.getContents().get(0);
 
     Composite area = (Composite)super.createDialogArea(parent);
@@ -198,7 +197,7 @@ public class SetupDialog extends TitleAreaDialog
     container.setLayout(gl_container);
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-    final String ECLIPSE_VERSION_COLUMN = "eclipseVersion";
+    final String ECLIPSE_VERSION_COLUMN = "eclipse";
 
     viewer = new CheckboxTreeViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
     Tree tree = viewer.getTree();
@@ -241,7 +240,7 @@ public class SetupDialog extends TitleAreaDialog
           Setup setup = setups.get(branch);
           if (setup != null)
           {
-            setup.setEclipseVersion((EclipseVersion)value);
+            setup.setEclipseVersion((Eclipse)value);
             viewer.update(modelElement, new String[] { property });
           }
         }
@@ -262,8 +261,8 @@ public class SetupDialog extends TitleAreaDialog
 
       public Object[] getElements(Object inputElement)
       {
-        EList<EclipseVersion> eclipseVersions = configuration.getEclipseVersions();
-        return eclipseVersions.toArray(new EclipseVersion[eclipseVersions.size()]);
+        EList<Eclipse> eclipses = configuration.getEclipseVersions();
+        return eclipses.toArray(new Eclipse[eclipses.size()]);
       }
     });
 
@@ -313,8 +312,8 @@ public class SetupDialog extends TitleAreaDialog
             {
               Branch branch = (Branch)element;
               Setup setup = setups.get(branch);
-              EclipseVersion eclipseVersion = setup.getEclipseVersion();
-              return labelProvider.getText(eclipseVersion);
+              Eclipse eclipse = setup.getEclipseVersion();
+              return labelProvider.getText(eclipse);
             }
 
             return "";
@@ -747,10 +746,10 @@ public class SetupDialog extends TitleAreaDialog
     return setups;
   }
 
-  private EclipseVersion getDefaultEclipseVersion()
+  private Eclipse getDefaultEclipseVersion()
   {
-    EList<EclipseVersion> eclipseVersions = configuration.getEclipseVersions();
-    return eclipseVersions.get(eclipseVersions.size() - 1);
+    EList<Eclipse> eclipses = configuration.getEclipseVersions();
+    return eclipses.get(eclipses.size() - 1);
   }
 
   private void validate()
@@ -952,17 +951,6 @@ public class SetupDialog extends TitleAreaDialog
   {
     Activator.log(ex);
     ErrorDialog.open(ex);
-  }
-
-  private static String getSetupURI()
-  {
-    String uri = System.getProperty("setup.uri");
-    if (uri == null || !uri.startsWith("file:"))
-    {
-      uri = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";
-    }
-
-    return uri.replace('\\', '/');
   }
 
   /**

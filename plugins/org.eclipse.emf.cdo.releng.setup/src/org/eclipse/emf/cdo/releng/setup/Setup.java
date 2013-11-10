@@ -67,12 +67,12 @@ public interface Setup extends TopLevelElement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Eclipse Version</em>' reference.
-   * @see #setEclipseVersion(EclipseVersion)
+   * @see #setEclipseVersion(Eclipse)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetup_EclipseVersion()
    * @model required="true"
    * @generated
    */
-  EclipseVersion getEclipseVersion();
+  Eclipse getEclipseVersion();
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Setup#getEclipseVersion <em>Eclipse Version</em>}' reference.
@@ -82,22 +82,22 @@ public interface Setup extends TopLevelElement
    * @see #getEclipseVersion()
    * @generated
    */
-  void setEclipseVersion(EclipseVersion value);
+  void setEclipseVersion(Eclipse value);
 
   /**
-   * Returns the value of the '<em><b>Preferences</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Preferences</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Preferences</em>' reference.
-   * @see #setPreferences(Preferences)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetup_Preferences()
-   * @model required="true"
-   * @generated
-   */
+  	 * Returns the value of the '<em><b>Preferences</b></em>' reference.
+  	 * <!-- begin-user-doc -->
+       * <p>
+       * If the meaning of the '<em>Preferences</em>' containment reference isn't clear,
+       * there really should be more of a description here...
+       * </p>
+       * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Preferences</em>' reference.
+  	 * @see #setPreferences(Preferences)
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetup_Preferences()
+  	 * @model required="true"
+  	 * @generated
+  	 */
   Preferences getPreferences();
 
   /**

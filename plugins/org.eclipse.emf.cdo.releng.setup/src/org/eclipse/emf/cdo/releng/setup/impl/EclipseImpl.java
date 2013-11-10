@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Configuration;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -28,14 +28,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl#getConfiguration <em>Configuration</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseVersionImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseVersion
+public class EclipseImpl extends ConfigurableItemImpl implements Eclipse
 {
   /**
    * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
@@ -62,7 +62,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
    * <!-- end-user-doc -->
    * @generated
    */
-  protected EclipseVersionImpl()
+  protected EclipseImpl()
   {
     super();
   }
@@ -75,7 +75,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   @Override
   protected EClass eStaticClass()
   {
-    return SetupPackage.Literals.ECLIPSE_VERSION;
+    return SetupPackage.Literals.ECLIPSE;
   }
 
   /**
@@ -85,7 +85,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
    */
   public Configuration getConfiguration()
   {
-    if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
+    if (eContainerFeatureID() != SetupPackage.ECLIPSE__CONFIGURATION)
     {
       return null;
     }
@@ -99,7 +99,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
    */
   public Configuration basicGetConfiguration()
   {
-    if (eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION)
+    if (eContainerFeatureID() != SetupPackage.ECLIPSE__CONFIGURATION)
     {
       return null;
     }
@@ -113,7 +113,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
    */
   public NotificationChain basicSetConfiguration(Configuration newConfiguration, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newConfiguration, SetupPackage.ECLIPSE_VERSION__CONFIGURATION, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newConfiguration, SetupPackage.ECLIPSE__CONFIGURATION, msgs);
     return msgs;
   }
 
@@ -124,8 +124,8 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
    */
   public void setConfiguration(Configuration newConfiguration)
   {
-    if (newConfiguration != eInternalContainer()
-        || eContainerFeatureID() != SetupPackage.ECLIPSE_VERSION__CONFIGURATION && newConfiguration != null)
+    if (newConfiguration != eInternalContainer() || eContainerFeatureID() != SetupPackage.ECLIPSE__CONFIGURATION
+        && newConfiguration != null)
     {
       if (EcoreUtil.isAncestor(this, newConfiguration))
       {
@@ -149,8 +149,8 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__CONFIGURATION,
-          newConfiguration, newConfiguration));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE__CONFIGURATION, newConfiguration,
+          newConfiguration));
     }
   }
 
@@ -175,7 +175,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
     version = newVersion;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE_VERSION__VERSION, oldVersion, version));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.ECLIPSE__VERSION, oldVersion, version));
     }
   }
 
@@ -189,7 +189,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (featureID)
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       if (eInternalContainer() != null)
       {
         msgs = eBasicRemoveFromContainer(msgs);
@@ -209,7 +209,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (featureID)
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       return basicSetConfiguration(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -225,7 +225,7 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (eContainerFeatureID())
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       return eInternalContainer().eInverseRemove(this, SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS,
           Configuration.class, msgs);
     }
@@ -242,13 +242,13 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (featureID)
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       if (resolve)
       {
         return getConfiguration();
       }
       return basicGetConfiguration();
-    case SetupPackage.ECLIPSE_VERSION__VERSION:
+    case SetupPackage.ECLIPSE__VERSION:
       return getVersion();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -264,10 +264,10 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (featureID)
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       setConfiguration((Configuration)newValue);
       return;
-    case SetupPackage.ECLIPSE_VERSION__VERSION:
+    case SetupPackage.ECLIPSE__VERSION:
       setVersion((String)newValue);
       return;
     }
@@ -284,10 +284,10 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (featureID)
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       setConfiguration((Configuration)null);
       return;
-    case SetupPackage.ECLIPSE_VERSION__VERSION:
+    case SetupPackage.ECLIPSE__VERSION:
       setVersion(VERSION_EDEFAULT);
       return;
     }
@@ -304,9 +304,9 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
   {
     switch (featureID)
     {
-    case SetupPackage.ECLIPSE_VERSION__CONFIGURATION:
+    case SetupPackage.ECLIPSE__CONFIGURATION:
       return basicGetConfiguration() != null;
-    case SetupPackage.ECLIPSE_VERSION__VERSION:
+    case SetupPackage.ECLIPSE__VERSION:
       return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
     }
     return super.eIsSet(featureID);
@@ -331,4 +331,4 @@ public class EclipseVersionImpl extends ConfigurableItemImpl implements EclipseV
     result.append(')');
     return result.toString();
   }
-} // EclipseVersionImpl
+} // EclipseImpl

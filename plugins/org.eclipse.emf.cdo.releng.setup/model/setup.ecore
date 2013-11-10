@@ -5,7 +5,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolVersion" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EclipseVersion" eSuperTypes="#//ConfigurableItem">
+  <eClassifiers xsi:type="ecore:EClass" name="Eclipse" eSuperTypes="#//ConfigurableItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
         eOpposite="#//Configuration/eclipseVersions"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -15,8 +15,8 @@
         upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"
         eKeys="#//Project/name"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
-        upperBound="-1" eType="#//EclipseVersion" containment="true" eOpposite="#//EclipseVersion/configuration"
-        eKeys="#//EclipseVersion/version"/>
+        upperBound="-1" eType="#//Eclipse" containment="true" eOpposite="#//Eclipse/configuration"
+        eKeys="#//Eclipse/version"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//SetupTaskContainer"/>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem #//TopLevelElement">
@@ -45,7 +45,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="branch" lowerBound="1"
         eType="#//Branch"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersion" lowerBound="1"
-        eType="#//EclipseVersion"/>
+        eType="#//Eclipse"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preferences" lowerBound="1"
         eType="#//Preferences"/>
   </eClassifiers>
@@ -231,7 +231,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
     <eLiterals name="None"/>
-    <eLiterals name="Configuration" value="1"/>
+    <eLiterals name="Eclipse" value="1" literal="Eclipse"/>
     <eLiterals name="Project" value="2"/>
     <eLiterals name="Branch" value="3"/>
     <eLiterals name="User" value="4"/>

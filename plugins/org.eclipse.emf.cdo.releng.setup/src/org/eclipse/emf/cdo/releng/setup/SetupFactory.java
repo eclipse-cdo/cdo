@@ -31,12 +31,21 @@ public interface SetupFactory extends EFactory
   SetupFactory eINSTANCE = org.eclipse.emf.cdo.releng.setup.impl.SetupFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Configuration</em>'.
+   * Returns a new object of class '<em>Eclipse</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return a new object of class '<em>Configuration</em>'.
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eclipse</em>'.
    * @generated
    */
+  Eclipse createEclipse();
+
+  /**
+  	 * Returns a new object of class '<em>Configuration</em>'.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return a new object of class '<em>Configuration</em>'.
+  	 * @generated
+  	 */
   Configuration createConfiguration();
 
   /**
@@ -74,15 +83,6 @@ public interface SetupFactory extends EFactory
    * @generated
    */
   GitCloneTask createGitCloneTask();
-
-  /**
-   * Returns a new object of class '<em>Eclipse Version</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Eclipse Version</em>'.
-   * @generated
-   */
-  EclipseVersion createEclipseVersion();
 
   /**
    * Returns a new object of class '<em>P2 Task</em>'.

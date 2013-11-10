@@ -18,16 +18,16 @@ package org.eclipse.emf.cdo.releng.setup;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration <em>Configuration</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipseVersion()
+ * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipse()
  * @model
  * @generated
  */
-public interface EclipseVersion extends ConfigurableItem
+public interface Eclipse extends ConfigurableItem
 {
   /**
    * Returns the value of the '<em><b>Configuration</b></em>' container reference.
@@ -40,7 +40,7 @@ public interface EclipseVersion extends ConfigurableItem
    * <!-- end-user-doc -->
    * @return the value of the '<em>Configuration</em>' container reference.
    * @see #setConfiguration(Configuration)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipseVersion_Configuration()
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipse_Configuration()
    * @see org.eclipse.emf.cdo.releng.setup.Configuration#getEclipseVersions
    * @model opposite="eclipseVersions" transient="false"
    * @generated
@@ -48,7 +48,7 @@ public interface EclipseVersion extends ConfigurableItem
   Configuration getConfiguration();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration <em>Configuration</em>}' container reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}' container reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Configuration</em>' container reference.
@@ -67,14 +67,14 @@ public interface EclipseVersion extends ConfigurableItem
    * <!-- end-user-doc -->
    * @return the value of the '<em>Version</em>' attribute.
    * @see #setVersion(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipseVersion_Version()
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipse_Version()
    * @model
    * @generated
    */
   String getVersion();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getVersion <em>Version</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion <em>Version</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Version</em>' attribute.
@@ -83,4 +83,4 @@ public interface EclipseVersion extends ConfigurableItem
    */
   void setVersion(String value);
 
-} // EclipseVersion
+} // Eclipse

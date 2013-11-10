@@ -147,14 +147,13 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   {
     MylynQueryTask mylynQuery = (MylynQueryTask)object;
     String summary = mylynQuery.getSummary();
-    String url = mylynQuery.getURL();
 
-    if (StringUtil.isEmpty(summary) && StringUtil.isEmpty(url))
+    if (StringUtil.isEmpty(summary))
     {
       return getString("_UI_MylynQueryTask_type");
     }
 
-    return "" + summary + " + " + url;
+    return summary;
   }
 
   /**

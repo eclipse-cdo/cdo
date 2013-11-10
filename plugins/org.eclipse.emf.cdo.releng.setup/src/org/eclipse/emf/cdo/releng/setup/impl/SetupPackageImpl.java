@@ -22,9 +22,9 @@ import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
@@ -81,9 +81,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EClass eclipseEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EClass configurationEClass = null;
 
   /**
@@ -113,13 +120,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass gitCloneTaskEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass eclipseVersionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -457,9 +457,39 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getEclipse()
+  {
+    return eclipseEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getEclipse_Configuration()
+  {
+    return (EReference)eclipseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getEclipse_Version()
+  {
+    return (EAttribute)eclipseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getConfiguration()
   {
     return configurationEClass;
@@ -606,10 +636,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getGitCloneTask_RemoteName()
   {
     return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(1);
@@ -633,36 +663,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   public EAttribute getGitCloneTask_CheckoutBranch()
   {
     return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEclipseVersion()
-  {
-    return eclipseVersionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEclipseVersion_Configuration()
-  {
-    return (EReference)eclipseVersionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEclipseVersion_Version()
-  {
-    return (EAttribute)eclipseVersionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1711,9 +1711,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     topLevelElementEClass = createEClass(TOP_LEVEL_ELEMENT);
     createEAttribute(topLevelElementEClass, TOP_LEVEL_ELEMENT__TOOL_VERSION);
 
-    eclipseVersionEClass = createEClass(ECLIPSE_VERSION);
-    createEReference(eclipseVersionEClass, ECLIPSE_VERSION__CONFIGURATION);
-    createEAttribute(eclipseVersionEClass, ECLIPSE_VERSION__VERSION);
+    eclipseEClass = createEClass(ECLIPSE);
+    createEReference(eclipseEClass, ECLIPSE__CONFIGURATION);
+    createEAttribute(eclipseEClass, ECLIPSE__VERSION);
 
     configurationEClass = createEClass(CONFIGURATION);
     createEReference(configurationEClass, CONFIGURATION__PROJECTS);
@@ -1909,7 +1909,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    eclipseVersionEClass.getESuperTypes().add(getConfigurableItem());
+    eclipseEClass.getESuperTypes().add(getConfigurableItem());
     configurationEClass.getESuperTypes().add(getTopLevelElement());
     configurableItemEClass.getESuperTypes().add(getSetupTaskContainer());
     projectEClass.getESuperTypes().add(getConfigurableItem());
@@ -1947,12 +1947,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         TopLevelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
-    initEClass(eclipseVersionEClass, EclipseVersion.class, "EclipseVersion", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEclipseVersion_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(),
-        "configuration", null, 0, 1, EclipseVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEclipseVersion_Version(), ecorePackage.getEString(), "version", null, 0, 1, EclipseVersion.class,
+    initEClass(eclipseEClass, Eclipse.class, "Eclipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEclipse_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(), "configuration",
+        null, 0, 1, Eclipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEclipse_Version(), ecorePackage.getEString(), "version", null, 0, 1, Eclipse.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1961,10 +1960,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     getConfiguration_Projects().getEKeys().add(getProject_Name());
-    initEReference(getConfiguration_EclipseVersions(), getEclipseVersion(), getEclipseVersion_Configuration(),
-        "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    getConfiguration_EclipseVersions().getEKeys().add(getEclipseVersion_Version());
+    initEReference(getConfiguration_EclipseVersions(), getEclipse(), getEclipse_Configuration(), "eclipseVersions",
+        null, 1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    getConfiguration_EclipseVersions().getEKeys().add(getEclipse_Version());
 
     initEClass(configurableItemEClass, ConfigurableItem.class, "ConfigurableItem", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2001,7 +2000,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getSetup_Branch(), getBranch(), null, "branch", null, 1, 1, Setup.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getSetup_EclipseVersion(), getEclipseVersion(), null, "eclipseVersion", null, 1, 1, Setup.class,
+    initEReference(getSetup_EclipseVersion(), getEclipse(), null, "eclipseVersion", null, 1, 1, Setup.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEReference(getSetup_Preferences(), getPreferences(), null, "preferences", null, 1, 1, Setup.class,
@@ -2278,7 +2277,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.NONE);
-    addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.CONFIGURATION);
+    addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.ECLIPSE);
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.PROJECT);
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.BRANCH);
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.USER);

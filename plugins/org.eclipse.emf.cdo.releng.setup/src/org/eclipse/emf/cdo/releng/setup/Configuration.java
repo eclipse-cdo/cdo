@@ -51,8 +51,8 @@ public interface Configuration extends TopLevelElement
 
   /**
    * Returns the value of the '<em><b>Eclipse Versions</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.EclipseVersion}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration <em>Configuration</em>}'.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}'.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Eclipse Versions</em>' containment reference list isn't clear,
@@ -61,10 +61,10 @@ public interface Configuration extends TopLevelElement
    * <!-- end-user-doc -->
    * @return the value of the '<em>Eclipse Versions</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getConfiguration_EclipseVersions()
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseVersion#getConfiguration
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration
    * @model opposite="configuration" containment="true" resolveProxies="true" keys="version" required="true"
    * @generated
    */
-  EList<EclipseVersion> getEclipseVersions();
+  EList<Eclipse> getEclipseVersions();
 
 } // Configuration

@@ -83,13 +83,13 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   protected String location = LOCATION_EDEFAULT;
 
   /**
-  	 * The default value of the '{@link #getRemoteName() <em>Remote Name</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The default value of the '{@link #getRemoteName() <em>Remote Name</em>}' attribute.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @see #getRemoteName()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getRemoteName()
+   * @generated
+   * @ordered
+   */
   protected static final String REMOTE_NAME_EDEFAULT = "origin";
 
   /**
@@ -176,10 +176,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setLocation(String newLocation)
   {
     String oldLocation = location;
@@ -192,10 +192,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public String getRemoteName()
   {
     return remoteName;

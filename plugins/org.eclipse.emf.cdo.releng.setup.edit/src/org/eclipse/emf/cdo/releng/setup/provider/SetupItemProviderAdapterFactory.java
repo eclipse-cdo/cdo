@@ -97,11 +97,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Configuration} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Eclipse} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected EclipseItemProvider eclipseItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createEclipseAdapter()
+  {
+    if (eclipseItemProvider == null)
+    {
+      eclipseItemProvider = new EclipseItemProvider(this);
+    }
+
+    return eclipseItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Configuration} instances.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ConfigurationItemProvider configurationItemProvider;
 
   /**
@@ -219,31 +244,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     }
 
     return gitCloneTaskItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseVersion} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected EclipseVersionItemProvider eclipseVersionItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.EclipseVersion}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createEclipseVersionAdapter()
-  {
-    if (eclipseVersionItemProvider == null)
-    {
-      eclipseVersionItemProvider = new EclipseVersionItemProvider(this);
-    }
-
-    return eclipseVersionItemProvider;
   }
 
   /**
@@ -987,9 +987,9 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    */
   public void dispose()
   {
-    if (eclipseVersionItemProvider != null)
+    if (eclipseItemProvider != null)
     {
-      eclipseVersionItemProvider.dispose();
+      eclipseItemProvider.dispose();
     }
     if (configurationItemProvider != null)
     {

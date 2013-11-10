@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
@@ -125,17 +125,17 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
-    case SetupPackage.ECLIPSE_VERSION:
+    case SetupPackage.ECLIPSE:
     {
-      EclipseVersion eclipseVersion = (EclipseVersion)theEObject;
-      T result = caseEclipseVersion(eclipseVersion);
+      Eclipse eclipse = (Eclipse)theEObject;
+      T result = caseEclipse(eclipse);
       if (result == null)
       {
-        result = caseConfigurableItem(eclipseVersion);
+        result = caseConfigurableItem(eclipse);
       }
       if (result == null)
       {
-        result = caseSetupTaskContainer(eclipseVersion);
+        result = caseSetupTaskContainer(eclipse);
       }
       if (result == null)
       {
@@ -637,16 +637,32 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Eclipse</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Preferences</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Eclipse</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
+  public T caseEclipse(Eclipse object)
+  {
+    return null;
+  }
+
+  /**
+  	 * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
+  	 * <!-- begin-user-doc -->
+         * This implementation returns null;
+         * returning a non-null result will terminate the switch.
+         * <!-- end-user-doc -->
+  	 * @param object the target of the switch.
+  	 * @return the result of interpreting the object as an instance of '<em>Preferences</em>'.
+  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+  	 * @generated
+  	 */
   public T casePreferences(Preferences object)
   {
     return null;
@@ -696,22 +712,6 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEclipsePreferenceTask(EclipsePreferenceTask object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Eclipse Version</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Eclipse Version</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEclipseVersion(EclipseVersion object)
   {
     return null;
   }

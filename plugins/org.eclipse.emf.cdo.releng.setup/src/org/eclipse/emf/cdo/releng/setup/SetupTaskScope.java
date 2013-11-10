@@ -38,23 +38,21 @@ public enum SetupTaskScope implements Enumerator
   NONE(0, "None", "None"),
 
   /**
-   * The '<em><b>Configuration</b></em>' literal object.
+   * The '<em><b>Eclipse</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #CONFIGURATION_VALUE
+   * @see #ECLIPSE_VALUE
    * @generated
    * @ordered
    */
-  CONFIGURATION(1, "Configuration", "Configuration"),
-
-  /**
-   * The '<em><b>Project</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #PROJECT_VALUE
-   * @generated
-   * @ordered
-   */
+  ECLIPSE(1, "Eclipse", "Eclipse"), /**
+                                    * The '<em><b>Project</b></em>' literal object.
+                                    * <!-- begin-user-doc -->
+                                    * <!-- end-user-doc -->
+                                    * @see #PROJECT_VALUE
+                                    * @generated
+                                    * @ordered
+                                    */
   PROJECT(2, "Project", "Project"),
 
   /**
@@ -93,28 +91,28 @@ public enum SetupTaskScope implements Enumerator
   public static final int NONE_VALUE = 0;
 
   /**
-   * The '<em><b>Configuration</b></em>' literal value.
+   * The '<em><b>Eclipse</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Configuration</b></em>' literal object isn't clear,
+   * If the meaning of '<em><b>Eclipse</b></em>' literal object isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @see #CONFIGURATION
-   * @model name="Configuration"
+   * @see #ECLIPSE
+   * @model name="Eclipse"
    * @generated
    * @ordered
    */
-  public static final int CONFIGURATION_VALUE = 1;
+  public static final int ECLIPSE_VALUE = 1;
 
   /**
    * The '<em><b>Project</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>Project</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>Project</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
    * @see #PROJECT
    * @model name="Project"
    * @generated
@@ -158,8 +156,7 @@ public enum SetupTaskScope implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
-  private static final SetupTaskScope[] VALUES_ARRAY = new SetupTaskScope[] { NONE, CONFIGURATION, PROJECT, BRANCH,
-      USER, };
+  private static final SetupTaskScope[] VALUES_ARRAY = new SetupTaskScope[] { NONE, ECLIPSE, PROJECT, BRANCH, USER, };
 
   /**
    * A public read-only list of all the '<em><b>Task Scope</b></em>' enumerators.
@@ -219,8 +216,8 @@ public enum SetupTaskScope implements Enumerator
     {
     case NONE_VALUE:
       return NONE;
-    case CONFIGURATION_VALUE:
-      return CONFIGURATION;
+    case ECLIPSE_VALUE:
+      return ECLIPSE;
     case PROJECT_VALUE:
       return PROJECT;
     case BRANCH_VALUE:

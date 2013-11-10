@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.rcp.presentation;
 
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
@@ -836,7 +837,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * <!-- end-user-doc -->
    * @generated
    */
-  public void createModel()
+  public void createModelGen()
   {
     URI resourceURI = EditUIUtil.getURI(getEditorInput());
     Exception exception = null;
@@ -859,6 +860,13 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
     }
     editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
+  }
+
+  public void createModel()
+  {
+    createModelGen();
+
+    EMFUtil.loadResourceSafe(editingDomain.getResourceSet(), EMFUtil.SETUP_URI);
   }
 
   /**

@@ -187,7 +187,7 @@ public class ConfigurationItemProvider extends ItemProviderAdapter implements IE
         SetupFactory.eINSTANCE.createProject()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.CONFIGURATION__ECLIPSE_VERSIONS,
-        SetupFactory.eINSTANCE.createEclipseVersion()));
+        SetupFactory.eINSTANCE.createEclipse()));
   }
 
   /**

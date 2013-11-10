@@ -460,8 +460,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void callDirectorApp(final SetupTaskContext context) throws Exception
   {
-    if (getScope() == SetupTaskScope.CONFIGURATION)
-
+    if (getScope() == SetupTaskScope.ECLIPSE)
     {
       FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
     }

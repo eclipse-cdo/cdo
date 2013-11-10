@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
@@ -122,9 +122,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseEclipseVersion(EclipseVersion object)
+    public Adapter caseEclipse(Eclipse object)
     {
-      return createEclipseVersionAdapter();
+      return createEclipseAdapter();
     }
 
     @Override
@@ -368,15 +368,30 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.Configuration
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse
    * @generated
    */
+  public Adapter createEclipseAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
+  	 * <!-- begin-user-doc -->
+       * This default implementation returns null so that we can easily ignore cases;
+       * it's useful to ignore a case when inheritance will catch all the cases anyway.
+       * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Configuration
+  	 * @generated
+  	 */
   public Adapter createConfigurationAdapter()
   {
     return null;
@@ -438,21 +453,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGitCloneTaskAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseVersion <em>Eclipse Version</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseVersion
-   * @generated
-   */
-  public Adapter createEclipseVersionAdapter()
   {
     return null;
   }

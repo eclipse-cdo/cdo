@@ -20,9 +20,9 @@ import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
-import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
@@ -109,8 +109,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     switch (eClass.getClassifierID())
     {
-    case SetupPackage.ECLIPSE_VERSION:
-      return createEclipseVersion();
+    case SetupPackage.ECLIPSE:
+      return createEclipse();
     case SetupPackage.CONFIGURATION:
       return createConfiguration();
     case SetupPackage.PROJECT:
@@ -230,9 +230,20 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public Eclipse createEclipse()
+  {
+    EclipseImpl eclipse = new EclipseImpl();
+    return eclipse;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public Configuration createConfiguration()
   {
     ConfigurationImpl configuration = new ConfigurationImpl();
@@ -281,17 +292,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     GitCloneTaskImpl gitCloneTask = new GitCloneTaskImpl();
     return gitCloneTask;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EclipseVersion createEclipseVersion()
-  {
-    EclipseVersionImpl eclipseVersion = new EclipseVersionImpl();
-    return eclipseVersion;
   }
 
   /**

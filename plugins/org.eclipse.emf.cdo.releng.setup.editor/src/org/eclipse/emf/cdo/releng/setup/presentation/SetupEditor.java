@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdap
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -702,7 +703,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void initializeEditingDomain()
+  protected void initializeEditingDomainGen()
   {
     // Create an adapter factory that yields item providers.
     //
@@ -757,6 +758,13 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     // Create the editing domain with a special command stack.
     //
     editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+  }
+
+  protected void initializeEditingDomain()
+  {
+    initializeEditingDomainGen();
+    editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
+        .put("xmi", new SetupResourceFactoryImpl());
   }
 
   /**

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup;
 
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -51,9 +53,10 @@ public class Activator extends AbstractUIPlugin
         setupTaskPerformer.perform();
       }
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       log(ex);
+      ErrorDialog.open(ex);
     }
   }
 

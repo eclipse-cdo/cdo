@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.rcp.presentation;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesEditPlugin;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -48,7 +49,7 @@ public final class SetupEditorPlugin extends EMFPlugin
    */
   public SetupEditorPlugin()
   {
-    super(new ResourceLocator[] { WorkingSetsEditPlugin.INSTANCE, });
+    super(new ResourceLocator[] { WorkingSetsEditPlugin.INSTANCE, PredicatesEditPlugin.INSTANCE, });
   }
 
   /**

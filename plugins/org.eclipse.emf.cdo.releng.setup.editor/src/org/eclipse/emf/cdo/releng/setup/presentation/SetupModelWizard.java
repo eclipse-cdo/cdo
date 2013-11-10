@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.presentation;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -21,7 +22,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
@@ -209,7 +209,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
    * Do the work after everything is specified.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public boolean performFinish()
@@ -231,7 +231,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
           {
             // Create a resource set
             //
-            ResourceSet resourceSet = new ResourceSetImpl();
+            ResourceSet resourceSet = EMFUtil.createResourceSet();
 
             // Get the URI of the model file.
             //

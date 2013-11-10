@@ -337,7 +337,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   public boolean close()
   {
     SetupTaskPerformer.setProgress(null);
-
     return super.close();
   }
 
@@ -513,7 +512,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
                 dialog.log(jobName);
                 restart[0] = runnable.run(dialog);
               }
-              catch (Exception ex)
+              catch (Throwable ex)
               {
                 Activator.log(ex);
                 dialog.log("An error occured: " + ex.getMessage());
@@ -556,9 +555,10 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
         shell.getDisplay().asyncExec(jobRunnable);
       }
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       Activator.log(ex);
+      ErrorDialog.open(ex);
     }
   }
 

@@ -7,9 +7,9 @@
     usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
     importOrganizing="true" decoration="Live">
   <foreignModel>setup.ecore</foreignModel>
-  <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
-      multipleEditorPages="false" extensibleProviderFactory="true" childCreationExtenders="true"
-      ecorePackage="setup.ecore#/">
+  <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" resource="XMI"
+      disposableProviderFactory="true" multipleEditorPages="false" extensibleProviderFactory="true"
+      childCreationExtenders="true" ecorePackage="setup.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="setup.ecore#//SetupTaskScope">
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//SetupTaskScope/None"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//SetupTaskScope/Configuration"/>

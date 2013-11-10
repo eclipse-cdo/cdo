@@ -21,6 +21,13 @@
             genModel="model/setup.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated setup -->
+      <parser
+            type="setup"
+            class="org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl"/>
+   </extension>
+
    <extension
          point="org.eclipse.ui.startup">
       <startup

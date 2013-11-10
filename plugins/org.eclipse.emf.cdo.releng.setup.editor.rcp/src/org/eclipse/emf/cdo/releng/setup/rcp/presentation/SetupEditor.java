@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.setup.rcp.presentation;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -94,6 +96,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
@@ -118,7 +121,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final List<String> FILE_EXTENSION_FILTERS = prefixExtensions(SetupModelWizard.FILE_EXTENSIONS, "*.");
+  public static final List<String> FILE_EXTENSION_FILTERS = prefixExtensions(
+      Arrays.asList(SetupEditorPlugin.INSTANCE.getString("_UI_SetupEditorFilenameExtensions").split("\\s*,\\s*")), "*.");
 
   /**
    * Returns a new unmodifiable list containing prefixed versions of the extensions in the given list.
@@ -558,7 +562,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void initializeEditingDomain()
+  protected void initializeEditingDomainGen()
   {
     // Create an adapter factory that yields item providers.
     //
@@ -567,6 +571,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new SetupItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new WorkingSetsItemProviderAdapterFactory());
+    adapterFactory.addAdapterFactory(new PredicatesItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
     // Create the command stack that will notify this editor as commands are executed.
@@ -612,6 +617,13 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     // Create the editing domain with a special command stack.
     //
     editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+  }
+
+  protected void initializeEditingDomain()
+  {
+    initializeEditingDomainGen();
+    editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
+        .put("xmi", new SetupResourceFactoryImpl());
   }
 
   /**

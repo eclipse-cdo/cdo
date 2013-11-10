@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.product;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.releng.setup.provider.BranchItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ConfigurationItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ProjectItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
@@ -38,10 +40,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
@@ -127,10 +126,6 @@ public class SetupDialog extends TitleAreaDialog
 
   public static final int RETURN_RESTART = -3;
 
-  private static final String SETUP_URI = System.getProperty("setup.uri",
-      "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/model/Configuration.setup")
-      .replace('\\', '/');
-
   private Map<Branch, Setup> setups;
 
   private AdapterFactory adapterFactory;
@@ -159,10 +154,7 @@ public class SetupDialog extends TitleAreaDialog
     setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE);
     setHelpAvailable(true);
 
-    resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
-    resourceSet.getLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
-
+    resourceSet = EMFUtil.createResourceSet();
     adapterFactory = new SetupDialogAdapterFactory();
   }
 
@@ -193,8 +185,8 @@ public class SetupDialog extends TitleAreaDialog
     setTitle(ProgressLogDialog.TITLE);
     setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/install_wiz.gif"));
 
-    URI configurationURI = URI.createURI(SETUP_URI);
-    Resource resource = resourceSet.getResource(configurationURI, true);
+    URI configurationURI = URI.createURI(getSetupURI());
+    Resource resource = EMFUtil.loadResourceSafe(resourceSet, configurationURI);
     configuration = (Configuration)resource.getContents().get(0);
 
     Composite area = (Composite)super.createDialogArea(parent);
@@ -668,7 +660,7 @@ public class SetupDialog extends TitleAreaDialog
     {
       handleException(ex.getCause());
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       handleException(ex);
     }
@@ -681,7 +673,7 @@ public class SetupDialog extends TitleAreaDialog
     {
       install();
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       handleException(ex);
     }
@@ -691,9 +683,10 @@ public class SetupDialog extends TitleAreaDialog
 
   private void init()
   {
+    Resource resource;
     if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
     {
-      Resource resource = resourceSet.getResource(Preferences.PREFERENCES_URI, true);
+      resource = EMFUtil.loadResourceSafe(resourceSet, Preferences.PREFERENCES_URI);
       preferences = (Preferences)resource.getContents().get(0);
 
       setups = initSetups();
@@ -704,7 +697,7 @@ public class SetupDialog extends TitleAreaDialog
     }
     else
     {
-      Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
+      resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
       preferences = SetupFactory.eINSTANCE.createPreferences();
       resource.getContents().add(preferences);
 
@@ -732,7 +725,7 @@ public class SetupDialog extends TitleAreaDialog
         URI uri = getSetupURI(branch);
         if (resourceSet.getURIConverter().exists(uri, null))
         {
-          Resource resource = resourceSet.getResource(uri, true);
+          Resource resource = EMFUtil.loadResourceSafe(resourceSet, uri);
           setup = (Setup)resource.getContents().get(0);
         }
         else
@@ -957,7 +950,18 @@ public class SetupDialog extends TitleAreaDialog
   private void handleException(Throwable ex)
   {
     Activator.log(ex);
-    new Application.InternalErrorDialog(ex).open();
+    ErrorDialog.open(ex);
+  }
+
+  private static String getSetupURI()
+  {
+    String uri = System.getProperty("setup.uri");
+    if (uri == null || !uri.startsWith("file:"))
+    {
+      uri = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";
+    }
+
+    return uri.replace('\\', '/');
   }
 
   /**

@@ -522,18 +522,25 @@ public class SetupDialog extends TitleAreaDialog
             IStatus updateStatus = checkForUpdates(agent, monitor);
             if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
             {
-              // userNameText.getDisplay().asyncExec(new Runnable()
-              // {
-              // public void run()
-              // {
-              // MessageDialog.openInformation(null, "Update", "No updates were found");
-              // }
-              // });
+              SetupDialog.this.getShell().getDisplay().asyncExec(new Runnable()
+              {
+                public void run()
+                {
+                  MessageDialog.openInformation(null, "Update", "No updates were found");
+                }
+              });
             }
             else if (updateStatus.getSeverity() != IStatus.ERROR)
             {
-              close();
-              setReturnCode(RETURN_RESTART);
+              SetupDialog.this.getShell().getDisplay().asyncExec(new Runnable()
+              {
+                public void run()
+                {
+                  close();
+                  setReturnCode(RETURN_RESTART);
+                  MessageDialog.openInformation(null, "Update", "Updates were installed, restart required");
+                }
+              });
             }
             else
             {
@@ -950,7 +957,7 @@ public class SetupDialog extends TitleAreaDialog
   private void handleException(Throwable ex)
   {
     Activator.log(ex);
-    MessageDialog.openError(getShell(), "Error", ex.getMessage());
+    new Application.InternalErrorDialog(ex).open();
   }
 
   /**

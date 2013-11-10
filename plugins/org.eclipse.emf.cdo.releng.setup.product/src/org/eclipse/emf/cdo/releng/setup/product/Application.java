@@ -109,7 +109,7 @@ public class Application implements IApplication
   /**
    * @author Eike Stepper
    */
-  private static class InternalErrorDialog extends MessageDialog
+  static class InternalErrorDialog extends MessageDialog
   {
     private static int DETAILS_BUTTON_ID = 1;
 

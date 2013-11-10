@@ -83,20 +83,6 @@
       </actionSet>
    </extension>
 
-   <extension point="org.eclipse.ui.actionSets">
-      <!-- @generated setup-rcp -->
-      <actionSet
-            label="%_UI_SetupModelWizard_ActionSet_label"
-            visible="true"
-            id="org.eclipse.emf.cdo.releng.setup.rcp.presentation.SetupActionBarContributorActionSet">
-         <action
-               label="%_UI_SetupModelWizard_label"
-               class="org.eclipse.emf.cdo.releng.setup.rcp.presentation.SetupActionBarContributor$NewAction"
-               menubarPath="file/new/additions"
-               id="org.eclipse.emf.cdo.releng.setup.rcp.presentation.SetupActionBarContributorNewAction"/>
-      </actionSet>
-   </extension>
-
    <extension point="org.eclipse.ui.editors">
       <!-- @generated setup-rcp -->
       <editor

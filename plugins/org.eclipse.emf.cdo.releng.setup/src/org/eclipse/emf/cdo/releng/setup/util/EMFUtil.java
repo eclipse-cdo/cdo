@@ -22,6 +22,10 @@ import org.eclipse.core.runtime.Plugin;
  */
 public final class EMFUtil extends Plugin
 {
+  public static final String EXAMPLE_URI = System.getProperty("example.uri");
+
+  public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
+
   private EMFUtil()
   {
   }
@@ -30,6 +34,13 @@ public final class EMFUtil extends Plugin
   {
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new SetupResourceFactoryImpl());
+
+    if (EXAMPLE_URI != null)
+    {
+      URI exampleURI = URI.createURI(EXAMPLE_URI);
+      resourceSet.getURIConverter().getURIMap().put(EXAMPLE_PROXY_URI, exampleURI);
+    }
+
     return resourceSet;
   }
 

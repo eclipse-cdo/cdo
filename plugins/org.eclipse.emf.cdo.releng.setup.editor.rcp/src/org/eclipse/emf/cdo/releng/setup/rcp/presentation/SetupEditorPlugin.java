@@ -13,9 +13,12 @@ package org.eclipse.emf.cdo.releng.setup.rcp.presentation;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesEditPlugin;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsEditPlugin;
 
+import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * This is the central singleton for the Setup editor plugin.
@@ -98,6 +101,24 @@ public final class SetupEditorPlugin extends EMFPlugin
       // Remember the static instance.
       //
       plugin = this;
+    }
+
+    @Override
+    public void start(BundleContext context) throws Exception
+    {
+      try
+      {
+        CommonPlugin.loadClass("org.eclipse.emf.cdo.releng.setup.editor",
+            "org.eclipse.emf.cdo.releng.setup.presentation.SetupEditor");
+      }
+      catch (Throwable ex)
+      {
+        // Ok
+        super.start(context);
+        return;
+      }
+
+      throw new IllegalStateException("The IDE editor is present");
     }
   }
 

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdap
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
@@ -1010,7 +1011,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * <!-- end-user-doc -->
    * @generated
    */
-  public Diagnostic analyzeResourceProblems(Resource resource, Exception exception)
+  public Diagnostic analyzeResourceProblemsGen(Resource resource, Exception exception)
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
@@ -1029,6 +1030,16 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     {
       return Diagnostic.OK_INSTANCE;
     }
+  }
+
+  public Diagnostic analyzeResourceProblems(Resource resource, Exception exception)
+  {
+    if (resource.getURI().equals(EMFUtil.EXAMPLE_PROXY_URI))
+    {
+      return Diagnostic.OK_INSTANCE;
+    }
+
+    return analyzeResourceProblemsGen(resource, exception);
   }
 
   /**

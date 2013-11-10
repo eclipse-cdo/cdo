@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.EclipseVersion;
+import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -339,7 +340,7 @@ public class SetupDialog extends TitleAreaDialog
     Label userNameLabel = new Label(grpPreferences, SWT.NONE);
     userNameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     userNameLabel.setBounds(0, 0, 55, 15);
-    userNameLabel.setText("Git User ID:");
+    userNameLabel.setText("Git/Gerrit ID:");
 
     userNameText = new Text(grpPreferences, SWT.BORDER);
     userNameText
@@ -705,7 +706,7 @@ public class SetupDialog extends TitleAreaDialog
 
       File rootFolder = new File(System.getProperty("user.home", "."));
 
-      userNameText.setText("anonymous");
+      userNameText.setText("");
       installFolderText.setText(safe(getAbsolutePath(rootFolder)));
       gitPrefixText.setText(safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix()))));
     }
@@ -767,21 +768,21 @@ public class SetupDialog extends TitleAreaDialog
 
     if (viewer.getCheckedElements().length == 0)
     {
-      setMessage("Select one or more project branches to install.", IMessageProvider.ERROR);
+      setMessage("Select one or more project branches to install.", IMessageProvider.NONE);
       installButton.setEnabled(false);
       return;
     }
 
     if (userNameText.getText().length() == 0)
     {
-      setMessage("Enter your user name.", IMessageProvider.WARNING);
+      setMessage("Enter your Eclipse Git/Gerrit ID or '" + GitCloneTask.ANONYMOUS + "'.", IMessageProvider.ERROR);
       installButton.setEnabled(false);
       return;
     }
 
     if (installFolderText.getText().length() == 0)
     {
-      setMessage("Enter the install folder.", IMessageProvider.WARNING);
+      setMessage("Enter the install folder.", IMessageProvider.ERROR);
       installButton.setEnabled(false);
       return;
     }

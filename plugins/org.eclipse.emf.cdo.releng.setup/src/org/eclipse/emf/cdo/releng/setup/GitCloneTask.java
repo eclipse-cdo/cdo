@@ -31,6 +31,8 @@ package org.eclipse.emf.cdo.releng.setup;
  */
 public interface GitCloneTask extends SetupTask
 {
+  public static final String ANONYMOUS = "anonymous";
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

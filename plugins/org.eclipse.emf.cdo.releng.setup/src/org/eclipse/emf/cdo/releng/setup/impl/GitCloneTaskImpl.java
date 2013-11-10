@@ -539,10 +539,40 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     private static Git cloneRepository(SetupTaskContext context, File workDir, String checkoutBranch,
         String remoteName, String remoteURI) throws Exception
     {
+      String remote;
+
       URI baseURI = URI.createURI(remoteURI);
-      String remote = baseURI.isFile() ? baseURI.toString() : URI.createHierarchicalURI(baseURI.scheme(),
-          context.getSetup().getPreferences().getUserName() + "@" + baseURI.authority(), baseURI.device(),
-          baseURI.segments(), baseURI.query(), baseURI.fragment()).toString();
+      if (baseURI.isFile())
+      {
+        remote = baseURI.toString();
+      }
+      else
+      {
+        String scheme = baseURI.scheme();
+        String[] segments = baseURI.segments();
+
+        String userName = context.getSetup().getPreferences().getUserName();
+        if (ANONYMOUS.equals(userName))
+        {
+          if (baseURI.port() != null)
+          {
+            scheme = "git";
+
+            String[] newSegments = new String[1 + segments.length];
+            newSegments[0] = "gitroot";
+            System.arraycopy(segments, 0, newSegments, 1, segments.length);
+            segments = newSegments;
+          }
+
+          remote = URI.createHierarchicalURI(scheme, baseURI.host(), baseURI.device(), segments, baseURI.query(),
+              baseURI.fragment()).toString();
+        }
+        else
+        {
+          remote = URI.createHierarchicalURI(scheme, userName + "@" + baseURI.authority(), baseURI.device(), segments,
+              baseURI.query(), baseURI.fragment()).toString();
+        }
+      }
 
       context.log("Cloning Git repo " + remote + " to " + workDir);
 

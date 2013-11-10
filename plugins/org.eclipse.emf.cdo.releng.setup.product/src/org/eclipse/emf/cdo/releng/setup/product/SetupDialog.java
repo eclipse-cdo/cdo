@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
@@ -710,7 +711,17 @@ public class SetupDialog extends TitleAreaDialog
       gitPrefixText.setText(safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix()))));
     }
 
-    viewer.setInput(configuration);
+    ItemProvider input = new ItemProvider();
+    EList<Object> projects = input.getChildren();
+    for (Project project : configuration.getProjects())
+    {
+      if (!project.eIsProxy())
+      {
+        projects.add(project);
+      }
+    }
+
+    viewer.setInput(input);
     viewer.expandAll();
   }
 

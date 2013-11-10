@@ -61,7 +61,7 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
     {
       super.getPropertyDescriptors(object);
 
-      addNamePropertyDescriptor(object);
+      addLocationPropertyDescriptor(object);
       addRemoteNamePropertyDescriptor(object);
       addRemoteURIPropertyDescriptor(object);
       addCheckoutBranchPropertyDescriptor(object);
@@ -70,27 +70,27 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
   }
 
   /**
-   * This adds a property descriptor for the Name feature.
+   * This adds a property descriptor for the Location feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addNamePropertyDescriptor(Object object)
+  protected void addLocationPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_GitCloneTask_name_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_GitCloneTask_name_feature", "_UI_GitCloneTask_type"),
-        SetupPackage.Literals.GIT_CLONE_TASK__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        getString("_UI_GitCloneTask_location_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_GitCloneTask_location_feature", "_UI_GitCloneTask_type"),
+        SetupPackage.Literals.GIT_CLONE_TASK__LOCATION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
 
   /**
-   * This adds a property descriptor for the Remote Name feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * This adds a property descriptor for the Remote Name feature.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected void addRemoteNamePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
@@ -192,7 +192,7 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
 
     switch (notification.getFeatureID(GitCloneTask.class))
     {
-    case SetupPackage.GIT_CLONE_TASK__NAME:
+    case SetupPackage.GIT_CLONE_TASK__LOCATION:
     case SetupPackage.GIT_CLONE_TASK__REMOTE_NAME:
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:

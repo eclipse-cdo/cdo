@@ -18,7 +18,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteURI <em>Remote URI</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getCheckoutBranch <em>Checkout Branch</em>}</li>
@@ -31,33 +31,33 @@ package org.eclipse.emf.cdo.releng.setup;
  */
 public interface GitCloneTask extends SetupTask
 {
-  public static final String ANONYMOUS = "anonymous";
-
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * If the meaning of the '<em>Location</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_Name()
-   * @model
+   * @return the value of the '<em>Location</em>' attribute.
+   * @see #setLocation(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_Location()
+   * @model required="true"
    * @generated
    */
-  String getName();
+  String getLocation();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getLocation <em>Location</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
+   * @param value the new value of the '<em>Location</em>' attribute.
+   * @see #getLocation()
    * @generated
    */
-  void setName(String value);
+  void setLocation(String value);
+
+  public static final String ANONYMOUS = "anonymous";
 
   /**
    * Returns the value of the '<em><b>Remote Name</b></em>' attribute.

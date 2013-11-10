@@ -156,7 +156,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="zipLocation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GitCloneTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="origin"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

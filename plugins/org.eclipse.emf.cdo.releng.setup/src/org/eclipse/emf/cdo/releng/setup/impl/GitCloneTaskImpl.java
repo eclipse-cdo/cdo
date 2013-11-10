@@ -51,7 +51,7 @@ import java.util.Set;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getRemoteName <em>Remote Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getRemoteURI <em>Remote URI</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getCheckoutBranch <em>Checkout Branch</em>}</li>
@@ -63,33 +63,33 @@ import java.util.Set;
 public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getLocation()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String LOCATION_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getLocation()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected String location = LOCATION_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getRemoteName() <em>Remote Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRemoteName()
-   * @generated
-   * @ordered
-   */
+  	 * The default value of the '{@link #getRemoteName() <em>Remote Name</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @see #getRemoteName()
+  	 * @generated
+  	 * @ordered
+  	 */
   protected static final String REMOTE_NAME_EDEFAULT = "origin";
 
   /**
@@ -170,31 +170,32 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public String getLocation()
   {
-    return name;
+    return location;
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setLocation(String newLocation)
   {
-    String oldName = name;
-    name = newName;
+    String oldLocation = location;
+    location = newLocation;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__LOCATION, oldLocation,
+          location));
     }
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public String getRemoteName()
   {
     return remoteName;
@@ -278,8 +279,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   {
     switch (featureID)
     {
-    case SetupPackage.GIT_CLONE_TASK__NAME:
-      return getName();
+    case SetupPackage.GIT_CLONE_TASK__LOCATION:
+      return getLocation();
     case SetupPackage.GIT_CLONE_TASK__REMOTE_NAME:
       return getRemoteName();
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
@@ -300,8 +301,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   {
     switch (featureID)
     {
-    case SetupPackage.GIT_CLONE_TASK__NAME:
-      setName((String)newValue);
+    case SetupPackage.GIT_CLONE_TASK__LOCATION:
+      setLocation((String)newValue);
       return;
     case SetupPackage.GIT_CLONE_TASK__REMOTE_NAME:
       setRemoteName((String)newValue);
@@ -326,8 +327,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   {
     switch (featureID)
     {
-    case SetupPackage.GIT_CLONE_TASK__NAME:
-      setName(NAME_EDEFAULT);
+    case SetupPackage.GIT_CLONE_TASK__LOCATION:
+      setLocation(LOCATION_EDEFAULT);
       return;
     case SetupPackage.GIT_CLONE_TASK__REMOTE_NAME:
       setRemoteName(REMOTE_NAME_EDEFAULT);
@@ -352,8 +353,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   {
     switch (featureID)
     {
-    case SetupPackage.GIT_CLONE_TASK__NAME:
-      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case SetupPackage.GIT_CLONE_TASK__LOCATION:
+      return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
     case SetupPackage.GIT_CLONE_TASK__REMOTE_NAME:
       return REMOTE_NAME_EDEFAULT == null ? remoteName != null : !REMOTE_NAME_EDEFAULT.equals(remoteName);
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
@@ -379,8 +380,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (location: ");
+    result.append(location);
     result.append(", remoteName: ");
     result.append(remoteName);
     result.append(", remoteURI: ");
@@ -400,8 +401,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     gitDelegate = GitUtil.create();
-    return gitDelegate.isNeeded(context, context.expandString(getName()), context.expandString(getCheckoutBranch()),
-        context.expandString(getRemoteName()));
+    return gitDelegate.isNeeded(context, context.expandString(getLocation()),
+        context.expandString(getCheckoutBranch()), context.expandString(getRemoteName()));
   }
 
   public void perform(SetupTaskContext context) throws Exception
@@ -455,10 +456,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return new GitUtil();
     }
 
-    public boolean isNeeded(SetupTaskContext context, String name, String checkoutBranch, String remoteName)
+    public boolean isNeeded(SetupTaskContext context, String location, String checkoutBranch, String remoteName)
         throws Exception
     {
-      workDir = getWorkDir(context, name);
+      workDir = new File(location);
       if (!workDir.isDirectory())
       {
         return true;
@@ -514,12 +515,6 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       {
         cachedRepository.close();
       }
-    }
-
-    private static File getWorkDir(SetupTaskContext context, String name)
-    {
-      File gitDir = new File(context.getBranchDir(), "git");
-      return new File(gitDir, name);
     }
 
     private static boolean hasWorkTree(Git git) throws Exception

@@ -1868,21 +1868,21 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIT_CLONE_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
+  int GIT_CLONE_TASK__LOCATION = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Remote Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
+  	 * The feature id for the '<em><b>Remote Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
   int GIT_CLONE_TASK__REMOTE_NAME = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
@@ -2818,25 +2818,25 @@ public interface SetupPackage extends EPackage
   EClass getGitCloneTask();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getLocation <em>Location</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getName()
+   * @return the meta object for the attribute '<em>Location</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getLocation()
    * @see #getGitCloneTask()
    * @generated
    */
-  EAttribute getGitCloneTask_Name();
+  EAttribute getGitCloneTask_Location();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Remote Name</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName()
-   * @see #getGitCloneTask()
-   * @generated
-   */
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Remote Name</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName()
+  	 * @see #getGitCloneTask()
+  	 * @generated
+  	 */
   EAttribute getGitCloneTask_RemoteName();
 
   /**
@@ -4137,19 +4137,19 @@ public interface SetupPackage extends EPackage
     EClass GIT_CLONE_TASK = eINSTANCE.getGitCloneTask();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GIT_CLONE_TASK__NAME = eINSTANCE.getGitCloneTask_Name();
+    EAttribute GIT_CLONE_TASK__LOCATION = eINSTANCE.getGitCloneTask_Location();
 
     /**
-     * The meta object literal for the '<em><b>Remote Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
+    	 * The meta object literal for the '<em><b>Remote Name</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @generated
+    	 */
     EAttribute GIT_CLONE_TASK__REMOTE_NAME = eINSTANCE.getGitCloneTask_RemoteName();
 
     /**

@@ -118,6 +118,7 @@
     <setupTasks xsi:type="setup:MylynQueryTask" excludedTriggers="BOOTSTRAP" summary="CDO_UI" url="${cdo.bugzilla.url}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
     <setupTasks xsi:type="setup:MylynQueryTask" disabled="true" excludedTriggers="BOOTSTRAP" summary="TaskTable" url="${cdo.bugzilla.url}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
   </setupTasks>
+  <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo}" stringSubstitution="true"/>
   <branches name="master">
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.3" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:P2Task">
@@ -129,9 +130,8 @@
       <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
     </setupTasks>
     <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
-    <setupTasks xsi:type="setup:GitCloneTask" name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@branches[name='master']/@setupTasks.3" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo}" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:BuckminsterImportTask" requirements="//@branches[name='4.2']/@setupTasks.2 //@branches[name='master']/@setupTasks.4" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master" name="cdo"/>
+    <setupTasks xsi:type="setup:BuckminsterImportTask" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
   </branches>
   <branches name="4.2">
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.2" stringSubstitution="true"/>
@@ -143,8 +143,7 @@
       <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
     </setupTasks>
     <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
-    <setupTasks xsi:type="setup:GitCloneTask" name="cdo" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="streams/4.2-maintenance"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@branches[name='4.2']/@setupTasks.3" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo}" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:BuckminsterImportTask" requirements="//@branches[name='4.2']/@setupTasks.2 //@branches[name='4.2']/@setupTasks.4" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="streams/4.2-maintenance" name="cdo"/>
+    <setupTasks xsi:type="setup:BuckminsterImportTask" targetPlatform="${setup.branch.dir}/tp" bundlePool="${setup.install.dir}/.p2pool-tp" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
   </branches>
 </setup:Project>

@@ -600,16 +600,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getGitCloneTask_Name()
+  public EAttribute getGitCloneTask_Location()
   {
     return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EAttribute getGitCloneTask_RemoteName()
   {
     return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(1);
@@ -1815,7 +1815,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__ZIP_LOCATION);
 
     gitCloneTaskEClass = createEClass(GIT_CLONE_TASK);
-    createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__NAME);
+    createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__LOCATION);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_NAME);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_URI);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__CHECKOUT_BRANCH);
@@ -2173,7 +2173,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(gitCloneTaskEClass, GitCloneTask.class, "GitCloneTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGitCloneTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, GitCloneTask.class,
+    initEAttribute(getGitCloneTask_Location(), ecorePackage.getEString(), "location", null, 1, 1, GitCloneTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGitCloneTask_RemoteName(), ecorePackage.getEString(), "remoteName", "origin", 0, 1,
         GitCloneTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,

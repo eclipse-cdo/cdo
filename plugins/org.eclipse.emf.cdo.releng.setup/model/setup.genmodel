@@ -147,7 +147,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/zipLocation"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//GitCloneTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/remoteName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/remoteURI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/checkoutBranch"/>

@@ -33,7 +33,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl#getURL <em>URL</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl#getModifications <em>Modifications</em>}</li>
  * </ul>
  * </p>
@@ -43,29 +43,29 @@ import java.util.Collection;
 public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 {
   /**
-   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUrl()
+   * @see #getURL()
    * @generated
    * @ordered
    */
   protected static final String URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUrl()
+   * @see #getURL()
    * @generated
    * @ordered
    */
-  protected String url = URL_EDEFAULT;
+  protected String uRL = URL_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getModifications() <em>Modifications</em>}' containment reference list.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getModifications()
    * @generated
    * @ordered
@@ -98,29 +98,29 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getUrl()
+  public String getURL()
   {
-    return url;
+    return uRL;
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setUrl(String newUrl)
+  public void setURL(String newURL)
   {
-    String oldUrl = url;
-    url = newUrl;
+    String oldURL = uRL;
+    uRL = newURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TEXT_MODIFY_TASK__URL, oldUrl, url));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TEXT_MODIFY_TASK__URL, oldURL, uRL));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EList<TextModification> getModifications()
@@ -160,7 +160,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     switch (featureID)
     {
     case SetupPackage.TEXT_MODIFY_TASK__URL:
-      return getUrl();
+      return getURL();
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       return getModifications();
     }
@@ -179,7 +179,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     switch (featureID)
     {
     case SetupPackage.TEXT_MODIFY_TASK__URL:
-      setUrl((String)newValue);
+      setURL((String)newValue);
       return;
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       getModifications().clear();
@@ -200,7 +200,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     switch (featureID)
     {
     case SetupPackage.TEXT_MODIFY_TASK__URL:
-      setUrl(URL_EDEFAULT);
+      setURL(URL_EDEFAULT);
       return;
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       getModifications().clear();
@@ -220,7 +220,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     switch (featureID)
     {
     case SetupPackage.TEXT_MODIFY_TASK__URL:
-      return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+      return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       return modifications != null && !modifications.isEmpty();
     }
@@ -241,8 +241,8 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (url: ");
-    result.append(url);
+    result.append(" (uRL: ");
+    result.append(uRL);
     result.append(')');
     return result.toString();
   }

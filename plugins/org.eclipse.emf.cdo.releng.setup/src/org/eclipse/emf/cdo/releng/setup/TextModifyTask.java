@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getURL <em>URL</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getModifications <em>Modifications</em>}</li>
  * </ul>
  * </p>
@@ -32,40 +32,41 @@ import org.eclipse.emf.common.util.EList;
 public interface TextModifyTask extends SetupTask
 {
   /**
-   * Returns the value of the '<em><b>Url</b></em>' attribute.
+   * Returns the value of the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Url</em>' attribute isn't clear,
+   * If the meaning of the '<em>URL</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Url</em>' attribute.
-   * @see #setUrl(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModifyTask_Url()
-   * @model
+   * @return the value of the '<em>URL</em>' attribute.
+   * @see #setURL(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModifyTask_URL()
+   * @model required="true"
+   *        extendedMetaData="kind='attribute' name='url'"
    * @generated
    */
-  String getUrl();
+  String getURL();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getUrl <em>Url</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getURL <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Url</em>' attribute.
-   * @see #getUrl()
+   * @param value the new value of the '<em>URL</em>' attribute.
+   * @see #getURL()
    * @generated
    */
-  void setUrl(String value);
+  void setURL(String value);
 
   /**
    * Returns the value of the '<em><b>Modifications</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.TextModification}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Modifications</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Modifications</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
    * @return the value of the '<em>Modifications</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModifyTask_Modifications()
    * @model containment="true" resolveProxies="true"

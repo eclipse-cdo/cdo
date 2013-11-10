@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
-import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
@@ -180,12 +179,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseCompoundSetupTask(CompoundSetupTask object)
     {
       return createCompoundSetupTaskAdapter();
-    }
-
-    @Override
-    public Adapter caseOneTimeSetupTask(OneTimeSetupTask object)
-    {
-      return createOneTimeSetupTaskAdapter();
     }
 
     @Override
@@ -805,21 +798,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCompoundSetupTaskAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask <em>One Time Setup Task</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask
-   * @generated
-   */
-  public Adapter createOneTimeSetupTaskAdapter()
   {
     return null;
   }

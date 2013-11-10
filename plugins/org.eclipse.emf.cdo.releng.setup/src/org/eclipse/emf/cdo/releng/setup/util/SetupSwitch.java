@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
-import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
@@ -275,20 +274,6 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseSetupTaskContainer(compoundSetupTask);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.ONE_TIME_SETUP_TASK:
-    {
-      OneTimeSetupTask oneTimeSetupTask = (OneTimeSetupTask)theEObject;
-      T result = caseOneTimeSetupTask(oneTimeSetupTask);
-      if (result == null)
-      {
-        result = caseSetupTask(oneTimeSetupTask);
       }
       if (result == null)
       {
@@ -1175,22 +1160,6 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseCompoundSetupTask(CompoundSetupTask object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>One Time Setup Task</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>One Time Setup Task</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseOneTimeSetupTask(OneTimeSetupTask object)
   {
     return null;
   }

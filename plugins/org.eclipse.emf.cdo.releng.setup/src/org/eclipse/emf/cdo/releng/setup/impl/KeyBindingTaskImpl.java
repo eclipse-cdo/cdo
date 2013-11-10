@@ -671,7 +671,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     Map params = new HashMap();
     for (CommandParameter commandParameter : getCommandParameters())
     {
-      params.put(commandParameter.getId(), commandParameter.getValue());
+      params.put(commandParameter.getID(), commandParameter.getValue());
     }
 
     return params;

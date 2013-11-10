@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl#getID <em>ID</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
@@ -35,29 +35,29 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class CommandParameterImpl extends MinimalEObjectImpl.Container implements CommandParameter
 {
   /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * The default value of the '{@link #getID() <em>ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getId()
+   * @see #getID()
    * @generated
    * @ordered
    */
   protected static final String ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * The cached value of the '{@link #getID() <em>ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getId()
+   * @see #getID()
    * @generated
    * @ordered
    */
-  protected String id = ID_EDEFAULT;
+  protected String iD = ID_EDEFAULT;
 
   /**
    * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getValue()
    * @generated
    * @ordered
@@ -100,29 +100,29 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getId()
+  public String getID()
   {
-    return id;
+    return iD;
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setId(String newId)
+  public void setID(String newID)
   {
-    String oldId = id;
-    id = newId;
+    String oldID = iD;
+    iD = newID;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__ID, oldId, id));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.COMMAND_PARAMETER__ID, oldID, iD));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public String getValue()
@@ -156,7 +156,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
     case SetupPackage.COMMAND_PARAMETER__ID:
-      return getId();
+      return getID();
     case SetupPackage.COMMAND_PARAMETER__VALUE:
       return getValue();
     }
@@ -174,7 +174,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
     case SetupPackage.COMMAND_PARAMETER__ID:
-      setId((String)newValue);
+      setID((String)newValue);
       return;
     case SetupPackage.COMMAND_PARAMETER__VALUE:
       setValue((String)newValue);
@@ -194,7 +194,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
     case SetupPackage.COMMAND_PARAMETER__ID:
-      setId(ID_EDEFAULT);
+      setID(ID_EDEFAULT);
       return;
     case SetupPackage.COMMAND_PARAMETER__VALUE:
       setValue(VALUE_EDEFAULT);
@@ -214,7 +214,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
     case SetupPackage.COMMAND_PARAMETER__ID:
-      return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+      return ID_EDEFAULT == null ? iD != null : !ID_EDEFAULT.equals(iD);
     case SetupPackage.COMMAND_PARAMETER__VALUE:
       return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
     }
@@ -235,8 +235,8 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (id: ");
-    result.append(id);
+    result.append(" (iD: ");
+    result.append(iD);
     result.append(", value: ");
     result.append(value);
     result.append(')');

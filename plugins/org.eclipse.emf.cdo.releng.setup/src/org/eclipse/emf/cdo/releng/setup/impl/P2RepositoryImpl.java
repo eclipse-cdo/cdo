@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl#getP2Task <em>P2 Task</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl#getURL <em>URL</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,28 +39,28 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2Repository
 {
   /**
-   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUrl()
+   * @see #getURL()
    * @generated
    * @ordered
    */
   protected static final String URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUrl()
+   * @see #getURL()
    * @generated
    * @ordered
    */
-  protected String url = URL_EDEFAULT;
+  protected String uRL = URL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected P2RepositoryImpl()
@@ -159,29 +159,29 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getUrl()
+  public String getURL()
   {
-    return url;
+    return uRL;
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setUrl(String newUrl)
+  public void setURL(String newURL)
   {
-    String oldUrl = url;
-    url = newUrl;
+    String oldURL = uRL;
+    uRL = newURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_REPOSITORY__URL, oldUrl, url));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_REPOSITORY__URL, oldURL, uRL));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -248,7 +248,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
       }
       return basicGetP2Task();
     case SetupPackage.P2_REPOSITORY__URL:
-      return getUrl();
+      return getURL();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -267,7 +267,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
       setP2Task((P2Task)newValue);
       return;
     case SetupPackage.P2_REPOSITORY__URL:
-      setUrl((String)newValue);
+      setURL((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -287,7 +287,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
       setP2Task((P2Task)null);
       return;
     case SetupPackage.P2_REPOSITORY__URL:
-      setUrl(URL_EDEFAULT);
+      setURL(URL_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -306,7 +306,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     case SetupPackage.P2_REPOSITORY__P2_TASK:
       return basicGetP2Task() != null;
     case SetupPackage.P2_REPOSITORY__URL:
-      return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+      return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
     }
     return super.eIsSet(featureID);
   }
@@ -325,8 +325,8 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (url: ");
-    result.append(url);
+    result.append(" (uRL: ");
+    result.append(uRL);
     result.append(')');
     return result.toString();
   }

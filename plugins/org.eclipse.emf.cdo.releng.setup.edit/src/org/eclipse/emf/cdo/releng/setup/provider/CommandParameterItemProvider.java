@@ -64,26 +64,26 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
     {
       super.getPropertyDescriptors(object);
 
-      addIdPropertyDescriptor(object);
+      addIDPropertyDescriptor(object);
       addValuePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Id feature.
+   * This adds a property descriptor for the ID feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addIdPropertyDescriptor(Object object)
+  protected void addIDPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(
             ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(),
-            getString("_UI_CommandParameter_id_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_CommandParameter_id_feature",
+            getString("_UI_CommandParameter_iD_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_CommandParameter_iD_feature",
                 "_UI_CommandParameter_type"), SetupPackage.Literals.COMMAND_PARAMETER__ID, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -91,7 +91,7 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
   /**
    * This adds a property descriptor for the Value feature.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected void addValuePropertyDescriptor(Object object)
@@ -149,7 +149,7 @@ public class CommandParameterItemProvider extends ItemProviderAdapter implements
   public String getText(Object object)
   {
     CommandParameter commandParameter = (CommandParameter)object;
-    return "" + commandParameter.getId() + " = " + commandParameter.getValue();
+    return "" + commandParameter.getID() + " = " + commandParameter.getValue();
   }
 
   /**

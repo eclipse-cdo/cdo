@@ -57,7 +57,7 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
 
       addConnectorKindPropertyDescriptor(object);
       addSummaryPropertyDescriptor(object);
-      addUrlPropertyDescriptor(object);
+      addURLPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -98,17 +98,17 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-   * This adds a property descriptor for the Url feature.
+   * This adds a property descriptor for the URL feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addUrlPropertyDescriptor(Object object)
+  protected void addURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_MylynQueryTask_url_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_MylynQueryTask_url_feature", "_UI_MylynQueryTask_type"),
+        getString("_UI_MylynQueryTask_uRL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MylynQueryTask_uRL_feature", "_UI_MylynQueryTask_type"),
         SetupPackage.Literals.MYLYN_QUERY_TASK__URL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
@@ -116,7 +116,7 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This returns MylynQueryTask.gif.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -147,7 +147,7 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   {
     MylynQueryTask mylynQuery = (MylynQueryTask)object;
     String summary = mylynQuery.getSummary();
-    String url = mylynQuery.getUrl();
+    String url = mylynQuery.getURL();
 
     if (StringUtil.isEmpty(summary) && StringUtil.isEmpty(url))
     {

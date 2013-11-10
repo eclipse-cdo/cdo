@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getP2Task <em>P2 Task</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getURL <em>URL</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,29 +60,30 @@ public interface P2Repository extends EObject
   void setP2Task(P2Task value);
 
   /**
-   * Returns the value of the '<em><b>Url</b></em>' attribute.
+   * Returns the value of the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Url</em>' attribute isn't clear,
+   * If the meaning of the '<em>URL</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Url</em>' attribute.
-   * @see #setUrl(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Repository_Url()
-   * @model
+   * @return the value of the '<em>URL</em>' attribute.
+   * @see #setURL(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Repository_URL()
+   * @model required="true"
+   *        extendedMetaData="kind='attribute' name='url'"
    * @generated
    */
-  String getUrl();
+  String getURL();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getUrl <em>Url</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getURL <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Url</em>' attribute.
-   * @see #getUrl()
+  	 * <!-- end-user-doc -->
+   * @param value the new value of the '<em>URL</em>' attribute.
+   * @see #getURL()
    * @generated
    */
-  void setUrl(String value);
+  void setURL(String value);
 
 } // P2Repository

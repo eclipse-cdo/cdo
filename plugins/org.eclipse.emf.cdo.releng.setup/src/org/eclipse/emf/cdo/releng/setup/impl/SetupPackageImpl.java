@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
-import org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
@@ -303,13 +302,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass compoundSetupTaskEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass oneTimeSetupTaskEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -728,14 +720,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getInstallableUnit_Id()
+  public EAttribute getInstallableUnit_ID()
   {
     return (EAttribute)installableUnitEClass.getEStructuralFeatures().get(1);
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EClass getP2Repository()
@@ -758,14 +750,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getP2Repository_Url()
+  public EAttribute getP2Repository_URL()
   {
     return (EAttribute)p2RepositoryEClass.getEStructuralFeatures().get(1);
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EClass getSetup()
@@ -935,17 +927,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTextModifyTask_Url()
+  public EAttribute getTextModifyTask_URL()
   {
     return (EAttribute)textModifyTaskEClass.getEStructuralFeatures().get(0);
   }
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    */
   public EReference getTextModifyTask_Modifications()
@@ -1075,17 +1067,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getCommandParameter_Id()
+  public EAttribute getCommandParameter_ID()
   {
     return (EAttribute)commandParameterEClass.getEStructuralFeatures().get(0);
   }
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getCommandParameter_Value()
@@ -1125,17 +1117,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getMylynQueryTask_Url()
+  public EAttribute getMylynQueryTask_URL()
   {
     return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EClass getAutomaticSourceLocator()
@@ -1508,26 +1500,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getOneTimeSetupTask()
-  {
-    return oneTimeSetupTaskEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getOneTimeSetupTask_Id()
-  {
-    return (EAttribute)oneTimeSetupTaskEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getConfigurableItem()
   {
     return configurableItemEClass;
@@ -1782,9 +1754,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     compoundSetupTaskEClass = createEClass(COMPOUND_SETUP_TASK);
     createEAttribute(compoundSetupTaskEClass, COMPOUND_SETUP_TASK__NAME);
 
-    oneTimeSetupTaskEClass = createEClass(ONE_TIME_SETUP_TASK);
-    createEAttribute(oneTimeSetupTaskEClass, ONE_TIME_SETUP_TASK__ID);
-
     eclipseIniTaskEClass = createEClass(ECLIPSE_INI_TASK);
     createEAttribute(eclipseIniTaskEClass, ECLIPSE_INI_TASK__OPTION);
     createEAttribute(eclipseIniTaskEClass, ECLIPSE_INI_TASK__VALUE);
@@ -1951,7 +1920,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     setupEClass.getESuperTypes().add(getTopLevelElement());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTask());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTaskContainer());
-    oneTimeSetupTaskEClass.getESuperTypes().add(getSetupTask());
     eclipseIniTaskEClass.getESuperTypes().add(getSetupTask());
     linkLocationTaskEClass.getESuperTypes().add(getSetupTask());
     p2TaskEClass.getESuperTypes().add(getSetupTask());
@@ -1992,9 +1960,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 1, -1,
         Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    getConfiguration_Projects().getEKeys().add(getProject_Name());
     initEReference(getConfiguration_EclipseVersions(), getEclipseVersion(), getEclipseVersion_Configuration(),
         "eclipseVersions", null, 1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    getConfiguration_EclipseVersions().getEKeys().add(getEclipseVersion_Version());
 
     initEClass(configurableItemEClass, ConfigurableItem.class, "ConfigurableItem", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2006,6 +1976,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getProject_Branches(), getBranch(), getBranch_Project(), "branches", null, 1, -1, Project.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    getProject_Branches().getEKeys().add(getBranch_Name());
     initEAttribute(getProject_Name(), ecorePackage.getEString(), "name", null, 0, 1, Project.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2076,11 +2047,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getCompoundSetupTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, CompoundSetupTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(oneTimeSetupTaskEClass, OneTimeSetupTask.class, "OneTimeSetupTask", IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getOneTimeSetupTask_Id(), ecorePackage.getEString(), "id", null, 1, 1, OneTimeSetupTask.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(eclipseIniTaskEClass, EclipseIniTask.class, "EclipseIniTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEclipseIniTask_Option(), ecorePackage.getEString(), "option", null, 0, 1, EclipseIniTask.class,
@@ -2110,7 +2076,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getInstallableUnit_P2Task(), getP2Task(), getP2Task_InstallableUnits(), "p2Task", null, 0, 1,
         InstallableUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInstallableUnit_Id(), ecorePackage.getEString(), "id", null, 0, 1, InstallableUnit.class,
+    initEAttribute(getInstallableUnit_ID(), ecorePackage.getEString(), "iD", null, 0, 1, InstallableUnit.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2RepositoryEClass, P2Repository.class, "P2Repository", !IS_ABSTRACT, !IS_INTERFACE,
@@ -2118,7 +2084,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getP2Repository_P2Task(), getP2Task(), getP2Task_P2Repositories(), "p2Task", null, 0, 1,
         P2Repository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getP2Repository_Url(), ecorePackage.getEString(), "url", null, 0, 1, P2Repository.class,
+    initEAttribute(getP2Repository_URL(), ecorePackage.getEString(), "uRL", null, 1, 1, P2Repository.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(basicMaterializationTaskEClass, BasicMaterializationTask.class, "BasicMaterializationTask", IS_ABSTRACT,
@@ -2256,7 +2222,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(textModifyTaskEClass, TextModifyTask.class, "TextModifyTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getTextModifyTask_Url(), ecorePackage.getEString(), "url", null, 0, 1, TextModifyTask.class,
+    initEAttribute(getTextModifyTask_URL(), ecorePackage.getEString(), "uRL", null, 1, 1, TextModifyTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTextModifyTask_Modifications(), getTextModification(), null, "modifications", null, 0, -1,
         TextModifyTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
@@ -2294,7 +2260,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(commandParameterEClass, CommandParameter.class, "CommandParameter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getCommandParameter_Id(), ecorePackage.getEString(), "id", null, 0, 1, CommandParameter.class,
+    initEAttribute(getCommandParameter_ID(), ecorePackage.getEString(), "iD", null, 0, 1, CommandParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCommandParameter_Value(), ecorePackage.getEString(), "value", null, 0, 1, CommandParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2306,7 +2272,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMylynQueryTask_Summary(), ecorePackage.getEString(), "summary", null, 1, 1, MylynQueryTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMylynQueryTask_Url(), ecorePackage.getEString(), "url", null, 1, 1, MylynQueryTask.class,
+    initEAttribute(getMylynQueryTask_URL(), ecorePackage.getEString(), "uRL", null, 1, 1, MylynQueryTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
@@ -2336,6 +2302,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     // Create resource
     createResource(eNS_URI);
+
+    // Create annotations
+    // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+    createExtendedMetaDataAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createExtendedMetaDataAnnotations()
+  {
+    String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+    addAnnotation(getInstallableUnit_ID(), source, new String[] { "kind", "attribute", "name", "id" });
+    addAnnotation(getP2Repository_URL(), source, new String[] { "kind", "attribute", "name", "url" });
+    addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
+    addAnnotation(getCommandParameter_ID(), source, new String[] { "kind", "attribute", "name", "id" });
+    addAnnotation(getMylynQueryTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
   }
 
 } // SetupPackageImpl

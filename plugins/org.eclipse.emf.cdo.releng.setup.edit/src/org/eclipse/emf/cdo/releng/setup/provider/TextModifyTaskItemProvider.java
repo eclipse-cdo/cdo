@@ -1,12 +1,4 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
@@ -63,23 +55,23 @@ public class TextModifyTaskItemProvider extends SetupTaskItemProvider implements
     {
       super.getPropertyDescriptors(object);
 
-      addUrlPropertyDescriptor(object);
+      addURLPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Url feature.
+   * This adds a property descriptor for the URL feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addUrlPropertyDescriptor(Object object)
+  protected void addURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_TextModifyTask_url_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_TextModifyTask_url_feature", "_UI_TextModifyTask_type"),
+        getString("_UI_TextModifyTask_uRL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TextModifyTask_uRL_feature", "_UI_TextModifyTask_type"),
         SetupPackage.Literals.TEXT_MODIFY_TASK__URL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
@@ -143,13 +135,13 @@ public class TextModifyTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public String getText(Object object)
   {
-    String label = ((TextModifyTask)object).getUrl();
+    String label = ((TextModifyTask)object).getURL();
     return label == null || label.length() == 0 ? getString("_UI_TextModifyTask_type")
         : getString("_UI_TextModifyTask_type") + " " + label;
   }

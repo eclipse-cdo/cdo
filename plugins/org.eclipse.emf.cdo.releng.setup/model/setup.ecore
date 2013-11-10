@@ -12,16 +12,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//TopLevelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" lowerBound="1"
-        upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"/>
+        upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"
+        eKeys="#//Project/name"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
-        upperBound="-1" eType="#//EclipseVersion" containment="true" eOpposite="#//EclipseVersion/configuration"/>
+        upperBound="-1" eType="#//EclipseVersion" containment="true" eOpposite="#//EclipseVersion/configuration"
+        eKeys="#//EclipseVersion/version"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//SetupTaskContainer"/>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem #//TopLevelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
         transient="true" eOpposite="#//Configuration/projects"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="branches" lowerBound="1"
-        upperBound="-1" eType="#//Branch" containment="true" eOpposite="#//Branch/project"/>
+        upperBound="-1" eType="#//Branch" containment="true" eOpposite="#//Branch/project"
+        eKeys="#//Branch/name"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Branch" eSuperTypes="#//ConfigurableItem">
@@ -70,9 +73,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="CompoundSetupTask" eSuperTypes="#//SetupTask #//SetupTaskContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OneTimeSetupTask" abstract="true" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EclipseIniTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="option" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -91,12 +91,22 @@
   <eClassifiers xsi:type="ecore:EClass" name="InstallableUnit">
     <eStructuralFeatures xsi:type="ecore:EReference" name="p2Task" eType="#//P2Task"
         eOpposite="#//P2Task/installableUnits"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="P2Repository">
     <eStructuralFeatures xsi:type="ecore:EReference" name="p2Task" eType="#//P2Task"
         eOpposite="#//P2Task/p2Repositories"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="url"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BasicMaterializationTask" abstract="true"
       eSuperTypes="#//SetupTask">
@@ -171,7 +181,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TextModifyTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="url"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modifications" upperBound="-1"
         eType="#//TextModification" containment="true"/>
   </eClassifiers>
@@ -193,7 +208,12 @@
         eType="#//CommandParameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CommandParameter">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MylynQueryTask" eSuperTypes="#//SetupTask">
@@ -201,7 +221,12 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="bugzilla"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="summary" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="url"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
     <eLiterals name="None"/>

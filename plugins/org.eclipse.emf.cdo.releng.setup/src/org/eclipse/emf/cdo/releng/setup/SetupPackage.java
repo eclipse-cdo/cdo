@@ -153,7 +153,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getInstallableUnit()
    * @generated
    */
-  int INSTALLABLE_UNIT = 15;
+  int INSTALLABLE_UNIT = 14;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
@@ -163,7 +163,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
    * @generated
    */
-  int P2_REPOSITORY = 16;
+  int P2_REPOSITORY = 15;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.
@@ -193,7 +193,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
    * @generated
    */
-  int LINK_LOCATION_TASK = 13;
+  int LINK_LOCATION_TASK = 12;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl <em>Eclipse Preference Task</em>}' class.
@@ -203,7 +203,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
    * @generated
    */
-  int ECLIPSE_PREFERENCE_TASK = 28;
+  int ECLIPSE_PREFERENCE_TASK = 27;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -223,7 +223,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Task()
    * @generated
    */
-  int P2_TASK = 14;
+  int P2_TASK = 13;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -504,7 +504,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
    * @generated
    */
-  int API_BASELINE_TASK = 26;
+  int API_BASELINE_TASK = 25;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl <em>Git Clone Task</em>}' class.
@@ -514,7 +514,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getGitCloneTask()
    * @generated
    */
-  int GIT_CLONE_TASK = 27;
+  int GIT_CLONE_TASK = 26;
 
   /**
    * The feature id for the '<em><b>Branch</b></em>' reference.
@@ -623,7 +623,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
    * @generated
    */
-  int WORKING_SET_TASK = 29;
+  int WORKING_SET_TASK = 28;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
@@ -717,88 +717,6 @@ public interface SetupPackage extends EPackage
   int COMPOUND_SETUP_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.OneTimeSetupTaskImpl <em>One Time Setup Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.OneTimeSetupTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getOneTimeSetupTask()
-   * @generated
-   */
-  int ONE_TIME_SETUP_TASK = 11;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK__ID = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>One Time Setup Task</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ONE_TIME_SETUP_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuckminsterImportTaskImpl <em>Buckminster Import Task</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -806,7 +724,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuckminsterImportTask()
    * @generated
    */
-  int BUCKMINSTER_IMPORT_TASK = 18;
+  int BUCKMINSTER_IMPORT_TASK = 17;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
@@ -816,7 +734,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
    * @generated
    */
-  int ECLIPSE_INI_TASK = 12;
+  int ECLIPSE_INI_TASK = 11;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1080,7 +998,7 @@ public interface SetupPackage extends EPackage
   int INSTALLABLE_UNIT__P2_TASK = 0;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1107,7 +1025,7 @@ public interface SetupPackage extends EPackage
   int P2_REPOSITORY__P2_TASK = 0;
 
   /**
-   * The feature id for the '<em><b>Url</b></em>' attribute.
+   * The feature id for the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1132,7 +1050,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBasicMaterializationTask()
    * @generated
    */
-  int BASIC_MATERIALIZATION_TASK = 17;
+  int BASIC_MATERIALIZATION_TASK = 16;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1313,7 +1231,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
    * @generated
    */
-  int RESOURCE_COPY_TASK = 30;
+  int RESOURCE_COPY_TASK = 29;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
@@ -1323,7 +1241,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
    */
-  int TEXT_MODIFY_TASK = 32;
+  int TEXT_MODIFY_TASK = 31;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
@@ -1333,7 +1251,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
    */
-  int TEXT_MODIFICATION = 33;
+  int TEXT_MODIFICATION = 32;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
@@ -1343,7 +1261,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
    * @generated
    */
-  int KEY_BINDING_TASK = 34;
+  int KEY_BINDING_TASK = 33;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
@@ -1353,7 +1271,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
    * @generated
    */
-  int COMMAND_PARAMETER = 35;
+  int COMMAND_PARAMETER = 34;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
@@ -1363,7 +1281,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getContextVariableTask()
    * @generated
    */
-  int CONTEXT_VARIABLE_TASK = 25;
+  int CONTEXT_VARIABLE_TASK = 24;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
@@ -1373,7 +1291,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
    * @generated
    */
-  int RESOURCE_CREATION_TASK = 31;
+  int RESOURCE_CREATION_TASK = 30;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl <em>Materialization Task</em>}' class.
@@ -1383,7 +1301,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMaterializationTask()
    * @generated
    */
-  int MATERIALIZATION_TASK = 19;
+  int MATERIALIZATION_TASK = 18;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1501,7 +1419,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSourceLocator()
    * @generated
    */
-  int SOURCE_LOCATOR = 21;
+  int SOURCE_LOCATOR = 20;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentImpl <em>Component</em>}' class.
@@ -1511,7 +1429,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponent()
    * @generated
    */
-  int COMPONENT = 20;
+  int COMPONENT = 19;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1557,7 +1475,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
    * @generated
    */
-  int MYLYN_QUERY_TASK = 36;
+  int MYLYN_QUERY_TASK = 35;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
@@ -1567,7 +1485,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
    * @generated
    */
-  int AUTOMATIC_SOURCE_LOCATOR = 23;
+  int AUTOMATIC_SOURCE_LOCATOR = 22;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
@@ -1577,7 +1495,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
    * @generated
    */
-  int MANUAL_SOURCE_LOCATOR = 22;
+  int MANUAL_SOURCE_LOCATOR = 21;
 
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -1641,7 +1559,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
    * @generated
    */
-  int REDIRECTION_TASK = 24;
+  int REDIRECTION_TASK = 23;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2373,7 +2291,7 @@ public interface SetupPackage extends EPackage
   int TEXT_MODIFY_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Url</b></em>' attribute.
+   * The feature id for the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
             	 * <!-- end-user-doc -->
    * @generated
@@ -2553,7 +2471,7 @@ public interface SetupPackage extends EPackage
   int KEY_BINDING_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 7;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
    * @generated
@@ -2652,7 +2570,7 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERY_TASK__SUMMARY = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Url</b></em>' attribute.
+   * The feature id for the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
    * @generated
@@ -2677,7 +2595,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 37;
+  int SETUP_TASK_SCOPE = 36;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -2687,7 +2605,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 38;
+  int TRIGGER = 37;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -2697,7 +2615,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 39;
+  int COMPONENT_TYPE = 38;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -2707,7 +2625,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 42;
+  int URI = 41;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TopLevelElement <em>Top Level Element</em>}'.
@@ -2738,7 +2656,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 41;
+  int EXCEPTION = 40;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -2748,7 +2666,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 40;
+  int TRIGGER_SET = 39;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -3029,20 +2947,20 @@ public interface SetupPackage extends EPackage
   EReference getInstallableUnit_P2Task();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getId <em>Id</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getID <em>ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.InstallableUnit#getId()
+   * @return the meta object for the attribute '<em>ID</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.InstallableUnit#getID()
    * @see #getInstallableUnit()
    * @generated
    */
-  EAttribute getInstallableUnit_Id();
+  EAttribute getInstallableUnit_ID();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Repository <em>P2 Repository</em>}'.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @return the meta object for class '<em>P2 Repository</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.P2Repository
    * @generated
@@ -3061,20 +2979,20 @@ public interface SetupPackage extends EPackage
   EReference getP2Repository_P2Task();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getUrl <em>Url</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getURL <em>URL</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Url</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.P2Repository#getUrl()
+   * @return the meta object for the attribute '<em>URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.P2Repository#getURL()
    * @see #getP2Repository()
    * @generated
    */
-  EAttribute getP2Repository_Url();
+  EAttribute getP2Repository_URL();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Setup <em>Setup</em>}'.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @return the meta object for class '<em>Setup</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Setup
    * @generated
@@ -3254,20 +3172,20 @@ public interface SetupPackage extends EPackage
   EClass getTextModifyTask();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getUrl <em>Url</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getURL <em>URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Url</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask#getUrl()
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask#getURL()
    * @see #getTextModifyTask()
    * @generated
    */
-  EAttribute getTextModifyTask_Url();
+  EAttribute getTextModifyTask_URL();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getModifications <em>Modifications</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Modifications</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask#getModifications()
    * @see #getTextModifyTask()
@@ -3405,20 +3323,20 @@ public interface SetupPackage extends EPackage
   EClass getCommandParameter();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getId <em>Id</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getID <em>ID</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter#getId()
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>ID</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter#getID()
    * @see #getCommandParameter()
    * @generated
    */
-  EAttribute getCommandParameter_Id();
+  EAttribute getCommandParameter_ID();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue()
    * @see #getCommandParameter()
@@ -3459,20 +3377,20 @@ public interface SetupPackage extends EPackage
   EAttribute getMylynQueryTask_Summary();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getUrl <em>Url</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getURL <em>URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Url</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getUrl()
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getURL()
    * @see #getMylynQueryTask()
    * @generated
    */
-  EAttribute getMylynQueryTask_Url();
+  EAttribute getMylynQueryTask_URL();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @return the meta object for class '<em>Automatic Source Locator</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
    * @generated
@@ -3861,27 +3779,6 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getCompoundSetupTask_Name();
-
-  /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask <em>One Time Setup Task</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>One Time Setup Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask
-   * @generated
-   */
-  EClass getOneTimeSetupTask();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.OneTimeSetupTask#getId()
-   * @see #getOneTimeSetupTask()
-   * @generated
-   */
-  EAttribute getOneTimeSetupTask_Id();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ConfigurableItem <em>Configurable Item</em>}'.
@@ -4342,12 +4239,12 @@ public interface SetupPackage extends EPackage
     EReference INSTALLABLE_UNIT__P2_TASK = eINSTANCE.getInstallableUnit_P2Task();
 
     /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INSTALLABLE_UNIT__ID = eINSTANCE.getInstallableUnit_Id();
+    EAttribute INSTALLABLE_UNIT__ID = eINSTANCE.getInstallableUnit_ID();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
@@ -4368,12 +4265,12 @@ public interface SetupPackage extends EPackage
     EReference P2_REPOSITORY__P2_TASK = eINSTANCE.getP2Repository_P2Task();
 
     /**
-     * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute P2_REPOSITORY__URL = eINSTANCE.getP2Repository_Url();
+    EAttribute P2_REPOSITORY__URL = eINSTANCE.getP2Repository_URL();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -4522,12 +4419,12 @@ public interface SetupPackage extends EPackage
     EClass TEXT_MODIFY_TASK = eINSTANCE.getTextModifyTask();
 
     /**
-     * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TEXT_MODIFY_TASK__URL = eINSTANCE.getTextModifyTask_Url();
+    EAttribute TEXT_MODIFY_TASK__URL = eINSTANCE.getTextModifyTask_URL();
 
     /**
      * The meta object literal for the '<em><b>Modifications</b></em>' containment reference list feature.
@@ -4640,12 +4537,12 @@ public interface SetupPackage extends EPackage
     EClass COMMAND_PARAMETER = eINSTANCE.getCommandParameter();
 
     /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMAND_PARAMETER__ID = eINSTANCE.getCommandParameter_Id();
+    EAttribute COMMAND_PARAMETER__ID = eINSTANCE.getCommandParameter_ID();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
@@ -4682,12 +4579,12 @@ public interface SetupPackage extends EPackage
     EAttribute MYLYN_QUERY_TASK__SUMMARY = eINSTANCE.getMylynQueryTask_Summary();
 
     /**
-     * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MYLYN_QUERY_TASK__URL = eINSTANCE.getMylynQueryTask_Url();
+    EAttribute MYLYN_QUERY_TASK__URL = eINSTANCE.getMylynQueryTask_URL();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
@@ -5012,24 +4909,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute COMPOUND_SETUP_TASK__NAME = eINSTANCE.getCompoundSetupTask_Name();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.OneTimeSetupTaskImpl <em>One Time Setup Task</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.OneTimeSetupTaskImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getOneTimeSetupTask()
-     * @generated
-     */
-    EClass ONE_TIME_SETUP_TASK = eINSTANCE.getOneTimeSetupTask();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ONE_TIME_SETUP_TASK__ID = eINSTANCE.getOneTimeSetupTask_Id();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurableItemImpl <em>Configurable Item</em>}' class.

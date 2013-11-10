@@ -64,30 +64,30 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
     {
       super.getPropertyDescriptors(object);
 
-      addIdPropertyDescriptor(object);
+      addIDPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Id feature.
+   * This adds a property descriptor for the ID feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addIdPropertyDescriptor(Object object)
+  protected void addIDPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_InstallableUnit_id_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_InstallableUnit_id_feature", "_UI_InstallableUnit_type"),
+        getString("_UI_InstallableUnit_iD_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_InstallableUnit_iD_feature", "_UI_InstallableUnit_type"),
         SetupPackage.Literals.INSTALLABLE_UNIT__ID, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -128,7 +128,7 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
   @Override
   public String getText(Object object)
   {
-    String label = ((InstallableUnit)object).getId();
+    String label = ((InstallableUnit)object).getID();
     return label == null || label.length() == 0 ? getString("_UI_InstallableUnit_type") : label;
   }
 

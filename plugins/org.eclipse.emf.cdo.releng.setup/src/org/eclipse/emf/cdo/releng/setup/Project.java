@@ -73,7 +73,7 @@ public interface Project extends ConfigurableItem, TopLevelElement
    * @return the value of the '<em>Branches</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_Branches()
    * @see org.eclipse.emf.cdo.releng.setup.Branch#getProject
-   * @model opposite="project" containment="true" resolveProxies="true" required="true"
+   * @model opposite="project" containment="true" resolveProxies="true" keys="name" required="true"
    * @generated
    */
   EList<Branch> getBranches();

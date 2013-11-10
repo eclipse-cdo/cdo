@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getID <em>ID</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
@@ -32,39 +32,39 @@ import org.eclipse.emf.ecore.EObject;
 public interface CommandParameter extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute.
+   * Returns the value of the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id</em>' attribute isn't clear,
+   * If the meaning of the '<em>ID</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id</em>' attribute.
-   * @see #setId(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getCommandParameter_Id()
-   * @model
+   * @return the value of the '<em>ID</em>' attribute.
+   * @see #setID(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getCommandParameter_ID()
+   * @model extendedMetaData="kind='attribute' name='id'"
    * @generated
    */
-  String getId();
+  String getID();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getId <em>Id</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getID <em>ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Id</em>' attribute.
-   * @see #getId()
+   * @param value the new value of the '<em>ID</em>' attribute.
+   * @see #getID()
    * @generated
    */
-  void setId(String value);
+  void setID(String value);
 
   /**
    * Returns the value of the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Value</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Value</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' attribute.
    * @see #setValue(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getCommandParameter_Value()

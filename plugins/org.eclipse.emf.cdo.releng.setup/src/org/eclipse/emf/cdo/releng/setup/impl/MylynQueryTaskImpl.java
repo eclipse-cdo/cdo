@@ -24,7 +24,7 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getSummary <em>Summary</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getURL <em>URL</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,28 +73,28 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   protected String summary = SUMMARY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUrl()
+   * @see #getURL()
    * @generated
    * @ordered
    */
   protected static final String URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUrl()
+   * @see #getURL()
    * @generated
    * @ordered
    */
-  protected String url = URL_EDEFAULT;
+  protected String uRL = URL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected MylynQueryTaskImpl()
@@ -169,29 +169,29 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getUrl()
+  public String getURL()
   {
-    return url;
+    return uRL;
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setUrl(String newUrl)
+  public void setURL(String newURL)
   {
-    String oldUrl = url;
-    url = newUrl;
+    String oldURL = uRL;
+    uRL = newURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY_TASK__URL, oldUrl, url));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY_TASK__URL, oldURL, uRL));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -204,7 +204,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
       return getSummary();
     case SetupPackage.MYLYN_QUERY_TASK__URL:
-      return getUrl();
+      return getURL();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -226,7 +226,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       setSummary((String)newValue);
       return;
     case SetupPackage.MYLYN_QUERY_TASK__URL:
-      setUrl((String)newValue);
+      setURL((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -249,7 +249,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       setSummary(SUMMARY_EDEFAULT);
       return;
     case SetupPackage.MYLYN_QUERY_TASK__URL:
-      setUrl(URL_EDEFAULT);
+      setURL(URL_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -270,7 +270,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
       return SUMMARY_EDEFAULT == null ? summary != null : !SUMMARY_EDEFAULT.equals(summary);
     case SetupPackage.MYLYN_QUERY_TASK__URL:
-      return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+      return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
     }
     return super.eIsSet(featureID);
   }
@@ -293,8 +293,8 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     result.append(connectorKind);
     result.append(", summary: ");
     result.append(summary);
-    result.append(", url: ");
-    result.append(url);
+    result.append(", uRL: ");
+    result.append(uRL);
     result.append(')');
     return result.toString();
   }
@@ -307,13 +307,13 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    return MylynHelper.isNeeded(context.expandString(getSummary()), context.expandString(getUrl()));
+    return MylynHelper.isNeeded(context.expandString(getSummary()), context.expandString(getURL()));
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
     MylynHelper.perform(context.expandString(getConnectorKind()), context.expandString(getSummary()),
-        context.expandString(getUrl()));
+        context.expandString(getURL()));
   }
 
   /**

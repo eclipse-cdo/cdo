@@ -86,9 +86,6 @@
     <genClasses ecoreClass="setup.ecore#//CompoundSetupTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CompoundSetupTask/name"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="setup.ecore#//OneTimeSetupTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//OneTimeSetupTask/id"/>
-    </genClasses>
     <genClasses ecoreClass="setup.ecore#//EclipseIniTask" labelFeature="#//setup/EclipseIniTask/option">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipseIniTask/option"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipseIniTask/value"/>
@@ -104,11 +101,11 @@
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//InstallableUnit">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//InstallableUnit/p2Task"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/iD"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//P2Repository">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//P2Repository/p2Task"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Repository/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Repository/uRL"/>
     </genClasses>
     <genClasses image="false" ecoreClass="setup.ecore#//BasicMaterializationTask"
         labelFeature="#//setup/BasicMaterializationTask/targetPlatform">
@@ -171,8 +168,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/targetURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ResourceCreationTask/encoding"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//TextModifyTask" labelFeature="#//setup/TextModifyTask/url">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModifyTask/url"/>
+    <genClasses ecoreClass="setup.ecore#//TextModifyTask" labelFeature="#//setup/TextModifyTask/uRL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModifyTask/uRL"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TextModifyTask/modifications"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//TextModification">
@@ -189,13 +186,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//KeyBindingTask/commandParameters"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//CommandParameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/iD"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/value"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//MylynQueryTask" labelFeature="#//setup/MylynQueryTask/summary">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/connectorKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/summary"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/uRL"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

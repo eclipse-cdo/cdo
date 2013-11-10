@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getP2Task <em>P2 Task</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getID <em>ID</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,29 +60,29 @@ public interface InstallableUnit extends EObject
   void setP2Task(P2Task value);
 
   /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute.
+   * Returns the value of the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id</em>' attribute isn't clear,
+   * If the meaning of the '<em>ID</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id</em>' attribute.
-   * @see #setId(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getInstallableUnit_Id()
-   * @model
+   * @return the value of the '<em>ID</em>' attribute.
+   * @see #setID(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getInstallableUnit_ID()
+   * @model extendedMetaData="kind='attribute' name='id'"
    * @generated
    */
-  String getId();
+  String getID();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getId <em>Id</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getID <em>ID</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Id</em>' attribute.
-   * @see #getId()
+  	 * <!-- end-user-doc -->
+   * @param value the new value of the '<em>ID</em>' attribute.
+   * @see #getID()
    * @generated
    */
-  void setId(String value);
+  void setID(String value);
 
 } // InstallableUnit

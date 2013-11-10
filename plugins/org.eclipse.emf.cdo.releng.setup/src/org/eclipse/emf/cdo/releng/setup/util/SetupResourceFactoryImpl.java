@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.util;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,7 +45,12 @@ public class SetupResourceFactoryImpl extends ResourceFactoryImpl
   public Resource createResource(URI uri)
   {
     SetupResourceImpl result = new SetupResourceImpl(uri);
-    result.getDefaultLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
+
+    result.getDefaultLoadOptions().put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
+    result.getDefaultLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, true);
+
+    result.getDefaultSaveOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, true);
+
     return result;
   }
 

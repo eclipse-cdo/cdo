@@ -64,30 +64,30 @@ public class P2RepositoryItemProvider extends ItemProviderAdapter implements IEd
     {
       super.getPropertyDescriptors(object);
 
-      addUrlPropertyDescriptor(object);
+      addURLPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Url feature.
+   * This adds a property descriptor for the URL feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addUrlPropertyDescriptor(Object object)
+  protected void addURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_P2Repository_url_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_P2Repository_url_feature", "_UI_P2Repository_type"),
+        getString("_UI_P2Repository_uRL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_P2Repository_uRL_feature", "_UI_P2Repository_type"),
         SetupPackage.Literals.P2_REPOSITORY__URL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -128,7 +128,7 @@ public class P2RepositoryItemProvider extends ItemProviderAdapter implements IEd
   @Override
   public String getText(Object object)
   {
-    String label = ((P2Repository)object).getUrl();
+    String label = ((P2Repository)object).getURL();
     return label == null || label.length() == 0 ? getString("_UI_P2Repository_type") : label;
   }
 

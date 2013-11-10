@@ -312,7 +312,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     Set<String> installedUnits = getInstalledUnits();
     for (InstallableUnit installableUnit : getInstallableUnits())
     {
-      String id = context.expandString(installableUnit.getId());
+      String id = context.expandString(installableUnit.getID());
       if (!installedUnits.contains(id))
       {
         if (neededInstallableUnits == null)
@@ -327,7 +327,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     for (P2Repository p2Repository : getP2Repositories())
     {
       String url = context.redirect(
-          org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getUrl()))).toString();
+          org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getURL()))).toString();
       if (!knownRepositories.contains(url))
       {
         return true;
@@ -355,7 +355,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       for (P2Repository p2Repository : getP2Repositories())
       {
         String url = context.redirect(
-            org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getUrl()))).toString();
+            org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getURL()))).toString();
         URI uri = new URI(url);
         context.log("Using repository " + uri);
         if (neededInstallableUnits == null)

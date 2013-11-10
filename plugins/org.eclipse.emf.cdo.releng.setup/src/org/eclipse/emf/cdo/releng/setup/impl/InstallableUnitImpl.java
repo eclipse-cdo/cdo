@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getP2Task <em>P2 Task</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getID <em>ID</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,28 +39,28 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements InstallableUnit
 {
   /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * The default value of the '{@link #getID() <em>ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getId()
+   * @see #getID()
    * @generated
    * @ordered
    */
   protected static final String ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * The cached value of the '{@link #getID() <em>ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getId()
+   * @see #getID()
    * @generated
    * @ordered
    */
-  protected String id = ID_EDEFAULT;
+  protected String iD = ID_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected InstallableUnitImpl()
@@ -160,29 +160,29 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getId()
+  public String getID()
   {
-    return id;
+    return iD;
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setId(String newId)
+  public void setID(String newID)
   {
-    String oldId = id;
-    id = newId;
+    String oldID = iD;
+    iD = newID;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__ID, oldId, id));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__ID, oldID, iD));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -249,7 +249,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
       }
       return basicGetP2Task();
     case SetupPackage.INSTALLABLE_UNIT__ID:
-      return getId();
+      return getID();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -268,7 +268,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
       setP2Task((P2Task)newValue);
       return;
     case SetupPackage.INSTALLABLE_UNIT__ID:
-      setId((String)newValue);
+      setID((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -288,7 +288,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
       setP2Task((P2Task)null);
       return;
     case SetupPackage.INSTALLABLE_UNIT__ID:
-      setId(ID_EDEFAULT);
+      setID(ID_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -307,7 +307,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     case SetupPackage.INSTALLABLE_UNIT__P2_TASK:
       return basicGetP2Task() != null;
     case SetupPackage.INSTALLABLE_UNIT__ID:
-      return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+      return ID_EDEFAULT == null ? iD != null : !ID_EDEFAULT.equals(iD);
     }
     return super.eIsSet(featureID);
   }
@@ -326,8 +326,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (id: ");
-    result.append(id);
+    result.append(" (iD: ");
+    result.append(iD);
     result.append(')');
     return result.toString();
   }

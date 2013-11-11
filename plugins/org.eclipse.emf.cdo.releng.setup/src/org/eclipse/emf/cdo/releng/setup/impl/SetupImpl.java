@@ -241,10 +241,10 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public Preferences getPreferences()
   {
     if (preferences != null && preferences.eIsProxy())

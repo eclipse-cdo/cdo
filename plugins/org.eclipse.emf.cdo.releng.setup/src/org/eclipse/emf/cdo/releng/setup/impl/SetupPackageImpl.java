@@ -87,10 +87,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EClass eclipseEClass = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EClass configurationEClass = null;
 
   /**
@@ -466,30 +466,30 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getEclipse_Configuration()
   {
     return (EReference)eclipseEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getEclipse_Version()
   {
     return (EAttribute)eclipseEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getConfiguration()
   {
     return configurationEClass;
@@ -1120,14 +1120,24 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getMylynQueryTask_URL()
+  public EAttribute getMylynQueryTask_RepositoryURL()
   {
     return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynQueryTask_RelativeURL()
+  {
+    return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    */
   public EClass getAutomaticSourceLocator()
@@ -1860,7 +1870,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     mylynQueryTaskEClass = createEClass(MYLYN_QUERY_TASK);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__CONNECTOR_KIND);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__SUMMARY);
-    createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__URL);
+    createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__REPOSITORY_URL);
+    createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__RELATIVE_URL);
 
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
@@ -2271,8 +2282,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMylynQueryTask_Summary(), ecorePackage.getEString(), "summary", null, 1, 1, MylynQueryTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMylynQueryTask_URL(), ecorePackage.getEString(), "uRL", null, 1, 1, MylynQueryTask.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueryTask_RepositoryURL(), ecorePackage.getEString(), "repositoryURL", null, 1, 1,
+        MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueryTask_RelativeURL(), ecorePackage.getEString(), "relativeURL", null, 1, 1,
+        MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");
@@ -2320,7 +2335,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addAnnotation(getP2Repository_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getCommandParameter_ID(), source, new String[] { "kind", "attribute", "name", "id" });
-    addAnnotation(getMylynQueryTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
   }
 
 } // SetupPackageImpl

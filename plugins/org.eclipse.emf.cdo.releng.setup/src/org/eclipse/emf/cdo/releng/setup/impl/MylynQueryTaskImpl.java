@@ -24,7 +24,8 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getSummary <em>Summary</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getURL <em>URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getRepositoryURL <em>Repository URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl#getRelativeURL <em>Relative URL</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,28 +74,48 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   protected String summary = SUMMARY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
+   * The default value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getURL()
+   * @see #getRepositoryURL()
    * @generated
    * @ordered
    */
-  protected static final String URL_EDEFAULT = null;
+  protected static final String REPOSITORY_URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
+   * The cached value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getURL()
+  	 * <!-- end-user-doc -->
+   * @see #getRepositoryURL()
    * @generated
    * @ordered
    */
-  protected String uRL = URL_EDEFAULT;
+  protected String repositoryURL = REPOSITORY_URL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getRelativeURL() <em>Relative URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @see #getRelativeURL()
+   * @generated
+   * @ordered
+   */
+  protected static final String RELATIVE_URL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getRelativeURL() <em>Relative URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @see #getRelativeURL()
+   * @generated
+   * @ordered
+   */
+  protected String relativeURL = RELATIVE_URL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   protected MylynQueryTaskImpl()
@@ -169,9 +190,9 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getURL()
+  public String getRepositoryURL()
   {
-    return uRL;
+    return repositoryURL;
   }
 
   /**
@@ -179,19 +200,46 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setURL(String newURL)
+  public void setRepositoryURL(String newRepositoryURL)
   {
-    String oldURL = uRL;
-    uRL = newURL;
+    String oldRepositoryURL = repositoryURL;
+    repositoryURL = newRepositoryURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY_TASK__URL, oldURL, uRL));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY_TASK__REPOSITORY_URL,
+          oldRepositoryURL, repositoryURL));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getRelativeURL()
+  {
+    return relativeURL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRelativeURL(String newRelativeURL)
+  {
+    String oldRelativeURL = relativeURL;
+    relativeURL = newRelativeURL;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY_TASK__RELATIVE_URL,
+          oldRelativeURL, relativeURL));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -203,8 +251,10 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       return getConnectorKind();
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
       return getSummary();
-    case SetupPackage.MYLYN_QUERY_TASK__URL:
-      return getURL();
+    case SetupPackage.MYLYN_QUERY_TASK__REPOSITORY_URL:
+      return getRepositoryURL();
+    case SetupPackage.MYLYN_QUERY_TASK__RELATIVE_URL:
+      return getRelativeURL();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -225,8 +275,11 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
       setSummary((String)newValue);
       return;
-    case SetupPackage.MYLYN_QUERY_TASK__URL:
-      setURL((String)newValue);
+    case SetupPackage.MYLYN_QUERY_TASK__REPOSITORY_URL:
+      setRepositoryURL((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERY_TASK__RELATIVE_URL:
+      setRelativeURL((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -248,8 +301,11 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
       setSummary(SUMMARY_EDEFAULT);
       return;
-    case SetupPackage.MYLYN_QUERY_TASK__URL:
-      setURL(URL_EDEFAULT);
+    case SetupPackage.MYLYN_QUERY_TASK__REPOSITORY_URL:
+      setRepositoryURL(REPOSITORY_URL_EDEFAULT);
+      return;
+    case SetupPackage.MYLYN_QUERY_TASK__RELATIVE_URL:
+      setRelativeURL(RELATIVE_URL_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -269,8 +325,10 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       return CONNECTOR_KIND_EDEFAULT == null ? connectorKind != null : !CONNECTOR_KIND_EDEFAULT.equals(connectorKind);
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
       return SUMMARY_EDEFAULT == null ? summary != null : !SUMMARY_EDEFAULT.equals(summary);
-    case SetupPackage.MYLYN_QUERY_TASK__URL:
-      return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
+    case SetupPackage.MYLYN_QUERY_TASK__REPOSITORY_URL:
+      return REPOSITORY_URL_EDEFAULT == null ? repositoryURL != null : !REPOSITORY_URL_EDEFAULT.equals(repositoryURL);
+    case SetupPackage.MYLYN_QUERY_TASK__RELATIVE_URL:
+      return RELATIVE_URL_EDEFAULT == null ? relativeURL != null : !RELATIVE_URL_EDEFAULT.equals(relativeURL);
     }
     return super.eIsSet(featureID);
   }
@@ -293,8 +351,10 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     result.append(connectorKind);
     result.append(", summary: ");
     result.append(summary);
-    result.append(", uRL: ");
-    result.append(uRL);
+    result.append(", repositoryURL: ");
+    result.append(repositoryURL);
+    result.append(", relativeURL: ");
+    result.append(relativeURL);
     result.append(')');
     return result.toString();
   }
@@ -307,13 +367,21 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    return MylynHelper.isNeeded(context.expandString(getSummary()), context.expandString(getURL()));
+    String summary = context.expandString(getSummary());
+    String repositoryURL = context.expandString(getRepositoryURL());
+    String relativeURL = context.expandString(getRepositoryURL());
+
+    return MylynHelper.isNeeded(summary, repositoryURL, relativeURL);
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    MylynHelper.perform(context.expandString(getConnectorKind()), context.expandString(getSummary()),
-        context.expandString(getURL()));
+    String connectorKind = context.expandString(getConnectorKind());
+    String summary = context.expandString(getSummary());
+    String repositoryURL = context.expandString(getRepositoryURL());
+    String relativeURL = context.expandString(getRepositoryURL());
+
+    MylynHelper.perform(context, connectorKind, summary, repositoryURL, relativeURL);
   }
 
   /**
@@ -322,33 +390,46 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   @SuppressWarnings("restriction")
   private static class MylynHelper
   {
-    public static boolean isNeeded(String summary, String url) throws Exception
+    public static boolean isNeeded(String summary, String repositoryURL, String relativeURL) throws Exception
     {
       org.eclipse.mylyn.internal.tasks.core.TaskList taskList = //
       org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
 
       org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query = lookupQuery(taskList, summary);
-      return query == null || !ObjectUtil.equals(query.getUrl(), url);
+      return query == null || !ObjectUtil.equals(query.getUrl(), getQueryURL(repositoryURL, relativeURL));
     }
 
-    public static void perform(String connectorKind, String summary, String url) throws Exception
+    public static void perform(SetupTaskContext context, String connectorKind, String summary, String repositoryURL,
+        String relativeURL) throws Exception
     {
+      String queryURL = getQueryURL(repositoryURL, relativeURL);
+
       org.eclipse.mylyn.internal.tasks.core.TaskList taskList = //
       org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
 
       org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query = lookupQuery(taskList, summary);
       if (query == null)
       {
+        context.log("Adding " + connectorKind + " query " + summary + " = " + queryURL);
         String handle = taskList.getUniqueHandleIdentifier();
         query = new org.eclipse.mylyn.internal.tasks.core.RepositoryQuery(connectorKind, handle);
         query.setSummary(summary);
-        query.setUrl(url);
+        query.setRepositoryUrl(repositoryURL);
+        query.setUrl(queryURL);
         taskList.addQuery(query);
       }
       else
       {
-        query.setUrl(url);
+        context.log("Changing " + connectorKind + " query " + summary + " = " + queryURL);
+        query.setRepositoryUrl(repositoryURL);
+        query.setUrl(queryURL);
       }
+
+      // AbstractRepositoryConnector connector = TasksUi.getRepositoryManager().getRepositoryConnector(connectorKind);
+      // if (connector != null)
+      // {
+      // org.eclipse.mylyn.internal.tasks.ui.util.TasksUiInternal.synchronizeQuery(connector, query, null, true);
+      // }
     }
 
     private static org.eclipse.mylyn.internal.tasks.core.RepositoryQuery lookupQuery(
@@ -363,6 +444,11 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       }
 
       return null;
+    }
+
+    private static String getQueryURL(String repositoryURL, String relativeURL)
+    {
+      return repositoryURL + relativeURL;
     }
   }
 

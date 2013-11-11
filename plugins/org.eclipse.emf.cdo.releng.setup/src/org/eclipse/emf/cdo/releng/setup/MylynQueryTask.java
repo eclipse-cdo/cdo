@@ -12,7 +12,8 @@ package org.eclipse.emf.cdo.releng.setup;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getSummary <em>Summary</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getURL <em>URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRepositoryURL <em>Repository URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL <em>Relative URL</em>}</li>
  * </ul>
  * </p>
  *
@@ -76,30 +77,55 @@ public interface MylynQueryTask extends SetupTask
   void setSummary(String value);
 
   /**
-   * Returns the value of the '<em><b>URL</b></em>' attribute.
+   * Returns the value of the '<em><b>Repository URL</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>URL</em>' attribute isn't clear,
+   * If the meaning of the '<em>Repository URL</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>URL</em>' attribute.
-   * @see #setURL(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueryTask_URL()
+   * @return the value of the '<em>Repository URL</em>' attribute.
+   * @see #setRepositoryURL(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueryTask_RepositoryURL()
    * @model required="true"
-   *        extendedMetaData="kind='attribute' name='url'"
    * @generated
    */
-  String getURL();
+  String getRepositoryURL();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getURL <em>URL</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRepositoryURL <em>Repository URL</em>}' attribute.
    * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-   * @param value the new value of the '<em>URL</em>' attribute.
-   * @see #getURL()
+   * @param value the new value of the '<em>Repository URL</em>' attribute.
+   * @see #getRepositoryURL()
    * @generated
    */
-  void setURL(String value);
+  void setRepositoryURL(String value);
+
+  /**
+   * Returns the value of the '<em><b>Relative URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Relative URL</em>' attribute isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+   * @return the value of the '<em>Relative URL</em>' attribute.
+   * @see #setRelativeURL(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueryTask_RelativeURL()
+   * @model required="true"
+   * @generated
+   */
+  String getRelativeURL();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL <em>Relative URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Relative URL</em>' attribute.
+   * @see #getRelativeURL()
+   * @generated
+   */
+  void setRelativeURL(String value);
 
 } // MylynQueryTask

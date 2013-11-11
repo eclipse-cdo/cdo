@@ -40,12 +40,12 @@ public interface SetupFactory extends EFactory
   Eclipse createEclipse();
 
   /**
-  	 * Returns a new object of class '<em>Configuration</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Configuration</em>'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Configuration</em>'.
-  	 * @generated
-  	 */
+   * @return a new object of class '<em>Configuration</em>'.
+   * @generated
+   */
   Configuration createConfiguration();
 
   /**

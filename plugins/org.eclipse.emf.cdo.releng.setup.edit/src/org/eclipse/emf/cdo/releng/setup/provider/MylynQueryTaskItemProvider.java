@@ -57,7 +57,8 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
 
       addConnectorKindPropertyDescriptor(object);
       addSummaryPropertyDescriptor(object);
-      addURLPropertyDescriptor(object);
+      addRepositoryURLPropertyDescriptor(object);
+      addRelativeURLPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -98,27 +99,45 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-   * This adds a property descriptor for the URL feature.
+   * This adds a property descriptor for the Repository URL feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addURLPropertyDescriptor(Object object)
+  protected void addRepositoryURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_MylynQueryTask_uRL_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_MylynQueryTask_uRL_feature", "_UI_MylynQueryTask_type"),
-        SetupPackage.Literals.MYLYN_QUERY_TASK__URL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_MylynQueryTask_repositoryURL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MylynQueryTask_repositoryURL_feature",
+            "_UI_MylynQueryTask_type"), SetupPackage.Literals.MYLYN_QUERY_TASK__REPOSITORY_URL, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This returns MylynQueryTask.gif.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * This adds a property descriptor for the Relative URL feature.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  protected void addRelativeURLPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_MylynQueryTask_relativeURL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MylynQueryTask_relativeURL_feature",
+            "_UI_MylynQueryTask_type"), SetupPackage.Literals.MYLYN_QUERY_TASK__RELATIVE_URL, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * This returns MylynQueryTask.gif.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object getImage(Object object)
   {
@@ -172,7 +191,8 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
     {
     case SetupPackage.MYLYN_QUERY_TASK__CONNECTOR_KIND:
     case SetupPackage.MYLYN_QUERY_TASK__SUMMARY:
-    case SetupPackage.MYLYN_QUERY_TASK__URL:
+    case SetupPackage.MYLYN_QUERY_TASK__REPOSITORY_URL:
+    case SetupPackage.MYLYN_QUERY_TASK__RELATIVE_URL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

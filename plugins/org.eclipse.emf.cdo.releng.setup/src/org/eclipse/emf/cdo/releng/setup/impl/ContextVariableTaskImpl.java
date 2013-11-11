@@ -104,8 +104,6 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   private IValueVariable cachedVariable;
 
-  private String expandedValue;
-
   /**
    * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -353,6 +351,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    String expandedValue = context.expandString(getValue());
     context.log("Setting string substitution variable " + getName() + " = " + expandedValue);
 
     IValueVariable variable = cachedVariable;

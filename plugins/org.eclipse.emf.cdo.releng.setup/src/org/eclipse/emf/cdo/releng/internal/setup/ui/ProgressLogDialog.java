@@ -81,9 +81,9 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 {
   public static final String TITLE = "Setup Development Environment";
 
-  public static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
   private static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
+
+  public static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd " + TIME.toPattern());
 
   private static final String[] IGNORED_PREFIXES = { "Scanning Git", "Re-indexing", "Calculating Decorations",
       "Decorating", "http://", "The user operation is waiting", "Git repository changed", "Refreshing ", "Opening ",
@@ -119,7 +119,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     this.setupTaskPerformers = setupTaskPerformers;
 
     setHelpAvailable(false);
-    setShellStyle(SWT.BORDER | SWT.MAX | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
+    setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
   }
 
   /**

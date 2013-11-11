@@ -41,7 +41,7 @@ public class ErrorDialog extends MessageDialog
         "icons/install_wiz.gif"), "Internal error" + System.getProperty("line.separator") + detail.getMessage(),
         MessageDialog.ERROR, new String[] { IDialogConstants.OK_LABEL, IDialogConstants.SHOW_DETAILS_LABEL }, 0);
     throwable = detail;
-    setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL);
+    setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
   }
 
   protected void createDropDownText(Composite parent)

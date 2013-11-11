@@ -272,48 +272,48 @@ public interface SetupPackage extends EPackage
   int ECLIPSE = 1;
 
   /**
-  	 * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int ECLIPSE__SETUP_TASKS = CONFIGURABLE_ITEM__SETUP_TASKS;
 
   /**
-  	 * The feature id for the '<em><b>Configuration</b></em>' container reference.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Configuration</b></em>' container reference.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int ECLIPSE__CONFIGURATION = CONFIGURABLE_ITEM_FEATURE_COUNT + 0;
 
   /**
-  	 * The feature id for the '<em><b>Version</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Version</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int ECLIPSE__VERSION = CONFIGURABLE_ITEM_FEATURE_COUNT + 1;
 
   /**
-  	 * The number of structural features of the '<em>Eclipse</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Eclipse</em>' class.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int ECLIPSE_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 2;
 
   /**
-  	 * The feature id for the '<em><b>Tool Version</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Tool Version</b></em>' attribute.
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONFIGURATION__TOOL_VERSION = TOP_LEVEL_ELEMENT__TOOL_VERSION;
 
   /**
@@ -2570,22 +2570,31 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERY_TASK__SUMMARY = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>URL</b></em>' attribute.
+   * The feature id for the '<em><b>Repository URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERY_TASK__REPOSITORY_URL = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Relative URL</b></em>' attribute.
    * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY_TASK__URL = SETUP_TASK_FEATURE_COUNT + 2;
+  int MYLYN_QUERY_TASK__RELATIVE_URL = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Mylyn Query Task</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+  int MYLYN_QUERY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
@@ -2659,35 +2668,35 @@ public interface SetupPackage extends EPackage
   EClass getEclipse();
 
   /**
-  	 * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the container reference '<em>Configuration</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration()
-  	 * @see #getEclipse()
-  	 * @generated
-  	 */
+   * @return the meta object for the container reference '<em>Configuration</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration()
+   * @see #getEclipse()
+   * @generated
+   */
   EReference getEclipse_Configuration();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion <em>Version</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion <em>Version</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Version</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion()
-  	 * @see #getEclipse()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Version</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion()
+   * @see #getEclipse()
+   * @generated
+   */
   EAttribute getEclipse_Version();
 
   /**
-  	 * The meta object id for the '<em>Exception</em>' data type.
-  	 * <!-- begin-user-doc -->
+   * The meta object id for the '<em>Exception</em>' data type.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @see java.lang.Exception
-  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
-  	 * @generated
-  	 */
+   * @see java.lang.Exception
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+   * @generated
+   */
   int EXCEPTION = 40;
 
   /**
@@ -3377,20 +3386,31 @@ public interface SetupPackage extends EPackage
   EAttribute getMylynQueryTask_Summary();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getURL <em>URL</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRepositoryURL <em>Repository URL</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>URL</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getURL()
+   * @return the meta object for the attribute '<em>Repository URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRepositoryURL()
    * @see #getMylynQueryTask()
    * @generated
    */
-  EAttribute getMylynQueryTask_URL();
+  EAttribute getMylynQueryTask_RepositoryURL();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL <em>Relative URL</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Relative URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL()
+   * @see #getMylynQueryTask()
+   * @generated
+   */
+  EAttribute getMylynQueryTask_RelativeURL();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @return the meta object for class '<em>Automatic Source Locator</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
    * @generated
@@ -4025,29 +4045,29 @@ public interface SetupPackage extends EPackage
     EClass ECLIPSE = eINSTANCE.getEclipse();
 
     /**
-    	 * The meta object literal for the '<em><b>Configuration</b></em>' container reference feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Configuration</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EReference ECLIPSE__CONFIGURATION = eINSTANCE.getEclipse_Configuration();
 
     /**
-    	 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute ECLIPSE__VERSION = eINSTANCE.getEclipse_Version();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl <em>Configuration</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl <em>Configuration</em>}' class.
+     * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfiguration()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfiguration()
+     * @generated
+     */
     EClass CONFIGURATION = eINSTANCE.getConfiguration();
 
     /**
@@ -4579,17 +4599,25 @@ public interface SetupPackage extends EPackage
     EAttribute MYLYN_QUERY_TASK__SUMMARY = eINSTANCE.getMylynQueryTask_Summary();
 
     /**
-     * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Repository URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_QUERY_TASK__REPOSITORY_URL = eINSTANCE.getMylynQueryTask_RepositoryURL();
+
+    /**
+     * The meta object literal for the '<em><b>Relative URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MYLYN_QUERY_TASK__URL = eINSTANCE.getMylynQueryTask_URL();
+    EAttribute MYLYN_QUERY_TASK__RELATIVE_URL = eINSTANCE.getMylynQueryTask_RelativeURL();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
      * @generated

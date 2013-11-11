@@ -105,11 +105,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   protected EclipseItemProvider eclipseItemProvider;
 
   /**
-  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
-  	 * <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Adapter createEclipseAdapter()
   {
@@ -122,11 +122,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Configuration} instances.
-  	 * <!-- begin-user-doc -->
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Configuration} instances.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ConfigurationItemProvider configurationItemProvider;
 
   /**

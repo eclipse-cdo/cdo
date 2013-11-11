@@ -240,10 +240,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public Configuration createConfiguration()
   {
     ConfigurationImpl configuration = new ConfigurationImpl();

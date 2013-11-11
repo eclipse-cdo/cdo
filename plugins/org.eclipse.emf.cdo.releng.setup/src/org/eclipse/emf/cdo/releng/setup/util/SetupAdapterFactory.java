@@ -383,15 +383,15 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
+   * <!-- begin-user-doc -->
        * This default implementation returns null so that we can easily ignore cases;
        * it's useful to ignore a case when inheritance will catch all the cases anyway.
        * <!-- end-user-doc -->
-  	 * @return the new adapter.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Configuration
-  	 * @generated
-  	 */
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.Configuration
+   * @generated
+   */
   public Adapter createConfigurationAdapter()
   {
     return null;

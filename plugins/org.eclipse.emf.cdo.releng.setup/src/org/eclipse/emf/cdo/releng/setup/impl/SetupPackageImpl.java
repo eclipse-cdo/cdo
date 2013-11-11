@@ -710,19 +710,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getInstallableUnit_P2Task()
-  {
-    return (EReference)installableUnitEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getInstallableUnit_ID()
   {
-    return (EAttribute)installableUnitEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)installableUnitEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -740,19 +730,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getP2Repository_P2Task()
-  {
-    return (EReference)p2RepositoryEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getP2Repository_URL()
   {
-    return (EAttribute)p2RepositoryEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)p2RepositoryEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1778,11 +1758,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(p2TaskEClass, P2_TASK__INSTALLABLE_UNITS);
 
     installableUnitEClass = createEClass(INSTALLABLE_UNIT);
-    createEReference(installableUnitEClass, INSTALLABLE_UNIT__P2_TASK);
     createEAttribute(installableUnitEClass, INSTALLABLE_UNIT__ID);
 
     p2RepositoryEClass = createEClass(P2_REPOSITORY);
-    createEReference(p2RepositoryEClass, P2_REPOSITORY__P2_TASK);
     createEAttribute(p2RepositoryEClass, P2_REPOSITORY__URL);
 
     basicMaterializationTaskEClass = createEClass(BASIC_MATERIALIZATION_TASK);
@@ -2074,26 +2052,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2TaskEClass, P2Task.class, "P2Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getP2Task_P2Repositories(), getP2Repository(), getP2Repository_P2Task(), "p2Repositories", null, 1,
-        -1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+    initEReference(getP2Task_P2Repositories(), getP2Repository(), null, "p2Repositories", null, 1, -1, P2Task.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getP2Task_InstallableUnits(), getInstallableUnit(), null, "installableUnits", null, 1, -1,
+        P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getP2Task_InstallableUnits(), getInstallableUnit(), getInstallableUnit_P2Task(), "installableUnits",
-        null, 1, -1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(installableUnitEClass, InstallableUnit.class, "InstallableUnit", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstallableUnit_P2Task(), getP2Task(), getP2Task_InstallableUnits(), "p2Task", null, 0, 1,
-        InstallableUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInstallableUnit_ID(), ecorePackage.getEString(), "iD", null, 0, 1, InstallableUnit.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2RepositoryEClass, P2Repository.class, "P2Repository", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getP2Repository_P2Task(), getP2Task(), getP2Task_P2Repositories(), "p2Task", null, 0, 1,
-        P2Repository.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getP2Repository_URL(), ecorePackage.getEString(), "uRL", null, 1, 1, P2Repository.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -989,22 +989,13 @@ public interface SetupPackage extends EPackage
   int P2_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>P2 Task</b></em>' container reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTALLABLE_UNIT__P2_TASK = 0;
-
-  /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTALLABLE_UNIT__ID = 1;
+  int INSTALLABLE_UNIT__ID = 0;
 
   /**
    * The number of structural features of the '<em>Installable Unit</em>' class.
@@ -1013,16 +1004,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INSTALLABLE_UNIT_FEATURE_COUNT = 2;
-
-  /**
-   * The feature id for the '<em><b>P2 Task</b></em>' container reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int P2_REPOSITORY__P2_TASK = 0;
+  int INSTALLABLE_UNIT_FEATURE_COUNT = 1;
 
   /**
    * The feature id for the '<em><b>URL</b></em>' attribute.
@@ -1031,7 +1013,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int P2_REPOSITORY__URL = 1;
+  int P2_REPOSITORY__URL = 0;
 
   /**
    * The number of structural features of the '<em>P2 Repository</em>' class.
@@ -1040,7 +1022,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int P2_REPOSITORY_FEATURE_COUNT = 2;
+  int P2_REPOSITORY_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BasicMaterializationTaskImpl <em>Basic Materialization Task</em>}' class.
@@ -2945,17 +2927,6 @@ public interface SetupPackage extends EPackage
   EClass getInstallableUnit();
 
   /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getP2Task <em>P2 Task</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the container reference '<em>P2 Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.InstallableUnit#getP2Task()
-   * @see #getInstallableUnit()
-   * @generated
-   */
-  EReference getInstallableUnit_P2Task();
-
-  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getID <em>ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2975,17 +2946,6 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EClass getP2Repository();
-
-  /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getP2Task <em>P2 Task</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the container reference '<em>P2 Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.P2Repository#getP2Task()
-   * @see #getP2Repository()
-   * @generated
-   */
-  EReference getP2Repository_P2Task();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getURL <em>URL</em>}'.
@@ -4251,14 +4211,6 @@ public interface SetupPackage extends EPackage
     EClass INSTALLABLE_UNIT = eINSTANCE.getInstallableUnit();
 
     /**
-     * The meta object literal for the '<em><b>P2 Task</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INSTALLABLE_UNIT__P2_TASK = eINSTANCE.getInstallableUnit_P2Task();
-
-    /**
      * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4275,14 +4227,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EClass P2_REPOSITORY = eINSTANCE.getP2Repository();
-
-    /**
-     * The meta object literal for the '<em><b>P2 Task</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference P2_REPOSITORY__P2_TASK = eINSTANCE.getP2Repository_P2Task();
 
     /**
      * The meta object literal for the '<em><b>URL</b></em>' attribute feature.

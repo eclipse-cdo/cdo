@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.runtime.CoreException;
@@ -131,8 +131,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     if (installableUnits == null)
     {
-      installableUnits = new EObjectContainmentWithInverseEList.Resolving<InstallableUnit>(InstallableUnit.class, this,
-          SetupPackage.P2_TASK__INSTALLABLE_UNITS, SetupPackage.INSTALLABLE_UNIT__P2_TASK);
+      installableUnits = new EObjectContainmentEList.Resolving<InstallableUnit>(InstallableUnit.class, this,
+          SetupPackage.P2_TASK__INSTALLABLE_UNITS);
     }
     return installableUnits;
   }
@@ -146,29 +146,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     if (p2Repositories == null)
     {
-      p2Repositories = new EObjectContainmentWithInverseEList.Resolving<P2Repository>(P2Repository.class, this,
-          SetupPackage.P2_TASK__P2_REPOSITORIES, SetupPackage.P2_REPOSITORY__P2_TASK);
+      p2Repositories = new EObjectContainmentEList.Resolving<P2Repository>(P2Repository.class, this,
+          SetupPackage.P2_TASK__P2_REPOSITORIES);
     }
     return p2Repositories;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getP2Repositories()).basicAdd(otherEnd, msgs);
-    case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getInstallableUnits()).basicAdd(otherEnd, msgs);
-    }
-    return super.eInverseAdd(otherEnd, featureID, msgs);
   }
 
   /**

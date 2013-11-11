@@ -116,11 +116,11 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-  	 * This adds a property descriptor for the Relative URL feature.
-  	 * <!-- begin-user-doc -->
+   * This adds a property descriptor for the Relative URL feature.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected void addRelativeURLPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
@@ -133,11 +133,11 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-  	 * This returns MylynQueryTask.gif.
-  	 * <!-- begin-user-doc -->
+   * This returns MylynQueryTask.gif.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object getImage(Object object)
   {

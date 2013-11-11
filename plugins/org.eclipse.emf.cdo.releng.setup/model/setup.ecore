@@ -84,13 +84,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="P2Task" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EReference" name="p2Repositories" lowerBound="1"
-        upperBound="-1" eType="#//P2Repository" containment="true" eOpposite="#//P2Repository/p2Task"/>
+        upperBound="-1" eType="#//P2Repository" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="installableUnits" lowerBound="1"
-        upperBound="-1" eType="#//InstallableUnit" containment="true" eOpposite="#//InstallableUnit/p2Task"/>
+        upperBound="-1" eType="#//InstallableUnit" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InstallableUnit">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Task" eType="#//P2Task"
-        eOpposite="#//P2Task/installableUnits"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -99,8 +97,6 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="P2Repository">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Task" eType="#//P2Task"
-        eOpposite="#//P2Task/p2Repositories"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>

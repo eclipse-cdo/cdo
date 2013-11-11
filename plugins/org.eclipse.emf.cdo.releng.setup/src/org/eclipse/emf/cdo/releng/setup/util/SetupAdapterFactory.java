@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
@@ -278,6 +279,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseProjectSetImportTask(ProjectSetImportTask object)
+    {
+      return createProjectSetImportTaskAdapter();
+    }
+
+    @Override
     public Adapter caseEclipsePreferenceTask(EclipsePreferenceTask object)
     {
       return createEclipsePreferenceTaskAdapter();
@@ -458,11 +465,26 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.P2Task <em>P2 Task</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask <em>Project Set Import Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask
+   * @generated
+   */
+  public Adapter createProjectSetImportTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.P2Task <em>P2 Task</em>}'.
+   * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.P2Task
    * @generated

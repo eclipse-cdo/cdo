@@ -863,21 +863,41 @@
     <element xmi:type="ecore:EClass" href="setup.ecore#//CommandParameter"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_769_kkq8EeOoD7QuIvs66Q" x="490" y="742"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_6k6WIEq9EeOoD7QuIvs66Q" type="1001">
-    <children xmi:type="notation:Node" xmi:id="_6k7kQEq9EeOoD7QuIvs66Q" type="4001"/>
-    <children xmi:type="notation:Node" xmi:id="_6k8LUEq9EeOoD7QuIvs66Q" type="5001">
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_6k8LUUq9EeOoD7QuIvs66Q"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_6k8LUkq9EeOoD7QuIvs66Q"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_6k8LU0q9EeOoD7QuIvs66Q"/>
+  <children xmi:type="notation:Node" xmi:id="_KlIKQErmEeO0jrJ0LC-I2Q" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_KlKmgErmEeO0jrJ0LC-I2Q" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_KlKmgUrmEeO0jrJ0LC-I2Q" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_jS7gwErmEeO0jrJ0LC-I2Q" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//ProjectSetImportTask/uRL"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_jS8H0ErmEeO0jrJ0LC-I2Q"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_KlKmgkrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_KlKmg0rmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_KlKmhErmEeO0jrJ0LC-I2Q"/>
     </children>
-    <children xmi:type="notation:Node" xmi:id="_6k8yYEq9EeOoD7QuIvs66Q" type="5002">
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_6k8yYUq9EeOoD7QuIvs66Q"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_6k8yYkq9EeOoD7QuIvs66Q"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_6k8yY0q9EeOoD7QuIvs66Q"/>
+    <children xmi:type="notation:Node" xmi:id="_KlLNkErmEeO0jrJ0LC-I2Q" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_KlLNkUrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_KlLNkkrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_KlLNk0rmEeO0jrJ0LC-I2Q"/>
     </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_6k6WIUq9EeOoD7QuIvs66Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_KlIxUErmEeO0jrJ0LC-I2Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="setup.ecore#//ProjectSetImportTask"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KlIxUUrmEeO0jrJ0LC-I2Q" x="1140" y="585"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_aNuPwErmEeO0jrJ0LC-I2Q" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_aNwE8ErmEeO0jrJ0LC-I2Q" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_aNwsAErmEeO0jrJ0LC-I2Q" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_aNwsAUrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_aNwsAkrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_aNwsA0rmEeO0jrJ0LC-I2Q"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aNxTEErmEeO0jrJ0LC-I2Q" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_aNxTEUrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_aNxTEkrmEeO0jrJ0LC-I2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_aNxTE0rmEeO0jrJ0LC-I2Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_aNu20ErmEeO0jrJ0LC-I2Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//GitCloneTask"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6k6WIkq9EeOoD7QuIvs66Q" x="1105" y="576"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aNu20UrmEeO0jrJ0LC-I2Q" x="1365" y="675"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_u_e_seoIEeKpRf481yfX-g"/>
   <element xmi:type="ecore:EPackage" href="setup.ecore#/"/>
@@ -1337,10 +1357,16 @@
     <element xsi:nil="true"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_776aw0q8EeOoD7QuIvs66Q" points="[1, 0, -285, -114]$[121, 48, -165, -66]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_6lchoEq9EeOoD7QuIvs66Q" visible="false" type="3003" source="_6k6WIEq9EeOoD7QuIvs66Q" target="_7oaMoAVzEeORNPhE9cWxTA">
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_6lchoUq9EeOoD7QuIvs66Q" routing="Rectilinear" lineColor="4210752"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_6lchokq9EeOoD7QuIvs66Q" fontName="Segoe UI"/>
+  <edges xmi:type="notation:Edge" xmi:id="_P16HYErmEeO0jrJ0LC-I2Q" visible="false" type="3003" source="_KlIKQErmEeO0jrJ0LC-I2Q" target="_7oaMoAVzEeORNPhE9cWxTA">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_P16HYUrmEeO0jrJ0LC-I2Q" routing="Rectilinear" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_P16HYkrmEeO0jrJ0LC-I2Q" fontName="Segoe UI"/>
     <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6lcho0q9EeOoD7QuIvs66Q" points="[1, 0, -285, -114]$[121, 48, -165, -66]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_P16HY0rmEeO0jrJ0LC-I2Q" points="[-55, -23, 1056, 412]$[-1028, -533, 83, -98]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_aOLiwErmEeO0jrJ0LC-I2Q" visible="false" type="3003" source="_aNuPwErmEeO0jrJ0LC-I2Q" target="_7oaMoAVzEeORNPhE9cWxTA">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_aOLiwUrmEeO0jrJ0LC-I2Q" routing="Rectilinear" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_aOLiwkrmEeO0jrJ0LC-I2Q" fontName="Segoe UI"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_aOLiw0rmEeO0jrJ0LC-I2Q" points="[1, 0, -285, -114]$[121, 48, -165, -66]"/>
   </edges>
 </notation:Diagram>

@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
@@ -124,6 +125,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass projectSetImportTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   private EClass p2TaskEClass = null;
@@ -668,6 +676,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getProjectSetImportTask()
+  {
+    return projectSetImportTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getProjectSetImportTask_URL()
+  {
+    return (EAttribute)projectSetImportTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EClass getP2Task()
@@ -1808,6 +1836,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_URI);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__CHECKOUT_BRANCH);
 
+    projectSetImportTaskEClass = createEClass(PROJECT_SET_IMPORT_TASK);
+    createEAttribute(projectSetImportTaskEClass, PROJECT_SET_IMPORT_TASK__URL);
+
     eclipsePreferenceTaskEClass = createEClass(ECLIPSE_PREFERENCE_TASK);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__KEY);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__VALUE);
@@ -1921,6 +1952,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     contextVariableTaskEClass.getESuperTypes().add(getSetupTask());
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
+    projectSetImportTaskEClass.getESuperTypes().add(getSetupTask());
     eclipsePreferenceTaskEClass.getESuperTypes().add(getSetupTask());
     workingSetTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2165,6 +2197,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getGitCloneTask_CheckoutBranch(), ecorePackage.getEString(), "checkoutBranch", null, 0, 1,
         GitCloneTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+
+    initEClass(projectSetImportTaskEClass, ProjectSetImportTask.class, "ProjectSetImportTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getProjectSetImportTask_URL(), ecorePackage.getEString(), "uRL", null, 1, 1,
+        ProjectSetImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(eclipsePreferenceTaskEClass, EclipsePreferenceTask.class, "EclipsePreferenceTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

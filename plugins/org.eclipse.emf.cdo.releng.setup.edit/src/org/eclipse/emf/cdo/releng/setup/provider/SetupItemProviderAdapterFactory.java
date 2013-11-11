@@ -247,9 +247,34 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.P2Task} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ProjectSetImportTaskItemProvider projectSetImportTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createProjectSetImportTaskAdapter()
+  {
+    if (projectSetImportTaskItemProvider == null)
+    {
+      projectSetImportTaskItemProvider = new ProjectSetImportTaskItemProvider(this);
+    }
+
+    return projectSetImportTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.P2Task} instances.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected P2TaskItemProvider p2TaskItemProvider;
@@ -1070,6 +1095,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (gitCloneTaskItemProvider != null)
     {
       gitCloneTaskItemProvider.dispose();
+    }
+    if (projectSetImportTaskItemProvider != null)
+    {
+      projectSetImportTaskItemProvider.dispose();
     }
     if (eclipsePreferenceTaskItemProvider != null)
     {

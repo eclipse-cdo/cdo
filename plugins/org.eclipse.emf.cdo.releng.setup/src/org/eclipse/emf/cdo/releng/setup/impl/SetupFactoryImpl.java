@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
@@ -151,6 +152,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createApiBaselineTask();
     case SetupPackage.GIT_CLONE_TASK:
       return createGitCloneTask();
+    case SetupPackage.PROJECT_SET_IMPORT_TASK:
+      return createProjectSetImportTask();
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
       return createEclipsePreferenceTask();
     case SetupPackage.WORKING_SET_TASK:
@@ -297,6 +300,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public ProjectSetImportTask createProjectSetImportTask()
+  {
+    ProjectSetImportTaskImpl projectSetImportTask = new ProjectSetImportTaskImpl();
+    return projectSetImportTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public P2Task createP2Task()

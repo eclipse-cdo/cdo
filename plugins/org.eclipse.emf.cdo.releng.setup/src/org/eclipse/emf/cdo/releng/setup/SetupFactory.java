@@ -85,9 +85,18 @@ public interface SetupFactory extends EFactory
   GitCloneTask createGitCloneTask();
 
   /**
-   * Returns a new object of class '<em>P2 Task</em>'.
+   * Returns a new object of class '<em>Project Set Import Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return a new object of class '<em>Project Set Import Task</em>'.
+   * @generated
+   */
+  ProjectSetImportTask createProjectSetImportTask();
+
+  /**
+   * Returns a new object of class '<em>P2 Task</em>'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return a new object of class '<em>P2 Task</em>'.
    * @generated
    */

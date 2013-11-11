@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Installer" id="org.eclipse.emf.cdo.releng.setup.product.ide" application="org.eclipse.emf.cdo.releng.setup.product.app" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Installer" id="org.eclipse.emf.cdo.releng.setup.product.ide" application="org.eclipse.emf.cdo.releng.setup.product.app" version="1.0.0.v20131111-1902" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
    </configIni>

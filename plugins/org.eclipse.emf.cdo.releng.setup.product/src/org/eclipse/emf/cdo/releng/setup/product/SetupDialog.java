@@ -276,7 +276,7 @@ public class SetupDialog extends TitleAreaDialog
       public void checkStateChanged(CheckStateChangedEvent event)
       {
         boolean checked = event.getChecked();
-        Object element = event.getElement();
+        final Object element = event.getElement();
         if (element instanceof Project)
         {
           Project project = (Project)element;
@@ -286,10 +286,23 @@ public class SetupDialog extends TitleAreaDialog
             viewer.setChecked(branch, checked);
           }
         }
-        else if (element instanceof Branch && !checked)
+        else if (element instanceof Branch)
         {
-          Branch branch = (Branch)element;
-          viewer.setChecked(branch.getProject(), false);
+          if (checked)
+          {
+            viewer.getControl().getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                viewer.editElement(element, 1);
+              }
+            });
+          }
+          else
+          {
+            Branch branch = (Branch)element;
+            viewer.setChecked(branch.getProject(), false);
+          }
         }
 
         validate();
@@ -387,12 +400,7 @@ public class SetupDialog extends TitleAreaDialog
       public void modifyText(ModifyEvent e)
       {
         preferences.setInstallFolder(installFolderText.getText());
-        for (Setup setup : setups.values())
-        {
-          URI uri = getSetupURI(setup.getBranch());
-          setup.eResource().setURI(uri);
-        }
-
+        setups = initSetups();
         validate();
       }
     });
@@ -690,8 +698,6 @@ public class SetupDialog extends TitleAreaDialog
       resource = EMFUtil.loadResourceSafe(resourceSet, Preferences.PREFERENCES_URI);
       preferences = (Preferences)resource.getContents().get(0);
 
-      setups = initSetups();
-
       userNameText.setText(safe(preferences.getUserName()));
       installFolderText.setText(safe(preferences.getInstallFolder()));
       gitPrefixText.setText(safe(preferences.getGitPrefix()));
@@ -701,8 +707,6 @@ public class SetupDialog extends TitleAreaDialog
       resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
       preferences = SetupFactory.eINSTANCE.createPreferences();
       resource.getContents().add(preferences);
-
-      setups = initSetups();
 
       File rootFolder = new File(System.getProperty("user.home", "."));
 

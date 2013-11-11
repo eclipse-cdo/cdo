@@ -392,11 +392,13 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   {
     public static boolean isNeeded(String summary, String repositoryURL, String relativeURL) throws Exception
     {
+      String queryURL = getQueryURL(repositoryURL, relativeURL);
+
       org.eclipse.mylyn.internal.tasks.core.TaskList taskList = //
       org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
 
       org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query = lookupQuery(taskList, summary);
-      return query == null || !ObjectUtil.equals(query.getUrl(), getQueryURL(repositoryURL, relativeURL));
+      return query == null || !ObjectUtil.equals(query.getUrl(), queryURL);
     }
 
     public static void perform(SetupTaskContext context, String connectorKind, String summary, String repositoryURL,

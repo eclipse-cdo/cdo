@@ -369,7 +369,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   {
     String summary = context.expandString(getSummary());
     String repositoryURL = context.expandString(getRepositoryURL());
-    String relativeURL = context.expandString(getRepositoryURL());
+    String relativeURL = context.expandString(getRelativeURL());
 
     return MylynHelper.isNeeded(summary, repositoryURL, relativeURL);
   }
@@ -379,7 +379,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
     String connectorKind = context.expandString(getConnectorKind());
     String summary = context.expandString(getSummary());
     String repositoryURL = context.expandString(getRepositoryURL());
-    String relativeURL = context.expandString(getRepositoryURL());
+    String relativeURL = context.expandString(getRelativeURL());
 
     MylynHelper.perform(context, connectorKind, summary, repositoryURL, relativeURL);
   }

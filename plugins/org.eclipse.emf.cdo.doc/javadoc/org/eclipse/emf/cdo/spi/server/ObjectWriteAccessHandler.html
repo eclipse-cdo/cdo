@@ -4,7 +4,7 @@
 <head>
 
 <title>ObjectWriteAccessHandler (CDO Model Repository Documentation)</title>
-<meta name="date" content="2013-11-06">
+<meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 </head>
 <body>
@@ -116,6 +116,21 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.Wri
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></h3>
+<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="class in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler.TransactionValidationException</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor_summary">
@@ -157,11 +172,11 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.Wri
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#getCommitContext()">getCommitContext</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]</code></td>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#getDirtyObjects()">getDirtyObjects</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]</code></td>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#getNewObjects()">getNewObjects</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -298,7 +313,7 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewObjects</h4>
-<pre>protected final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]&nbsp;getNewObjects()</pre>
+<pre>protected final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]&nbsp;getNewObjects()</pre>
 </li>
 </ul>
 <a name="getDirtyObjects()">
@@ -307,7 +322,7 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDirtyObjects</h4>
-<pre>protected final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]&nbsp;getDirtyObjects()</pre>
+<pre>protected final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]&nbsp;getDirtyObjects()</pre>
 </li>
 </ul>
 <a name="handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">
@@ -329,6 +344,9 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
           used to introspect all aspects of the current commit operation. <b>Note that you must not alter the
           internal state of the commit context in any way!</b></dd><dd><code>monitor</code> - A monitor that should be used by the implementor to avoid timeouts.</dd>
 <dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="class in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler.TransactionValidationException</a></code> - to indicate that the commit operation must not be executed against the backend store because some
+           semantic validation checks failed. The message should describe the validation failure and will be
+           passed through to the client</dd>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - to indicate that the commit operation must not be executed against the backend store. This exception
            will be visible at the client side!</dd></dl>
 </li>

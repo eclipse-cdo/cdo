@@ -115,22 +115,22 @@
     <packages name="org.eclipse.emf.cdo.server.admin"/>
     <packages name="org.eclipse.emf.cdo.server.spi.admin"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB Store">
+  <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
     <packages name="org.eclipse.emf.cdo.server.db"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.db4o" label="CDO Model Repository Server DB4O Store">
+  <article:Plugin name="org.eclipse.emf.cdo.server.db4o" label="CDO Model Repository Server DB4O">
     <packages name="org.eclipse.emf.cdo.server.db4o"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.hibernate" label="CDO Model Repository Server Hibernate Store">
+  <article:Plugin name="org.eclipse.emf.cdo.server.hibernate" label="CDO Model Repository Server Hibernate">
     <packages name="org.eclipse.emf.cdo.server.hibernate"/>
     <extensionPoints name="mappingProviderFactories"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.lissome" label="CDO Model Repository Server Lissome Store">
+  <article:Plugin name="org.eclipse.emf.cdo.server.lissome" label="CDO Model Repository Server Lissome">
     <packages name="org.eclipse.emf.cdo.server.lissome"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.mongodb" label="CDO Model Repository Server MongoDB Store">
+  <article:Plugin name="org.eclipse.emf.cdo.server.mongodb" label="CDO Model Repository Server MongoDB">
     <packages name="org.eclipse.emf.cdo.server.mongodb"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.net4j" label="CDO Model Repository Server Net4j Support">
@@ -139,7 +139,7 @@
   <article:Plugin name="org.eclipse.emf.cdo.server.ocl" label="CDO Model Repository Server OCL Support">
     <packages name="org.eclipse.emf.cdo.server.ocl"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.objectivity" label="CDO Model Repository Server Objectivity Store">
+  <article:Plugin name="org.eclipse.emf.cdo.server.objectivity" label="CDO Model Repository Server Objectivity">
     <packages name="org.eclipse.emf.cdo.server.objectivity"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">

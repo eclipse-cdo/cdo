@@ -4,7 +4,7 @@
 <head>
 
 <title>CDOCompareUtil (CDO Model Repository Documentation)</title>
-<meta name="date" content="2013-11-06">
+<meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 </head>
 <body>
@@ -106,7 +106,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
  Two different <code>scopes</code> are supported:
  <ul>
  <li><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare"><code>CDOComparisonScope.AllContents</code></a> takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
- and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>. This scope has the advantage that the comparison can
+ and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
  The following method returns comparisons that are based on this scope algorithm:
@@ -126,7 +126,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
  inspecting the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tree</code></a> and used if its different from the left or right side.
  <p>
  The <code>matcher</code> used by the comparisons is based on an <a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.
- <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>Resources</code></a> and <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folders</code></a> are treated as normal <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObject</code></a>s.</div>
+ <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>Resources</code></a> and <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folders</code></a> are treated as normal <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObject</code></a>s.</div>
 </li>
 </ul>
 </div>
@@ -150,7 +150,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">compare</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
        <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
        <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>
-<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>.</div>
+<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -217,7 +217,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <pre>public static&nbsp;Comparison&nbsp;compare(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
                  <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
                  <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</pre>
-<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>. This scope has the advantage that the comparison can
+<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
 </li>

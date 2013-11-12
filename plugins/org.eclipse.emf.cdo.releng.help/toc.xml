@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="CDO Release Engineering Documentation" topic="html/Overview.html">
+<toc label="Release Engineering Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
   <topic label="Contributor's Guide" href="html/contributor/index.html">
     <topic label="Project Infrastructure" href="html/contributor/Infrastructure.html" />

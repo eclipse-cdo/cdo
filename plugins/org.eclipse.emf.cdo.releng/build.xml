@@ -132,6 +132,19 @@
     </sequential>
   </macrodef>
 
+  <!-- ======================= -->
+  <!-- Replace Product Version -->
+  <!-- ======================= -->
+
+  <macrodef name="replace.product.version">
+    <attribute name="feature" />
+    <attribute name="profile" />
+    <attribute name="version" />
+    <sequential>
+    	<replace file="${features}/@{feature}-feature/@{profile}.product" token=".qualifier" value=".@{version}" />
+    </sequential>
+  </macrodef>
+
   <!-- ============= -->
   <!-- Generate Site -->
   <!-- ============= -->
@@ -263,7 +276,7 @@
       <cleandir dir="${temp.dropins}" />
 
       <copy todir="${temp.dropins}" failonerror="true">
-        <fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
+        <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">
           <include name="epl-v10.html" />
           <include name="notice.html" />
         </fileset>
@@ -320,7 +333,7 @@
         </classpath>
         <arg value="${build.root}" />
         <arg value="${build.qualifier}" />
-        <arg value="${git.clone}/plugins" />
+        <arg value="${plugins}" />
         <arg value="${tp}/plugins" />
       </java>
       <copy file="${releng}/hudson/api.css" todir="${build.root}" overwrite="true" />
@@ -341,7 +354,7 @@
           <equals arg1="${skip.generate.products.server}" arg2="true" />
         </not>
         <then>
-          <generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2" profile="CDOServer" priority="4" />
+          <generate.product feature="org.eclipse.emf.cdo.server.product" name="tcp_h2" profile="CDOServer" priority="4" />
         </then>
       </if>
 
@@ -350,7 +363,7 @@
           <equals arg1="${skip.generate.products.explorer}" arg2="true" />
         </not>
         <then>
-          <generate.product id="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" priority="3" />
+          <generate.product feature="org.eclipse.emf.cdo.explorer" name="product" profile="CDOExplorer" priority="3" />
         </then>
       </if>
 
@@ -359,7 +372,7 @@
           <equals arg1="${skip.generate.products.setup}" arg2="true" />
         </not>
         <then>
-          <generate.product id="org.eclipse.emf.cdo.releng.setup.installer.product" profile="Setup" priority="2" />
+          <generate.product feature="org.eclipse.emf.cdo.releng.setup.installer" name="product" profile="Setup" priority="2" />
         </then>
       </if>
     </sequential>
@@ -370,7 +383,8 @@
   <!-- ================ -->
 
   <macrodef name="generate.product">
-    <attribute name="id" />
+    <attribute name="feature" />
+    <attribute name="name" />
     <attribute name="profile" />
     <attribute name="priority" />
     <sequential>
@@ -379,7 +393,8 @@
           <equals arg1="${skip.generate.products.windows}" arg2="true" />
         </not>
         <then>
-          <generate.product.platform id="@{id}"
+          <generate.product.platform feature="@{feature}"
+        	                           name="@{name}"
                                      profile="@{profile}"
                                      platform="Windows"
                                      os="win32"
@@ -394,7 +409,8 @@
           <equals arg1="${skip.generate.products.linux}" arg2="true" />
         </not>
         <then>
-          <generate.product.platform id="@{id}"
+          <generate.product.platform feature="@{feature}"
+                                     name="@{name}"
                                      profile="@{profile}"
                                      platform="Linux"
                                      os="linux"
@@ -409,7 +425,8 @@
           <equals arg1="${skip.generate.products.macos}" arg2="true" />
         </not>
         <then>
-          <generate.product.platform id="@{id}"
+          <generate.product.platform feature="@{feature}"
+                                     name="@{name}"
                                      profile="@{profile}"
                                      platform="Mac"
                                      os="macosx"
@@ -426,7 +443,8 @@
   <!-- ========================= -->
 
   <macrodef name="generate.product.platform">
-    <attribute name="id" />
+    <attribute name="feature" />
+    <attribute name="name" />
     <attribute name="profile" />
     <attribute name="platform" />
     <attribute name="os" />
@@ -468,7 +486,7 @@
               <arg value="-p" />
               <arg value="@{profile}" />
               <arg value="-i" />
-              <arg value="@{id}" />
+              <arg value="@{feature}.@{name}" />
               <arg value="-p2.os" />
               <arg value="@{os}" />
               <arg value="-p2.ws" />
@@ -494,7 +512,7 @@
           </if>
 
           <copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
-            <fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
+            <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">
               <include name="epl-v10.html" />
               <include name="notice.html" />
             </fileset>
@@ -634,7 +652,9 @@
     </condition>
 
     <property name="git.clone" location="${build.root}/git" />
-    <property name="releng" location="${git.clone}/plugins/org.eclipse.emf.cdo.releng" />
+    <property name="features" location="${build.root}/features" />
+    <property name="plugins" location="${build.root}/plugins" />
+    <property name="releng" location="${plugins}/org.eclipse.emf.cdo.releng" />
     <property name="test.report" location="${build.root}/test-report.xml" />
     <property name="tools" location="${build.root}/tools" />
     <property name="zips" location="${build.root}/zips" />
@@ -652,12 +672,15 @@
               prefix="build-qualifier-"
               suffix=".tmp"
               deleteonexit="true" />
-    <echo message="build.qualifier=${build.type}${build.timestamp}" file="${build.qualifier.tmp}" />
+    <echo message="build.qualifier.date=${build.timestamp}" file="${build.qualifier.tmp}" />
     <replaceregexp file="${build.qualifier.tmp}">
       <regexp pattern="([0-9]*)-([0-9]*)-([0-9]*)_([0-9]*)-([0-9]*)-([0-9]*)" />
       <substitution expression="\1\2\3-\4\5" />
     </replaceregexp >
     <property file="${build.qualifier.tmp}" />
+  	<property name="build.qualifier" value="${build.type}${build.qualifier.date}" />
+  	<property name="build.version" value="v${build.qualifier.date}" />
+
 
     <!-- build-info.xml -->
     <echoxml file="${build.root}/build-info.xml">
@@ -869,6 +892,10 @@
             <arg value="CDO Baseline" />
           </cmdargs>
         </buckminster>
+
+      	<replace.product.version feature="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" version="${build.version}" />
+      	<replace.product.version feature="org.eclipse.emf.cdo.server.product" profile="CDOServer" version="${build.version}" />
+      	<replace.product.version feature="org.eclipse.emf.cdo.releng.setup.installer" profile="Setup" version="${build.version}" />
       </then>
     </if>
   </target>
@@ -893,7 +920,7 @@
         </buckminster>
 
         <delete failonerror="false" includeemptydirs="true">
-          <fileset dir="${git.clone}/plugins">
+          <fileset dir="${plugins}">
             <exclude name="org.eclipse.emf.cdo.releng.doc/**" />
             <include name="*.doc/bin/**" />
             <include name="*.help/bin/**" />

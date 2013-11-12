@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="CDO Server" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
+<product name="CDO Server" uid="CDOServer" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.server.app" version="4.1.200.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
    </configIni>
@@ -32,31 +32,14 @@
    </vm>
 
    <plugins>
-<!--
-      <plugin id="org.eclipse.core.contenttype"/>
-      <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
-      <plugin id="org.eclipse.equinox.preferences"/>
- -->
-
-<!--
-      <plugin id="org.apache.felix.gogo.command"/>
-      <plugin id="org.apache.felix.gogo.runtime"/>
-      <plugin id="org.apache.felix.gogo.shell"/>
-      <plugin id="org.eclipse.core.jobs"/>
-      <plugin id="org.eclipse.equinox.app"/>
-      <plugin id="org.eclipse.equinox.common"/>
-      <plugin id="org.eclipse.equinox.console"/>
-      <plugin id="org.eclipse.equinox.registry"/>
-      <plugin id="org.eclipse.osgi"/>
--->
    </plugins>
 
-  <features>
-		<feature id="org.eclipse.emf.cdo.server.product"/>    
-		<feature id="org.eclipse.core.runtime.feature"/>    
-		<feature id="org.eclipse.emf.common"/>    
-		<feature id="org.eclipse.emf.ecore"/>    
-  </features>
+   <features>
+      <feature id="org.eclipse.emf.cdo.server.product"/>
+      <feature id="org.eclipse.core.runtime.feature"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.emf.ecore"/>
+   </features>
+
 
 </product>

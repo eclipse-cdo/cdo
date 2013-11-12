@@ -359,7 +359,7 @@
           <equals arg1="${skip.generate.products.setup}" arg2="true" />
         </not>
         <then>
-          <generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide" profile="Setup" priority="2" />
+          <generate.product id="org.eclipse.emf.cdo.releng.setup.installer.product" profile="Setup" priority="2" />
         </then>
       </if>
     </sequential>

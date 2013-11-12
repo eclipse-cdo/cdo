@@ -178,12 +178,9 @@
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.epp" version="0.0.0">
-      <category name="org.eclipse.emf.cdo.hidden.category"/>
-   </feature>
-   <feature id="org.eclipse.emf.cdo.epp" version="0.0.0">
       <category name="org.eclipse.emf.releng.hidden.category"/>
    </feature>
-   <feature id="org.eclipse.emf.cdo.releng.setup.product" version="0.0.0">
+   <feature id="org.eclipse.emf.cdo.releng.setup.installer" version="0.0.0">
       <category name="org.eclipse.emf.releng.hidden.category"/>
    </feature>
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>

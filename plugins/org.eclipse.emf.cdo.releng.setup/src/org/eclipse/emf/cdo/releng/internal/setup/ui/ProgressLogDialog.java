@@ -79,7 +79,9 @@ import java.util.List;
 
 public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 {
-  public static final String TITLE = "Setup Development Environment";
+  public static final String TITLE = "Development Environment Setup";
+
+  public static final String JOB_NAME = "Setting up IDE";
 
   private static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
 
@@ -489,7 +491,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     return false;
   }
 
-  public static void run(final Shell shell, final String jobName, final ProgressLogRunnable runnable,
+  public static void run(final Shell shell, final ProgressLogRunnable runnable,
       List<SetupTaskPerformer> setupTaskPerformers)
   {
     try
@@ -500,7 +502,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       {
         public void run()
         {
-          final Job job = new Job(jobName)
+          final Job job = new Job(JOB_NAME)
           {
             @Override
             protected IStatus run(IProgressMonitor monitor)
@@ -509,7 +511,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
               try
               {
-                dialog.log(jobName);
+                dialog.log(JOB_NAME);
                 restart[0] = runnable.run(dialog);
               }
               catch (Throwable ex)

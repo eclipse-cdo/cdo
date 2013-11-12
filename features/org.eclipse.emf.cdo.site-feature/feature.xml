@@ -99,7 +99,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.setup.product"
+         id="org.eclipse.emf.cdo.releng.setup.installer"
          version="0.0.0"/>
 
    <includes

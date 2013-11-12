@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Installer" id="org.eclipse.emf.cdo.releng.setup.installer.product" application="org.eclipse.emf.cdo.releng.setup.installer.application" version="1.0.0.v20131112-0801" useFeatures="true" includeLaunchers="true">
+
+   <configIni use="">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>--launcher.XXMaxPermSize
+256M
+-data
+configuration</programArgs>
+      <vmArgs>-Xms256M
+-Xmx1024M</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_16.gif" i32="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_32.gif" i48="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_48.gif" i64="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_64.gif"/>
+
+   <launcher name="setup-eclipse">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.emf.cdo.releng.setup.installer"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.emf.common.ui"/>
+      <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.emf.edit"/>
+      <feature id="org.eclipse.emf.edit.ui"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.equinox.p2.core.feature"/>
+   </features>
+
+
+</product>

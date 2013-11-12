@@ -67,7 +67,7 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
       // }
 
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
-      ProgressLogDialog.run(shell, "Setting up IDE", new ProgressLogRunnable()
+      ProgressLogDialog.run(shell, new ProgressLogRunnable()
       {
         public boolean run(ProgressLog log) throws Exception
         {

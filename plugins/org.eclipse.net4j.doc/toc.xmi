@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
-  <article:Plugin name="org.eclipse.net4j" label="Net4j Signalling Platform Transport">
+  <article:Plugin name="org.eclipse.net4j" label="Net4j Signalling Platform">
     <packages name="org.eclipse.net4j"/>
     <packages name="org.eclipse.net4j.acceptor"/>
     <packages name="org.eclipse.net4j.buffer"/>
@@ -13,19 +13,19 @@
     <packages name="org.eclipse.net4j.signal.wrapping"/>
     <packages name="org.eclipse.spi.net4j"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.http" label="Net4j Signalling Platform Transport HTTP">
+  <article:Plugin name="org.eclipse.net4j.http" label="Net4j Signalling Platform HTTP">
     <packages name="org.eclipse.net4j.http"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.http.common" label="Net4j Signalling Platform Transport HTTP Common">
+  <article:Plugin name="org.eclipse.net4j.http.common" label="Net4j Signalling Platform HTTP Common">
     <packages name="org.eclipse.net4j.http.common"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.http.server" label="Net4j Signalling Platform Transport HTTP Server">
+  <article:Plugin name="org.eclipse.net4j.http.server" label="Net4j Signalling Platform HTTP Server">
     <packages name="org.eclipse.net4j.http.server"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signalling Platform Transport JVM">
+  <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signalling Platform JVM">
     <packages name="org.eclipse.net4j.jvm"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.tcp" label="Net4j Signalling Platform Transport TCP">
+  <article:Plugin name="org.eclipse.net4j.tcp" label="Net4j Signalling Platform TCP">
     <packages name="org.eclipse.net4j.tcp"/>
     <packages name="org.eclipse.net4j.tcp.ssl"/>
   </article:Plugin>

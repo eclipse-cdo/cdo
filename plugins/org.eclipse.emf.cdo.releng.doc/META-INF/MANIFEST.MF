@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CDO Release Engineering Documentation
+Bundle-Name: Documentation Generator
 Bundle-SymbolicName: org.eclipse.emf.cdo.releng.doc;singleton:=true
 Bundle-Version: 4.1.200.qualifier
 Bundle-Vendor: Eclipse Modeling Project

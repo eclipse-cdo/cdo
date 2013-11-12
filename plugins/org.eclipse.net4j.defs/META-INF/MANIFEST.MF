@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.defs;singleton:=true
-Bundle-Version: 4.0.200.qualifier
+Bundle-Version: 4.0.300.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,6 +12,6 @@ Require-Bundle: org.eclipse.net4j.util.defs;bundle-version="[4.0.0,5.0.0)";visib
  org.eclipse.net4j.jvm;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.http;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.net4j.defs;version="4.0.200",
- org.eclipse.net4j.defs.impl;version="4.0.200",
- org.eclipse.net4j.defs.util;version="4.0.200"
+Export-Package: org.eclipse.net4j.defs;version="4.0.300",
+ org.eclipse.net4j.defs.impl;version="4.0.300",
+ org.eclipse.net4j.defs.util;version="4.0.300"

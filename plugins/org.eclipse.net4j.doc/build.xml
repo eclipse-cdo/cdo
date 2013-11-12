@@ -121,7 +121,7 @@
 				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
 			</fileset>
 
-			<group title="Net4j Signalling Platform Transport">
+			<group title="Net4j Signalling Platform">
 				<package name="org.eclipse.net4j" />
 				<package name="org.eclipse.net4j.acceptor" />
 				<package name="org.eclipse.net4j.buffer" />
@@ -134,19 +134,19 @@
 				<package name="org.eclipse.net4j.signal.wrapping" />
 				<package name="org.eclipse.spi.net4j" />
 			</group>
-			<group title="Net4j Signalling Platform Transport HTTP">
+			<group title="Net4j Signalling Platform HTTP">
 				<package name="org.eclipse.net4j.http" />
 			</group>
-			<group title="Net4j Signalling Platform Transport HTTP Common">
+			<group title="Net4j Signalling Platform HTTP Common">
 				<package name="org.eclipse.net4j.http.common" />
 			</group>
-			<group title="Net4j Signalling Platform Transport HTTP Server">
+			<group title="Net4j Signalling Platform HTTP Server">
 				<package name="org.eclipse.net4j.http.server" />
 			</group>
-			<group title="Net4j Signalling Platform Transport JVM">
+			<group title="Net4j Signalling Platform JVM">
 				<package name="org.eclipse.net4j.jvm" />
 			</group>
-			<group title="Net4j Signalling Platform Transport TCP">
+			<group title="Net4j Signalling Platform TCP">
 				<package name="org.eclipse.net4j.tcp" />
 				<package name="org.eclipse.net4j.tcp.ssl" />
 			</group>

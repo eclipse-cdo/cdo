@@ -652,8 +652,8 @@
     </condition>
 
     <property name="git.clone" location="${build.root}/git" />
-    <property name="features" location="${build.root}/features" />
-    <property name="plugins" location="${build.root}/plugins" />
+    <property name="features" location="${git.clone}/features" />
+    <property name="plugins" location="${git.clone}/plugins" />
     <property name="releng" location="${plugins}/org.eclipse.emf.cdo.releng" />
     <property name="test.report" location="${build.root}/test-report.xml" />
     <property name="tools" location="${build.root}/tools" />

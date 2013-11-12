@@ -354,7 +354,7 @@
           <equals arg1="${skip.generate.products.server}" arg2="true" />
         </not>
         <then>
-          <generate.product feature="org.eclipse.emf.cdo.server.product" name="tcp_h2" profile="CDOServer" priority="4" />
+          <generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2" profile="CDOServer" priority="4" />
         </then>
       </if>
 
@@ -363,7 +363,7 @@
           <equals arg1="${skip.generate.products.explorer}" arg2="true" />
         </not>
         <then>
-          <generate.product feature="org.eclipse.emf.cdo.explorer" name="product" profile="CDOExplorer" priority="3" />
+          <generate.product id="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" priority="3" />
         </then>
       </if>
 
@@ -372,7 +372,7 @@
           <equals arg1="${skip.generate.products.setup}" arg2="true" />
         </not>
         <then>
-          <generate.product feature="org.eclipse.emf.cdo.releng.setup.installer" name="product" profile="Setup" priority="2" />
+          <generate.product id="org.eclipse.emf.cdo.releng.setup.product.ide" profile="Setup" priority="2" />
         </then>
       </if>
     </sequential>
@@ -383,8 +383,7 @@
   <!-- ================ -->
 
   <macrodef name="generate.product">
-    <attribute name="feature" />
-    <attribute name="name" />
+    <attribute name="id" />
     <attribute name="profile" />
     <attribute name="priority" />
     <sequential>
@@ -393,8 +392,7 @@
           <equals arg1="${skip.generate.products.windows}" arg2="true" />
         </not>
         <then>
-          <generate.product.platform feature="@{feature}"
-        	                           name="@{name}"
+          <generate.product.platform id="@{id}"
                                      profile="@{profile}"
                                      platform="Windows"
                                      os="win32"
@@ -409,8 +407,7 @@
           <equals arg1="${skip.generate.products.linux}" arg2="true" />
         </not>
         <then>
-          <generate.product.platform feature="@{feature}"
-                                     name="@{name}"
+          <generate.product.platform id="@{id}"
                                      profile="@{profile}"
                                      platform="Linux"
                                      os="linux"
@@ -425,8 +422,7 @@
           <equals arg1="${skip.generate.products.macos}" arg2="true" />
         </not>
         <then>
-          <generate.product.platform feature="@{feature}"
-                                     name="@{name}"
+          <generate.product.platform id="@{id}"
                                      profile="@{profile}"
                                      platform="Mac"
                                      os="macosx"
@@ -443,8 +439,7 @@
   <!-- ========================= -->
 
   <macrodef name="generate.product.platform">
-    <attribute name="feature" />
-    <attribute name="name" />
+    <attribute name="id" />
     <attribute name="profile" />
     <attribute name="platform" />
     <attribute name="os" />
@@ -486,7 +481,7 @@
               <arg value="-p" />
               <arg value="@{profile}" />
               <arg value="-i" />
-              <arg value="@{feature}.@{name}" />
+              <arg value="@{id}" />
               <arg value="-p2.os" />
               <arg value="@{os}" />
               <arg value="-p2.ws" />

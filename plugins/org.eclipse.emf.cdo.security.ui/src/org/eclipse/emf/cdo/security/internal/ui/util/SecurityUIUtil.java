@@ -101,7 +101,7 @@ public final class SecurityUIUtil
 
   private static IFilter[] getSupportedElementFilters(EClass itemType)
   {
-    if (itemType == SecurityPackage.Literals.PERMISSION)
+    if (itemType == SecurityPackage.Literals.FILTER_PERMISSION)
     {
       return RESOURCE_BASED_PERMISSION_FILTERS;
     }

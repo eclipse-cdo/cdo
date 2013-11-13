@@ -110,7 +110,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
   protected OneToManyTableBlock.ITableConfiguration createTableConfiguration()
   {
     return new OneToManyTableBlock.TableConfiguration(getManagedForm(), SecurityPackage.Literals.ROLE__PERMISSIONS,
-        SecurityPackage.Literals.PERMISSION)
+        SecurityPackage.Literals.FILTER_PERMISSION)
     {
       private static final int COL_ACCESS = 0;
 

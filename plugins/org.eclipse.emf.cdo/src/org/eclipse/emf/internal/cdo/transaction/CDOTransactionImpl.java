@@ -85,6 +85,8 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
@@ -2673,6 +2675,52 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return locksOnNewObjects;
+  }
+
+  public static void resurrectObject(CDOObject object, CDOID id)
+  {
+    if (object.cdoState() != CDOState.NEW)
+    {
+      throw new IllegalStateException("Object is not new: " + object);
+    }
+  
+    CDOID oldID = object.cdoID();
+    if (oldID == id)
+    {
+      return;
+    }
+  
+    InternalCDORevision revision = (InternalCDORevision)object.cdoRevision(false);
+    revision.setID(id);
+  
+    InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
+    transaction.remapObject(oldID);
+  
+    Map<CDOID, CDOObject> newObjects = transaction.getLastSavepoint().getNewObjects();
+    newObjects.remove(oldID);
+    newObjects.put(id, object);
+  
+    CDORevision detachedRevision = getDetachedRevision(transaction, id);
+    if (detachedRevision != null)
+    {
+      revision.setVersion(detachedRevision.getVersion());
+    }
+  }
+
+  private static CDORevision getDetachedRevision(InternalCDOTransaction transaction, CDOID id)
+  {
+    SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
+    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+  
+    InternalCDORevision result = //
+    revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+  
+    if (result != null)
+    {
+      throw new IllegalStateException("An object with the same id already exists on this branch");
+    }
+  
+    return synthetics[0];
   }
 
   private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>

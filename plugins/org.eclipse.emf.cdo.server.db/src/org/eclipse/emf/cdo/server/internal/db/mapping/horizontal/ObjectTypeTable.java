@@ -100,7 +100,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
-  public final void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
+  public final boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     IDBStore store = getMappingStrategy().getStore();
     IIDHandler idHandler = store.getIDHandler();
@@ -118,19 +118,22 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
       }
 
       int result = stmt.executeUpdate();
-
       if (result != 1)
       {
         throw new DBException("Object type could not be inserted: " + id); //$NON-NLS-1$
       }
+
+      return true;
     }
     catch (SQLException ex)
     {
-      // Unique key violation can occur in rare cases (merging new objects from other branches)
-      if (!store.getDBAdapter().isDuplicateKeyException(ex))
+      if (store.getDBAdapter().isDuplicateKeyException(ex))
       {
-        throw new DBException(ex);
+        // Unique key violation can occur in rare cases (merging new objects from other branches)
+        return false;
       }
+
+      throw new DBException(ex);
     }
     finally
     {
@@ -138,7 +141,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
-  public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
+  public final boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.MAX);
@@ -153,10 +156,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
       }
 
       int result = stmt.executeUpdate();
-      if (result != 1)
-      {
-        throw new DBException("Object type could not be deleted: " + id); //$NON-NLS-1$
-      }
+      return result == 1;
     }
     catch (SQLException ex)
     {

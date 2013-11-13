@@ -565,7 +565,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       monitor.begin(revisions.length);
       for (InternalCDORevision revision : revisions)
       {
-        writeRevision(revision, newObjects.contains(revision.getID()), true, monitor.fork());
+        boolean mapType = newObjects.contains(revision.getID());
+        writeRevision(revision, mapType, true, monitor.fork());
       }
     }
     finally
@@ -610,7 +611,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
         InternalCDORevision revision = revisionManager.getRevision(id, branch.getHead(), CDORevision.UNCHUNKED,
             CDORevision.DEPTH_NONE, true);
-        int version = ObjectUtil.equals(branch, revision.getBranch()) ? revision.getVersion()
+        int version = ObjectUtil.equals(branch, revision.getBranch()) ? revision.getVersion() + 1
             : CDOBranchVersion.FIRST_VERSION;
 
         if (TRACER.isEnabled())

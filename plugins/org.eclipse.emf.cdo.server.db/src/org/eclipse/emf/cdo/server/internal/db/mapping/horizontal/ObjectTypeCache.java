@@ -43,15 +43,15 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
   }
 
   @Override
-  protected void doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type)
+  protected boolean doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type)
   {
-    memoryCache.put(id, type);
+    return memoryCache.put(id, type) == null;
   }
 
   @Override
-  protected void doRemoveObjectType(IDBStoreAccessor accessor, CDOID id)
+  protected boolean doRemoveObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    memoryCache.remove(id);
+    return memoryCache.remove(id) != null;
   }
 
   @Override

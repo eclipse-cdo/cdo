@@ -141,37 +141,48 @@ public class CDOIDTest extends AbstractCDOTest
     assertEquals(idToForce, CDOUtil.getCDOObject(companyB).cdoID());
   }
 
+  @CleanRepositoriesBefore(reason = "New transaction seems to need a clean repo be restarted")
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testSetIDWithReferences() throws Exception
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    CDOID idToForce1;
+    CDOID idToForce2;
 
-    Company company = getModel1Factory().createCompany();
-    Category category = getModel1Factory().createCategory();
-    company.getCategories().add(category);
-    resource.getContents().add(company);
-    transaction.commit();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    CDOID idToForce1 = CDOUtil.getCDOObject(company).cdoID();
-    CDOID idToForce2 = CDOUtil.getCDOObject(category).cdoID();
-    CDOBranch newBranch = transaction.getBranch().createBranch("new");
-    transaction.setBranch(newBranch);
+      Company company = getModel1Factory().createCompany();
+      Category category = getModel1Factory().createCategory();
+      company.getCategories().add(category);
+      resource.getContents().add(company);
+      transaction.commit();
 
-    resource.getContents().clear();
-    transaction.commit();
+      idToForce1 = CDOUtil.getCDOObject(company).cdoID();
+      idToForce2 = CDOUtil.getCDOObject(category).cdoID();
+      CDOBranch newBranch = transaction.getBranch().createBranch("new");
+      transaction.setBranch(newBranch);
 
-    Company company2 = getModel1Factory().createCompany();
-    Category category2 = getModel1Factory().createCategory();
-    company2.getCategories().add(category2);
-    resource.getContents().add(company2);
+      resource.getContents().clear();
+      transaction.commit();
 
-    CDOTransactionImpl.resurrectObject(CDOUtil.getCDOObject(company2), idToForce1);
-    CDOTransactionImpl.resurrectObject(CDOUtil.getCDOObject(category2), idToForce2);
-    transaction.commit();
+      Company company2 = getModel1Factory().createCompany();
+      Category category2 = getModel1Factory().createCategory();
+      company2.getCategories().add(category2);
+      resource.getContents().add(company2);
+
+      CDOTransactionImpl.resurrectObject(CDOUtil.getCDOObject(company2), idToForce1);
+      CDOTransactionImpl.resurrectObject(CDOUtil.getCDOObject(category2), idToForce2);
+      transaction.commit();
+      session.close();
+    }
+
+    restartRepository();
 
     CDOSession sessionB = openSession();
+    CDOBranch newBranch = sessionB.getBranchManager().getBranch("MAIN/new");
+
     CDOTransaction transactionB = sessionB.openTransaction(newBranch);
     CDOResource resourceB = transactionB.getResource(getResourcePath("/test1"));
     Company companyB = (Company)resourceB.getContents().get(0);

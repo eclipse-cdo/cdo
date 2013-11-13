@@ -508,6 +508,21 @@ public class InstallerDialog extends TitleAreaDialog
     return toolBar;
   }
 
+  @Override
+  protected void okPressed()
+  {
+    try
+    {
+      install();
+    }
+    catch (Throwable ex)
+    {
+      handleException(ex);
+    }
+
+    super.okPressed();
+  }
+
   protected void updatePressed()
   {
     try
@@ -554,111 +569,23 @@ public class InstallerDialog extends TitleAreaDialog
             monitor.done();
           }
         }
+      };
 
-        private IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor)
+      ProgressMonitorDialog dialog = new ProgressMonitorDialog(null)
+      {
+        @Override
+        protected Point getInitialSize()
         {
-          SubMonitor sub = SubMonitor.convert(monitor, "Checking for updates...", 1000);
-
-          try
+          Point calculatedSize = super.getInitialSize();
+          if (calculatedSize.x < 800)
           {
-            addRepository(agent, SetupTaskPerformer.RELENG_URL, sub.newChild(200));
-          }
-          catch (ProvisionException ex)
-          {
-            return ex.getStatus();
+            calculatedSize.x = 800;
           }
 
-          ProvisioningSession session = new ProvisioningSession(agent);
-          IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
-          IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
-          IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
-
-          List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
-          for (IInstallableUnit installableUnit : queryResult)
-          {
-            String id = installableUnit.getId();
-            if (id.startsWith("org.eclipse.emf.cdo") || id.startsWith("org.eclipse.net4j"))
-            {
-              ius.add(installableUnit);
-            }
-          }
-
-          UpdateOperation operation = new UpdateOperation(session, ius);
-          IStatus status = operation.resolveModal(sub.newChild(300));
-          if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
-          {
-            return status;
-          }
-
-          if (status.getSeverity() == IStatus.CANCEL)
-          {
-            throw new OperationCanceledException();
-          }
-
-          if (status.getSeverity() != IStatus.ERROR)
-          {
-            ProvisioningJob job = operation.getProvisioningJob(null);
-            if (job == null)
-            {
-              String resolutionDetails = operation.getResolutionDetails();
-              throw new IllegalStateException(resolutionDetails);
-            }
-
-            status = job.runModal(sub.newChild(300));
-            if (status.getSeverity() == IStatus.CANCEL)
-            {
-              throw new OperationCanceledException();
-            }
-          }
-
-          return status;
-        }
-
-        private void addRepository(IProvisioningAgent agent, String location, IProgressMonitor monitor)
-            throws ProvisionException
-        {
-          SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 1000);
-
-          try
-          {
-            java.net.URI uri = new java.net.URI(location);
-            addMetadataRepository(agent, uri, sub.newChild(500));
-            addArtifactRepository(agent, uri, sub.newChild(500));
-          }
-          catch (URISyntaxException ex)
-          {
-            throw new IllegalArgumentException(ex);
-          }
-        }
-
-        private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
-            throws ProvisionException
-        {
-          IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
-              .getService(IMetadataRepositoryManager.SERVICE_NAME);
-          if (manager == null)
-          {
-            throw new IllegalStateException("No metadata repository manager found");
-          }
-
-          manager.loadRepository(location, monitor);
-        }
-
-        private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
-            throws ProvisionException
-        {
-          IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
-              .getService(IArtifactRepositoryManager.SERVICE_NAME);
-          if (manager == null)
-          {
-            throw new IllegalStateException("No metadata repository manager found");
-          }
-
-          manager.loadRepository(location, monitor);
+          return calculatedSize;
         }
       };
 
-      ProgressMonitorDialog dialog = new ProgressMonitorDialog(null);
       dialog.run(true, true, runnable);
     }
     catch (InterruptedException ex)
@@ -675,19 +602,106 @@ public class InstallerDialog extends TitleAreaDialog
     }
   }
 
-  @Override
-  protected void okPressed()
+  private IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor)
   {
+    SubMonitor sub = SubMonitor.convert(monitor, "Checking for updates...", 1000);
+
     try
     {
-      install();
+      addRepository(agent, SetupTaskPerformer.RELENG_URL, sub.newChild(200));
     }
-    catch (Throwable ex)
+    catch (ProvisionException ex)
     {
-      handleException(ex);
+      return ex.getStatus();
     }
 
-    super.okPressed();
+    ProvisioningSession session = new ProvisioningSession(agent);
+    IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
+    IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
+    IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
+
+    List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
+    for (IInstallableUnit installableUnit : queryResult)
+    {
+      String id = installableUnit.getId();
+      if (id.startsWith("org.eclipse.emf.cdo") || id.startsWith("org.eclipse.net4j"))
+      {
+        ius.add(installableUnit);
+      }
+    }
+
+    UpdateOperation operation = new UpdateOperation(session, ius);
+    IStatus status = operation.resolveModal(sub.newChild(300));
+    if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
+    {
+      return status;
+    }
+
+    if (status.getSeverity() == IStatus.CANCEL)
+    {
+      throw new OperationCanceledException();
+    }
+
+    if (status.getSeverity() != IStatus.ERROR)
+    {
+      ProvisioningJob job = operation.getProvisioningJob(null);
+      if (job == null)
+      {
+        String resolutionDetails = operation.getResolutionDetails();
+        throw new IllegalStateException(resolutionDetails);
+      }
+
+      status = job.runModal(sub.newChild(300));
+      if (status.getSeverity() == IStatus.CANCEL)
+      {
+        throw new OperationCanceledException();
+      }
+    }
+
+    return status;
+  }
+
+  private void addRepository(IProvisioningAgent agent, String location, IProgressMonitor monitor)
+      throws ProvisionException
+  {
+    SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 1000);
+
+    try
+    {
+      java.net.URI uri = new java.net.URI(location);
+      addMetadataRepository(agent, uri, sub.newChild(500));
+      addArtifactRepository(agent, uri, sub.newChild(500));
+    }
+    catch (URISyntaxException ex)
+    {
+      throw new IllegalArgumentException(ex);
+    }
+  }
+
+  private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
+      throws ProvisionException
+  {
+    IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
+        .getService(IMetadataRepositoryManager.SERVICE_NAME);
+    if (manager == null)
+    {
+      throw new IllegalStateException("No metadata repository manager found");
+    }
+
+    manager.loadRepository(location, monitor);
+  }
+
+  private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
+      throws ProvisionException
+  {
+    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
+        .getService(IArtifactRepositoryManager.SERVICE_NAME);
+    if (manager == null)
+    {
+      throw new IllegalStateException("No metadata repository manager found");
+    }
+
+    manager.loadRepository(location, monitor);
   }
 
   private void init()

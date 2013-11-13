@@ -488,6 +488,8 @@
               <arg value="@{ws}" />
               <arg value="-p2.arch" />
               <arg value="@{arch}" />
+              <arg value="-roaming" />
+              <arg value="-purgeHistory" />
             </args>
           </eclipse>
 

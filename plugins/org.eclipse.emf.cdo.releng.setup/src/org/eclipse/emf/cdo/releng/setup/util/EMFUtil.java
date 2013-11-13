@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -54,6 +56,7 @@ public final class EMFUtil extends Plugin
     }
     catch (Throwable ex)
     {
+      Activator.log(ex);
       return resourceSet.getResource(uri, false);
     }
   }

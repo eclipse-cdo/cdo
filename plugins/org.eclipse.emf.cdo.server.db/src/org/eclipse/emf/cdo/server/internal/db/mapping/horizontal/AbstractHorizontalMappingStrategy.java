@@ -82,14 +82,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return objectTypeMapper.getObjectType(accessor, id);
   }
 
-  public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
+  public boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    objectTypeMapper.putObjectType(accessor, timeStamp, id, type);
+    return objectTypeMapper.putObjectType(accessor, timeStamp, id, type);
   }
 
-  public void removeObjectType(IDBStoreAccessor accessor, CDOID id)
+  public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    objectTypeMapper.removeObjectType(accessor, id);
+    return objectTypeMapper.removeObjectType(accessor, id);
   }
 
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)

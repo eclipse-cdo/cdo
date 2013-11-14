@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -704,16 +705,24 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         CDOID id = revision.getID();
         if (mapType)
         {
-          // put new objects into objectTypeMapper
+          // Put new objects into objectTypeMapper
           long timeStamp = revision.getTimeStamp();
+          EClass eClass = getEClass();
+
           AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
-          mappingStrategy.putObjectType(accessor, timeStamp, id, getEClass());
+          if (!mappingStrategy.putObjectType(accessor, timeStamp, id, eClass))
+          {
+            mapType = false;
+          }
         }
-        else if (revise && revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
+
+        if (!mapType && revise && revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
         {
-          // if revision is not the first one, revise the old revision
+          // If revision is not the first one, revise the old revision
           long revised = revision.getTimeStamp() - 1;
-          reviseOldRevision(accessor, id, revision.getBranch(), revised);
+          InternalCDOBranch branch = revision.getBranch();
+
+          reviseOldRevision(accessor, id, branch, revised);
           for (IListMapping mapping : getListMappings())
           {
             mapping.objectDetached(accessor, id, revised);

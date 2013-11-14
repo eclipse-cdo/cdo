@@ -60,18 +60,21 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     return delegate.getObjectType(accessor, id);
   }
 
-  public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
+  public boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     CDOID classID = getMetaDataManager().getMetaID(type, timeStamp);
-    doPutObjectType(accessor, id, classID);
+    if (!doPutObjectType(accessor, id, classID))
+    {
+      return false;
+    }
 
-    delegate.putObjectType(accessor, timeStamp, id, type);
+    return delegate.putObjectType(accessor, timeStamp, id, type);
   }
 
-  public void removeObjectType(IDBStoreAccessor accessor, CDOID id)
+  public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     doRemoveObjectType(accessor, id);
-    delegate.removeObjectType(accessor, id);
+    return delegate.removeObjectType(accessor, id);
   }
 
   public CDOID getMaxID(Connection connection, IIDHandler idHandler)
@@ -117,11 +120,11 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     super.doDeactivate();
   }
 
+  protected abstract CDOID doGetMaxID(Connection connection, IIDHandler idHandler);
+
   protected abstract CDOID doGetObjectType(IDBStoreAccessor accessor, CDOID id);
 
-  protected abstract void doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type);
+  protected abstract boolean doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type);
 
-  protected abstract void doRemoveObjectType(IDBStoreAccessor accessor, CDOID id);
-
-  protected abstract CDOID doGetMaxID(Connection connection, IIDHandler idHandler);
+  protected abstract boolean doRemoveObjectType(IDBStoreAccessor accessor, CDOID id);
 }

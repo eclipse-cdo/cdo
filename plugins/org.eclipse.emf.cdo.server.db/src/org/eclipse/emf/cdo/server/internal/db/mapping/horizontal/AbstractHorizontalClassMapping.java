@@ -719,7 +719,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         reviseOldRevision(accessor, id, branch, timeStamp - 1);
       }
 
-      detachAttributes(accessor, id, version + 1, branch, timeStamp, monitor.fork());
+      detachAttributes(accessor, id, version, branch, timeStamp, monitor.fork());
 
       // notify list mappings so they can clean up
       for (IListMapping mapping : getListMappings())

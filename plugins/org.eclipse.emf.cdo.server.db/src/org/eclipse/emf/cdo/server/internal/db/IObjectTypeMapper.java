@@ -33,13 +33,13 @@ public interface IObjectTypeMapper
 {
   public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id);
 
-  public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type);
+  public boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type);
 
-  public void removeObjectType(IDBStoreAccessor accessor, CDOID id);
+  public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id);
 
   /**
    * Return the maximum object id managed by this cache.
-   * 
+   *
    * @param connection
    *          the DB connection to use.
    * @return the maximum object ID.

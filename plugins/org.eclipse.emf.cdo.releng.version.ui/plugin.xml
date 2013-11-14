@@ -100,4 +100,22 @@
       </page>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.eclipse.emf.cdo.releng.version.ui.versionManagementActions"
+            label="Version Management"
+            visible="true">
+         <action
+               class="org.eclipse.emf.cdo.releng.version.ui.actions.DisableApiBuilderAction"
+               icon="icons/ApiDisabled.gif"
+               id="org.eclipse.emf.cdo.releng.version.ui.actions.DisableApiBuilderAction"
+               label="Disable API Builder"
+               style="toggle"
+               toolbarPath="versionManagementGroup"
+               tooltip="Disable the API Analysis builder">
+         </action>
+      </actionSet>
+   </extension>
+
 </plugin>

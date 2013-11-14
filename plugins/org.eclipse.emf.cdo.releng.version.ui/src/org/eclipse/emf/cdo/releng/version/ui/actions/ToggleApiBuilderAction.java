@@ -24,11 +24,11 @@ import java.lang.reflect.Field;
 /**
  * @author Eike Stepper
  */
-public class DisableApiBuilderAction implements IWorkbenchWindowActionDelegate
+public class ToggleApiBuilderAction implements IWorkbenchWindowActionDelegate
 {
   private Field disabledField;
 
-  public DisableApiBuilderAction()
+  public ToggleApiBuilderAction()
   {
     try
     {

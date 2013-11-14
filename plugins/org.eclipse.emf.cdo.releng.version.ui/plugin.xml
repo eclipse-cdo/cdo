@@ -103,13 +103,13 @@
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id="org.eclipse.emf.cdo.releng.version.ui.versionManagementActions"
+            id="org.eclipse.emf.cdo.releng.version.ui.actions"
             label="Version Management"
             visible="true">
          <action
-               class="org.eclipse.emf.cdo.releng.version.ui.actions.DisableApiBuilderAction"
-               icon="icons/ApiDisabled.gif"
-               id="org.eclipse.emf.cdo.releng.version.ui.actions.DisableApiBuilderAction"
+               class="org.eclipse.emf.cdo.releng.version.ui.actions.ToggleApiBuilderAction"
+               icon="icons/ApiBaseline.gif"
+               id="org.eclipse.emf.cdo.releng.version.ui.ToggleApiBuilderAction"
                label="Disable API Builder"
                style="toggle"
                toolbarPath="versionManagementGroup"

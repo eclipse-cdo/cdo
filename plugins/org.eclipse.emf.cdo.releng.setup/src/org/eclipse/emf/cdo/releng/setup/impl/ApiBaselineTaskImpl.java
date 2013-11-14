@@ -275,10 +275,17 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
+    ApiPlugin apiPlugin = ApiPlugin.getDefault();
+    if (apiPlugin == null)
+    {
+      // Might be deactivated
+      return false;
+    }
+
     baselineName = context.getSetup().getBranch().getProject().getName() + " Baseline";
     baselineDir = new File(new File(context.getProjectDir(), ".baselines"), getVersion());
 
-    IApiBaselineManager baselineManager = ApiPlugin.getDefault().getApiBaselineManager();
+    IApiBaselineManager baselineManager = apiPlugin.getApiBaselineManager();
     IApiBaseline baseline = baselineManager.getApiBaseline(baselineName);
     if (baseline == null)
     {

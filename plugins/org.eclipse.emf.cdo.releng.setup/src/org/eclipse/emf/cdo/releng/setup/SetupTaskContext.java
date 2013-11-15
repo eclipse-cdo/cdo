@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.common.util.URI;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +32,8 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
   public boolean isRestartNeeded();
 
   public void setRestartNeeded(String reason);
+
+  public void rememberAcceptedLicenses(List<String> uuids);
 
   public OS getOS();
 

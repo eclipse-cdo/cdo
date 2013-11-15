@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
@@ -50,6 +51,7 @@ import org.eclipse.ui.PlatformUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -91,6 +93,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   private File branchDir;
 
   private Setup setup;
+
+  private Preferences preferences;
 
   private EList<SetupTask> triggeredSetupTasks;
 
@@ -221,6 +225,19 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   public Set<String> getRestartReasons()
   {
     return restartReasons;
+  }
+
+  public void rememberAcceptedLicenses(List<String> uuids)
+  {
+    try
+    {
+      preferences.getAcceptedLicenses().addAll(uuids);
+      preferences.eResource().save(null);
+    }
+    catch (IOException ex)
+    {
+      throw new RuntimeException(ex);
+    }
   }
 
   public String expandString(String string)
@@ -402,6 +419,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     Resource resource = EMFUtil.loadResourceSafe(resourceSet, uri);
 
     setup = (Setup)resource.getContents().get(0);
+    preferences = setup.getPreferences();
 
     Branch branch = setup.getBranch();
     String branchName = branch.getName();
@@ -410,7 +428,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     String projectLabel = project.getLabel();
     String projectName = project.getName();
 
-    put("setup.git.prefix", setup.getPreferences().getGitPrefix());
+    put("setup.git.prefix", preferences.getGitPrefix());
     put("setup.install.dir", getInstallDir());
     put("setup.project.dir", getProjectDir());
     put("setup.branch.dir", getBranchDir());

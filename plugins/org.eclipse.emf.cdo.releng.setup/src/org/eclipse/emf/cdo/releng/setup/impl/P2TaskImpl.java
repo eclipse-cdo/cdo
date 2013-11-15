@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -448,22 +449,35 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
   }
 
-  private void processLicenses(SetupTaskContext context, IProvisioningPlan provisioningPlan, IProgressMonitor monitor)
-      throws Exception
+  private void processLicenses(final SetupTaskContext context, IProvisioningPlan provisioningPlan,
+      IProgressMonitor monitor) throws Exception
   {
     final Preferences preferences = context.getSetup().getPreferences();
-    HashSet<String> acceptedLicenses = new HashSet<String>(preferences.getAcceptedLicenses());
+    Set<String> acceptedLicenses = new HashSet<String>(preferences.getAcceptedLicenses());
+
     final Map<ILicense, List<IInstallableUnit>> licensesToIUs = new HashMap<ILicense, List<IInstallableUnit>>();
+    Set<Pair<ILicense, String>> set = new HashSet<Pair<ILicense, String>>();
 
     IQueryable<IInstallableUnit> queryable = provisioningPlan.getAdditions();
     IQueryResult<IInstallableUnit> result = queryable.query(QueryUtil.ALL_UNITS, monitor);
-    for (IInstallableUnit installableUnit : result)
+    for (IInstallableUnit iu : result)
     {
-      Collection<ILicense> licenses = installableUnit.getLicenses(null);
+      Collection<ILicense> licenses = iu.getLicenses(null);
       for (ILicense license : licenses)
       {
         String uuid = license.getUUID();
         if (acceptedLicenses.contains(uuid))
+        {
+          continue;
+        }
+
+        String name = iu.getProperty(IInstallableUnit.PROP_NAME, null);
+        if (name == null)
+        {
+          name = iu.getId();
+        }
+
+        if (!set.add(Pair.create(license, name)))
         {
           continue;
         }
@@ -475,7 +489,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           licensesToIUs.put(license, ius);
         }
 
-        ius.add(installableUnit);
+        ius.add(iu);
       }
     }
 
@@ -491,15 +505,16 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
             LicenseDialog dialog = new LicenseDialog(null, licensesToIUs);
             if (dialog.open() == LicenseDialog.OK)
             {
+              List<String> uuids = new ArrayList<String>();
               if (dialog.isRememberAcceptedLicenses())
               {
                 for (ILicense license : licensesToIUs.keySet())
                 {
-                  preferences.getAcceptedLicenses().add(license.getUUID());
+                  String uuid = license.getUUID();
+                  uuids.add(uuid);
                 }
 
-                int xxx;
-                // preferences.eResource().save(null);
+                context.rememberAcceptedLicenses(uuids);
               }
             }
             else

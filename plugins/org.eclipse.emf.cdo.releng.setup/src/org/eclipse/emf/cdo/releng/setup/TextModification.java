@@ -43,7 +43,7 @@ public interface TextModification extends EObject
    * @return the value of the '<em>Pattern</em>' attribute.
    * @see #setPattern(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModification_Pattern()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getPattern();

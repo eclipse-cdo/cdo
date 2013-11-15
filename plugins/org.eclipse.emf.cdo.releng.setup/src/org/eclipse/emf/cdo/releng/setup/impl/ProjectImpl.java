@@ -39,6 +39,7 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -97,10 +98,30 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   protected String name = NAME_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
    * @generated
+   * @ordered
    */
+  protected static final String LABEL_EDEFAULT = null;
+
+  /**
+  	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #getLabel()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected String label = LABEL_EDEFAULT;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ProjectImpl()
   {
     super();
@@ -261,9 +282,34 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public String getLabel()
+  {
+    return label;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setLabel(String newLabel)
+  {
+    String oldLabel = label;
+    label = newLabel;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PROJECT__LABEL, oldLabel, label));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -338,6 +384,8 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
       return getBranches();
     case SetupPackage.PROJECT__NAME:
       return getName();
+    case SetupPackage.PROJECT__LABEL:
+      return getLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -366,6 +414,9 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     case SetupPackage.PROJECT__NAME:
       setName((String)newValue);
       return;
+    case SetupPackage.PROJECT__LABEL:
+      setLabel((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -392,6 +443,9 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     case SetupPackage.PROJECT__NAME:
       setName(NAME_EDEFAULT);
       return;
+    case SetupPackage.PROJECT__LABEL:
+      setLabel(LABEL_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -414,6 +468,8 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
       return branches != null && !branches.isEmpty();
     case SetupPackage.PROJECT__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case SetupPackage.PROJECT__LABEL:
+      return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
     }
     return super.eIsSet(featureID);
   }
@@ -478,6 +534,8 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     result.append(toolVersion);
     result.append(", name: ");
     result.append(name);
+    result.append(", label: ");
+    result.append(label);
     result.append(')');
     return result.toString();
   }

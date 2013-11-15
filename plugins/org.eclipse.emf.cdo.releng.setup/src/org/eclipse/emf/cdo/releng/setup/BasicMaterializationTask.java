@@ -40,7 +40,7 @@ public interface BasicMaterializationTask extends SetupTask
    * @return the value of the '<em>Target Platform</em>' attribute.
    * @see #setTargetPlatform(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask_TargetPlatform()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getTargetPlatform();
@@ -66,7 +66,7 @@ public interface BasicMaterializationTask extends SetupTask
    * @return the value of the '<em>Bundle Pool</em>' attribute.
    * @see #setBundlePool(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask_BundlePool()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getBundlePool();

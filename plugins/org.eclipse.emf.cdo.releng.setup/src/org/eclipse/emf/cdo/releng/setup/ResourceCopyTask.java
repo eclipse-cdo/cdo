@@ -40,7 +40,7 @@ public interface ResourceCopyTask extends SetupTask
    * @return the value of the '<em>Source URL</em>' attribute.
    * @see #setSourceURL(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getResourceCopyTask_SourceURL()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getSourceURL();
@@ -66,7 +66,7 @@ public interface ResourceCopyTask extends SetupTask
    * @return the value of the '<em>Target URL</em>' attribute.
    * @see #setTargetURL(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getResourceCopyTask_TargetURL()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getTargetURL();

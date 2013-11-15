@@ -40,7 +40,7 @@ public interface ApiBaselineTask extends SetupTask
    * @return the value of the '<em>Version</em>' attribute.
    * @see #setVersion(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getApiBaselineTask_Version()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getVersion();
@@ -66,7 +66,7 @@ public interface ApiBaselineTask extends SetupTask
    * @return the value of the '<em>Zip Location</em>' attribute.
    * @see #setZipLocation(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getApiBaselineTask_ZipLocation()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getZipLocation();

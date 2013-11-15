@@ -40,7 +40,7 @@ public interface LinkLocationTask extends SetupTask
    * @return the value of the '<em>Path</em>' attribute.
    * @see #setPath(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getLinkLocationTask_Path()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getPath();

@@ -41,7 +41,7 @@ public interface ResourceCreationTask extends SetupTask
    * @return the value of the '<em>Content</em>' attribute.
    * @see #setContent(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getResourceCreationTask_Content()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getContent();
@@ -67,7 +67,7 @@ public interface ResourceCreationTask extends SetupTask
    * @return the value of the '<em>Target URL</em>' attribute.
    * @see #setTargetURL(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getResourceCreationTask_TargetURL()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getTargetURL();

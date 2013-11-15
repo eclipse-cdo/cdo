@@ -49,7 +49,7 @@ public interface KeyBindingTask extends SetupTask
    * @return the value of the '<em>Scheme</em>' attribute.
    * @see #setScheme(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Scheme()
-   * @model default="org.eclipse.ui.defaultAcceleratorConfiguration"
+   * @model default="org.eclipse.ui.defaultAcceleratorConfiguration" required="true"
    * @generated
    */
   String getScheme();
@@ -76,7 +76,7 @@ public interface KeyBindingTask extends SetupTask
    * @return the value of the '<em>Context</em>' attribute.
    * @see #setContext(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Context()
-   * @model default="org.eclipse.ui.contexts.window"
+   * @model default="org.eclipse.ui.contexts.window" required="true"
    * @generated
    */
   String getContext();
@@ -154,7 +154,7 @@ public interface KeyBindingTask extends SetupTask
    * @return the value of the '<em>Keys</em>' attribute.
    * @see #setKeys(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Keys()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getKeys();
@@ -180,7 +180,7 @@ public interface KeyBindingTask extends SetupTask
    * @return the value of the '<em>Command</em>' attribute.
    * @see #setCommand(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Command()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getCommand();

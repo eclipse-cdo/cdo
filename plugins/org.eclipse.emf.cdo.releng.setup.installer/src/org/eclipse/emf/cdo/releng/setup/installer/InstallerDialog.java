@@ -779,7 +779,7 @@ public class InstallerDialog extends TitleAreaDialog
               project = (InternalEObject)configuredProjects.get(i);
             }
 
-            if (!project.eIsProxy())
+            if (!project.eIsProxy() && !((Project)project).getBranches().isEmpty())
             {
               projects.add(project);
             }

@@ -41,7 +41,7 @@ public interface ContextVariableTask extends SetupTask
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_Name()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getName();
@@ -67,7 +67,7 @@ public interface ContextVariableTask extends SetupTask
    * @return the value of the '<em>Value</em>' attribute.
    * @see #setValue(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_Value()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getValue();

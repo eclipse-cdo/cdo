@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -64,6 +66,7 @@ public class ProjectItemProvider extends ConfigurableItemItemProvider implements
       super.getPropertyDescriptors(object);
 
       addNamePropertyDescriptor(object);
+      addLabelPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -85,13 +88,29 @@ public class ProjectItemProvider extends ConfigurableItemItemProvider implements
   }
 
   /**
-   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * This adds a property descriptor for the Label feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected void addLabelPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Project_label_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Project_label_feature", "_UI_Project_type"),
+        SetupPackage.Literals.PROJECT__LABEL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
+  }
+
+  /**
+  	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+  	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+  	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
   {
@@ -149,7 +168,13 @@ public class ProjectItemProvider extends ConfigurableItemItemProvider implements
   @Override
   public String getText(Object object)
   {
-    String label = ((Project)object).getName();
+    Project project = (Project)object;
+    String label = project.getLabel();
+    if (StringUtil.isEmpty(label))
+    {
+      label = project.getName();
+    }
+
     return label == null || label.length() == 0 ? getString("_UI_Project_type") : label;
   }
 
@@ -168,6 +193,7 @@ public class ProjectItemProvider extends ConfigurableItemItemProvider implements
     switch (notification.getFeatureID(Project.class))
     {
     case SetupPackage.PROJECT__NAME:
+    case SetupPackage.PROJECT__LABEL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.PROJECT__BRANCHES:

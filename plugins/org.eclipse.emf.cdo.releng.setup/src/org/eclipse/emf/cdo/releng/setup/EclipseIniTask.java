@@ -41,7 +41,7 @@ public interface EclipseIniTask extends SetupTask
    * @return the value of the '<em>Option</em>' attribute.
    * @see #setOption(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipseIniTask_Option()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getOption();

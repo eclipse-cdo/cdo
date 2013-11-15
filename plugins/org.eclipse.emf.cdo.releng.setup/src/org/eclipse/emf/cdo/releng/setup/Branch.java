@@ -68,7 +68,7 @@ public interface Branch extends ConfigurableItem
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBranch_Name()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getName();

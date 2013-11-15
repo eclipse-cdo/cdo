@@ -42,7 +42,8 @@ public interface CommandParameter extends EObject
    * @return the value of the '<em>ID</em>' attribute.
    * @see #setID(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getCommandParameter_ID()
-   * @model extendedMetaData="kind='attribute' name='id'"
+   * @model required="true"
+   *        extendedMetaData="kind='attribute' name='id'"
    * @generated
    */
   String getID();
@@ -68,7 +69,7 @@ public interface CommandParameter extends EObject
    * @return the value of the '<em>Value</em>' attribute.
    * @see #setValue(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getCommandParameter_Value()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getValue();

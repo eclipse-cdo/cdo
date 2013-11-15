@@ -50,7 +50,7 @@ public interface Preferences extends SetupTaskContainer, TopLevelElement
    * @return the value of the '<em>User Name</em>' attribute.
    * @see #setUserName(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_UserName()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getUserName();
@@ -76,7 +76,7 @@ public interface Preferences extends SetupTaskContainer, TopLevelElement
    * @return the value of the '<em>Install Folder</em>' attribute.
    * @see #setInstallFolder(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_InstallFolder()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getInstallFolder();

@@ -40,7 +40,7 @@ public interface EclipsePreferenceTask extends SetupTask
    * @return the value of the '<em>Key</em>' attribute.
    * @see #setKey(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipsePreferenceTask_Key()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getKey();

@@ -39,7 +39,7 @@ public interface CompoundSetupTask extends SetupTask, SetupTaskContainer
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getCompoundSetupTask_Name()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getName();

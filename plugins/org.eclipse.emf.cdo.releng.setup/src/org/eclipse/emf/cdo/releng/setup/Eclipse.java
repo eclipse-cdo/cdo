@@ -68,7 +68,7 @@ public interface Eclipse extends ConfigurableItem
    * @return the value of the '<em>Version</em>' attribute.
    * @see #setVersion(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getEclipse_Version()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getVersion();

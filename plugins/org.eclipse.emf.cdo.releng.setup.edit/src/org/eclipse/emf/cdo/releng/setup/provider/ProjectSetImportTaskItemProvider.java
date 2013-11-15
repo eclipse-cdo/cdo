@@ -78,11 +78,11 @@ public class ProjectSetImportTaskItemProvider extends SetupTaskItemProvider impl
   }
 
   /**
-  	 * This returns ProjectSetImportTask.gif.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * This returns ProjectSetImportTask.gif.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object getImage(Object object)
   {

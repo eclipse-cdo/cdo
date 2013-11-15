@@ -41,7 +41,8 @@ public interface InstallableUnit extends EObject
    * @return the value of the '<em>ID</em>' attribute.
    * @see #setID(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getInstallableUnit_ID()
-   * @model extendedMetaData="kind='attribute' name='id'"
+   * @model required="true"
+   *        extendedMetaData="kind='attribute' name='id'"
    * @generated
    */
   String getID();

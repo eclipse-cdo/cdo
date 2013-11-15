@@ -389,13 +389,22 @@ public interface SetupPackage extends EPackage
   int PROJECT__NAME = CONFIGURABLE_ITEM_FEATURE_COUNT + 3;
 
   /**
-   * The number of structural features of the '<em>Project</em>' class.
+   * The feature id for the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROJECT_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 4;
+  int PROJECT__LABEL = CONFIGURABLE_ITEM_FEATURE_COUNT + 4;
+
+  /**
+  	 * The number of structural features of the '<em>Project</em>' class.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int PROJECT_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -2849,13 +2858,24 @@ public interface SetupPackage extends EPackage
   EAttribute getProject_Name();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Project#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Branch</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Branch
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Label</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Project#getLabel()
+   * @see #getProject()
    * @generated
    */
+  EAttribute getProject_Label();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Branch</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Branch
+  	 * @generated
+  	 */
   EClass getBranch();
 
   /**
@@ -4184,13 +4204,21 @@ public interface SetupPackage extends EPackage
     EAttribute PROJECT__NAME = eINSTANCE.getProject_Name();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
+     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
+     * <!-- end-user-doc -->
      * @generated
      */
+    EAttribute PROJECT__LABEL = eINSTANCE.getProject_Label();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
+    	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
+    	 * @generated
+    	 */
     EClass BRANCH = eINSTANCE.getBranch();
 
     /**

@@ -71,7 +71,7 @@ public interface GitCloneTask extends SetupTask
    * @return the value of the '<em>Remote Name</em>' attribute.
    * @see #setRemoteName(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_RemoteName()
-   * @model default="origin"
+   * @model default="origin" required="true"
    * @generated
    */
   String getRemoteName();
@@ -97,7 +97,7 @@ public interface GitCloneTask extends SetupTask
    * @return the value of the '<em>Remote URI</em>' attribute.
    * @see #setRemoteURI(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_RemoteURI()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getRemoteURI();
@@ -123,7 +123,7 @@ public interface GitCloneTask extends SetupTask
    * @return the value of the '<em>Checkout Branch</em>' attribute.
    * @see #setCheckoutBranch(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_CheckoutBranch()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getCheckoutBranch();

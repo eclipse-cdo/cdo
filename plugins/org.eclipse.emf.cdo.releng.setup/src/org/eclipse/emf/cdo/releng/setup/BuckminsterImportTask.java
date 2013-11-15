@@ -39,7 +39,7 @@ public interface BuckminsterImportTask extends BasicMaterializationTask
    * @return the value of the '<em>Mspec</em>' attribute.
    * @see #setMspec(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBuckminsterImportTask_Mspec()
-   * @model
+   * @model required="true"
    * @generated
    */
   String getMspec();

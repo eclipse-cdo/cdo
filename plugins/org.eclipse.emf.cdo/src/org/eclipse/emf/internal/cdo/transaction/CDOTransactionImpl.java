@@ -2683,23 +2683,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       throw new IllegalStateException("Object is not new: " + object);
     }
-  
+
     CDOID oldID = object.cdoID();
     if (oldID == id)
     {
       return;
     }
-  
+
     InternalCDORevision revision = (InternalCDORevision)object.cdoRevision(false);
     revision.setID(id);
-  
+
     InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
     transaction.remapObject(oldID);
-  
+
     Map<CDOID, CDOObject> newObjects = transaction.getLastSavepoint().getNewObjects();
     newObjects.remove(oldID);
     newObjects.put(id, object);
-  
+
     CDORevision detachedRevision = getDetachedRevision(transaction, id);
     if (detachedRevision != null)
     {
@@ -2711,18 +2711,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
     InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-  
+
     InternalCDORevision result = //
     revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
-  
+
     if (result != null)
     {
       throw new IllegalStateException("An object with the same id already exists on this branch");
     }
-  
+
     return synthetics[0];
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>
   {
     private static final long serialVersionUID = 1L;

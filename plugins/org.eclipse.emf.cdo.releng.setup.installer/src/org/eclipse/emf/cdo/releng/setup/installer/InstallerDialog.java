@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.releng.setup.installer;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractSetupDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
@@ -71,7 +71,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
@@ -125,11 +124,13 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class InstallerDialog extends TitleAreaDialog
+public class InstallerDialog extends AbstractSetupDialog
 {
   public static final int RETURN_WORKBENCH = -2;
 
   public static final int RETURN_RESTART = -3;
+
+  private static final String ECLIPSE_VERSION_COLUMN = "eclipse";
 
   private Map<Branch, Setup> setups;
 
@@ -151,14 +152,9 @@ public class InstallerDialog extends TitleAreaDialog
 
   private ComboBoxViewerCellEditor cellEditor;
 
-  /**
-   * Create the dialog.
-   * @param parentShell
-   */
   public InstallerDialog(Shell parentShell)
   {
     super(parentShell);
-    setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE);
     setHelpAvailable(true);
 
     resourceSet = EMFUtil.createResourceSet();
@@ -172,37 +168,22 @@ public class InstallerDialog extends TitleAreaDialog
     return super.close();
   }
 
-  /**
-   * Return the initial size of the dialog.
-   */
   @Override
   protected Point getInitialSize()
   {
     return new Point(500, 700);
   }
 
-  /**
-   * Create contents of the dialog.
-   * @param parent
-   */
   @Override
-  protected Control createDialogArea(Composite parent)
+  protected String getDefaultMessage()
   {
-    getShell().setText(ProgressLogDialog.TITLE);
-    setTitle(ProgressLogDialog.TITLE);
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/install_wiz.gif"));
+    return null;
+  }
 
-    Composite area = (Composite)super.createDialogArea(parent);
-    Composite container = new Composite(area, SWT.NONE);
-    GridLayout gl_container = new GridLayout(1, false);
-    gl_container.marginWidth = 0;
-    gl_container.marginHeight = 0;
-    container.setLayout(gl_container);
-    container.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-    final String ECLIPSE_VERSION_COLUMN = "eclipse";
-
-    viewer = new CheckboxTreeViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
+  @Override
+  protected void createUI(Composite parent)
+  {
+    viewer = new CheckboxTreeViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
     Tree tree = viewer.getTree();
     tree.setLinesVisible(true);
     tree.setHeaderVisible(true);
@@ -345,7 +326,7 @@ public class InstallerDialog extends TitleAreaDialog
     trclmnEclipseVersion.setWidth(150);
     trclmnEclipseVersion.setText("Eclipse Version");
 
-    Group grpPreferences = new Group(container, SWT.NONE);
+    Group grpPreferences = new Group(parent, SWT.NONE);
     grpPreferences.setLayout(new GridLayout(3, false));
     grpPreferences.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     // grpPreferences.setText("Preferences");
@@ -469,8 +450,6 @@ public class InstallerDialog extends TitleAreaDialog
         init();
       }
     });
-
-    return area;
   }
 
   /**
@@ -578,22 +557,7 @@ public class InstallerDialog extends TitleAreaDialog
         }
       };
 
-      ProgressMonitorDialog dialog = new ProgressMonitorDialog(null)
-      {
-        @Override
-        protected Point getInitialSize()
-        {
-          Point calculatedSize = super.getInitialSize();
-          if (calculatedSize.x < 800)
-          {
-            calculatedSize.x = 800;
-          }
-
-          return calculatedSize;
-        }
-      };
-
-      dialog.run(true, true, runnable);
+      runInProgressDialog(runnable);
     }
     catch (InterruptedException ex)
     {
@@ -811,8 +775,7 @@ public class InstallerDialog extends TitleAreaDialog
         }
       };
 
-      ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell());
-      dialog.run(true, true, runnable);
+      runInProgressDialog(runnable);
     }
     catch (InterruptedException ex)
     {
@@ -1002,14 +965,7 @@ public class InstallerDialog extends TitleAreaDialog
       {
         for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
         {
-          try
-          {
-            install(setupTaskPerformer);
-          }
-          catch (IOException ex)
-          {
-            throw new RuntimeException(ex);
-          }
+          install(setupTaskPerformer);
         }
 
         return null;
@@ -1059,6 +1015,27 @@ public class InstallerDialog extends TitleAreaDialog
     {
       Activator.log(ex);
     }
+  }
+
+  private void runInProgressDialog(IRunnableWithProgress runnable) throws InvocationTargetException,
+      InterruptedException
+  {
+    ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell())
+    {
+      @Override
+      protected Point getInitialSize()
+      {
+        Point calculatedSize = super.getInitialSize();
+        if (calculatedSize.x < 800)
+        {
+          calculatedSize.x = 800;
+        }
+
+        return calculatedSize;
+      }
+    };
+
+    dialog.run(true, true, runnable);
   }
 
   private void handleException(Throwable ex)

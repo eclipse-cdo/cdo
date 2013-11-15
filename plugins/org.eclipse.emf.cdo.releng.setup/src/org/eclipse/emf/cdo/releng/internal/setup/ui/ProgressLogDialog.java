@@ -44,7 +44,6 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -61,10 +60,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -81,15 +78,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
+public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLog
 {
-  public static final String TITLE = "Development Environment Setup";
-
-  public static final String JOB_NAME = "Setting up IDE";
-
   public static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
 
   public static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd " + TIME.toPattern());
+
+  private static final String JOB_NAME = "Setting up IDE";
 
   private Text text;
 
@@ -110,11 +105,8 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   private ProgressLogDialog(Shell parentShell, List<SetupTaskPerformer> setupTaskPerformers)
   {
     super(parentShell);
-
     this.setupTaskPerformers = setupTaskPerformers;
-
     setHelpAvailable(false);
-    setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
   }
 
   /**
@@ -127,23 +119,21 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   }
 
   @Override
-  protected Control createDialogArea(Composite parent)
+  protected int getContainerMargin()
   {
-    setMessage("Please wait until the setup process is finished and the OK button is enabled...");
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/install_wiz.gif"));
-    getShell().setText(TITLE);
-    setTitle(TITLE);
+    return 10;
+  }
 
-    Composite area = (Composite)super.createDialogArea(parent);
+  @Override
+  protected String getDefaultMessage()
+  {
+    return "Please wait until the setup process is finished and the OK button is enabled...";
+  }
 
-    Composite container = new Composite(area, SWT.NONE);
-    GridLayout gl_container = new GridLayout(1, false);
-    gl_container.marginWidth = 10;
-    gl_container.marginHeight = 10;
-    container.setLayout(gl_container);
-    container.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-    SashForm sashForm = new SashForm(container, SWT.VERTICAL);
+  @Override
+  protected void createUI(Composite parent)
+  {
+    SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
     sashForm.setLayoutData(new GridData(GridData.FILL_BOTH));
 
     treeViewer = new TreeViewer(sashForm);
@@ -296,8 +286,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
     text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
     text.getVerticalBar().addSelectionListener(scrollBarListener);
-
-    return area;
   }
 
   @Override

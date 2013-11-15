@@ -11,9 +11,11 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.LicenseDialog;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
+import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
@@ -64,6 +66,7 @@ import org.eclipse.equinox.p2.repository.metadata.IMetadataRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.equinox.p2.ui.ProvisioningUI;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -72,8 +75,10 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -423,7 +428,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         if (status.isOK())
         {
           IProvisioningPlan provisioningPlan = installOperation.getProvisioningPlan();
-          processLicenses(provisioningPlan, monitor);
+          processLicenses(context, provisioningPlan, monitor);
 
           ProvisioningJob provisioningJob = installOperation.getProvisioningJob(null);
           provisioningJob.run(monitor);
@@ -443,8 +448,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
   }
 
-  private void processLicenses(IProvisioningPlan provisioningPlan, IProgressMonitor monitor)
+  private void processLicenses(SetupTaskContext context, IProvisioningPlan provisioningPlan, IProgressMonitor monitor)
+      throws Exception
   {
+    final Preferences preferences = context.getSetup().getPreferences();
+    HashSet<String> acceptedLicenses = new HashSet<String>(preferences.getAcceptedLicenses());
+    final Map<ILicense, List<IInstallableUnit>> licensesToIUs = new HashMap<ILicense, List<IInstallableUnit>>();
+
     IQueryable<IInstallableUnit> queryable = provisioningPlan.getAdditions();
     IQueryResult<IInstallableUnit> result = queryable.query(QueryUtil.ALL_UNITS, monitor);
     for (IInstallableUnit installableUnit : result)
@@ -453,7 +463,60 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       for (ILicense license : licenses)
       {
         String uuid = license.getUUID();
-        System.out.println(uuid);
+        if (acceptedLicenses.contains(uuid))
+        {
+          continue;
+        }
+
+        List<IInstallableUnit> ius = licensesToIUs.get(license);
+        if (ius == null)
+        {
+          ius = new ArrayList<IInstallableUnit>();
+          licensesToIUs.put(license, ius);
+        }
+
+        ius.add(installableUnit);
+      }
+    }
+
+    if (!licensesToIUs.isEmpty())
+    {
+      final Exception exception[] = { null };
+      Display.getDefault().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            LicenseDialog dialog = new LicenseDialog(null, licensesToIUs);
+            if (dialog.open() == LicenseDialog.OK)
+            {
+              if (dialog.isRememberAcceptedLicenses())
+              {
+                for (ILicense license : licensesToIUs.keySet())
+                {
+                  preferences.getAcceptedLicenses().add(license.getUUID());
+                }
+
+                int xxx;
+                // preferences.eResource().save(null);
+              }
+            }
+            else
+            {
+              throw new UnsupportedOperationException("Licenses have been declined");
+            }
+          }
+          catch (Exception ex)
+          {
+            exception[0] = ex;
+          }
+        }
+      });
+
+      if (exception[0] != null)
+      {
+        throw exception[0];
       }
     }
   }
@@ -532,10 +595,20 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
             IPlanner delegate = (IPlanner)targetAgent.getService(IPlanner.SERVICE_NAME);
 
             public IProvisioningPlan getProvisioningPlan(IProfileChangeRequest profileChangeRequest,
-                ProvisioningContext context, IProgressMonitor monitor)
+                ProvisioningContext provisioningContext, IProgressMonitor monitor)
             {
-              IProvisioningPlan provisioningPlan = delegate.getProvisioningPlan(profileChangeRequest, context, monitor);
-              processLicenses(provisioningPlan, monitor);
+              IProvisioningPlan provisioningPlan = delegate.getProvisioningPlan(profileChangeRequest,
+                  provisioningContext, monitor);
+
+              try
+              {
+                processLicenses(context, provisioningPlan, monitor);
+              }
+              catch (Exception ex)
+              {
+                throw new RuntimeException(ex);
+              }
+
               return provisioningPlan;
             }
 

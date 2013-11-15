@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogProvider;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.ui.ImageURIRegistry;
@@ -76,6 +77,8 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 {
@@ -496,7 +499,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
   {
     try
     {
-      final boolean[] restart = { false };
+      final AtomicReference<Set<String>> result = new AtomicReference<Set<String>>();
       final ProgressLogDialog dialog = new ProgressLogDialog(shell, setupTaskPerformers);
       Runnable jobRunnable = new Runnable()
       {
@@ -512,7 +515,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
               try
               {
                 dialog.log(JOB_NAME);
-                restart[0] = runnable.run(dialog);
+                result.set(runnable.run(dialog));
               }
               catch (Throwable ex)
               {
@@ -524,8 +527,22 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
               {
                 long seconds = (System.currentTimeMillis() - start) / 1000;
                 dialog.log("Took " + seconds + " seconds.");
-                dialog.log("Press OK to close the dialog"
-                    + (restart[0] && Activator.SETUP_IDE ? " and restart Eclipse" : "") + "...");
+                Set<String> restartReasons = result.get();
+                if (!ObjectUtil.isEmpty(restartReasons) && Activator.SETUP_IDE)
+                {
+                  dialog.log("A restart is needed for the following reasons:");
+                  for (String reason : restartReasons)
+                  {
+                    dialog.log("  - " + reason);
+                  }
+
+                  dialog.log("Press OK to restart now or Cancel to restart later...");
+                }
+                else
+                {
+                  dialog.log("Press OK to close the dialog...");
+                }
+
                 dialog.setFinished();
               }
 
@@ -541,7 +558,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
             }
           });
 
-          if (dialog.open() == ProgressLogDialog.OK && restart[0] && Activator.SETUP_IDE)
+          if (dialog.open() == ProgressLogDialog.OK && !ObjectUtil.isEmpty(result.get()) && Activator.SETUP_IDE)
           {
             PlatformUI.getWorkbench().restart();
           }

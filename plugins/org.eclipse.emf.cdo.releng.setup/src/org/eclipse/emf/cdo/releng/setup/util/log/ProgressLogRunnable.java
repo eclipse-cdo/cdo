@@ -10,13 +10,15 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util.log;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
 public interface ProgressLogRunnable
 {
   /**
-   * @return <code>true</code> if a restart is needed, <code>false</code> otherwise.
+   * @return a non-empty set of reasons if a restart is needed, an empty set or <code>null</code> otherwise.
    */
-  public boolean run(ProgressLog log) throws Exception;
+  public Set<String> run(ProgressLog log) throws Exception;
 }

@@ -270,7 +270,7 @@ public class LinkLocationTaskImpl extends SetupTaskImpl implements LinkLocationT
   {
     List<String> lines = Collections.singletonList("path=" + canonicalPath.toString().replace("\\", "\\\\"));
     context.getOS().writeText(link, lines);
-    context.setRestartNeeded();
+    context.setRestartNeeded("Product extension locations have been added to the installation.");
   }
 
 } // LinkLocationTaskImpl

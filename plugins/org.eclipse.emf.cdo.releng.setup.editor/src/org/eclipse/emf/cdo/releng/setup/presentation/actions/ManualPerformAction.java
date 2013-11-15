@@ -24,6 +24,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -69,10 +70,10 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
       ProgressLogDialog.run(shell, new ProgressLogRunnable()
       {
-        public boolean run(ProgressLog log) throws Exception
+        public Set<String> run(ProgressLog log) throws Exception
         {
           setupTaskPerformer.perform();
-          return true;
+          return setupTaskPerformer.getRestartReasons();
         }
       }, Collections.singletonList(setupTaskPerformer));
     }

@@ -93,7 +93,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private EList<SetupTask> triggeredSetupTasks;
 
-  private transient boolean restartNeeded;
+  private Set<String> restartReasons = new LinkedHashSet<String>();
 
   private PrintStream logStream;
 
@@ -194,12 +194,17 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public boolean isRestartNeeded()
   {
-    return restartNeeded;
+    return !restartReasons.isEmpty();
   }
 
-  public void setRestartNeeded()
+  public void setRestartNeeded(String reason)
   {
-    restartNeeded = true;
+    restartReasons.add(reason);
+  }
+
+  public Set<String> getRestartReasons()
+  {
+    return restartReasons;
   }
 
   public String expandString(String string)
@@ -470,10 +475,10 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
       ProgressLogDialog.run(shell, new ProgressLogRunnable()
       {
-        public boolean run(ProgressLog log) throws Exception
+        public Set<String> run(ProgressLog log) throws Exception
         {
           doPerform(neededTasks);
-          return isRestartNeeded();
+          return restartReasons;
         }
       }, Collections.singletonList(this));
     }

@@ -377,9 +377,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
               {
                 candidate = installableUnitMatch;
               }
+
               break;
             }
           }
+
           if (candidate != null)
           {
             toInstall.add(candidate);
@@ -412,7 +414,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           context.log(status);
           throw new CoreException(Status.CANCEL_STATUS);
         }
-        context.setRestartNeeded();
+
+        context.setRestartNeeded("New software has been installed.");
       }
     }
     else

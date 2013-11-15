@@ -546,7 +546,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_1NjhoTcOEeOvrbVwd-Y02g" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="8047085" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.emf.cdo.releng.workingsets/model/workingsets.ecore#//WorkingSet"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1NjhojcOEeOvrbVwd-Y02g" x="650" y="673" width="203" height="110"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1NjhojcOEeOvrbVwd-Y02g" x="681" y="673" width="138"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_p1fVkDySEeORQ6467O3RjQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_p1fVkTySEeORQ6467O3RjQ" type="4001"/>
@@ -861,7 +861,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_769_kUq8EeOoD7QuIvs66Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="8047085" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//CommandParameter"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_769_kkq8EeOoD7QuIvs66Q" x="490" y="742"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_769_kkq8EeOoD7QuIvs66Q" x="490" y="665"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_KlIKQErmEeO0jrJ0LC-I2Q" type="1001">
     <children xmi:type="notation:Node" xmi:id="_KlKmgErmEeO0jrJ0LC-I2Q" type="4001"/>
@@ -897,7 +897,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_aNu20ErmEeO0jrJ0LC-I2Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//GitCloneTask"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aNu20UrmEeO0jrJ0LC-I2Q" x="1365" y="675"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aNu20UrmEeO0jrJ0LC-I2Q" x="932" y="940"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_u_e_seoIEeKpRf481yfX-g"/>
   <element xmi:type="ecore:EPackage" href="setup.ecore#/"/>
@@ -1347,7 +1347,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_773XcUq8EeOoD7QuIvs66Q" routing="Rectilinear" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_773Xckq8EeOoD7QuIvs66Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="setup.ecore#//KeyBindingTask/commandParameters"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_773Xc0q8EeOoD7QuIvs66Q" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_773Xc0q8EeOoD7QuIvs66Q" points="[6, 41, -9, -183]$[6, 183, -9, -41]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_78ozgEq8EeOoD7QuIvs66Q" id="(0.49645390070921985,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_78pakEq8EeOoD7QuIvs66Q" id="(0.49645390070921985,1.0)"/>
   </edges>

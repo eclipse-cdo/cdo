@@ -118,6 +118,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -913,7 +914,7 @@ public class InstallerDialog extends TitleAreaDialog
 
     ProgressLogDialog.run(getShell(), new ProgressLogRunnable()
     {
-      public boolean run(ProgressLog log) throws Exception
+      public Set<String> run(ProgressLog log) throws Exception
       {
         for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
         {
@@ -927,7 +928,7 @@ public class InstallerDialog extends TitleAreaDialog
           }
         }
 
-        return false;
+        return null;
       }
     }, setupTaskPerformers);
   }

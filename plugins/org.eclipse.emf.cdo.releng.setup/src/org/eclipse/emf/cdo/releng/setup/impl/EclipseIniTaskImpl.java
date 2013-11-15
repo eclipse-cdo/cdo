@@ -385,7 +385,7 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     {
       context.log("Changing " + file + " (" + getLabel(expandedValue) + ")");
       context.getOS().writeText(file, contents);
-      context.setRestartNeeded();
+      context.setRestartNeeded("The eclipse.ini file has changed.");
     }
   }
 } // EclipseIniTaskImpl

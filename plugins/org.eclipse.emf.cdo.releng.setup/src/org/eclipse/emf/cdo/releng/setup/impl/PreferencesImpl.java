@@ -132,10 +132,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   protected EList<String> acceptedLicenses;
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   protected PreferencesImpl()
   {
     super();
@@ -271,10 +271,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

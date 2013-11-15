@@ -907,6 +907,26 @@
     <element xmi:type="ecore:EClass" href="setup.ecore#//GitCloneTask"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aNu20UrmEeO0jrJ0LC-I2Q" x="932" y="940"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_4ovssE3kEeOgecV4PNc8SA" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_4ovss03kEeOgecV4PNc8SA" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_4ovstE3kEeOgecV4PNc8SA" type="5001">
+      <children xmi:type="notation:Node" xmi:id="__cdcME3kEeOgecV4PNc8SA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//TargetPlatformTask/name"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__cdcMU3kEeOgecV4PNc8SA"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_4ovstU3kEeOgecV4PNc8SA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_4ovstk3kEeOgecV4PNc8SA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_4ovst03kEeOgecV4PNc8SA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_4ovsuE3kEeOgecV4PNc8SA" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_4ovsuU3kEeOgecV4PNc8SA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_4ovsuk3kEeOgecV4PNc8SA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_4ovsu03kEeOgecV4PNc8SA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_4ovssU3kEeOgecV4PNc8SA" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="setup.ecore#//TargetPlatformTask"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4ovssk3kEeOgecV4PNc8SA" x="480" y="780"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_u_e_seoIEeKpRf481yfX-g"/>
   <element xmi:type="ecore:EPackage" href="setup.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_4esFEOoIEeKpRf481yfX-g" type="3002" source="_zoytIOoIEeKpRf481yfX-g" target="_2Y42MOoIEeKpRf481yfX-g">
@@ -1376,5 +1396,11 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_aOLiwkrmEeO0jrJ0LC-I2Q" fontName="Segoe UI"/>
     <element xsi:nil="true"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_aOLiw0rmEeO0jrJ0LC-I2Q" points="[1, 0, -285, -114]$[121, 48, -165, -66]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_6gji4E3kEeOgecV4PNc8SA" visible="false" type="3003" source="_4ovssE3kEeOgecV4PNc8SA" target="_7oaMoAVzEeORNPhE9cWxTA">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_6gji4U3kEeOgecV4PNc8SA" routing="Rectilinear" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_6gji4k3kEeOgecV4PNc8SA" fontName="Segoe UI"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6gji403kEeOgecV4PNc8SA" points="[-11, -23, 356, 695]$[-318, -816, 49, -98]"/>
   </edges>
 </notation:Diagram>

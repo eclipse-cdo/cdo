@@ -137,11 +137,11 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   }
 
   /**
-  	 * This returns Preferences.gif.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * This returns Preferences.gif.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object getImage(Object object)
   {

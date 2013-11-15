@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
+import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
@@ -630,6 +631,20 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.TARGET_PLATFORM_TASK:
+    {
+      TargetPlatformTask targetPlatformTask = (TargetPlatformTask)theEObject;
+      T result = caseTargetPlatformTask(targetPlatformTask);
+      if (result == null)
+      {
+        result = caseSetupTask(targetPlatformTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -1020,16 +1035,32 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Target Platform Task</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Target Platform Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
+  public T caseTargetPlatformTask(TargetPlatformTask object)
+  {
+    return null;
+  }
+
+  /**
+  	 * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+  	 * <!-- begin-user-doc -->
+       * This implementation returns null;
+       * returning a non-null result will terminate the switch.
+       * <!-- end-user-doc -->
+  	 * @param object the target of the switch.
+  	 * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+  	 * @generated
+  	 */
   public T caseAutomaticSourceLocator(AutomaticSourceLocator object)
   {
     return null;

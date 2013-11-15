@@ -198,5 +198,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/repositoryURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/relativeURL"/>
     </genClasses>
+    <genClasses ecoreClass="setup.ecore#//TargetPlatformTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargetPlatformTask/name"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -265,4 +265,7 @@
     <eLiterals name="OSGI_BUNDLE" value="1" literal="osgi.bundle"/>
     <eLiterals name="BUCKMINSTER" value="3" literal="buckminster"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TargetPlatformTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

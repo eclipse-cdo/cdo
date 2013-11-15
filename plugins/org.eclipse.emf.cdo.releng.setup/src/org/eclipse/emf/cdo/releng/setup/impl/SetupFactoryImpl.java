@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
+import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -172,6 +173,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createCommandParameter();
     case SetupPackage.MYLYN_QUERY_TASK:
       return createMylynQueryTask();
+    case SetupPackage.TARGET_PLATFORM_TASK:
+      return createTargetPlatformTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -431,9 +434,20 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public TargetPlatformTask createTargetPlatformTask()
+  {
+    TargetPlatformTaskImpl targetPlatformTask = new TargetPlatformTaskImpl();
+    return targetPlatformTask;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public AutomaticSourceLocator createAutomaticSourceLocator()
   {
     AutomaticSourceLocatorImpl automaticSourceLocator = new AutomaticSourceLocatorImpl();

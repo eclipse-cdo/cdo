@@ -547,11 +547,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected TargetPlatformTaskItemProvider targetPlatformTaskItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createTargetPlatformTaskAdapter()
+  {
+    if (targetPlatformTaskItemProvider == null)
+    {
+      targetPlatformTaskItemProvider = new TargetPlatformTaskItemProvider(this);
+    }
+
+    return targetPlatformTaskItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected AutomaticSourceLocatorItemProvider automaticSourceLocatorItemProvider;
 
   /**
@@ -1135,6 +1160,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (mylynQueryTaskItemProvider != null)
     {
       mylynQueryTaskItemProvider.dispose();
+    }
+    if (targetPlatformTaskItemProvider != null)
+    {
+      targetPlatformTaskItemProvider.dispose();
     }
   }
 

@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
+import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
@@ -336,6 +337,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseMylynQueryTask(MylynQueryTask object)
     {
       return createMylynQueryTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseTargetPlatformTask(TargetPlatformTask object)
+    {
+      return createTargetPlatformTaskAdapter();
     }
 
     @Override
@@ -660,15 +667,30 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask
    * @generated
    */
+  public Adapter createTargetPlatformTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+  	 * <!-- begin-user-doc -->
+       * This default implementation returns null so that we can easily ignore cases;
+       * it's useful to ignore a case when inheritance will catch all the cases anyway.
+       * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+  	 * @generated
+  	 */
   public Adapter createAutomaticSourceLocatorAdapter()
   {
     return null;

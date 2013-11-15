@@ -497,12 +497,12 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__ACCEPTED_LICENSES = SETUP_TASK_CONTAINER_FEATURE_COUNT + 4;
 
   /**
-  	 * The number of structural features of the '<em>Preferences</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Preferences</em>' class.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int PREFERENCES_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 5;
 
   /**
@@ -2679,14 +2679,96 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
    * <!-- begin-user-doc -->
-                     * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 37;
+  int TARGET_PLATFORM_TASK = 37;
+
+  /**
+  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+  	 * The feature id for the '<em><b>Name</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+  	 * The number of structural features of the '<em>Target Platform Task</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int TARGET_PLATFORM_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+  	 * <!-- begin-user-doc -->
+                       * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
+  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+  	 * @generated
+  	 */
+  int SETUP_TASK_SCOPE = 38;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -2696,7 +2778,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 38;
+  int TRIGGER = 39;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -2706,7 +2788,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 39;
+  int COMPONENT_TYPE = 40;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -2716,7 +2798,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 42;
+  int URI = 43;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TopLevelElement <em>Top Level Element</em>}'.
@@ -2779,7 +2861,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 41;
+  int EXCEPTION = 42;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -2789,7 +2871,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 40;
+  int TRIGGER_SET = 41;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -3500,13 +3582,34 @@ public interface SetupPackage extends EPackage
   EAttribute getMylynQueryTask_RelativeURL();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Automatic Source Locator</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Target Platform Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask
    * @generated
    */
+  EClass getTargetPlatformTask();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName <em>Name</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Name</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName()
+  	 * @see #getTargetPlatformTask()
+  	 * @generated
+  	 */
+  EAttribute getTargetPlatformTask_Name();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Automatic Source Locator</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+  	 * @generated
+  	 */
   EClass getAutomaticSourceLocator();
 
   /**
@@ -3978,13 +4081,13 @@ public interface SetupPackage extends EPackage
   EAttribute getPreferences_AcceptedLicenses();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask <em>Link Location Task</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask <em>Link Location Task</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Link Location Task</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.LinkLocationTask
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Link Location Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.LinkLocationTask
+   * @generated
+   */
   EClass getLinkLocationTask();
 
   /**
@@ -4728,13 +4831,31 @@ public interface SetupPackage extends EPackage
     EAttribute MYLYN_QUERY_TASK__RELATIVE_URL = eINSTANCE.getMylynQueryTask_RelativeURL();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
      * @generated
      */
+    EClass TARGET_PLATFORM_TASK = eINSTANCE.getTargetPlatformTask();
+
+    /**
+    	 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+    	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+    	 * @generated
+    	 */
+    EAttribute TARGET_PLATFORM_TASK__NAME = eINSTANCE.getTargetPlatformTask_Name();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
+    	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
+    	 * @generated
+    	 */
     EClass AUTOMATIC_SOURCE_LOCATOR = eINSTANCE.getAutomaticSourceLocator();
 
     /**
@@ -5122,13 +5243,13 @@ public interface SetupPackage extends EPackage
     EAttribute PREFERENCES__ACCEPTED_LICENSES = eINSTANCE.getPreferences_AcceptedLicenses();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl <em>Link Location Task</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl <em>Link Location Task</em>}' class.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
+     * @generated
+     */
     EClass LINK_LOCATION_TASK = eINSTANCE.getLinkLocationTask();
 
     /**

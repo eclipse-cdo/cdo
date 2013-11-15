@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
+import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
@@ -215,9 +216,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EClass targetPlatformTaskEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EClass automaticSourceLocatorEClass = null;
 
   /**
@@ -1155,9 +1163,29 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getTargetPlatformTask()
+  {
+    return targetPlatformTaskEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getTargetPlatformTask_Name()
+  {
+    return (EAttribute)targetPlatformTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+           * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getAutomaticSourceLocator()
   {
     return automaticSourceLocatorEClass;
@@ -1604,10 +1632,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getLinkLocationTask()
   {
     return linkLocationTaskEClass;
@@ -1904,6 +1932,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__REPOSITORY_URL);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__RELATIVE_URL);
 
+    targetPlatformTaskEClass = createEClass(TARGET_PLATFORM_TASK);
+    createEAttribute(targetPlatformTaskEClass, TARGET_PLATFORM_TASK__NAME);
+
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
@@ -1982,6 +2013,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     textModifyTaskEClass.getESuperTypes().add(getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
     mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
+    targetPlatformTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(topLevelElementEClass, TopLevelElement.class, "TopLevelElement", IS_ABSTRACT, IS_INTERFACE,
@@ -2324,6 +2356,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMylynQueryTask_RelativeURL(), ecorePackage.getEString(), "relativeURL", null, 1, 1,
         MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(targetPlatformTaskEClass, TargetPlatformTask.class, "TargetPlatformTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTargetPlatformTask_Name(), ecorePackage.getEString(), "name", null, 1, 1,
+        TargetPlatformTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

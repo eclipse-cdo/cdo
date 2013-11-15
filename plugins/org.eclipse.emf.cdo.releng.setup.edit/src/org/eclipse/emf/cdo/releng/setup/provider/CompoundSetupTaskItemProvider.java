@@ -245,6 +245,9 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createMylynQueryTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createTargetPlatformTask()));
   }
 
 }

@@ -31,6 +31,58 @@ import java.io.IOException;
  */
 public final class TargetPlatformUtil
 {
+  public static ITargetDefinition getActiveTargetPlatform()
+  {
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      return service.getWorkspaceTargetHandle().getTargetDefinition();
+    }
+    catch (CoreException ex)
+    {
+      // Ignore
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
+
+    return null;
+  }
+
+  public static ITargetDefinition getTargetPlatform(String targetPlatformName, ProgressLog progress)
+  {
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      for (ITargetHandle targetHandle : service.getTargets(new ProgressLogMonitor(progress)))
+      {
+        try
+        {
+          ITargetDefinition candidate = targetHandle.getTargetDefinition();
+          if (targetPlatformName.equals(candidate.getName()))
+          {
+            return candidate;
+          }
+        }
+        catch (CoreException ex)
+        {
+          // Ignore
+        }
+      }
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
+
+    return null;
+  }
+
   public static boolean hasTargetPlatform(String targetPlatformPath, ProgressLog progress)
   {
     ITargetPlatformService service = null;

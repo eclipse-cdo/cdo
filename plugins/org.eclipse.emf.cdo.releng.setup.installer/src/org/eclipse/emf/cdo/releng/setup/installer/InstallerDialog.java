@@ -39,8 +39,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -147,6 +149,8 @@ public class InstallerDialog extends TitleAreaDialog
 
   private Text gitPrefixText;
 
+  private ComboBoxViewerCellEditor cellEditor;
+
   /**
    * Create the dialog.
    * @param parentShell
@@ -187,9 +191,6 @@ public class InstallerDialog extends TitleAreaDialog
     getShell().setText(ProgressLogDialog.TITLE);
     setTitle(ProgressLogDialog.TITLE);
     setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/install_wiz.gif"));
-
-    Resource resource = EMFUtil.loadResourceSafe(resourceSet, EMFUtil.SETUP_URI);
-    configuration = (Configuration)resource.getContents().get(0);
 
     Composite area = (Composite)super.createDialogArea(parent);
     Composite container = new Composite(area, SWT.NONE);
@@ -250,7 +251,7 @@ public class InstallerDialog extends TitleAreaDialog
     });
     viewer.setColumnProperties(new String[] { "project", ECLIPSE_VERSION_COLUMN });
 
-    ComboBoxViewerCellEditor cellEditor = new ComboBoxViewerCellEditor(viewer.getTree());
+    cellEditor = new ComboBoxViewerCellEditor(viewer.getTree());
     cellEditor.setContentProvider(new IStructuredContentProvider()
     {
       public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
@@ -270,7 +271,6 @@ public class InstallerDialog extends TitleAreaDialog
 
     viewer.setCellEditors(new CellEditor[] { null, cellEditor });
     cellEditor.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-    cellEditor.setInput(this);
 
     viewer.addCheckStateListener(new ICheckStateListener()
     {
@@ -462,7 +462,13 @@ public class InstallerDialog extends TitleAreaDialog
       }
     });
 
-    init();
+    parent.getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        init();
+      }
+    });
 
     return area;
   }
@@ -707,41 +713,119 @@ public class InstallerDialog extends TitleAreaDialog
 
   private void init()
   {
-    Resource resource;
-    if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
+    try
     {
-      resource = EMFUtil.loadResourceSafe(resourceSet, Preferences.PREFERENCES_URI);
-      preferences = (Preferences)resource.getContents().get(0);
-
-      userNameText.setText(safe(preferences.getUserName()));
-      installFolderText.setText(safe(preferences.getInstallFolder()));
-      gitPrefixText.setText(safe(preferences.getGitPrefix()));
-    }
-    else
-    {
-      resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
-      preferences = SetupFactory.eINSTANCE.createPreferences();
-      resource.getContents().add(preferences);
-
-      File rootFolder = new File(System.getProperty("user.home", "."));
-
-      userNameText.setText("");
-      installFolderText.setText(safe(getAbsolutePath(rootFolder)));
-      gitPrefixText.setText(safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix()))));
-    }
-
-    ItemProvider input = new ItemProvider();
-    EList<Object> projects = input.getChildren();
-    for (Project project : configuration.getProjects())
-    {
-      if (!project.eIsProxy())
+      IRunnableWithProgress runnable = new IRunnableWithProgress()
       {
-        projects.add(project);
-      }
-    }
+        public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+        {
+          monitor.subTask("Loading " + EMFUtil.SETUP_URI.trimFragment());
 
-    viewer.setInput(input);
-    viewer.expandAll();
+          Resource configurationResource = EMFUtil.loadResourceSafe(resourceSet, EMFUtil.SETUP_URI);
+          configuration = (Configuration)configurationResource.getContents().get(0);
+
+          InternalEList<Project> configuredProjects = (InternalEList<Project>)configuration.getProjects();
+          monitor.beginTask("Processing the configuration", 1 + configuredProjects.size());
+
+          String userName;
+          String installFolder;
+          String gitPrefix;
+
+          monitor.subTask("Loading " + Preferences.PREFERENCES_URI.trimFragment());
+
+          if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
+          {
+            Resource resource = EMFUtil.loadResourceSafe(resourceSet, Preferences.PREFERENCES_URI);
+            preferences = (Preferences)resource.getContents().get(0);
+
+            userName = safe(preferences.getUserName());
+            installFolder = safe(preferences.getInstallFolder());
+            gitPrefix = safe(preferences.getGitPrefix());
+          }
+          else
+          {
+            Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
+            preferences = SetupFactory.eINSTANCE.createPreferences();
+            resource.getContents().add(preferences);
+
+            File rootFolder = new File(System.getProperty("user.home", "."));
+
+            userName = "";
+            installFolder = safe(getAbsolutePath(rootFolder));
+            gitPrefix = safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix())));
+          }
+
+          monitor.worked(1);
+
+          ItemProvider input = new ItemProvider();
+          EList<Object> projects = input.getChildren();
+
+          for (int i = 0; i < configuredProjects.size(); i++)
+          {
+            if (monitor.isCanceled())
+            {
+              throw new OperationCanceledException();
+            }
+
+            InternalEObject project = (InternalEObject)configuredProjects.basicGet(i);
+            if (project.eIsProxy())
+            {
+              URI uri = project.eProxyURI().trimFragment();
+              if (!uri.equals(EMFUtil.EXAMPLE_PROXY_URI))
+              {
+                monitor.subTask("Loading " + uri);
+              }
+
+              project = (InternalEObject)configuredProjects.get(i);
+            }
+
+            if (!project.eIsProxy())
+            {
+              projects.add(project);
+            }
+
+            monitor.worked(1);
+          }
+
+          initUI(input, userName, installFolder, gitPrefix);
+          monitor.done();
+        }
+
+        private void initUI(final ItemProvider input, final String userName, final String installFolder,
+            final String gitPrefix)
+        {
+          viewer.getControl().getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              userNameText.setText(userName);
+              installFolderText.setText(installFolder);
+              gitPrefixText.setText(gitPrefix);
+
+              viewer.setInput(input);
+              viewer.expandAll();
+
+              cellEditor.setInput(this);
+            }
+          });
+        }
+      };
+
+      ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell());
+      dialog.run(true, true, runnable);
+    }
+    catch (InterruptedException ex)
+    {
+      // Do nothing
+    }
+    catch (InvocationTargetException ex)
+    {
+      handleException(ex.getCause());
+    }
+    catch (Throwable ex)
+    {
+      handleException(ex);
+    }
   }
 
   private Map<Branch, Setup> initSetups()

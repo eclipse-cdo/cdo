@@ -40,6 +40,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="installFolder" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="gitPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="acceptedLicenses" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Setup" eSuperTypes="#//TopLevelElement">
     <eOperations name="getSetupTasks" upperBound="-1" eType="#//SetupTask">

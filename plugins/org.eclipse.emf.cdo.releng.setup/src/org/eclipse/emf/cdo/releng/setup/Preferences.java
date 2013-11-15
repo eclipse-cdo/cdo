@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import java.io.File;
@@ -25,6 +26,7 @@ import java.io.File;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix <em>Git Prefix</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}</li>
  * </ul>
  * </p>
  *
@@ -116,5 +118,21 @@ public interface Preferences extends SetupTaskContainer, TopLevelElement
    * @generated
    */
   void setGitPrefix(String value);
+
+  /**
+  	 * Returns the value of the '<em><b>Accepted Licenses</b></em>' attribute list.
+  	 * The list contents are of type {@link java.lang.String}.
+  	 * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Accepted Licenses</em>' attribute list isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Accepted Licenses</em>' attribute list.
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_AcceptedLicenses()
+  	 * @model
+  	 * @generated
+  	 */
+  EList<String> getAcceptedLicenses();
 
 } // Preferences

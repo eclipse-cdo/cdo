@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util.log;
 
-
 public class ProgressLogFilter
 {
   private static final String[] IGNORED_PREFIXES = { "Scanning Git", "Re-indexing", "Calculating Decorations",

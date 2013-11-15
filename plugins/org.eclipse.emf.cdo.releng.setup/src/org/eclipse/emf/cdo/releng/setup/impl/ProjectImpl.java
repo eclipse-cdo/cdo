@@ -108,20 +108,20 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   protected static final String LABEL_EDEFAULT = null;
 
   /**
-  	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getLabel()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
   protected String label = LABEL_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ProjectImpl()
   {
     super();
@@ -291,10 +291,10 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setLabel(String newLabel)
   {
     String oldLabel = label;
@@ -306,10 +306,10 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)

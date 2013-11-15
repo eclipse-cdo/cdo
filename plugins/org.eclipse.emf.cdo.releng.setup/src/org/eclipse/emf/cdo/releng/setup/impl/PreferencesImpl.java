@@ -15,8 +15,12 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,6 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getInstallFolder <em>Install Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getGitPrefix <em>Git Prefix</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getAcceptedLicenses <em>Accepted Licenses</em>}</li>
  * </ul>
  * </p>
  *
@@ -117,10 +122,20 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   protected String gitPrefix = GIT_PREFIX_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getAcceptedLicenses() <em>Accepted Licenses</em>}' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getAcceptedLicenses()
    * @generated
+   * @ordered
    */
+  protected EList<String> acceptedLicenses;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected PreferencesImpl()
   {
     super();
@@ -245,6 +260,21 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getAcceptedLicenses()
+  {
+    if (acceptedLicenses == null)
+    {
+      acceptedLicenses = new EDataTypeUniqueEList<String>(String.class, this,
+          SetupPackage.PREFERENCES__ACCEPTED_LICENSES);
+    }
+    return acceptedLicenses;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -258,6 +288,8 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
       return getInstallFolder();
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       return getGitPrefix();
+    case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
+      return getAcceptedLicenses();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -267,6 +299,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -283,6 +316,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
       return;
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       setGitPrefix((String)newValue);
+      return;
+    case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
+      getAcceptedLicenses().clear();
+      getAcceptedLicenses().addAll((Collection<? extends String>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -310,6 +347,9 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       setGitPrefix(GIT_PREFIX_EDEFAULT);
       return;
+    case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
+      getAcceptedLicenses().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -332,6 +372,8 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
       return INSTALL_FOLDER_EDEFAULT == null ? installFolder != null : !INSTALL_FOLDER_EDEFAULT.equals(installFolder);
     case SetupPackage.PREFERENCES__GIT_PREFIX:
       return GIT_PREFIX_EDEFAULT == null ? gitPrefix != null : !GIT_PREFIX_EDEFAULT.equals(gitPrefix);
+    case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
+      return acceptedLicenses != null && !acceptedLicenses.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -400,6 +442,8 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     result.append(installFolder);
     result.append(", gitPrefix: ");
     result.append(gitPrefix);
+    result.append(", acceptedLicenses: ");
+    result.append(acceptedLicenses);
     result.append(')');
     return result.toString();
   }

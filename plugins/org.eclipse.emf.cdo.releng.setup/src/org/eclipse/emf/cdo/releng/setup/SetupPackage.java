@@ -398,12 +398,12 @@ public interface SetupPackage extends EPackage
   int PROJECT__LABEL = CONFIGURABLE_ITEM_FEATURE_COUNT + 4;
 
   /**
-  	 * The number of structural features of the '<em>Project</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Project</em>' class.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int PROJECT_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 5;
 
   /**
@@ -488,13 +488,22 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__GIT_PREFIX = SETUP_TASK_CONTAINER_FEATURE_COUNT + 3;
 
   /**
-   * The number of structural features of the '<em>Preferences</em>' class.
+   * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 4;
+  int PREFERENCES__ACCEPTED_LICENSES = SETUP_TASK_CONTAINER_FEATURE_COUNT + 4;
+
+  /**
+  	 * The number of structural features of the '<em>Preferences</em>' class.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int PREFERENCES_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Tool Version</b></em>' attribute.
@@ -2869,13 +2878,13 @@ public interface SetupPackage extends EPackage
   EAttribute getProject_Label();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Branch</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Branch
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Branch</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Branch
+   * @generated
+   */
   EClass getBranch();
 
   /**
@@ -3958,13 +3967,24 @@ public interface SetupPackage extends EPackage
   EAttribute getPreferences_GitPrefix();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask <em>Link Location Task</em>}'.
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Link Location Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.LinkLocationTask
+   * @return the meta object for the attribute list '<em>Accepted Licenses</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses()
+   * @see #getPreferences()
    * @generated
    */
+  EAttribute getPreferences_AcceptedLicenses();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask <em>Link Location Task</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Link Location Task</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.LinkLocationTask
+  	 * @generated
+  	 */
   EClass getLinkLocationTask();
 
   /**
@@ -4212,13 +4232,13 @@ public interface SetupPackage extends EPackage
     EAttribute PROJECT__LABEL = eINSTANCE.getProject_Label();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
+     * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
+     * @generated
+     */
     EClass BRANCH = eINSTANCE.getBranch();
 
     /**
@@ -5094,13 +5114,21 @@ public interface SetupPackage extends EPackage
     EAttribute PREFERENCES__GIT_PREFIX = eINSTANCE.getPreferences_GitPrefix();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl <em>Link Location Task</em>}' class.
+     * The meta object literal for the '<em><b>Accepted Licenses</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
      * @generated
      */
+    EAttribute PREFERENCES__ACCEPTED_LICENSES = eINSTANCE.getPreferences_AcceptedLicenses();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl <em>Link Location Task</em>}' class.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
+    	 * @generated
+    	 */
     EClass LINK_LOCATION_TASK = eINSTANCE.getLinkLocationTask();
 
     /**

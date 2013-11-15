@@ -574,10 +574,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getBranch()
   {
     return branchEClass;
@@ -1598,6 +1598,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getPreferences_AcceptedLicenses()
+  {
+    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getLinkLocationTask()
   {
     return linkLocationTaskEClass;
@@ -1763,6 +1773,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(preferencesEClass, PREFERENCES__USER_NAME);
     createEAttribute(preferencesEClass, PREFERENCES__INSTALL_FOLDER);
     createEAttribute(preferencesEClass, PREFERENCES__GIT_PREFIX);
+    createEAttribute(preferencesEClass, PREFERENCES__ACCEPTED_LICENSES);
 
     setupEClass = createEClass(SETUP);
     createEReference(setupEClass, SETUP__BRANCH);
@@ -2029,6 +2040,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_ORDERED);
     initEAttribute(getPreferences_GitPrefix(), ecorePackage.getEString(), "gitPrefix", null, 0, 1, Preferences.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPreferences_AcceptedLicenses(), ecorePackage.getEString(), "acceptedLicenses", null, 0, -1,
+        Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(setupEClass, Setup.class, "Setup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSetup_Branch(), getBranch(), null, "branch", null, 1, 1, Setup.class, !IS_TRANSIENT,

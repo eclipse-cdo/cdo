@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -30,30 +32,43 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
+import org.eclipse.equinox.internal.p2.director.app.Messages;
 import org.eclipse.equinox.internal.p2.ui.ProvUI;
+import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.engine.IProfile;
+import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
+import org.eclipse.equinox.p2.metadata.ILicense;
 import org.eclipse.equinox.p2.metadata.MetadataFactory;
 import org.eclipse.equinox.p2.metadata.MetadataFactory.InstallableUnitDescription;
 import org.eclipse.equinox.p2.operations.InstallOperation;
 import org.eclipse.equinox.p2.operations.ProvisioningJob;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.RepositoryTracker;
+import org.eclipse.equinox.p2.planner.IPlanner;
+import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
 import org.eclipse.equinox.p2.query.IQuery;
 import org.eclipse.equinox.p2.query.IQueryResult;
+import org.eclipse.equinox.p2.query.IQueryable;
 import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.equinox.p2.ui.ProvisioningUI;
+import org.eclipse.osgi.util.NLS;
 
 import java.io.File;
+import java.io.PrintStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -396,6 +411,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           }
         }
 
+        context.log("Resolving...");
         InstallOperation installOperation = new InstallOperation(session, toInstall);
         String profileId = provisioningUI.getProfileId();
         installOperation.setProfileId(profileId);
@@ -406,6 +422,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         IStatus status = installOperation.resolveModal(monitor);
         if (status.isOK())
         {
+          IProvisioningPlan provisioningPlan = installOperation.getProvisioningPlan();
+          processLicenses(provisioningPlan, monitor);
+
           ProvisioningJob provisioningJob = installOperation.getProvisioningJob(null);
           provisioningJob.run(monitor);
         }
@@ -421,6 +440,21 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     else
     {
       callDirectorApp(context);
+    }
+  }
+
+  private void processLicenses(IProvisioningPlan provisioningPlan, IProgressMonitor monitor)
+  {
+    IQueryable<IInstallableUnit> queryable = provisioningPlan.getAdditions();
+    IQueryResult<IInstallableUnit> result = queryable.query(QueryUtil.ALL_UNITS, monitor);
+    for (IInstallableUnit installableUnit : result)
+    {
+      Collection<ILicense> licenses = installableUnit.getLicenses(null);
+      for (ILicense license : licenses)
+      {
+        String uuid = license.getUUID();
+        System.out.println(uuid);
+      }
     }
   }
 
@@ -472,13 +506,132 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       context.log("Using repository " + repository);
     }
 
+    context.log("Executing p2 director...");
+
     String ius = makeList(context, installableUnits, SetupPackage.Literals.INSTALLABLE_UNIT__ID);
 
     String[] args = { "-destination", destination, "-repository", repositories, "-installIU", ius, "-profile",
         context.getP2ProfileName(), "-profileProperties", "org.eclipse.update.install.features=true", "-bundlepool",
         bundlePool, "-shared", bundleAgent, "-p2.os", os, "-p2.ws", ws, "-p2.arch", arch };
 
-    DirectorApplication app = new DirectorApplication();
+    DirectorApplication app = new DirectorApplication()
+    {
+      @Override
+      public Object run(String[] args)
+      {
+        long time = System.currentTimeMillis();
+
+        try
+        {
+          processArguments(args);
+          initializeServices();
+
+          final IProvisioningAgent targetAgent = getTargetAgent();
+          IPlanner planner = new IPlanner()
+          {
+            IPlanner delegate = (IPlanner)targetAgent.getService(IPlanner.SERVICE_NAME);
+
+            public IProvisioningPlan getProvisioningPlan(IProfileChangeRequest profileChangeRequest,
+                ProvisioningContext context, IProgressMonitor monitor)
+            {
+              IProvisioningPlan provisioningPlan = delegate.getProvisioningPlan(profileChangeRequest, context, monitor);
+              processLicenses(provisioningPlan, monitor);
+              return provisioningPlan;
+            }
+
+            public IProvisioningPlan getDiffPlan(IProfile currentProfile, IProfile targetProfile,
+                IProgressMonitor monitor)
+            {
+              return delegate.getDiffPlan(currentProfile, targetProfile, monitor);
+            }
+
+            public IProfileChangeRequest createChangeRequest(IProfile profileToChange)
+            {
+              return delegate.createChangeRequest(profileToChange);
+            }
+
+            public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
+                IProgressMonitor monitor)
+            {
+              return delegate.updatesFor(iu, context, monitor);
+            }
+          };
+
+          targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
+
+          Field field = ReflectUtil.getField(DirectorApplication.class, "planner");
+          ReflectUtil.setValue(field, this, planner);
+
+          initializeRepositories();
+          performProvisioningActions();
+
+          printMessage(NLS.bind(Messages.Operation_complete, new Long(System.currentTimeMillis() - time)));
+          return IApplication.EXIT_OK;
+        }
+        catch (CoreException e)
+        {
+          printMessage(Messages.Operation_failed);
+          deeplyPrint(e.getStatus(), System.err, 0);
+          Activator.log(e.getStatus());
+          return EXIT_ERROR;
+        }
+        finally
+        {
+          cleanupRepositories();
+          cleanupServices();
+        }
+      }
+
+      private IProvisioningAgent getTargetAgent()
+      {
+        Field field = ReflectUtil.getField(DirectorApplication.class, "targetAgent");
+        return (IProvisioningAgent)ReflectUtil.getValue(field, this);
+      }
+
+      private void initializeServices()
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "initializeServices");
+        ReflectUtil.invokeMethod(method, this);
+      }
+
+      private void performProvisioningActions()
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "performProvisioningActions");
+        ReflectUtil.invokeMethod(method, this);
+      }
+
+      private void initializeRepositories()
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "initializeRepositories");
+        ReflectUtil.invokeMethod(method, this);
+      }
+
+      private void cleanupServices()
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "cleanupServices");
+        ReflectUtil.invokeMethod(method, this);
+      }
+
+      private void cleanupRepositories()
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "cleanupRepositories");
+        ReflectUtil.invokeMethod(method, this);
+      }
+
+      private void deeplyPrint(IStatus status, PrintStream err, int i)
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "deeplyPrint", IStatus.class,
+            PrintStream.class, int.class);
+        ReflectUtil.invokeMethod(method, this, status, err, i);
+      }
+
+      private void printMessage(String str)
+      {
+        Method method = ReflectUtil.getMethod(DirectorApplication.class, "printMessage", String.class);
+        ReflectUtil.invokeMethod(method, this, str);
+      }
+    };
+
     app.setLog(new ILog()
     {
       public void log(String message)

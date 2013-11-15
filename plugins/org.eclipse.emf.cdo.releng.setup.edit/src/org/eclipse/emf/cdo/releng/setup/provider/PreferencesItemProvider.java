@@ -64,6 +64,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
       addUserNamePropertyDescriptor(object);
       addInstallFolderPropertyDescriptor(object);
       addGitPrefixPropertyDescriptor(object);
+      addAcceptedLicensesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -119,11 +120,28 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   }
 
   /**
-   * This returns Preferences.gif.
+   * This adds a property descriptor for the Accepted Licenses feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected void addAcceptedLicensesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_Preferences_acceptedLicenses_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_acceptedLicenses_feature",
+            "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__ACCEPTED_LICENSES, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * This returns Preferences.gif.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object getImage(Object object)
   {
@@ -172,6 +190,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
     case SetupPackage.PREFERENCES__USER_NAME:
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
     case SetupPackage.PREFERENCES__GIT_PREFIX:
+    case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

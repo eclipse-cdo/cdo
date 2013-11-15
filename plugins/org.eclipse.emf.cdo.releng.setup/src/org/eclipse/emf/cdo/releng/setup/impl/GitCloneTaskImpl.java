@@ -601,7 +601,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     {
       if (context.getOS().isLineEndingConversionNeeded())
       {
-        context.log("Setting " + ConfigConstants.CONFIG_KEY_AUTOCRLF + " = true");
+        if (context.isPerforming())
+        {
+          context.log("Setting " + ConfigConstants.CONFIG_KEY_AUTOCRLF + " = true");
+        }
+
         config.setEnum(ConfigConstants.CONFIG_CORE_SECTION, null, ConfigConstants.CONFIG_KEY_AUTOCRLF, AutoCRLF.TRUE);
         return true;
       }
@@ -624,7 +628,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
           }
 
           RefSpec refSpec = new RefSpec("HEAD:" + gerritQueue);
-          context.log("Adding push ref spec: " + refSpec);
+
+          if (context.isPerforming())
+          {
+            context.log("Adding push ref spec: " + refSpec);
+          }
 
           remoteConfig.addPushRefSpec(refSpec);
           remoteConfig.update(config);

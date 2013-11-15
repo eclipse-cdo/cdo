@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -93,11 +94,15 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private EList<SetupTask> triggeredSetupTasks;
 
+  private boolean performing;
+
   private Set<String> restartReasons = new LinkedHashSet<String>();
+
+  private List<String> logMessageBuffer;
 
   private PrintStream logStream;
 
-  private List<String> logMessageBuffer;
+  private ProgressLogFilter logFilter = new ProgressLogFilter();
 
   private URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
@@ -148,6 +153,12 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private void doLog(String line)
   {
+    line = logFilter.filter(line);
+    if (line == null)
+    {
+      return;
+    }
+
     if (logStream != null)
     {
       try
@@ -190,6 +201,11 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   public Trigger getTrigger()
   {
     return trigger;
+  }
+
+  public boolean isPerforming()
+  {
+    return performing;
   }
 
   public boolean isRestartNeeded()
@@ -354,15 +370,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   {
     EList<SetupTask> setupTasks = getTriggeredSetupTasks();
     perform(setupTasks);
-
-    if (logStream != null)
-    {
-      logStream.println();
-      logStream.println();
-      logStream.println();
-      logStream.println();
-      IOUtil.closeSilent(logStream);
-    }
   }
 
   protected String lookup(String key)
@@ -400,6 +407,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     String branchName = branch.getName();
 
     Project project = branch.getProject();
+    String projectLabel = project.getLabel();
     String projectName = project.getName();
 
     put("setup.git.prefix", setup.getPreferences().getGitPrefix());
@@ -409,6 +417,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     put("setup.eclipse.dir", getEclipseDir());
     put("setup.tp.dir", getTargetPlatformDir());
     put("setup.ws.dir", getWorkspaceDir());
+    put("setup.project.label", projectLabel);
     put("setup.project.name", projectName);
     put("setup.branch.name", branchName);
     put("releng.url", RELENG_URL);
@@ -421,7 +430,9 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     {
       File logFile = new File(getBranchDir(), "setup.log");
       logFile.getParentFile().mkdirs();
-      logStream = new PrintStream(new FileOutputStream(logFile, true));
+
+      FileOutputStream out = new FileOutputStream(logFile, true);
+      logStream = new PrintStream(out);
     }
     catch (FileNotFoundException ex)
     {
@@ -470,6 +481,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       return;
     }
 
+    performing = true;
+
     if (Activator.SETUP_IDE && trigger != Trigger.MANUAL)
     {
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
@@ -499,6 +512,15 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       log("Performing setup task " + getLabel(neededTask));
       neededTask.perform(this);
       neededTask.dispose();
+    }
+
+    if (logStream != null)
+    {
+      logStream.println();
+      logStream.println();
+      logStream.println();
+      logStream.println();
+      IOUtil.closeSilent(logStream);
     }
   }
 

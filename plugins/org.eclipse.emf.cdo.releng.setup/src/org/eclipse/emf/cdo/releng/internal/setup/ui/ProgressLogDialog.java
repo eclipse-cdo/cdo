@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogProvider;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
@@ -86,20 +87,9 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
   public static final String JOB_NAME = "Setting up IDE";
 
-  private static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
+  public static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
 
   public static final SimpleDateFormat DATE_TIME = new SimpleDateFormat("yyyy-MM-dd " + TIME.toPattern());
-
-  private static final String[] IGNORED_PREFIXES = { "Scanning Git", "Re-indexing", "Calculating Decorations",
-      "Decorating", "http://", "The user operation is waiting", "Git repository changed", "Refreshing ", "Opening ",
-      "Connecting project ", "Connected project ", "Searching for associated repositories.", "Preparing type ",
-      "Loading project description", "Generating cspec from PDE artifacts", "Reporting encoding changes", "Saving",
-      "Downloading software", "Java indexing...", "Computing Git status for ", "Configuring Plug-in Dependencies",
-      "Configuring JRE System Library", "Invoking builder on ", "Invoking '", "Verifying ", "Updating ...",
-      "Reading saved build state for project ", "Reading resource change information for ",
-      "Cleaning output folder for ", "Copying resources to the output folder", " adding component ",
-      "Preparing to build", "Compiling ", "Analyzing ", "Comparing ", "Checking ", "Build done",
-      "Processing API deltas..." };
 
   private Text text;
 
@@ -111,7 +101,7 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
 
   private boolean cancelled;
 
-  private String lastLine;
+  private ProgressLogFilter logFilter = new ProgressLogFilter();
 
   private List<SetupTaskPerformer> setupTaskPerformers;
 
@@ -357,34 +347,17 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       throw new OperationCanceledException();
     }
 
-    if (line == null || line.length() == 0 || Character.isLowerCase(line.charAt(0)) || line.equals("Updating")
-        || line.endsWith(" remaining.") || startsWithIgnoredPrefix(line))
+    line = logFilter.filter(line);
+    if (line == null)
     {
       return;
     }
-
-    if (line.endsWith("/s)"))
-    {
-      int index = line.lastIndexOf(" (");
-      if (index != -1)
-      {
-        line = line.substring(0, index);
-      }
-    }
-
-    if (line.equals(lastLine))
-    {
-      return;
-    }
-
-    lastLine = line;
 
     final String message = line + "\n";
     final Date date = new Date();
 
     asyncExec(new Runnable()
     {
-
       public void run()
       {
         if (!okButton.isEnabled())
@@ -478,20 +451,6 @@ public class ProgressLogDialog extends TitleAreaDialog implements ProgressLog
       text.setTopIndex(topIndex);
       text.setRedraw(true);
     }
-  }
-
-  private static boolean startsWithIgnoredPrefix(String line)
-  {
-    for (int i = 0; i < IGNORED_PREFIXES.length; i++)
-    {
-      String prefix = IGNORED_PREFIXES[i];
-      if (line.startsWith(prefix))
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   public static void run(final Shell shell, final ProgressLogRunnable runnable,

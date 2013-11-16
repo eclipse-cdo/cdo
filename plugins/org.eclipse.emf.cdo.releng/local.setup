@@ -123,7 +123,7 @@
   <branches name="master">
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.3" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:P2Task">
-      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
+      <p2Repositories url="${train.url}"/>
       <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
       <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>

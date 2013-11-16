@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.installer;
 
+import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskMigrator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractSetupDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
@@ -120,6 +122,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
@@ -164,7 +167,15 @@ public class InstallerDialog extends AbstractSetupDialog
   @Override
   public boolean close()
   {
-    saveEObject(preferences);
+    if (preferences != null)
+    {
+      Resource eResource = preferences.eResource();
+      if (eResource.isModified())
+      {
+        saveEObject(preferences);
+      }
+    }
+
     return super.close();
   }
 
@@ -189,7 +200,69 @@ public class InstallerDialog extends AbstractSetupDialog
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    viewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+    viewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory)
+    {
+      @Override
+      public boolean hasChildren(Object object)
+      {
+        if (object instanceof Project)
+        {
+          return true;
+        }
+
+        return super.hasChildren(object);
+      }
+
+      @Override
+      public Object[] getChildren(Object object)
+      {
+        if (object instanceof Project)
+        {
+          final InternalEObject eObject = (InternalEObject)object;
+          URI eProxyURI = eObject.eProxyURI();
+          if (eProxyURI != null)
+          {
+            try
+            {
+              URI resourceURI = eProxyURI.trimFragment();
+              Resource resource = resourceSet.getResource(resourceURI, false);
+              if (resource == null)
+              {
+                resource = loadResourceSafely(resourceURI);
+                object = resource.getEObject(eProxyURI.fragment());
+
+                final Project project = (Project)object;
+                viewer.getControl().getDisplay().asyncExec(new Runnable()
+                {
+                  public void run()
+                  {
+                    String label = project.getLabel();
+                    if (label == null)
+                    {
+                      label = project.getName();
+                    }
+
+                    ((Project)eObject).setLabel(label);
+                    InstallerDialog.this.viewer.update(project, null);
+                  }
+                });
+              }
+              else
+              {
+                object = resource.getEObject(eProxyURI.fragment());
+              }
+            }
+            catch (UpdatingException ex)
+            {
+              // Ignore
+            }
+          }
+        }
+
+        return super.getChildren(object);
+      }
+    });
+
     SetupDialogLabelProvider labelProvider = new SetupDialogLabelProvider(adapterFactory, viewer);
     viewer.setLabelProvider(labelProvider);
     viewer.setCellModifier(new ICellModifier()
@@ -204,7 +277,7 @@ public class InstallerDialog extends AbstractSetupDialog
         if (element instanceof Branch && ECLIPSE_VERSION_COLUMN.equals(property))
         {
           Branch branch = (Branch)element;
-          Setup setup = setups.get(branch);
+          Setup setup = getSetup(branch);
           if (setup != null)
           {
             return setup.getEclipseVersion();
@@ -221,7 +294,7 @@ public class InstallerDialog extends AbstractSetupDialog
         if (modelElement instanceof Branch && ECLIPSE_VERSION_COLUMN.equals(property))
         {
           Branch branch = (Branch)modelElement;
-          Setup setup = setups.get(branch);
+          Setup setup = getSetup(branch);
           if (setup != null)
           {
             setup.setEclipseVersion((Eclipse)value);
@@ -262,6 +335,8 @@ public class InstallerDialog extends AbstractSetupDialog
         if (element instanceof Project)
         {
           Project project = (Project)element;
+
+          viewer.expandToLevel(project, 1);
 
           for (Branch branch : project.getBranches())
           {
@@ -307,9 +382,12 @@ public class InstallerDialog extends AbstractSetupDialog
             if (element instanceof Branch)
             {
               Branch branch = (Branch)element;
-              Setup setup = setups.get(branch);
-              Eclipse eclipse = setup.getEclipseVersion();
-              return labelProvider.getText(eclipse);
+              Setup setup = getSetup(branch);
+              if (setup != null)
+              {
+                Eclipse eclipse = setup.getEclipseVersion();
+                return labelProvider.getText(eclipse);
+              }
             }
 
             return "";
@@ -382,7 +460,6 @@ public class InstallerDialog extends AbstractSetupDialog
       public void modifyText(ModifyEvent e)
       {
         preferences.setInstallFolder(installFolderText.getText());
-        setups = initSetups();
         validate();
       }
     });
@@ -479,7 +556,7 @@ public class InstallerDialog extends AbstractSetupDialog
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        updatePressed();
+        update(false);
       }
     });
 
@@ -509,11 +586,35 @@ public class InstallerDialog extends AbstractSetupDialog
     super.okPressed();
   }
 
-  protected void updatePressed()
+  protected boolean update(final boolean needsEarlyConfirmation)
   {
+    if (needsEarlyConfirmation)
+    {
+      final AtomicBoolean result = new AtomicBoolean();
+      InstallerDialog.this.getShell().getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          boolean confirmation = MessageDialog
+              .openQuestion(
+                  null,
+                  "Update",
+                  "Updates are needed to process the configuration, and then a restart is required. "
+                      + "It might be possible for the tool to process the configuration with an older version of the tool, but that's not recommended.\n\n"
+                      + "Do you wish to update?");
+          result.set(confirmation);
+        }
+      });
+
+      if (!result.get())
+      {
+        return false;
+      }
+    }
+
     try
     {
-      IRunnableWithProgress runnable = new IRunnableWithProgress()
+      final IRunnableWithProgress runnable = new IRunnableWithProgress()
       {
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
@@ -521,7 +622,9 @@ public class InstallerDialog extends AbstractSetupDialog
 
           try
           {
-            IStatus updateStatus = checkForUpdates(agent, monitor);
+            SubMonitor sub = SubMonitor.convert(monitor, needsEarlyConfirmation ? "Updating..."
+                : "Checking for updates...", 1000);
+            IStatus updateStatus = checkForUpdates(agent, sub);
             if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
             {
               InstallerDialog.this.getShell().getDisplay().asyncExec(new Runnable()
@@ -540,7 +643,11 @@ public class InstallerDialog extends AbstractSetupDialog
                 {
                   close();
                   setReturnCode(RETURN_RESTART);
-                  MessageDialog.openInformation(null, "Update", "Updates were installed, restart required");
+
+                  if (!needsEarlyConfirmation)
+                  {
+                    MessageDialog.openInformation(null, "Update", "Updates were installed, restart required");
+                  }
                 }
               });
             }
@@ -557,26 +664,35 @@ public class InstallerDialog extends AbstractSetupDialog
         }
       };
 
-      runInProgressDialog(runnable);
-    }
-    catch (InterruptedException ex)
-    {
-      // Do nothing
-    }
-    catch (InvocationTargetException ex)
-    {
-      handleException(ex.getCause());
+      viewer.getControl().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            runInProgressDialog(runnable);
+          }
+          catch (InvocationTargetException ex)
+          {
+            handleException(ex.getCause());
+          }
+          catch (InterruptedException ex)
+          {
+            // Do nothing
+          }
+        }
+      });
     }
     catch (Throwable ex)
     {
       handleException(ex);
     }
+
+    return true;
   }
 
-  private IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor)
+  private IStatus checkForUpdates(IProvisioningAgent agent, SubMonitor sub)
   {
-    SubMonitor sub = SubMonitor.convert(monitor, "Checking for updates...", 1000);
-
     try
     {
       addRepository(agent, SetupTaskPerformer.RELENG_URL, sub.newChild(200));
@@ -675,6 +791,26 @@ public class InstallerDialog extends AbstractSetupDialog
     manager.loadRepository(location, monitor);
   }
 
+  class UpdatingException extends Exception
+  {
+    private static final long serialVersionUID = 1L;
+
+  }
+
+  private SetupResource loadResourceSafely(URI uri) throws UpdatingException
+  {
+    SetupResource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
+    if (resource.getToolVersion() > SetupTaskMigrator.TOOL_VERSION)
+    {
+      if (update(true))
+      {
+        throw new UpdatingException();
+      }
+    }
+
+    return resource;
+  }
+
   private void init()
   {
     try
@@ -683,76 +819,72 @@ public class InstallerDialog extends AbstractSetupDialog
       {
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
-          monitor.subTask("Loading " + EMFUtil.SETUP_URI.trimFragment());
-
-          Resource configurationResource = EMFUtil.loadResourceSafe(resourceSet, EMFUtil.SETUP_URI);
-          configuration = (Configuration)configurationResource.getContents().get(0);
-
-          InternalEList<Project> configuredProjects = (InternalEList<Project>)configuration.getProjects();
-          monitor.beginTask("Processing the configuration", 1 + configuredProjects.size());
-
-          String userName;
-          String installFolder;
-          String gitPrefix;
-
-          monitor.subTask("Loading " + Preferences.PREFERENCES_URI.trimFragment());
-
-          if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
+          try
           {
-            Resource resource = EMFUtil.loadResourceSafe(resourceSet, Preferences.PREFERENCES_URI);
-            preferences = (Preferences)resource.getContents().get(0);
+            monitor.beginTask("Loading " + EMFUtil.SETUP_URI.trimFragment(), IProgressMonitor.UNKNOWN);
 
-            userName = safe(preferences.getUserName());
-            installFolder = safe(preferences.getInstallFolder());
-            gitPrefix = safe(preferences.getGitPrefix());
-          }
-          else
-          {
-            Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
-            preferences = SetupFactory.eINSTANCE.createPreferences();
-            resource.getContents().add(preferences);
+            Resource configurationResource = loadResourceSafely(EMFUtil.SETUP_URI);
 
-            File rootFolder = new File(System.getProperty("user.home", "."));
+            configuration = (Configuration)configurationResource.getContents().get(0);
 
-            userName = "";
-            installFolder = safe(getAbsolutePath(rootFolder));
-            gitPrefix = safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix())));
-          }
+            InternalEList<Project> configuredProjects = (InternalEList<Project>)configuration.getProjects();
 
-          monitor.worked(1);
+            String userName;
+            String installFolder;
+            String gitPrefix;
 
-          ItemProvider input = new ItemProvider();
-          EList<Object> projects = input.getChildren();
-
-          for (int i = 0; i < configuredProjects.size(); i++)
-          {
-            if (monitor.isCanceled())
+            if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
             {
-              throw new OperationCanceledException();
+              Resource resource = loadResourceSafely(Preferences.PREFERENCES_URI);
+              preferences = (Preferences)resource.getContents().get(0);
+              resource.setTrackingModification(true);
+
+              userName = safe(preferences.getUserName());
+              installFolder = safe(preferences.getInstallFolder());
+              gitPrefix = safe(preferences.getGitPrefix());
+            }
+            else
+            {
+              Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
+              preferences = SetupFactory.eINSTANCE.createPreferences();
+              resource.getContents().add(preferences);
+              resource.setModified(true);
+
+              File rootFolder = new File(System.getProperty("user.home", "."));
+
+              userName = "";
+              installFolder = safe(getAbsolutePath(rootFolder));
+              gitPrefix = safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix())));
             }
 
-            InternalEObject project = (InternalEObject)configuredProjects.basicGet(i);
-            if (project.eIsProxy())
+            ItemProvider input = new ItemProvider();
+            EList<Object> projects = input.getChildren();
+
+            for (int i = 0; i < configuredProjects.size(); i++)
             {
-              URI uri = project.eProxyURI().trimFragment();
-              if (!uri.equals(EMFUtil.EXAMPLE_PROXY_URI))
+              InternalEObject project = (InternalEObject)configuredProjects.basicGet(i);
+              if (project.eIsProxy())
               {
-                monitor.subTask("Loading " + uri);
+                URI uri = project.eProxyURI().trimFragment();
+                if (uri.equals(EMFUtil.EXAMPLE_PROXY_URI))
+                {
+                  continue;
+                }
               }
 
-              project = (InternalEObject)configuredProjects.get(i);
-            }
-
-            if (!project.eIsProxy() && !((Project)project).getBranches().isEmpty())
-            {
               projects.add(project);
             }
 
-            monitor.worked(1);
+            initUI(input, userName, installFolder, gitPrefix);
           }
-
-          initUI(input, userName, installFolder, gitPrefix);
-          monitor.done();
+          catch (UpdatingException ex)
+          {
+            // Ignore
+          }
+          finally
+          {
+            monitor.done();
+          }
         }
 
         private void initUI(final ItemProvider input, final String userName, final String installFolder,
@@ -767,7 +899,6 @@ public class InstallerDialog extends AbstractSetupDialog
               gitPrefixText.setText(gitPrefix);
 
               viewer.setInput(input);
-              viewer.expandAll();
 
               cellEditor.setInput(this);
             }
@@ -791,36 +922,44 @@ public class InstallerDialog extends AbstractSetupDialog
     }
   }
 
-  private Map<Branch, Setup> initSetups()
+  private Setup getSetup(Branch branch)
   {
-    Map<Branch, Setup> setups = new HashMap<Branch, Setup>();
-    for (Project project : configuration.getProjects())
+    if (setups == null)
     {
-      for (Branch branch : project.getBranches())
-      {
-        Setup setup;
-        URI uri = getSetupURI(branch);
-        if (resourceSet.getURIConverter().exists(uri, null))
-        {
-          Resource resource = EMFUtil.loadResourceSafe(resourceSet, uri);
-          setup = (Setup)resource.getContents().get(0);
-        }
-        else
-        {
-          setup = SetupFactory.eINSTANCE.createSetup();
-          setup.setEclipseVersion(getDefaultEclipseVersion());
-          setup.setBranch(branch);
-          setup.setPreferences(preferences);
-
-          Resource resource = resourceSet.createResource(uri);
-          resource.getContents().add(setup);
-        }
-
-        setups.put(branch, setup);
-      }
+      setups = new HashMap<Branch, Setup>();
     }
 
-    return setups;
+    Setup setup = setups.get(branch);
+    if (setup == null)
+    {
+      URI uri = getSetupURI(branch);
+      if (resourceSet.getURIConverter().exists(uri, null))
+      {
+        try
+        {
+          Resource resource = loadResourceSafely(uri);
+          setup = (Setup)resource.getContents().get(0);
+        }
+        catch (UpdatingException ex)
+        {
+          return null;
+        }
+      }
+      else
+      {
+        setup = SetupFactory.eINSTANCE.createSetup();
+        setup.setEclipseVersion(getDefaultEclipseVersion());
+        setup.setBranch(branch);
+        setup.setPreferences(preferences);
+
+        Resource resource = resourceSet.createResource(uri);
+        resource.getContents().add(setup);
+      }
+
+      setups.put(branch, setup);
+    }
+
+    return setup;
   }
 
   private Eclipse getDefaultEclipseVersion()
@@ -928,9 +1067,12 @@ public class InstallerDialog extends AbstractSetupDialog
     if (object instanceof Branch)
     {
       Branch branch = (Branch)object;
-      Setup setup = setups.get(branch);
-      URI uri = setup.eResource().getURI();
-      return resourceSet.getURIConverter().exists(uri, null);
+      Setup setup = getSetup(branch);
+      if (setup != null)
+      {
+        URI uri = setup.eResource().getURI();
+        return resourceSet.getURIConverter().exists(uri, null);
+      }
     }
 
     return false;
@@ -951,7 +1093,7 @@ public class InstallerDialog extends AbstractSetupDialog
       if (checkedElement instanceof Branch)
       {
         Branch branch = (Branch)checkedElement;
-        Setup setup = setups.get(branch);
+        Setup setup = getSetup(branch);
         if (setup != null)
         {
           setupTaskPerformers.add(createTaskPerformer(setup, installFolder, gitPrefix));

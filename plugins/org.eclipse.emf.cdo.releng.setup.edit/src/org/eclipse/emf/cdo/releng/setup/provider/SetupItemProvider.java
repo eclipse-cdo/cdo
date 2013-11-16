@@ -179,8 +179,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   @Override
   public String getText(Object object)
   {
-    Setup setup = (Setup)object;
-    return getString("_UI_Setup_type") + " " + setup.getToolVersion();
+    return getString("_UI_Setup_type");
   }
 
   /**

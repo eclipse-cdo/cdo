@@ -47,7 +47,6 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
-import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -117,12 +116,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    */
   protected SetupSwitch<Adapter> modelSwitch = new SetupSwitch<Adapter>()
   {
-    @Override
-    public Adapter caseTopLevelElement(TopLevelElement object)
-    {
-      return createTopLevelElementAdapter();
-    }
-
     @Override
     public Adapter caseEclipse(Eclipse object)
     {
@@ -364,21 +357,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   public Adapter createAdapter(Notifier target)
   {
     return modelSwitch.doSwitch((EObject)target);
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TopLevelElement <em>Top Level Element</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.TopLevelElement
-   * @generated
-   */
-  public Adapter createTopLevelElementAdapter()
-  {
-    return null;
   }
 
   /**

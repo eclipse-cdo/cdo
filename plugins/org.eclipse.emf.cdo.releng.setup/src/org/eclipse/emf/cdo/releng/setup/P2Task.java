@@ -65,29 +65,29 @@ public interface P2Task extends SetupTask
   boolean isDisableLicenseConfirmation();
 
   /**
-  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Task#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Task#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @param value the new value of the '<em>Disable License Confirmation</em>' attribute.
-  	 * @see #isDisableLicenseConfirmation()
-  	 * @generated
-  	 */
+   * @param value the new value of the '<em>Disable License Confirmation</em>' attribute.
+   * @see #isDisableLicenseConfirmation()
+   * @generated
+   */
   void setDisableLicenseConfirmation(boolean value);
 
   /**
-  	 * Returns the value of the '<em><b>P2 Repositories</b></em>' containment reference list.
-  	 * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
-  	 * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>P2 Repositories</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
+   * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>P2 Repositories</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-  	 * @return the value of the '<em>P2 Repositories</em>' containment reference list.
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_P2Repositories()
-  	 * @model containment="true" resolveProxies="true" required="true"
-  	 * @generated
-  	 */
+   * @return the value of the '<em>P2 Repositories</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_P2Repositories()
+   * @model containment="true" resolveProxies="true" required="true"
+   * @generated
+   */
   EList<P2Repository> getP2Repositories();
 
 } // InstallTask

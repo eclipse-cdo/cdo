@@ -50,7 +50,6 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
-import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
@@ -74,13 +73,6 @@ import java.util.Set;
  */
 public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 {
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass topLevelElementEClass = null;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -456,26 +448,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getTopLevelElement()
-  {
-    return topLevelElementEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getTopLevelElement_ToolVersion()
-  {
-    return (EAttribute)topLevelElementEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getEclipse()
   {
     return eclipseEClass;
@@ -742,10 +714,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getP2Task_P2Repositories()
   {
     return (EReference)p2TaskEClass.getEStructuralFeatures().get(0);
@@ -1784,9 +1756,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     isCreated = true;
 
     // Create classes and their features
-    topLevelElementEClass = createEClass(TOP_LEVEL_ELEMENT);
-    createEAttribute(topLevelElementEClass, TOP_LEVEL_ELEMENT__TOOL_VERSION);
-
     eclipseEClass = createEClass(ECLIPSE);
     createEReference(eclipseEClass, ECLIPSE__CONFIGURATION);
     createEAttribute(eclipseEClass, ECLIPSE__VERSION);
@@ -1994,14 +1963,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     // Add supertypes to classes
     eclipseEClass.getESuperTypes().add(getConfigurableItem());
-    configurationEClass.getESuperTypes().add(getTopLevelElement());
     configurableItemEClass.getESuperTypes().add(getSetupTaskContainer());
     projectEClass.getESuperTypes().add(getConfigurableItem());
-    projectEClass.getESuperTypes().add(getTopLevelElement());
     branchEClass.getESuperTypes().add(getConfigurableItem());
     preferencesEClass.getESuperTypes().add(getSetupTaskContainer());
-    preferencesEClass.getESuperTypes().add(getTopLevelElement());
-    setupEClass.getESuperTypes().add(getTopLevelElement());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTask());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTaskContainer());
     eclipseIniTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2027,12 +1992,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     targetPlatformTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(topLevelElementEClass, TopLevelElement.class, "TopLevelElement", IS_ABSTRACT, IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getTopLevelElement_ToolVersion(), ecorePackage.getEInt(), "toolVersion", null, 1, 1,
-        TopLevelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
     initEClass(eclipseEClass, Eclipse.class, "Eclipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEclipse_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(), "configuration",
         null, 0, 1, Eclipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,

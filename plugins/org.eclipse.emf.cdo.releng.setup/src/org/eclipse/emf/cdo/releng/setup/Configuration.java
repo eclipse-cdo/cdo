@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +30,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Configuration extends TopLevelElement
+public interface Configuration extends EObject
 {
   /**
    * Returns the value of the '<em><b>Projects</b></em>' containment reference list.

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.TopLevelElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -35,7 +34,6 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getToolVersion <em>Tool Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getName <em>Name</em>}</li>
@@ -47,26 +45,6 @@ import java.util.Collection;
  */
 public class ProjectImpl extends ConfigurableItemImpl implements Project
 {
-  /**
-   * The default value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getToolVersion()
-   * @generated
-   * @ordered
-   */
-  protected static final int TOOL_VERSION_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getToolVersion()
-   * @generated
-   * @ordered
-   */
-  protected int toolVersion = TOOL_VERSION_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getBranches() <em>Branches</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -136,32 +114,6 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   protected EClass eStaticClass()
   {
     return SetupPackage.Literals.PROJECT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getToolVersion()
-  {
-    return toolVersion;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setToolVersion(int newToolVersion)
-  {
-    int oldToolVersion = toolVersion;
-    toolVersion = newToolVersion;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PROJECT__TOOL_VERSION, oldToolVersion,
-          toolVersion));
-    }
   }
 
   /**
@@ -372,8 +324,6 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   {
     switch (featureID)
     {
-    case SetupPackage.PROJECT__TOOL_VERSION:
-      return getToolVersion();
     case SetupPackage.PROJECT__CONFIGURATION:
       if (resolve)
       {
@@ -401,9 +351,6 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   {
     switch (featureID)
     {
-    case SetupPackage.PROJECT__TOOL_VERSION:
-      setToolVersion((Integer)newValue);
-      return;
     case SetupPackage.PROJECT__CONFIGURATION:
       setConfiguration((Configuration)newValue);
       return;
@@ -431,9 +378,6 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   {
     switch (featureID)
     {
-    case SetupPackage.PROJECT__TOOL_VERSION:
-      setToolVersion(TOOL_VERSION_EDEFAULT);
-      return;
     case SetupPackage.PROJECT__CONFIGURATION:
       setConfiguration((Configuration)null);
       return;
@@ -460,8 +404,6 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   {
     switch (featureID)
     {
-    case SetupPackage.PROJECT__TOOL_VERSION:
-      return toolVersion != TOOL_VERSION_EDEFAULT;
     case SetupPackage.PROJECT__CONFIGURATION:
       return basicGetConfiguration() != null;
     case SetupPackage.PROJECT__BRANCHES:
@@ -472,48 +414,6 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
       return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == TopLevelElement.class)
-    {
-      switch (derivedFeatureID)
-      {
-      case SetupPackage.PROJECT__TOOL_VERSION:
-        return SetupPackage.TOP_LEVEL_ELEMENT__TOOL_VERSION;
-      default:
-        return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == TopLevelElement.class)
-    {
-      switch (baseFeatureID)
-      {
-      case SetupPackage.TOP_LEVEL_ELEMENT__TOOL_VERSION:
-        return SetupPackage.PROJECT__TOOL_VERSION;
-      default:
-        return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
   /**
@@ -530,9 +430,7 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (toolVersion: ");
-    result.append(toolVersion);
-    result.append(", name: ");
+    result.append(" (name: ");
     result.append(name);
     result.append(", label: ");
     result.append(label);

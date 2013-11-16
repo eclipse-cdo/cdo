@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getToolVersion <em>Tool Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getBranch <em>Branch</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getEclipseVersion <em>Eclipse Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl#getPreferences <em>Preferences</em>}</li>
@@ -47,26 +46,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
 {
-  /**
-   * The default value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getToolVersion()
-   * @generated
-   * @ordered
-   */
-  protected static final int TOOL_VERSION_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getToolVersion() <em>Tool Version</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getToolVersion()
-   * @generated
-   * @ordered
-   */
-  protected int toolVersion = TOOL_VERSION_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getBranch() <em>Branch</em>}' reference.
    * <!-- begin-user-doc -->
@@ -116,32 +95,6 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   protected EClass eStaticClass()
   {
     return SetupPackage.Literals.SETUP;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getToolVersion()
-  {
-    return toolVersion;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setToolVersion(int newToolVersion)
-  {
-    int oldToolVersion = toolVersion;
-    toolVersion = newToolVersion;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.SETUP__TOOL_VERSION, oldToolVersion,
-          toolVersion));
-    }
   }
 
   /**
@@ -361,8 +314,6 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   {
     switch (featureID)
     {
-    case SetupPackage.SETUP__TOOL_VERSION:
-      return getToolVersion();
     case SetupPackage.SETUP__BRANCH:
       if (resolve)
       {
@@ -395,9 +346,6 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   {
     switch (featureID)
     {
-    case SetupPackage.SETUP__TOOL_VERSION:
-      setToolVersion((Integer)newValue);
-      return;
     case SetupPackage.SETUP__BRANCH:
       setBranch((Branch)newValue);
       return;
@@ -421,9 +369,6 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   {
     switch (featureID)
     {
-    case SetupPackage.SETUP__TOOL_VERSION:
-      setToolVersion(TOOL_VERSION_EDEFAULT);
-      return;
     case SetupPackage.SETUP__BRANCH:
       setBranch((Branch)null);
       return;
@@ -447,8 +392,6 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   {
     switch (featureID)
     {
-    case SetupPackage.SETUP__TOOL_VERSION:
-      return toolVersion != TOOL_VERSION_EDEFAULT;
     case SetupPackage.SETUP__BRANCH:
       return branch != null;
     case SetupPackage.SETUP__ECLIPSE_VERSION:
@@ -457,26 +400,6 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       return preferences != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy())
-    {
-      return super.toString();
-    }
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (toolVersion: ");
-    result.append(toolVersion);
-    result.append(')');
-    return result.toString();
   }
 
 } // WorkspaceImpl

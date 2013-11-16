@@ -50,6 +50,7 @@ public class SetupResourceFactoryImpl extends ResourceFactoryImpl
     result.getDefaultLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, true);
 
     result.getDefaultSaveOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, true);
+    result.getDefaultSaveOptions().put(XMLResource.OPTION_PROXY_ATTRIBUTES, true);
 
     return result;
   }

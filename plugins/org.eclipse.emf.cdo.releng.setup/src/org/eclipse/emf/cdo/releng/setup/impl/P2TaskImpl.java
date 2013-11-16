@@ -134,13 +134,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   protected static final boolean DISABLE_LICENSE_CONFIRMATION_EDEFAULT = false;
 
   /**
-  	 * The cached value of the '{@link #isDisableLicenseConfirmation() <em>Disable License Confirmation</em>}' attribute.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @see #isDisableLicenseConfirmation()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The cached value of the '{@link #isDisableLicenseConfirmation() <em>Disable License Confirmation</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isDisableLicenseConfirmation()
+   * @generated
+   * @ordered
+   */
   protected boolean disableLicenseConfirmation = DISABLE_LICENSE_CONFIRMATION_EDEFAULT;
 
   private transient Set<String> neededInstallableUnits;
@@ -192,10 +192,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setDisableLicenseConfirmation(boolean newDisableLicenseConfirmation)
   {
     boolean oldDisableLicenseConfirmation = disableLicenseConfirmation;
@@ -208,10 +208,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EList<P2Repository> getP2Repositories()
   {
     if (p2Repositories == null)

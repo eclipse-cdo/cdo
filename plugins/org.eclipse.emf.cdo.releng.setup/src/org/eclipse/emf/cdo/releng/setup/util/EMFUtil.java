@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.releng.setup.util;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
@@ -48,16 +47,16 @@ public final class EMFUtil extends Plugin
     return resourceSet;
   }
 
-  public static Resource loadResourceSafe(ResourceSet resourceSet, URI uri)
+  public static SetupResource loadResourceSafely(ResourceSet resourceSet, URI uri)
   {
     try
     {
-      return resourceSet.getResource(uri, true);
+      return (SetupResource)resourceSet.getResource(uri, true);
     }
     catch (Throwable ex)
     {
       Activator.log(ex);
-      return resourceSet.getResource(uri, false);
+      return (SetupResource)resourceSet.getResource(uri, false);
     }
   }
 

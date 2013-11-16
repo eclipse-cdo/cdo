@@ -145,8 +145,7 @@ public class ConfigurationItemProvider extends ItemProviderAdapter implements IE
   @Override
   public String getText(Object object)
   {
-    Configuration configuration = (Configuration)object;
-    return getString("_UI_Configuration_type") + " " + configuration.getToolVersion();
+    return getString("_UI_Configuration_type");
   }
 
   /**

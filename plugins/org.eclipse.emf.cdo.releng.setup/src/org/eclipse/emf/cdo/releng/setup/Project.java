@@ -31,7 +31,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Project extends ConfigurableItem, TopLevelElement
+public interface Project extends ConfigurableItem
 {
   /**
    * Returns the value of the '<em><b>Configuration</b></em>' container reference.

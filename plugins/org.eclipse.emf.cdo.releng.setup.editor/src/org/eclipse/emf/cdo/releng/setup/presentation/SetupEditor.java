@@ -1011,7 +1011,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
 
     if (!(editingDomain.getResourceSet().getResources().get(0).getContents().get(0) instanceof Configuration))
     {
-      EMFUtil.loadResourceSafe(editingDomain.getResourceSet(), EMFUtil.SETUP_URI);
+      EMFUtil.loadResourceSafely(editingDomain.getResourceSet(), EMFUtil.SETUP_URI);
     }
   }
 

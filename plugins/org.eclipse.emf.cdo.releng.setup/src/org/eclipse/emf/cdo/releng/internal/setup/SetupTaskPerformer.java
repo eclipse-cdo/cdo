@@ -407,7 +407,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     ResourceSet resourceSet = EMFUtil.createResourceSet();
 
     URI uri = URI.createFileURI(branchDir.toString() + "/setup.xmi");
-    Resource resource = EMFUtil.loadResourceSafe(resourceSet, uri);
+    Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
 
     setup = (Setup)resource.getContents().get(0);
     preferences = setup.getPreferences();

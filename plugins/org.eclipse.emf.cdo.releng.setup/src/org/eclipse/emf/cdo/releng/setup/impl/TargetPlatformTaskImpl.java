@@ -200,7 +200,7 @@ public class TargetPlatformTaskImpl extends SetupTaskImpl implements TargetPlatf
     }
 
     initTargetPlatform(context);
-    return targetPlatform != null && !targetPlatform.equals(TargetPlatformUtil.getActiveTargetPlatform());
+    return targetPlatform == null || !targetPlatform.equals(TargetPlatformUtil.getActiveTargetPlatform());
   }
 
   private void initTargetPlatform(SetupTaskContext context)
@@ -216,7 +216,10 @@ public class TargetPlatformTaskImpl extends SetupTaskImpl implements TargetPlatf
       initTargetPlatform(context);
     }
 
-    TargetPlatformUtil.setTargetActive(targetPlatform, new ProgressLogMonitor(context));
+    if (targetPlatform != null)
+    {
+      TargetPlatformUtil.setTargetActive(targetPlatform, new ProgressLogMonitor(context));
+    }
   }
 
 } // TargetPlatformTaskImpl

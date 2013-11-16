@@ -22,7 +22,7 @@
          <action
                class="org.eclipse.emf.cdo.releng.winexplorer.PromptAction"
                enablesFor="1"
-               icon="prompt.gif"
+               icon="icons/prompt.gif"
                id="org.eclipse.emf.cdo.releng.PromptAction"
                label="Command Prompt"
                menubarPath="additions"
@@ -32,7 +32,22 @@
          <action
                class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
                enablesFor="1"
-               icon="explorer.gif"
+               icon="icons/explorer.gif"
+               id="org.eclipse.emf.cdo.releng.ExplorerAction"
+               label="Windows Explorer"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Open Windows Explorer"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.releng.winexplorer.contribution2"
+            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+         <action
+               class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
+               enablesFor="1"
+               icon="icons/explorer.gif"
                id="org.eclipse.emf.cdo.releng.ExplorerAction"
                label="Windows Explorer"
                menubarPath="additions"

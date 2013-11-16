@@ -10,23 +10,20 @@
  */
 package org.eclipse.emf.cdo.releng.winexplorer;
 
-import org.eclipse.core.resources.IContainer;
-
 import java.io.File;
 
 /**
  * @author Eike Stepper
  */
-public class PromptAction extends AbstractContainerAction
+public class PromptAction extends AbstractLocationAction
 {
   public PromptAction()
   {
   }
 
   @Override
-  protected void run(IContainer container) throws Exception
+  protected void run(File location) throws Exception
   {
-    String location = container.getLocation().toString().replace('/', File.separatorChar);
     Runtime.getRuntime().exec("cmd /c cd \"" + location + "\" && start cmd.exe");
   }
 }

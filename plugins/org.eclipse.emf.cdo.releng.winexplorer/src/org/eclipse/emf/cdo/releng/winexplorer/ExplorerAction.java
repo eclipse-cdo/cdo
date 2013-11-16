@@ -10,23 +10,20 @@
  */
 package org.eclipse.emf.cdo.releng.winexplorer;
 
-import org.eclipse.core.resources.IContainer;
-
 import java.io.File;
 
 /**
  * @author Eike Stepper
  */
-public class ExplorerAction extends AbstractContainerAction
+public class ExplorerAction extends AbstractLocationAction
 {
   public ExplorerAction()
   {
   }
 
   @Override
-  protected void run(IContainer container) throws Exception
+  protected void run(File location) throws Exception
   {
-    String location = container.getLocation().toString().replace('/', File.separatorChar);
     Runtime.getRuntime().exec("explorer.exe \"" + location + "\"");
   }
 }

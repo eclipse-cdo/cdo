@@ -555,11 +555,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   protected TargetPlatformTaskItemProvider targetPlatformTaskItemProvider;
 
   /**
-  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask}.
-  	 * <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask}.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Adapter createTargetPlatformTaskAdapter()
   {
@@ -572,11 +572,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
-  	 * <!-- begin-user-doc -->
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected AutomaticSourceLocatorItemProvider automaticSourceLocatorItemProvider;
 
   /**

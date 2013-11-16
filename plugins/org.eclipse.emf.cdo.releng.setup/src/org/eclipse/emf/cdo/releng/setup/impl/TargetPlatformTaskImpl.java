@@ -194,13 +194,28 @@ public class TargetPlatformTaskImpl extends SetupTaskImpl implements TargetPlatf
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
+    if (context.getTrigger() == Trigger.MANUAL)
+    {
+      return true;
+    }
+
+    initTargetPlatform(context);
+    return targetPlatform != null && !targetPlatform.equals(TargetPlatformUtil.getActiveTargetPlatform());
+  }
+
+  private void initTargetPlatform(SetupTaskContext context)
+  {
     String name = context.expandString(getName());
     targetPlatform = TargetPlatformUtil.getTargetPlatform(name, context);
-    return targetPlatform != null && !targetPlatform.equals(TargetPlatformUtil.getActiveTargetPlatform());
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    if (targetPlatform == null)
+    {
+      initTargetPlatform(context);
+    }
+
     TargetPlatformUtil.setTargetActive(targetPlatform, new ProgressLogMonitor(context));
   }
 

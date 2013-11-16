@@ -998,13 +998,22 @@ public interface SetupPackage extends EPackage
   int P2_TASK__INSTALLABLE_UNITS = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>P2 Task</em>' class.
+   * The feature id for the '<em><b>Disable License Confirmation</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int P2_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+  int P2_TASK__DISABLE_LICENSE_CONFIRMATION = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+  	 * The number of structural features of the '<em>P2 Task</em>' class.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int P2_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
@@ -2689,85 +2698,85 @@ public interface SetupPackage extends EPackage
   int TARGET_PLATFORM_TASK = 37;
 
   /**
-  	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
 
   /**
-  	 * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
-  	 * The feature id for the '<em><b>Disabled</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
-  	 * The feature id for the '<em><b>Scope</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__SCOPE = SETUP_TASK__SCOPE;
 
   /**
-  	 * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
-  	 * The feature id for the '<em><b>Documentation</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-  	 * The feature id for the '<em><b>Name</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK__NAME = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-  	 * The number of structural features of the '<em>Target Platform Task</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Target Platform Task</em>' class.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int TARGET_PLATFORM_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-  	 * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
-  	 * <!-- begin-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
+   * <!-- begin-user-doc -->
                        * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
-  	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
-  	 * @generated
-  	 */
+   * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
+   * @generated
+   */
   int SETUP_TASK_SCOPE = 38;
 
   /**
@@ -3120,14 +3129,25 @@ public interface SetupPackage extends EPackage
   EReference getP2Task_InstallableUnits();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.P2Task#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories()
+   * @return the meta object for the attribute '<em>Disable License Confirmation</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.P2Task#isDisableLicenseConfirmation()
    * @see #getP2Task()
    * @generated
    */
+  EAttribute getP2Task_DisableLicenseConfirmation();
+
+  /**
+  	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories()
+  	 * @see #getP2Task()
+  	 * @generated
+  	 */
   EReference getP2Task_P2Repositories();
 
   /**
@@ -3592,24 +3612,24 @@ public interface SetupPackage extends EPackage
   EClass getTargetPlatformTask();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName <em>Name</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Name</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName()
-  	 * @see #getTargetPlatformTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName()
+   * @see #getTargetPlatformTask()
+   * @generated
+   */
   EAttribute getTargetPlatformTask_Name();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
+   * <!-- begin-user-doc -->
            * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Automatic Source Locator</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Automatic Source Locator</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
+   * @generated
+   */
   EClass getAutomaticSourceLocator();
 
   /**
@@ -4465,11 +4485,19 @@ public interface SetupPackage extends EPackage
     EReference P2_TASK__INSTALLABLE_UNITS = eINSTANCE.getP2Task_InstallableUnits();
 
     /**
-     * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Disable License Confirmation</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
+    EAttribute P2_TASK__DISABLE_LICENSE_CONFIRMATION = eINSTANCE.getP2Task_DisableLicenseConfirmation();
+
+    /**
+    	 * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @generated
+    	 */
     EReference P2_TASK__P2_REPOSITORIES = eINSTANCE.getP2Task_P2Repositories();
 
     /**
@@ -4841,21 +4869,21 @@ public interface SetupPackage extends EPackage
     EClass TARGET_PLATFORM_TASK = eINSTANCE.getTargetPlatformTask();
 
     /**
-    	 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute TARGET_PLATFORM_TASK__NAME = eINSTANCE.getTargetPlatformTask_Name();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
+     * <!-- begin-user-doc -->
            * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
+     * @generated
+     */
     EClass AUTOMATIC_SOURCE_LOCATOR = eINSTANCE.getAutomaticSourceLocator();
 
     /**

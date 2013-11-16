@@ -51,7 +51,6 @@ import org.eclipse.ui.PlatformUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -227,17 +226,9 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     return restartReasons;
   }
 
-  public void rememberAcceptedLicenses(List<String> uuids)
+  public Preferences getPreferences()
   {
-    try
-    {
-      preferences.getAcceptedLicenses().addAll(uuids);
-      preferences.eResource().save(null);
-    }
-    catch (IOException ex)
-    {
-      throw new RuntimeException(ex);
-    }
+    return preferences;
   }
 
   public String expandString(String string)
@@ -420,6 +411,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
     setup = (Setup)resource.getContents().get(0);
     preferences = setup.getPreferences();
+    preferences.eResource().setTrackingModification(true);
 
     Branch branch = setup.getBranch();
     String branchName = branch.getName();
@@ -521,24 +513,35 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private void doPerform(EList<SetupTask> neededTasks) throws Exception
   {
-    Branch branch = setup.getBranch();
-    log("Setting up " + branch.getProject().getName() + " " + branch.getName());
-
-    for (SetupTask neededTask : neededTasks)
+    try
     {
-      task(neededTask);
-      log("Performing setup task " + getLabel(neededTask));
-      neededTask.perform(this);
-      neededTask.dispose();
+      Branch branch = setup.getBranch();
+      log("Setting up " + branch.getProject().getName() + " " + branch.getName());
+
+      for (SetupTask neededTask : neededTasks)
+      {
+        task(neededTask);
+        log("Performing setup task " + getLabel(neededTask));
+        neededTask.perform(this);
+        neededTask.dispose();
+      }
+
+      Resource preferencesResource = preferences.eResource();
+      if (preferencesResource.isModified())
+      {
+        preferencesResource.save(null);
+      }
     }
-
-    if (logStream != null)
+    finally
     {
-      logStream.println();
-      logStream.println();
-      logStream.println();
-      logStream.println();
-      IOUtil.closeSilent(logStream);
+      if (logStream != null)
+      {
+        logStream.println();
+        logStream.println();
+        logStream.println();
+        logStream.println();
+        IOUtil.closeSilent(logStream);
+      }
     }
   }
 

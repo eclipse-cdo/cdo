@@ -25,12 +25,14 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -91,6 +93,7 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getInstallableUnits <em>Installable Units</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}</li>
  * </ul>
  * </p>
  *
@@ -119,6 +122,26 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    * @ordered
    */
   protected EList<InstallableUnit> installableUnits;
+
+  /**
+   * The default value of the '{@link #isDisableLicenseConfirmation() <em>Disable License Confirmation</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isDisableLicenseConfirmation()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean DISABLE_LICENSE_CONFIRMATION_EDEFAULT = false;
+
+  /**
+  	 * The cached value of the '{@link #isDisableLicenseConfirmation() <em>Disable License Confirmation</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #isDisableLicenseConfirmation()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected boolean disableLicenseConfirmation = DISABLE_LICENSE_CONFIRMATION_EDEFAULT;
 
   private transient Set<String> neededInstallableUnits;
 
@@ -163,6 +186,32 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isDisableLicenseConfirmation()
+  {
+    return disableLicenseConfirmation;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setDisableLicenseConfirmation(boolean newDisableLicenseConfirmation)
+  {
+    boolean oldDisableLicenseConfirmation = disableLicenseConfirmation;
+    disableLicenseConfirmation = newDisableLicenseConfirmation;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION,
+          oldDisableLicenseConfirmation, disableLicenseConfirmation));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EList<P2Repository> getP2Repositories()
   {
     if (p2Repositories == null)
@@ -205,6 +254,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return getP2Repositories();
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return getInstallableUnits();
+    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
+      return isDisableLicenseConfirmation();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -228,6 +279,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       getInstallableUnits().clear();
       getInstallableUnits().addAll((Collection<? extends InstallableUnit>)newValue);
       return;
+    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
+      setDisableLicenseConfirmation((Boolean)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -248,6 +302,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       getInstallableUnits().clear();
       return;
+    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
+      setDisableLicenseConfirmation(DISABLE_LICENSE_CONFIRMATION_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -266,8 +323,30 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return p2Repositories != null && !p2Repositories.isEmpty();
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return installableUnits != null && !installableUnits.isEmpty();
+    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
+      return disableLicenseConfirmation != DISABLE_LICENSE_CONFIRMATION_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (disableLicenseConfirmation: ");
+    result.append(disableLicenseConfirmation);
+    result.append(')');
+    return result.toString();
   }
 
   private static Set<String> getInstalledUnits()
@@ -452,7 +531,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   private void processLicenses(final SetupTaskContext context, IProvisioningPlan provisioningPlan,
       IProgressMonitor monitor) throws Exception
   {
-    final Preferences preferences = context.getSetup().getPreferences();
+    final Preferences preferences = context.getPreferences();
     Set<String> acceptedLicenses = new HashSet<String>(preferences.getAcceptedLicenses());
 
     final Map<ILicense, List<IInstallableUnit>> licensesToIUs = new HashMap<ILicense, List<IInstallableUnit>>();
@@ -505,16 +584,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
             LicenseDialog dialog = new LicenseDialog(null, licensesToIUs);
             if (dialog.open() == LicenseDialog.OK)
             {
-              List<String> uuids = new ArrayList<String>();
               if (dialog.isRememberAcceptedLicenses())
               {
                 for (ILicense license : licensesToIUs.keySet())
                 {
                   String uuid = license.getUUID();
-                  uuids.add(uuid);
+                  context.getPreferences().getAcceptedLicenses().add(uuid);
                 }
-
-                context.rememberAcceptedLicenses(uuids);
               }
             }
             else

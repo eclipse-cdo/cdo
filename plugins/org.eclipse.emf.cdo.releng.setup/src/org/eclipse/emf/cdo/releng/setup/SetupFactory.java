@@ -202,12 +202,12 @@ public interface SetupFactory extends EFactory
   TargetPlatformTask createTargetPlatformTask();
 
   /**
-  	 * Returns a new object of class '<em>Automatic Source Locator</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Automatic Source Locator</em>'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Automatic Source Locator</em>'.
-  	 * @generated
-  	 */
+   * @return a new object of class '<em>Automatic Source Locator</em>'.
+   * @generated
+   */
   AutomaticSourceLocator createAutomaticSourceLocator();
 
   /**

@@ -1051,16 +1051,16 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-  	 * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * <!-- begin-user-doc -->
        * This implementation returns null;
        * returning a non-null result will terminate the switch.
        * <!-- end-user-doc -->
-  	 * @param object the target of the switch.
-  	 * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
-  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-  	 * @generated
-  	 */
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
   public T caseAutomaticSourceLocator(AutomaticSourceLocator object)
   {
     return null;

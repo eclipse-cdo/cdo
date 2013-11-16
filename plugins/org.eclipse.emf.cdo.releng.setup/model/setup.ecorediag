@@ -99,18 +99,24 @@
   <children xmi:type="notation:Node" xmi:id="_PhLMcOoNEeKpRf481yfX-g" type="1001">
     <children xmi:type="notation:Node" xmi:id="_PhLzgOoNEeKpRf481yfX-g" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_PhLzgeoNEeKpRf481yfX-g" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_sAZNYE6aEeOgecV4PNc8SA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//P2Task/disableLicenseConfirmation"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_sAZNYU6aEeOgecV4PNc8SA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_PhLzguoNEeKpRf481yfX-g"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_PhLzg-oNEeKpRf481yfX-g"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_PhLzhOoNEeKpRf481yfX-g"/>
+      <layoutConstraint xmi:type="notation:Ratio" xmi:id="_1NOwYE6aEeOgecV4PNc8SA" value="0.30578512396694213"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_PhMakOoNEeKpRf481yfX-g" type="5002">
       <styles xmi:type="notation:DrawerStyle" xmi:id="_PhMakeoNEeKpRf481yfX-g"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_PhMakuoNEeKpRf481yfX-g"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_PhMak-oNEeKpRf481yfX-g"/>
+      <layoutConstraint xmi:type="notation:Ratio" xmi:id="_1NOwYU6aEeOgecV4PNc8SA" value="0.5041322314049587"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_PhLMceoNEeKpRf481yfX-g" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//P2Task"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_PhLMcuoNEeKpRf481yfX-g" x="636" y="913" width="118" height="43"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_PhLMcuoNEeKpRf481yfX-g" x="600" y="870" width="213" height="123"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_mgNekOoOEeKpRf481yfX-g" type="1001">
     <children xmi:type="notation:Node" xmi:id="_mgOFoOoOEeKpRf481yfX-g" type="4001"/>

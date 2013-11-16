@@ -165,21 +165,6 @@ public class InstallerDialog extends AbstractSetupDialog
   }
 
   @Override
-  public boolean close()
-  {
-    if (preferences != null)
-    {
-      Resource eResource = preferences.eResource();
-      if (eResource.isModified())
-      {
-        saveEObject(preferences);
-      }
-    }
-
-    return super.close();
-  }
-
-  @Override
   protected Point getInitialSize()
   {
     return new Point(500, 700);
@@ -200,8 +185,10 @@ public class InstallerDialog extends AbstractSetupDialog
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    viewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory)
+    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory)
     {
+      private Map<Object, Object> parentMap = new HashMap<Object, Object>();
+
       @Override
       public boolean hasChildren(Object object)
       {
@@ -211,6 +198,23 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         return super.hasChildren(object);
+      }
+
+      @Override
+      public Object getParent(Object object)
+      {
+        Object parent = parentMap.get(object);
+        if (parent != null)
+        {
+          return parent;
+        }
+
+        if (object instanceof Project)
+        {
+          return viewer.getInput();
+        }
+
+        return super.getParent(object);
       }
 
       @Override
@@ -231,7 +235,17 @@ public class InstallerDialog extends AbstractSetupDialog
                 resource = loadResourceSafely(resourceURI);
                 object = resource.getEObject(eProxyURI.fragment());
 
+                // Force proxy reference from the configuration to resolve too.
+                EList<Project> projects = configuration.getProjects();
+                projects.get(projects.indexOf(eObject));
+
                 final Project project = (Project)object;
+                Object[] children = super.getChildren(project);
+                for (Object child : children)
+                {
+                  parentMap.put(child, eObject);
+                }
+
                 viewer.getControl().getDisplay().asyncExec(new Runnable()
                 {
                   public void run()
@@ -246,11 +260,10 @@ public class InstallerDialog extends AbstractSetupDialog
                     InstallerDialog.this.viewer.update(project, null);
                   }
                 });
+
+                return children;
               }
-              else
-              {
-                object = resource.getEObject(eProxyURI.fragment());
-              }
+              object = resource.getEObject(eProxyURI.fragment());
             }
             catch (UpdatingException ex)
             {
@@ -261,7 +274,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
         return super.getChildren(object);
       }
-    });
+    };
+    viewer.setContentProvider(contentProvider);
 
     SetupDialogLabelProvider labelProvider = new SetupDialogLabelProvider(adapterFactory, viewer);
     viewer.setLabelProvider(labelProvider);
@@ -335,13 +349,12 @@ public class InstallerDialog extends AbstractSetupDialog
         if (element instanceof Project)
         {
           Project project = (Project)element;
-
-          viewer.expandToLevel(project, 1);
-
-          for (Branch branch : project.getBranches())
+          for (Object branch : contentProvider.getChildren(project))
           {
             viewer.setChecked(branch, checked);
           }
+
+          viewer.expandToLevel(project, 1);
         }
         else if (element instanceof Branch)
         {
@@ -427,6 +440,7 @@ public class InstallerDialog extends AbstractSetupDialog
       public void modifyText(ModifyEvent e)
       {
         preferences.setUserName(userNameText.getText());
+        saveEObject(preferences);
         validate();
       }
     });
@@ -460,6 +474,7 @@ public class InstallerDialog extends AbstractSetupDialog
       public void modifyText(ModifyEvent e)
       {
         preferences.setInstallFolder(installFolderText.getText());
+        saveEObject(preferences);
         validate();
       }
     });
@@ -496,6 +511,7 @@ public class InstallerDialog extends AbstractSetupDialog
       public void modifyText(ModifyEvent e)
       {
         preferences.setGitPrefix(gitPrefixText.getText());
+        saveEObject(preferences);
         validate();
       }
     });
@@ -837,7 +853,6 @@ public class InstallerDialog extends AbstractSetupDialog
             {
               Resource resource = loadResourceSafely(Preferences.PREFERENCES_URI);
               preferences = (Preferences)resource.getContents().get(0);
-              resource.setTrackingModification(true);
 
               userName = safe(preferences.getUserName());
               installFolder = safe(preferences.getInstallFolder());
@@ -848,7 +863,7 @@ public class InstallerDialog extends AbstractSetupDialog
               Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
               preferences = SetupFactory.eINSTANCE.createPreferences();
               resource.getContents().add(preferences);
-              resource.setModified(true);
+              saveEObject(preferences);
 
               File rootFolder = new File(System.getProperty("user.home", "."));
 
@@ -1108,6 +1123,11 @@ public class InstallerDialog extends AbstractSetupDialog
         for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
         {
           install(setupTaskPerformer);
+
+          Preferences newPreferences = setupTaskPerformer.getPreferences();
+          Resource eResource = preferences.eResource();
+          eResource.getContents().set(0, newPreferences);
+          eResource.save(null);
         }
 
         return null;

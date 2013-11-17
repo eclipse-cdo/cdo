@@ -401,16 +401,15 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     gitDelegate = GitUtil.create();
-    return gitDelegate.isNeeded(context, context.expandString(getLocation()),
-        context.expandString(getCheckoutBranch()), context.expandString(getRemoteName()));
+    return gitDelegate.isNeeded(context, getLocation(), getCheckoutBranch(), getRemoteName());
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
     if (gitDelegate != null)
     {
-      gitDelegate.perform(context, context.expandString(getCheckoutBranch()), context.expandString(getRemoteName()),
-          context.redirect(URI.createURI(context.expandString(getRemoteURI()))).toString());
+      gitDelegate.perform(context, getCheckoutBranch(), getRemoteName(), context
+          .redirect(URI.createURI(getRemoteURI())).toString());
     }
   }
 

@@ -254,7 +254,7 @@ public class LinkLocationTaskImpl extends SetupTaskImpl implements LinkLocationT
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     File links = new File(context.getEclipseDir(), "links");
-    canonicalPath = new File(context.expandString(getPath())).getCanonicalFile();
+    canonicalPath = new File(getPath()).getCanonicalFile();
 
     String name = getName();
     if (name == null || name.length() == 0)

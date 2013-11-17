@@ -12,9 +12,13 @@ package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
+import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -31,7 +35,11 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -54,9 +62,11 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -108,6 +118,10 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   private ProgressLogFilter logFilter = new ProgressLogFilter();
 
   private URIConverter uriConverter = new ExtensibleURIConverterImpl();
+
+  private List<ContextVariableTask> unresolvedVariables = new ArrayList<ContextVariableTask>();
+
+  private List<EStructuralFeature.Setting> unresolvedSettings = new ArrayList<EStructuralFeature.Setting>();
 
   public SetupTaskPerformer(File branchDir)
   {
@@ -233,6 +247,35 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public String expandString(String string)
   {
+    return expandString(string, null);
+  }
+
+  public Set<String> getVariables(String string)
+  {
+    if (string == null)
+    {
+      return null;
+    }
+
+    Set<String> result = new HashSet<String>();
+    for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)
+    {
+      String key = matcher.group(1);
+
+      int prefixIndex = key.indexOf('/');
+      if (prefixIndex != -1)
+      {
+        key = key.substring(0, prefixIndex);
+      }
+
+      result.add(key);
+    }
+
+    return result;
+  }
+
+  public String expandString(String string, Set<String> keys)
+  {
     if (string == null)
     {
       return null;
@@ -240,6 +283,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
     StringBuilder result = new StringBuilder();
     int previous = 0;
+    boolean unresolved = false;
     for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)
     {
       result.append(string.substring(previous, matcher.start()));
@@ -258,18 +302,42 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       }
 
       String value = lookup(key);
-      String filters = matcher.group(3);
-      if (filters != null)
+      if (value == null)
       {
-        for (String filterName : filters.split("\\|"))
+        if (keys != null)
         {
-          value = filter(value, filterName);
+          unresolved = true;
+          keys.add(key);
+        }
+        else
+        {
+          result.append(matcher.group());
+        }
+      }
+      else
+      {
+        String filters = matcher.group(3);
+        if (filters != null)
+        {
+          for (String filterName : filters.split("\\|"))
+          {
+            value = filter(value, filterName);
+          }
+        }
+
+        if (!unresolved)
+        {
+          result.append(value);
+          result.append(suffix);
         }
       }
 
-      result.append(value);
-      result.append(suffix);
       previous = matcher.end();
+    }
+
+    if (unresolved)
+    {
+      return null;
     }
 
     result.append(string.substring(previous));
@@ -355,29 +423,173 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     return setup;
   }
 
-  public synchronized EList<SetupTask> getTriggeredSetupTasks()
+  public EList<SetupTask> getTriggeredSetupTasks()
   {
-    if (triggeredSetupTasks == null)
+    return triggeredSetupTasks;
+  }
+
+  private void initTriggeredSetupTasks()
+  {
+    triggeredSetupTasks = setup.getSetupTasks(true, trigger);
+    if (!triggeredSetupTasks.isEmpty())
     {
-      triggeredSetupTasks = setup.getSetupTasks(true, trigger);
-      if (triggeredSetupTasks.isEmpty())
-      {
-        return triggeredSetupTasks;
-      }
 
       Map<SetupTask, SetupTask> substitutions = getSubstitutions(triggeredSetupTasks);
       setup = copySetup(triggeredSetupTasks, substitutions);
 
+      Set<String> keys = new HashSet<String>();
+      for (SetupTask setupTask : triggeredSetupTasks)
+      {
+        if (setupTask instanceof ContextVariableTask)
+        {
+          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
+          String name = contextVariableTask.getName();
+          keys.add(name);
+          String value = contextVariableTask.getValue();
+          put(name, value);
+        }
+      }
+
+      Map<String, Set<String>> variables = new HashMap<String, Set<String>>();
+      for (Map.Entry<Object, Object> entry : entrySet())
+      {
+        Object entryKey = entry.getKey();
+        if (keys.contains(entryKey))
+        {
+          Object entryValue = entry.getValue();
+          if (entryKey instanceof String && entryValue != null)
+          {
+            String key = (String)entryKey;
+            String value = entryValue.toString();
+            variables.put(key, getVariables(value));
+          }
+        }
+      }
+
+      EList<Map.Entry<String, Set<String>>> orderedVariables = reorderVariables(variables);
+
+      for (Map.Entry<String, Set<String>> entry : orderedVariables)
+      {
+        String key = entry.getKey();
+        Object object = get(key);
+        if (object != null)
+        {
+          String value = expandString(object.toString());
+          put(key, value);
+        }
+      }
+
       reorder(triggeredSetupTasks);
+
+      expandStrings(triggeredSetupTasks);
+
+      for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
+      {
+        SetupTask setupTask = it.next();
+        if (setupTask instanceof ContextVariableTask)
+        {
+          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
+          if (!contextVariableTask.isStringSubstitution())
+          {
+            it.remove();
+          }
+        }
+      }
+    }
+  }
+
+  public List<ContextVariableTask> getUnresolvedVariables()
+  {
+    return unresolvedVariables;
+  }
+
+  private void expandStrings(EList<SetupTask> orderedSetupTasks)
+  {
+    Set<String> keys = new HashSet<String>();
+    for (SetupTask setupTask : orderedSetupTasks)
+    {
+      expand(keys, unresolvedSettings, setupTask);
+      for (Iterator<EObject> it = setupTask.eAllContents(); it.hasNext();)
+      {
+        expand(keys, unresolvedSettings, it.next());
+      }
     }
 
-    return triggeredSetupTasks;
+    if (!unresolvedSettings.isEmpty())
+    {
+      for (String key : keys)
+      {
+        for (SetupTask setupTask : orderedSetupTasks)
+        {
+          if (setupTask instanceof ContextVariableTask)
+          {
+            ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
+            if (key.equals(contextVariableTask.getName()))
+            {
+              unresolvedVariables.add(contextVariableTask);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void resolveSettings()
+  {
+    EList<SetupTask> setupTasks = preferences.getSetupTasks();
+    for (ContextVariableTask contextVariableTask : unresolvedVariables)
+    {
+      put(contextVariableTask.getName(), contextVariableTask.getValue());
+      ContextVariableTask userPreference = SetupFactory.eINSTANCE.createContextVariableTask();
+      userPreference.setName(contextVariableTask.getName());
+      userPreference.setValue(contextVariableTask.getValue());
+      for (EObject container = contextVariableTask.eContainer(); container != null; container = container.eContainer())
+      {
+        if (container instanceof ConfigurableItem)
+        {
+          userPreference.getRestrictions().add((ConfigurableItem)container);
+          break;
+        }
+      }
+
+      setupTasks.add(userPreference);
+    }
+
+    for (EStructuralFeature.Setting setting : unresolvedSettings)
+    {
+      setting.set(expandString((String)setting.get(false)));
+    }
+
+  }
+
+  private void expand(Set<String> keys, List<EStructuralFeature.Setting> unresolvedVariables, EObject eObject)
+  {
+    EClass eClass = eObject.eClass();
+    for (EAttribute attribute : eClass.getEAllAttributes())
+    {
+      if (attribute.getEAttributeType().getInstanceClassName() == "java.lang.String"
+          && attribute != SetupPackage.Literals.CONTEXT_VARIABLE_TASK__NAME)
+      {
+        String value = (String)eObject.eGet(attribute);
+        if (value != null)
+        {
+          String newValue = expandString(value, keys);
+          if (newValue == null)
+          {
+            unresolvedVariables.add(((InternalEObject)eObject).eSetting(attribute));
+          }
+          else if (!value.equals(newValue))
+          {
+            eObject.eSet(attribute, newValue);
+          }
+        }
+      }
+    }
   }
 
   public void perform() throws Exception
   {
-    EList<SetupTask> setupTasks = getTriggeredSetupTasks();
-    perform(setupTasks);
+    perform(triggeredSetupTasks);
   }
 
   protected String lookup(String key)
@@ -388,7 +600,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       return object.toString();
     }
 
-    return System.getProperty(key, key);
+    return null;
   }
 
   protected String filter(String value, String filterName)
@@ -436,6 +648,11 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     put("os.arch", Platform.getOSArch());
     put("ws", Platform.getWS());
 
+    for (Map.Entry<Object, Object> entry : System.getProperties().entrySet())
+    {
+      put(entry.getKey(), entry.getValue());
+    }
+
     try
     {
       File logFile = new File(getBranchDir(), "setup.log");
@@ -448,25 +665,70 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     {
       throw new RuntimeException(ex);
     }
+
+    initTriggeredSetupTasks();
+  }
+
+  private EList<Map.Entry<String, Set<String>>> reorderVariables(final Map<String, Set<String>> variables)
+  {
+    EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
+
+    reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
+    {
+      public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
+      {
+        Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
+        for (String key : variable.getValue())
+        {
+          for (Map.Entry<String, Set<String>> entry : variables.entrySet())
+          {
+            if (entry.getKey().equals(key))
+            {
+              result.add(entry);
+            }
+          }
+        }
+
+        return result;
+      }
+    });
+
+    return list;
   }
 
   private void reorder(EList<SetupTask> setupTasks)
   {
-    for (int i = 0, size = setupTasks.size(), count = 0; i < size; ++i)
+    reorder(setupTasks, new DependencyProvider<SetupTask>()
     {
-      SetupTask setupTask = setupTasks.get(i);
+      public Collection<SetupTask> getDependencies(SetupTask setupTask)
+      {
+        return setupTask.getRequirements();
+      }
+    });
+  }
+
+  public interface DependencyProvider<T>
+  {
+    Collection<? extends T> getDependencies(T value);
+  }
+
+  public static <T> void reorder(EList<T> values, DependencyProvider<T> dependencyProvider)
+  {
+    for (int i = 0, size = values.size(), count = 0; i < size; ++i)
+    {
+      T value = values.get(i);
       if (count == size)
       {
-        throw new IllegalArgumentException("Circular requirements " + setupTask);
+        throw new IllegalArgumentException("Circular dependencies " + value);
       }
 
       boolean changed = false;
-      for (SetupTask requirement : setupTask.getRequirements())
+      for (T dependency : dependencyProvider.getDependencies(value))
       {
-        int index = setupTasks.indexOf(requirement);
+        int index = values.indexOf(dependency);
         if (index > i)
         {
-          setupTasks.move(i, index);
+          values.move(i, index);
           changed = true;
         }
       }

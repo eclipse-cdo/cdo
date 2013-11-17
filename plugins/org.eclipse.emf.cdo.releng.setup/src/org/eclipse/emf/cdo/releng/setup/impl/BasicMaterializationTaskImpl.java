@@ -464,7 +464,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
     {
-      URL mSpecURL = new URL(context.expandString(mSpec));
+      URL mSpecURL = new URL(mSpec);
       MaterializationSpec mspec = BuckminsterHelper.getMSpec(mSpecURL, monitor); // 20 ticks
       ComponentQuery cquery = BuckminsterHelper.getCQuery(mspec.getResolvedURL(), monitor); // 20 ticks
 

@@ -319,9 +319,6 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    String expandedValue = context.expandString(getValue());
-    context.put(getName(), expandedValue);
-
     if (!isStringSubstitution() || context.getTrigger() == Trigger.BOOTSTRAP)
     {
       return false;
@@ -336,7 +333,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
       return true;
     }
 
-    if (!expandedValue.equals(variable.getValue()))
+    if (!getValue().equals(variable.getValue()))
     {
       return true;
     }
@@ -351,8 +348,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    String expandedValue = context.expandString(getValue());
-    context.log("Setting string substitution variable " + getName() + " = " + expandedValue);
+    context.log("Setting string substitution variable " + getName() + " = " + getValue());
 
     IValueVariable variable = cachedVariable;
     if (variable == null)
@@ -363,7 +359,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     }
 
     variable.setDescription(getDocumentation());
-    variable.setValue(expandedValue);
+    variable.setValue(getValue());
   }
 
 } // ContextVariableTaskImpl

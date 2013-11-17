@@ -87,8 +87,6 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
 
   private transient String property;
 
-  private transient String expandedValue;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -283,10 +281,9 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     }
 
     property = segments[segments.length - 1];
-    expandedValue = context.expandString(getValue());
 
     String oldValue = node.get(property, null);
-    if (ObjectUtil.equals(expandedValue, oldValue))
+    if (ObjectUtil.equals(getValue(), oldValue))
     {
       return false;
     }
@@ -297,7 +294,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    context.log("Setting preference " + getKey() + " = " + expandedValue);
+    context.log("Setting preference " + getKey() + " = " + getValue());
 
     final Exception[] exception = { null };
     PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay().syncExec(new Runnable()
@@ -307,9 +304,9 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
         try
         {
           org.osgi.service.prefs.Preferences node = (org.osgi.service.prefs.Preferences)cachedNode;
-          if (expandedValue != null)
+          if (getValue() != null)
           {
-            node.put(property, expandedValue);
+            node.put(property, getValue());
           }
           else
           {

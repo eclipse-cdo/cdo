@@ -103,8 +103,6 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
 
   private transient List<String> contents;
 
-  private transient String expandedValue;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -333,11 +331,10 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     int vmargsIndex = contents.indexOf("-vmargs");
 
     String option = getOption();
-    expandedValue = context.expandString(getValue());
 
     if (isVm())
     {
-      String line = option + expandedValue;
+      String line = option + getValue();
       if (vmargsIndex != -1)
       {
         for (int i = vmargsIndex + 1; i < contents.size(); i++)
@@ -366,13 +363,13 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
       int optionIndex = contents.indexOf(option);
       if (optionIndex != -1)
       {
-        contents.set(optionIndex + 1, expandedValue);
+        contents.set(optionIndex + 1, getValue());
       }
       else
       {
         optionIndex = vmargsIndex != -1 ? vmargsIndex : contents.size();
         contents.add(optionIndex, option);
-        contents.add(optionIndex + 1, expandedValue);
+        contents.add(optionIndex + 1, getValue());
       }
     }
 
@@ -383,7 +380,7 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
   {
     if (contents != null || createNewContent(context))
     {
-      context.log("Changing " + file + " (" + getLabel(expandedValue) + ")");
+      context.log("Changing " + file + " (" + getLabel(getValue()) + ")");
       context.getOS().writeText(file, contents);
       context.setRestartNeeded("The eclipse.ini file has changed.");
     }

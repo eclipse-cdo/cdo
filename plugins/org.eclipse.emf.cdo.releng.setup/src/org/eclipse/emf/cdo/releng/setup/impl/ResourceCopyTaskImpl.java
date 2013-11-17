@@ -254,8 +254,8 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    URI sourceURI = context.redirect(URI.createURI(context.expandString(getSourceURL())));
-    URI targetURI = context.redirect(URI.createURI(context.expandString(getTargetURL())));
+    URI sourceURI = context.redirect(URI.createURI(getSourceURL()));
+    URI targetURI = context.redirect(URI.createURI(getTargetURL()));
     if (targetURI.hasTrailingPathSeparator())
     {
       if (sourceURI.hasTrailingPathSeparator())
@@ -277,8 +277,8 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    URI sourceURI = context.redirect(URI.createURI(context.expandString(getSourceURL())));
-    URI targetURI = context.redirect(URI.createURI(context.expandString(getTargetURL())));
+    URI sourceURI = context.redirect(URI.createURI(getSourceURL()));
+    URI targetURI = context.redirect(URI.createURI(getTargetURL()));
 
     context.log("Copying " + sourceURI + " to " + targetURI);
 

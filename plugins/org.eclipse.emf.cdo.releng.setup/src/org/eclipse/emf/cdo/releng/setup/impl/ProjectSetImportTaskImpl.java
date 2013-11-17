@@ -213,7 +213,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    URI uri = context.redirect(URI.createURI(context.expandString(getURL())));
+    URI uri = context.redirect(URI.createURI(getURL()));
     helper = new Helper(uri);
     return helper.isNeeded(context);
   }

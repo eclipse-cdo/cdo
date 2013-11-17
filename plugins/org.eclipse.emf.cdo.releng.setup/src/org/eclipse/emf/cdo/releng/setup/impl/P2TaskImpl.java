@@ -77,6 +77,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -106,6 +107,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   /**
    * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.
    * <!-- begin-user-doc -->
+    EList<SetupTask> setupTasks = preferences.getSetupTasks();
    * <!-- end-user-doc -->
    * @see #getP2Repositories()
    * @generated
@@ -394,7 +396,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     Set<String> installedUnits = getInstalledUnits();
     for (InstallableUnit installableUnit : getInstallableUnits())
     {
-      String id = context.expandString(installableUnit.getID());
+      String id = installableUnit.getID();
       if (!installedUnits.contains(id))
       {
         if (neededInstallableUnits == null)
@@ -409,8 +411,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     Set<String> knownRepositories = getKnownRepositories();
     for (P2Repository p2Repository : getP2Repositories())
     {
-      String url = context.redirect(
-          org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getURL()))).toString();
+      String url = context.redirect(org.eclipse.emf.common.util.URI.createURI(p2Repository.getURL())).toString();
       if (!knownRepositories.contains(url))
       {
         return true;
@@ -437,8 +438,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       List<URI> repos = new ArrayList<URI>();
       for (P2Repository p2Repository : getP2Repositories())
       {
-        String url = context.redirect(
-            org.eclipse.emf.common.util.URI.createURI(context.expandString(p2Repository.getURL()))).toString();
+        String url = context.redirect(org.eclipse.emf.common.util.URI.createURI(p2Repository.getURL())).toString();
         URI uri = new URI(url);
         context.log("Using repository " + uri);
         if (neededInstallableUnits == null)
@@ -828,38 +828,56 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     Thread poolMonitorThread = new Thread("Bundle Pool Monitor")
     {
+      private File featuresDir = new File(p2PoolDir, "features");
+
+      private File pluginsDir = new File(p2PoolDir, "plugins");
+
+      private Set<String> features = new HashSet<String>();
+
+      private Set<String> plugins = new HashSet<String>();
+
       {
+        if (featuresDir.isDirectory())
+        {
+          features.addAll(Arrays.asList(featuresDir.list()));
+        }
+
+        if (pluginsDir.isDirectory())
+        {
+          plugins.addAll(Arrays.asList(pluginsDir.list()));
+        }
+
         setDaemon(true);
         start();
       }
 
-      private Set<String> features = new HashSet<String>();
-
-      private Set<String> bundles = new HashSet<String>();
-
       @Override
       public void run()
       {
-        File featuresDir = new File(p2PoolDir, "features");
-        File bundlesDir = new File(p2PoolDir, "bundles");
 
         try
         {
           for (; !interrupted(); sleep(1000))
           {
-            for (String feature : featuresDir.list())
+            if (featuresDir.isDirectory())
             {
-              if (features.add(feature))
+              for (String feature : featuresDir.list())
               {
-                context.log("Downloading feature " + feature);
+                if (features.add(feature))
+                {
+                  context.log("Downloading feature " + feature);
+                }
               }
             }
 
-            for (String bundle : bundlesDir.list())
+            if (pluginsDir.isDirectory())
             {
-              if (bundles.add(bundle))
+              for (String bundle : pluginsDir.list())
               {
-                context.log("Downloading bundle " + bundle);
+                if (plugins.add(bundle))
+                {
+                  context.log("Downloading bundle " + bundle);
+                }
               }
             }
           }
@@ -892,7 +910,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       }
 
       String value = (String)object.eGet(attribute);
-      value = context.expandString(value);
       if (attribute == SetupPackage.Literals.P2_REPOSITORY__URL)
       {
         value = context.redirect(org.eclipse.emf.common.util.URI.createURI(value)).toString();

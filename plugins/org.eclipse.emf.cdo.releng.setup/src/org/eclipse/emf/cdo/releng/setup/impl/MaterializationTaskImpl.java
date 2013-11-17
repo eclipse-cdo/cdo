@@ -370,7 +370,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       for (Component rootComponent : rootComponents)
       {
         ComponentRequestBuilder rootComponentRequestBuilder = new ComponentRequestBuilder();
-        rootComponentRequestBuilder.setName(context.expandString(rootComponent.getName()));
+        rootComponentRequestBuilder.setName(rootComponent.getName());
         rootComponentRequestBuilder.setComponentTypeID(rootComponent.getType().toString());
         cspecBuilder.addDependency(rootComponentRequestBuilder.createComponentRequest());
       }
@@ -423,7 +423,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             EList<Provider> sourceProviders = sourceSearchPath.getProviders();
 
             ManualSourceLocator manualSourceLocator = (ManualSourceLocator)sourceLocator;
-            String locationPattern = context.expandString(manualSourceLocator.getLocation());
+            String locationPattern = manualSourceLocator.getLocation();
             locationPattern = locationPattern.replace("*", "{0}");
             if (locationPattern.indexOf("{0}") == -1)
             {
@@ -481,8 +481,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             documentBuilderFactory.setNamespaceAware(true);
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             HashMap<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
-            analyze(componentMap, documentBuilder,
-                new File(context.expandString(automaticSourceLocator.getRootFolder())));
+            analyze(componentMap, documentBuilder, new File(automaticSourceLocator.getRootFolder()));
             for (Map.Entry<String, List<ComponentLocation>> entry : componentMap.entrySet())
             {
               String componentName = entry.getKey();
@@ -526,7 +525,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         EList<Provider> p2Providers = p2SearchPath.getProviders();
         for (P2Repository p2Repository : p2Repositories)
         {
-          String url = context.redirect(URI.createURI(context.expandString(p2Repository.getURL()))).toString();
+          String url = context.redirect(URI.createURI(p2Repository.getURL())).toString();
           Provider provider = RmapFactory.eINSTANCE.createProvider();
           provider.setComponentTypesAttr("eclipse.feature,osgi.bundle");
           provider.setReaderType("p2");

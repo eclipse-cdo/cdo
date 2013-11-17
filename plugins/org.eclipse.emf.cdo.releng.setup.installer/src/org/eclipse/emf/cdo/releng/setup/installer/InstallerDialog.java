@@ -1111,7 +1111,8 @@ public class InstallerDialog extends AbstractSetupDialog
         Setup setup = getSetup(branch);
         if (setup != null)
         {
-          setupTaskPerformers.add(createTaskPerformer(setup, installFolder, gitPrefix));
+          SetupTaskPerformer taskPerformer = createTaskPerformer(setup, installFolder, gitPrefix);
+          setupTaskPerformers.add(taskPerformer);
         }
       }
     }

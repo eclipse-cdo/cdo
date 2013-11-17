@@ -205,8 +205,7 @@ public class TargetPlatformTaskImpl extends SetupTaskImpl implements TargetPlatf
 
   private void initTargetPlatform(SetupTaskContext context)
   {
-    String name = context.expandString(getName());
-    targetPlatform = TargetPlatformUtil.getTargetPlatform(name, context);
+    targetPlatform = TargetPlatformUtil.getTargetPlatform(getName(), context);
   }
 
   public void perform(SetupTaskContext context) throws Exception

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
@@ -54,15 +55,19 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
@@ -441,9 +446,102 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
     }
   }
 
+  private static boolean promptUnresolvedVariables(Shell shell, final List<SetupTaskPerformer> setupTaskPerformers)
+  {
+    int result = new AbstractSetupDialog(shell)
+    {
+      @Override
+      protected Point getInitialSize()
+      {
+        return new Point(400, 400);
+      }
+
+      @Override
+      protected String getDefaultMessage()
+      {
+        return "Unspecified context variables";
+      }
+
+      @Override
+      protected void createUI(Composite parent)
+      {
+        GridLayout layout = (GridLayout)parent.getLayout();
+        layout.numColumns = 2;
+
+        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+        {
+          List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
+          if (!unresolvedVariables.isEmpty())
+          {
+            Label header = new Label(parent, SWT.NONE);
+            header.setText(setupTaskPerformer.getBranchDir().toString());
+            header.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
+
+            for (final ContextVariableTask contextVariableTask : unresolvedVariables)
+            {
+              Label variableLabel = new Label(parent, SWT.NONE);
+              variableLabel.setText(contextVariableTask.getName() + ":");
+              variableLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+
+              final Text text = new Text(parent, SWT.BORDER);
+              text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+              text.addModifyListener(new ModifyListener()
+              {
+                public void modifyText(ModifyEvent e)
+                {
+                  contextVariableTask.setValue(text.getText());
+                  validate();
+                }
+              });
+            }
+          }
+        }
+      }
+
+      private void validate()
+      {
+        Button okButton = getButton(IDialogConstants.OK_ID);
+        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+        {
+          List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
+          for (final ContextVariableTask contextVariableTask : unresolvedVariables)
+          {
+            if (StringUtil.isEmpty(contextVariableTask.getValue()))
+            {
+              okButton.setEnabled(false);
+              return;
+            }
+          }
+        }
+
+        okButton.setEnabled(true);
+      }
+    }.open();
+
+    return result == AbstractSetupDialog.OK;
+  }
+
   public static void run(final Shell shell, final ProgressLogRunnable runnable,
       List<SetupTaskPerformer> setupTaskPerformers)
   {
+    for (SetupTaskPerformer taskPerformer : setupTaskPerformers)
+    {
+      List<ContextVariableTask> unresolvedVariables = taskPerformer.getUnresolvedVariables();
+      if (!unresolvedVariables.isEmpty())
+      {
+        if (!promptUnresolvedVariables(shell, setupTaskPerformers))
+        {
+          return;
+        }
+
+        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+        {
+          setupTaskPerformer.resolveSettings();
+        }
+        break;
+      }
+    }
+
     try
     {
       final AtomicReference<Set<String>> result = new AtomicReference<Set<String>>();

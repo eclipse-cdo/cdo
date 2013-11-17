@@ -497,11 +497,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.CommandParameter} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.KeyBindingContext} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected KeyBindingContextItemProvider keyBindingContextItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.KeyBindingContext}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createKeyBindingContextAdapter()
+  {
+    if (keyBindingContextItemProvider == null)
+    {
+      keyBindingContextItemProvider = new KeyBindingContextItemProvider(this);
+    }
+
+    return keyBindingContextItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.CommandParameter} instances.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected CommandParameterItemProvider commandParameterItemProvider;
 
   /**
@@ -1125,6 +1150,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       projectSetImportTaskItemProvider.dispose();
     }
+    if (targetPlatformTaskItemProvider != null)
+    {
+      targetPlatformTaskItemProvider.dispose();
+    }
     if (eclipsePreferenceTaskItemProvider != null)
     {
       eclipsePreferenceTaskItemProvider.dispose();
@@ -1153,6 +1182,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       keyBindingTaskItemProvider.dispose();
     }
+    if (keyBindingContextItemProvider != null)
+    {
+      keyBindingContextItemProvider.dispose();
+    }
     if (commandParameterItemProvider != null)
     {
       commandParameterItemProvider.dispose();
@@ -1160,10 +1193,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (mylynQueryTaskItemProvider != null)
     {
       mylynQueryTaskItemProvider.dispose();
-    }
-    if (targetPlatformTaskItemProvider != null)
-    {
-      targetPlatformTaskItemProvider.dispose();
     }
   }
 

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
@@ -197,6 +198,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass keyBindingContextEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EClass commandParameterEClass = null;
 
   /**
@@ -1005,19 +1013,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getKeyBindingTask_Context()
+  public EReference getKeyBindingTask_Contexts()
   {
-    return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(1);
+    return (EReference)keyBindingTaskEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EAttribute getKeyBindingTask_Platform()
   {
     return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(2);
@@ -1065,9 +1073,29 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getKeyBindingContext()
+  {
+    return keyBindingContextEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getKeyBindingContext_ID()
+  {
+    return (EAttribute)keyBindingContextEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getCommandParameter()
   {
     return commandParameterEClass;
@@ -1869,6 +1897,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     projectSetImportTaskEClass = createEClass(PROJECT_SET_IMPORT_TASK);
     createEAttribute(projectSetImportTaskEClass, PROJECT_SET_IMPORT_TASK__URL);
 
+    targetPlatformTaskEClass = createEClass(TARGET_PLATFORM_TASK);
+    createEAttribute(targetPlatformTaskEClass, TARGET_PLATFORM_TASK__NAME);
+
     eclipsePreferenceTaskEClass = createEClass(ECLIPSE_PREFERENCE_TASK);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__KEY);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__VALUE);
@@ -1895,12 +1926,15 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     keyBindingTaskEClass = createEClass(KEY_BINDING_TASK);
     createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__SCHEME);
-    createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__CONTEXT);
+    createEReference(keyBindingTaskEClass, KEY_BINDING_TASK__CONTEXTS);
     createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__PLATFORM);
     createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__LOCALE);
     createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__KEYS);
     createEAttribute(keyBindingTaskEClass, KEY_BINDING_TASK__COMMAND);
     createEReference(keyBindingTaskEClass, KEY_BINDING_TASK__COMMAND_PARAMETERS);
+
+    keyBindingContextEClass = createEClass(KEY_BINDING_CONTEXT);
+    createEAttribute(keyBindingContextEClass, KEY_BINDING_CONTEXT__ID);
 
     commandParameterEClass = createEClass(COMMAND_PARAMETER);
     createEAttribute(commandParameterEClass, COMMAND_PARAMETER__ID);
@@ -1911,9 +1945,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__SUMMARY);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__REPOSITORY_URL);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__RELATIVE_URL);
-
-    targetPlatformTaskEClass = createEClass(TARGET_PLATFORM_TASK);
-    createEAttribute(targetPlatformTaskEClass, TARGET_PLATFORM_TASK__NAME);
 
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
@@ -1982,6 +2013,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
     projectSetImportTaskEClass.getESuperTypes().add(getSetupTask());
+    targetPlatformTaskEClass.getESuperTypes().add(getSetupTask());
     eclipsePreferenceTaskEClass.getESuperTypes().add(getSetupTask());
     workingSetTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(getSetupTask());
@@ -1989,7 +2021,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     textModifyTaskEClass.getESuperTypes().add(getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
     mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
-    targetPlatformTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseEClass, Eclipse.class, "Eclipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2236,6 +2267,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         ProjectSetImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    initEClass(targetPlatformTaskEClass, TargetPlatformTask.class, "TargetPlatformTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTargetPlatformTask_Name(), ecorePackage.getEString(), "name", null, 1, 1,
+        TargetPlatformTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(eclipsePreferenceTaskEClass, EclipsePreferenceTask.class, "EclipsePreferenceTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEclipsePreferenceTask_Key(), ecorePackage.getEString(), "key", null, 1, 1,
@@ -2294,9 +2331,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getKeyBindingTask_Scheme(), ecorePackage.getEString(), "scheme",
         "org.eclipse.ui.defaultAcceleratorConfiguration", 1, 1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getKeyBindingTask_Context(), ecorePackage.getEString(), "context", "org.eclipse.ui.contexts.window",
-        1, 1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getKeyBindingTask_Contexts(), getKeyBindingContext(), null, "contexts", null, 1, -1,
+        KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getKeyBindingTask_Platform(), ecorePackage.getEString(), "platform", null, 0, 1,
         KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
@@ -2309,6 +2346,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getKeyBindingTask_CommandParameters(), getCommandParameter(), null, "commandParameters", null, 0,
         -1, KeyBindingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(keyBindingContextEClass, KeyBindingContext.class, "KeyBindingContext", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getKeyBindingContext_ID(), ecorePackage.getEString(), "iD", "org.eclipse.ui.contexts.window", 0, 1,
+        KeyBindingContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(commandParameterEClass, CommandParameter.class, "CommandParameter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2329,12 +2372,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMylynQueryTask_RelativeURL(), ecorePackage.getEString(), "relativeURL", null, 1, 1,
         MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(targetPlatformTaskEClass, TargetPlatformTask.class, "TargetPlatformTask", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getTargetPlatformTask_Name(), ecorePackage.getEString(), "name", null, 1, 1,
-        TargetPlatformTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
@@ -2382,6 +2419,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addAnnotation(getInstallableUnit_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getP2Repository_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
+    addAnnotation(getKeyBindingContext_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getCommandParameter_ID(), source, new String[] { "kind", "attribute", "name", "id" });
   }
 

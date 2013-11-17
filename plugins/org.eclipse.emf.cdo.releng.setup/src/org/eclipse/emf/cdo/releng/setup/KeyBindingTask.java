@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getScheme <em>Scheme</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getContexts <em>Contexts</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getPlatform <em>Platform</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getLocale <em>Locale</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getKeys <em>Keys</em>}</li>
@@ -65,46 +65,35 @@ public interface KeyBindingTask extends SetupTask
   void setScheme(String value);
 
   /**
-   * Returns the value of the '<em><b>Context</b></em>' attribute.
-   * The default value is <code>"org.eclipse.ui.contexts.window"</code>.
+   * Returns the value of the '<em><b>Contexts</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.KeyBindingContext}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Context</em>' attribute isn't clear,
+   * If the meaning of the '<em>Contexts</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Context</em>' attribute.
-   * @see #setContext(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Context()
-   * @model default="org.eclipse.ui.contexts.window" required="true"
+   * @return the value of the '<em>Contexts</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Contexts()
+   * @model containment="true" resolveProxies="true" required="true"
    * @generated
    */
-  String getContext();
+  EList<KeyBindingContext> getContexts();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getContext <em>Context</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Context</em>' attribute.
-   * @see #getContext()
-   * @generated
-   */
-  void setContext(String value);
-
-  /**
-   * Returns the value of the '<em><b>Platform</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Platform</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-   * @return the value of the '<em>Platform</em>' attribute.
-   * @see #setPlatform(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Platform()
-   * @model
-   * @generated
-   */
+  	 * Returns the value of the '<em><b>Platform</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+       * <p>
+       * If the meaning of the '<em>Platform</em>' attribute isn't clear,
+       * there really should be more of a description here...
+       * </p>
+       * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Platform</em>' attribute.
+  	 * @see #setPlatform(String)
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Platform()
+  	 * @model
+  	 * @generated
+  	 */
   String getPlatform();
 
   /**

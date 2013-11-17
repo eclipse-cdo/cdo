@@ -64,7 +64,6 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
       super.getPropertyDescriptors(object);
 
       addSchemePropertyDescriptor(object);
-      addContextPropertyDescriptor(object);
       addPlatformPropertyDescriptor(object);
       addLocalePropertyDescriptor(object);
       addKeysPropertyDescriptor(object);
@@ -88,24 +87,6 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
             getString("_UI_KeyBindingTask_scheme_feature"),
             getString("_UI_PropertyDescriptor_description", "_UI_KeyBindingTask_scheme_feature",
                 "_UI_KeyBindingTask_type"), SetupPackage.Literals.KEY_BINDING_TASK__SCHEME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Context feature.
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addContextPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(
-            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_KeyBindingTask_context_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_KeyBindingTask_context_feature",
-                "_UI_KeyBindingTask_type"), SetupPackage.Literals.KEY_BINDING_TASK__CONTEXT, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -192,6 +173,7 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
+      childrenFeatures.add(SetupPackage.Literals.KEY_BINDING_TASK__CONTEXTS);
       childrenFeatures.add(SetupPackage.Literals.KEY_BINDING_TASK__COMMAND_PARAMETERS);
     }
     return childrenFeatures;
@@ -262,13 +244,13 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
     switch (notification.getFeatureID(KeyBindingTask.class))
     {
     case SetupPackage.KEY_BINDING_TASK__SCHEME:
-    case SetupPackage.KEY_BINDING_TASK__CONTEXT:
     case SetupPackage.KEY_BINDING_TASK__PLATFORM:
     case SetupPackage.KEY_BINDING_TASK__LOCALE:
     case SetupPackage.KEY_BINDING_TASK__KEYS:
     case SetupPackage.KEY_BINDING_TASK__COMMAND:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
+    case SetupPackage.KEY_BINDING_TASK__CONTEXTS:
     case SetupPackage.KEY_BINDING_TASK__COMMAND_PARAMETERS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
@@ -287,6 +269,9 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.KEY_BINDING_TASK__CONTEXTS,
+        SetupFactory.eINSTANCE.createKeyBindingContext()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.KEY_BINDING_TASK__COMMAND_PARAMETERS,
         SetupFactory.eINSTANCE.createCommandParameter()));

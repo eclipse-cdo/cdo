@@ -32,9 +32,6 @@
     <genDataTypes ecoreDataType="setup.ecore#//TriggerSet"/>
     <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
-    <genClasses image="false" ecoreClass="setup.ecore#//TopLevelElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TopLevelElement/toolVersion"/>
-    </genClasses>
     <genClasses ecoreClass="setup.ecore#//Eclipse">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Eclipse/configuration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Eclipse/version"/>
@@ -48,6 +45,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Project/configuration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/branches"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Project/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Project/label"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Branch">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Branch/project"/>
@@ -57,6 +55,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/userName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/gitPrefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/acceptedLicenses"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Setup">
       <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
@@ -100,6 +99,7 @@
     <genClasses ecoreClass="setup.ecore#//P2Task">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/p2Repositories"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/installableUnits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Task/disableLicenseConfirmation"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//InstallableUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/iD"/>
@@ -196,6 +196,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/summary"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/repositoryURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/relativeURL"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//TargetPlatformTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargetPlatformTask/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

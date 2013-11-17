@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
@@ -155,6 +156,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createGitCloneTask();
     case SetupPackage.PROJECT_SET_IMPORT_TASK:
       return createProjectSetImportTask();
+    case SetupPackage.TARGET_PLATFORM_TASK:
+      return createTargetPlatformTask();
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
       return createEclipsePreferenceTask();
     case SetupPackage.WORKING_SET_TASK:
@@ -169,12 +172,12 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createTextModification();
     case SetupPackage.KEY_BINDING_TASK:
       return createKeyBindingTask();
+    case SetupPackage.KEY_BINDING_CONTEXT:
+      return createKeyBindingContext();
     case SetupPackage.COMMAND_PARAMETER:
       return createCommandParameter();
     case SetupPackage.MYLYN_QUERY_TASK:
       return createMylynQueryTask();
-    case SetupPackage.TARGET_PLATFORM_TASK:
-      return createTargetPlatformTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -415,6 +418,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public KeyBindingContext createKeyBindingContext()
+  {
+    KeyBindingContextImpl keyBindingContext = new KeyBindingContextImpl();
+    return keyBindingContext;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public CommandParameter createCommandParameter()
   {
     CommandParameterImpl commandParameter = new CommandParameterImpl();

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
@@ -279,6 +280,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseTargetPlatformTask(TargetPlatformTask object)
+    {
+      return createTargetPlatformTaskAdapter();
+    }
+
+    @Override
     public Adapter caseEclipsePreferenceTask(EclipsePreferenceTask object)
     {
       return createEclipsePreferenceTaskAdapter();
@@ -321,6 +328,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseKeyBindingContext(KeyBindingContext object)
+    {
+      return createKeyBindingContextAdapter();
+    }
+
+    @Override
     public Adapter caseCommandParameter(CommandParameter object)
     {
       return createCommandParameterAdapter();
@@ -330,12 +343,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseMylynQueryTask(MylynQueryTask object)
     {
       return createMylynQueryTaskAdapter();
-    }
-
-    @Override
-    public Adapter caseTargetPlatformTask(TargetPlatformTask object)
-    {
-      return createTargetPlatformTaskAdapter();
     }
 
     @Override
@@ -615,15 +622,30 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter <em>Command Parameter</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingContext <em>Key Binding Context</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.CommandParameter
+   * @see org.eclipse.emf.cdo.releng.setup.KeyBindingContext
    * @generated
    */
+  public Adapter createKeyBindingContextAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter <em>Command Parameter</em>}'.
+  	 * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @see org.eclipse.emf.cdo.releng.setup.CommandParameter
+  	 * @generated
+  	 */
   public Adapter createCommandParameterAdapter()
   {
     return null;

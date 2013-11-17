@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
@@ -486,6 +487,20 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.TARGET_PLATFORM_TASK:
+    {
+      TargetPlatformTask targetPlatformTask = (TargetPlatformTask)theEObject;
+      T result = caseTargetPlatformTask(targetPlatformTask);
+      if (result == null)
+      {
+        result = caseSetupTask(targetPlatformTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
     {
       EclipsePreferenceTask eclipsePreferenceTask = (EclipsePreferenceTask)theEObject;
@@ -580,6 +595,16 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.KEY_BINDING_CONTEXT:
+    {
+      KeyBindingContext keyBindingContext = (KeyBindingContext)theEObject;
+      T result = caseKeyBindingContext(keyBindingContext);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.COMMAND_PARAMETER:
     {
       CommandParameter commandParameter = (CommandParameter)theEObject;
@@ -597,20 +622,6 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseSetupTask(mylynQueryTask);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.TARGET_PLATFORM_TASK:
-    {
-      TargetPlatformTask targetPlatformTask = (TargetPlatformTask)theEObject;
-      T result = caseTargetPlatformTask(targetPlatformTask);
-      if (result == null)
-      {
-        result = caseSetupTask(targetPlatformTask);
       }
       if (result == null)
       {
@@ -960,16 +971,32 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Command Parameter</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Key Binding Context</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Command Parameter</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Key Binding Context</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
+  public T caseKeyBindingContext(KeyBindingContext object)
+  {
+    return null;
+  }
+
+  /**
+  	 * Returns the result of interpreting the object as an instance of '<em>Command Parameter</em>'.
+  	 * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+  	 * @param object the target of the switch.
+  	 * @return the result of interpreting the object as an instance of '<em>Command Parameter</em>'.
+  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+  	 * @generated
+  	 */
   public T caseCommandParameter(CommandParameter object)
   {
     return null;

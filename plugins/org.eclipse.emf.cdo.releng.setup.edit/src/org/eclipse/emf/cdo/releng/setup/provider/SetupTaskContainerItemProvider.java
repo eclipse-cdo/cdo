@@ -202,6 +202,9 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
         SetupFactory.eINSTANCE.createProjectSetImportTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createTargetPlatformTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createEclipsePreferenceTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
@@ -221,9 +224,6 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createMylynQueryTask()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
-        SetupFactory.eINSTANCE.createTargetPlatformTask()));
   }
 
   /**

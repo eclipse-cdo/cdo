@@ -173,6 +173,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="ProjectSetImportTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TargetPlatformTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EclipsePreferenceTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -214,8 +217,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="KeyBindingTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scheme" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="context" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="org.eclipse.ui.contexts.window"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contexts" lowerBound="1"
+        upperBound="-1" eType="#//KeyBindingContext" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="platform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="locale" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keys" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -223,6 +226,15 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="commandParameters" upperBound="-1"
         eType="#//CommandParameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyBindingContext">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="org.eclipse.ui.contexts.window">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CommandParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="iD" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -262,8 +274,5 @@
     <eLiterals name="ECLIPSE_FEATURE" literal="eclipse.feature"/>
     <eLiterals name="OSGI_BUNDLE" value="1" literal="osgi.bundle"/>
     <eLiterals name="BUCKMINSTER" value="3" literal="buckminster"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TargetPlatformTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

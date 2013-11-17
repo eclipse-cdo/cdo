@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
@@ -40,8 +41,11 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.keys.IBindingService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,7 +57,7 @@ import java.util.Set;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl#getScheme <em>Scheme</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl#getContexts <em>Contexts</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl#getPlatform <em>Platform</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl#getLocale <em>Locale</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl#getKeys <em>Keys</em>}</li>
@@ -87,33 +91,23 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   protected String scheme = SCHEME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getContext() <em>Context</em>}' attribute.
+   * The cached value of the '{@link #getContexts() <em>Contexts</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getContext()
+   * @see #getContexts()
    * @generated
    * @ordered
    */
-  protected static final String CONTEXT_EDEFAULT = "org.eclipse.ui.contexts.window";
+  protected EList<KeyBindingContext> contexts;
 
   /**
-   * The cached value of the '{@link #getContext() <em>Context</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getContext()
-   * @generated
-   * @ordered
-   */
-  protected String context = CONTEXT_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getPlatform() <em>Platform</em>}' attribute.
-   * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-   * @see #getPlatform()
-   * @generated
-   * @ordered
-   */
+  	 * The default value of the '{@link #getPlatform() <em>Platform</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @see #getPlatform()
+  	 * @generated
+  	 * @ordered
+  	 */
   protected static final String PLATFORM_EDEFAULT = null;
 
   /**
@@ -244,34 +238,24 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public String getContext()
+  public EList<KeyBindingContext> getContexts()
   {
-    return context;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setContext(String newContext)
-  {
-    String oldContext = context;
-    context = newContext;
-    if (eNotificationRequired())
+    if (contexts == null)
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.KEY_BINDING_TASK__CONTEXT, oldContext, context));
+      contexts = new EObjectContainmentEList.Resolving<KeyBindingContext>(KeyBindingContext.class, this,
+          SetupPackage.KEY_BINDING_TASK__CONTEXTS);
     }
+    return contexts;
   }
 
   /**
-   * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public String getPlatform()
   {
     return platform;
@@ -393,6 +377,8 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   {
     switch (featureID)
     {
+    case SetupPackage.KEY_BINDING_TASK__CONTEXTS:
+      return ((InternalEList<?>)getContexts()).basicRemove(otherEnd, msgs);
     case SetupPackage.KEY_BINDING_TASK__COMMAND_PARAMETERS:
       return ((InternalEList<?>)getCommandParameters()).basicRemove(otherEnd, msgs);
     }
@@ -411,8 +397,8 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     {
     case SetupPackage.KEY_BINDING_TASK__SCHEME:
       return getScheme();
-    case SetupPackage.KEY_BINDING_TASK__CONTEXT:
-      return getContext();
+    case SetupPackage.KEY_BINDING_TASK__CONTEXTS:
+      return getContexts();
     case SetupPackage.KEY_BINDING_TASK__PLATFORM:
       return getPlatform();
     case SetupPackage.KEY_BINDING_TASK__LOCALE:
@@ -441,8 +427,9 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     case SetupPackage.KEY_BINDING_TASK__SCHEME:
       setScheme((String)newValue);
       return;
-    case SetupPackage.KEY_BINDING_TASK__CONTEXT:
-      setContext((String)newValue);
+    case SetupPackage.KEY_BINDING_TASK__CONTEXTS:
+      getContexts().clear();
+      getContexts().addAll((Collection<? extends KeyBindingContext>)newValue);
       return;
     case SetupPackage.KEY_BINDING_TASK__PLATFORM:
       setPlatform((String)newValue);
@@ -477,8 +464,8 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     case SetupPackage.KEY_BINDING_TASK__SCHEME:
       setScheme(SCHEME_EDEFAULT);
       return;
-    case SetupPackage.KEY_BINDING_TASK__CONTEXT:
-      setContext(CONTEXT_EDEFAULT);
+    case SetupPackage.KEY_BINDING_TASK__CONTEXTS:
+      getContexts().clear();
       return;
     case SetupPackage.KEY_BINDING_TASK__PLATFORM:
       setPlatform(PLATFORM_EDEFAULT);
@@ -511,8 +498,8 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     {
     case SetupPackage.KEY_BINDING_TASK__SCHEME:
       return SCHEME_EDEFAULT == null ? scheme != null : !SCHEME_EDEFAULT.equals(scheme);
-    case SetupPackage.KEY_BINDING_TASK__CONTEXT:
-      return CONTEXT_EDEFAULT == null ? context != null : !CONTEXT_EDEFAULT.equals(context);
+    case SetupPackage.KEY_BINDING_TASK__CONTEXTS:
+      return contexts != null && !contexts.isEmpty();
     case SetupPackage.KEY_BINDING_TASK__PLATFORM:
       return PLATFORM_EDEFAULT == null ? platform != null : !PLATFORM_EDEFAULT.equals(platform);
     case SetupPackage.KEY_BINDING_TASK__LOCALE:
@@ -543,8 +530,6 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (scheme: ");
     result.append(scheme);
-    result.append(", context: ");
-    result.append(context);
     result.append(", platform: ");
     result.append(platform);
     result.append(", locale: ");
@@ -566,70 +551,90 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
-
     Binding[] bindings = bindingService.getBindings();
+
+    for (KeyBindingContext keyBindingContext : getContexts())
+    {
+      if (isNeeded(keyBindingContext, bindings))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean isNeeded(KeyBindingContext keyBindingContext, Binding[] bindings) throws Exception
+  {
     for (int i = 0; i < bindings.length; i++)
     {
       Binding binding = bindings[i];
       if (binding instanceof KeyBinding)
       {
         KeyBinding keyBinding = (KeyBinding)binding;
-
-        if (!ObjectUtil.equals(keyBinding.getSchemeId(), getScheme()))
+        if (!isNeeded(keyBindingContext, keyBinding))
         {
-          continue;
+          return false;
         }
-
-        if (!ObjectUtil.equals(keyBinding.getContextId(), getContext()))
-        {
-          continue;
-        }
-
-        if (!ObjectUtil.equals(keyBinding.getPlatform(), getPlatform()))
-        {
-          continue;
-        }
-
-        if (!ObjectUtil.equals(keyBinding.getLocale(), getLocale()))
-        {
-          continue;
-        }
-
-        KeySequence keySequence = KeySequence.getInstance(getKeys());
-        if (!ObjectUtil.equals(keyBinding.getKeySequence(), keySequence))
-        {
-          continue;
-        }
-
-        ParameterizedCommand parameterizedCommand = keyBinding.getParameterizedCommand();
-        if (parameterizedCommand == null || !ObjectUtil.equals(parameterizedCommand.getId(), getCommand()))
-        {
-          continue;
-        }
-
-        if (!ObjectUtil.equals(parameterizedCommand.getParameterMap(), getCommandParameterMap()))
-        {
-          continue;
-        }
-
-        return false;
       }
     }
 
     return true;
   }
 
+  private boolean isNeeded(KeyBindingContext keyBindingContext, KeyBinding keyBinding) throws Exception
+  {
+    if (!ObjectUtil.equals(keyBinding.getSchemeId(), getScheme()))
+    {
+      return true;
+    }
+
+    if (!ObjectUtil.equals(keyBinding.getContextId(), keyBindingContext.getID()))
+    {
+      return true;
+    }
+
+    if (!ObjectUtil.equals(keyBinding.getPlatform(), getPlatform()))
+    {
+      return true;
+    }
+
+    if (!ObjectUtil.equals(keyBinding.getLocale(), getLocale()))
+    {
+      return true;
+    }
+
+    KeySequence keySequence = KeySequence.getInstance(getKeys());
+    if (!ObjectUtil.equals(keyBinding.getKeySequence(), keySequence))
+    {
+      return true;
+    }
+
+    ParameterizedCommand parameterizedCommand = keyBinding.getParameterizedCommand();
+    if (parameterizedCommand == null || !ObjectUtil.equals(parameterizedCommand.getId(), getCommand()))
+    {
+      return true;
+    }
+
+    if (!ObjectUtil.equals(parameterizedCommand.getParameterMap(), getCommandParameterMap()))
+    {
+      return true;
+    }
+
+    return false;
+  }
+
   public void perform(SetupTaskContext context) throws Exception
   {
-    KeyBinding binding = new KeyBinding(KeySequence.getInstance(getKeys()), getParameterizedCommand(), getScheme(),
-        getContext(), getLocale(), getPlatform(), null, Binding.USER);
-
     final IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
-    Binding[] bindings = bindingService.getBindings();
+    final List<Binding> bindings = new ArrayList<Binding>(Arrays.asList(bindingService.getBindings()));
 
-    final Binding[] newBindings = new Binding[bindings.length + 1];
-    System.arraycopy(bindings, 0, newBindings, 0, bindings.length);
-    newBindings[bindings.length] = binding;
+    for (KeyBindingContext keyBindingContext : getContexts())
+    {
+      KeyBinding binding = new KeyBinding(KeySequence.getInstance(getKeys()), getParameterizedCommand(), getScheme(),
+          keyBindingContext.getID(), getLocale(), getPlatform(), null, Binding.USER);
+      bindings.add(binding);
+    }
 
     final Exception[] exception = { null };
     Display.getDefault().syncExec(new Runnable()
@@ -639,7 +644,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
         try
         {
           Scheme activeScheme = bindingService.getActiveScheme();
-          bindingService.savePreferences(activeScheme, newBindings);
+          bindingService.savePreferences(activeScheme, bindings.toArray(new Binding[bindings.size()]));
         }
         catch (IOException ex)
         {

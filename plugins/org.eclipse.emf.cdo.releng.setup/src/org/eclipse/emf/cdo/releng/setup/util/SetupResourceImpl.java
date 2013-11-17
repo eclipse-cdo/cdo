@@ -36,7 +36,7 @@ import java.util.Map;
  * @see org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl
  * @generated
  */
-public class SetupResourceImpl extends XMIResourceImpl implements SetupResource
+public class SetupResourceImpl extends XMIResourceImpl implements org.eclipse.emf.cdo.releng.setup.util.SetupResource
 {
   private static final String TOOL_VERSION_ATTRIBUTE = "setup:toolVersion";
 

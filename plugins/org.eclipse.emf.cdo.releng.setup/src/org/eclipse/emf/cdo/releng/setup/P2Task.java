@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#getInstallableUnits <em>Installable Units</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#isLicenseConfirmationDisabled <em>License Confirmation Disabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,45 +49,45 @@ public interface P2Task extends SetupTask
   EList<InstallableUnit> getInstallableUnits();
 
   /**
-   * Returns the value of the '<em><b>Disable License Confirmation</b></em>' attribute.
+   * Returns the value of the '<em><b>License Confirmation Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Disable License Confirmation</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Disable License Confirmation</em>' attribute.
-   * @see #setDisableLicenseConfirmation(boolean)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_DisableLicenseConfirmation()
+   * @return the value of the '<em>License Confirmation Disabled</em>' attribute.
+   * @see #setLicenseConfirmationDisabled(boolean)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_LicenseConfirmationDisabled()
    * @model
    * @generated
    */
-  boolean isDisableLicenseConfirmation();
+  boolean isLicenseConfirmationDisabled();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Task#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Task#isLicenseConfirmationDisabled <em>License Confirmation Disabled</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Disable License Confirmation</em>' attribute.
-   * @see #isDisableLicenseConfirmation()
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>License Confirmation Disabled</em>' attribute.
+   * @see #isLicenseConfirmationDisabled()
    * @generated
    */
-  void setDisableLicenseConfirmation(boolean value);
+  void setLicenseConfirmationDisabled(boolean value);
 
   /**
-   * Returns the value of the '<em><b>P2 Repositories</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
-   * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>P2 Repositories</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-   * @return the value of the '<em>P2 Repositories</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_P2Repositories()
-   * @model containment="true" resolveProxies="true" required="true"
-   * @generated
-   */
+  	 * Returns the value of the '<em><b>P2 Repositories</b></em>' containment reference list.
+  	 * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
+  	 * <!-- begin-user-doc -->
+       * <p>
+       * If the meaning of the '<em>P2 Repositories</em>' containment reference list isn't clear,
+       * there really should be more of a description here...
+       * </p>
+       * <!-- end-user-doc -->
+  	 * @return the value of the '<em>P2 Repositories</em>' containment reference list.
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_P2Repositories()
+  	 * @model containment="true" resolveProxies="true" required="true"
+  	 * @generated
+  	 */
   EList<P2Repository> getP2Repositories();
 
 } // InstallTask

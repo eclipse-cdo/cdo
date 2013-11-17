@@ -184,12 +184,12 @@ public interface SetupFactory extends EFactory
   KeyBindingContext createKeyBindingContext();
 
   /**
-  	 * Returns a new object of class '<em>Command Parameter</em>'.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Command Parameter</em>'.
-  	 * @generated
-  	 */
+   * Returns a new object of class '<em>Command Parameter</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Command Parameter</em>'.
+   * @generated
+   */
   CommandParameter createCommandParameter();
 
   /**

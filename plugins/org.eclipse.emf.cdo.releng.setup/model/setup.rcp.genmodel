@@ -6,8 +6,8 @@
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
     testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
     copyrightFields="false" editorPluginID="org.eclipse.emf.cdo.releng.setup.installer.editor"
-    optimizedHasChildren="true" runtimeVersion="2.5" usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
-    runtimePlatform="RCP" importOrganizing="true">
+    optimizedHasChildren="true" runtimeVersion="2.9" usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
+    runtimePlatform="RCP" importOrganizing="true" decoration="Live">
   <foreignModel>setup.ecore</foreignModel>
   <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
       presentationPackageSuffix="installer.editor" multipleEditorPages="false" generateModelWizard="false"
@@ -99,7 +99,7 @@
     <genClasses ecoreClass="setup.ecore#//P2Task">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/p2Repositories"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/installableUnits"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Task/disableLicenseConfirmation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Task/licenseConfirmationDisabled"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//InstallableUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/iD"/>
@@ -154,6 +154,9 @@
     <genClasses ecoreClass="setup.ecore#//ProjectSetImportTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ProjectSetImportTask/uRL"/>
     </genClasses>
+    <genClasses ecoreClass="setup.ecore#//TargetPlatformTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargetPlatformTask/name"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//EclipsePreferenceTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipsePreferenceTask/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipsePreferenceTask/value"/>
@@ -180,12 +183,15 @@
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//KeyBindingTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/scheme"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/context"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//KeyBindingTask/contexts"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/platform"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/locale"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/keys"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingTask/command"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//KeyBindingTask/commandParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//KeyBindingContext">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//KeyBindingContext/iD"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//CommandParameter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CommandParameter/iD"/>
@@ -196,9 +202,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/summary"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/repositoryURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/relativeURL"/>
-    </genClasses>
-    <genClasses ecoreClass="setup.ecore#//TargetPlatformTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargetPlatformTask/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

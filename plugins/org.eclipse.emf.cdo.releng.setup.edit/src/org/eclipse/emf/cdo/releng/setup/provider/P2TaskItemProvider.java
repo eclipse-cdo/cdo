@@ -63,36 +63,36 @@ public class P2TaskItemProvider extends SetupTaskItemProvider implements IEditin
     {
       super.getPropertyDescriptors(object);
 
-      addDisableLicenseConfirmationPropertyDescriptor(object);
+      addLicenseConfirmationDisabledPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Disable License Confirmation feature.
+   * This adds a property descriptor for the License Confirmation Disabled feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addDisableLicenseConfirmationPropertyDescriptor(Object object)
+  protected void addLicenseConfirmationDisabledPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_P2Task_disableLicenseConfirmation_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_P2Task_disableLicenseConfirmation_feature",
-            "_UI_P2Task_type"), SetupPackage.Literals.P2_TASK__DISABLE_LICENSE_CONFIRMATION, true, false, false,
+        getString("_UI_P2Task_licenseConfirmationDisabled_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_P2Task_licenseConfirmationDisabled_feature",
+            "_UI_P2Task_type"), SetupPackage.Literals.P2_TASK__LICENSE_CONFIRMATION_DISABLED, true, false, false,
         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+  	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+  	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
   {
@@ -168,7 +168,7 @@ public class P2TaskItemProvider extends SetupTaskItemProvider implements IEditin
 
     switch (notification.getFeatureID(P2Task.class))
     {
-    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
+    case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.P2_TASK__P2_REPOSITORIES:

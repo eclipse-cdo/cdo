@@ -81,19 +81,19 @@ public interface KeyBindingTask extends SetupTask
   EList<KeyBindingContext> getContexts();
 
   /**
-  	 * Returns the value of the '<em><b>Platform</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
-       * <p>
-       * If the meaning of the '<em>Platform</em>' attribute isn't clear,
-       * there really should be more of a description here...
-       * </p>
-       * <!-- end-user-doc -->
-  	 * @return the value of the '<em>Platform</em>' attribute.
-  	 * @see #setPlatform(String)
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Platform()
-  	 * @model
-  	 * @generated
-  	 */
+   * Returns the value of the '<em><b>Platform</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Platform</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Platform</em>' attribute.
+   * @see #setPlatform(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Platform()
+   * @model
+   * @generated
+   */
   String getPlatform();
 
   /**

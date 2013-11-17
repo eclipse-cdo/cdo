@@ -201,10 +201,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EClass keyBindingContextEClass = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EClass commandParameterEClass = null;
 
   /**
@@ -716,16 +716,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getP2Task_DisableLicenseConfirmation()
+  public EAttribute getP2Task_LicenseConfirmationDisabled()
   {
     return (EAttribute)p2TaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EReference getP2Task_P2Repositories()
   {
     return (EReference)p2TaskEClass.getEStructuralFeatures().get(0);
@@ -1022,10 +1022,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getKeyBindingTask_Platform()
   {
     return (EAttribute)keyBindingTaskEClass.getEStructuralFeatures().get(2);
@@ -1082,20 +1082,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getKeyBindingContext_ID()
   {
     return (EAttribute)keyBindingContextEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getCommandParameter()
   {
     return commandParameterEClass;
@@ -1841,7 +1841,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     p2TaskEClass = createEClass(P2_TASK);
     createEReference(p2TaskEClass, P2_TASK__P2_REPOSITORIES);
     createEReference(p2TaskEClass, P2_TASK__INSTALLABLE_UNITS);
-    createEAttribute(p2TaskEClass, P2_TASK__DISABLE_LICENSE_CONFIRMATION);
+    createEAttribute(p2TaskEClass, P2_TASK__LICENSE_CONFIRMATION_DISABLED);
 
     installableUnitEClass = createEClass(INSTALLABLE_UNIT);
     createEAttribute(installableUnitEClass, INSTALLABLE_UNIT__ID);
@@ -2150,7 +2150,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getP2Task_InstallableUnits(), getInstallableUnit(), null, "installableUnits", null, 1, -1,
         P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getP2Task_DisableLicenseConfirmation(), ecorePackage.getEBoolean(), "disableLicenseConfirmation",
+    initEAttribute(getP2Task_LicenseConfirmationDisabled(), ecorePackage.getEBoolean(), "licenseConfirmationDisabled",
         null, 0, 1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 

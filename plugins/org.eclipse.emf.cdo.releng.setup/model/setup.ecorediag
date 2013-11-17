@@ -100,7 +100,7 @@
     <children xmi:type="notation:Node" xmi:id="_PhLzgOoNEeKpRf481yfX-g" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_PhLzgeoNEeKpRf481yfX-g" type="5001">
       <children xmi:type="notation:Node" xmi:id="_sAZNYE6aEeOgecV4PNc8SA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="setup.ecore#//P2Task/disableLicenseConfirmation"/>
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//P2Task/licenseConfirmationDisabled"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_sAZNYU6aEeOgecV4PNc8SA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_PhLzguoNEeKpRf481yfX-g"/>

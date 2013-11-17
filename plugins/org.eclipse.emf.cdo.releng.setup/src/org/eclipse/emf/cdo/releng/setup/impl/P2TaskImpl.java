@@ -93,7 +93,7 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getInstallableUnits <em>Installable Units</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#isDisableLicenseConfirmation <em>Disable License Confirmation</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#isLicenseConfirmationDisabled <em>License Confirmation Disabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -124,24 +124,24 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   protected EList<InstallableUnit> installableUnits;
 
   /**
-   * The default value of the '{@link #isDisableLicenseConfirmation() <em>Disable License Confirmation</em>}' attribute.
+   * The default value of the '{@link #isLicenseConfirmationDisabled() <em>License Confirmation Disabled</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isDisableLicenseConfirmation()
+   * @see #isLicenseConfirmationDisabled()
    * @generated
    * @ordered
    */
-  protected static final boolean DISABLE_LICENSE_CONFIRMATION_EDEFAULT = false;
+  protected static final boolean LICENSE_CONFIRMATION_DISABLED_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isDisableLicenseConfirmation() <em>Disable License Confirmation</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isDisableLicenseConfirmation()
-   * @generated
-   * @ordered
-   */
-  protected boolean disableLicenseConfirmation = DISABLE_LICENSE_CONFIRMATION_EDEFAULT;
+  	 * The cached value of the '{@link #isLicenseConfirmationDisabled() <em>License Confirmation Disabled</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #isLicenseConfirmationDisabled()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected boolean licenseConfirmationDisabled = LICENSE_CONFIRMATION_DISABLED_EDEFAULT;
 
   private transient Set<String> neededInstallableUnits;
 
@@ -186,32 +186,32 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isDisableLicenseConfirmation()
+  public boolean isLicenseConfirmationDisabled()
   {
-    return disableLicenseConfirmation;
+    return licenseConfirmationDisabled;
   }
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public void setDisableLicenseConfirmation(boolean newDisableLicenseConfirmation)
+  public void setLicenseConfirmationDisabled(boolean newLicenseConfirmationDisabled)
   {
-    boolean oldDisableLicenseConfirmation = disableLicenseConfirmation;
-    disableLicenseConfirmation = newDisableLicenseConfirmation;
+    boolean oldLicenseConfirmationDisabled = licenseConfirmationDisabled;
+    licenseConfirmationDisabled = newLicenseConfirmationDisabled;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION,
-          oldDisableLicenseConfirmation, disableLicenseConfirmation));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED,
+          oldLicenseConfirmationDisabled, licenseConfirmationDisabled));
     }
   }
 
   /**
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EList<P2Repository> getP2Repositories()
   {
     if (p2Repositories == null)
@@ -254,8 +254,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return getP2Repositories();
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return getInstallableUnits();
-    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
-      return isDisableLicenseConfirmation();
+    case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
+      return isLicenseConfirmationDisabled();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -279,8 +279,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       getInstallableUnits().clear();
       getInstallableUnits().addAll((Collection<? extends InstallableUnit>)newValue);
       return;
-    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
-      setDisableLicenseConfirmation((Boolean)newValue);
+    case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
+      setLicenseConfirmationDisabled((Boolean)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -302,8 +302,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       getInstallableUnits().clear();
       return;
-    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
-      setDisableLicenseConfirmation(DISABLE_LICENSE_CONFIRMATION_EDEFAULT);
+    case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
+      setLicenseConfirmationDisabled(LICENSE_CONFIRMATION_DISABLED_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -323,8 +323,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return p2Repositories != null && !p2Repositories.isEmpty();
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return installableUnits != null && !installableUnits.isEmpty();
-    case SetupPackage.P2_TASK__DISABLE_LICENSE_CONFIRMATION:
-      return disableLicenseConfirmation != DISABLE_LICENSE_CONFIRMATION_EDEFAULT;
+    case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
+      return licenseConfirmationDisabled != LICENSE_CONFIRMATION_DISABLED_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -343,8 +343,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (disableLicenseConfirmation: ");
-    result.append(disableLicenseConfirmation);
+    result.append(" (licenseConfirmationDisabled: ");
+    result.append(licenseConfirmationDisabled);
     result.append(')');
     return result.toString();
   }
@@ -375,6 +375,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     {
       result.add(knowRepository.toString());
     }
+
     return result;
   }
 
@@ -400,6 +401,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         {
           neededInstallableUnits = new HashSet<String>();
         }
+
         neededInstallableUnits.add(id);
       }
     }
@@ -531,6 +533,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   private void processLicenses(final SetupTaskContext context, IProvisioningPlan provisioningPlan,
       IProgressMonitor monitor) throws Exception
   {
+    if (isLicenseConfirmationDisabled())
+    {
+      return;
+    }
+
     final Preferences preferences = context.getPreferences();
     Set<String> acceptedLicenses = new HashSet<String>(preferences.getAcceptedLicenses());
 
@@ -638,7 +645,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     String destination = context.getEclipseDir().toString();
-    String bundlePool = context.getP2PoolDir().toString();
+    final File p2PoolDir = context.getP2PoolDir();
+    String bundlePool = p2PoolDir.toString();
     String bundleAgent = context.getP2AgentDir().toString();
 
     String os = Platform.getOS();
@@ -818,7 +826,53 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       }
     });
 
+    Thread poolMonitorThread = new Thread("Bundle Pool Monitor")
+    {
+      {
+        setDaemon(true);
+        start();
+      }
+
+      private Set<String> features = new HashSet<String>();
+
+      private Set<String> bundles = new HashSet<String>();
+
+      @Override
+      public void run()
+      {
+        File featuresDir = new File(p2PoolDir, "features");
+        File bundlesDir = new File(p2PoolDir, "bundles");
+
+        try
+        {
+          for (; !interrupted(); sleep(1000))
+          {
+            for (String feature : featuresDir.list())
+            {
+              if (features.add(feature))
+              {
+                context.log("Downloading feature " + feature);
+              }
+            }
+
+            for (String bundle : bundlesDir.list())
+            {
+              if (bundles.add(bundle))
+              {
+                context.log("Downloading bundle " + bundle);
+              }
+            }
+          }
+        }
+        catch (Throwable ex)
+        {
+          // Ignore
+        }
+      }
+    };
+
     Object exitCode = app.run(args);
+    poolMonitorThread.interrupt();
     if (EXIT_ERROR.equals(exitCode))
     {
       throw new CoreException(Status.CANCEL_STATUS);

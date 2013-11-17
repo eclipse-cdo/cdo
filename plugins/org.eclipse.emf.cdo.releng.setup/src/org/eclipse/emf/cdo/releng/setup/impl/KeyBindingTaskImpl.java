@@ -101,13 +101,13 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   protected EList<KeyBindingContext> contexts;
 
   /**
-  	 * The default value of the '{@link #getPlatform() <em>Platform</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The default value of the '{@link #getPlatform() <em>Platform</em>}' attribute.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @see #getPlatform()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getPlatform()
+   * @generated
+   * @ordered
+   */
   protected static final String PLATFORM_EDEFAULT = null;
 
   /**
@@ -252,10 +252,10 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public String getPlatform()
   {
     return platform;

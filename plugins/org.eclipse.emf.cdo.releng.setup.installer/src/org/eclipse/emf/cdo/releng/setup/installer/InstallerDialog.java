@@ -473,6 +473,8 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       public void modifyText(ModifyEvent e)
       {
+        setups.clear();
+
         preferences.setInstallFolder(installFolderText.getText());
         saveEObject(preferences);
         validate();

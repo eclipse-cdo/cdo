@@ -723,6 +723,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       }
 
       boolean changed = false;
+      // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
       for (T dependency : dependencyProvider.getDependencies(value))
       {
         int index = values.indexOf(dependency);

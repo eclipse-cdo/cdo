@@ -81,6 +81,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLog
@@ -448,7 +449,7 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
 
   private static boolean promptUnresolvedVariables(Shell shell, final List<SetupTaskPerformer> setupTaskPerformers)
   {
-    int result = new AbstractSetupDialog(shell)
+    final AbstractSetupDialog promptDialog = new AbstractSetupDialog(shell)
     {
       @Override
       protected Point getInitialSize()
@@ -516,32 +517,30 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
 
         okButton.setEnabled(true);
       }
-    }.open();
+    };
 
-    return result == AbstractSetupDialog.OK;
+    final AtomicInteger result = new AtomicInteger();
+    if (Display.getCurrent() == shell.getDisplay())
+    {
+      result.set(promptDialog.open());
+    }
+    else
+    {
+      shell.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          result.set(promptDialog.open());
+        }
+      });
+    }
+
+    return result.get() == AbstractSetupDialog.OK;
   }
 
   public static void run(final Shell shell, final ProgressLogRunnable runnable,
-      List<SetupTaskPerformer> setupTaskPerformers)
+      final List<SetupTaskPerformer> setupTaskPerformers)
   {
-    for (SetupTaskPerformer taskPerformer : setupTaskPerformers)
-    {
-      List<ContextVariableTask> unresolvedVariables = taskPerformer.getUnresolvedVariables();
-      if (!unresolvedVariables.isEmpty())
-      {
-        if (!promptUnresolvedVariables(shell, setupTaskPerformers))
-        {
-          return;
-        }
-
-        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
-        {
-          setupTaskPerformer.resolveSettings();
-        }
-        break;
-      }
-    }
-
     try
     {
       final AtomicReference<Set<String>> result = new AtomicReference<Set<String>>();
@@ -555,6 +554,25 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
             @Override
             protected IStatus run(IProgressMonitor monitor)
             {
+              for (SetupTaskPerformer taskPerformer : setupTaskPerformers)
+              {
+                List<ContextVariableTask> unresolvedVariables = taskPerformer.getUnresolvedVariables();
+                if (!unresolvedVariables.isEmpty())
+                {
+                  if (!promptUnresolvedVariables(shell, setupTaskPerformers))
+                  {
+                    return Status.CANCEL_STATUS;
+                  }
+
+                  for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+                  {
+                    setupTaskPerformer.resolveSettings();
+                  }
+
+                  break;
+                }
+              }
+
               long start = System.currentTimeMillis();
 
               try

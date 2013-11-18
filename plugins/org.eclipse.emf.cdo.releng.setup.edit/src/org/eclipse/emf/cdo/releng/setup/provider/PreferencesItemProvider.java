@@ -61,28 +61,11 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
     {
       super.getPropertyDescriptors(object);
 
-      addUserNamePropertyDescriptor(object);
       addInstallFolderPropertyDescriptor(object);
-      addGitPrefixPropertyDescriptor(object);
+      addBundlePoolFolderPropertyDescriptor(object);
       addAcceptedLicensesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
-  }
-
-  /**
-   * This adds a property descriptor for the User Name feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addUserNamePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Preferences_userName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_userName_feature", "_UI_Preferences_type"),
-        SetupPackage.Literals.PREFERENCES__USER_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
   }
 
   /**
@@ -104,25 +87,26 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   }
 
   /**
-   * This adds a property descriptor for the Git Prefix feature.
+   * This adds a property descriptor for the Bundle Pool Folder feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addGitPrefixPropertyDescriptor(Object object)
+  protected void addBundlePoolFolderPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Preferences_gitPrefix_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_gitPrefix_feature", "_UI_Preferences_type"),
-        SetupPackage.Literals.PREFERENCES__GIT_PREFIX, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_Preferences_bundlePoolFolder_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePoolFolder_feature",
+            "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__BUNDLE_POOL_FOLDER, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
    * This adds a property descriptor for the Accepted Licenses feature.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   protected void addAcceptedLicensesPropertyDescriptor(Object object)
@@ -168,7 +152,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   @Override
   public String getText(Object object)
   {
-    String label = ((Preferences)object).getUserName();
+    String label = ((Preferences)object).getInstallFolder();
     return label == null || label.length() == 0 ? getString("_UI_Preferences_type") : getString("_UI_Preferences_type")
         + " " + label;
   }
@@ -187,9 +171,8 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
 
     switch (notification.getFeatureID(Preferences.class))
     {
-    case SetupPackage.PREFERENCES__USER_NAME:
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
-    case SetupPackage.PREFERENCES__GIT_PREFIX:
+    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

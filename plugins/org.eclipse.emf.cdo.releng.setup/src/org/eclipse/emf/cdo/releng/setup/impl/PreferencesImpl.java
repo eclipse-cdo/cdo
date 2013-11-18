@@ -28,9 +28,8 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getInstallFolder <em>Install Folder</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getGitPrefix <em>Git Prefix</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getBundlePoolFolder <em>Bundle Pool Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getAcceptedLicenses <em>Accepted Licenses</em>}</li>
  * </ul>
  * </p>
@@ -39,26 +38,6 @@ import java.util.Collection;
  */
 public class PreferencesImpl extends SetupTaskContainerImpl implements Preferences
 {
-  /**
-   * The default value of the '{@link #getUserName() <em>User Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getUserName()
-   * @generated
-   * @ordered
-   */
-  protected static final String USER_NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getUserName() <em>User Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getUserName()
-   * @generated
-   * @ordered
-   */
-  protected String userName = USER_NAME_EDEFAULT;
-
   /**
    * The default value of the '{@link #getInstallFolder() <em>Install Folder</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -80,29 +59,29 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   protected String installFolder = INSTALL_FOLDER_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getGitPrefix() <em>Git Prefix</em>}' attribute.
+   * The default value of the '{@link #getBundlePoolFolder() <em>Bundle Pool Folder</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGitPrefix()
+   * @see #getBundlePoolFolder()
    * @generated
    * @ordered
    */
-  protected static final String GIT_PREFIX_EDEFAULT = null;
+  protected static final String BUNDLE_POOL_FOLDER_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getGitPrefix() <em>Git Prefix</em>}' attribute.
+   * The cached value of the '{@link #getBundlePoolFolder() <em>Bundle Pool Folder</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getGitPrefix()
+  	 * <!-- end-user-doc -->
+   * @see #getBundlePoolFolder()
    * @generated
    * @ordered
    */
-  protected String gitPrefix = GIT_PREFIX_EDEFAULT;
+  protected String bundlePoolFolder = BUNDLE_POOL_FOLDER_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAcceptedLicenses() <em>Accepted Licenses</em>}' attribute list.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @see #getAcceptedLicenses()
    * @generated
    * @ordered
@@ -128,31 +107,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   protected EClass eStaticClass()
   {
     return SetupPackage.Literals.PREFERENCES;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getUserName()
-  {
-    return userName;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setUserName(String newUserName)
-  {
-    String oldUserName = userName;
-    userName = newUserName;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__USER_NAME, oldUserName, userName));
-    }
   }
 
   /**
@@ -186,30 +140,30 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getGitPrefix()
+  public String getBundlePoolFolder()
   {
-    return gitPrefix;
+    return bundlePoolFolder;
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  	 * <!-- end-user-doc -->
    * @generated
    */
-  public void setGitPrefix(String newGitPrefix)
+  public void setBundlePoolFolder(String newBundlePoolFolder)
   {
-    String oldGitPrefix = gitPrefix;
-    gitPrefix = newGitPrefix;
+    String oldBundlePoolFolder = bundlePoolFolder;
+    bundlePoolFolder = newBundlePoolFolder;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__GIT_PREFIX, oldGitPrefix,
-          gitPrefix));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER,
+          oldBundlePoolFolder, bundlePoolFolder));
     }
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EList<String> getAcceptedLicenses()
@@ -232,12 +186,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
-    case SetupPackage.PREFERENCES__USER_NAME:
-      return getUserName();
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       return getInstallFolder();
-    case SetupPackage.PREFERENCES__GIT_PREFIX:
-      return getGitPrefix();
+    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
+      return getBundlePoolFolder();
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       return getAcceptedLicenses();
     }
@@ -255,14 +207,11 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
-    case SetupPackage.PREFERENCES__USER_NAME:
-      setUserName((String)newValue);
-      return;
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       setInstallFolder((String)newValue);
       return;
-    case SetupPackage.PREFERENCES__GIT_PREFIX:
-      setGitPrefix((String)newValue);
+    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
+      setBundlePoolFolder((String)newValue);
       return;
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       getAcceptedLicenses().clear();
@@ -282,14 +231,11 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
-    case SetupPackage.PREFERENCES__USER_NAME:
-      setUserName(USER_NAME_EDEFAULT);
-      return;
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       setInstallFolder(INSTALL_FOLDER_EDEFAULT);
       return;
-    case SetupPackage.PREFERENCES__GIT_PREFIX:
-      setGitPrefix(GIT_PREFIX_EDEFAULT);
+    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
+      setBundlePoolFolder(BUNDLE_POOL_FOLDER_EDEFAULT);
       return;
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       getAcceptedLicenses().clear();
@@ -308,12 +254,11 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   {
     switch (featureID)
     {
-    case SetupPackage.PREFERENCES__USER_NAME:
-      return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       return INSTALL_FOLDER_EDEFAULT == null ? installFolder != null : !INSTALL_FOLDER_EDEFAULT.equals(installFolder);
-    case SetupPackage.PREFERENCES__GIT_PREFIX:
-      return GIT_PREFIX_EDEFAULT == null ? gitPrefix != null : !GIT_PREFIX_EDEFAULT.equals(gitPrefix);
+    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
+      return BUNDLE_POOL_FOLDER_EDEFAULT == null ? bundlePoolFolder != null : !BUNDLE_POOL_FOLDER_EDEFAULT
+          .equals(bundlePoolFolder);
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       return acceptedLicenses != null && !acceptedLicenses.isEmpty();
     }
@@ -334,12 +279,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (userName: ");
-    result.append(userName);
-    result.append(", installFolder: ");
+    result.append(" (installFolder: ");
     result.append(installFolder);
-    result.append(", gitPrefix: ");
-    result.append(gitPrefix);
+    result.append(", bundlePoolFolder: ");
+    result.append(bundlePoolFolder);
     result.append(", acceptedLicenses: ");
     result.append(acceptedLicenses);
     result.append(')');

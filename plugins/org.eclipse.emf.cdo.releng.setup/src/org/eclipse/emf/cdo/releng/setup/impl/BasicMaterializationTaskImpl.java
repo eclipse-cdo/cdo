@@ -104,7 +104,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
    * @generated
    * @ordered
    */
-  protected static final String BUNDLE_POOL_EDEFAULT = null;
+  protected static final String BUNDLE_POOL_EDEFAULT = "${setup.install.dir/.p2pool-tp}";
 
   /**
    * The cached value of the '{@link #getBundlePool() <em>Bundle Pool</em>}' attribute.
@@ -297,7 +297,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
   public boolean isNeeded(SetupTaskContext context)
   {
     return context.getTrigger() == Trigger.MANUAL
-        || !TargetPlatformUtil.hasTargetPlatform(context.getTargetPlatformDir().toString(), context);
+        || !TargetPlatformUtil.hasTargetPlatform(getTargetPlatform(), context);
   }
 
   protected abstract String getMspec(SetupTaskContext context) throws Exception;
@@ -310,7 +310,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     try
     {
       File tpOld = null;
-      File tp = context.getTargetPlatformDir();
+      File tp = new File(getTargetPlatform());
       if (tp.exists())
       {
         tpOld = new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis());
@@ -325,10 +325,8 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
         File tpPool = updateTargetPlatformPool(context);
         tpPoolLock = FileLock.forWrite(tpPool);
 
-        File targetPlatformLocation = context.getTargetPlatformDir();
-        targetPlatformLocation.mkdirs();
-        TargetPlatformUtil.setTargetPlatform(targetPlatformLocation.toString(), context.getSetup().getBranch()
-            .getProject().getName()
+        tp.mkdirs();
+        TargetPlatformUtil.setTargetPlatform(tp.toString(), context.getSetup().getBranch().getProject().getName()
             + " Target", true, context);
 
         BuckminsterHelper.materialize(context, getMspec(context), monitor);

@@ -668,12 +668,22 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getGitCloneTask_CheckoutBranch()
   {
-    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(4);
   }
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGitCloneTask_UserID()
+  {
+    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EClass getProjectSetImportTask()
@@ -722,10 +732,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getP2Task_P2Repositories()
   {
     return (EReference)p2TaskEClass.getEStructuralFeatures().get(0);
@@ -1606,7 +1616,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferences_UserName()
+  public EAttribute getPreferences_InstallFolder()
   {
     return (EAttribute)preferencesEClass.getEStructuralFeatures().get(0);
   }
@@ -1616,29 +1626,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferences_InstallFolder()
+  public EAttribute getPreferences_BundlePoolFolder()
   {
     return (EAttribute)preferencesEClass.getEStructuralFeatures().get(1);
   }
 
   /**
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPreferences_GitPrefix()
-  {
-    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getPreferences_AcceptedLicenses()
   {
-    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1805,9 +1805,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(branchEClass, BRANCH__NAME);
 
     preferencesEClass = createEClass(PREFERENCES);
-    createEAttribute(preferencesEClass, PREFERENCES__USER_NAME);
     createEAttribute(preferencesEClass, PREFERENCES__INSTALL_FOLDER);
-    createEAttribute(preferencesEClass, PREFERENCES__GIT_PREFIX);
+    createEAttribute(preferencesEClass, PREFERENCES__BUNDLE_POOL_FOLDER);
     createEAttribute(preferencesEClass, PREFERENCES__ACCEPTED_LICENSES);
 
     setupEClass = createEClass(SETUP);
@@ -1892,6 +1891,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__LOCATION);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_NAME);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_URI);
+    createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__USER_ID);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__CHECKOUT_BRANCH);
 
     projectSetImportTaskEClass = createEClass(PROJECT_SET_IMPORT_TASK);
@@ -2066,13 +2066,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(preferencesEClass, Preferences.class, "Preferences", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPreferences_UserName(), ecorePackage.getEString(), "userName", null, 1, 1, Preferences.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPreferences_InstallFolder(), ecorePackage.getEString(), "installFolder", null, 1, 1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getPreferences_GitPrefix(), ecorePackage.getEString(), "gitPrefix", null, 0, 1, Preferences.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPreferences_BundlePoolFolder(), ecorePackage.getEString(), "bundlePoolFolder", null, 0, 1,
+        Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
     initEAttribute(getPreferences_AcceptedLicenses(), ecorePackage.getEString(), "acceptedLicenses", null, 0, -1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
@@ -2169,9 +2168,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getBasicMaterializationTask_TargetPlatform(), ecorePackage.getEString(), "targetPlatform", null, 1,
         1, BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBasicMaterializationTask_BundlePool(), ecorePackage.getEString(), "bundlePool", null, 1, 1,
-        BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicMaterializationTask_BundlePool(), ecorePackage.getEString(), "bundlePool",
+        "${setup.install.dir/.p2pool-tp}", 1, 1, BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(buckminsterImportTaskEClass, BuckminsterImportTask.class, "BuckminsterImportTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2232,7 +2231,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 1, 1,
         ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 1, 1,
+    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
         ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getContextVariableTask_StringSubstitution(), ecorePackage.getEBoolean(), "stringSubstitution", null,
@@ -2257,6 +2256,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_ORDERED);
     initEAttribute(getGitCloneTask_RemoteURI(), ecorePackage.getEString(), "remoteURI", null, 1, 1, GitCloneTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGitCloneTask_UserID(), ecorePackage.getEString(), "userID", "${git.user.id}", 0, 1,
+        GitCloneTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
     initEAttribute(getGitCloneTask_CheckoutBranch(), ecorePackage.getEString(), "checkoutBranch", null, 1, 1,
         GitCloneTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);

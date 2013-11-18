@@ -54,6 +54,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getRemoteName <em>Remote Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getRemoteURI <em>Remote URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getUserID <em>User ID</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getCheckoutBranch <em>Checkout Branch</em>}</li>
  * </ul>
  * </p>
@@ -123,9 +124,29 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   protected String remoteURI = REMOTE_URI_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getCheckoutBranch() <em>Checkout Branch</em>}' attribute.
+   * The default value of the '{@link #getUserID() <em>User ID</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getUserID()
+   * @generated
+   * @ordered
+   */
+  protected static final String USER_ID_EDEFAULT = "${git.user.id}";
+
+  /**
+   * The cached value of the '{@link #getUserID() <em>User ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @see #getUserID()
+   * @generated
+   * @ordered
+   */
+  protected String userID = USER_ID_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getCheckoutBranch() <em>Checkout Branch</em>}' attribute.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getCheckoutBranch()
    * @generated
    * @ordered
@@ -135,7 +156,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * The cached value of the '{@link #getCheckoutBranch() <em>Checkout Branch</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @see #getCheckoutBranch()
    * @generated
    * @ordered
@@ -274,6 +295,31 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setUserID(String newUserID)
+  {
+    String oldUserID = userID;
+    userID = newUserID;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__USER_ID, oldUserID, userID));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -285,6 +331,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return getRemoteName();
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       return getRemoteURI();
+    case SetupPackage.GIT_CLONE_TASK__USER_ID:
+      return getUserID();
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return getCheckoutBranch();
     }
@@ -309,6 +357,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return;
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       setRemoteURI((String)newValue);
+      return;
+    case SetupPackage.GIT_CLONE_TASK__USER_ID:
+      setUserID((String)newValue);
       return;
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       setCheckoutBranch((String)newValue);
@@ -336,6 +387,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       setRemoteURI(REMOTE_URI_EDEFAULT);
       return;
+    case SetupPackage.GIT_CLONE_TASK__USER_ID:
+      setUserID(USER_ID_EDEFAULT);
+      return;
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       setCheckoutBranch(CHECKOUT_BRANCH_EDEFAULT);
       return;
@@ -359,6 +413,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return REMOTE_NAME_EDEFAULT == null ? remoteName != null : !REMOTE_NAME_EDEFAULT.equals(remoteName);
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       return REMOTE_URI_EDEFAULT == null ? remoteURI != null : !REMOTE_URI_EDEFAULT.equals(remoteURI);
+    case SetupPackage.GIT_CLONE_TASK__USER_ID:
+      return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return CHECKOUT_BRANCH_EDEFAULT == null ? checkoutBranch != null : !CHECKOUT_BRANCH_EDEFAULT
           .equals(checkoutBranch);
@@ -386,6 +442,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     result.append(remoteName);
     result.append(", remoteURI: ");
     result.append(remoteURI);
+    result.append(", userID: ");
+    result.append(userID);
     result.append(", checkoutBranch: ");
     result.append(checkoutBranch);
     result.append(')');
@@ -409,7 +467,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     if (gitDelegate != null)
     {
       gitDelegate.perform(context, getCheckoutBranch(), getRemoteName(), context
-          .redirect(URI.createURI(getRemoteURI())).toString());
+          .redirect(URI.createURI(getRemoteURI())).toString(), getUserID());
     }
   }
 
@@ -431,8 +489,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     public boolean isNeeded(SetupTaskContext context, String name, String checkoutBranch, String remoteName)
         throws Exception;
 
-    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI)
-        throws Exception;
+    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
+        String userID) throws Exception;
 
     public void dispose();
   }
@@ -487,12 +545,12 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return false;
     }
 
-    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI)
-        throws Exception
+    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
+        String userID) throws Exception
     {
       if (cachedGit == null)
       {
-        cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, remoteURI);
+        cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, remoteURI, userID);
         cachedRepository = cachedGit.getRepository();
         if (!URI.createURI(remoteURI).isFile())
         {
@@ -531,7 +589,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     }
 
     private static Git cloneRepository(SetupTaskContext context, File workDir, String checkoutBranch,
-        String remoteName, String remoteURI) throws Exception
+        String remoteName, String remoteURI, String userID) throws Exception
     {
       String remote;
 
@@ -545,8 +603,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         String scheme = baseURI.scheme();
         String[] segments = baseURI.segments();
 
-        String userName = context.getSetup().getPreferences().getUserName();
-        if (ANONYMOUS.equals(userName))
+        if (ANONYMOUS.equals(userID))
         {
           if (baseURI.port() != null)
           {
@@ -563,7 +620,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         }
         else
         {
-          remote = URI.createHierarchicalURI(scheme, userName + "@" + baseURI.authority(), baseURI.device(), segments,
+          remote = URI.createHierarchicalURI(scheme, userID + "@" + baseURI.authority(), baseURI.device(), segments,
               baseURI.query(), baseURI.fragment()).toString();
         }
       }

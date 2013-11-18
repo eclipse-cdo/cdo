@@ -406,40 +406,31 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__SETUP_TASKS = SETUP_TASK_CONTAINER__SETUP_TASKS;
 
   /**
-   * The feature id for the '<em><b>User Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCES__USER_NAME = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Install Folder</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES__INSTALL_FOLDER = SETUP_TASK_CONTAINER_FEATURE_COUNT + 1;
+  int PREFERENCES__INSTALL_FOLDER = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Git Prefix</b></em>' attribute.
+   * The feature id for the '<em><b>Bundle Pool Folder</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES__GIT_PREFIX = SETUP_TASK_CONTAINER_FEATURE_COUNT + 2;
+  int PREFERENCES__BUNDLE_POOL_FOLDER = SETUP_TASK_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES__ACCEPTED_LICENSES = SETUP_TASK_CONTAINER_FEATURE_COUNT + 3;
+  int PREFERENCES__ACCEPTED_LICENSES = SETUP_TASK_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Preferences</em>' class.
@@ -448,7 +439,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 4;
+  int PREFERENCES_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl <em>Api Baseline Task</em>}' class.
@@ -943,12 +934,12 @@ public interface SetupPackage extends EPackage
   int P2_TASK__LICENSE_CONFIRMATION_DISABLED = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-  	 * The number of structural features of the '<em>P2 Task</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>P2 Task</em>' class.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int P2_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
@@ -1840,22 +1831,31 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__REMOTE_URI = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 3;
+  int GIT_CLONE_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Git Clone Task</em>' class.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
+  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
@@ -3030,9 +3030,20 @@ public interface SetupPackage extends EPackage
   EAttribute getGitCloneTask_CheckoutBranch();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask <em>Project Set Import Task</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getUserID <em>User ID</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>User ID</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getUserID()
+   * @see #getGitCloneTask()
+   * @generated
+   */
+  EAttribute getGitCloneTask_UserID();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask <em>Project Set Import Task</em>}'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return the meta object for class '<em>Project Set Import Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask
    * @generated
@@ -3083,14 +3094,14 @@ public interface SetupPackage extends EPackage
   EAttribute getP2Task_LicenseConfirmationDisabled();
 
   /**
-  	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories()
-  	 * @see #getP2Task()
-  	 * @generated
-  	 */
+   * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories()
+   * @see #getP2Task()
+   * @generated
+   */
   EReference getP2Task_P2Repositories();
 
   /**
@@ -4021,17 +4032,6 @@ public interface SetupPackage extends EPackage
   EClass getPreferences();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getUserName <em>User Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>User Name</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getUserName()
-   * @see #getPreferences()
-   * @generated
-   */
-  EAttribute getPreferences_UserName();
-
-  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getInstallFolder <em>Install Folder</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4043,20 +4043,20 @@ public interface SetupPackage extends EPackage
   EAttribute getPreferences_InstallFolder();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix <em>Git Prefix</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder <em>Bundle Pool Folder</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Git Prefix</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix()
+   * @return the meta object for the attribute '<em>Bundle Pool Folder</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder()
    * @see #getPreferences()
    * @generated
    */
-  EAttribute getPreferences_GitPrefix();
+  EAttribute getPreferences_BundlePoolFolder();
 
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}'.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Accepted Licenses</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses()
    * @see #getPreferences()
@@ -4395,9 +4395,17 @@ public interface SetupPackage extends EPackage
     EAttribute GIT_CLONE_TASK__CHECKOUT_BRANCH = eINSTANCE.getGitCloneTask_CheckoutBranch();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
+     * The meta object literal for the '<em><b>User ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GIT_CLONE_TASK__USER_ID = eINSTANCE.getGitCloneTask_UserID();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
+     * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectSetImportTask()
      * @generated
@@ -4439,11 +4447,11 @@ public interface SetupPackage extends EPackage
     EAttribute P2_TASK__LICENSE_CONFIRMATION_DISABLED = eINSTANCE.getP2Task_LicenseConfirmationDisabled();
 
     /**
-    	 * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EReference P2_TASK__P2_REPOSITORIES = eINSTANCE.getP2Task_P2Repositories();
 
     /**
@@ -5203,14 +5211,6 @@ public interface SetupPackage extends EPackage
     EClass PREFERENCES = eINSTANCE.getPreferences();
 
     /**
-     * The meta object literal for the '<em><b>User Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PREFERENCES__USER_NAME = eINSTANCE.getPreferences_UserName();
-
-    /**
      * The meta object literal for the '<em><b>Install Folder</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5219,17 +5219,17 @@ public interface SetupPackage extends EPackage
     EAttribute PREFERENCES__INSTALL_FOLDER = eINSTANCE.getPreferences_InstallFolder();
 
     /**
-     * The meta object literal for the '<em><b>Git Prefix</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Bundle Pool Folder</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PREFERENCES__GIT_PREFIX = eINSTANCE.getPreferences_GitPrefix();
+    EAttribute PREFERENCES__BUNDLE_POOL_FOLDER = eINSTANCE.getPreferences_BundlePoolFolder();
 
     /**
      * The meta object literal for the '<em><b>Accepted Licenses</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
      * @generated
      */
     EAttribute PREFERENCES__ACCEPTED_LICENSES = eINSTANCE.getPreferences_AcceptedLicenses();

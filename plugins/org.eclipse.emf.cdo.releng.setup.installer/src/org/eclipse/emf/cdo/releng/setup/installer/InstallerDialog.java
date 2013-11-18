@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
-import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -29,7 +28,6 @@ import org.eclipse.emf.cdo.releng.setup.provider.ConfigurationItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.ProjectItemProvider;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
-import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
@@ -55,7 +53,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
@@ -147,11 +144,9 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private CheckboxTreeViewer viewer;
 
-  private Text userNameText;
-
   private Text installFolderText;
 
-  private Text gitPrefixText;
+  private Text bundlePoolFolderText;
 
   private ComboBoxViewerCellEditor cellEditor;
 
@@ -423,43 +418,46 @@ public class InstallerDialog extends AbstractSetupDialog
     // grpPreferences.setText("Preferences");
     grpPreferences.setBounds(0, 0, 70, 82);
 
-    Label userNameLabel = new Label(grpPreferences, SWT.NONE);
-    userNameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    userNameLabel.setBounds(0, 0, 55, 15);
-    userNameLabel.setText("Git/Gerrit ID:");
-
-    userNameText = new Text(grpPreferences, SWT.BORDER);
-    userNameText
-        .setToolTipText("Must match your account on Git/Gerrit.\nDon't forget to upload your public key to that account!");
-    GridData gd_userNameText = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-    gd_userNameText.widthHint = 165;
-    userNameText.setLayoutData(gd_userNameText);
-    userNameText.setBounds(0, 0, 76, 21);
-    userNameText.addModifyListener(new ModifyListener()
-    {
-      public void modifyText(ModifyEvent e)
-      {
-        preferences.setUserName(userNameText.getText());
-        saveEObject(preferences);
-        validate();
-      }
-    });
+    // Label userNameLabel = new Label(grpPreferences, SWT.NONE);
+    // userNameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    // userNameLabel.setBounds(0, 0, 55, 15);
+    // userNameLabel.setText("Git/Gerrit ID:");
+    //
+    // userNameText = new Text(grpPreferences, SWT.BORDER);
+    // userNameText
+    // .setToolTipText("Must match your account on Git/Gerrit.\nDon't forget to upload your public key to that account!");
+    // GridData gd_userNameText = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+    // gd_userNameText.widthHint = 165;
+    // userNameText.setLayoutData(gd_userNameText);
+    // userNameText.setBounds(0, 0, 76, 21);
+    // userNameText.addModifyListener(new ModifyListener()
+    // {
+    // public void modifyText(ModifyEvent e)
+    // {
+    // preferences.setUserName(userNameText.getText());
+    // saveEObject(preferences);
+    // validate();
+    // }
+    // });
 
     // Label empty = new Label(grpPreferences, SWT.NONE);
     // empty.setBounds(0, 0, 55, 15);
-    Button editButton = new Button(grpPreferences, SWT.NONE);
-    editButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    editButton.setBounds(0, 0, 75, 25);
-    editButton.setText("Preferences...");
-    editButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        close();
-        setReturnCode(RETURN_WORKBENCH);
-      }
-    });
+    // TODO
+    // Need to move this to the bottom.
+    // Also want current tool version
+    // Button editButton = new Button(grpPreferences, SWT.NONE);
+    // editButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    // editButton.setBounds(0, 0, 75, 25);
+    // editButton.setText("Preferences...");
+    // editButton.addSelectionListener(new SelectionAdapter()
+    // {
+    // @Override
+    // public void widgetSelected(SelectionEvent e)
+    // {
+    // close();
+    // setReturnCode(RETURN_WORKBENCH);
+    // }
+    // });
 
     Label installFolderLabel = new Label(grpPreferences, SWT.NONE);
     installFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -471,11 +469,23 @@ public class InstallerDialog extends AbstractSetupDialog
     installFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     installFolderText.addModifyListener(new ModifyListener()
     {
+      private String previousText;
+
       public void modifyText(ModifyEvent e)
       {
-        setups.clear();
+        setups = null;
 
-        preferences.setInstallFolder(installFolderText.getText());
+        String text = installFolderText.getText();
+        preferences.setInstallFolder(text);
+        String defaultBundlePoolFolder = text + File.separator + ".p2pool-ide";
+        if (previousText == null
+            || bundlePoolFolderText.getText().equals(previousText + File.separator + ".p2pool-ide"))
+        {
+          bundlePoolFolderText.setText(defaultBundlePoolFolder);
+        }
+
+        previousText = text;
+
         saveEObject(preferences);
         validate();
       }
@@ -501,39 +511,40 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    Label gitPrefixLabel = new Label(grpPreferences, SWT.NONE);
-    gitPrefixLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    gitPrefixLabel.setText("Git Prefix:");
+    Label bundlePoolFolderLabel = new Label(grpPreferences, SWT.NONE);
+    bundlePoolFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    bundlePoolFolderLabel.setText("Bundle Pool Folder:");
 
-    gitPrefixText = new Text(grpPreferences, SWT.BORDER);
-    gitPrefixText.setToolTipText("Points to your native Git installation in order to reuse the 'etc/gitconfig' file.");
-    gitPrefixText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-    gitPrefixText.addModifyListener(new ModifyListener()
+    bundlePoolFolderText = new Text(grpPreferences, SWT.BORDER);
+    bundlePoolFolderText
+        .setToolTipText("Points to your native Git installation in order to reuse the 'etc/gitconfig' file.");
+    bundlePoolFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+    bundlePoolFolderText.addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)
       {
-        preferences.setGitPrefix(gitPrefixText.getText());
+        preferences.setBundlePoolFolder(bundlePoolFolderText.getText());
         saveEObject(preferences);
         validate();
       }
     });
 
-    Button gitPrefixButton = new Button(grpPreferences, SWT.NONE);
-    gitPrefixButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    gitPrefixButton.setBounds(0, 0, 75, 25);
-    gitPrefixButton.setText("Browse...");
-    gitPrefixButton.addSelectionListener(new SelectionAdapter()
+    Button bundlePoolFolderButton = new Button(grpPreferences, SWT.NONE);
+    bundlePoolFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    bundlePoolFolderButton.setBounds(0, 0, 75, 25);
+    bundlePoolFolderButton.setText("Browse...");
+    bundlePoolFolderButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
         DirectoryDialog dlg = new DirectoryDialog(getShell());
-        dlg.setText("Select Git Prefix Folder");
+        dlg.setText("Select IDE Bundle Pool Folder");
         dlg.setMessage("Select a folder");
         String dir = dlg.open();
         if (dir != null)
         {
-          gitPrefixText.setText(dir);
+          bundlePoolFolderText.setText(dir);
         }
       }
     });
@@ -563,28 +574,56 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     ToolBar toolBar = (ToolBar)super.createHelpControl(parent);
 
-    ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/dialog_update.gif");
-    final Image image = imageDescriptor.createImage(toolBar.getDisplay());
-
-    ToolItem updateButton = new ToolItem(toolBar, SWT.PUSH);
-    updateButton.setImage(image);
-    updateButton.setToolTipText("Update");
-    updateButton.addSelectionListener(new SelectionAdapter()
     {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        update(false);
-      }
-    });
+      ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/dialog_prefs.gif");
+      final Image image = imageDescriptor.createImage(toolBar.getDisplay());
 
-    updateButton.addDisposeListener(new DisposeListener()
-    {
-      public void widgetDisposed(DisposeEvent e)
+      ToolItem button = new ToolItem(toolBar, SWT.PUSH);
+      button.setImage(image);
+      button.setToolTipText("Preferences");
+      button.addSelectionListener(new SelectionAdapter()
       {
-        image.dispose();
-      }
-    });
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          close();
+          setReturnCode(RETURN_WORKBENCH);
+        }
+      });
+
+      button.addDisposeListener(new DisposeListener()
+      {
+        public void widgetDisposed(DisposeEvent e)
+        {
+          image.dispose();
+        }
+      });
+    }
+
+    {
+      ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/dialog_update.gif");
+      final Image image = imageDescriptor.createImage(toolBar.getDisplay());
+
+      ToolItem button = new ToolItem(toolBar, SWT.PUSH);
+      button.setImage(image);
+      button.setToolTipText("Update");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          update(false);
+        }
+      });
+
+      button.addDisposeListener(new DisposeListener()
+      {
+        public void widgetDisposed(DisposeEvent e)
+        {
+          image.dispose();
+        }
+      });
+    }
 
     return toolBar;
   }
@@ -847,18 +886,16 @@ public class InstallerDialog extends AbstractSetupDialog
 
             InternalEList<Project> configuredProjects = (InternalEList<Project>)configuration.getProjects();
 
-            String userName;
             String installFolder;
-            String gitPrefix;
+            String bundlePoolFolder;
 
             if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
             {
               Resource resource = loadResourceSafely(Preferences.PREFERENCES_URI);
               preferences = (Preferences)resource.getContents().get(0);
 
-              userName = safe(preferences.getUserName());
               installFolder = safe(preferences.getInstallFolder());
-              gitPrefix = safe(preferences.getGitPrefix());
+              bundlePoolFolder = safe(preferences.getBundlePoolFolder());
             }
             else
             {
@@ -869,9 +906,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
               File rootFolder = new File(System.getProperty("user.home", "."));
 
-              userName = "";
               installFolder = safe(getAbsolutePath(rootFolder));
-              gitPrefix = safe(getAbsolutePath(new File(OS.INSTANCE.getGitPrefix())));
+              bundlePoolFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-ide")));
             }
 
             ItemProvider input = new ItemProvider();
@@ -892,7 +928,7 @@ public class InstallerDialog extends AbstractSetupDialog
               projects.add(project);
             }
 
-            initUI(input, userName, installFolder, gitPrefix);
+            initUI(input, installFolder, bundlePoolFolder);
           }
           catch (UpdatingException ex)
           {
@@ -904,16 +940,14 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         }
 
-        private void initUI(final ItemProvider input, final String userName, final String installFolder,
-            final String gitPrefix)
+        private void initUI(final ItemProvider input, final String installFolder, final String bundlePoolFolder)
         {
           viewer.getControl().getDisplay().asyncExec(new Runnable()
           {
             public void run()
             {
-              userNameText.setText(userName);
               installFolderText.setText(installFolder);
-              gitPrefixText.setText(gitPrefix);
+              bundlePoolFolderText.setText(bundlePoolFolder);
 
               viewer.setInput(input);
 
@@ -987,6 +1021,11 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private void validate()
   {
+    String text = installFolderText.getText();
+    String defaultBundlePoolFolder = text + File.separator + ".p2pool-ide";
+    bundlePoolFolderText.setForeground(getShell().getDisplay().getSystemColor(
+        bundlePoolFolderText.getText().equals(defaultBundlePoolFolder) ? SWT.COLOR_DARK_GRAY : SWT.COLOR_BLACK));
+
     if (viewer != null)
     {
       viewer.refresh(true);
@@ -1005,39 +1044,11 @@ public class InstallerDialog extends AbstractSetupDialog
       return;
     }
 
-    if (userNameText.getText().length() == 0)
-    {
-      setMessage("Enter your Eclipse Git/Gerrit ID or '" + GitCloneTask.ANONYMOUS + "'.", IMessageProvider.ERROR);
-      installButton.setEnabled(false);
-      return;
-    }
-
     if (installFolderText.getText().length() == 0)
     {
       setMessage("Enter the install folder.", IMessageProvider.ERROR);
       installButton.setEnabled(false);
       return;
-    }
-
-    if (Platform.OS_WIN32.equals(Platform.getOS()))
-    {
-      String gitPrefix = gitPrefixText.getText();
-      if (gitPrefix.length() == 0)
-      {
-        setMessage("Enter the Git installation folder to use its 'etc/gitconfig' in the installed IDE.",
-            IMessageProvider.WARNING);
-        installButton.setEnabled(true);
-        return;
-      }
-
-      File etc = new File(gitPrefix, "etc");
-      File gitconfig = new File(etc, "gitconfig");
-      if (!gitconfig.isFile())
-      {
-        setMessage("The Git prefix folder does not contain 'etc/gitconfig'.", IMessageProvider.WARNING);
-        installButton.setEnabled(true);
-        return;
-      }
     }
 
     setMessage("Click the Install button to start the installation process.", IMessageProvider.NONE);
@@ -1099,7 +1110,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     final Object[] checkedElements = viewer.getCheckedElements();
     final String installFolder = installFolderText.getText();
-    final String gitPrefix = safe(gitPrefixText.getText());
+    final String gitPrefix = safe(bundlePoolFolderText.getText());
 
     File folder = new File(installFolder);
     folder.mkdirs();

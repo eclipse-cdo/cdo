@@ -75,19 +75,19 @@ public interface P2Task extends SetupTask
   void setLicenseConfirmationDisabled(boolean value);
 
   /**
-  	 * Returns the value of the '<em><b>P2 Repositories</b></em>' containment reference list.
-  	 * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
-  	 * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>P2 Repositories</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.P2Repository}.
+   * <!-- begin-user-doc -->
        * <p>
        * If the meaning of the '<em>P2 Repositories</em>' containment reference list isn't clear,
        * there really should be more of a description here...
        * </p>
        * <!-- end-user-doc -->
-  	 * @return the value of the '<em>P2 Repositories</em>' containment reference list.
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_P2Repositories()
-  	 * @model containment="true" resolveProxies="true" required="true"
-  	 * @generated
-  	 */
+   * @return the value of the '<em>P2 Repositories</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getP2Task_P2Repositories()
+   * @model containment="true" resolveProxies="true" required="true"
+   * @generated
+   */
   EList<P2Repository> getP2Repositories();
 
 } // InstallTask

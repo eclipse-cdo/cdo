@@ -67,7 +67,7 @@ public interface ContextVariableTask extends SetupTask
    * @return the value of the '<em>Value</em>' attribute.
    * @see #setValue(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_Value()
-   * @model required="true"
+   * @model
    * @generated
    */
   String getValue();

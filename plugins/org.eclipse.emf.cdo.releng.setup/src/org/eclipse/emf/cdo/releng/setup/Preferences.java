@@ -23,9 +23,8 @@ import java.io.File;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getInstallFolder <em>Install Folder</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix <em>Git Prefix</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder <em>Bundle Pool Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}</li>
  * </ul>
  * </p>
@@ -40,32 +39,6 @@ public interface Preferences extends SetupTaskContainer
 
   public static final URI PREFERENCES_URI = URI.createFileURI(new File(System.getProperty("user.home", "."),
       PREFERENCES_NAME).getAbsolutePath());
-
-  /**
-   * Returns the value of the '<em><b>User Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>User Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>User Name</em>' attribute.
-   * @see #setUserName(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_UserName()
-   * @model required="true"
-   * @generated
-   */
-  String getUserName();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getUserName <em>User Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>User Name</em>' attribute.
-   * @see #getUserName()
-   * @generated
-   */
-  void setUserName(String value);
 
   /**
    * Returns the value of the '<em><b>Install Folder</b></em>' attribute.
@@ -94,40 +67,40 @@ public interface Preferences extends SetupTaskContainer
   void setInstallFolder(String value);
 
   /**
-   * Returns the value of the '<em><b>Git Prefix</b></em>' attribute.
+   * Returns the value of the '<em><b>Bundle Pool Folder</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Git Prefix</em>' attribute isn't clear,
+   * If the meaning of the '<em>Bundle Pool Folder</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Git Prefix</em>' attribute.
-   * @see #setGitPrefix(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_GitPrefix()
+   * @return the value of the '<em>Bundle Pool Folder</em>' attribute.
+   * @see #setBundlePoolFolder(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_BundlePoolFolder()
    * @model
    * @generated
    */
-  String getGitPrefix();
+  String getBundlePoolFolder();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getGitPrefix <em>Git Prefix</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder <em>Bundle Pool Folder</em>}' attribute.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Git Prefix</em>' attribute.
-   * @see #getGitPrefix()
+  	 * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Bundle Pool Folder</em>' attribute.
+   * @see #getBundlePoolFolder()
    * @generated
    */
-  void setGitPrefix(String value);
+  void setBundlePoolFolder(String value);
 
   /**
    * Returns the value of the '<em><b>Accepted Licenses</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Accepted Licenses</em>' attribute list isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+      	 * <p>
+      	 * If the meaning of the '<em>Accepted Licenses</em>' attribute list isn't clear,
+      	 * there really should be more of a description here...
+      	 * </p>
+      	 * <!-- end-user-doc -->
    * @return the value of the '<em>Accepted Licenses</em>' attribute list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_AcceptedLicenses()
    * @model

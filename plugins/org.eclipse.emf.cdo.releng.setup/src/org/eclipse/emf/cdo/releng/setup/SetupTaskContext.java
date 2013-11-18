@@ -52,8 +52,6 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
 
   public File getEclipseDir();
 
-  public File getTargetPlatformDir();
-
   public File getWorkspaceDir();
 
   public Setup getSetup();

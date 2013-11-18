@@ -361,12 +361,8 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public String getP2ProfileName()
   {
-    Branch branch = setup.getBranch();
-    Project project = branch.getProject();
-
-    String profileName = project.getName() + "_" + branch.getName();
-    profileName = profileName.replace('.', '_');
-    profileName = profileName.replace('-', '_');
+    String profileName = getBranchDir().toString();
+    profileName = profileName.replace(':', '_');
     profileName = profileName.replace('/', '_');
     profileName = profileName.replace('\\', '_');
     return profileName;
@@ -384,7 +380,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public File getP2PoolDir()
   {
-    return new File(getInstallDir(), ".p2pool-ide");
+    return new File(preferences.getBundlePoolFolder());
   }
 
   public File getInstallDir()
@@ -405,12 +401,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   public File getEclipseDir()
   {
     return new File(branchDir, "eclipse");
-  }
-
-  // TODO Is this Bucky-specific?
-  public File getTargetPlatformDir()
-  {
-    return new File(branchDir, "tp");
   }
 
   public File getWorkspaceDir()
@@ -567,7 +557,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     EClass eClass = eObject.eClass();
     for (EAttribute attribute : eClass.getEAllAttributes())
     {
-      if (attribute.getEAttributeType().getInstanceClassName() == "java.lang.String"
+      if (attribute.isChangeable() && attribute.getEAttributeType().getInstanceClassName() == "java.lang.String"
           && attribute != SetupPackage.Literals.CONTEXT_VARIABLE_TASK__NAME)
       {
         String value = (String)eObject.eGet(attribute);
@@ -632,12 +622,10 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     String projectLabel = project.getLabel();
     String projectName = project.getName();
 
-    put("setup.git.prefix", preferences.getGitPrefix());
     put("setup.install.dir", getInstallDir());
     put("setup.project.dir", getProjectDir());
     put("setup.branch.dir", getBranchDir());
     put("setup.eclipse.dir", getEclipseDir());
-    put("setup.tp.dir", getTargetPlatformDir());
     put("setup.ws.dir", getWorkspaceDir());
     put("setup.project.label", projectLabel);
     put("setup.project.name", projectName);

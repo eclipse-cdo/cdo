@@ -208,7 +208,7 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
       }
       else if (eContainer instanceof Preferences)
       {
-        prefix += ((Preferences)eContainer).getUserName() + " ";
+        prefix += "<user> ";
       }
     }
 

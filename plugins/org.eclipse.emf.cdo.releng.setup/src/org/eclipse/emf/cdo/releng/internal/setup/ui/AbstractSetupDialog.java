@@ -12,9 +12,17 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.jface.dialogs.DialogTray;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.events.HelpEvent;
+import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -27,22 +35,82 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+import org.osgi.framework.Bundle;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.URL;
+
+/**
+ * @author Eike Stepper
+ */
 public abstract class AbstractSetupDialog extends TitleAreaDialog
 {
-  public static final String TITLE = "Development Environment " + (Activator.SETUP_IDE ? "Setup" : "Installer");
+  public static final String SHELL_TEXT = "Development Environment " + (Activator.SETUP_IDE ? "Setup" : "Installer");
 
-  protected AbstractSetupDialog(Shell parentShell)
+  private String title;
+
+  private int width;
+
+  private int height;
+
+  private Bundle bundle;
+
+  private String help;
+
+  protected AbstractSetupDialog(Shell parentShell, String title, int width, int height, Bundle bundle, String help)
   {
     super(parentShell);
-    setHelpAvailable(false);
+    this.title = title;
+    this.width = width;
+    this.height = height;
+    this.bundle = bundle;
+    this.help = help;
+
+    setHelpAvailable(help != null);
     setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
+  }
+
+  protected AbstractSetupDialog(Shell parentShell, String title, int width, int height, Bundle bundle)
+  {
+    this(parentShell, title, width, height, bundle, null);
+  }
+
+  protected AbstractSetupDialog(Shell parentShell, String title, int width, int height)
+  {
+    this(parentShell, title, width, height, Activator.getDefault().getBundle());
+  }
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public int getWidth()
+  {
+    return width;
+  }
+
+  public int getHeight()
+  {
+    return height;
+  }
+
+  public Bundle getBundle()
+  {
+    return bundle;
+  }
+
+  public String getHelp()
+  {
+    return help;
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    getShell().setText(TITLE);
-    setTitle(getDefaultTitle());
+    getShell().setText(SHELL_TEXT);
+    setTitle(title);
     setTitleImage(getDefaultImage(getImagePath()));
     setMessage(getDefaultMessage());
 
@@ -58,6 +126,65 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
     createUI(container);
+
+    if (getContainerMargin() == 0)
+    {
+      createSeparator(container);
+    }
+
+    parent.addHelpListener(new HelpListener()
+    {
+      public void helpRequested(HelpEvent e)
+      {
+        if (getTray() != null)
+        {
+          closeTray();
+          updatedHelpButton(false);
+          return;
+        }
+
+        DialogTray tray = new DialogTray()
+        {
+          @Override
+          protected Control createContents(Composite parent)
+          {
+            URL resource = bundle.getResource(help);
+
+            try
+            {
+              resource = FileLocator.resolve(resource);
+            }
+            catch (IOException ex)
+            {
+              Activator.log(ex);
+            }
+
+            Browser browser = new Browser(parent, SWT.NONE);
+            browser.setSize(500, 800);
+            browser.setUrl(resource.toString());
+            return browser;
+          }
+        };
+
+        openTray(tray);
+        updatedHelpButton(true);
+      }
+
+      private void updatedHelpButton(boolean pushed)
+      {
+        try
+        {
+          Field field = ReflectUtil.getField(TrayDialog.class, "fHelpButton");
+          ToolItem fHelpButton = (ToolItem)ReflectUtil.getValue(field, AbstractSetupDialog.this);
+          fHelpButton.setSelection(pushed);
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+    });
+
     return area;
   }
 
@@ -121,7 +248,7 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
 
   protected String getImagePlugin()
   {
-    return "org.eclipse.emf.cdo.releng.setup";
+    return Activator.PLUGIN_ID;
   }
 
   protected String getImagePath()
@@ -134,15 +261,13 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
     return ResourceManager.getPluginImage(getImagePlugin(), path);
   }
 
-  protected String getDefaultTitle()
-  {
-    return TITLE;
-  }
-
   protected abstract String getDefaultMessage();
 
   @Override
-  protected abstract Point getInitialSize();
+  protected final Point getInitialSize()
+  {
+    return new Point(width, height);
+  }
 
   protected abstract void createUI(Composite parent);
 }

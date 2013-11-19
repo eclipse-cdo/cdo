@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskMigrator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractSetupDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
@@ -33,8 +33,6 @@ import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
-import org.eclipse.net4j.util.ReflectUtil;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
@@ -52,7 +50,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -69,12 +66,10 @@ import org.eclipse.equinox.p2.query.IQueryResult;
 import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
-import org.eclipse.jface.dialogs.DialogTray;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -88,9 +83,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.events.HelpEvent;
-import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -112,17 +104,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -170,17 +159,10 @@ public class InstallerDialog extends AbstractSetupDialog
 
   public InstallerDialog(Shell parentShell)
   {
-    super(parentShell);
-    setHelpAvailable(true);
-
+    super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
+        "/help/InstallerDialog.html");
     resourceSet = EMFUtil.createResourceSet();
     adapterFactory = new SetupDialogAdapterFactory();
-  }
-
-  @Override
-  protected Point getInitialSize()
-  {
-    return new Point(500, 500);
   }
 
   @Override
@@ -189,63 +171,9 @@ public class InstallerDialog extends AbstractSetupDialog
     return null;
   }
 
-  protected void pushHelpButton(boolean pushed)
-  {
-    try
-    {
-      Field field = ReflectUtil.getField(TrayDialog.class, "fHelpButton");
-      ToolItem fHelpButton = (ToolItem)ReflectUtil.getValue(field, InstallerDialog.this);
-      fHelpButton.setSelection(pushed);
-    }
-    catch (Exception ex)
-    {
-      Activator.log(ex);
-    }
-  }
-
   @Override
   protected void createUI(Composite parent)
   {
-    parent.addHelpListener(new HelpListener()
-    {
-      public void helpRequested(HelpEvent e)
-      {
-        if (getTray() != null)
-        {
-          closeTray();
-          pushHelpButton(false);
-          return;
-        }
-
-        pushHelpButton(true);
-
-        DialogTray tray = new DialogTray()
-        {
-          @Override
-          protected Control createContents(Composite parent)
-          {
-            URL resource = Activator.getDefault().getBundle().getResource("/help/InstallerDialog.html");
-
-            try
-            {
-              resource = FileLocator.resolve(resource);
-            }
-            catch (IOException ex)
-            {
-              Activator.log(ex);
-            }
-
-            Browser browser = new Browser(parent, SWT.NONE);
-            browser.setSize(500, 800);
-            browser.setUrl(resource.toString());
-            return browser;
-          }
-        };
-
-        openTray(tray);
-      }
-    });
-
     viewer = new CheckboxTreeViewer(parent, SWT.FULL_SELECTION);
     Tree tree = viewer.getTree();
     tree.setLinesVisible(true);
@@ -494,8 +422,6 @@ public class InstallerDialog extends AbstractSetupDialog
     group.setLayout(layout);
     group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
-    createSeparator(parent);
-
     Label installFolderLabel = new Label(group, SWT.NONE);
     installFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     installFolderLabel.setBounds(0, 0, 55, 15);
@@ -646,98 +572,6 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     super.okPressed();
-  }
-
-  protected void aboutPressed(final String version)
-  {
-    new AbstractSetupDialog(getShell())
-    {
-      @Override
-      protected Point getInitialSize()
-      {
-        return new Point(600, 500);
-      }
-
-      @Override
-      protected String getDefaultMessage()
-      {
-        return "This is the installer version " + version + ".";
-      }
-
-      @Override
-      protected void createUI(Composite parent)
-      {
-        Table table = new Table(parent, SWT.FULL_SELECTION);
-        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-        TableColumn idColumn = new TableColumn(table, SWT.NONE);
-        idColumn.setText("ID");
-        idColumn.setWidth(400);
-
-        TableColumn versionColumn = new TableColumn(table, SWT.NONE);
-        versionColumn.setText("Version");
-        versionColumn.setWidth(400);
-
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-
-        IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
-
-        try
-        {
-          ProvisioningSession session = new ProvisioningSession(agent);
-          List<IInstallableUnit> installedUnits = getInstalledUnits(session);
-
-          String[][] rows = new String[installedUnits.size()][];
-          for (int i = 0; i < rows.length; i++)
-          {
-            IInstallableUnit installableUnit = installedUnits.get(i);
-            rows[i] = new String[] { installableUnit.getId(), installableUnit.getVersion().toString() };
-          }
-
-          Arrays.sort(rows, new Comparator<String[]>()
-          {
-            public int compare(String[] o1, String[] o2)
-            {
-              return o1[0].compareTo(o2[0]);
-            }
-          });
-
-          Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
-
-          for (int i = 0; i < rows.length; i++)
-          {
-            TableItem item = new TableItem(table, SWT.NONE);
-
-            String id = rows[i][0];
-            item.setText(0, id);
-
-            String version = rows[i][1];
-            item.setText(1, version);
-
-            if (hasPrefix(id, PRODUCT_PREFIXES))
-            {
-              item.setForeground(blue);
-            }
-          }
-
-          idColumn.pack();
-          versionColumn.pack();
-
-          createSeparator(parent);
-        }
-        finally
-        {
-          ServiceUtil.ungetService(agent);
-        }
-      }
-
-      @Override
-      protected void createButtonsForButtonBar(Composite parent)
-      {
-        createButton(parent, IDialogConstants.OK_ID, "Close", true);
-      }
-    }.open();
   }
 
   protected boolean update(final boolean needsEarlyConfirmation)
@@ -986,7 +820,7 @@ public class InstallerDialog extends AbstractSetupDialog
                     @Override
                     public void widgetSelected(SelectionEvent e)
                     {
-                      aboutPressed(version);
+                      new AboutDialog(version).open();
                     }
                   });
 
@@ -1050,12 +884,6 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-  }
-
-  class UpdatingException extends Exception
-  {
-    private static final long serialVersionUID = 1L;
-
   }
 
   private SetupResource loadResourceSafely(URI uri) throws UpdatingException
@@ -1334,7 +1162,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     }
 
-    ProgressLogDialog.run(getShell(), new ProgressLogRunnable()
+    ProgressDialog.run(getShell(), new ProgressLogRunnable()
     {
       public Set<String> run(ProgressLog log) throws Exception
       {
@@ -1422,6 +1250,12 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     Activator.log(ex);
     ErrorDialog.open(ex);
+  }
+
+  class UpdatingException extends Exception
+  {
+    private static final long serialVersionUID = 1L;
+
   }
 
   /**
@@ -1536,6 +1370,99 @@ public class InstallerDialog extends AbstractSetupDialog
       }
 
       return super.getBackground(object);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class AboutDialog extends AbstractSetupDialog
+  {
+    private final String version;
+
+    private AboutDialog(String version)
+    {
+      super(InstallerDialog.this.getShell(), "About Development Evironment Installer", 600, 500, Activator.getDefault()
+          .getBundle());
+      this.version = version;
+    }
+
+    @Override
+    protected String getDefaultMessage()
+    {
+      return "The current product version is " + version + ".";
+    }
+
+    @Override
+    protected void createUI(Composite parent)
+    {
+      Table table = new Table(parent, SWT.FULL_SELECTION);
+      table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+      TableColumn idColumn = new TableColumn(table, SWT.NONE);
+      idColumn.setText("ID");
+      idColumn.setWidth(400);
+
+      TableColumn versionColumn = new TableColumn(table, SWT.NONE);
+      versionColumn.setText("Version");
+      versionColumn.setWidth(400);
+
+      table.setHeaderVisible(true);
+      table.setLinesVisible(true);
+
+      IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
+
+      try
+      {
+        ProvisioningSession session = new ProvisioningSession(agent);
+        List<IInstallableUnit> installedUnits = getInstalledUnits(session);
+
+        String[][] rows = new String[installedUnits.size()][];
+        for (int i = 0; i < rows.length; i++)
+        {
+          IInstallableUnit installableUnit = installedUnits.get(i);
+          rows[i] = new String[] { installableUnit.getId(), installableUnit.getVersion().toString() };
+        }
+
+        Arrays.sort(rows, new Comparator<String[]>()
+        {
+          public int compare(String[] o1, String[] o2)
+          {
+            return o1[0].compareTo(o2[0]);
+          }
+        });
+
+        Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
+
+        for (int i = 0; i < rows.length; i++)
+        {
+          TableItem item = new TableItem(table, SWT.NONE);
+
+          String id = rows[i][0];
+          item.setText(0, id);
+
+          String version = rows[i][1];
+          item.setText(1, version);
+
+          if (hasPrefix(id, PRODUCT_PREFIXES))
+          {
+            item.setForeground(blue);
+          }
+        }
+
+        idColumn.pack();
+        versionColumn.pack();
+      }
+      finally
+      {
+        ServiceUtil.ungetService(agent);
+      }
+    }
+
+    @Override
+    protected void createButtonsForButtonBar(Composite parent)
+    {
+      createButton(parent, IDialogConstants.OK_ID, "Close", true);
     }
   }
 }

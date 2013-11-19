@@ -26,19 +26,16 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -70,7 +67,7 @@ public class LicenseDialog extends AbstractSetupDialog
 
   public LicenseDialog(Shell parentShell, Map<ILicense, List<IInstallableUnit>> licensesToIUs)
   {
-    super(parentShell);
+    super(parentShell, "Review Licenses", 1000, 600);
     this.licensesToIUs = licensesToIUs;
   }
 
@@ -79,23 +76,11 @@ public class LicenseDialog extends AbstractSetupDialog
     return rememberAcceptedLicenses;
   }
 
-  @Override
-  protected Point getInitialSize()
-  {
-    return new Point(1000, 600);
-  }
-
-  @Override
-  protected int getContainerMargin()
-  {
-    return 10;
-  }
-
-  @Override
-  protected String getDefaultTitle()
-  {
-    return "Review Licenses";
-  }
+  // @Override
+  // protected int getContainerMargin()
+  // {
+  // return 10;
+  // }
 
   @Override
   protected String getDefaultMessage()
@@ -159,9 +144,9 @@ public class LicenseDialog extends AbstractSetupDialog
     GridData gd = new GridData(GridData.FILL_BOTH);
     composite.setLayoutData(gd);
 
-    Label label = new Label(composite, SWT.NONE);
-    label.setText("&Licenses:");
-    viewer = new TreeViewer(composite, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+    // Label label = new Label(composite, SWT.NONE);
+    // label.setText("&Licenses:");
+    viewer = new TreeViewer(composite, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(new LicenseContentProvider());
     viewer.setLabelProvider(new LicenseLabelProvider());
     viewer.setComparator(new ViewerComparator());
@@ -192,17 +177,17 @@ public class LicenseDialog extends AbstractSetupDialog
     GridData gd = new GridData(GridData.FILL_BOTH);
     composite.setLayoutData(gd);
 
-    Label label = new Label(composite, SWT.NONE);
-    if (singleIU == null)
-    {
-      label.setText("License &text:");
-    }
-    else
-    {
-      label.setText(NLS.bind("License &text (for {0}):", getIUName(singleIU)));
-    }
+    // Label label = new Label(composite, SWT.NONE);
+    // if (singleIU == null)
+    // {
+    // label.setText("License &text:");
+    // }
+    // else
+    // {
+    // label.setText(NLS.bind("License &text (for {0}):", getIUName(singleIU)));
+    // }
 
-    licenseTextBox = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP | SWT.READ_ONLY);
+    licenseTextBox = new Text(composite, SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.READ_ONLY);
     licenseTextBox.setBackground(licenseTextBox.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
     initializeDialogUnits(licenseTextBox);
     gd = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -214,7 +199,6 @@ public class LicenseDialog extends AbstractSetupDialog
     {
       String licenseBody = ""; //$NON-NLS-1$
 
-      // We've already established before calling this method that it's a single IU with a single license
       Iterator<ILicense> licenses = singleIU.getLicenses(null).iterator();
       ILicense license = licenses.hasNext() ? licenses.next() : null;
       if (license != null && license.getBody() != null)

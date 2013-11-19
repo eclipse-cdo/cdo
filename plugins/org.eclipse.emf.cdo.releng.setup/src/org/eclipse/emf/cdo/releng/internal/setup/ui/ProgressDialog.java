@@ -55,19 +55,14 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
@@ -84,7 +79,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLog
+/**
+ * @author Eike Stepper
+ */
+public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 {
   public static final SimpleDateFormat TIME = new SimpleDateFormat("HH:mm:ss");
 
@@ -108,32 +106,17 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
 
   private TreeViewer treeViewer;
 
-  private ProgressLogDialog(Shell parentShell, List<SetupTaskPerformer> setupTaskPerformers)
+  private ProgressDialog(Shell parentShell, List<SetupTaskPerformer> setupTaskPerformers)
   {
-    super(parentShell);
+    super(parentShell, getTitle(setupTaskPerformers), 1000, 600);
     this.setupTaskPerformers = setupTaskPerformers;
-    setHelpAvailable(false);
-  }
-
-  /**
-   * Return the initial size of the dialog.
-   */
-  @Override
-  protected Point getInitialSize()
-  {
-    return new Point(1000, 600);
-  }
-
-  @Override
-  protected int getContainerMargin()
-  {
-    return 10;
   }
 
   @Override
   protected String getDefaultMessage()
   {
-    return "Please wait until the setup process is finished and the OK button is enabled...";
+    return "Please wait until the " + (Activator.SETUP_IDE ? "setup" : "install")
+        + " process is finished and the OK button is enabled...";
   }
 
   @Override
@@ -142,7 +125,7 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
     SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
     sashForm.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-    treeViewer = new TreeViewer(sashForm);
+    treeViewer = new TreeViewer(sashForm, SWT.NONE);
     Tree tree = treeViewer.getTree();
 
     ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
@@ -286,11 +269,11 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     tree.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 
-    text = new Text(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-    text.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
+    text = new Text(sashForm, SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
+    text.setBackground(text.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+    text.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
     text.setEditable(false);
     text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
     text.getVerticalBar().addSelectionListener(scrollBarListener);
   }
 
@@ -447,77 +430,9 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
     }
   }
 
-  private static boolean promptUnresolvedVariables(Shell shell, final List<SetupTaskPerformer> setupTaskPerformers)
+  private static boolean promptUnresolvedVariables(Shell shell, List<SetupTaskPerformer> setupTaskPerformers)
   {
-    final AbstractSetupDialog promptDialog = new AbstractSetupDialog(shell)
-    {
-      @Override
-      protected Point getInitialSize()
-      {
-        return new Point(400, 400);
-      }
-
-      @Override
-      protected String getDefaultMessage()
-      {
-        return "Unspecified context variables";
-      }
-
-      @Override
-      protected void createUI(Composite parent)
-      {
-        GridLayout layout = (GridLayout)parent.getLayout();
-        layout.numColumns = 2;
-
-        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
-        {
-          List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
-          if (!unresolvedVariables.isEmpty())
-          {
-            Label header = new Label(parent, SWT.NONE);
-            header.setText(setupTaskPerformer.getBranchDir().toString());
-            header.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
-
-            for (final ContextVariableTask contextVariableTask : unresolvedVariables)
-            {
-              Label variableLabel = new Label(parent, SWT.NONE);
-              variableLabel.setText(contextVariableTask.getName() + ":");
-              variableLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-
-              final Text text = new Text(parent, SWT.BORDER);
-              text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-              text.addModifyListener(new ModifyListener()
-              {
-                public void modifyText(ModifyEvent e)
-                {
-                  contextVariableTask.setValue(text.getText());
-                  validate();
-                }
-              });
-            }
-          }
-        }
-      }
-
-      private void validate()
-      {
-        Button okButton = getButton(IDialogConstants.OK_ID);
-        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
-        {
-          List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
-          for (final ContextVariableTask contextVariableTask : unresolvedVariables)
-          {
-            if (StringUtil.isEmpty(contextVariableTask.getValue()))
-            {
-              okButton.setEnabled(false);
-              return;
-            }
-          }
-        }
-
-        okButton.setEnabled(true);
-      }
-    };
+    final PromptDialog promptDialog = new PromptDialog(shell, setupTaskPerformers);
 
     final AtomicInteger result = new AtomicInteger();
     if (Display.getCurrent() == shell.getDisplay())
@@ -535,7 +450,7 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
       });
     }
 
-    return result.get() == AbstractSetupDialog.OK;
+    return result.get() == PromptDialog.OK;
   }
 
   public static void run(final Shell shell, final ProgressLogRunnable runnable,
@@ -544,7 +459,7 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
     try
     {
       final AtomicReference<Set<String>> result = new AtomicReference<Set<String>>();
-      final ProgressLogDialog dialog = new ProgressLogDialog(shell, setupTaskPerformers);
+      final ProgressDialog dialog = new ProgressDialog(shell, setupTaskPerformers);
       Runnable jobRunnable = new Runnable()
       {
         public void run()
@@ -621,7 +536,7 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
             }
           });
 
-          if (dialog.open() == ProgressLogDialog.OK && !ObjectUtil.isEmpty(result.get()) && Activator.SETUP_IDE)
+          if (dialog.open() == ProgressDialog.OK && !ObjectUtil.isEmpty(result.get()) && Activator.SETUP_IDE)
           {
             PlatformUI.getWorkbench().restart();
           }
@@ -713,6 +628,12 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
     }
   }
 
+  private static String getTitle(List<SetupTaskPerformer> setupTaskPerformers)
+  {
+    return (Activator.SETUP_IDE ? "Setting up" : "Installing") + " Development Environment"
+        + (setupTaskPerformers.size() > 1 ? "s" : "");
+  }
+
   protected class ScrollBarListener extends SelectionAdapter
   {
     private boolean isDragging;
@@ -727,7 +648,7 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
         isDragging = false;
         if (pendingLines != null)
         {
-          ProgressLogDialog.this.appendText(pendingLines);
+          ProgressDialog.this.appendText(pendingLines);
           pendingLines = null;
         }
       }
@@ -753,6 +674,5 @@ public class ProgressLogDialog extends AbstractSetupDialog implements ProgressLo
         pendingLines = pendingLines.trim() + text.getLineDelimiter() + line;
       }
     }
-
   }
 }

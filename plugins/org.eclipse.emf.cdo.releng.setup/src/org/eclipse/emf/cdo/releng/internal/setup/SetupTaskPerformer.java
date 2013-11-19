@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup;
 
-import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
@@ -182,7 +182,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     {
       try
       {
-        logStream.println("[" + ProgressLogDialog.DATE_TIME.format(new Date()) + "] " + line);
+        logStream.println("[" + ProgressDialog.DATE_TIME.format(new Date()) + "] " + line);
         logStream.flush();
       }
       catch (Exception ex)
@@ -196,14 +196,14 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public void log(IStatus status)
   {
-    log(ProgressLogDialog.toString(status));
+    log(ProgressDialog.toString(status));
   }
 
   public void task(SetupTask setupTask)
   {
-    if (progress instanceof ProgressLogDialog)
+    if (progress instanceof ProgressDialog)
     {
-      ((ProgressLogDialog)progress).task(setupTask);
+      ((ProgressDialog)progress).task(setupTask);
     }
   }
 
@@ -749,7 +749,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     if (Activator.SETUP_IDE && trigger != Trigger.MANUAL)
     {
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
-      ProgressLogDialog.run(shell, new ProgressLogRunnable()
+      ProgressDialog.run(shell, new ProgressLogRunnable()
       {
         public Set<String> run(ProgressLog log) throws Exception
         {

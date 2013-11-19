@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.presentation.actions;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressLogDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
@@ -68,7 +68,7 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
       // }
 
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
-      ProgressLogDialog.run(shell, new ProgressLogRunnable()
+      ProgressDialog.run(shell, new ProgressLogRunnable()
       {
         public Set<String> run(ProgressLog log) throws Exception
         {

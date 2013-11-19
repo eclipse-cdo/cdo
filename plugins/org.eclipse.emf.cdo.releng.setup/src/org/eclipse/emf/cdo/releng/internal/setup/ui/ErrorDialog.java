@@ -37,7 +37,7 @@ public class ErrorDialog extends MessageDialog
 
   private ErrorDialog(Throwable detail)
   {
-    super(null, ProgressLogDialog.TITLE, ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup",
+    super(null, ProgressDialog.SHELL_TEXT, ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup",
         "icons/install_wiz.gif"), "Internal error" + System.getProperty("line.separator") + detail.getMessage(),
         MessageDialog.ERROR, new String[] { IDialogConstants.OK_LABEL, IDialogConstants.SHOW_DETAILS_LABEL }, 0);
     throwable = detail;

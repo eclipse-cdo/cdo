@@ -55,6 +55,7 @@ import org.eclipse.buckminster.rmap.RmapFactory;
 import org.eclipse.buckminster.rmap.SearchPath;
 import org.eclipse.buckminster.sax.Utils;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.p2.metadata.Version;
 
 import org.w3c.dom.Document;
@@ -321,9 +322,12 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       mspec.setUrl("buckminster.cquery");
 
       Map<String, String> properties = mspec.getProperties();
-      properties.put("target.os", "*");
-      properties.put("target.ws", "*");
-      properties.put("target.arch", "*");
+      // properties.put("target.os", "*");
+      // properties.put("target.ws", "*");
+      // properties.put("target.arch", "*");
+      properties.put("target.os", Platform.getOS());
+      properties.put("target.ws", Platform.getWS());
+      properties.put("target.arch", Platform.getOSArch());
       properties.put("buckminster.download.source", "true");
 
       MaterializationNode materializationNode = MspecFactory.eINSTANCE.createMaterializationNode();
@@ -345,9 +349,12 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       componentQueryBuilder.setRootRequest(componentRequestBuilder.createComponentRequest());
 
       Map<String, String> declaredProperties = componentQueryBuilder.getDeclaredProperties();
-      declaredProperties.put("target.os", "*");
-      declaredProperties.put("target.ws", "*");
-      declaredProperties.put("target.arch", "*");
+      declaredProperties.put("target.os", Platform.getOS());
+      declaredProperties.put("target.ws", Platform.getWS());
+      declaredProperties.put("target.arch", Platform.getOSArch());
+      // declaredProperties.put("target.os", "*");
+      // declaredProperties.put("target.ws", "*");
+      // declaredProperties.put("target.arch", "*");
 
       ComponentQuery componentQuery = componentQueryBuilder.createComponentQuery();
 
@@ -414,6 +421,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       if (!sourceLocators.isEmpty())
       {
         int sourceProviderIndex = 0;
+        HashMap<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
         for (SourceLocator sourceLocator : sourceLocators)
         {
           if (sourceLocator instanceof ManualSourceLocator)
@@ -480,41 +488,41 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setNamespaceAware(true);
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            HashMap<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
             analyze(componentMap, documentBuilder, new File(automaticSourceLocator.getRootFolder()));
-            for (Map.Entry<String, List<ComponentLocation>> entry : componentMap.entrySet())
-            {
-              String componentName = entry.getKey();
-
-              SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
-              sourceSearchPath.setName("sources_" + componentName);
-              EList<Provider> sourceProviders = sourceSearchPath.getProviders();
-
-              for (ComponentLocation componentLocation : entry.getValue())
-              {
-                Provider provider = RmapFactory.eINSTANCE.createProvider();
-
-                provider.setComponentTypesAttr(componentLocation.componentType.toString());
-                provider.setReaderType("local");
-                provider.setSource(true);
-
-                Format format = CommonFactory.eINSTANCE.createFormat();
-                format.setFormat(componentLocation.location);
-                provider.setURI(format);
-
-                sourceProviders.add(provider);
-              }
-
-              Locator locator = RmapFactory.eINSTANCE.createLocator();
-              locator.setPattern(Pattern.compile("^" + Pattern.quote(componentName) + "$"));
-
-              locator.setSearchPath(sourceSearchPath);
-              locator.setFailOnError(true);
-              matchers.add(locator);
-
-              rmap.getSearchPaths().add(sourceSearchPath);
-            }
           }
+        }
+
+        for (Map.Entry<String, List<ComponentLocation>> entry : componentMap.entrySet())
+        {
+          String componentName = entry.getKey();
+
+          SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
+          sourceSearchPath.setName("sources_" + componentName);
+          EList<Provider> sourceProviders = sourceSearchPath.getProviders();
+
+          for (ComponentLocation componentLocation : entry.getValue())
+          {
+            Provider provider = RmapFactory.eINSTANCE.createProvider();
+
+            provider.setComponentTypesAttr(componentLocation.componentType.toString());
+            provider.setReaderType("local");
+            provider.setSource(true);
+
+            Format format = CommonFactory.eINSTANCE.createFormat();
+            format.setFormat(componentLocation.location);
+            provider.setURI(format);
+
+            sourceProviders.add(provider);
+          }
+
+          Locator locator = RmapFactory.eINSTANCE.createLocator();
+          locator.setPattern(Pattern.compile("^" + Pattern.quote(componentName) + "$"));
+
+          locator.setSearchPath(sourceSearchPath);
+          locator.setFailOnError(true);
+          matchers.add(locator);
+
+          rmap.getSearchPaths().add(sourceSearchPath);
         }
       }
 
@@ -648,17 +656,15 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           Activator.log(ex);
         }
       }
-      else
+
+      File[] listFiles = folder.listFiles();
+      if (listFiles != null)
       {
-        File[] listFiles = folder.listFiles();
-        if (listFiles != null)
+        for (File file : listFiles)
         {
-          for (File file : listFiles)
+          if (file.isDirectory())
           {
-            if (file.isDirectory())
-            {
-              analyze(componentMap, documentBuilder, file);
-            }
+            analyze(componentMap, documentBuilder, file);
           }
         }
       }

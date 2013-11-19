@@ -39,8 +39,10 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -855,6 +857,46 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     }
 
     copier.copyReferences();
+
+    // Determine all the copied objects for which the original object is directly contained in a resource.
+    // For each such resource, create a copy of that resource.
+    Map<Resource, Resource> resourceCopies = new HashMap<Resource, Resource>();
+    @SuppressWarnings("unchecked")
+    Set<InternalEObject> originals = (Set<InternalEObject>)(Set<?>)copier.keySet();
+    for (InternalEObject original : originals)
+    {
+      Internal resource = original.eDirectResource();
+      if (resource != null)
+      {
+        Resource newResource = resourceCopies.get(resource);
+        if (newResource == null)
+        {
+          URI uri = resource.getURI();
+          newResource = resource.getResourceSet().getResourceFactoryRegistry().getFactory(uri).createResource(uri);
+          resourceCopies.put(resource, newResource);
+        }
+      }
+    }
+
+    // For each original resource, ensure that the copied resource contains the either the corresponding copies or
+    // a placeholder object.
+    //
+    for (Map.Entry<Resource, Resource> entry : resourceCopies.entrySet())
+    {
+      Resource originalResource = entry.getKey();
+      Resource copyResource = entry.getValue();
+      EList<EObject> copyResourceContents = copyResource.getContents();
+      for (EObject eObject : originalResource.getContents())
+      {
+        EObject copy = copier.get(eObject);
+        if (copy == null)
+        {
+          copy = EcoreFactory.eINSTANCE.createEObject();
+        }
+
+        copyResourceContents.add(copy);
+      }
+    }
 
     for (ListIterator<SetupTask> it = setupTasks.listIterator(); it.hasNext();)
     {

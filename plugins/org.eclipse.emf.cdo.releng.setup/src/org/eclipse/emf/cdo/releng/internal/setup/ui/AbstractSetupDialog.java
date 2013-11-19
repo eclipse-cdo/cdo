@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -20,11 +22,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 public abstract class AbstractSetupDialog extends TitleAreaDialog
 {
-  public static final String TITLE = "Development Environment Setup";
+  public static final String TITLE = "Development Environment " + (Activator.SETUP_IDE ? "Setup" : "Installer");
 
   protected AbstractSetupDialog(Shell parentShell)
   {
@@ -43,11 +48,13 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
 
     Composite area = (Composite)super.createDialogArea(parent);
 
+    GridLayout layout = new GridLayout(1, false);
+    layout.marginWidth = getContainerMargin();
+    layout.marginHeight = getContainerMargin();
+    layout.verticalSpacing = 0;
+
     Composite container = new Composite(area, SWT.NONE);
-    GridLayout gl_container = new GridLayout(1, false);
-    gl_container.marginWidth = getContainerMargin();
-    gl_container.marginHeight = getContainerMargin();
-    container.setLayout(gl_container);
+    container.setLayout(layout);
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
     createUI(container);
@@ -64,6 +71,47 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
 
     setButtonLayoutData(button);
     return button;
+  }
+
+  @Override
+  protected Control createHelpControl(Composite parent)
+  {
+    ToolBar toolBar = (ToolBar)super.createHelpControl(parent);
+    createToolItemsForToolBar(toolBar);
+    return toolBar;
+  }
+
+  protected void createToolItemsForToolBar(ToolBar toolBar)
+  {
+  }
+
+  protected final ToolItem createToolItem(ToolBar toolBar, String label)
+  {
+    return createToolItem(toolBar, null, label);
+  }
+
+  protected final ToolItem createToolItem(ToolBar toolBar, String iconPath, String toolTip)
+  {
+    ToolItem toolItem = new ToolItem(toolBar, SWT.PUSH);
+    if (iconPath == null)
+    {
+      toolItem.setText(toolTip);
+    }
+    else
+    {
+      Image image = getDefaultImage(iconPath);
+      toolItem.setImage(image);
+      toolItem.setToolTipText(toolTip);
+    }
+
+    return toolItem;
+  }
+
+  protected Label createSeparator(Composite parent)
+  {
+    Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+    separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    return separator;
   }
 
   protected int getContainerMargin()

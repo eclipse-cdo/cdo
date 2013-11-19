@@ -33,6 +33,8 @@ import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
@@ -50,6 +52,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -66,12 +69,13 @@ import org.eclipse.equinox.p2.query.IQueryResult;
 import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
+import org.eclipse.jface.dialogs.DialogTray;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -84,8 +88,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.events.HelpEvent;
+import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -99,9 +104,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -111,10 +119,14 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,6 +143,10 @@ public class InstallerDialog extends AbstractSetupDialog
   public static final int RETURN_RESTART = -3;
 
   private static final String ECLIPSE_VERSION_COLUMN = "eclipse";
+
+  private static final String[] PRODUCT_PREFIXES = { "org.eclipse.emf.cdo.releng", "org.eclipse.net4j" };
+
+  private static final String PRODUCT_ID = "org.eclipse.emf.cdo.releng.setup.installer.product";
 
   private Map<Branch, Setup> setups;
 
@@ -150,6 +166,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private ComboBoxViewerCellEditor cellEditor;
 
+  private Link versionLink;
+
   public InstallerDialog(Shell parentShell)
   {
     super(parentShell);
@@ -162,7 +180,7 @@ public class InstallerDialog extends AbstractSetupDialog
   @Override
   protected Point getInitialSize()
   {
-    return new Point(500, 700);
+    return new Point(500, 500);
   }
 
   @Override
@@ -171,10 +189,64 @@ public class InstallerDialog extends AbstractSetupDialog
     return null;
   }
 
+  protected void pushHelpButton(boolean pushed)
+  {
+    try
+    {
+      Field field = ReflectUtil.getField(TrayDialog.class, "fHelpButton");
+      ToolItem fHelpButton = (ToolItem)ReflectUtil.getValue(field, InstallerDialog.this);
+      fHelpButton.setSelection(pushed);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+  }
+
   @Override
   protected void createUI(Composite parent)
   {
-    viewer = new CheckboxTreeViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
+    parent.addHelpListener(new HelpListener()
+    {
+      public void helpRequested(HelpEvent e)
+      {
+        if (getTray() != null)
+        {
+          closeTray();
+          pushHelpButton(false);
+          return;
+        }
+
+        pushHelpButton(true);
+
+        DialogTray tray = new DialogTray()
+        {
+          @Override
+          protected Control createContents(Composite parent)
+          {
+            URL resource = Activator.getDefault().getBundle().getResource("/help/InstallerDialog.html");
+
+            try
+            {
+              resource = FileLocator.resolve(resource);
+            }
+            catch (IOException ex)
+            {
+              Activator.log(ex);
+            }
+
+            Browser browser = new Browser(parent, SWT.NONE);
+            browser.setSize(500, 800);
+            browser.setUrl(resource.toString());
+            return browser;
+          }
+        };
+
+        openTray(tray);
+      }
+    });
+
+    viewer = new CheckboxTreeViewer(parent, SWT.FULL_SELECTION);
     Tree tree = viewer.getTree();
     tree.setLinesVisible(true);
     tree.setHeaderVisible(true);
@@ -408,63 +480,28 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         });
 
-    TreeColumn trclmnEclipseVersion = treeViewerColumn_1.getColumn();
-    trclmnEclipseVersion.setWidth(150);
-    trclmnEclipseVersion.setText("Eclipse Version");
+    TreeColumn eclipseVersionColumn = treeViewerColumn_1.getColumn();
+    eclipseVersionColumn.setWidth(150);
+    eclipseVersionColumn.setText("Eclipse Version");
 
-    Group grpPreferences = new Group(parent, SWT.NONE);
-    grpPreferences.setLayout(new GridLayout(3, false));
-    grpPreferences.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    // grpPreferences.setText("Preferences");
-    grpPreferences.setBounds(0, 0, 70, 82);
+    createSeparator(parent);
 
-    // Label userNameLabel = new Label(grpPreferences, SWT.NONE);
-    // userNameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    // userNameLabel.setBounds(0, 0, 55, 15);
-    // userNameLabel.setText("Git/Gerrit ID:");
-    //
-    // userNameText = new Text(grpPreferences, SWT.BORDER);
-    // userNameText
-    // .setToolTipText("Must match your account on Git/Gerrit.\nDon't forget to upload your public key to that account!");
-    // GridData gd_userNameText = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-    // gd_userNameText.widthHint = 165;
-    // userNameText.setLayoutData(gd_userNameText);
-    // userNameText.setBounds(0, 0, 76, 21);
-    // userNameText.addModifyListener(new ModifyListener()
-    // {
-    // public void modifyText(ModifyEvent e)
-    // {
-    // preferences.setUserName(userNameText.getText());
-    // saveEObject(preferences);
-    // validate();
-    // }
-    // });
+    GridLayout layout = new GridLayout(3, false);
+    layout.marginWidth = 10;
+    layout.marginHeight = 10;
 
-    // Label empty = new Label(grpPreferences, SWT.NONE);
-    // empty.setBounds(0, 0, 55, 15);
-    // TODO
-    // Need to move this to the bottom.
-    // Also want current tool version
-    // Button editButton = new Button(grpPreferences, SWT.NONE);
-    // editButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    // editButton.setBounds(0, 0, 75, 25);
-    // editButton.setText("Preferences...");
-    // editButton.addSelectionListener(new SelectionAdapter()
-    // {
-    // @Override
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // close();
-    // setReturnCode(RETURN_WORKBENCH);
-    // }
-    // });
+    Composite group = new Composite(parent, SWT.NONE);
+    group.setLayout(layout);
+    group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
-    Label installFolderLabel = new Label(grpPreferences, SWT.NONE);
+    createSeparator(parent);
+
+    Label installFolderLabel = new Label(group, SWT.NONE);
     installFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     installFolderLabel.setBounds(0, 0, 55, 15);
     installFolderLabel.setText("Install Folder:");
 
-    installFolderText = new Text(grpPreferences, SWT.BORDER);
+    installFolderText = new Text(group, SWT.BORDER);
     installFolderText.setToolTipText("Points to the folder where the setup tool will create the project folders.");
     installFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     installFolderText.addModifyListener(new ModifyListener()
@@ -491,7 +528,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    Button installFolderButton = new Button(grpPreferences, SWT.NONE);
+    Button installFolderButton = new Button(group, SWT.NONE);
     installFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     installFolderButton.setBounds(0, 0, 75, 25);
     installFolderButton.setText("Browse...");
@@ -511,11 +548,11 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    Label bundlePoolFolderLabel = new Label(grpPreferences, SWT.NONE);
+    Label bundlePoolFolderLabel = new Label(group, SWT.NONE);
     bundlePoolFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     bundlePoolFolderLabel.setText("Bundle Pool Folder:");
 
-    bundlePoolFolderText = new Text(grpPreferences, SWT.BORDER);
+    bundlePoolFolderText = new Text(group, SWT.BORDER);
     bundlePoolFolderText
         .setToolTipText("Points to your native Git installation in order to reuse the 'etc/gitconfig' file.");
     bundlePoolFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -529,7 +566,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    Button bundlePoolFolderButton = new Button(grpPreferences, SWT.NONE);
+    Button bundlePoolFolderButton = new Button(group, SWT.NONE);
     bundlePoolFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     bundlePoolFolderButton.setBounds(0, 0, 75, 25);
     bundlePoolFolderButton.setText("Browse...");
@@ -558,10 +595,6 @@ public class InstallerDialog extends AbstractSetupDialog
     });
   }
 
-  /**
-   * Create contents of the button bar.
-   * @param parent
-   */
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
@@ -572,60 +605,32 @@ public class InstallerDialog extends AbstractSetupDialog
   @Override
   protected Control createHelpControl(Composite parent)
   {
-    ToolBar toolBar = (ToolBar)super.createHelpControl(parent);
+    Control helpControl = super.createHelpControl(parent);
+    setProductVersionLink(parent);
+    return helpControl;
+  }
 
+  @Override
+  protected void createToolItemsForToolBar(ToolBar toolBar)
+  {
+    createToolItem(toolBar, "icons/install_prefs.gif", "Preferences").addSelectionListener(new SelectionAdapter()
     {
-      ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/dialog_prefs.gif");
-      final Image image = imageDescriptor.createImage(toolBar.getDisplay());
-
-      ToolItem button = new ToolItem(toolBar, SWT.PUSH);
-      button.setImage(image);
-      button.setToolTipText("Preferences");
-      button.addSelectionListener(new SelectionAdapter()
+      @Override
+      public void widgetSelected(SelectionEvent e)
       {
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          close();
-          setReturnCode(RETURN_WORKBENCH);
-        }
-      });
+        close();
+        setReturnCode(RETURN_WORKBENCH);
+      }
+    });
 
-      button.addDisposeListener(new DisposeListener()
-      {
-        public void widgetDisposed(DisposeEvent e)
-        {
-          image.dispose();
-        }
-      });
-    }
-
+    createToolItem(toolBar, "icons/install_update.gif", "Update").addSelectionListener(new SelectionAdapter()
     {
-      ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/dialog_update.gif");
-      final Image image = imageDescriptor.createImage(toolBar.getDisplay());
-
-      ToolItem button = new ToolItem(toolBar, SWT.PUSH);
-      button.setImage(image);
-      button.setToolTipText("Update");
-      button.addSelectionListener(new SelectionAdapter()
+      @Override
+      public void widgetSelected(SelectionEvent e)
       {
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          update(false);
-        }
-      });
-
-      button.addDisposeListener(new DisposeListener()
-      {
-        public void widgetDisposed(DisposeEvent e)
-        {
-          image.dispose();
-        }
-      });
-    }
-
-    return toolBar;
+        update(false);
+      }
+    });
   }
 
   @Override
@@ -641,6 +646,98 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     super.okPressed();
+  }
+
+  protected void aboutPressed(final String version)
+  {
+    new AbstractSetupDialog(getShell())
+    {
+      @Override
+      protected Point getInitialSize()
+      {
+        return new Point(600, 500);
+      }
+
+      @Override
+      protected String getDefaultMessage()
+      {
+        return "This is the installer version " + version + ".";
+      }
+
+      @Override
+      protected void createUI(Composite parent)
+      {
+        Table table = new Table(parent, SWT.FULL_SELECTION);
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+        TableColumn idColumn = new TableColumn(table, SWT.NONE);
+        idColumn.setText("ID");
+        idColumn.setWidth(400);
+
+        TableColumn versionColumn = new TableColumn(table, SWT.NONE);
+        versionColumn.setText("Version");
+        versionColumn.setWidth(400);
+
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+
+        IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
+
+        try
+        {
+          ProvisioningSession session = new ProvisioningSession(agent);
+          List<IInstallableUnit> installedUnits = getInstalledUnits(session);
+
+          String[][] rows = new String[installedUnits.size()][];
+          for (int i = 0; i < rows.length; i++)
+          {
+            IInstallableUnit installableUnit = installedUnits.get(i);
+            rows[i] = new String[] { installableUnit.getId(), installableUnit.getVersion().toString() };
+          }
+
+          Arrays.sort(rows, new Comparator<String[]>()
+          {
+            public int compare(String[] o1, String[] o2)
+            {
+              return o1[0].compareTo(o2[0]);
+            }
+          });
+
+          Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
+
+          for (int i = 0; i < rows.length; i++)
+          {
+            TableItem item = new TableItem(table, SWT.NONE);
+
+            String id = rows[i][0];
+            item.setText(0, id);
+
+            String version = rows[i][1];
+            item.setText(1, version);
+
+            if (hasPrefix(id, PRODUCT_PREFIXES))
+            {
+              item.setForeground(blue);
+            }
+          }
+
+          idColumn.pack();
+          versionColumn.pack();
+
+          createSeparator(parent);
+        }
+        finally
+        {
+          ServiceUtil.ungetService(agent);
+        }
+      }
+
+      @Override
+      protected void createButtonsForButtonBar(Composite parent)
+      {
+        createButton(parent, IDialogConstants.OK_ID, "Close", true);
+      }
+    }.open();
   }
 
   protected boolean update(final boolean needsEarlyConfirmation)
@@ -681,6 +778,7 @@ public class InstallerDialog extends AbstractSetupDialog
           {
             SubMonitor sub = SubMonitor.convert(monitor, needsEarlyConfirmation ? "Updating..."
                 : "Checking for updates...", 1000);
+
             IStatus updateStatus = checkForUpdates(agent, sub);
             if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
             {
@@ -760,19 +858,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     ProvisioningSession session = new ProvisioningSession(agent);
-    IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
-    IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
-    IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
-
-    List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
-    for (IInstallableUnit installableUnit : queryResult)
-    {
-      String id = installableUnit.getId();
-      if (id.startsWith("org.eclipse.emf.cdo") || id.startsWith("org.eclipse.net4j"))
-      {
-        ius.add(installableUnit);
-      }
-    }
+    List<IInstallableUnit> ius = getInstalledUnits(session, PRODUCT_PREFIXES);
 
     UpdateOperation operation = new UpdateOperation(session, ius);
     IStatus status = operation.resolveModal(sub.newChild(300));
@@ -803,6 +889,124 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     return status;
+  }
+
+  private List<IInstallableUnit> getInstalledUnits(ProvisioningSession session, String... iuPrefixes)
+  {
+    IProvisioningAgent agent = session.getProvisioningAgent();
+    IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
+    IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
+    IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
+
+    List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
+    for (IInstallableUnit installableUnit : queryResult)
+    {
+      String id = installableUnit.getId();
+
+      if (iuPrefixes.length == 0)
+      {
+        ius.add(installableUnit);
+      }
+      else
+      {
+        if (hasPrefix(id, iuPrefixes))
+        {
+          ius.add(installableUnit);
+        }
+      }
+    }
+
+    return ius;
+  }
+
+  private boolean hasPrefix(String id, String[] iuPrefixes)
+  {
+    for (int i = 0; i < iuPrefixes.length; i++)
+    {
+      String iuPrefix = iuPrefixes[i];
+      if (id.startsWith(iuPrefix))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private String getProductVersion()
+  {
+    IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
+
+    try
+    {
+      ProvisioningSession session = new ProvisioningSession(agent);
+      List<IInstallableUnit> installedUnits = getInstalledUnits(session, PRODUCT_ID);
+      if (installedUnits.isEmpty())
+      {
+        return null;
+      }
+
+      IInstallableUnit product = installedUnits.iterator().next();
+      return product.getVersion().toString();
+    }
+    finally
+    {
+      ServiceUtil.ungetService(agent);
+    }
+  }
+
+  private void setProductVersionLink(Composite parent)
+  {
+    GridLayout parentLayout = (GridLayout)parent.getLayout();
+    parentLayout.numColumns++;
+    parentLayout.horizontalSpacing = 10;
+
+    versionLink = new Link(parent, SWT.NO_FOCUS);
+    versionLink.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER | GridData.VERTICAL_ALIGN_CENTER));
+    versionLink.setToolTipText("About");
+
+    new Thread("Product Version Setter")
+    {
+      @Override
+      public void run()
+      {
+        try
+        {
+          final String version = getProductVersion();
+          if (version != null)
+          {
+            versionLink.getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                try
+                {
+                  versionLink.addSelectionListener(new SelectionAdapter()
+                  {
+                    @Override
+                    public void widgetSelected(SelectionEvent e)
+                    {
+                      aboutPressed(version);
+                    }
+                  });
+
+                  versionLink.setText("<a>" + version + "</a>"); //$NON-NLS-1$
+                  versionLink.getParent().layout();
+                }
+                catch (Exception ex)
+                {
+                  Activator.log(ex);
+                }
+              }
+            });
+          }
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+    }.start();
   }
 
   private void addRepository(IProvisioningAgent agent, String location, IProgressMonitor monitor)
@@ -842,7 +1046,7 @@ public class InstallerDialog extends AbstractSetupDialog
         .getService(IArtifactRepositoryManager.SERVICE_NAME);
     if (manager == null)
     {
-      throw new IllegalStateException("No metadata repository manager found");
+      throw new IllegalStateException("No artifact repository manager found");
     }
 
     manager.loadRepository(location, monitor);

@@ -1152,12 +1152,12 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
 
       public void mouseDown(MouseEvent e)
       {
-        // do nothing
+        // Do nothing
       }
 
       public void mouseUp(MouseEvent e)
       {
-        // do nothing
+        // Do nothing
       }
     });
   }

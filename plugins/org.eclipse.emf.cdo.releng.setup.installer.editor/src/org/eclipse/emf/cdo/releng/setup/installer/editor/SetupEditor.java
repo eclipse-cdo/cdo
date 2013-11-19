@@ -79,6 +79,8 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -94,9 +96,11 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.eclipse.ui.views.properties.IPropertySheetEntry;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetSorter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -880,7 +884,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * <!-- end-user-doc -->
    * @generated
    */
-  public Diagnostic analyzeResourceProblems(Resource resource, Exception exception)
+  public Diagnostic analyzeResourceProblemsGen(Resource resource, Exception exception)
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
@@ -899,6 +903,16 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     {
       return Diagnostic.OK_INSTANCE;
     }
+  }
+
+  public Diagnostic analyzeResourceProblems(Resource resource, Exception exception)
+  {
+    if (resource.getURI().equals(EMFUtil.EXAMPLE_PROXY_URI))
+    {
+      return Diagnostic.OK_INSTANCE;
+    }
+
+    return analyzeResourceProblemsGen(resource, exception);
   }
 
   /**
@@ -983,6 +997,31 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     Resource resource = editingDomain.getResourceSet().getResources().get(0);
     selectionViewer.setInput(resource);
     selectionViewer.setSelection(new StructuredSelection(resource.getContents().get(0)), true);
+
+    getViewer().getControl().addMouseListener(new MouseListener()
+    {
+      public void mouseDoubleClick(MouseEvent e)
+      {
+        try
+        {
+          getSite().getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
+        }
+        catch (PartInitException ex)
+        {
+          SetupEditorPlugin.INSTANCE.log(ex);
+        }
+      }
+
+      public void mouseDown(MouseEvent e)
+      {
+        // Do nothing
+      }
+
+      public void mouseUp(MouseEvent e)
+      {
+        // Do nothing
+      }
+    });
   }
 
   /**
@@ -1072,7 +1111,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This accesses a cached version of the content outliner.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public IContentOutlinePage getContentOutlinePage()
   {
@@ -1095,7 +1134,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
           contentOutlineViewer.setLabelProvider(new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(
               adapterFactory), new DiagnosticDecorator(editingDomain, contentOutlineViewer, SetupEditorPlugin
               .getPlugin().getDialogSettings())));
-          contentOutlineViewer.setInput(editingDomain.getResourceSet());
+          contentOutlineViewer.setInput(editingDomain.getResourceSet().getResources().get(0));
 
           new ColumnViewerInformationControlToolTipSupport(contentOutlineViewer,
               new DiagnosticDecorator.EditingDomainLocationListener(editingDomain, contentOutlineViewer));
@@ -1151,13 +1190,23 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This accesses a cached version of the property sheet.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public IPropertySheetPage getPropertySheetPage()
   {
-    PropertySheetPage propertySheetPage = new ExtendedPropertySheetPage(editingDomain,
-        ExtendedPropertySheetPage.Decoration.LIVE, SetupEditorPlugin.getPlugin().getDialogSettings())
+    PropertySheetPage propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
     {
+      {
+        setSorter(new PropertySheetSorter()
+        {
+          @Override
+          public void sort(IPropertySheetEntry[] entries)
+          {
+            // Intentionally left empty
+          }
+        });
+      }
+
       @Override
       public void setSelectionToViewer(List<?> selection)
       {

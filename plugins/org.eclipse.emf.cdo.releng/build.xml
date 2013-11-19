@@ -468,27 +468,41 @@
             <args>
               <arg value="-r" />
               <arg value="file:${build.root}" />
+
               <arg value="-r" />
               <arg value="http://download.eclipse.org/releases/${train}" />
-              <arg value="-r" />
+
+            	<arg value="-r" />
               <arg value="http://download.eclipse.org/releases/${train.previous}" />
-              <arg value="-r" />
+
+            	<arg value="-r" />
               <arg value="http://download.eclipse.org/eclipse/updates/${eclipse}" />
-              <arg value="-r" />
+
+            	<arg value="-r" />
               <arg value="http://download.eclipse.org/eclipse/updates/${eclipse}-I-builds" />
-              <arg value="-d" />
+
+            	<arg value="-d" />
               <arg value="${temp.products}/@{profile}-@{platform}" />
-              <arg value="-p" />
+
+            	<arg value="-p" />
               <arg value="@{profile}" />
-              <arg value="-i" />
+
+            	<arg value="-profileProperties" />
+              <arg value="org.eclipse.update.install.features=true" />
+
+            	<arg value="-i" />
               <arg value="@{id}" />
-              <arg value="-p2.os" />
+
+            	<arg value="-p2.os" />
               <arg value="@{os}" />
-              <arg value="-p2.ws" />
+
+            	<arg value="-p2.ws" />
               <arg value="@{ws}" />
-              <arg value="-p2.arch" />
+
+            	<arg value="-p2.arch" />
               <arg value="@{arch}" />
-              <arg value="-roaming" />
+
+            	<arg value="-roaming" />
               <arg value="-purgeHistory" />
             </args>
           </eclipse>
@@ -1036,6 +1050,10 @@
         </if>
       </else>
     </if>
+  </target>
+
+	<target name="generate.products.only" depends="init.properties" >
+		<generate.products/>
   </target>
 
   <!-- === -->

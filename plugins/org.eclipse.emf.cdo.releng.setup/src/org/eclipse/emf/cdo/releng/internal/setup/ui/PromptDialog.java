@@ -96,6 +96,8 @@ public class PromptDialog extends AbstractSetupDialog
         }
       }
     }
+
+    validate();
   }
 
   private void createHeader(Composite parent, SetupTaskPerformer setupTaskPerformer)
@@ -111,15 +113,9 @@ public class PromptDialog extends AbstractSetupDialog
 
   private void createField(Composite parent, final ContextVariableTask variable)
   {
-    String documentation = variable.getDocumentation();
-
     Label label = new Label(parent, SWT.NONE);
     label.setText(StringUtil.isEmpty(variable.getLabel()) ? variable.getName() : variable.getLabel() + ":");
     label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-    if (!StringUtil.isEmpty(documentation))
-    {
-      label.setToolTipText(documentation);
-    }
 
     final Text text = new Text(parent, SWT.BORDER);
     text.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
@@ -132,9 +128,16 @@ public class PromptDialog extends AbstractSetupDialog
       }
     });
 
+    setToolTip(variable, label);
+    setToolTip(variable, text);
+  }
+
+  private void setToolTip(ContextVariableTask variable, Control control)
+  {
+    String documentation = variable.getDocumentation();
     if (!StringUtil.isEmpty(documentation))
     {
-      label.setToolTipText(documentation);
+      control.setToolTipText(documentation);
     }
   }
 
@@ -143,7 +146,7 @@ public class PromptDialog extends AbstractSetupDialog
     Button okButton = getButton(IDialogConstants.OK_ID);
     for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
     {
-      for (final ContextVariableTask variable : setupTaskPerformer.getUnresolvedVariables())
+      for (ContextVariableTask variable : setupTaskPerformer.getUnresolvedVariables())
       {
         if (StringUtil.isEmpty(variable.getValue()))
         {

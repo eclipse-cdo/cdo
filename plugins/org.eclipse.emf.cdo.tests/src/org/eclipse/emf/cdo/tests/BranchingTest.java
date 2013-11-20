@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -130,6 +130,35 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testRenameBranch() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOBranch branch = mainBranch.createBranch("testing");
+    branch.rename("renamed");
+    closeSession1();
+
+    session = openSession2();
+    CDOBranch renamedBranch = session.getBranchManager().getBranch("MAIN/renamed");
+    assertNotNull(renamedBranch);
+
+    CDOBranch testingBranch = session.getBranchManager().getBranch("MAIN/testing");
+    assertNull(testingBranch);
+
+    try
+    {
+      session.getBranchManager().getMainBranch().rename("test");
+      fail("Main branch can't be renamed");
+    }
+    catch (Exception expected)
+    {
+      // SUCCESS
+    }
+
+    String name = session.getBranchManager().getMainBranch().getName();
+    assertEquals("Main branch can't be renamed", CDOBranch.MAIN_BRANCH_NAME, name);
+  }
+
   public void testGetBranch() throws Exception
   {
     String name = getBranchName("testing");
@@ -183,9 +212,9 @@ public class BranchingTest extends AbstractCDOTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof CDOBranchCreatedEvent)
+        if (event instanceof CDOBranchChangedEvent)
         {
-          CDOBranchCreatedEvent e = (CDOBranchCreatedEvent)event;
+          CDOBranchChangedEvent e = (CDOBranchChangedEvent)event;
           result.setValue(e.getBranch());
         }
       }

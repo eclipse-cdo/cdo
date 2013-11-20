@@ -29,8 +29,9 @@ public interface CDOProtocolConstants
   /**
    * @since 4.2
    */
-  public static final int PROTOCOL_VERSION = 18; // Password change protocol
+  public static final int PROTOCOL_VERSION = 19; // Branch renaming
 
+  // public static final int PROTOCOL_VERSION = 18; // Password change protocol
   // public static final int PROTOCOL_VERSION = 17; // Last update for make query fail in sequence
 
   // //////////////////////////////////////////////////////////////////////
@@ -277,6 +278,11 @@ public interface CDOProtocolConstants
    * @see #SIGNAL_CHANGE_CREDENTIALS
    */
   public static final short SIGNAL_CREDENTIALS_CHALLENGE = 57;
+
+  /**
+   * @since 4.3
+   */
+  public static final short SIGNAL_RENAME_BRANCH = 58;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

@@ -896,9 +896,10 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     fireEvent(new RepositoryStateChangedEvent(this, oldState, newState));
   }
 
+  @Deprecated
   public void handleBranchNotification(InternalCDOBranch branch)
   {
-    getBranchManager().handleBranchCreated(branch);
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated

@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -108,7 +109,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, DurableLocking2
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader2, DurableLocking2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
@@ -972,6 +973,36 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     finally
     {
       DBUtil.close(resultSet);
+      DBUtil.close(stmt);
+    }
+  }
+
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void renameBranch(int branchID, String newName)
+  {
+    checkBranchingSupport();
+
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_RENAME_BRANCH, ReuseProbability.LOW);
+
+    try
+    {
+      stmt.setString(1, newName);
+      stmt.setInt(2, branchID);
+
+      DBUtil.update(stmt, true);
+      getConnection().commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
       DBUtil.close(stmt);
     }
   }

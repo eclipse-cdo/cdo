@@ -27,7 +27,7 @@ import org.eclipse.net4j.util.container.IContainer;
  * <li> {@link CDOBranchTag Branch tags} are named points in a branch.
  * <li> {@link #getBase() Base points } of sub branches of a branch.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -50,7 +50,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
 
   /**
    * The string used to separate the segments of branch paths.
-   * 
+   *
    * @see #getPathName()
    * @see #getBranch(String)
    * @see CDOBranchManager#getBranch(String)
@@ -107,7 +107,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
    * <p>
    * The base of the {@link CDOBranchManager#getMainBranch() main branch} marks the creation of the
    * {@link CDOCommonRepository repository}.
-   * 
+   *
    * @see CDOBranch#getHead()
    * @see #getPoint(long)
    */
@@ -116,7 +116,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
   /**
    * Returns the floating <i>end point</i> of this branch, a pair of this branch and the fixed special time stamp <i>
    * {@link CDOBranchPoint#UNSPECIFIED_DATE unspecified}</i>.
-   * 
+   *
    * @see CDOBranch#getBase()
    * @see #getPoint(long)
    */
@@ -126,7 +126,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
    * Returns the branch point in this branch with the given time stamp.
    * <p>
    * This factory method never returns <code>null</code>.
-   * 
+   *
    * @see CDOBranch#getBase()
    * @see CDOBranch#getHead()
    * @see #getVersion(int)
@@ -137,7 +137,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
    * Returns the branch version in this branch with the given version number.
    * <p>
    * This factory method never returns <code>null</code>.
-   * 
+   *
    * @see #getPoint(long)
    */
   public CDOBranchVersion getVersion(int version);
@@ -165,7 +165,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
    * Creates a sub branch of this branch with the given name, {@link #getBase() based} at the {@link CDOBranchPoint
    * branch point} in this branch with the given time stamp.
    * <p>
-   * 
+   *
    * @param name
    *          The name of the sub branch to be created. It must not contain the {@link #PATH_SEPARATOR path separator}
    *          character (slash).
@@ -182,4 +182,11 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
    * current time}.
    */
   public CDOBranch createBranch(String name);
+
+  /**
+   * Renames this branch with the given new name.
+   *
+   * @since 4.3
+   */
+  public void rename(String newName);
 }

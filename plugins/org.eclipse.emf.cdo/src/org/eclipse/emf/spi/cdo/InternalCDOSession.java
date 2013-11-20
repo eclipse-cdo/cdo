@@ -201,7 +201,9 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 3.0
+   * @deprecated As of 4.3 no longer supported.
    */
+  @Deprecated
   public void handleBranchNotification(InternalCDOBranch branch);
 
   /**

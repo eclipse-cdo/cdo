@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ui.ide;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveResourceActionDelegate;
@@ -324,7 +324,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof CDOBranchCreatedEvent)
+        if (event instanceof CDOBranchChangedEvent)
         {
           refreshViewer(true);
         }

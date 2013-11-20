@@ -521,7 +521,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     /**
      * Server sessions may not be used to change the user's credentials: it must
      * be done client-side by interaction with the user.
-     * 
+     *
      * @since 4.3
      */
     public void changeCredentials()
@@ -532,7 +532,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     /**
      * Server sessions may not be used to reset a user's credentials: it must
      * be done client-side by interaction with an adminstrator.
-     * 
+     *
      * @since 4.3
      */
     public void resetCredentials(String userID)
@@ -1001,6 +1001,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     public void handleBranchNotification(InternalCDOBranch branch)
     {
       throw new UnsupportedOperationException();

@@ -16,6 +16,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -139,11 +140,17 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Deprecated
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception
+  {
+    sendBranchNotification(branch, ChangeKind.CREATED);
+  }
+
+  public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new BranchNotificationRequest(this, branch).sendAsync();
+      new BranchNotificationRequest(this, branch, changeKind).sendAsync();
     }
     else
     {
@@ -364,6 +371,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case SIGNAL_CHANGE_CREDENTIALS:
       return new ChangeCredentialsIndication(this);
+
+    case SIGNAL_RENAME_BRANCH:
+      return new RenameBranchIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

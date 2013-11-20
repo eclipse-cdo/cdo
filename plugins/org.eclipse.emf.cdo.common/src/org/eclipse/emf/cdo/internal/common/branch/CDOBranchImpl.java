@@ -234,6 +234,16 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return child.getBranch(rest);
   }
 
+  public void rename(String newName)
+  {
+    if (!branchManager.getRepository().isSupportingBranches())
+    {
+      throw new IllegalStateException("Branching is not supported");
+    }
+
+    branchManager.renameBranch(this, newName);
+  }
+
   private InternalCDOBranch getChild(String name)
   {
     InternalCDOBranch[] branches = getBranches();
@@ -258,6 +268,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   {
     this.name = name;
     base = baseBranch.getPoint(baseTimeStamp);
+  }
+
+  public void setName(String name)
+  {
+    this.name = name;
   }
 
   public void addChild(InternalCDOBranch branch)

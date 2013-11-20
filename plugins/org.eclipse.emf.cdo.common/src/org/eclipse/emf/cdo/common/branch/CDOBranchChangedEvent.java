@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,15 +17,23 @@ import org.eclipse.net4j.util.event.IEvent;
  * been created.
  *
  * @author Eike Stepper
- * @since 3.0
+ * @since 4.3
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @deprecated As of 4.3 use {@link CDOBranchChangedEvent}.
  */
-@Deprecated
-public interface CDOBranchCreatedEvent extends CDOBranchChangedEvent
+public interface CDOBranchChangedEvent extends IEvent
 {
   public CDOBranchManager getSource();
 
   public CDOBranch getBranch();
+
+  public ChangeKind getChangeKind();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum ChangeKind
+  {
+    CREATED, RENAMED, DELETED
+  }
 }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -27,8 +28,7 @@ public class Activator extends AbstractUIPlugin
 {
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.setup";
 
-  public static final boolean SETUP_IDE = "true".equalsIgnoreCase(System.getProperty(
-      "org.eclipse.emf.cdo.releng.setup.ide", "false"));
+  public static final String CDO_URL = "http://download.eclipse.org/modeling/emf/cdo/updates/integration";
 
   private static Activator plugin;
 
@@ -47,7 +47,7 @@ public class Activator extends AbstractUIPlugin
 
     try
     {
-      if (SETUP_IDE)
+      if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP)
       {
         SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
         setupTaskPerformer.perform();

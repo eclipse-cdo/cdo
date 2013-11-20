@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
@@ -374,7 +375,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     setPerforming(true);
 
-    if (Activator.SETUP_IDE && getTrigger() != Trigger.MANUAL)
+    if (SetupConstants.SETUP_IDE && getTrigger() != Trigger.MANUAL)
     {
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
       ProgressDialog.run(shell, new ProgressLogRunnable()

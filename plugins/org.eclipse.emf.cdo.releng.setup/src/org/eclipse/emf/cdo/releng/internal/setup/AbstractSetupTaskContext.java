@@ -90,19 +90,19 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
       projectLabel = projectName;
     }
 
-    put(PROP_INSTALL_DIR, getInstallDir());
-    put(PROP_PROJECT_DIR, getProjectDir());
-    put(PROP_BRANCH_DIR, getBranchDir());
-    put(PROP_ECLIPSE_DIR, getEclipseDir());
-    put(PROP_WS_DIR, getWorkspaceDir());
-    put(PROP_PROJECT_NAME, projectName);
-    put(PROP_PROJECT_LABEL, projectLabel);
-    put(PROP_BRANCH_NAME, branchName);
-    put(PROP_BRANCH_LABEL, projectLabel + " " + branchName);
+    put(KEY_INSTALL_DIR, getInstallDir());
+    put(KEY_PROJECT_DIR, getProjectDir());
+    put(KEY_BRANCH_DIR, getBranchDir());
+    put(KEY_ECLIPSE_DIR, getEclipseDir());
+    put(KEY_WS_DIR, getWorkspaceDir());
+    put(KEY_PROJECT_NAME, projectName);
+    put(KEY_PROJECT_LABEL, projectLabel);
+    put(KEY_BRANCH_NAME, branchName);
+    put(KEY_BRANCH_LABEL, projectLabel + " " + branchName);
 
-    put(PROP_OS, Platform.getOS());
-    put(PROP_ARCH, Platform.getOSArch());
-    put(PROP_WS, Platform.getWS());
+    put(KEY_OS, Platform.getOS());
+    put(KEY_ARCH, Platform.getOSArch());
+    put(KEY_WS, Platform.getWS());
 
     put(PROP_RELENG_URL, RELENG_URL);
 

@@ -106,7 +106,7 @@ public class PromptDialog extends AbstractSetupDialog
     gd.heightHint = 32;
 
     Label header = new Label(parent, SWT.NONE);
-    header.setText((String)setupTaskPerformer.get(SetupConstants.PROP_BRANCH_LABEL));
+    header.setText((String)setupTaskPerformer.get(SetupConstants.KEY_BRANCH_LABEL));
     header.setLayoutData(gd);
     header.setFont(headerFont);
   }

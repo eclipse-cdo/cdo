@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -25,7 +26,7 @@ public final class EMFUtil extends Plugin
 {
   public static final URI SETUP_URI = getSetupURI();
 
-  public static final String EXAMPLE_URI = System.getProperty("example.uri");
+  public static final String EXAMPLE_URI = System.getProperty(SetupConstants.PROP_EXAMPLE_URI);
 
   public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
 
@@ -62,7 +63,7 @@ public final class EMFUtil extends Plugin
 
   private static URI getSetupURI()
   {
-    String uri = System.getProperty("setup.uri");
+    String uri = System.getProperty(SetupConstants.PROP_SETUP_URI);
     if (uri == null || !uri.startsWith("file:"))
     {
       uri = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";

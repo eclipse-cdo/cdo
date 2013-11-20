@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
@@ -115,7 +116,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   @Override
   protected String getDefaultMessage()
   {
-    return "Please wait until the " + (Activator.SETUP_IDE ? "setup" : "install")
+    return "Please wait until the " + (SetupConstants.SETUP_IDE ? "setup" : "install")
         + " process is finished and the OK button is enabled...";
   }
 
@@ -506,7 +507,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
                 long seconds = (System.currentTimeMillis() - start) / 1000;
                 dialog.log("Took " + seconds + " seconds.");
                 Set<String> restartReasons = result.get();
-                if (!ObjectUtil.isEmpty(restartReasons) && Activator.SETUP_IDE)
+                if (!ObjectUtil.isEmpty(restartReasons) && SetupConstants.SETUP_IDE)
                 {
                   dialog.log("A restart is needed for the following reasons:");
                   for (String reason : restartReasons)
@@ -536,7 +537,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
             }
           });
 
-          if (dialog.open() == ProgressDialog.OK && !ObjectUtil.isEmpty(result.get()) && Activator.SETUP_IDE)
+          if (dialog.open() == ProgressDialog.OK && !ObjectUtil.isEmpty(result.get()) && SetupConstants.SETUP_IDE)
           {
             PlatformUI.getWorkbench().restart();
           }
@@ -630,7 +631,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   private static String getTitle(List<SetupTaskPerformer> setupTaskPerformers)
   {
-    return (Activator.SETUP_IDE ? "Setting up" : "Installing") + " Development Environment"
+    return (SetupConstants.SETUP_IDE ? "Setting up" : "Installing") + " Development Environment"
         + (setupTaskPerformers.size() > 1 ? "s" : "");
   }
 

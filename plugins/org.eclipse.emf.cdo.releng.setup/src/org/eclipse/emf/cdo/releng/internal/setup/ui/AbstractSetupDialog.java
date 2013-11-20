@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 
 import org.eclipse.net4j.util.ReflectUtil;
 
@@ -46,7 +47,7 @@ import java.net.URL;
  */
 public abstract class AbstractSetupDialog extends TitleAreaDialog
 {
-  public static final String SHELL_TEXT = "Development Environment " + (Activator.SETUP_IDE ? "Setup" : "Installer");
+  public static final String SHELL_TEXT = "Development Environment " + (SetupConstants.SETUP_IDE ? "Setup" : "Installer");
 
   private String title;
 

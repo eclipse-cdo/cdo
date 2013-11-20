@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
@@ -388,7 +389,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return false;
     }
 
-    if (!Activator.SETUP_IDE)
+    if (!SetupConstants.SETUP_IDE)
     {
       return true;
     }
@@ -423,7 +424,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    if (Activator.SETUP_IDE)
+    if (SetupConstants.SETUP_IDE)
     {
       ProgressLogMonitor monitor = new ProgressLogMonitor(context);
 

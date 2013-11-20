@@ -83,8 +83,12 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     String branchName = branch.getName();
 
     Project project = branch.getProject();
-    String projectLabel = project.getLabel();
     String projectName = project.getName();
+    String projectLabel = project.getLabel();
+    if (StringUtil.isEmpty(projectLabel))
+    {
+      projectLabel = projectName;
+    }
 
     put(PROP_INSTALL_DIR, getInstallDir());
     put(PROP_PROJECT_DIR, getProjectDir());

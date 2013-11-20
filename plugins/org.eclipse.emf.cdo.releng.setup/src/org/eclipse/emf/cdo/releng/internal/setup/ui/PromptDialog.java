@@ -20,10 +20,14 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -37,10 +41,24 @@ public class PromptDialog extends AbstractSetupDialog
 {
   private final List<SetupTaskPerformer> setupTaskPerformers;
 
+  private Font headerFont;
+
   public PromptDialog(Shell parentShell, List<SetupTaskPerformer> setupTaskPerformers)
   {
     super(parentShell, "Unspecified Variables", 400, 400);
     this.setupTaskPerformers = setupTaskPerformers;
+  }
+
+  @Override
+  public boolean close()
+  {
+    if (headerFont != null)
+    {
+      headerFont.dispose();
+      headerFont = null;
+    }
+
+    return super.close();
   }
 
   @Override
@@ -58,6 +76,8 @@ public class PromptDialog extends AbstractSetupDialog
   @Override
   protected void createUI(Composite parent)
   {
+    headerFont = getFont(parent, 16, SWT.BOLD);
+
     GridLayout layout = (GridLayout)parent.getLayout();
     layout.numColumns = 2;
     layout.horizontalSpacing = 10;
@@ -68,29 +88,53 @@ public class PromptDialog extends AbstractSetupDialog
       List<ContextVariableTask> variables = setupTaskPerformer.getUnresolvedVariables();
       if (!variables.isEmpty())
       {
-        Label header = new Label(parent, SWT.NONE);
-        header.setText((String)setupTaskPerformer.get(SetupConstants.PROP_BRANCH_LABEL));
-        header.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
+        createHeader(parent, setupTaskPerformer);
 
-        for (final ContextVariableTask variable : variables)
+        for (ContextVariableTask variable : variables)
         {
-          Label variableLabel = new Label(parent, SWT.NONE);
-          variableLabel.setText(variable.getName() + ":");
-          variableLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-
-          final Text text = new Text(parent, SWT.BORDER);
-          text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-          text.addModifyListener(new ModifyListener()
-          {
-            public void modifyText(ModifyEvent e)
-            {
-              variable.setValue(text.getText());
-              validate();
-            }
-          });
-
+          createField(parent, variable);
         }
       }
+    }
+  }
+
+  private void createHeader(Composite parent, SetupTaskPerformer setupTaskPerformer)
+  {
+    GridData gd = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
+    gd.heightHint = 32;
+
+    Label header = new Label(parent, SWT.NONE);
+    header.setText((String)setupTaskPerformer.get(SetupConstants.PROP_BRANCH_LABEL));
+    header.setLayoutData(gd);
+    header.setFont(headerFont);
+  }
+
+  private void createField(Composite parent, final ContextVariableTask variable)
+  {
+    String documentation = variable.getDocumentation();
+
+    Label label = new Label(parent, SWT.NONE);
+    label.setText(StringUtil.isEmpty(variable.getLabel()) ? variable.getName() : variable.getLabel() + ":");
+    label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+    if (!StringUtil.isEmpty(documentation))
+    {
+      label.setToolTipText(documentation);
+    }
+
+    final Text text = new Text(parent, SWT.BORDER);
+    text.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+    text.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        variable.setValue(text.getText());
+        validate();
+      }
+    });
+
+    if (!StringUtil.isEmpty(documentation))
+    {
+      label.setToolTipText(documentation);
     }
   }
 
@@ -110,5 +154,16 @@ public class PromptDialog extends AbstractSetupDialog
     }
 
     okButton.setEnabled(true);
+  }
+
+  private static Font getFont(Control control, int height, int style)
+  {
+    FontData[] datas = control.getFont().getFontData().clone();
+    datas[0].setHeight(height);
+    datas[0].setStyle(style);
+
+    Display display = control.getShell().getDisplay();
+    Font font = new Font(display, datas);
+    return font;
   }
 }

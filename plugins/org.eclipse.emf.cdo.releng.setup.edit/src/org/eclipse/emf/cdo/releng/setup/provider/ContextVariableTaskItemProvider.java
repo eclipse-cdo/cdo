@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -26,8 +28,6 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.eclipse.core.runtime.Path;
 
 import java.util.Collection;
 import java.util.List;
@@ -228,16 +228,18 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
     String name = variable.getName();
     String value = variable.getValue();
 
-    if (name != null && name.length() != 0)
-    {
-      name = new Path(name).lastSegment();
-    }
-    else if (value == null || value.length() == 0)
+    if (StringUtil.isEmpty(name))
     {
       return getString("_UI_ContextVariableTask_type");
     }
 
-    return "" + name + " = " + value;
+    String label = "" + name;
+    if (!StringUtil.isEmpty(value))
+    {
+      label += " = " + value;
+    }
+
+    return label;
   }
 
   /**

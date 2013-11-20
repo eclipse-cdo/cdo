@@ -509,11 +509,22 @@
 
           <delete includeemptydirs="true" failonerror="false" quiet="true">
             <fileset dir="${temp.products}/@{profile}-@{platform}">
+              <include name="readme" />
               <include name="artifacts.xml" />
               <include name="launcher.exe" />
               <include name="eclipsec.exe" />
             </fileset>
           </delete>
+
+          <if>
+          	<and>
+          	  <available file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" />
+          		<equals arg1="${build.type}" arg2="N" />
+          	</and>
+            <then>
+            	<echo message="-Dreleng.url=${env.JOB_URL}/lastSuccessfulBuild/artifact" file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" append="true" />
+            </then>
+          </if>
 
           <if>
             <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
@@ -536,7 +547,7 @@
             </fileset>
           </zip>
 
-          <echo message="description=for execution on @{platform}.${line.separator}priority=@{priority}"
+          <echo message="description=for execution on @{platform}.${line.separator}priority=@{priority}${line.separator}build=${build.qualifier}"
                 file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
         </then>
       </if>
@@ -602,7 +613,10 @@
         <not>
           <equals arg1="${build.type}" arg2="N" />
         </not>
-        <equals arg1="${env.HUDSON_URL}" arg2="https://hudson.eclipse.org/hudson/" />
+      	<or>
+      	  <equals arg1="${env.HUDSON_URL}" arg2="https://hudson.eclipse.org/cdo/" />
+      	  <equals arg1="${env.HUDSON_URL}" arg2="https://hudson.eclipse.org/hudson/" />
+      	</or>
       </and>
     </condition>
 

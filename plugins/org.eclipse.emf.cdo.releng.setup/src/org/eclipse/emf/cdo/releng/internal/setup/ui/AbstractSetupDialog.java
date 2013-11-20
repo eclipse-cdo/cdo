@@ -109,7 +109,8 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    getShell().setText(SHELL_TEXT);
+    Shell shell = getShell();
+    shell.setText(SHELL_TEXT);
     setTitle(title);
     setTitleImage(getDefaultImage(getImagePath()));
     setMessage(getDefaultMessage());
@@ -132,7 +133,7 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
       createSeparator(container);
     }
 
-    parent.addHelpListener(new HelpListener()
+    shell.addHelpListener(new HelpListener()
     {
       public void helpRequested(HelpEvent e)
       {

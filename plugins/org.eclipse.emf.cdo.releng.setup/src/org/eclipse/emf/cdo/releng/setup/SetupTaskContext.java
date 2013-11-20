@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, StringExpander
+public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, StringExpander, SetupConstants
 {
   public Trigger getTrigger();
 

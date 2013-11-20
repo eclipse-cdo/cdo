@@ -14,22 +14,16 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
-import org.eclipse.emf.cdo.releng.setup.Preferences;
-import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
-import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -43,18 +37,13 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -75,43 +64,20 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
  */
-public class SetupTaskPerformer extends HashMap<Object, Object> implements SetupTaskContext
+public class SetupTaskPerformer extends AbstractSetupTaskContext
 {
-  public static final String RELENG_URL = System.getProperty("releng.url",
-      "http://download.eclipse.org/modeling/emf/cdo/updates/integration").replace('\\', '/');
-
-  private static boolean NEEDS_PATH_SEPARATOR_CONVERSION = File.separatorChar == '\\';
-
   private static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
       EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
-
-  private static final Pattern STRING_EXPANSION_PATTERN = Pattern.compile("\\$\\{([^${}|]+)(\\|([^}]+))?}");
-
-  private static final Map<String, StringFilter> STRING_FILTER_REGISTRY = new HashMap<String, StringFilter>();
 
   private static final long serialVersionUID = 1L;
 
   private static ProgressLog progress;
 
-  private Trigger trigger;
-
-  private File branchDir;
-
-  private Setup setup;
-
-  private Preferences preferences;
-
   private EList<SetupTask> triggeredSetupTasks;
-
-  private boolean performing;
-
-  private Set<String> restartReasons = new LinkedHashSet<String>();
 
   private List<String> logMessageBuffer;
 
@@ -119,28 +85,138 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private ProgressLogFilter logFilter = new ProgressLogFilter();
 
-  private URIConverter uriConverter = new ExtensibleURIConverterImpl();
-
   private List<ContextVariableTask> unresolvedVariables = new ArrayList<ContextVariableTask>();
 
   private List<EStructuralFeature.Setting> unresolvedSettings = new ArrayList<EStructuralFeature.Setting>();
 
   public SetupTaskPerformer(File branchDir)
   {
-    trigger = Trigger.BOOTSTRAP;
-    this.branchDir = branchDir;
-
+    super(Trigger.BOOTSTRAP, branchDir);
     initialize();
   }
 
   public SetupTaskPerformer(boolean manual) throws Exception
   {
-    trigger = manual ? Trigger.MANUAL : Trigger.STARTUP;
-
-    IPath branchDirPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1);
-    branchDir = new File(branchDirPath.toOSString()).getCanonicalFile();
-
+    super(manual ? Trigger.MANUAL : Trigger.STARTUP, new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()
+        .removeLastSegments(1).toOSString()).getCanonicalFile());
     initialize();
+  }
+
+  private void initialize()
+  {
+    try
+    {
+      File logFile = new File(getBranchDir(), "setup.log");
+      logFile.getParentFile().mkdirs();
+
+      FileOutputStream out = new FileOutputStream(logFile, true);
+      logStream = new PrintStream(out);
+    }
+    catch (FileNotFoundException ex)
+    {
+      throw new RuntimeException(ex);
+    }
+
+    initTriggeredSetupTasks();
+  }
+
+  public EList<SetupTask> getTriggeredSetupTasks()
+  {
+    return triggeredSetupTasks;
+  }
+
+  private void initTriggeredSetupTasks()
+  {
+    triggeredSetupTasks = getSetup().getSetupTasks(true, getTrigger());
+    if (!triggeredSetupTasks.isEmpty())
+    {
+  
+      Map<SetupTask, SetupTask> substitutions = getSubstitutions(triggeredSetupTasks);
+      setSetup(copySetup(triggeredSetupTasks, substitutions));
+  
+      Set<String> keys = new HashSet<String>();
+      for (SetupTask setupTask : triggeredSetupTasks)
+      {
+        if (setupTask instanceof ContextVariableTask)
+        {
+          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
+  
+          String name = contextVariableTask.getName();
+          keys.add(name);
+  
+          String value = contextVariableTask.getValue();
+          put(name, value);
+        }
+      }
+  
+      Map<String, Set<String>> variables = new HashMap<String, Set<String>>();
+      for (Map.Entry<Object, Object> entry : entrySet())
+      {
+        Object entryKey = entry.getKey();
+        if (keys.contains(entryKey))
+        {
+          Object entryValue = entry.getValue();
+          if (entryKey instanceof String && entryValue != null)
+          {
+            String key = (String)entryKey;
+            String value = entryValue.toString();
+  
+            variables.put(key, getVariables(value));
+          }
+        }
+      }
+  
+      EList<Map.Entry<String, Set<String>>> orderedVariables = reorderVariables(variables);
+      for (Map.Entry<String, Set<String>> entry : orderedVariables)
+      {
+        String key = entry.getKey();
+        Object object = get(key);
+        if (object != null)
+        {
+          String value = expandString(object.toString());
+          put(key, value);
+        }
+      }
+  
+      reorderSetupTasks(triggeredSetupTasks);
+      expandStrings(triggeredSetupTasks);
+  
+      for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
+      {
+        SetupTask setupTask = it.next();
+        if (setupTask instanceof ContextVariableTask)
+        {
+          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
+          if (!contextVariableTask.isStringSubstitution())
+          {
+            it.remove();
+          }
+        }
+      }
+    }
+  }
+
+  public boolean isCancelled()
+  {
+    if (progress != null)
+    {
+      return progress.isCancelled();
+    }
+
+    return false;
+  }
+
+  public void task(SetupTask setupTask)
+  {
+    if (progress instanceof ProgressDialog)
+    {
+      ((ProgressDialog)progress).task(setupTask);
+    }
+  }
+
+  public void log(IStatus status)
+  {
+    log(ProgressDialog.toString(status));
   }
 
   public void log(String line)
@@ -194,302 +270,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     progress.log(line);
   }
 
-  public void log(IStatus status)
-  {
-    log(ProgressDialog.toString(status));
-  }
-
-  public void task(SetupTask setupTask)
-  {
-    if (progress instanceof ProgressDialog)
-    {
-      ((ProgressDialog)progress).task(setupTask);
-    }
-  }
-
-  public boolean isCancelled()
-  {
-    if (progress != null)
-    {
-      return progress.isCancelled();
-    }
-
-    return false;
-  }
-
-  public Trigger getTrigger()
-  {
-    return trigger;
-  }
-
-  public boolean isPerforming()
-  {
-    return performing;
-  }
-
-  public boolean isRestartNeeded()
-  {
-    return !restartReasons.isEmpty();
-  }
-
-  public void setRestartNeeded(String reason)
-  {
-    restartReasons.add(reason);
-  }
-
-  public Set<String> getRestartReasons()
-  {
-    return restartReasons;
-  }
-
-  public Preferences getPreferences()
-  {
-    return preferences;
-  }
-
-  public String expandString(String string)
-  {
-    return expandString(string, null);
-  }
-
-  public Set<String> getVariables(String string)
-  {
-    if (string == null)
-    {
-      return null;
-    }
-
-    Set<String> result = new HashSet<String>();
-    for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)
-    {
-      String key = matcher.group(1);
-
-      int prefixIndex = key.indexOf('/');
-      if (prefixIndex != -1)
-      {
-        key = key.substring(0, prefixIndex);
-      }
-
-      result.add(key);
-    }
-
-    return result;
-  }
-
-  public String expandString(String string, Set<String> keys)
-  {
-    if (string == null)
-    {
-      return null;
-    }
-
-    StringBuilder result = new StringBuilder();
-    int previous = 0;
-    boolean unresolved = false;
-    for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)
-    {
-      result.append(string.substring(previous, matcher.start()));
-      String key = matcher.group(1);
-      String suffix = "";
-
-      int prefixIndex = key.indexOf('/');
-      if (prefixIndex != -1)
-      {
-        suffix = key.substring(prefixIndex);
-        key = key.substring(0, prefixIndex);
-        if (NEEDS_PATH_SEPARATOR_CONVERSION)
-        {
-          suffix = suffix.replace('/', File.separatorChar);
-        }
-      }
-
-      String value = lookup(key);
-      if (value == null)
-      {
-        if (keys != null)
-        {
-          unresolved = true;
-          keys.add(key);
-        }
-        else
-        {
-          result.append(matcher.group());
-        }
-      }
-      else
-      {
-        String filters = matcher.group(3);
-        if (filters != null)
-        {
-          for (String filterName : filters.split("\\|"))
-          {
-            value = filter(value, filterName);
-          }
-        }
-
-        if (!unresolved)
-        {
-          result.append(value);
-          result.append(suffix);
-        }
-      }
-
-      previous = matcher.end();
-    }
-
-    if (unresolved)
-    {
-      return null;
-    }
-
-    result.append(string.substring(previous));
-    return result.toString();
-  }
-
-  public void redirect(URI sourceURI, URI targetURI)
-  {
-    uriConverter.getURIMap().put(sourceURI, targetURI);
-  }
-
-  public URI redirect(URI uri)
-  {
-    return uriConverter.normalize(uri);
-  }
-
-  public OS getOS()
-  {
-    return OS.INSTANCE;
-  }
-
-  public String getP2ProfileName()
-  {
-    String profileName = getBranchDir().toString();
-    profileName = profileName.replace(':', '_');
-    profileName = profileName.replace('/', '_');
-    profileName = profileName.replace('\\', '_');
-    return profileName;
-  }
-
-  public File getP2ProfileDir()
-  {
-    return new File(getP2AgentDir(), "org.eclipse.equinox.p2.engine/profileRegistry/" + getP2ProfileName() + ".profile");
-  }
-
-  public File getP2AgentDir()
-  {
-    return new File(getP2PoolDir(), "p2");
-  }
-
-  public File getP2PoolDir()
-  {
-    return new File(preferences.getBundlePoolFolder());
-  }
-
-  public File getInstallDir()
-  {
-    return getProjectDir().getParentFile();
-  }
-
-  public File getProjectDir()
-  {
-    return branchDir.getParentFile();
-  }
-
-  public File getBranchDir()
-  {
-    return branchDir;
-  }
-
-  public File getEclipseDir()
-  {
-    return new File(branchDir, "eclipse");
-  }
-
-  public File getWorkspaceDir()
-  {
-    return new File(branchDir, "ws");
-  }
-
-  public Setup getSetup()
-  {
-    return setup;
-  }
-
-  public EList<SetupTask> getTriggeredSetupTasks()
-  {
-    return triggeredSetupTasks;
-  }
-
-  private void initTriggeredSetupTasks()
-  {
-    triggeredSetupTasks = setup.getSetupTasks(true, trigger);
-    if (!triggeredSetupTasks.isEmpty())
-    {
-
-      Map<SetupTask, SetupTask> substitutions = getSubstitutions(triggeredSetupTasks);
-      setup = copySetup(triggeredSetupTasks, substitutions);
-
-      Set<String> keys = new HashSet<String>();
-      for (SetupTask setupTask : triggeredSetupTasks)
-      {
-        if (setupTask instanceof ContextVariableTask)
-        {
-          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
-          String name = contextVariableTask.getName();
-          keys.add(name);
-          String value = contextVariableTask.getValue();
-          put(name, value);
-        }
-      }
-
-      Map<String, Set<String>> variables = new HashMap<String, Set<String>>();
-      for (Map.Entry<Object, Object> entry : entrySet())
-      {
-        Object entryKey = entry.getKey();
-        if (keys.contains(entryKey))
-        {
-          Object entryValue = entry.getValue();
-          if (entryKey instanceof String && entryValue != null)
-          {
-            String key = (String)entryKey;
-            String value = entryValue.toString();
-            variables.put(key, getVariables(value));
-          }
-        }
-      }
-
-      EList<Map.Entry<String, Set<String>>> orderedVariables = reorderVariables(variables);
-
-      for (Map.Entry<String, Set<String>> entry : orderedVariables)
-      {
-        String key = entry.getKey();
-        Object object = get(key);
-        if (object != null)
-        {
-          String value = expandString(object.toString());
-          put(key, value);
-        }
-      }
-
-      reorder(triggeredSetupTasks);
-
-      expandStrings(triggeredSetupTasks);
-
-      for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
-      {
-        SetupTask setupTask = it.next();
-        if (setupTask instanceof ContextVariableTask)
-        {
-          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
-          if (!contextVariableTask.isStringSubstitution())
-          {
-            it.remove();
-          }
-        }
-      }
-    }
-  }
-
   public List<ContextVariableTask> getUnresolvedVariables()
   {
     return unresolvedVariables;
@@ -528,7 +308,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   public void resolveSettings()
   {
-    EList<SetupTask> setupTasks = preferences.getSetupTasks();
+    EList<SetupTask> setupTasks = getPreferences().getSetupTasks();
     for (ContextVariableTask contextVariableTask : unresolvedVariables)
     {
       put(contextVariableTask.getName(), contextVariableTask.getValue());
@@ -584,158 +364,6 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     perform(triggeredSetupTasks);
   }
 
-  protected String lookup(String key)
-  {
-    Object object = get(key);
-    if (object != null)
-    {
-      return object.toString();
-    }
-
-    return null;
-  }
-
-  protected String filter(String value, String filterName)
-  {
-    StringFilter filter = STRING_FILTER_REGISTRY.get(filterName);
-    if (filter != null)
-    {
-      return filter.filter(value);
-    }
-
-    return value;
-  }
-
-  private void initialize()
-  {
-    ResourceSet resourceSet = EMFUtil.createResourceSet();
-
-    URI uri = URI.createFileURI(branchDir.toString() + "/setup.xmi");
-    Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
-
-    setup = (Setup)resource.getContents().get(0);
-    preferences = setup.getPreferences();
-    preferences.eResource().setTrackingModification(true);
-
-    Branch branch = setup.getBranch();
-    String branchName = branch.getName();
-
-    Project project = branch.getProject();
-    String projectLabel = project.getLabel();
-    String projectName = project.getName();
-
-    put("setup.install.dir", getInstallDir());
-    put("setup.project.dir", getProjectDir());
-    put("setup.branch.dir", getBranchDir());
-    put("setup.eclipse.dir", getEclipseDir());
-    put("setup.ws.dir", getWorkspaceDir());
-    put("setup.project.label", projectLabel);
-    put("setup.project.name", projectName);
-    put("setup.branch.name", branchName);
-    put("releng.url", RELENG_URL);
-
-    put("os", Platform.getOS());
-    put("os.arch", Platform.getOSArch());
-    put("ws", Platform.getWS());
-
-    for (Map.Entry<Object, Object> entry : System.getProperties().entrySet())
-    {
-      put(entry.getKey(), entry.getValue());
-    }
-
-    try
-    {
-      File logFile = new File(getBranchDir(), "setup.log");
-      logFile.getParentFile().mkdirs();
-
-      FileOutputStream out = new FileOutputStream(logFile, true);
-      logStream = new PrintStream(out);
-    }
-    catch (FileNotFoundException ex)
-    {
-      throw new RuntimeException(ex);
-    }
-
-    initTriggeredSetupTasks();
-  }
-
-  private EList<Map.Entry<String, Set<String>>> reorderVariables(final Map<String, Set<String>> variables)
-  {
-    EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
-
-    reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
-    {
-      public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
-      {
-        Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
-        for (String key : variable.getValue())
-        {
-          for (Map.Entry<String, Set<String>> entry : variables.entrySet())
-          {
-            if (entry.getKey().equals(key))
-            {
-              result.add(entry);
-            }
-          }
-        }
-
-        return result;
-      }
-    });
-
-    return list;
-  }
-
-  private void reorder(EList<SetupTask> setupTasks)
-  {
-    reorder(setupTasks, new DependencyProvider<SetupTask>()
-    {
-      public Collection<SetupTask> getDependencies(SetupTask setupTask)
-      {
-        return setupTask.getRequirements();
-      }
-    });
-  }
-
-  public interface DependencyProvider<T>
-  {
-    Collection<? extends T> getDependencies(T value);
-  }
-
-  public static <T> void reorder(EList<T> values, DependencyProvider<T> dependencyProvider)
-  {
-    for (int i = 0, size = values.size(), count = 0; i < size; ++i)
-    {
-      T value = values.get(i);
-      if (count == size)
-      {
-        throw new IllegalArgumentException("Circular dependencies " + value);
-      }
-
-      boolean changed = false;
-      // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
-      for (T dependency : dependencyProvider.getDependencies(value))
-      {
-        int index = values.indexOf(dependency);
-        if (index > i)
-        {
-          values.move(i, index);
-          changed = true;
-        }
-      }
-
-      if (changed)
-      {
-        --i;
-        ++count;
-      }
-      else
-      {
-        count = 0;
-      }
-    }
-  }
-
   private void perform(EList<SetupTask> setupTasks) throws Exception
   {
     final EList<SetupTask> neededTasks = getNeededTasks(setupTasks);
@@ -744,9 +372,9 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
       return;
     }
 
-    performing = true;
+    setPerforming(true);
 
-    if (Activator.SETUP_IDE && trigger != Trigger.MANUAL)
+    if (Activator.SETUP_IDE && getTrigger() != Trigger.MANUAL)
     {
       Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
       ProgressDialog.run(shell, new ProgressLogRunnable()
@@ -754,7 +382,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
         public Set<String> run(ProgressLog log) throws Exception
         {
           doPerform(neededTasks);
-          return restartReasons;
+          return getRestartReasons();
         }
       }, Collections.singletonList(this));
     }
@@ -768,7 +396,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
   {
     try
     {
-      Branch branch = setup.getBranch();
+      Branch branch = getSetup().getBranch();
       log("Setting up " + branch.getProject().getName() + " " + branch.getName());
 
       for (SetupTask neededTask : neededTasks)
@@ -779,7 +407,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
         neededTask.dispose();
       }
 
-      Resource preferencesResource = preferences.eResource();
+      Resource preferencesResource = getPreferences().eResource();
       if (preferencesResource.isModified())
       {
         preferencesResource.save(null);
@@ -835,6 +463,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
 
   private Setup copySetup(EList<SetupTask> setupTasks, Map<SetupTask, SetupTask> substitutions)
   {
+    Setup setup = getSetup();
     Set<EObject> roots = new LinkedHashSet<EObject>();
     roots.add(setup);
 
@@ -845,7 +474,7 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     }
 
     EcoreUtil.Copier copier = new EcoreUtil.Copier();
-    Setup setup = (Setup)copier.copyAll(roots).iterator().next();
+    setup = (Setup)copier.copyAll(roots).iterator().next();
 
     for (Map.Entry<SetupTask, SetupTask> entry : substitutions.entrySet())
     {
@@ -935,6 +564,44 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     return result;
   }
 
+  private EList<Map.Entry<String, Set<String>>> reorderVariables(final Map<String, Set<String>> variables)
+  {
+    EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
+  
+    reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
+    {
+      public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
+      {
+        Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
+        for (String key : variable.getValue())
+        {
+          for (Map.Entry<String, Set<String>> entry : variables.entrySet())
+          {
+            if (entry.getKey().equals(key))
+            {
+              result.add(entry);
+            }
+          }
+        }
+  
+        return result;
+      }
+    });
+  
+    return list;
+  }
+
+  private void reorderSetupTasks(EList<SetupTask> setupTasks)
+  {
+    reorder(setupTasks, new DependencyProvider<SetupTask>()
+    {
+      public Collection<SetupTask> getDependencies(SetupTask setupTask)
+      {
+        return setupTask.getRequirements();
+      }
+    });
+  }
+
   private static String getLabel(SetupTask setupTask)
   {
     IItemLabelProvider labelProvider = (IItemLabelProvider)ADAPTER_FACTORY.adapt(setupTask, IItemLabelProvider.class);
@@ -963,54 +630,42 @@ public class SetupTaskPerformer extends HashMap<Object, Object> implements Setup
     SetupTaskPerformer.progress = progress;
   }
 
-  static
+  public static <T> void reorder(EList<T> values, DependencyProvider<T> dependencyProvider)
   {
-    STRING_FILTER_REGISTRY.put("uri", new StringFilter()
+    for (int i = 0, size = values.size(), count = 0; i < size; ++i)
     {
-      public String filter(String value)
+      T value = values.get(i);
+      if (count == size)
       {
-        return URI.createFileURI(value).toString();
+        throw new IllegalArgumentException("Circular dependencies " + value);
       }
-    });
-
-    STRING_FILTER_REGISTRY.put("upper", new StringFilter()
-    {
-      public String filter(String value)
+  
+      boolean changed = false;
+      // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
+      for (T dependency : dependencyProvider.getDependencies(value))
       {
-        return value.toUpperCase();
+        int index = values.indexOf(dependency);
+        if (index > i)
+        {
+          values.move(i, index);
+          changed = true;
+        }
       }
-    });
-
-    STRING_FILTER_REGISTRY.put("lower", new StringFilter()
-    {
-      public String filter(String value)
+  
+      if (changed)
       {
-        return value.toLowerCase();
+        --i;
+        ++count;
       }
-    });
-
-    STRING_FILTER_REGISTRY.put("cap", new StringFilter()
-    {
-      public String filter(String value)
+      else
       {
-        return StringUtil.cap(value);
+        count = 0;
       }
-    });
-
-    STRING_FILTER_REGISTRY.put("allcap", new StringFilter()
-    {
-      public String filter(String value)
-      {
-        return StringUtil.capAll(value);
-      }
-    });
+    }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public interface StringFilter
+  public interface DependencyProvider<T>
   {
-    public String filter(String value);
+    Collection<? extends T> getDependencies(T value);
   }
 }

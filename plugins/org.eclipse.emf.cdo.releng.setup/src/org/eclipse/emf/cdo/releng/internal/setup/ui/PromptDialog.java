@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -49,24 +49,32 @@ public class PromptDialog extends AbstractSetupDialog
   }
 
   @Override
+  protected int getContainerMargin()
+  {
+    return 10;
+  }
+
+  @Override
   protected void createUI(Composite parent)
   {
     GridLayout layout = (GridLayout)parent.getLayout();
     layout.numColumns = 2;
+    layout.horizontalSpacing = 10;
+    layout.verticalSpacing = 10;
 
     for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
     {
-      List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
-      if (!unresolvedVariables.isEmpty())
+      List<ContextVariableTask> variables = setupTaskPerformer.getUnresolvedVariables();
+      if (!variables.isEmpty())
       {
         Label header = new Label(parent, SWT.NONE);
         header.setText(setupTaskPerformer.getBranchDir().toString());
         header.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
 
-        for (final ContextVariableTask contextVariableTask : unresolvedVariables)
+        for (final ContextVariableTask variable : variables)
         {
           Label variableLabel = new Label(parent, SWT.NONE);
-          variableLabel.setText(contextVariableTask.getName() + ":");
+          variableLabel.setText(variable.getName() + ":");
           variableLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 
           final Text text = new Text(parent, SWT.BORDER);
@@ -75,10 +83,11 @@ public class PromptDialog extends AbstractSetupDialog
           {
             public void modifyText(ModifyEvent e)
             {
-              contextVariableTask.setValue(text.getText());
+              variable.setValue(text.getText());
               validate();
             }
           });
+
         }
       }
     }
@@ -89,10 +98,9 @@ public class PromptDialog extends AbstractSetupDialog
     Button okButton = getButton(IDialogConstants.OK_ID);
     for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
     {
-      List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
-      for (final ContextVariableTask contextVariableTask : unresolvedVariables)
+      for (final ContextVariableTask variable : setupTaskPerformer.getUnresolvedVariables())
       {
-        if (StringUtil.isEmpty(contextVariableTask.getValue()))
+        if (StringUtil.isEmpty(variable.getValue()))
         {
           okButton.setEnabled(false);
           return;

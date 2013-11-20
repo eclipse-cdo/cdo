@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.provider.BranchItemProvider;
@@ -684,7 +685,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     try
     {
-      addRepository(agent, SetupTaskPerformer.RELENG_URL, sub.newChild(200));
+      addRepository(agent, SetupConstants.RELENG_URL, sub.newChild(200));
     }
     catch (ProvisionException ex)
     {

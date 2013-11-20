@@ -47,6 +47,8 @@ import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
+import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.common.util.URI;
@@ -126,6 +128,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createSetup();
     case SetupPackage.COMPOUND_SETUP_TASK:
       return createCompoundSetupTask();
+    case SetupPackage.CONTEXT_VARIABLE_TASK:
+      return createContextVariableTask();
+    case SetupPackage.VARIABLE_CHOICE:
+      return createVariableChoice();
     case SetupPackage.ECLIPSE_INI_TASK:
       return createEclipseIniTask();
     case SetupPackage.LINK_LOCATION_TASK:
@@ -148,8 +154,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createAutomaticSourceLocator();
     case SetupPackage.REDIRECTION_TASK:
       return createRedirectionTask();
-    case SetupPackage.CONTEXT_VARIABLE_TASK:
-      return createContextVariableTask();
     case SetupPackage.API_BASELINE_TASK:
       return createApiBaselineTask();
     case SetupPackage.GIT_CLONE_TASK:
@@ -199,6 +203,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createTriggerFromString(eDataType, initialValue);
     case SetupPackage.COMPONENT_TYPE:
       return createComponentTypeFromString(eDataType, initialValue);
+    case SetupPackage.VARIABLE_TYPE:
+      return createVariableTypeFromString(eDataType, initialValue);
     case SetupPackage.TRIGGER_SET:
       return createTriggerSetFromString(eDataType, initialValue);
     case SetupPackage.EXCEPTION:
@@ -226,6 +232,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return convertTriggerToString(eDataType, instanceValue);
     case SetupPackage.COMPONENT_TYPE:
       return convertComponentTypeToString(eDataType, instanceValue);
+    case SetupPackage.VARIABLE_TYPE:
+      return convertVariableTypeToString(eDataType, instanceValue);
     case SetupPackage.TRIGGER_SET:
       return convertTriggerSetToString(eDataType, instanceValue);
     case SetupPackage.EXCEPTION:
@@ -506,6 +514,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public VariableChoice createVariableChoice()
+  {
+    VariableChoiceImpl variableChoice = new VariableChoiceImpl();
+    return variableChoice;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   public ResourceCreationTask createResourceCreationTask()
   {
     ResourceCreationTaskImpl resourceCreationTask = new ResourceCreationTaskImpl();
@@ -625,7 +644,33 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VariableType createVariableTypeFromString(EDataType eDataType, String initialValue)
+  {
+    VariableType result = VariableType.get(initialValue);
+    if (result == null)
+    {
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
+          + eDataType.getName() + "'");
+    }
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertVariableTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    */
   public CompoundSetupTask createCompoundSetupTask()

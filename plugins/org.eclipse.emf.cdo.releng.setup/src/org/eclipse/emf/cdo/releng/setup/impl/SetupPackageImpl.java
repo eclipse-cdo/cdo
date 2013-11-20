@@ -52,6 +52,8 @@ import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
+import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
 
@@ -254,6 +256,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass variableChoiceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass resourceCreationTaskEClass = null;
 
   /**
@@ -314,7 +323,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum variableTypeEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    */
   private EClass compoundSetupTaskEClass = null;
@@ -1303,12 +1319,22 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getContextVariableTask_Type()
+  {
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getContextVariableTask_Name()
   {
-    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1318,7 +1344,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getContextVariableTask_Value()
   {
-    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1328,12 +1354,62 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getContextVariableTask_StringSubstitution()
   {
-    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(3);
   }
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getContextVariableTask_Label()
+  {
+    return (EAttribute)contextVariableTaskEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getContextVariableTask_Choices()
+  {
+    return (EReference)contextVariableTaskEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVariableChoice()
+  {
+    return variableChoiceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getVariableChoice_Value()
+  {
+    return (EAttribute)variableChoiceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getVariableChoice_Label()
+  {
+    return (EAttribute)variableChoiceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public EClass getResourceCreationTask()
@@ -1553,7 +1629,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getVariableType()
+  {
+    return variableTypeEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
    * @generated
    */
   public EClass getCompoundSetupTask()
@@ -1828,6 +1914,18 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     compoundSetupTaskEClass = createEClass(COMPOUND_SETUP_TASK);
     createEAttribute(compoundSetupTaskEClass, COMPOUND_SETUP_TASK__NAME);
 
+    contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__TYPE);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION);
+    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__LABEL);
+    createEReference(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__CHOICES);
+
+    variableChoiceEClass = createEClass(VARIABLE_CHOICE);
+    createEAttribute(variableChoiceEClass, VARIABLE_CHOICE__VALUE);
+    createEAttribute(variableChoiceEClass, VARIABLE_CHOICE__LABEL);
+
     eclipseIniTaskEClass = createEClass(ECLIPSE_INI_TASK);
     createEAttribute(eclipseIniTaskEClass, ECLIPSE_INI_TASK__OPTION);
     createEAttribute(eclipseIniTaskEClass, ECLIPSE_INI_TASK__VALUE);
@@ -1877,11 +1975,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     redirectionTaskEClass = createEClass(REDIRECTION_TASK);
     createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__SOURCE_URL);
     createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__TARGET_URL);
-
-    contextVariableTaskEClass = createEClass(CONTEXT_VARIABLE_TASK);
-    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__NAME);
-    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__VALUE);
-    createEAttribute(contextVariableTaskEClass, CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION);
 
     apiBaselineTaskEClass = createEClass(API_BASELINE_TASK);
     createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__VERSION);
@@ -1950,6 +2043,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
     triggerEEnum = createEEnum(TRIGGER);
     componentTypeEEnum = createEEnum(COMPONENT_TYPE);
+    variableTypeEEnum = createEEnum(VARIABLE_TYPE);
 
     // Create data types
     triggerSetEDataType = createEDataType(TRIGGER_SET);
@@ -2000,6 +2094,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     preferencesEClass.getESuperTypes().add(getSetupTaskContainer());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTask());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTaskContainer());
+    contextVariableTaskEClass.getESuperTypes().add(getSetupTask());
     eclipseIniTaskEClass.getESuperTypes().add(getSetupTask());
     linkLocationTaskEClass.getESuperTypes().add(getSetupTask());
     p2TaskEClass.getESuperTypes().add(getSetupTask());
@@ -2009,7 +2104,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     redirectionTaskEClass.getESuperTypes().add(getSetupTask());
-    contextVariableTaskEClass.getESuperTypes().add(getSetupTask());
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
     projectSetImportTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2126,6 +2220,33 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getCompoundSetupTask_Name(), ecorePackage.getEString(), "name", null, 1, 1, CompoundSetupTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getContextVariableTask_Type(), getVariableType(), "type", "STRING", 1, 1, ContextVariableTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 1, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_StringSubstitution(), ecorePackage.getEBoolean(), "stringSubstitution", null,
+        0, 1, ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContextVariableTask_Label(), ecorePackage.getEString(), "label", null, 0, 1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getContextVariableTask_Choices(), getVariableChoice(), null, "choices", null, 0, -1,
+        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(variableChoiceEClass, VariableChoice.class, "VariableChoice", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVariableChoice_Value(), ecorePackage.getEString(), "value", null, 1, 1, VariableChoice.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableChoice_Label(), ecorePackage.getEString(), "label", null, 0, 1, VariableChoice.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(eclipseIniTaskEClass, EclipseIniTask.class, "EclipseIniTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEclipseIniTask_Option(), ecorePackage.getEString(), "option", null, 1, 1, EclipseIniTask.class,
@@ -2224,18 +2345,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRedirectionTask_TargetURL(), ecorePackage.getEString(), "targetURL", null, 1, 1,
         RedirectionTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(contextVariableTaskEClass, ContextVariableTask.class, "ContextVariableTask", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getContextVariableTask_Name(), ecorePackage.getEString(), "name", null, 1, 1,
-        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContextVariableTask_Value(), ecorePackage.getEString(), "value", null, 0, 1,
-        ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContextVariableTask_StringSubstitution(), ecorePackage.getEBoolean(), "stringSubstitution", null,
-        0, 1, ContextVariableTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(apiBaselineTaskEClass, ApiBaselineTask.class, "ApiBaselineTask", !IS_ABSTRACT, !IS_INTERFACE,
@@ -2393,6 +2502,21 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addEEnumLiteral(componentTypeEEnum, ComponentType.ECLIPSE_FEATURE);
     addEEnumLiteral(componentTypeEEnum, ComponentType.OSGI_BUNDLE);
     addEEnumLiteral(componentTypeEEnum, ComponentType.BUCKMINSTER);
+
+    initEEnum(variableTypeEEnum, VariableType.class, "VariableType");
+    addEEnumLiteral(variableTypeEEnum, VariableType.STRING);
+    addEEnumLiteral(variableTypeEEnum, VariableType.TEXT);
+    addEEnumLiteral(variableTypeEEnum, VariableType.PASSWORD);
+    addEEnumLiteral(variableTypeEEnum, VariableType.PATTERN);
+    addEEnumLiteral(variableTypeEEnum, VariableType.URI);
+    addEEnumLiteral(variableTypeEEnum, VariableType.FILE);
+    addEEnumLiteral(variableTypeEEnum, VariableType.FOLDER);
+    addEEnumLiteral(variableTypeEEnum, VariableType.RESOURCE);
+    addEEnumLiteral(variableTypeEEnum, VariableType.CONTAINER);
+    addEEnumLiteral(variableTypeEEnum, VariableType.PROJECT);
+    addEEnumLiteral(variableTypeEEnum, VariableType.BOOLEAN);
+    addEEnumLiteral(variableTypeEEnum, VariableType.INTEGER);
+    addEEnumLiteral(variableTypeEEnum, VariableType.FLOAT);
 
     // Initialize data types
     initEDataType(triggerSetEDataType, Set.class, "TriggerSet", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS,

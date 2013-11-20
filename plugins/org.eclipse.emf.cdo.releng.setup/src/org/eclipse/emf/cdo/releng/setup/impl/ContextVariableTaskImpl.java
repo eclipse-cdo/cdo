@@ -14,16 +14,25 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
+import org.eclipse.emf.cdo.releng.setup.VariableType;
 
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.IValueVariable;
 import org.eclipse.core.variables.VariablesPlugin;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,9 +41,12 @@ import org.eclipse.core.variables.VariablesPlugin;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#isStringSubstitution <em>String Substitution</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl#getChoices <em>Choices</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,6 +54,26 @@ import org.eclipse.core.variables.VariablesPlugin;
  */
 public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVariableTask
 {
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final VariableType TYPE_EDEFAULT = VariableType.STRING;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected VariableType type = TYPE_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -102,6 +134,36 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
    */
   protected boolean stringSubstitution = STRING_SUBSTITUTION_EDEFAULT;
 
+  /**
+   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected static final String LABEL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected String label = LABEL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getChoices() <em>Choices</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getChoices()
+   * @generated
+   * @ordered
+   */
+  protected EList<VariableChoice> choices;
+
   private IValueVariable cachedVariable;
 
   /**
@@ -123,6 +185,31 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   protected EClass eStaticClass()
   {
     return SetupPackage.Literals.CONTEXT_VARIABLE_TASK;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VariableType getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(VariableType newType)
+  {
+    VariableType oldType = type;
+    type = newType == null ? TYPE_EDEFAULT : newType;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.CONTEXT_VARIABLE_TASK__TYPE, oldType, type));
+    }
   }
 
   /**
@@ -203,7 +290,63 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getLabel()
+  {
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLabel(String newLabel)
+  {
+    String oldLabel = label;
+    label = newLabel;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.CONTEXT_VARIABLE_TASK__LABEL, oldLabel, label));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<VariableChoice> getChoices()
+  {
+    if (choices == null)
+    {
+      choices = new EObjectContainmentEList.Resolving<VariableChoice>(VariableChoice.class, this,
+          SetupPackage.CONTEXT_VARIABLE_TASK__CHOICES);
+    }
+    return choices;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case SetupPackage.CONTEXT_VARIABLE_TASK__CHOICES:
+      return ((InternalEList<?>)getChoices()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -211,12 +354,18 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   {
     switch (featureID)
     {
+    case SetupPackage.CONTEXT_VARIABLE_TASK__TYPE:
+      return getType();
     case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
       return getName();
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
       return getValue();
     case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
       return isStringSubstitution();
+    case SetupPackage.CONTEXT_VARIABLE_TASK__LABEL:
+      return getLabel();
+    case SetupPackage.CONTEXT_VARIABLE_TASK__CHOICES:
+      return getChoices();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -226,11 +375,15 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+    case SetupPackage.CONTEXT_VARIABLE_TASK__TYPE:
+      setType((VariableType)newValue);
+      return;
     case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
       setName((String)newValue);
       return;
@@ -239,6 +392,13 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
       return;
     case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
       setStringSubstitution((Boolean)newValue);
+      return;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__LABEL:
+      setLabel((String)newValue);
+      return;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__CHOICES:
+      getChoices().clear();
+      getChoices().addAll((Collection<? extends VariableChoice>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -254,6 +414,9 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   {
     switch (featureID)
     {
+    case SetupPackage.CONTEXT_VARIABLE_TASK__TYPE:
+      setType(TYPE_EDEFAULT);
+      return;
     case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
       setName(NAME_EDEFAULT);
       return;
@@ -262,6 +425,12 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
       return;
     case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
       setStringSubstitution(STRING_SUBSTITUTION_EDEFAULT);
+      return;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__LABEL:
+      setLabel(LABEL_EDEFAULT);
+      return;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__CHOICES:
+      getChoices().clear();
       return;
     }
     super.eUnset(featureID);
@@ -277,12 +446,18 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   {
     switch (featureID)
     {
+    case SetupPackage.CONTEXT_VARIABLE_TASK__TYPE:
+      return type != TYPE_EDEFAULT;
     case SetupPackage.CONTEXT_VARIABLE_TASK__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case SetupPackage.CONTEXT_VARIABLE_TASK__VALUE:
       return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
     case SetupPackage.CONTEXT_VARIABLE_TASK__STRING_SUBSTITUTION:
       return stringSubstitution != STRING_SUBSTITUTION_EDEFAULT;
+    case SetupPackage.CONTEXT_VARIABLE_TASK__LABEL:
+      return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+    case SetupPackage.CONTEXT_VARIABLE_TASK__CHOICES:
+      return choices != null && !choices.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -301,12 +476,16 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
+    result.append(" (type: ");
+    result.append(type);
+    result.append(", name: ");
     result.append(name);
     result.append(", value: ");
     result.append(value);
     result.append(", stringSubstitution: ");
     result.append(stringSubstitution);
+    result.append(", label: ");
+    result.append(label);
     result.append(')');
     return result.toString();
   }

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -68,17 +69,17 @@ public class PromptDialog extends AbstractSetupDialog
       if (!variables.isEmpty())
       {
         Label header = new Label(parent, SWT.NONE);
-        header.setText(setupTaskPerformer.getBranchDir().toString());
+        header.setText((String)setupTaskPerformer.get(SetupConstants.PROP_BRANCH_LABEL));
         header.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
 
         for (final ContextVariableTask variable : variables)
         {
           Label variableLabel = new Label(parent, SWT.NONE);
           variableLabel.setText(variable.getName() + ":");
-          variableLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+          variableLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
           final Text text = new Text(parent, SWT.BORDER);
-          text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+          text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
           text.addModifyListener(new ModifyListener()
           {
             public void modifyText(ModifyEvent e)

@@ -130,25 +130,25 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     triggeredSetupTasks = getSetup().getSetupTasks(true, getTrigger());
     if (!triggeredSetupTasks.isEmpty())
     {
-  
+
       Map<SetupTask, SetupTask> substitutions = getSubstitutions(triggeredSetupTasks);
       setSetup(copySetup(triggeredSetupTasks, substitutions));
-  
+
       Set<String> keys = new HashSet<String>();
       for (SetupTask setupTask : triggeredSetupTasks)
       {
         if (setupTask instanceof ContextVariableTask)
         {
           ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
-  
+
           String name = contextVariableTask.getName();
           keys.add(name);
-  
+
           String value = contextVariableTask.getValue();
           put(name, value);
         }
       }
-  
+
       Map<String, Set<String>> variables = new HashMap<String, Set<String>>();
       for (Map.Entry<Object, Object> entry : entrySet())
       {
@@ -160,12 +160,12 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           {
             String key = (String)entryKey;
             String value = entryValue.toString();
-  
+
             variables.put(key, getVariables(value));
           }
         }
       }
-  
+
       EList<Map.Entry<String, Set<String>>> orderedVariables = reorderVariables(variables);
       for (Map.Entry<String, Set<String>> entry : orderedVariables)
       {
@@ -177,10 +177,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           put(key, value);
         }
       }
-  
+
       reorderSetupTasks(triggeredSetupTasks);
       expandStrings(triggeredSetupTasks);
-  
+
       for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
       {
         SetupTask setupTask = it.next();
@@ -567,7 +567,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private EList<Map.Entry<String, Set<String>>> reorderVariables(final Map<String, Set<String>> variables)
   {
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
-  
+
     reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
     {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
@@ -583,11 +583,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
             }
           }
         }
-  
+
         return result;
       }
     });
-  
+
     return list;
   }
 
@@ -639,7 +639,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       {
         throw new IllegalArgumentException("Circular dependencies " + value);
       }
-  
+
       boolean changed = false;
       // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
       for (T dependency : dependencyProvider.getDependencies(value))
@@ -651,7 +651,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           changed = true;
         }
       }
-  
+
       if (changed)
       {
         --i;

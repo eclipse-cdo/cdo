@@ -73,6 +73,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="CompoundSetupTask" eSuperTypes="#//SetupTask #//SetupTaskContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContextVariableTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//VariableType"
+        defaultValueLiteral="STRING"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringSubstitution" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="choices" upperBound="-1"
+        eType="#//VariableChoice" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableChoice">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EclipseIniTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="option" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -146,11 +160,6 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetURL" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ContextVariableTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringSubstitution" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ApiBaselineTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
@@ -274,5 +283,20 @@
     <eLiterals name="ECLIPSE_FEATURE" literal="eclipse.feature"/>
     <eLiterals name="OSGI_BUNDLE" value="1" literal="osgi.bundle"/>
     <eLiterals name="BUCKMINSTER" value="3" literal="buckminster"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VariableType">
+    <eLiterals name="STRING"/>
+    <eLiterals name="TEXT" value="1"/>
+    <eLiterals name="PASSWORD" value="2"/>
+    <eLiterals name="PATTERN" value="3"/>
+    <eLiterals name="URI" value="4"/>
+    <eLiterals name="FILE" value="5"/>
+    <eLiterals name="FOLDER" value="6"/>
+    <eLiterals name="RESOURCE" value="7"/>
+    <eLiterals name="CONTAINER" value="8"/>
+    <eLiterals name="PROJECT" value="9"/>
+    <eLiterals name="BOOLEAN" value="10"/>
+    <eLiterals name="INTEGER" value="11"/>
+    <eLiterals name="FLOAT" value="12"/>
   </eClassifiers>
 </ecore:EPackage>

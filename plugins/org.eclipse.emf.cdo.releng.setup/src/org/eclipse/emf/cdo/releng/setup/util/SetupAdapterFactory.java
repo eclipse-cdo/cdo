@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -178,6 +179,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseContextVariableTask(ContextVariableTask object)
+    {
+      return createContextVariableTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseVariableChoice(VariableChoice object)
+    {
+      return createVariableChoiceAdapter();
+    }
+
+    @Override
     public Adapter caseEclipseIniTask(EclipseIniTask object)
     {
       return createEclipseIniTaskAdapter();
@@ -253,12 +266,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseRedirectionTask(RedirectionTask object)
     {
       return createRedirectionTaskAdapter();
-    }
-
-    @Override
-    public Adapter caseContextVariableTask(ContextVariableTask object)
-    {
-      return createContextVariableTaskAdapter();
     }
 
     @Override
@@ -742,11 +749,26 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.VariableChoice <em>Variable Choice</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.VariableChoice
+   * @generated
+   */
+  public Adapter createVariableChoiceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
+   * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask
    * @generated

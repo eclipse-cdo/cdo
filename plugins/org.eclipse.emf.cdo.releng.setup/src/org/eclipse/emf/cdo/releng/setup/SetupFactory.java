@@ -247,9 +247,18 @@ public interface SetupFactory extends EFactory
   ContextVariableTask createContextVariableTask();
 
   /**
-   * Returns a new object of class '<em>Resource Creation Task</em>'.
+   * Returns a new object of class '<em>Variable Choice</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable Choice</em>'.
+   * @generated
+   */
+  VariableChoice createVariableChoice();
+
+  /**
+   * Returns a new object of class '<em>Resource Creation Task</em>'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return a new object of class '<em>Resource Creation Task</em>'.
    * @generated
    */

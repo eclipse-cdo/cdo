@@ -697,11 +697,36 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.VariableChoice} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected VariableChoiceItemProvider variableChoiceItemProvider;
+
+  /**
+  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.VariableChoice}.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public Adapter createVariableChoiceAdapter()
+  {
+    if (variableChoiceItemProvider == null)
+    {
+      variableChoiceItemProvider = new VariableChoiceItemProvider(this);
+    }
+
+    return variableChoiceItemProvider;
+  }
+
+  /**
+  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} instances.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ResourceCreationTaskItemProvider resourceCreationTaskItemProvider;
 
   /**
@@ -1090,6 +1115,14 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       compoundSetupTaskItemProvider.dispose();
     }
+    if (contextVariableTaskItemProvider != null)
+    {
+      contextVariableTaskItemProvider.dispose();
+    }
+    if (variableChoiceItemProvider != null)
+    {
+      variableChoiceItemProvider.dispose();
+    }
     if (eclipseIniTaskItemProvider != null)
     {
       eclipseIniTaskItemProvider.dispose();
@@ -1133,10 +1166,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (redirectionTaskItemProvider != null)
     {
       redirectionTaskItemProvider.dispose();
-    }
-    if (contextVariableTaskItemProvider != null)
-    {
-      contextVariableTaskItemProvider.dispose();
     }
     if (apiBaselineTaskItemProvider != null)
     {

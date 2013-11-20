@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.ecore.EObject;
@@ -257,6 +258,30 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.CONTEXT_VARIABLE_TASK:
+    {
+      ContextVariableTask contextVariableTask = (ContextVariableTask)theEObject;
+      T result = caseContextVariableTask(contextVariableTask);
+      if (result == null)
+      {
+        result = caseSetupTask(contextVariableTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.VARIABLE_CHOICE:
+    {
+      VariableChoice variableChoice = (VariableChoice)theEObject;
+      T result = caseVariableChoice(variableChoice);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.ECLIPSE_INI_TASK:
     {
       EclipseIniTask eclipseIniTask = (EclipseIniTask)theEObject;
@@ -424,20 +449,6 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseSetupTask(redirectionTask);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.CONTEXT_VARIABLE_TASK:
-    {
-      ContextVariableTask contextVariableTask = (ContextVariableTask)theEObject;
-      T result = caseContextVariableTask(contextVariableTask);
-      if (result == null)
-      {
-        result = caseSetupTask(contextVariableTask);
       }
       if (result == null)
       {
@@ -1099,11 +1110,27 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Resource Creation Task</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Variable Choice</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable Choice</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariableChoice(VariableChoice object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Resource Creation Task</em>'.
+   * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Resource Creation Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)

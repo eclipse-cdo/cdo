@@ -128,15 +128,17 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private void initTriggeredSetupTasks()
   {
-    triggeredSetupTasks = getSetup().getSetupTasks(true, getTrigger());
-    if (!triggeredSetupTasks.isEmpty())
+    EList<SetupTask> setupTasks = getSetup().getSetupTasks(true, getTrigger());
+    triggeredSetupTasks = setupTasks; // Debugging help
+
+    if (!setupTasks.isEmpty())
     {
 
-      Map<SetupTask, SetupTask> substitutions = getSubstitutions(triggeredSetupTasks);
-      setSetup(copySetup(triggeredSetupTasks, substitutions));
+      Map<SetupTask, SetupTask> substitutions = getSubstitutions(setupTasks);
+      setSetup(copySetup(setupTasks, substitutions));
 
       Set<String> keys = new HashSet<String>();
-      for (SetupTask setupTask : triggeredSetupTasks)
+      for (SetupTask setupTask : setupTasks)
       {
         if (setupTask instanceof ContextVariableTask)
         {
@@ -179,10 +181,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         }
       }
 
-      reorderSetupTasks(triggeredSetupTasks);
-      expandStrings(triggeredSetupTasks);
+      reorderSetupTasks(setupTasks);
+      expandStrings(setupTasks);
 
-      for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
+      for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
       {
         SetupTask setupTask = it.next();
         if (setupTask instanceof ContextVariableTask)

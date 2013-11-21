@@ -92,11 +92,11 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-  	 * This adds a property descriptor for the Name feature.
-  	 * <!-- begin-user-doc -->
+   * This adds a property descriptor for the Name feature.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected void addNamePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
@@ -160,13 +160,13 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-  	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-  	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-  	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-  	 * <!-- begin-user-doc -->
+   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
   {
@@ -179,10 +179,10 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   protected EStructuralFeature getChildFeature(Object object, Object child)
   {
@@ -193,11 +193,11 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-  	 * This returns ContextVariableTask.gif.
-  	 * <!-- begin-user-doc -->
+   * This returns ContextVariableTask.gif.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object getImage(Object object)
   {
@@ -234,9 +234,16 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
     }
 
     String label = "" + name;
-    if (!StringUtil.isEmpty(value))
+    if (value != null)
     {
-      label += " = " + value;
+      if (value.length() == 0)
+      {
+        label += " = \"\"";
+      }
+      else
+      {
+        label += " = " + value;
+      }
     }
 
     return label;

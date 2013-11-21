@@ -1391,7 +1391,7 @@ public class InstallerDialog extends AbstractSetupDialog
     @Override
     protected String getDefaultMessage()
     {
-      return "The current product version is " + version + ".";
+      return "The current product version is " + version + ".\n" + EMFUtil.SETUP_URI;
     }
 
     @Override

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.LicenseDialog;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
@@ -540,7 +541,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     final Preferences preferences = context.getPreferences();
-    Set<String> acceptedLicenses = new HashSet<String>(preferences.getAcceptedLicenses());
+    Set<LicenseInfo> acceptedLicenses = new HashSet<LicenseInfo>(preferences.getAcceptedLicenses());
 
     final Map<ILicense, List<IInstallableUnit>> licensesToIUs = new HashMap<ILicense, List<IInstallableUnit>>();
     Set<Pair<ILicense, String>> set = new HashSet<Pair<ILicense, String>>();
@@ -553,7 +554,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       for (ILicense license : licenses)
       {
         String uuid = license.getUUID();
-        if (acceptedLicenses.contains(uuid))
+        if (acceptedLicenses.contains(new LicenseInfo(uuid, null)))
         {
           continue;
         }
@@ -596,8 +597,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
               {
                 for (ILicense license : licensesToIUs.keySet())
                 {
-                  String uuid = license.getUUID();
-                  context.getPreferences().getAcceptedLicenses().add(uuid);
+                  LicenseInfo licenseInfo = new LicenseInfo(license);
+                  context.getPreferences().getAcceptedLicenses().add(licenseInfo);
                 }
               }
             }

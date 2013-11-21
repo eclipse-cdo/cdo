@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 
 import org.eclipse.equinox.internal.p2.metadata.License;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
@@ -278,40 +279,46 @@ public class LicenseDialog extends AbstractSetupDialog
     return buf.toString();
   }
 
-  class IUWithLicenseParent
+  /**
+   * @author Eike Stepper
+   */
+  private final class IUWithLicenseParent
   {
-    IInstallableUnit iu;
+    public final IInstallableUnit iu;
 
-    ILicense license;
+    public final ILicense license;
 
-    IUWithLicenseParent(ILicense license, IInstallableUnit iu)
+    public IUWithLicenseParent(ILicense license, IInstallableUnit iu)
     {
       this.license = license;
       this.iu = iu;
     }
   }
 
-  class LicenseContentProvider implements ITreeContentProvider
+  /**
+  * @author Eike Stepper
+  */
+  private final class LicenseContentProvider implements ITreeContentProvider
   {
-    public Object[] getChildren(Object parentElement)
+    public Object[] getChildren(Object element)
     {
-      if (!(parentElement instanceof ILicense))
+      if (element instanceof ILicense)
       {
-        return new Object[0];
+        if (licensesToIUs.containsKey(element))
+        {
+          List<IInstallableUnit> iusWithLicense = licensesToIUs.get(element);
+          IInstallableUnit[] ius = iusWithLicense.toArray(new IInstallableUnit[iusWithLicense.size()]);
+          IUWithLicenseParent[] children = new IUWithLicenseParent[ius.length];
+          for (int i = 0; i < ius.length; i++)
+          {
+            children[i] = new IUWithLicenseParent((ILicense)element, ius[i]);
+          }
+
+          return children;
+        }
       }
 
-      if (licensesToIUs.containsKey(parentElement))
-      {
-        List<IInstallableUnit> iusWithLicense = licensesToIUs.get(parentElement);
-        IInstallableUnit[] ius = iusWithLicense.toArray(new IInstallableUnit[iusWithLicense.size()]);
-        IUWithLicenseParent[] children = new IUWithLicenseParent[ius.length];
-        for (int i = 0; i < ius.length; i++)
-        {
-          children[i] = new IUWithLicenseParent((ILicense)parentElement, ius[i]);
-        }
-        return children;
-      }
-      return null;
+      return new Object[0];
     }
 
     public Object getParent(Object element)
@@ -320,6 +327,7 @@ public class LicenseDialog extends AbstractSetupDialog
       {
         return ((IUWithLicenseParent)element).license;
       }
+
       return null;
     }
 
@@ -344,7 +352,10 @@ public class LicenseDialog extends AbstractSetupDialog
     }
   }
 
-  class LicenseLabelProvider extends LabelProvider
+  /**
+   * @author Eike Stepper
+   */
+  private final class LicenseLabelProvider extends LabelProvider
   {
     @Override
     public Image getImage(Object element)
@@ -357,36 +368,20 @@ public class LicenseDialog extends AbstractSetupDialog
     {
       if (element instanceof License)
       {
-        return getFirstLine(((License)element).getBody());
+        return LicenseInfo.getFirstLine(((License)element).getBody());
       }
-      else if (element instanceof IUWithLicenseParent)
+
+      if (element instanceof IUWithLicenseParent)
       {
         return getIUName(((IUWithLicenseParent)element).iu);
       }
-      else if (element instanceof IInstallableUnit)
+
+      if (element instanceof IInstallableUnit)
       {
         return getIUName((IInstallableUnit)element);
       }
-      return ""; //$NON-NLS-1$
-    }
 
-    private String getFirstLine(String body)
-    {
-      int i = body.indexOf('\n');
-      int j = body.indexOf('\r');
-      if (i > 0)
-      {
-        if (j > 0)
-        {
-          return body.substring(0, i < j ? i : j);
-        }
-        return body.substring(0, i);
-      }
-      else if (j > 0)
-      {
-        return body.substring(0, j);
-      }
-      return body;
+      return ""; //$NON-NLS-1$
     }
   }
 }

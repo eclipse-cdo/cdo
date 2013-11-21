@@ -705,11 +705,11 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   protected VariableChoiceItemProvider variableChoiceItemProvider;
 
   /**
-  	 * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.VariableChoice}.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.VariableChoice}.
+   * <!-- begin-user-doc -->
+  * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Adapter createVariableChoiceAdapter()
   {
@@ -722,17 +722,17 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-  	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} instances.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   protected ResourceCreationTaskItemProvider resourceCreationTaskItemProvider;
 
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

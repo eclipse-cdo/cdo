@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
+import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
@@ -211,6 +212,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createExceptionFromString(eDataType, initialValue);
     case SetupPackage.URI:
       return createURIFromString(eDataType, initialValue);
+    case SetupPackage.LICENSE_INFO:
+      return createLicenseInfoFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -240,6 +243,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return convertExceptionToString(eDataType, instanceValue);
     case SetupPackage.URI:
       return convertURIToString(eDataType, instanceValue);
+    case SetupPackage.LICENSE_INFO:
+      return convertLicenseInfoToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -748,6 +753,26 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public LicenseInfo createLicenseInfoFromString(EDataType eDataType, String initialValue)
+  {
+    return (LicenseInfo)super.createFromString(eDataType, initialValue);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public String convertLicenseInfoToString(EDataType eDataType, Object instanceValue)
+  {
+    return super.convertToString(eDataType, instanceValue);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public Exception createExceptionFromString(EDataType eDataType, String initialValue)
   {
     return (Exception)super.createFromString(eDataType, initialValue);

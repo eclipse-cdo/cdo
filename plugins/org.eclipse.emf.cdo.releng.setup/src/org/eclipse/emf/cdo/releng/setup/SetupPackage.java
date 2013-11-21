@@ -2848,13 +2848,23 @@ public interface SetupPackage extends EPackage
   int URI = 45;
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
+   * The meta object id for the '<em>License Info</em>' data type.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Eclipse</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Eclipse
+   * @see org.eclipse.emf.cdo.releng.setup.LicenseInfo
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
+  int LICENSE_INFO = 46;
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Eclipse</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse
+  	 * @generated
+  	 */
   EClass getEclipse();
 
   /**
@@ -4310,14 +4320,25 @@ public interface SetupPackage extends EPackage
   EDataType getURI();
 
   /**
-   * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.releng.setup.LicenseInfo <em>License Info</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for data type '<em>Exception</em>'.
-   * @see java.lang.Exception
-   * @model instanceClass="java.lang.Exception"
+   * @return the meta object for data type '<em>License Info</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.LicenseInfo
+   * @model instanceClass="org.eclipse.emf.cdo.releng.setup.LicenseInfo"
    * @generated
    */
+  EDataType getLicenseInfo();
+
+  /**
+  	 * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for data type '<em>Exception</em>'.
+  	 * @see java.lang.Exception
+  	 * @model instanceClass="java.lang.Exception"
+  	 * @generated
+  	 */
   EDataType getException();
 
   /**
@@ -5524,13 +5545,23 @@ public interface SetupPackage extends EPackage
     EDataType URI = eINSTANCE.getURI();
 
     /**
-     * The meta object literal for the '<em>Exception</em>' data type.
+     * The meta object literal for the '<em>License Info</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see java.lang.Exception
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+     * @see org.eclipse.emf.cdo.releng.setup.LicenseInfo
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
      * @generated
      */
+    EDataType LICENSE_INFO = eINSTANCE.getLicenseInfo();
+
+    /**
+    	 * The meta object literal for the '<em>Exception</em>' data type.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @see java.lang.Exception
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+    	 * @generated
+    	 */
     EDataType EXCEPTION = eINSTANCE.getException();
 
     /**

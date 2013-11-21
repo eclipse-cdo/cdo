@@ -96,7 +96,12 @@ public class PromptDialog extends AbstractSetupDialog
         }
       }
     }
+  }
 
+  @Override
+  protected void createButtonsForButtonBar(Composite parent)
+  {
+    super.createButtonsForButtonBar(parent);
     validate();
   }
 
@@ -144,19 +149,22 @@ public class PromptDialog extends AbstractSetupDialog
   private void validate()
   {
     Button okButton = getButton(IDialogConstants.OK_ID);
-    for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+    if (okButton != null)
     {
-      for (ContextVariableTask variable : setupTaskPerformer.getUnresolvedVariables())
+      for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
       {
-        if (StringUtil.isEmpty(variable.getValue()))
+        for (ContextVariableTask variable : setupTaskPerformer.getUnresolvedVariables())
         {
-          okButton.setEnabled(false);
-          return;
+          if (StringUtil.isEmpty(variable.getValue()))
+          {
+            okButton.setEnabled(false);
+            return;
+          }
         }
       }
-    }
 
-    okButton.setEnabled(true);
+      okButton.setEnabled(true);
+    }
   }
 
   private static Font getFont(Control control, int height, int style)

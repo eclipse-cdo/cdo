@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
+import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
@@ -389,6 +390,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EDataType licenseInfoEDataType = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EDataType exceptionEDataType = null;
 
   /**
@@ -1822,6 +1830,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EDataType getLicenseInfo()
+  {
+    return licenseInfoEDataType;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EDataType getException()
   {
     return exceptionEDataType;
@@ -2049,6 +2067,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     triggerSetEDataType = createEDataType(TRIGGER_SET);
     exceptionEDataType = createEDataType(EXCEPTION);
     uriEDataType = createEDataType(URI);
+    licenseInfoEDataType = createEDataType(LICENSE_INFO);
   }
 
   /**
@@ -2166,7 +2185,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getPreferences_BundlePoolFolder(), ecorePackage.getEString(), "bundlePoolFolder", null, 0, 1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getPreferences_AcceptedLicenses(), ecorePackage.getEString(), "acceptedLicenses", null, 0, -1,
+    initEAttribute(getPreferences_AcceptedLicenses(), getLicenseInfo(), "acceptedLicenses", null, 0, -1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -2524,6 +2543,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEDataType(exceptionEDataType, Exception.class, "Exception", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,
         !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(licenseInfoEDataType, LicenseInfo.class, "LicenseInfo", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

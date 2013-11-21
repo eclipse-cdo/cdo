@@ -1042,6 +1042,13 @@
     <element xmi:type="ecore:EClass" href="setup.ecore#//VariableChoice"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SpGf0lHNEeOHYJ4TtnLuKg" x="1028" y="771" width="127"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_eY15oFJrEeOTGOIrxOZDlg" type="1004">
+    <children xmi:type="notation:Node" xmi:id="_eY15o1JrEeOTGOIrxOZDlg" type="4008"/>
+    <children xmi:type="notation:Node" xmi:id="_eY15pFJrEeOTGOIrxOZDlg" type="4009"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_eY15oVJrEeOTGOIrxOZDlg" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="8047085" lineColor="8421504"/>
+    <element xmi:type="ecore:EDataType" href="setup.ecore#//LicenseInfo"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_eY15olJrEeOTGOIrxOZDlg" x="710" y="15"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_u_e_seoIEeKpRf481yfX-g"/>
   <element xmi:type="ecore:EPackage" href="setup.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_4esFEOoIEeKpRf481yfX-g" type="3002" source="_zoytIOoIEeKpRf481yfX-g" target="_2Y42MOoIEeKpRf481yfX-g">

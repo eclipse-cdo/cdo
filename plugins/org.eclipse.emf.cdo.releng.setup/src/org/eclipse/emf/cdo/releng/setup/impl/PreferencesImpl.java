@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
@@ -86,7 +87,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * @generated
    * @ordered
    */
-  protected EList<String> acceptedLicenses;
+  protected EList<LicenseInfo> acceptedLicenses;
 
   /**
    * <!-- begin-user-doc -->
@@ -166,11 +167,11 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
        * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getAcceptedLicenses()
+  public EList<LicenseInfo> getAcceptedLicenses()
   {
     if (acceptedLicenses == null)
     {
-      acceptedLicenses = new EDataTypeUniqueEList<String>(String.class, this,
+      acceptedLicenses = new EDataTypeUniqueEList<LicenseInfo>(LicenseInfo.class, this,
           SetupPackage.PREFERENCES__ACCEPTED_LICENSES);
     }
     return acceptedLicenses;
@@ -215,7 +216,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
       return;
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       getAcceptedLicenses().clear();
-      getAcceptedLicenses().addAll((Collection<? extends String>)newValue);
+      getAcceptedLicenses().addAll((Collection<? extends LicenseInfo>)newValue);
       return;
     }
     super.eSet(featureID, newValue);

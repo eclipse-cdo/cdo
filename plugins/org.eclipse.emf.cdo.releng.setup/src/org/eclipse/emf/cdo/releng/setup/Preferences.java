@@ -94,7 +94,7 @@ public interface Preferences extends SetupTaskContainer
 
   /**
    * Returns the value of the '<em><b>Accepted Licenses</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.LicenseInfo}.
    * <!-- begin-user-doc -->
       	 * <p>
       	 * If the meaning of the '<em>Accepted Licenses</em>' attribute list isn't clear,
@@ -103,9 +103,9 @@ public interface Preferences extends SetupTaskContainer
       	 * <!-- end-user-doc -->
    * @return the value of the '<em>Accepted Licenses</em>' attribute list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_AcceptedLicenses()
-   * @model
+   * @model dataType="org.eclipse.emf.cdo.releng.setup.LicenseInfo"
    * @generated
    */
-  EList<String> getAcceptedLicenses();
+  EList<LicenseInfo> getAcceptedLicenses();
 
 } // Preferences

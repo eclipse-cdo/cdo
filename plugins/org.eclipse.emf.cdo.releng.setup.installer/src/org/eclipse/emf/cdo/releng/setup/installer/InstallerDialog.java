@@ -1383,7 +1383,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
     private AboutDialog(String version)
     {
-      super(InstallerDialog.this.getShell(), "About Development Evironment Installer", 600, 500, Activator.getDefault()
+      super(InstallerDialog.this.getShell(), "About Development Evironment Installer", 700, 500, Activator.getDefault()
           .getBundle());
       this.version = version;
     }

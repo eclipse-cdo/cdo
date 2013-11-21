@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright (c) 2012, 2013 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<feature
+      id="org.eclipse.emf.cdo.releng"
+      label="%featureName"
+      version="1.0.0.qualifier"
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="0.0.0">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
+      <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
+   </url>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.apireports"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.buildstamp"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.gitbash"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.help"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.launches"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.manifests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.preferences"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.projectconfig"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.projectcopy"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.relativepaths"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.setup.installer"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.tasks"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version.headless"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.winexplorer"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.workingsets"
+         version="0.0.0"/>
+
+</feature>

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
@@ -381,6 +382,23 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     return result;
+  }
+
+  @Override
+  public Object getOverrideToken()
+  {
+    return getClass();
+  }
+
+  @Override
+  public void overrideFor(SetupTask overriddenSetupTask)
+  {
+    super.overrideFor(overriddenSetupTask);
+
+    P2Task overriddenP2Task = (P2Task)overriddenSetupTask;
+
+    getInstallableUnits().addAll(overriddenP2Task.getInstallableUnits());
+    getP2Repositories().addAll(overriddenP2Task.getP2Repositories());
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception

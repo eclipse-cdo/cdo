@@ -143,11 +143,11 @@ public interface SetupTask extends EObject
   /**
    * Returns the value of the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
    * @return the value of the '<em>Disabled</em>' attribute.
    * @see #setDisabled(boolean)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetupTask_Disabled()
@@ -191,6 +191,8 @@ public interface SetupTask extends EObject
   Set<Trigger> getTriggers();
 
   Object getOverrideToken();
+
+  void overrideFor(SetupTask overriddensetupTask);
 
   boolean isNeeded(SetupTaskContext context) throws Exception;
 

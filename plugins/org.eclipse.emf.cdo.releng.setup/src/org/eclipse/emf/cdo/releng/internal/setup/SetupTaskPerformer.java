@@ -59,6 +59,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
@@ -428,7 +429,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private Map<SetupTask, SetupTask> getSubstitutions(EList<SetupTask> setupTasks)
   {
     Map<Object, SetupTask> overrides = new HashMap<Object, SetupTask>();
-    Map<SetupTask, SetupTask> substitutions = new HashMap<SetupTask, SetupTask>();
+    Map<SetupTask, SetupTask> substitutions = new LinkedHashMap<SetupTask, SetupTask>();
 
     for (SetupTask setupTask : setupTasks)
     {
@@ -437,24 +438,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       if (overriddenTask != null)
       {
         substitutions.put(overriddenTask, setupTask);
-      }
-    }
-
-    // Shorten the paths through the substitutions map
-    for (Map.Entry<SetupTask, SetupTask> entry : substitutions.entrySet())
-    {
-      SetupTask task = entry.getValue();
-
-      for (;;)
-      {
-        SetupTask overridingTask = substitutions.get(task);
-        if (overridingTask == null)
-        {
-          break;
-        }
-
-        entry.setValue(overridingTask);
-        task = overridingTask;
       }
     }
 
@@ -476,7 +459,27 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     EcoreUtil.Copier copier = new EcoreUtil.Copier();
     setup = (Setup)copier.copyAll(roots).iterator().next();
 
-    for (Map.Entry<SetupTask, SetupTask> entry : substitutions.entrySet())
+    // Shorten the paths through the substitutions map
+    Map<SetupTask, SetupTask> directSubstitutions = new HashMap<SetupTask, SetupTask>(substitutions);
+    for (Map.Entry<SetupTask, SetupTask> entry : directSubstitutions.entrySet())
+    {
+      SetupTask task = entry.getValue();
+
+      for (;;)
+      {
+        SetupTask overridingTask = directSubstitutions.get(task);
+        if (overridingTask == null)
+        {
+          break;
+        }
+
+        entry.setValue(overridingTask);
+        task = overridingTask;
+      }
+    }
+
+    HashMap<EObject, EObject> originalCopier = new HashMap<EObject, EObject>(copier);
+    for (Map.Entry<SetupTask, SetupTask> entry : directSubstitutions.entrySet())
     {
       SetupTask overriddenTask = entry.getKey();
       SetupTask overridingTask = entry.getValue();
@@ -507,6 +510,14 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       }
     }
 
+    // Perform override merging.
+    for (Map.Entry<SetupTask, SetupTask> entry : substitutions.entrySet())
+    {
+      SetupTask overriddenSetupTask = (SetupTask)originalCopier.get(entry.getKey());
+      SetupTask setupTask = (SetupTask)originalCopier.get(entry.getValue());
+      setupTask.overrideFor(overriddenSetupTask);
+    }
+
     // For each original resource, ensure that the copied resource contains the either the corresponding copies or
     // a placeholder object.
     //
@@ -530,7 +541,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     for (ListIterator<SetupTask> it = setupTasks.listIterator(); it.hasNext();)
     {
       SetupTask setupTask = it.next();
-      if (substitutions.containsKey(setupTask))
+      if (directSubstitutions.containsKey(setupTask))
       {
         it.remove();
       }

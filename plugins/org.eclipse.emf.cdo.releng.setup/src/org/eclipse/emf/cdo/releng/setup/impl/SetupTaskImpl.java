@@ -381,6 +381,12 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     return this;
   }
 
+  public void overrideFor(SetupTask overriddenSetupTask)
+  {
+    getRequirements().addAll(overriddenSetupTask.getRequirements());
+    getRestrictions().addAll(overriddenSetupTask.getRestrictions());
+  }
+
   /**
    * Subclasses may override to reset this task to its initial state.
    */

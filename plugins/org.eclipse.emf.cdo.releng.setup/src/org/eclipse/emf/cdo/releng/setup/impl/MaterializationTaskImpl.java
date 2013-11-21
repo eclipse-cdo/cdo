@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 
@@ -297,6 +298,23 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       return p2Repositories != null && !p2Repositories.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  @Override
+  public Object getOverrideToken()
+  {
+    return getClass();
+  }
+
+  @Override
+  public void overrideFor(SetupTask overriddenSetupTask)
+  {
+    super.overrideFor(overriddenSetupTask);
+
+    MaterializationTask overriddenMaterializationTask = (MaterializationTask)overriddenSetupTask;
+    getRootComponents().addAll(overriddenMaterializationTask.getRootComponents());
+    getSourceLocators().addAll(overriddenMaterializationTask.getSourceLocators());
+    getP2Repositories().addAll(overriddenMaterializationTask.getP2Repositories());
   }
 
   @Override

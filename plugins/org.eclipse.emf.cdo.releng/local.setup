@@ -31,17 +31,19 @@
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.pde/compilers.f.unresolved-features" value="2"/>
   <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo}" stringSubstitution="true"/>
+  <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the workspace for the self hosting setup IDE." name="launcher.setup.ide.ws" value="" stringSubstitution="true"/>
+  <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the shared target platform bundle pool used by Buckminster in the self hosting IDE." name="launcher.setup.ide.p2pool" value="${setup.install.dir/.p2pool-tp}" stringSubstitution="true"/>
   <setupTasks xsi:type="setup:WorkingSetTask">
     <workingSets name="CDO" id="CDO CDO">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.1 //@setupTasks.8/@workingSets.2 //@setupTasks.8/@workingSets.3 //@setupTasks.8/@workingSets.7 //@setupTasks.8/@workingSets.8 //@setupTasks.8/@workingSets.9"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.8 //@setupTasks.10/@workingSets.9"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Tests" id="CDO CDO Tests">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Examples" id="CDO CDO Examples">
@@ -50,25 +52,25 @@
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.examples.*"/>
           <operands xsi:type="predicates:NamePredicate" pattern="org\.gastro.*"/>
         </operands>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="CDO Dawn" id="CDO CDO Dawn">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Net4j" id="CDO Net4j">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.5 //@setupTasks.8/@workingSets.6 //@setupTasks.8/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.5 //@setupTasks.10/@workingSets.6 //@setupTasks.10/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Net4j DB" id="CDO Net4j DB">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.db.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Net4j Examples" id="CDO Net4j Examples">
@@ -78,7 +80,7 @@
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.buddies.*"/>
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.net4j\.jms.*"/>
         </operands>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="Features" id="CDO Features">
@@ -89,7 +91,7 @@
     <workingSets name="Releng" id="CDO Releng">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.8/@workingSets.7 //@setupTasks.8/@workingSets.9"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.9"/>
       </predicates>
     </workingSets>
     <workingSets name="Infrastructure" id="CDO Infrastructure">
@@ -106,18 +108,18 @@
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.prefix" value="/buglist.cgi?classification=Modeling&amp;product=EMF" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.components" value="component=cdo.core&amp;component=cdo.legacy&amp;component=cdo.dawn&amp;component=cdo.db&amp;component=cdo.docs&amp;component=cdo.hibernate&amp;component=cdo.net4j&amp;component=cdo.net4j.db&amp;component=cdo.net4j.ui&amp;component=cdo.objy&amp;component=cdo.releng&amp;component=cdo.ui" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.open" value="bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="0_REVIEWS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;query_format=advanced&amp;field0-0-0=flagtypes.name&amp;type0-0-0=equals&amp;value0-0-0=review%3F"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="1_BUGS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="2_FEATURES" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=enhancement"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="3_RESOLVED" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;bug_status=RESOLVED&amp;resolution=FIXED"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_Complete" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_Dawn" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.dawn&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_DB" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.db&amp;component=cdo.net4j.db&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_Hibernate" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.hibernate&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_Legacy" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_Releng" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.releng&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" summary="CDO_UI" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.9/@setupTasks.0" disabled="true" summary="TaskTable" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="0_REVIEWS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;query_format=advanced&amp;field0-0-0=flagtypes.name&amp;type0-0-0=equals&amp;value0-0-0=review%3F"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="1_BUGS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="2_FEATURES" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=enhancement"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="3_RESOLVED" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;bug_status=RESOLVED&amp;resolution=FIXED"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_Complete" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_Dawn" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.dawn&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_DB" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.db&amp;component=cdo.net4j.db&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_Hibernate" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.hibernate&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_Legacy" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_Releng" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.releng&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" summary="CDO_UI" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+    <setupTasks xsi:type="setup:MylynQueryTask" requirements="//@setupTasks.11/@setupTasks.0" disabled="true" summary="TaskTable" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
   </setupTasks>
   <branches name="master">
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.3" stringSubstitution="true"/>

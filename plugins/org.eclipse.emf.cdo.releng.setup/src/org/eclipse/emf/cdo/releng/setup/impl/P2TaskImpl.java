@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
@@ -659,10 +658,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void callDirectorApp(final SetupTaskContext context) throws Exception
   {
-    if (getScope() == SetupTaskScope.ECLIPSE)
-    {
-      FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
-    }
+    FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
 
     String destination = context.getEclipseDir().toString();
     final File p2PoolDir = context.getP2PoolDir();

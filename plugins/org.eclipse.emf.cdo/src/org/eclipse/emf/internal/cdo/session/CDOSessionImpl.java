@@ -1884,12 +1884,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         boolean success = commitInfo.getBranch() != null;
         if (success)
         {
+          oldRevisions = reviseRevisions();
+
           if (securityImpact != CommitNotificationInfo.IMPACT_NONE)
           {
             oldPermissions = updatePermissions(views);
           }
-
-          oldRevisions = reviseRevisions();
         }
 
         if (options.isPassiveUpdateEnabled()/* || sender != null */)
@@ -1965,7 +1965,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
               continue;
             }
 
-            if (revision != null)
+            if (revision != null && !commitInfo.getDetachedObjects().contains(CDOIDUtil.createIDAndVersion(revision)))
             {
               revisions.add(revision);
             }

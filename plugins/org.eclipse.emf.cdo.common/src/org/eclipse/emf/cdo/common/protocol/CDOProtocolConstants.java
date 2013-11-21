@@ -428,4 +428,12 @@ public interface CDOProtocolConstants
    * @since 4.3
    */
   public static final byte ROLLBACK_REASON_VALIDATION_ERROR = 5;
+
+  // //////////////////////////////////////////////////////////////////////
+  // Security
+
+  /**
+   * @since 4.3
+   */
+  public static final byte REVISION_DOES_NOT_EXIST = -1;
 }

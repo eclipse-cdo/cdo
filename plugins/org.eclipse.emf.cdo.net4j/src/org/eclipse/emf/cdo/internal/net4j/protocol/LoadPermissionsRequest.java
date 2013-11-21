@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -63,10 +63,14 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CD
     int length = revisions.length;
     for (int i = 0; i < length; i++)
     {
+      byte bits = in.readByte();
+      if (bits == CDOProtocolConstants.REVISION_DOES_NOT_EXIST)
+      {
+        continue;
+      }
+
       InternalCDORevision revision = revisions[i];
       CDOPermission oldPermission = revision.getPermission();
-
-      byte bits = in.readByte();
       CDOPermission newPermission = CDOPermission.get(bits);
 
       if (oldPermission != newPermission)

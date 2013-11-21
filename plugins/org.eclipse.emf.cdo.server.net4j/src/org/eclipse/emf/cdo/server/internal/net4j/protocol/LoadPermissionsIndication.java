@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -73,6 +73,10 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
       CDOPermission oldPermission = oldPermissions[i];
 
       InternalCDORevision revision = revisionManager.getRevision(id, head, 0, CDORevision.DEPTH_NONE, true);
+      if (revision == null)
+      {
+        out.writeByte(CDOProtocolConstants.REVISION_DOES_NOT_EXIST);
+      }
 
       CDOPermission newPermission = permissionManager.getPermission(revision, head, session);
       out.writeByte(newPermission.getBits());

@@ -104,7 +104,7 @@ import java.util.Set;
  */
 public class P2TaskImpl extends SetupTaskImpl implements P2Task
 {
-  private static final boolean SKIP = "true".equals(System.getProperty(P2Task.class.getName() + ".skip"));
+  private static final boolean SKIP = "true".equals(System.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
 
   /**
    * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.

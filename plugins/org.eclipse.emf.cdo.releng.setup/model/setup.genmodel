@@ -27,9 +27,25 @@
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/OSGI_BUNDLE"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/BUCKMINSTER"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="setup.ecore#//VariableType">
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/TEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/PASSWORD"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/PATTERN"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/URI"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/FILE"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/FOLDER"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/RESOURCE"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/CONTAINER"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/PROJECT"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/BOOLEAN"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/INTEGER"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/FLOAT"/>
+    </genEnums>
     <genDataTypes ecoreDataType="setup.ecore#//TriggerSet"/>
     <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
+    <genDataTypes ecoreDataType="setup.ecore#//LicenseInfo"/>
     <genClasses ecoreClass="setup.ecore#//Eclipse">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Eclipse/configuration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Eclipse/version"/>
@@ -50,9 +66,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/name"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Preferences">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/userName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/gitPrefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/bundlePoolFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/acceptedLicenses"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Setup">
@@ -67,7 +82,8 @@
       </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="setup.ecore#//SetupTask">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//SetupTask/requirements"/>
+      <genFeatures notify="false" createChild="false" propertyCategory="" propertySortChoices="true"
+          ecoreFeature="ecore:EReference setup.ecore#//SetupTask/requirements"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//SetupTask/restrictions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/disabled"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/scope"/>
@@ -84,6 +100,18 @@
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//CompoundSetupTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CompoundSetupTask/name"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/stringSubstitution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ContextVariableTask/choices"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//VariableChoice">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//VariableChoice/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//VariableChoice/label"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//EclipseIniTask" labelFeature="#//setup/EclipseIniTask/option">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipseIniTask/option"/>
@@ -135,11 +163,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/sourceURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/targetURL"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//ContextVariableTask">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ContextVariableTask/stringSubstitution"/>
-    </genClasses>
     <genClasses ecoreClass="setup.ecore#//ApiBaselineTask" labelFeature="#//setup/ApiBaselineTask/version">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/zipLocation"/>
@@ -148,6 +171,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/remoteName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/remoteURI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/userID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/checkoutBranch"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ProjectSetImportTask">

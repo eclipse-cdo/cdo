@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.edit.EMFEditPlugin;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.core.runtime.Plugin;
 
@@ -29,6 +31,9 @@ public final class EMFUtil extends Plugin
   public static final String EXAMPLE_URI = System.getProperty(SetupConstants.PROP_EXAMPLE_URI);
 
   public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
+
+  public static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
+      EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
 
   private EMFUtil()
   {

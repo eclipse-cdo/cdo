@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.installer;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.installer.editor.SetupEditorAdvisor;
 

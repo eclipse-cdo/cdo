@@ -541,7 +541,7 @@
           </copy>
 
           <mkdir dir="${zips}" />
-          <zip destfile="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.zip">
+          <zip destfile="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.zip" >
             <fileset dir="${temp.products}/@{profile}-@{platform}">
               <include name="**" />
             </fileset>

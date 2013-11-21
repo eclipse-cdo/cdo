@@ -8,13 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.installer;
+package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskMigrator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractSetupDialog;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
@@ -23,23 +21,16 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
-import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.provider.BranchItemProvider;
-import org.eclipse.emf.cdo.releng.setup.provider.ConfigurationItemProvider;
-import org.eclipse.emf.cdo.releng.setup.provider.ProjectItemProvider;
-import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -115,7 +106,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -140,8 +130,6 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private Map<Branch, Setup> setups;
 
-  private AdapterFactory adapterFactory;
-
   private ResourceSet resourceSet;
 
   private Preferences preferences;
@@ -163,7 +151,6 @@ public class InstallerDialog extends AbstractSetupDialog
     super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
         "/help/InstallerDialog.html");
     resourceSet = EMFUtil.createResourceSet();
-    adapterFactory = new SetupDialogAdapterFactory();
   }
 
   @Override
@@ -181,16 +168,26 @@ public class InstallerDialog extends AbstractSetupDialog
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory)
+    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
     {
       private Map<Object, Object> parentMap = new HashMap<Object, Object>();
 
       @Override
       public boolean hasChildren(Object object)
       {
+        if (object instanceof Configuration)
+        {
+          return !((Configuration)object).getProjects().isEmpty();
+        }
+
         if (object instanceof Project)
         {
           return true;
+        }
+
+        if (object instanceof Branch)
+        {
+          return false;
         }
 
         return super.hasChildren(object);
@@ -216,6 +213,12 @@ public class InstallerDialog extends AbstractSetupDialog
       @Override
       public Object[] getChildren(Object object)
       {
+        if (object instanceof Configuration)
+        {
+          EList<Project> projects = ((Configuration)object).getProjects();
+          return projects.toArray(new Project[projects.size()]);
+        }
+
         if (object instanceof Project)
         {
           final InternalEObject eObject = (InternalEObject)object;
@@ -236,7 +239,8 @@ public class InstallerDialog extends AbstractSetupDialog
                 projects.get(projects.indexOf(eObject));
 
                 final Project project = (Project)object;
-                Object[] children = super.getChildren(project);
+                Object[] children = project.getBranches().toArray();
+
                 for (Object child : children)
                 {
                   parentMap.put(child, eObject);
@@ -259,6 +263,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
                 return children;
               }
+
               object = resource.getEObject(eProxyURI.fragment());
             }
             catch (UpdatingException ex)
@@ -266,14 +271,28 @@ public class InstallerDialog extends AbstractSetupDialog
               // Ignore
             }
           }
+          else
+          {
+          }
+        }
+
+        if (object instanceof Project)
+        {
+          return ((Project)object).getBranches().toArray();
+        }
+
+        if (object instanceof Branch)
+        {
+          return new Object[0];
         }
 
         return super.getChildren(object);
       }
     };
+
     viewer.setContentProvider(contentProvider);
 
-    SetupDialogLabelProvider labelProvider = new SetupDialogLabelProvider(adapterFactory, viewer);
+    DialogLabelProvider labelProvider = new DialogLabelProvider(EMFUtil.ADAPTER_FACTORY, viewer);
     viewer.setLabelProvider(labelProvider);
     viewer.setCellModifier(new ICellModifier()
     {
@@ -334,7 +353,7 @@ public class InstallerDialog extends AbstractSetupDialog
     });
 
     viewer.setCellEditors(new CellEditor[] { null, cellEditor });
-    cellEditor.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+    cellEditor.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
 
     viewer.addCheckStateListener(new ICheckStateListener()
     {
@@ -376,38 +395,37 @@ public class InstallerDialog extends AbstractSetupDialog
     });
 
     TreeViewerColumn treeViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
-    treeViewerColumn.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new SetupDialogLabelDecorator()));
+    treeViewerColumn.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new DialogLabelDecorator()));
     TreeColumn trclmnProjectBranch = treeViewerColumn.getColumn();
     trclmnProjectBranch.setWidth(300);
     trclmnProjectBranch.setText("Project / Branch");
 
     TreeViewerColumn treeViewerColumn_1 = new TreeViewerColumn(viewer, SWT.NONE);
-    treeViewerColumn_1
-        .setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new SetupDialogLabelDecorator())
+    treeViewerColumn_1.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new DialogLabelDecorator())
+    {
+      @Override
+      public String getText(Object element)
+      {
+        if (element instanceof Branch)
         {
-          @Override
-          public String getText(Object element)
+          Branch branch = (Branch)element;
+          Setup setup = getSetup(branch);
+          if (setup != null)
           {
-            if (element instanceof Branch)
-            {
-              Branch branch = (Branch)element;
-              Setup setup = getSetup(branch);
-              if (setup != null)
-              {
-                Eclipse eclipse = setup.getEclipseVersion();
-                return labelProvider.getText(eclipse);
-              }
-            }
-
-            return "";
+            Eclipse eclipse = setup.getEclipseVersion();
+            return labelProvider.getText(eclipse);
           }
+        }
 
-          @Override
-          public Image getImage(Object element)
-          {
-            return null;
-          }
-        });
+        return "";
+      }
+
+      @Override
+      public Image getImage(Object element)
+      {
+        return null;
+      }
+    });
 
     TreeColumn eclipseVersionColumn = treeViewerColumn_1.getColumn();
     eclipseVersionColumn.setWidth(150);
@@ -1262,84 +1280,7 @@ public class InstallerDialog extends AbstractSetupDialog
   /**
    * @author Eike Stepper
    */
-  private final class SetupDialogAdapterFactory extends SetupItemProviderAdapterFactory
-  {
-    @Override
-    public Adapter createConfigurationAdapter()
-    {
-      if (configurationItemProvider == null)
-      {
-        configurationItemProvider = new ConfigurationItemProvider(this)
-        {
-          @Override
-          public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-          {
-            if (childrenFeatures == null)
-            {
-              childrenFeatures = new ArrayList<EStructuralFeature>();
-              childrenFeatures.add(SetupPackage.Literals.CONFIGURATION__PROJECTS);
-            }
-
-            return childrenFeatures;
-          }
-        };
-      }
-
-      return configurationItemProvider;
-    }
-
-    @Override
-    public Adapter createProjectAdapter()
-    {
-      if (projectItemProvider == null)
-      {
-        projectItemProvider = new ProjectItemProvider(this)
-        {
-          @Override
-          public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-          {
-            if (childrenFeatures == null)
-            {
-              childrenFeatures = new ArrayList<EStructuralFeature>();
-              childrenFeatures.add(SetupPackage.Literals.PROJECT__BRANCHES);
-            }
-
-            return childrenFeatures;
-          }
-        };
-      }
-
-      return projectItemProvider;
-    }
-
-    @Override
-    public Adapter createBranchAdapter()
-    {
-      if (branchItemProvider == null)
-      {
-        branchItemProvider = new BranchItemProvider(this)
-        {
-          @Override
-          public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-          {
-            if (childrenFeatures == null)
-            {
-              childrenFeatures = new ArrayList<EStructuralFeature>();
-            }
-
-            return childrenFeatures;
-          }
-        };
-      }
-
-      return branchItemProvider;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class SetupDialogLabelDecorator extends LabelProvider implements ILabelDecorator
+  private final class DialogLabelDecorator extends LabelProvider implements ILabelDecorator
   {
     public Image decorateImage(Image image, Object element)
     {
@@ -1355,9 +1296,9 @@ public class InstallerDialog extends AbstractSetupDialog
   /**
    * @author Eike Stepper
    */
-  private final class SetupDialogLabelProvider extends AdapterFactoryLabelProvider.ColorProvider
+  private final class DialogLabelProvider extends AdapterFactoryLabelProvider.ColorProvider
   {
-    private SetupDialogLabelProvider(AdapterFactory adapterFactory, Viewer viewer)
+    private DialogLabelProvider(AdapterFactory adapterFactory, Viewer viewer)
     {
       super(adapterFactory, viewer);
     }
@@ -1401,7 +1342,7 @@ public class InstallerDialog extends AbstractSetupDialog
       table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
       TableColumn idColumn = new TableColumn(table, SWT.NONE);
-      idColumn.setText("ID");
+      idColumn.setText("Installed Unit");
       idColumn.setWidth(400);
 
       TableColumn versionColumn = new TableColumn(table, SWT.NONE);

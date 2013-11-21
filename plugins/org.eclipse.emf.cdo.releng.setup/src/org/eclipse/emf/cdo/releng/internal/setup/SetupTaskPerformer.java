@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
@@ -39,8 +40,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.EMFEditPlugin;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -71,9 +70,6 @@ import java.util.Set;
  */
 public class SetupTaskPerformer extends AbstractSetupTaskContext
 {
-  private static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
-      EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
-
   private static final long serialVersionUID = 1L;
 
   private static ProgressLog progress;
@@ -458,6 +454,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         }
 
         entry.setValue(overridingTask);
+        task = overridingTask;
       }
     }
 
@@ -607,7 +604,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private static String getLabel(SetupTask setupTask)
   {
-    IItemLabelProvider labelProvider = (IItemLabelProvider)ADAPTER_FACTORY.adapt(setupTask, IItemLabelProvider.class);
+    IItemLabelProvider labelProvider = (IItemLabelProvider)EMFUtil.ADAPTER_FACTORY.adapt(setupTask,
+        IItemLabelProvider.class);
     String type;
     try
     {

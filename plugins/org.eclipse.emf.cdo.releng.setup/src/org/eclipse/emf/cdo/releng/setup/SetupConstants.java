@@ -45,6 +45,8 @@ public interface SetupConstants
 
   public static final String PROP_SETUP_SKIP = "org.eclipse.emf.cdo.releng.setup.skip";
 
+  public static final String PROP_P2_TASK_SKIP = "org.eclipse.emf.cdo.releng.setup.skip.p2";
+
   public static final String PROP_SETUP_URI = "setup.uri";
 
   public static final String PROP_EXAMPLE_URI = "example.uri";

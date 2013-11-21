@@ -90,7 +90,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
    * This adds a property descriptor for the Bundle Pool Folder feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void addBundlePoolFolderPropertyDescriptor(Object object)
   {
@@ -100,14 +100,14 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
         getString("_UI_Preferences_bundlePoolFolder_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePoolFolder_feature",
             "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__BUNDLE_POOL_FOLDER, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, SetupTaskItemProvider.EXPERT_FILTER));
   }
 
   /**
    * This adds a property descriptor for the Accepted Licenses feature.
    * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void addAcceptedLicensesPropertyDescriptor(Object object)
   {
@@ -117,7 +117,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
         getString("_UI_Preferences_acceptedLicenses_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Preferences_acceptedLicenses_feature",
             "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__ACCEPTED_LICENSES, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, SetupTaskItemProvider.EXPERT_FILTER));
   }
 
   /**

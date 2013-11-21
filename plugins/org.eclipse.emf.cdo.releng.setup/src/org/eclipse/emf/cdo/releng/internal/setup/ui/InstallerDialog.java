@@ -974,13 +974,19 @@ public class InstallerDialog extends AbstractSetupDialog
 
             for (int i = 0; i < configuredProjects.size(); i++)
             {
-              InternalEObject project = (InternalEObject)configuredProjects.basicGet(i);
+              Project project = configuredProjects.basicGet(i);
               if (project.eIsProxy())
               {
-                URI uri = project.eProxyURI().trimFragment();
+                URI uri = ((InternalEObject)project).eProxyURI().trimFragment();
                 if (uri.equals(EMFUtil.EXAMPLE_PROXY_URI))
                 {
-                  continue;
+                  if (resourceSet.getURIConverter().normalize(uri).equals(EMFUtil.EXAMPLE_PROXY_URI))
+                  {
+                    continue;
+                  }
+
+                  // Resolve the project if it's a replacement for the example project.
+                  project = configuredProjects.get(i);
                 }
               }
 

@@ -980,13 +980,19 @@ public class InstallerDialog extends AbstractSetupDialog
                 URI uri = ((InternalEObject)project).eProxyURI().trimFragment();
                 if (uri.equals(EMFUtil.EXAMPLE_PROXY_URI))
                 {
-                  if (resourceSet.getURIConverter().normalize(uri).equals(EMFUtil.EXAMPLE_PROXY_URI))
+                  URI redirectedURI = resourceSet.getURIConverter().normalize(uri);
+                  if (redirectedURI.equals(EMFUtil.EXAMPLE_PROXY_URI))
                   {
                     continue;
                   }
 
                   // Resolve the project if it's a replacement for the example project.
                   project = configuredProjects.get(i);
+                  Resource resource = project.eResource();
+                  if (resource != null && resource.getURI().equals(EMFUtil.EXAMPLE_PROXY_URI))
+                  {
+                    resource.setURI(redirectedURI);
+                  }
                 }
               }
 

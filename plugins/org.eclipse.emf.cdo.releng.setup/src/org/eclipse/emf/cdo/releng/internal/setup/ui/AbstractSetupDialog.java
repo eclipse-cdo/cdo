@@ -113,6 +113,7 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
   {
     Shell shell = getShell();
     shell.setText(SHELL_TEXT);
+
     setTitle(title);
     setTitleImage(getDefaultImage(getImagePath()));
     setMessage(getDefaultMessage());

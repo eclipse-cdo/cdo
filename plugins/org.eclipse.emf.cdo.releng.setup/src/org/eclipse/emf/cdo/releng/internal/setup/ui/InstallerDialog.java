@@ -27,6 +27,8 @@ import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.collection.Pair;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -711,7 +713,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     ProvisioningSession session = new ProvisioningSession(agent);
-    List<IInstallableUnit> ius = getInstalledUnits(session, PRODUCT_PREFIXES);
+    List<IInstallableUnit> ius = getInstalledUnits(session, PRODUCT_PREFIXES).getElement2();
 
     UpdateOperation operation = new UpdateOperation(session, ius);
     IStatus status = operation.resolveModal(sub.newChild(300));
@@ -744,7 +746,7 @@ public class InstallerDialog extends AbstractSetupDialog
     return status;
   }
 
-  private List<IInstallableUnit> getInstalledUnits(ProvisioningSession session, String... iuPrefixes)
+  private Pair<String, List<IInstallableUnit>> getInstalledUnits(ProvisioningSession session, String... iuPrefixes)
   {
     IProvisioningAgent agent = session.getProvisioningAgent();
     IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
@@ -769,7 +771,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     }
 
-    return ius;
+    return Pair.create(profile.getProfileId(), ius);
   }
 
   private boolean hasPrefix(String id, String[] iuPrefixes)
@@ -793,7 +795,13 @@ public class InstallerDialog extends AbstractSetupDialog
     try
     {
       ProvisioningSession session = new ProvisioningSession(agent);
-      List<IInstallableUnit> installedUnits = getInstalledUnits(session, PRODUCT_ID);
+      Pair<String, List<IInstallableUnit>> profileAndIUs = getInstalledUnits(session, PRODUCT_ID);
+      if ("SelfHostingProfile".equals(profileAndIUs.getElement1()))
+      {
+        return "Self Hosting";
+      }
+
+      List<IInstallableUnit> installedUnits = profileAndIUs.getElement2();
       if (installedUnits.isEmpty())
       {
         return null;
@@ -1357,7 +1365,7 @@ public class InstallerDialog extends AbstractSetupDialog
       try
       {
         ProvisioningSession session = new ProvisioningSession(agent);
-        List<IInstallableUnit> installedUnits = getInstalledUnits(session);
+        List<IInstallableUnit> installedUnits = getInstalledUnits(session).getElement2();
 
         String[][] rows = new String[installedUnits.size()][];
         for (int i = 0; i < rows.length; i++)

@@ -189,6 +189,7 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
       }
     });
 
+    shell.setActive();
     return area;
   }
 

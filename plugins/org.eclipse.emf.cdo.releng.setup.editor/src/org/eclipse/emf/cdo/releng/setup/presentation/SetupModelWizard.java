@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
@@ -47,6 +49,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -126,6 +129,8 @@ public class SetupModelWizard extends Wizard implements INewWizard
    */
   protected SetupModelWizardInitialObjectCreationPage initialObjectCreationPage;
 
+  protected SetupModelWizardInitialObjectCreationPage2 initialObjectCreationPage2;
+
   /**
    * Remember the selection during initialization for populating the default container.
    * <!-- begin-user-doc -->
@@ -196,13 +201,23 @@ public class SetupModelWizard extends Wizard implements INewWizard
    * Create a new model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected EObject createInitialModel()
   {
-    EClass eClass = (EClass)setupPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
-    EObject rootObject = setupFactory.create(eClass);
-    return rootObject;
+    Project project = SetupFactory.eINSTANCE.createProject();
+    project.setName(initialObjectCreationPage2.getProjectName());
+    project.setLabel(initialObjectCreationPage2.getProjectLabel());
+
+    Branch masterBranch = SetupFactory.eINSTANCE.createBranch();
+    masterBranch.setName("master");
+    project.getBranches().add(masterBranch);
+
+    Branch maintenanceBranch = SetupFactory.eINSTANCE.createBranch();
+    maintenanceBranch.setName("maintenance");
+    project.getBranches().add(maintenanceBranch);
+
+    return project;
   }
 
   /**
@@ -252,7 +267,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
             // Save the contents of the resource to the file system.
             //
             Map<Object, Object> options = new HashMap<Object, Object>();
-            options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
+            options.put(XMLResource.OPTION_ENCODING, "UTF-8");
             resource.save(options);
           }
           catch (Exception exception)
@@ -608,11 +623,128 @@ public class SetupModelWizard extends Wizard implements INewWizard
     }
   }
 
+  public class SetupModelWizardInitialObjectCreationPage2 extends WizardPage
+  {
+    protected Text nameField;
+
+    protected Text labelField;
+
+    public SetupModelWizardInitialObjectCreationPage2(String pageId)
+    {
+      super(pageId);
+    }
+
+    public void createControl(Composite parent)
+    {
+      Composite composite = new Composite(parent, SWT.NONE);
+      {
+        GridLayout layout = new GridLayout();
+        layout.numColumns = 1;
+        layout.verticalSpacing = 12;
+        composite.setLayout(layout);
+
+        GridData data = new GridData();
+        data.verticalAlignment = GridData.FILL;
+        data.grabExcessVerticalSpace = true;
+        data.horizontalAlignment = GridData.FILL;
+        composite.setLayoutData(data);
+      }
+
+      Label containerLabel = new Label(composite, SWT.LEFT);
+      {
+        containerLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Name_label"));
+
+        GridData data = new GridData();
+        data.horizontalAlignment = GridData.FILL;
+        containerLabel.setLayoutData(data);
+      }
+
+      nameField = new Text(composite, SWT.BORDER);
+      {
+        GridData data = new GridData();
+        data.horizontalAlignment = GridData.FILL;
+        data.grabExcessHorizontalSpace = true;
+        nameField.setLayoutData(data);
+      }
+
+      nameField.addModifyListener(validator);
+
+      Label labelLabel = new Label(composite, SWT.LEFT);
+      {
+        labelLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Label_label"));
+
+        GridData data = new GridData();
+        data.horizontalAlignment = GridData.FILL;
+        labelLabel.setLayoutData(data);
+      }
+
+      labelField = new Text(composite, SWT.BORDER);
+      {
+        GridData data = new GridData();
+        data.horizontalAlignment = GridData.FILL;
+        data.grabExcessHorizontalSpace = true;
+        labelField.setLayoutData(data);
+      }
+
+      initValues();
+
+      setPageComplete(validatePage());
+      setControl(composite);
+    }
+
+    private void initValues()
+    {
+    }
+
+    protected ModifyListener validator = new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        setPageComplete(validatePage());
+      }
+    };
+
+    protected boolean validatePage()
+    {
+      String projectName = getProjectName();
+      return projectName.length() != 0;
+    }
+
+    @Override
+    public void setVisible(boolean visible)
+    {
+      super.setVisible(visible);
+      if (visible && nameField.getText().length() == 0)
+      {
+        String fileName = newFileCreationPage.getModelFile().getName();
+        int lastDot = fileName.lastIndexOf('.');
+        if (lastDot != -1)
+        {
+          fileName = fileName.substring(0, lastDot);
+        }
+
+        nameField.setText(fileName);
+        nameField.selectAll();
+        nameField.setFocus();
+      }
+    }
+
+    public String getProjectName()
+    {
+      return nameField.getText();
+    }
+
+    public String getProjectLabel()
+    {
+      return labelField.getText();
+    }
+  }
+
   /**
    * The framework calls this to create the contents of the wizard.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void addPages()
@@ -664,11 +796,12 @@ public class SetupModelWizard extends Wizard implements INewWizard
         }
       }
     }
-    initialObjectCreationPage = new SetupModelWizardInitialObjectCreationPage("Whatever2");
-    initialObjectCreationPage.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
-    initialObjectCreationPage.setDescription(SetupEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description"));
-    addPage(initialObjectCreationPage);
+
+    initialObjectCreationPage2 = new SetupModelWizardInitialObjectCreationPage2("Whatever2");
+    initialObjectCreationPage2.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
+    initialObjectCreationPage2.setDescription(SetupEditorPlugin.INSTANCE
+        .getString("_UI_Wizard_initial_object_description2"));
+    addPage(initialObjectCreationPage2);
   }
 
   /**

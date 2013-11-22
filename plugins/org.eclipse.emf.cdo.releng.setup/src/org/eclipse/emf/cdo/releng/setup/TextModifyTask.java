@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getURL <em>URL</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getModifications <em>Modifications</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getEncoding <em>Encoding</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,31 @@ public interface TextModifyTask extends SetupTask
    * @generated
    */
   EList<TextModification> getModifications();
+
+  /**
+   * Returns the value of the '<em><b>Encoding</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Encoding</em>' attribute isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+   * @return the value of the '<em>Encoding</em>' attribute.
+   * @see #setEncoding(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModifyTask_Encoding()
+   * @model
+   * @generated
+   */
+  String getEncoding();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getEncoding <em>Encoding</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Encoding</em>' attribute.
+   * @see #getEncoding()
+   * @generated
+   */
+  void setEncoding(String value);
 
 } // TextModifyTask

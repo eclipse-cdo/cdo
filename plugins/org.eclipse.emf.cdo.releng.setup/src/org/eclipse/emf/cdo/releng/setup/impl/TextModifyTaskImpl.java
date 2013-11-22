@@ -18,13 +18,20 @@ import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.ContentHandler;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +42,7 @@ import java.util.Collection;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl#getURL <em>URL</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl#getModifications <em>Modifications</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl#getEncoding <em>Encoding</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,8 +81,28 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
   protected EList<TextModification> modifications;
 
   /**
+   * The default value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getEncoding()
+   * @generated
+   * @ordered
+   */
+  protected static final String ENCODING_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @see #getEncoding()
+   * @generated
+   * @ordered
+   */
+  protected String encoding = ENCODING_EDEFAULT;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected TextModifyTaskImpl()
@@ -138,6 +166,32 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getEncoding()
+  {
+    return encoding;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEncoding(String newEncoding)
+  {
+    String oldEncoding = encoding;
+    encoding = newEncoding;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TEXT_MODIFY_TASK__ENCODING, oldEncoding,
+          encoding));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -163,6 +217,8 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
       return getURL();
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       return getModifications();
+    case SetupPackage.TEXT_MODIFY_TASK__ENCODING:
+      return getEncoding();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -185,6 +241,9 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
       getModifications().clear();
       getModifications().addAll((Collection<? extends TextModification>)newValue);
       return;
+    case SetupPackage.TEXT_MODIFY_TASK__ENCODING:
+      setEncoding((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -205,6 +264,9 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       getModifications().clear();
       return;
+    case SetupPackage.TEXT_MODIFY_TASK__ENCODING:
+      setEncoding(ENCODING_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -223,6 +285,8 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
       return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
     case SetupPackage.TEXT_MODIFY_TASK__MODIFICATIONS:
       return modifications != null && !modifications.isEmpty();
+    case SetupPackage.TEXT_MODIFY_TASK__ENCODING:
+      return ENCODING_EDEFAULT == null ? encoding != null : !ENCODING_EDEFAULT.equals(encoding);
     }
     return super.eIsSet(featureID);
   }
@@ -243,14 +307,29 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (uRL: ");
     result.append(uRL);
+    result.append(", encoding: ");
+    result.append(encoding);
     result.append(')');
     return result.toString();
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    // TODO
-    throw new UnsupportedOperationException();
+    URI uri = context.redirect(URI.createURI(getURL()));
+    try
+    {
+      InputStream inputStream = URIConverter.INSTANCE.createInputStream(uri);
+      Map<String, ?> contentDescription = URIConverter.INSTANCE.contentDescription(
+          uri,
+          Collections.singletonMap(ContentHandler.OPTION_REQUESTED_PROPERTIES,
+              Collections.singleton(ContentHandler.CONTENT_TYPE_PROPERTY)));
+      String charset = (String)contentDescription.get(ContentHandler.CHARSET_PROPERTY);
+      return false;
+    }
+    catch (IOException exception)
+    {
+      return true;
+    }
   }
 
   public void perform(SetupTaskContext context) throws Exception

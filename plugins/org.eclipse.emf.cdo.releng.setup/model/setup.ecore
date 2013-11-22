@@ -7,7 +7,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Configuration">
+  <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//SetupTaskContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" lowerBound="1"
         upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"
         eKeys="#//Project/name"/>
@@ -216,6 +216,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modifications" upperBound="-1"
         eType="#//TextModification" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TextModification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" lowerBound="1"
@@ -266,10 +267,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
     <eLiterals name="None"/>
-    <eLiterals name="Eclipse" value="1" literal="Eclipse"/>
-    <eLiterals name="Project" value="2"/>
-    <eLiterals name="Branch" value="3"/>
-    <eLiterals name="User" value="4"/>
+    <eLiterals name="Eclipse" value="2" literal="Eclipse"/>
+    <eLiterals name="Project" value="3"/>
+    <eLiterals name="Branch" value="4"/>
+    <eLiterals name="User" value="5"/>
+    <eLiterals name="Configuration" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Trigger">
     <eLiterals name="BOOTSTRAP"/>
@@ -300,4 +302,10 @@
     <eLiterals name="FLOAT" value="12"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="LicenseInfo" instanceClassName="org.eclipse.emf.cdo.releng.setup.LicenseInfo"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JRETask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

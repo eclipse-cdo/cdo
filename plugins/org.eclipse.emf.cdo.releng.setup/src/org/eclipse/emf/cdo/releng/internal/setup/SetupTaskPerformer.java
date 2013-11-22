@@ -289,8 +289,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     if (!unresolvedSettings.isEmpty())
     {
+      Set<String> undeclaredKeys = new HashSet<String>();
       for (String key : keys)
       {
+        boolean found = false;
         for (SetupTask setupTask : orderedSetupTasks)
         {
           if (setupTask instanceof ContextVariableTask)
@@ -299,9 +301,21 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
             if (key.equals(contextVariableTask.getName()))
             {
               unresolvedVariables.add(contextVariableTask);
+              found = true;
+              break;
             }
           }
         }
+
+        if (!found)
+        {
+          undeclaredKeys.add(key);
+        }
+      }
+
+      if (!undeclaredKeys.isEmpty())
+      {
+        throw new RuntimeException("Missing variables for " + keys);
       }
     }
   }

@@ -217,6 +217,11 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
 
               continue;
             }
+
+            case CONFIGURATION:
+            {
+              continue;
+            }
             }
 
             it.remove();

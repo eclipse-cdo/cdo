@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.JRETask;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
@@ -222,6 +223,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass jreTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass targetPlatformTaskEClass = null;
 
   /**
@@ -393,10 +401,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EDataType licenseInfoEDataType = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EDataType exceptionEDataType = null;
 
   /**
@@ -997,7 +1005,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTextModifyTask_Encoding()
+  {
+    return (EAttribute)textModifyTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
    * @generated
    */
   public EClass getTextModification()
@@ -1208,6 +1226,36 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getJRETask()
+  {
+    return jreTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getJRETask_Version()
+  {
+    return (EAttribute)jreTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getJRETask_Location()
+  {
+    return (EAttribute)jreTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public EClass getTargetPlatformTask()
@@ -1836,10 +1884,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EDataType getException()
   {
     return exceptionEDataType;
@@ -2030,6 +2078,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     textModifyTaskEClass = createEClass(TEXT_MODIFY_TASK);
     createEAttribute(textModifyTaskEClass, TEXT_MODIFY_TASK__URL);
     createEReference(textModifyTaskEClass, TEXT_MODIFY_TASK__MODIFICATIONS);
+    createEAttribute(textModifyTaskEClass, TEXT_MODIFY_TASK__ENCODING);
 
     textModificationEClass = createEClass(TEXT_MODIFICATION);
     createEAttribute(textModificationEClass, TEXT_MODIFICATION__PATTERN);
@@ -2056,6 +2105,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__SUMMARY);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__REPOSITORY_URL);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__RELATIVE_URL);
+
+    jreTaskEClass = createEClass(JRE_TASK);
+    createEAttribute(jreTaskEClass, JRE_TASK__VERSION);
+    createEAttribute(jreTaskEClass, JRE_TASK__LOCATION);
 
     // Create enums
     setupTaskScopeEEnum = createEEnum(SETUP_TASK_SCOPE);
@@ -2107,6 +2160,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     // Add supertypes to classes
     eclipseEClass.getESuperTypes().add(getConfigurableItem());
+    configurationEClass.getESuperTypes().add(getSetupTaskContainer());
     configurableItemEClass.getESuperTypes().add(getSetupTaskContainer());
     projectEClass.getESuperTypes().add(getConfigurableItem());
     branchEClass.getESuperTypes().add(getConfigurableItem());
@@ -2134,6 +2188,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     textModifyTaskEClass.getESuperTypes().add(getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
     mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
+    jreTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
     initEClass(eclipseEClass, Eclipse.class, "Eclipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2446,6 +2501,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getTextModifyTask_Modifications(), getTextModification(), null, "modifications", null, 0, -1,
         TextModifyTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTextModifyTask_Encoding(), ecorePackage.getEString(), "encoding", null, 0, 1,
+        TextModifyTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(textModificationEClass, TextModification.class, "TextModification", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2504,6 +2562,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    initEClass(jreTaskEClass, JRETask.class, "JRETask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJRETask_Version(), ecorePackage.getEString(), "version", null, 1, 1, JRETask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJRETask_Location(), ecorePackage.getEString(), "location", null, 1, 1, JRETask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     // Initialize enums and add enum literals
     initEEnum(setupTaskScopeEEnum, SetupTaskScope.class, "SetupTaskScope");
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.NONE);
@@ -2511,6 +2575,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.PROJECT);
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.BRANCH);
     addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.USER);
+    addEEnumLiteral(setupTaskScopeEEnum, SetupTaskScope.CONFIGURATION);
 
     initEEnum(triggerEEnum, Trigger.class, "Trigger");
     addEEnumLiteral(triggerEEnum, Trigger.BOOTSTRAP);

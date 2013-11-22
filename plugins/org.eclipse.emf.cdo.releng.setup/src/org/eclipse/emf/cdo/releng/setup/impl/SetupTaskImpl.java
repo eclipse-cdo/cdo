@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -278,6 +279,11 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   private SetupTaskScope getScope(EObject object)
   {
     if (object instanceof Configuration)
+    {
+      return SetupTaskScope.CONFIGURATION;
+    }
+
+    if (object instanceof Eclipse)
     {
       return SetupTaskScope.ECLIPSE;
     }

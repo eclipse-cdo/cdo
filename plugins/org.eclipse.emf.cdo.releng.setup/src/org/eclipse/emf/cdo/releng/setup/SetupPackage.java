@@ -280,13 +280,22 @@ public interface SetupPackage extends EPackage
   int ECLIPSE_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIGURATION__SETUP_TASKS = SETUP_TASK_CONTAINER__SETUP_TASKS;
+
+  /**
    * The feature id for the '<em><b>Projects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIGURATION__PROJECTS = 0;
+  int CONFIGURATION__PROJECTS = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Eclipse Versions</b></em>' containment reference list.
@@ -295,7 +304,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION__ECLIPSE_VERSIONS = 1;
+  int CONFIGURATION__ECLIPSE_VERSIONS = SETUP_TASK_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Configuration</em>' class.
@@ -304,7 +313,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION_FEATURE_COUNT = 2;
+  int CONFIGURATION_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -2492,13 +2501,22 @@ public interface SetupPackage extends EPackage
   int TEXT_MODIFY_TASK__MODIFICATIONS = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Text Modify Task</em>' class.
+   * The feature id for the '<em><b>Encoding</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TEXT_MODIFY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+  int TEXT_MODIFY_TASK__ENCODING = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Text Modify Task</em>' class.
+   * <!-- begin-user-doc -->
+          	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_MODIFY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' attribute.
@@ -2798,14 +2816,105 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
+   * @generated
+   */
+  int JRE_TASK = 39;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Version</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__VERSION = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK__LOCATION = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>JRE Task</em>' class.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JRE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
    * <!-- begin-user-doc -->
-                       * <!-- end-user-doc -->
+                         * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 39;
+  int SETUP_TASK_SCOPE = 40;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -2815,7 +2924,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 40;
+  int TRIGGER = 41;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -2825,7 +2934,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 41;
+  int COMPONENT_TYPE = 42;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -2835,7 +2944,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 42;
+  int VARIABLE_TYPE = 43;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -2845,7 +2954,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 45;
+  int URI = 46;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -2855,16 +2964,16 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 46;
+  int LICENSE_INFO = 47;
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Eclipse</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Eclipse</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse
+   * @generated
+   */
   EClass getEclipse();
 
   /**
@@ -2897,7 +3006,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 44;
+  int EXCEPTION = 45;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -2907,7 +3016,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 43;
+  int TRIGGER_SET = 44;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -3435,9 +3544,20 @@ public interface SetupPackage extends EPackage
   EReference getTextModifyTask_Modifications();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getEncoding <em>Encoding</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Encoding</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask#getEncoding()
+   * @see #getTextModifyTask()
+   * @generated
+   */
+  EAttribute getTextModifyTask_Encoding();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TextModification <em>Text Modification</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
    * @return the meta object for class '<em>Text Modification</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModification
    * @generated
@@ -3661,9 +3781,41 @@ public interface SetupPackage extends EPackage
   EAttribute getMylynQueryTask_RelativeURL();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.JRETask <em>JRE Task</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return the meta object for class '<em>JRE Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.JRETask
+   * @generated
+   */
+  EClass getJRETask();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.JRETask#getVersion <em>Version</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Version</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.JRETask#getVersion()
+   * @see #getJRETask()
+   * @generated
+   */
+  EAttribute getJRETask_Version();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.JRETask#getLocation <em>Location</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Location</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.JRETask#getLocation()
+   * @see #getJRETask()
+   * @generated
+   */
+  EAttribute getJRETask_Location();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return the meta object for class '<em>Target Platform Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask
    * @generated
@@ -4331,14 +4483,14 @@ public interface SetupPackage extends EPackage
   EDataType getLicenseInfo();
 
   /**
-  	 * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for data type '<em>Exception</em>'.
-  	 * @see java.lang.Exception
-  	 * @model instanceClass="java.lang.Exception"
-  	 * @generated
-  	 */
+   * @return the meta object for data type '<em>Exception</em>'.
+   * @see java.lang.Exception
+   * @model instanceClass="java.lang.Exception"
+   * @generated
+   */
   EDataType getException();
 
   /**
@@ -4823,9 +4975,17 @@ public interface SetupPackage extends EPackage
     EReference TEXT_MODIFY_TASK__MODIFICATIONS = eINSTANCE.getTextModifyTask_Modifications();
 
     /**
+     * The meta object literal for the '<em><b>Encoding</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TEXT_MODIFY_TASK__ENCODING = eINSTANCE.getTextModifyTask_Encoding();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+      	 * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
      * @generated
@@ -5001,9 +5161,35 @@ public interface SetupPackage extends EPackage
     EAttribute MYLYN_QUERY_TASK__RELATIVE_URL = eINSTANCE.getMylynQueryTask_RelativeURL();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
+     * @generated
+     */
+    EClass JRE_TASK = eINSTANCE.getJRETask();
+
+    /**
+     * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JRE_TASK__VERSION = eINSTANCE.getJRETask_Version();
+
+    /**
+     * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+    	 * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JRE_TASK__LOCATION = eINSTANCE.getJRETask_Location();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
+     * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
      * @generated
@@ -5555,13 +5741,13 @@ public interface SetupPackage extends EPackage
     EDataType LICENSE_INFO = eINSTANCE.getLicenseInfo();
 
     /**
-    	 * The meta object literal for the '<em>Exception</em>' data type.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em>Exception</em>' data type.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @see java.lang.Exception
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
-    	 * @generated
-    	 */
+     * @see java.lang.Exception
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+     * @generated
+     */
     EDataType EXCEPTION = eINSTANCE.getException();
 
     /**

@@ -572,9 +572,34 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.JRETask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  protected JRETaskItemProvider jreTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.JRETask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createJRETaskAdapter()
+  {
+    if (jreTaskItemProvider == null)
+    {
+      jreTaskItemProvider = new JRETaskItemProvider(this);
+    }
+
+    return jreTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask} instances.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   protected TargetPlatformTaskItemProvider targetPlatformTaskItemProvider;
@@ -1222,6 +1247,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (mylynQueryTaskItemProvider != null)
     {
       mylynQueryTaskItemProvider.dispose();
+    }
+    if (jreTaskItemProvider != null)
+    {
+      jreTaskItemProvider.dispose();
     }
   }
 

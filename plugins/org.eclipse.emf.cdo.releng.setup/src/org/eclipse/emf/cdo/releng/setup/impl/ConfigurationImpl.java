@@ -19,7 +19,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -39,7 +38,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class ConfigurationImpl extends MinimalEObjectImpl.Container implements Configuration
+public class ConfigurationImpl extends SetupTaskContainerImpl implements Configuration
 {
   /**
    * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.

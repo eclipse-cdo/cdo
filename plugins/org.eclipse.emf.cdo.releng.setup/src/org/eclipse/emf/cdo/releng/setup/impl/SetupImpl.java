@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
+import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -252,15 +253,15 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     EList<SetupTask> setupTasks = new BasicEList<SetupTask>();
 
     Eclipse eclipse = getEclipseVersion();
-    getSetupTasks(filterRestrictions, trigger, setupTasks, eclipse);
-
+    Configuration configuration = eclipse.getConfiguration();
     Project project = branch.getProject();
-    getSetupTasks(filterRestrictions, trigger, setupTasks, project);
-
     Branch branch = getBranch();
-    getSetupTasks(filterRestrictions, trigger, setupTasks, branch);
-
     Preferences preferences = getPreferences();
+
+    getSetupTasks(filterRestrictions, trigger, setupTasks, configuration);
+    getSetupTasks(filterRestrictions, trigger, setupTasks, eclipse);
+    getSetupTasks(filterRestrictions, trigger, setupTasks, project);
+    getSetupTasks(filterRestrictions, trigger, setupTasks, branch);
     getSetupTasks(filterRestrictions, trigger, setupTasks, preferences);
 
     return setupTasks;

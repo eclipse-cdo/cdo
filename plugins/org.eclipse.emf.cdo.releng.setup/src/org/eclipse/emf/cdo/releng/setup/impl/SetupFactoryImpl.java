@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.JRETask;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
@@ -183,6 +184,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createCommandParameter();
     case SetupPackage.MYLYN_QUERY_TASK:
       return createMylynQueryTask();
+    case SetupPackage.JRE_TASK:
+      return createJRETask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -462,6 +465,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public JRETask createJRETask()
+  {
+    JRETaskImpl jreTask = new JRETaskImpl();
+    return jreTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public TargetPlatformTask createTargetPlatformTask()
@@ -759,20 +773,20 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public String convertLicenseInfoToString(EDataType eDataType, Object instanceValue)
   {
     return super.convertToString(eDataType, instanceValue);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public Exception createExceptionFromString(EDataType eDataType, String initialValue)
   {
     return (Exception)super.createFromString(eDataType, initialValue);

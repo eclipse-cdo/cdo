@@ -45,7 +45,7 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  ECLIPSE(1, "Eclipse", "Eclipse"), /**
+  ECLIPSE(2, "Eclipse", "Eclipse"), /**
                                     * The '<em><b>Project</b></em>' literal object.
                                     * <!-- begin-user-doc -->
                                     * <!-- end-user-doc -->
@@ -53,7 +53,7 @@ public enum SetupTaskScope implements Enumerator
                                     * @generated
                                     * @ordered
                                     */
-  PROJECT(2, "Project", "Project"),
+  PROJECT(3, "Project", "Project"),
 
   /**
    * The '<em><b>Branch</b></em>' literal object.
@@ -63,7 +63,7 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  BRANCH(3, "Branch", "Branch"),
+  BRANCH(4, "Branch", "Branch"),
 
   /**
    * The '<em><b>User</b></em>' literal object.
@@ -73,7 +73,15 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  USER(4, "User", "User");
+  USER(5, "User", "User"), /**
+                           * The '<em><b>Configuration</b></em>' literal object.
+                           * <!-- begin-user-doc -->
+                           * <!-- end-user-doc -->
+                           * @see #CONFIGURATION_VALUE
+                           * @generated
+                           * @ordered
+                           */
+  CONFIGURATION(1, "Configuration", "Configuration");
 
   /**
    * The '<em><b>None</b></em>' literal value.
@@ -103,7 +111,7 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int ECLIPSE_VALUE = 1;
+  public static final int ECLIPSE_VALUE = 2;
 
   /**
    * The '<em><b>Project</b></em>' literal value.
@@ -118,7 +126,7 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int PROJECT_VALUE = 2;
+  public static final int PROJECT_VALUE = 3;
 
   /**
    * The '<em><b>Branch</b></em>' literal value.
@@ -133,7 +141,7 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int BRANCH_VALUE = 3;
+  public static final int BRANCH_VALUE = 4;
 
   /**
    * The '<em><b>User</b></em>' literal value.
@@ -148,15 +156,31 @@ public enum SetupTaskScope implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int USER_VALUE = 4;
+  public static final int USER_VALUE = 5;
 
   /**
-   * An array of all the '<em><b>Task Scope</b></em>' enumerators.
+   * The '<em><b>Configuration</b></em>' literal value.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>Configuration</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
+   * @see #CONFIGURATION
+   * @model name="Configuration"
    * @generated
+   * @ordered
    */
-  private static final SetupTaskScope[] VALUES_ARRAY = new SetupTaskScope[] { NONE, ECLIPSE, PROJECT, BRANCH, USER, };
+  public static final int CONFIGURATION_VALUE = 1;
+
+  /**
+  	 * An array of all the '<em><b>Task Scope</b></em>' enumerators.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  private static final SetupTaskScope[] VALUES_ARRAY = new SetupTaskScope[] { NONE, ECLIPSE, PROJECT, BRANCH, USER,
+      CONFIGURATION, };
 
   /**
    * A public read-only list of all the '<em><b>Task Scope</b></em>' enumerators.
@@ -224,6 +248,8 @@ public enum SetupTaskScope implements Enumerator
       return BRANCH;
     case USER_VALUE:
       return USER;
+    case CONFIGURATION_VALUE:
+      return CONFIGURATION;
     }
     return null;
   }

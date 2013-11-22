@@ -522,6 +522,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         return true;
       }
 
+      if (workDir.list().length > 1)
+      {
+        return false;
+      }
+
       context.log("Opening Git clone " + workDir);
 
       Git git = Git.open(workDir);

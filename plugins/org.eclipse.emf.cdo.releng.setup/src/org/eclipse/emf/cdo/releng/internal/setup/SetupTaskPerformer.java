@@ -315,7 +315,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
       if (!undeclaredKeys.isEmpty())
       {
-        throw new RuntimeException("Missing variables for " + keys);
+        throw new RuntimeException("Missing variables for " + undeclaredKeys);
       }
     }
   }

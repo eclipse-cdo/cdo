@@ -431,7 +431,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
       Locator buckminsterLocator = RmapFactory.eINSTANCE.createLocator();
       buckminsterLocator.setSearchPath(buckminsterSearchPath);
-      buckminsterLocator.setPattern(Pattern.compile("\\.buckminster"));
+      buckminsterLocator.setPattern(exactPattern(".buckminster"));
       buckminsterLocator.setFailOnError(true);
       matchers.add(buckminsterLocator);
       rmap.getSearchPaths().add(buckminsterSearchPath);
@@ -534,7 +534,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           }
 
           Locator locator = RmapFactory.eINSTANCE.createLocator();
-          locator.setPattern(Pattern.compile("^" + Pattern.quote(componentName) + "$"));
+          locator.setPattern(exactPattern(componentName));
 
           locator.setSearchPath(sourceSearchPath);
           locator.setFailOnError(true);
@@ -577,17 +577,9 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       return mspecURI.toString();
     }
 
-    private static class ComponentLocation
+    private static Pattern exactPattern(String componentName)
     {
-      public ComponentType componentType;
-
-      public String location;
-
-      public ComponentLocation(ComponentType componentType, String location)
-      {
-        this.componentType = componentType;
-        this.location = location;
-      }
+      return Pattern.compile("^" + Pattern.quote(componentName) + "$");
     }
 
     private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
@@ -692,6 +684,22 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     {
       Document document = documentBuilder.parse(file);
       return document.getDocumentElement();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static class ComponentLocation
+    {
+      public ComponentType componentType;
+
+      public String location;
+
+      public ComponentLocation(ComponentType componentType, String location)
+      {
+        this.componentType = componentType;
+        this.location = location;
+      }
     }
   }
 } // MaterializationTaskImpl

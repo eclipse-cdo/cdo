@@ -27,11 +27,11 @@
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
     <setupTasks xsi:type="setup:MaterializationTask" targetPlatform="${setup.branch.dir/tp}">
       <rootComponents name="org.eclipse.emf.cdo.releng.all"/>
-      <rootComponents name="org.eclipse.emf.sdk.feature.group"/>
-      <rootComponents name="org.eclipse.net4j.util.ui.feature.group"/>
-      <rootComponents name="org.eclipse.egit.feature.group"/>
-      <rootComponents name="org.eclipse.buckminster.core.feature.feature.group"/>
-      <rootComponents name="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
+      <rootComponents name="org.eclipse.emf.sdk"/>
+      <rootComponents name="org.eclipse.net4j.util.ui"/>
+      <rootComponents name="org.eclipse.egit"/>
+      <rootComponents name="org.eclipse.buckminster.core.feature"/>
+      <rootComponents name="org.eclipse.pde.api.tools.ee.feature"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${git.clone}"/>
       <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
       <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<setup:Project setup:toolVersion="1" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" xmlns:workingsets="http://www.eclipse.org/CDO/releng/workingsets/1.0" name="CDO">
+<setup:Project setup:toolVersion="1" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" xmlns:workingsets="http://www.eclipse.org/CDO/releng/workingsets/1.0" name="cdo" label="CDO Model Repository">
   <setupTasks xsi:type="setup:P2Task">
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
@@ -133,7 +133,7 @@
     </setupTasks>
     <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master" name="cdo"/>
-    <setupTasks xsi:type="setup:BuckminsterImportTask" targetPlatform="${setup.branch.dir/tp}" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
+    <setupTasks xsi:type="setup:BuckminsterImportTask" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
   </branches>
   <branches name="4.2">
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.2" stringSubstitution="true"/>
@@ -146,6 +146,6 @@
     </setupTasks>
     <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="streams/4.2-maintenance" name="cdo"/>
-    <setupTasks xsi:type="setup:BuckminsterImportTask" targetPlatform="${setup.branch.dir/tp}" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
+    <setupTasks xsi:type="setup:BuckminsterImportTask" mspec="${setup.branch.dir|uri}/git/cdo/plugins/org.eclipse.emf.cdo.releng/local.mspec"/>
   </branches>
 </setup:Project>

@@ -10,7 +10,7 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.releng"
+      id="org.eclipse.emf.cdo.releng.all"
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"

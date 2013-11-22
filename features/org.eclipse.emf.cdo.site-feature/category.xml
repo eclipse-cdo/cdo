@@ -56,7 +56,7 @@
 	<feature id="org.eclipse.net4j.util.ui" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
 
 	<!-- Release Engineering -->
-	<feature id="org.eclipse.emf.cdo.releng" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
+	<feature id="org.eclipse.emf.cdo.releng.all" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
 	<feature id="org.eclipse.emf.cdo.releng.version" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
 	<feature id="org.eclipse.emf.cdo.releng.version.headless" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
 	<feature id="org.eclipse.emf.cdo.releng.help" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>

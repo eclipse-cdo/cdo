@@ -509,7 +509,7 @@
 
           <delete includeemptydirs="true" failonerror="false" quiet="true">
             <fileset dir="${temp.products}/@{profile}-@{platform}">
-              <include name="readme" />
+              <include name="readme/**" />
               <include name="artifacts.xml" />
               <include name="launcher.exe" />
               <include name="eclipsec.exe" />
@@ -526,12 +526,14 @@
             </then>
           </if>
 
+        	<!--
           <if>
             <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
             <then>
               <chmod perm="a+x" file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
             </then>
           </if>
+          -->
 
           <copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
             <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">
@@ -541,14 +543,18 @@
           </copy>
 
           <mkdir dir="${zips}" />
-          <zip destfile="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.zip" >
-            <fileset dir="${temp.products}/@{profile}-@{platform}">
+          <zip destfile="${zips}/@{profile}-@{platform}.zip" >
+            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}" includes="@{profile}-eclipse.app/**/*" />
+            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}" includes="@{profile}-eclipse" />
+            <zipfileset dir="${temp.products}/@{profile}-@{platform}">
               <include name="**" />
-            </fileset>
+              <exclude name="@{profile}-eclipse.app/**/*" />
+              <exclude name="@{profile}-eclipse" />
+            </zipfileset>
           </zip>
 
           <echo message="description=for execution on @{platform}.${line.separator}priority=@{priority}${line.separator}build=${build.qualifier}"
-                file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
+                file="${zips}/@{profile}-@{platform}.properties" />
         </then>
       </if>
     </sequential>

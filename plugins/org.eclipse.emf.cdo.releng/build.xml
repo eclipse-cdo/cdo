@@ -517,23 +517,22 @@
           </delete>
 
           <if>
-          	<and>
-          	  <available file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" />
-          		<equals arg1="${build.type}" arg2="N" />
-          	</and>
+          	<equals arg1="${build.type}" arg2="N" />
             <then>
-            	<echo message="-Dreleng.url=${env.JOB_URL}/lastSuccessfulBuild/artifact" file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" append="true" />
+              <if>
+            	  <available file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" />
+                <then>
+                	<echo file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                </then>
+              </if>
+              <if>
+            	  <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" />
+                <then>
+                	<echo file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                </then>
+              </if>
             </then>
           </if>
-
-        	<!--
-          <if>
-            <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
-            <then>
-              <chmod perm="a+x" file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse" />
-            </then>
-          </if>
-          -->
 
           <copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
             <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">

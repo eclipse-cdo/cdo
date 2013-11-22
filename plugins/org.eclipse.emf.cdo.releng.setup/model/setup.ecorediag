@@ -155,6 +155,10 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//ApiBaselineTask/version"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_U2qjEeoQEeKpRf481yfX-g"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_fh6wwFNLEeOGU9etkvR0eQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//ApiBaselineTask/containerFolder"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_fh6wwVNLEeOGU9etkvR0eQ"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_XnMJ8OoQEeKpRf481yfX-g" type="2001">
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//ApiBaselineTask/zipLocation"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_XnMJ8eoQEeKpRf481yfX-g"/>

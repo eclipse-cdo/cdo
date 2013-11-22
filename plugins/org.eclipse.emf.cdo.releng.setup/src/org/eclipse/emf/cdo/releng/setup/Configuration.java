@@ -20,8 +20,8 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.Configuration#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Configuration#getEclipseVersions <em>Eclipse Versions</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Configuration#getProjects <em>Projects</em>}</li>
  * </ul>
  * </p>
  *

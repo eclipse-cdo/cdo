@@ -31,8 +31,8 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl#getEclipseVersions <em>Eclipse Versions</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl#getProjects <em>Projects</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,16 +40,6 @@ import java.util.Collection;
  */
 public class ConfigurationImpl extends SetupTaskContainerImpl implements Configuration
 {
-  /**
-   * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @see #getProjects()
-   * @generated
-   * @ordered
-   */
-  protected EList<Project> projects;
-
   /**
    * The cached value of the '{@link #getEclipseVersions() <em>Eclipse Versions</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -59,6 +49,16 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
    * @ordered
    */
   protected EList<Eclipse> eclipseVersions;
+
+  /**
+  	 * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @see #getProjects()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected EList<Project> projects;
 
   /**
    * <!-- begin-user-doc -->
@@ -122,10 +122,10 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   {
     switch (featureID)
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getProjects()).basicAdd(otherEnd, msgs);
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getEclipseVersions()).basicAdd(otherEnd, msgs);
+    case SetupPackage.CONFIGURATION__PROJECTS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getProjects()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -140,10 +140,10 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   {
     switch (featureID)
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
-      return ((InternalEList<?>)getProjects()).basicRemove(otherEnd, msgs);
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       return ((InternalEList<?>)getEclipseVersions()).basicRemove(otherEnd, msgs);
+    case SetupPackage.CONFIGURATION__PROJECTS:
+      return ((InternalEList<?>)getProjects()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -158,10 +158,10 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   {
     switch (featureID)
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
-      return getProjects();
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       return getEclipseVersions();
+    case SetupPackage.CONFIGURATION__PROJECTS:
+      return getProjects();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -177,13 +177,13 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   {
     switch (featureID)
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
-      getProjects().clear();
-      getProjects().addAll((Collection<? extends Project>)newValue);
-      return;
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       getEclipseVersions().clear();
       getEclipseVersions().addAll((Collection<? extends Eclipse>)newValue);
+      return;
+    case SetupPackage.CONFIGURATION__PROJECTS:
+      getProjects().clear();
+      getProjects().addAll((Collection<? extends Project>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -199,11 +199,11 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   {
     switch (featureID)
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
-      getProjects().clear();
-      return;
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       getEclipseVersions().clear();
+      return;
+    case SetupPackage.CONFIGURATION__PROJECTS:
+      getProjects().clear();
       return;
     }
     super.eUnset(featureID);
@@ -219,10 +219,10 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   {
     switch (featureID)
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
-      return projects != null && !projects.isEmpty();
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
       return eclipseVersions != null && !eclipseVersions.isEmpty();
+    case SetupPackage.CONFIGURATION__PROJECTS:
+      return projects != null && !projects.isEmpty();
     }
     return super.eIsSet(featureID);
   }

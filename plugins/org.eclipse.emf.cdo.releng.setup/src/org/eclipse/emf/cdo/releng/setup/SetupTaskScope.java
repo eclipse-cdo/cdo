@@ -174,11 +174,11 @@ public enum SetupTaskScope implements Enumerator
   public static final int CONFIGURATION_VALUE = 1;
 
   /**
-  	 * An array of all the '<em><b>Task Scope</b></em>' enumerators.
-  	 * <!-- begin-user-doc -->
+   * An array of all the '<em><b>Task Scope</b></em>' enumerators.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private static final SetupTaskScope[] VALUES_ARRAY = new SetupTaskScope[] { NONE, ECLIPSE, PROJECT, BRANCH, USER,
       CONFIGURATION, };
 

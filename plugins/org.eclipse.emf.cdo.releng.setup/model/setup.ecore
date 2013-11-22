@@ -8,12 +8,12 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//SetupTaskContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="projects" lowerBound="1"
-        upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"
-        eKeys="#//Project/name"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
         upperBound="-1" eType="#//Eclipse" containment="true" eOpposite="#//Eclipse/configuration"
         eKeys="#//Eclipse/version"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projects" lowerBound="1"
+        upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"
+        eKeys="#//Project/name"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//SetupTaskContainer"/>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem">
@@ -164,6 +164,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ApiBaselineTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="containerFolder" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="${setup.project.dir/.baselines}"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="zipLocation" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -265,6 +267,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeURL" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JRETask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SetupTaskScope">
     <eLiterals name="None"/>
     <eLiterals name="Eclipse" value="2" literal="Eclipse"/>
@@ -302,10 +310,4 @@
     <eLiterals name="FLOAT" value="12"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="LicenseInfo" instanceClassName="org.eclipse.emf.cdo.releng.setup.LicenseInfo"/>
-  <eClassifiers xsi:type="ecore:EClass" name="JRETask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
 </ecore:EPackage>

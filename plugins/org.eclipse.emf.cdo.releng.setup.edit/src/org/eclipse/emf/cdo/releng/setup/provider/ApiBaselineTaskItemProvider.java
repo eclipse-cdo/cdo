@@ -62,6 +62,7 @@ public class ApiBaselineTaskItemProvider extends SetupTaskItemProvider implement
       super.getPropertyDescriptors(object);
 
       addVersionPropertyDescriptor(object);
+      addContainerFolderPropertyDescriptor(object);
       addZipLocationPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
@@ -85,11 +86,28 @@ public class ApiBaselineTaskItemProvider extends SetupTaskItemProvider implement
   }
 
   /**
-   * This adds a property descriptor for the Zip Location feature.
+   * This adds a property descriptor for the Container Folder feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected void addContainerFolderPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_ApiBaselineTask_containerFolder_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ApiBaselineTask_containerFolder_feature",
+            "_UI_ApiBaselineTask_type"), SetupPackage.Literals.API_BASELINE_TASK__CONTAINER_FOLDER, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * This adds a property descriptor for the Zip Location feature.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected void addZipLocationPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
@@ -153,6 +171,7 @@ public class ApiBaselineTaskItemProvider extends SetupTaskItemProvider implement
     switch (notification.getFeatureID(ApiBaselineTask.class))
     {
     case SetupPackage.API_BASELINE_TASK__VERSION:
+    case SetupPackage.API_BASELINE_TASK__CONTAINER_FOLDER:
     case SetupPackage.API_BASELINE_TASK__ZIP_LOCATION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

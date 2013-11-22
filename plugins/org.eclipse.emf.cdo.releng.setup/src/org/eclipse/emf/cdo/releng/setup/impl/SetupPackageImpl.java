@@ -530,7 +530,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EReference getConfiguration_Projects()
   {
-    return (EReference)configurationEClass.getEStructuralFeatures().get(0);
+    return (EReference)configurationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -540,7 +540,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EReference getConfiguration_EclipseVersions()
   {
-    return (EReference)configurationEClass.getEStructuralFeatures().get(1);
+    return (EReference)configurationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -648,9 +648,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getApiBaselineTask_ZipLocation()
+  public EAttribute getApiBaselineTask_ContainerFolder()
   {
     return (EAttribute)apiBaselineTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getApiBaselineTask_ZipLocation()
+  {
+    return (EAttribute)apiBaselineTaskEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1941,8 +1951,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(eclipseEClass, ECLIPSE__VERSION);
 
     configurationEClass = createEClass(CONFIGURATION);
-    createEReference(configurationEClass, CONFIGURATION__PROJECTS);
     createEReference(configurationEClass, CONFIGURATION__ECLIPSE_VERSIONS);
+    createEReference(configurationEClass, CONFIGURATION__PROJECTS);
 
     configurableItemEClass = createEClass(CONFIGURABLE_ITEM);
 
@@ -2044,6 +2054,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     apiBaselineTaskEClass = createEClass(API_BASELINE_TASK);
     createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__VERSION);
+    createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__CONTAINER_FOLDER);
     createEAttribute(apiBaselineTaskEClass, API_BASELINE_TASK__ZIP_LOCATION);
 
     gitCloneTaskEClass = createEClass(GIT_CLONE_TASK);
@@ -2200,14 +2211,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 1, -1,
-        Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    getConfiguration_Projects().getEKeys().add(getProject_Name());
     initEReference(getConfiguration_EclipseVersions(), getEclipse(), getEclipse_Configuration(), "eclipseVersions",
         null, 1, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     getConfiguration_EclipseVersions().getEKeys().add(getEclipse_Version());
+    initEReference(getConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 1, -1,
+        Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    getConfiguration_Projects().getEKeys().add(getProject_Name());
 
     initEClass(configurableItemEClass, ConfigurableItem.class, "ConfigurableItem", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2426,6 +2437,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getApiBaselineTask_Version(), ecorePackage.getEString(), "version", null, 1, 1,
         ApiBaselineTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getApiBaselineTask_ContainerFolder(), ecorePackage.getEString(), "containerFolder",
+        "${setup.project.dir/.baselines}", 1, 1, ApiBaselineTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getApiBaselineTask_ZipLocation(), ecorePackage.getEString(), "zipLocation", null, 1, 1,
         ApiBaselineTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);

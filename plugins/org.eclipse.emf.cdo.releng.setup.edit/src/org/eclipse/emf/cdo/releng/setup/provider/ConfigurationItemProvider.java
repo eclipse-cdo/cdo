@@ -79,8 +79,8 @@ public class ConfigurationItemProvider extends SetupTaskContainerItemProvider im
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.CONFIGURATION__PROJECTS);
       childrenFeatures.add(SetupPackage.Literals.CONFIGURATION__ECLIPSE_VERSIONS);
+      childrenFeatures.add(SetupPackage.Literals.CONFIGURATION__PROJECTS);
     }
     return childrenFeatures;
   }
@@ -148,8 +148,8 @@ public class ConfigurationItemProvider extends SetupTaskContainerItemProvider im
 
     switch (notification.getFeatureID(Configuration.class))
     {
-    case SetupPackage.CONFIGURATION__PROJECTS:
     case SetupPackage.CONFIGURATION__ECLIPSE_VERSIONS:
+    case SetupPackage.CONFIGURATION__PROJECTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -168,11 +168,11 @@ public class ConfigurationItemProvider extends SetupTaskContainerItemProvider im
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.CONFIGURATION__PROJECTS,
-        SetupFactory.eINSTANCE.createProject()));
-
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.CONFIGURATION__ECLIPSE_VERSIONS,
         SetupFactory.eINSTANCE.createEclipse()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.CONFIGURATION__PROJECTS,
+        SetupFactory.eINSTANCE.createProject()));
   }
 
 }

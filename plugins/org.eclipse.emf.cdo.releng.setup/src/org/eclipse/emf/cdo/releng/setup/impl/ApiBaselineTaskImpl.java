@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.DownloadUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ZIPUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -42,6 +43,7 @@ import java.util.Set;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl#getContainerFolder <em>Container Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl#getZipLocation <em>Zip Location</em>}</li>
  * </ul>
  * </p>
@@ -71,13 +73,33 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   protected String version = VERSION_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getZipLocation() <em>Zip Location</em>}' attribute.
+   * The default value of the '{@link #getContainerFolder() <em>Container Folder</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getZipLocation()
+   * @see #getContainerFolder()
    * @generated
    * @ordered
    */
+  protected static final String CONTAINER_FOLDER_EDEFAULT = "${setup.project.dir/.baselines}";
+
+  /**
+  	 * The cached value of the '{@link #getContainerFolder() <em>Container Folder</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #getContainerFolder()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected String containerFolder = CONTAINER_FOLDER_EDEFAULT;
+
+  /**
+  	 * The default value of the '{@link #getZipLocation() <em>Zip Location</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @see #getZipLocation()
+  	 * @generated
+  	 * @ordered
+  	 */
   protected static final String ZIP_LOCATION_EDEFAULT = null;
 
   /**
@@ -148,6 +170,32 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getContainerFolder()
+  {
+    return containerFolder;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setContainerFolder(String newContainerFolder)
+  {
+    String oldContainerFolder = containerFolder;
+    containerFolder = newContainerFolder;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.API_BASELINE_TASK__CONTAINER_FOLDER,
+          oldContainerFolder, containerFolder));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public String getZipLocation()
   {
     return zipLocation;
@@ -181,6 +229,8 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     {
     case SetupPackage.API_BASELINE_TASK__VERSION:
       return getVersion();
+    case SetupPackage.API_BASELINE_TASK__CONTAINER_FOLDER:
+      return getContainerFolder();
     case SetupPackage.API_BASELINE_TASK__ZIP_LOCATION:
       return getZipLocation();
     }
@@ -199,6 +249,9 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     {
     case SetupPackage.API_BASELINE_TASK__VERSION:
       setVersion((String)newValue);
+      return;
+    case SetupPackage.API_BASELINE_TASK__CONTAINER_FOLDER:
+      setContainerFolder((String)newValue);
       return;
     case SetupPackage.API_BASELINE_TASK__ZIP_LOCATION:
       setZipLocation((String)newValue);
@@ -220,6 +273,9 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     case SetupPackage.API_BASELINE_TASK__VERSION:
       setVersion(VERSION_EDEFAULT);
       return;
+    case SetupPackage.API_BASELINE_TASK__CONTAINER_FOLDER:
+      setContainerFolder(CONTAINER_FOLDER_EDEFAULT);
+      return;
     case SetupPackage.API_BASELINE_TASK__ZIP_LOCATION:
       setZipLocation(ZIP_LOCATION_EDEFAULT);
       return;
@@ -239,6 +295,9 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     {
     case SetupPackage.API_BASELINE_TASK__VERSION:
       return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
+    case SetupPackage.API_BASELINE_TASK__CONTAINER_FOLDER:
+      return CONTAINER_FOLDER_EDEFAULT == null ? containerFolder != null : !CONTAINER_FOLDER_EDEFAULT
+          .equals(containerFolder);
     case SetupPackage.API_BASELINE_TASK__ZIP_LOCATION:
       return ZIP_LOCATION_EDEFAULT == null ? zipLocation != null : !ZIP_LOCATION_EDEFAULT.equals(zipLocation);
     }
@@ -261,6 +320,8 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (version: ");
     result.append(version);
+    result.append(", containerFolder: ");
+    result.append(containerFolder);
     result.append(", zipLocation: ");
     result.append(zipLocation);
     result.append(')');
@@ -282,8 +343,14 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
       return false;
     }
 
+    String containerFolder = getContainerFolder();
+    if (StringUtil.isEmpty(containerFolder))
+    {
+      containerFolder = new File(context.getProjectDir(), ".baselines").getAbsolutePath();
+    }
+
     baselineName = context.getSetup().getBranch().getProject().getName() + " Baseline";
-    baselineDir = new File(new File(context.getProjectDir(), ".baselines"), getVersion());
+    baselineDir = new File(containerFolder, getVersion());
 
     IApiBaselineManager baselineManager = apiPlugin.getApiBaselineManager();
     IApiBaseline baseline = baselineManager.getApiBaseline(baselineName);

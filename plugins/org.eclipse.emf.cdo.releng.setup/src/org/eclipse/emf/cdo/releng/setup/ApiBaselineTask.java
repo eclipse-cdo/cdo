@@ -19,6 +19,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getContainerFolder <em>Container Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation <em>Zip Location</em>}</li>
  * </ul>
  * </p>
@@ -56,19 +57,46 @@ public interface ApiBaselineTask extends SetupTask
   void setVersion(String value);
 
   /**
-   * Returns the value of the '<em><b>Zip Location</b></em>' attribute.
+   * Returns the value of the '<em><b>Container Folder</b></em>' attribute.
+   * The default value is <code>"${setup.project.dir/.baselines}"</code>.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Zip Location</em>' attribute isn't clear,
+   * If the meaning of the '<em>Container Folder</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Zip Location</em>' attribute.
-   * @see #setZipLocation(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getApiBaselineTask_ZipLocation()
-   * @model required="true"
+   * @return the value of the '<em>Container Folder</em>' attribute.
+   * @see #setContainerFolder(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getApiBaselineTask_ContainerFolder()
+   * @model default="${setup.project.dir/.baselines}" required="true"
    * @generated
    */
+  String getContainerFolder();
+
+  /**
+  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getContainerFolder <em>Container Folder</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @param value the new value of the '<em>Container Folder</em>' attribute.
+  	 * @see #getContainerFolder()
+  	 * @generated
+  	 */
+  void setContainerFolder(String value);
+
+  /**
+  	 * Returns the value of the '<em><b>Zip Location</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Zip Location</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Zip Location</em>' attribute.
+  	 * @see #setZipLocation(String)
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getApiBaselineTask_ZipLocation()
+  	 * @model required="true"
+  	 * @generated
+  	 */
   String getZipLocation();
 
   /**

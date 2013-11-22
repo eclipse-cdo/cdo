@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -27,11 +29,15 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <!-- begin-user-doc -->
@@ -313,29 +319,93 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     return result.toString();
   }
 
-  public boolean isNeeded(SetupTaskContext context) throws Exception
+  private String getText(SetupTaskContext context) throws IOException
   {
     URI uri = context.redirect(URI.createURI(getURL()));
+    BufferedInputStream bufferedInputStream = null;
     try
     {
-      InputStream inputStream = URIConverter.INSTANCE.createInputStream(uri);
-      Map<String, ?> contentDescription = URIConverter.INSTANCE.contentDescription(
-          uri,
-          Collections.singletonMap(ContentHandler.OPTION_REQUESTED_PROPERTIES,
-              Collections.singleton(ContentHandler.CONTENT_TYPE_PROPERTY)));
-      String charset = (String)contentDescription.get(ContentHandler.CHARSET_PROPERTY);
+      bufferedInputStream = new BufferedInputStream(URIConverter.INSTANCE.createInputStream(uri));
+      byte[] input = new byte[bufferedInputStream.available()];
+      bufferedInputStream.read(input);
+
+      if (encoding == null)
+      {
+        Map<String, ?> contentDescription = URIConverter.INSTANCE.contentDescription(
+            uri,
+            Collections.singletonMap(ContentHandler.OPTION_REQUESTED_PROPERTIES,
+                Collections.singleton(ContentHandler.CONTENT_TYPE_PROPERTY)));
+        encoding = (String)contentDescription.get(ContentHandler.CHARSET_PROPERTY);
+      }
+
+      return encoding == null ? new String(input) : new String(input, encoding);
+    }
+    finally
+    {
+      IOUtil.close(bufferedInputStream);
+    }
+  }
+
+  public boolean isNeeded(SetupTaskContext context) throws Exception
+  {
+    try
+    {
+      String text = getText(context);
+      for (TextModification modification : getModifications())
+      {
+        Pattern pattern = Pattern.compile(modification.getPattern());
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find())
+        {
+          return true;
+        }
+      }
+
       return false;
     }
     catch (IOException exception)
     {
+      // The file might not exist yet.
       return true;
     }
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    // TODO
-    throw new UnsupportedOperationException();
-  }
+    String text = getText(context);
+    int index = 0;
+    for (TextModification modification : getModifications())
+    {
+      StringBuilder result = new StringBuilder();
+      Pattern pattern = Pattern.compile(modification.getPattern());
+      for (Matcher matcher = pattern.matcher(text); matcher.find();)
+      {
+        result.append(text, index, index = matcher.start());
+        for (int i = 1, count = matcher.groupCount(); i <= count; ++i)
+        {
+          result.append(text, index, matcher.start(i));
+          result.append(modification.getSubstitutions().get(i - 1));
+          index = matcher.end(i);
+        }
 
+        result.append(text, index, index = matcher.end());
+      }
+
+      result.append(text, index, text.length());
+      text = result.toString();
+    }
+
+    URI uri = context.redirect(URI.createURI(getURL()));
+    PrintStream printStream = null;
+    try
+    {
+      OutputStream outputStream = URIConverter.INSTANCE.createOutputStream(uri);
+      printStream = encoding == null ? new PrintStream(outputStream) : new PrintStream(outputStream, false, encoding);
+      printStream.print(text);
+    }
+    finally
+    {
+      IOUtil.close(printStream);
+    }
+  }
 } // TextModifyTaskImpl

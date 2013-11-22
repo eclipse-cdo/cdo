@@ -343,9 +343,20 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     for (EStructuralFeature.Setting setting : unresolvedSettings)
     {
-      setting.set(expandString((String)setting.get(false)));
+      if (setting.getEStructuralFeature().isMany())
+      {
+        @SuppressWarnings("unchecked")
+        List<String> values = (List<String>)setting.get(false);
+        for (ListIterator<String> it = values.listIterator(); it.hasNext();)
+        {
+          it.set(expandString(it.next()));
+        }
+      }
+      else
+      {
+        setting.set(expandString((String)setting.get(false)));
+      }
     }
-
   }
 
   private void expand(Set<String> keys, List<EStructuralFeature.Setting> unresolvedVariables, EObject eObject)
@@ -356,17 +367,48 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       if (attribute.isChangeable() && attribute.getEAttributeType().getInstanceClassName() == "java.lang.String"
           && attribute != SetupPackage.Literals.CONTEXT_VARIABLE_TASK__NAME)
       {
-        String value = (String)eObject.eGet(attribute);
-        if (value != null)
+        if (attribute.isMany())
         {
-          String newValue = expandString(value, keys);
-          if (newValue == null)
+          @SuppressWarnings("unchecked")
+          List<String> values = (List<String>)eObject.eGet(attribute);
+          List<String> newValues = new ArrayList<String>();
+          boolean failed = false;
+          for (String value : values)
           {
-            unresolvedVariables.add(((InternalEObject)eObject).eSetting(attribute));
+            String newValue = expandString(value, keys);
+            if (newValue == null)
+            {
+              if (!failed)
+              {
+                unresolvedVariables.add(((InternalEObject)eObject).eSetting(attribute));
+                failed = true;
+              }
+            }
+            else
+            {
+              newValues.add(newValue);
+            }
           }
-          else if (!value.equals(newValue))
+
+          if (!failed)
           {
-            eObject.eSet(attribute, newValue);
+            eObject.eSet(attribute, newValues);
+          }
+        }
+        else
+        {
+          String value = (String)eObject.eGet(attribute);
+          if (value != null)
+          {
+            String newValue = expandString(value, keys);
+            if (newValue == null)
+            {
+              unresolvedVariables.add(((InternalEObject)eObject).eSetting(attribute));
+            }
+            else if (!value.equals(newValue))
+            {
+              eObject.eSet(attribute, newValue);
+            }
           }
         }
       }

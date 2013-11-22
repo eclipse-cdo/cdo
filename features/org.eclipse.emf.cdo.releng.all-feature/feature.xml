@@ -84,10 +84,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.version"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.version.headless"
          version="0.0.0"/>
 
@@ -98,5 +94,40 @@
    <includes
          id="org.eclipse.emf.cdo.releng.workingsets"
          version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.version"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.version.digest"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.version.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.releng.version.doc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

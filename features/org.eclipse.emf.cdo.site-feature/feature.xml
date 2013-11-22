@@ -67,6 +67,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.help"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.sdk"
          version="0.0.0"/>
 

@@ -48,10 +48,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.help"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.launches"
          version="0.0.0"/>
 

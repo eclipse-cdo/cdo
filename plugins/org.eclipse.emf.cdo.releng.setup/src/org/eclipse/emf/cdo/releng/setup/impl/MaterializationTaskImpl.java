@@ -401,8 +401,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       }
 
       CSpec cspec = cspecBuilder.createCSpec();
-
       FileOutputStream cspecOutputStream = null;
+
       try
       {
         cspecOutputStream = new FileOutputStream(new File(buckminsterFolder, "buckminster.cspec"));

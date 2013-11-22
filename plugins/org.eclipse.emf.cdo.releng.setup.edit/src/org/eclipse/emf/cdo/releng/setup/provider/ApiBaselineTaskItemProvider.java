@@ -103,11 +103,11 @@ public class ApiBaselineTaskItemProvider extends SetupTaskItemProvider implement
   }
 
   /**
-  	 * This adds a property descriptor for the Zip Location feature.
-  	 * <!-- begin-user-doc -->
+   * This adds a property descriptor for the Zip Location feature.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected void addZipLocationPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(

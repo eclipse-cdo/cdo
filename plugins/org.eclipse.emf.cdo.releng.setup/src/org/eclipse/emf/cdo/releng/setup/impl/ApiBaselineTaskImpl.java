@@ -83,23 +83,23 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   protected static final String CONTAINER_FOLDER_EDEFAULT = "${setup.project.dir/.baselines}";
 
   /**
-  	 * The cached value of the '{@link #getContainerFolder() <em>Container Folder</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getContainerFolder() <em>Container Folder</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getContainerFolder()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getContainerFolder()
+   * @generated
+   * @ordered
+   */
   protected String containerFolder = CONTAINER_FOLDER_EDEFAULT;
 
   /**
-  	 * The default value of the '{@link #getZipLocation() <em>Zip Location</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The default value of the '{@link #getZipLocation() <em>Zip Location</em>}' attribute.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @see #getZipLocation()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getZipLocation()
+   * @generated
+   * @ordered
+   */
   protected static final String ZIP_LOCATION_EDEFAULT = null;
 
   /**
@@ -176,10 +176,10 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setContainerFolder(String newContainerFolder)
   {
     String oldContainerFolder = containerFolder;
@@ -192,10 +192,10 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public String getZipLocation()
   {
     return zipLocation;

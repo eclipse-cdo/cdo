@@ -51,13 +51,13 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   protected EList<Eclipse> eclipseVersions;
 
   /**
-  	 * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @see #getProjects()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getProjects()
+   * @generated
+   * @ordered
+   */
   protected EList<Project> projects;
 
   /**

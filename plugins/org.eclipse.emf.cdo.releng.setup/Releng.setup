@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project setup:toolVersion="1" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" name="cdo.releng" label="CDO Release Engineering">
+  <branches name="master">
+    <setupTasks xsi:type="setup:P2Task">
+      <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
+      <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
+      <p2Repositories url="${train.url}"/>
+      <p2Repositories url="${releng.url}"/>
+      <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+      <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
+      <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
+      <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
+      <installableUnits id="org.eclipse.egit.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.core.feature.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.git.feature.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.pde.feature.feature.group"/>
+      <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:EclipseIniTask" option="-Dorg.eclipse.buckminster.core.bundle.pool" value="=${setup.install.dir/.p2pool-tp}" vm="true"/>
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo}" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the workspace for the self hosting setup IDE." name="launcher.setup.ide.ws" value="" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the shared target platform bundle pool used by Buckminster in the self hosting IDE." name="launcher.setup.ide.p2pool" value="${setup.install.dir/.p2pool-tp}" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
+    <setupTasks xsi:type="setup:MaterializationTask" targetPlatform="${setup.branch.dir/tp}">
+      <rootComponents name="org.eclipse.emf.cdo.releng.all"/>
+      <rootComponents name="org.eclipse.emf.sdk.feature.group"/>
+      <rootComponents name="org.eclipse.net4j.util.ui.feature.group"/>
+      <rootComponents name="org.eclipse.egit.feature.group"/>
+      <rootComponents name="org.eclipse.buckminster.core.feature.feature.group"/>
+      <rootComponents name="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${git.clone}"/>
+      <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
+      <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
+      <p2Repositories url="${train.url}"/>
+    </setupTasks>
+  </branches>
+</setup:Project>

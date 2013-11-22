@@ -43,10 +43,13 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
@@ -108,6 +111,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -153,6 +157,20 @@ public class InstallerDialog extends AbstractSetupDialog
     super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
         "/help/InstallerDialog.html");
     resourceSet = EMFUtil.createResourceSet();
+  }
+
+  public InstallerDialog(Shell parentShell, Project project)
+  {
+    this(parentShell);
+
+    URI uri = project.eResource().getURI();
+    if (uri.isPlatformResource())
+    {
+      IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toPlatformString(true)));
+      uri = URI.createFileURI(file.getLocation().toString());
+    }
+
+    resourceSet.getURIConverter().getURIMap().put(EMFUtil.EXAMPLE_PROXY_URI, uri);
   }
 
   @Override
@@ -751,6 +769,12 @@ public class InstallerDialog extends AbstractSetupDialog
     IProvisioningAgent agent = session.getProvisioningAgent();
     IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
     IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
+    if (profile == null)
+    {
+      List<IInstallableUnit> none = Collections.emptyList();
+      return Pair.create("SelfHostingProfile", none);
+    }
+
     IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
 
     List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();

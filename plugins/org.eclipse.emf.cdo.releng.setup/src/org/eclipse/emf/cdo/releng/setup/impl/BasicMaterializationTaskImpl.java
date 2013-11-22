@@ -84,7 +84,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
    * @generated
    * @ordered
    */
-  protected static final String TARGET_PLATFORM_EDEFAULT = null;
+  protected static final String TARGET_PLATFORM_EDEFAULT = "${setup.branch.dir/tp}";
 
   /**
    * The cached value of the '{@link #getTargetPlatform() <em>Target Platform</em>}' attribute.

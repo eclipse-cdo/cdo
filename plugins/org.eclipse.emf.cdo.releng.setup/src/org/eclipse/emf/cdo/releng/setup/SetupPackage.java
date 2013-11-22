@@ -298,12 +298,12 @@ public interface SetupPackage extends EPackage
   int CONFIGURATION__ECLIPSE_VERSIONS = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
 
   /**
-  	 * The feature id for the '<em><b>Projects</b></em>' containment reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Projects</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CONFIGURATION__PROJECTS = SETUP_TASK_CONTAINER_FEATURE_COUNT + 1;
 
   /**
@@ -1814,12 +1814,12 @@ public interface SetupPackage extends EPackage
   int API_BASELINE_TASK__CONTAINER_FOLDER = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
-  	 * The feature id for the '<em><b>Zip Location</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Zip Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int API_BASELINE_TASK__ZIP_LOCATION = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
@@ -3178,14 +3178,14 @@ public interface SetupPackage extends EPackage
   EAttribute getApiBaselineTask_ContainerFolder();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation <em>Zip Location</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation <em>Zip Location</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Zip Location</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation()
-  	 * @see #getApiBaselineTask()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Zip Location</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation()
+   * @see #getApiBaselineTask()
+   * @generated
+   */
   EAttribute getApiBaselineTask_ZipLocation();
 
   /**
@@ -4695,11 +4695,11 @@ public interface SetupPackage extends EPackage
     EAttribute API_BASELINE_TASK__CONTAINER_FOLDER = eINSTANCE.getApiBaselineTask_ContainerFolder();
 
     /**
-    	 * The meta object literal for the '<em><b>Zip Location</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Zip Location</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute API_BASELINE_TASK__ZIP_LOCATION = eINSTANCE.getApiBaselineTask_ZipLocation();
 
     /**

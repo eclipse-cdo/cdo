@@ -31,6 +31,7 @@ public interface BasicMaterializationTask extends SetupTask
 {
   /**
    * Returns the value of the '<em><b>Target Platform</b></em>' attribute.
+   * The default value is <code>"${setup.branch.dir/tp}"</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Target Platform</em>' attribute isn't clear,
@@ -40,7 +41,7 @@ public interface BasicMaterializationTask extends SetupTask
    * @return the value of the '<em>Target Platform</em>' attribute.
    * @see #setTargetPlatform(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask_TargetPlatform()
-   * @model required="true"
+   * @model default="${setup.branch.dir/tp}" required="true"
    * @generated
    */
   String getTargetPlatform();

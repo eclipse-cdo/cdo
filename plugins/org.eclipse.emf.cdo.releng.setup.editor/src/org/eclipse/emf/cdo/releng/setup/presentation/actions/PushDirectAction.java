@@ -72,6 +72,7 @@ public class PushDirectAction implements IObjectActionDelegate
             git.push().setRemote("direct")
                 .setProgressMonitor(new EclipseGitProgressTransformer(new SubProgressMonitor(monitor, 50))).call();
 
+            monitor.setTaskName("Pulling");
             git.pull().setProgressMonitor(new EclipseGitProgressTransformer(new SubProgressMonitor(monitor, 50)))
                 .call();
 

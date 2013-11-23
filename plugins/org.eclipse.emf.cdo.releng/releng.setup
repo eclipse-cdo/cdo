@@ -25,6 +25,7 @@
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the shared target platform bundle pool used by Buckminster in the self hosting IDE." name="launcher.setup.ide.p2pool" value="${setup.install.dir/.p2pool-tp}" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
+    <setupTasks xsi:type="setup:ResourceCreationTask" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;projectDescription>&#xD;&#xA;&#x9;&lt;name>.buckminster&lt;/name>&#xD;&#xA;&#x9;&lt;comment>&lt;/comment>&#xD;&#xA;&#x9;&lt;projects>&#xD;&#xA;&#x9;&lt;/projects>&#xD;&#xA;&#x9;&lt;buildSpec>&#xD;&#xA;&#x9;&lt;/buildSpec>&#xD;&#xA;&#x9;&lt;natures>&#xD;&#xA;&#x9;&lt;/natures>&#xD;&#xA;&lt;/projectDescription>&#xD;&#xA;" targetURL="${setup.ws.dir/.buckminster/.project|uri}"/>
     <setupTasks xsi:type="setup:MaterializationTask">
       <rootComponents name="org.eclipse.emf.cdo.releng.all"/>
       <rootComponents name="org.eclipse.emf.sdk"/>

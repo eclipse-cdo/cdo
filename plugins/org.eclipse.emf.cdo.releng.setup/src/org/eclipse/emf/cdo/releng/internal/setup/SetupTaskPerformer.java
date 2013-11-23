@@ -42,8 +42,13 @@ import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
+import org.eclipse.core.resources.IWorkspaceDescription;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -450,10 +455,63 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
-  private void doPerform(EList<SetupTask> neededTasks) throws Exception
+  public static boolean disableAutoBuilding() throws CoreException
   {
+    boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
+    if (autoBuilding)
+    {
+      restoreAutoBuilding(false);
+    }
+
+    return autoBuilding;
+  }
+
+  public static void restoreAutoBuilding(boolean autoBuilding) throws CoreException
+  {
+    if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
+    {
+      IWorkspaceDescription description = ResourcesPlugin.getWorkspace().getDescription();
+      description.setAutoBuilding(autoBuilding);
+
+      ResourcesPlugin.getWorkspace().setDescription(description);
+    }
+  }
+
+  private void doPerform(final EList<SetupTask> neededTasks) throws Exception
+  {
+    if (getTrigger() == Trigger.BOOTSTRAP)
+    {
+      doPerformHelper(neededTasks);
+    }
+    else
+    {
+      ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable()
+      {
+        public void run(IProgressMonitor monitor) throws CoreException
+        {
+          try
+          {
+            doPerformHelper(neededTasks);
+          }
+          catch (Exception ex)
+          {
+            throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+          }
+        }
+      }, null);
+    }
+  }
+
+  private void doPerformHelper(EList<SetupTask> neededTasks) throws Exception
+  {
+    Boolean autoBuilding = null;
     try
     {
+      if (getTrigger() != Trigger.BOOTSTRAP)
+      {
+        autoBuilding = disableAutoBuilding();
+      }
+
       Branch branch = getSetup().getBranch();
       log("Setting up " + branch.getProject().getName() + " " + branch.getName());
 
@@ -480,6 +538,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         logStream.println();
         logStream.println();
         IOUtil.closeSilent(logStream);
+      }
+
+      if (autoBuilding != null)
+      {
+        restoreAutoBuilding(autoBuilding);
       }
     }
   }

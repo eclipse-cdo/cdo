@@ -11,12 +11,15 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.equinox.p2.metadata.VersionRange;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getID <em>ID</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.InstallableUnitImpl#getVersionRange <em>Version Range</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,10 +58,31 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   protected String iD = ID_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVersionRange()
    * @generated
+   * @ordered
    */
+  protected static final VersionRange VERSION_RANGE_EDEFAULT = (VersionRange)SetupFactory.eINSTANCE.createFromString(
+      SetupPackage.eINSTANCE.getVersionRange(), "0.0.0");
+
+  /**
+  	 * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #getVersionRange()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected VersionRange versionRange = VERSION_RANGE_EDEFAULT;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected InstallableUnitImpl()
   {
     super();
@@ -104,6 +129,32 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  public VersionRange getVersionRange()
+  {
+    return versionRange;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setVersionRange(VersionRange newVersionRange)
+  {
+    VersionRange oldVersionRange = versionRange;
+    versionRange = newVersionRange;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INSTALLABLE_UNIT__VERSION_RANGE,
+          oldVersionRange, versionRange));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -111,6 +162,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     {
     case SetupPackage.INSTALLABLE_UNIT__ID:
       return getID();
+    case SetupPackage.INSTALLABLE_UNIT__VERSION_RANGE:
+      return getVersionRange();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -127,6 +180,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     {
     case SetupPackage.INSTALLABLE_UNIT__ID:
       setID((String)newValue);
+      return;
+    case SetupPackage.INSTALLABLE_UNIT__VERSION_RANGE:
+      setVersionRange((VersionRange)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -145,6 +201,9 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     case SetupPackage.INSTALLABLE_UNIT__ID:
       setID(ID_EDEFAULT);
       return;
+    case SetupPackage.INSTALLABLE_UNIT__VERSION_RANGE:
+      setVersionRange(VERSION_RANGE_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -161,6 +220,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     {
     case SetupPackage.INSTALLABLE_UNIT__ID:
       return ID_EDEFAULT == null ? iD != null : !ID_EDEFAULT.equals(iD);
+    case SetupPackage.INSTALLABLE_UNIT__VERSION_RANGE:
+      return VERSION_RANGE_EDEFAULT == null ? versionRange != null : !VERSION_RANGE_EDEFAULT.equals(versionRange);
     }
     return super.eIsSet(featureID);
   }
@@ -181,6 +242,8 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (iD: ");
     result.append(iD);
+    result.append(", versionRange: ");
+    result.append(versionRange);
     result.append(')');
     return result.toString();
   }

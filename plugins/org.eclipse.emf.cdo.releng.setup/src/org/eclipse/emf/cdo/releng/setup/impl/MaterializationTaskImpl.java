@@ -58,6 +58,7 @@ import org.eclipse.buckminster.sax.Utils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.p2.metadata.Version;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -340,9 +341,6 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       mspec.setUrl("buckminster.cquery");
 
       Map<String, String> properties = mspec.getProperties();
-      // properties.put("target.os", "*");
-      // properties.put("target.ws", "*");
-      // properties.put("target.arch", "*");
       properties.put("target.os", Platform.getOS());
       properties.put("target.ws", Platform.getWS());
       properties.put("target.arch", Platform.getOSArch());
@@ -397,6 +395,12 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         ComponentRequestBuilder rootComponentRequestBuilder = new ComponentRequestBuilder();
         rootComponentRequestBuilder.setName(rootComponent.getName());
         rootComponentRequestBuilder.setComponentTypeID(rootComponent.getType().toString());
+        VersionRange versionRange = rootComponent.getVersionRange();
+        if (versionRange != null)
+        {
+          rootComponentRequestBuilder.setVersionRange(versionRange);
+        }
+
         cspecBuilder.addDependency(rootComponentRequestBuilder.createComponentRequest());
       }
 

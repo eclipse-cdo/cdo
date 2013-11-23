@@ -26,8 +26,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.buckminster.core.CorePlugin;
+import org.eclipse.buckminster.core.materializer.InstallerJob;
 import org.eclipse.buckminster.core.materializer.MaterializationContext;
 import org.eclipse.buckminster.core.materializer.MaterializationJob;
+import org.eclipse.buckminster.core.materializer.MaterializerJob;
 import org.eclipse.buckminster.core.metadata.model.BillOfMaterials;
 import org.eclipse.buckminster.core.mspec.builder.MaterializationSpecBuilder;
 import org.eclipse.buckminster.core.mspec.model.MaterializationSpec;
@@ -37,10 +39,9 @@ import org.eclipse.buckminster.core.resolver.IResolver;
 import org.eclipse.buckminster.core.resolver.MainResolver;
 import org.eclipse.buckminster.core.resolver.ResolutionContext;
 import org.eclipse.buckminster.download.DownloadManager;
+import org.eclipse.buckminster.runtime.BuckminsterException;
 import org.eclipse.buckminster.runtime.Logger;
 import org.eclipse.buckminster.runtime.MonitorUtils;
-import org.eclipse.core.resources.IWorkspaceDescription;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -55,6 +56,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -318,7 +320,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       }
 
       FileLock tpPoolLock = null;
-      boolean isAutoBuilding = disableAutoBuilding();
 
       try
       {
@@ -355,16 +356,9 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       }
       finally
       {
-        try
+        if (tpPoolLock != null)
         {
-          if (tpPoolLock != null)
-          {
-            tpPoolLock.release();
-          }
-        }
-        finally
-        {
-          restoreAutoBuilding(isAutoBuilding);
+          tpPoolLock.release();
         }
       }
 
@@ -376,28 +370,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     finally
     {
       monitor.done();
-    }
-  }
-
-  public static boolean disableAutoBuilding() throws CoreException
-  {
-    boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
-    if (autoBuilding)
-    {
-      restoreAutoBuilding(false);
-    }
-
-    return autoBuilding;
-  }
-
-  public static void restoreAutoBuilding(boolean autoBuilding) throws CoreException
-  {
-    if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
-    {
-      IWorkspaceDescription description = ResourcesPlugin.getWorkspace().getDescription();
-      description.setAutoBuilding(autoBuilding);
-
-      ResourcesPlugin.getWorkspace().setDescription(description);
     }
   }
 
@@ -548,6 +520,28 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
             Logger.setOutStream(outStream);
             IOUtil.close(printStream);
           }
+        }
+
+        @Override
+        protected void internalRun(IProgressMonitor monitor, boolean waitForCompletion) throws CoreException
+        {
+          MaterializationContext context = getMaterializationContext();
+          BillOfMaterials bom = context.getBillOfMaterials();
+
+          Queue<MaterializerJob> allJobs = prepareJobs(monitor, bom);
+
+          if (allJobs != null)
+          {
+            triggerJobs(monitor, allJobs);
+            waitForJobs(monitor, allJobs, bom);
+          }
+          if (context.getStatus().getSeverity() == IStatus.ERROR)
+          {
+            throw BuckminsterException.wrap(context.getStatus());
+          }
+
+          InstallerJob installerJob = new InstallerJob(context, !waitForCompletion);
+          installerJob.run(monitor);
         }
       };
       job.run(MonitorUtils.subMonitor(monitor, 80));

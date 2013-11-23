@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.equinox.p2.metadata.VersionRange;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Installable Unit</b></em>'.
@@ -21,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getID <em>ID</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getVersionRange <em>Version Range</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,5 +59,32 @@ public interface InstallableUnit extends EObject
    * @generated
    */
   void setID(String value);
+
+  /**
+  	 * Returns the value of the '<em><b>Version Range</b></em>' attribute.
+  	 * The default value is <code>"0.0.0"</code>.
+  	 * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Version Range</em>' attribute isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Version Range</em>' attribute.
+  	 * @see #setVersionRange(VersionRange)
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getInstallableUnit_VersionRange()
+  	 * @model default="0.0.0" dataType="org.eclipse.emf.cdo.releng.setup.VersionRange"
+  	 * @generated
+  	 */
+  VersionRange getVersionRange();
+
+  /**
+  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getVersionRange <em>Version Range</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @param value the new value of the '<em>Version Range</em>' attribute.
+  	 * @see #getVersionRange()
+  	 * @generated
+  	 */
+  void setVersionRange(VersionRange value);
 
 } // InstallableUnit

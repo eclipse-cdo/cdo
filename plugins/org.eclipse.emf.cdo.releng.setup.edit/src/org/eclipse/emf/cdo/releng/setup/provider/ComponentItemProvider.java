@@ -28,6 +28,8 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.eclipse.equinox.p2.metadata.VersionRange;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class ComponentItemProvider extends ItemProviderAdapter implements IEditi
 
       addNamePropertyDescriptor(object);
       addTypePropertyDescriptor(object);
+      addVersionRangePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -103,10 +106,25 @@ public class ComponentItemProvider extends ItemProviderAdapter implements IEditi
   }
 
   /**
+   * This adds a property descriptor for the Version Range feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected void addVersionRangePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Component_versionRange_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Component_versionRange_feature", "_UI_Component_type"),
+        SetupPackage.Literals.COMPONENT__VERSION_RANGE, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public boolean hasChildren(Object object)
   {
@@ -146,7 +164,10 @@ public class ComponentItemProvider extends ItemProviderAdapter implements IEditi
   public String getText(Object object)
   {
     Component component = (Component)object;
-    return "" + component.getName() + " (" + component.getType() + ")";
+    VersionRange versionRange = component.getVersionRange();
+    return "" + component.getName()
+        + (versionRange == null || VersionRange.emptyRange.equals(versionRange) ? "" : " " + versionRange.toString())
+        + " - " + component.getType();
   }
 
   /**
@@ -165,6 +186,7 @@ public class ComponentItemProvider extends ItemProviderAdapter implements IEditi
     {
     case SetupPackage.COMPONENT__NAME:
     case SetupPackage.COMPONENT__TYPE:
+    case SetupPackage.COMPONENT__VERSION_RANGE:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

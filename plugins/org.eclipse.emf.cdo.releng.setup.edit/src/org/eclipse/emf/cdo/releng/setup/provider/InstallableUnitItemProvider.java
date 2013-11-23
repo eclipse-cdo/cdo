@@ -28,6 +28,8 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.eclipse.equinox.p2.metadata.VersionRange;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -65,6 +67,7 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
       super.getPropertyDescriptors(object);
 
       addIDPropertyDescriptor(object);
+      addVersionRangePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -86,10 +89,27 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
+   * This adds a property descriptor for the Version Range feature.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected void addVersionRangePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_InstallableUnit_versionRange_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_InstallableUnit_versionRange_feature",
+            "_UI_InstallableUnit_type"), SetupPackage.Literals.INSTALLABLE_UNIT__VERSION_RANGE, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public boolean hasChildren(Object object)
   {
@@ -128,8 +148,11 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
   @Override
   public String getText(Object object)
   {
-    String label = ((InstallableUnit)object).getID();
-    return label == null || label.length() == 0 ? getString("_UI_InstallableUnit_type") : label;
+    InstallableUnit installableUnit = (InstallableUnit)object;
+    String label = installableUnit.getID();
+    VersionRange versionRange = installableUnit.getVersionRange();
+    return (label == null || label.length() == 0 ? getString("_UI_InstallableUnit_type") : label)
+        + (versionRange == null || VersionRange.emptyRange.equals(versionRange) ? "" : " " + versionRange.toString());
   }
 
   /**

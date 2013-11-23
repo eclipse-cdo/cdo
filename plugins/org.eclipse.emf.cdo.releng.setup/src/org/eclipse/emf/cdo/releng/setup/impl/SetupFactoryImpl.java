@@ -61,6 +61,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import org.eclipse.equinox.p2.metadata.VersionRange;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -217,6 +219,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createURIFromString(eDataType, initialValue);
     case SetupPackage.LICENSE_INFO:
       return createLicenseInfoFromString(eDataType, initialValue);
+    case SetupPackage.VERSION_RANGE:
+      return createVersionRangeFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -248,6 +252,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return convertURIToString(eDataType, instanceValue);
     case SetupPackage.LICENSE_INFO:
       return convertLicenseInfoToString(eDataType, instanceValue);
+    case SetupPackage.VERSION_RANGE:
+      return convertVersionRangeToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -784,9 +790,29 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
+   * <!-- end-user-doc -->
+   * @generated NOT
    */
+  public VersionRange createVersionRangeFromString(EDataType eDataType, String initialValue)
+  {
+    return initialValue == null ? null : new VersionRange(initialValue);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated NOT
+  	 */
+  public String convertVersionRangeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : ((VersionRange)instanceValue).toString();
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public Exception createExceptionFromString(EDataType eDataType, String initialValue)
   {
     return (Exception)super.createFromString(eDataType, initialValue);

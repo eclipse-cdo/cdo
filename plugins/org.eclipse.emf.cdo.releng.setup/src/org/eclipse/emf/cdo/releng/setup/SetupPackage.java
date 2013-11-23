@@ -1265,13 +1265,22 @@ public interface SetupPackage extends EPackage
   int INSTALLABLE_UNIT__ID = 0;
 
   /**
-   * The number of structural features of the '<em>Installable Unit</em>' class.
+   * The feature id for the '<em><b>Version Range</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTALLABLE_UNIT_FEATURE_COUNT = 1;
+  int INSTALLABLE_UNIT__VERSION_RANGE = 1;
+
+  /**
+  	 * The number of structural features of the '<em>Installable Unit</em>' class.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int INSTALLABLE_UNIT_FEATURE_COUNT = 2;
 
   /**
    * The feature id for the '<em><b>URL</b></em>' attribute.
@@ -1589,13 +1598,22 @@ public interface SetupPackage extends EPackage
   int COMPONENT__TYPE = 1;
 
   /**
-   * The number of structural features of the '<em>Component</em>' class.
+   * The feature id for the '<em><b>Version Range</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 2;
+  int COMPONENT__VERSION_RANGE = 2;
+
+  /**
+  	 * The number of structural features of the '<em>Component</em>' class.
+  	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int COMPONENT_FEATURE_COUNT = 3;
 
   /**
    * The number of structural features of the '<em>Source Locator</em>' class.
@@ -2976,13 +2994,23 @@ public interface SetupPackage extends EPackage
   int LICENSE_INFO = 47;
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
+   * The meta object id for the '<em>Version Range</em>' data type.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Eclipse</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Eclipse
+   * <!-- end-user-doc -->
+   * @see org.eclipse.equinox.p2.metadata.VersionRange
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
+  int VERSION_RANGE = 48;
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Eclipse</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse
+  	 * @generated
+  	 */
   EClass getEclipse();
 
   /**
@@ -3339,13 +3367,24 @@ public interface SetupPackage extends EPackage
   EAttribute getInstallableUnit_ID();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Repository <em>P2 Repository</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.InstallableUnit#getVersionRange <em>Version Range</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return the meta object for class '<em>P2 Repository</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.P2Repository
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Version Range</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.InstallableUnit#getVersionRange()
+   * @see #getInstallableUnit()
    * @generated
    */
+  EAttribute getInstallableUnit_VersionRange();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Repository <em>P2 Repository</em>}'.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>P2 Repository</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.P2Repository
+  	 * @generated
+  	 */
   EClass getP2Repository();
 
   /**
@@ -4218,13 +4257,24 @@ public interface SetupPackage extends EPackage
   EAttribute getComponent_Type();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Component#getVersionRange <em>Version Range</em>}'.
    * <!-- begin-user-doc -->
-                         * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Eclipse Ini Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Version Range</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Component#getVersionRange()
+   * @see #getComponent()
    * @generated
    */
+  EAttribute getComponent_VersionRange();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+  	 * <!-- begin-user-doc -->
+                           * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Eclipse Ini Task</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+  	 * @generated
+  	 */
   EClass getEclipseIniTask();
 
   /**
@@ -4503,14 +4553,25 @@ public interface SetupPackage extends EPackage
   EDataType getLicenseInfo();
 
   /**
-   * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+   * Returns the meta object for data type '{@link org.eclipse.equinox.p2.metadata.VersionRange <em>Version Range</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return the meta object for data type '<em>Exception</em>'.
-   * @see java.lang.Exception
-   * @model instanceClass="java.lang.Exception"
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Version Range</em>'.
+   * @see org.eclipse.equinox.p2.metadata.VersionRange
+   * @model instanceClass="org.eclipse.equinox.p2.metadata.VersionRange"
    * @generated
    */
+  EDataType getVersionRange();
+
+  /**
+  	 * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return the meta object for data type '<em>Exception</em>'.
+  	 * @see java.lang.Exception
+  	 * @model instanceClass="java.lang.Exception"
+  	 * @generated
+  	 */
   EDataType getException();
 
   /**
@@ -4823,13 +4884,21 @@ public interface SetupPackage extends EPackage
     EAttribute INSTALLABLE_UNIT__ID = eINSTANCE.getInstallableUnit_ID();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
+     * The meta object literal for the '<em><b>Version Range</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
      * @generated
      */
+    EAttribute INSTALLABLE_UNIT__VERSION_RANGE = eINSTANCE.getInstallableUnit_VersionRange();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
+    	 * @generated
+    	 */
     EClass P2_REPOSITORY = eINSTANCE.getP2Repository();
 
     /**
@@ -5525,13 +5594,21 @@ public interface SetupPackage extends EPackage
     EAttribute COMPONENT__TYPE = eINSTANCE.getComponent_Type();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
+     * The meta object literal for the '<em><b>Version Range</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-                           * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
+     * <!-- end-user-doc -->
      * @generated
      */
+    EAttribute COMPONENT__VERSION_RANGE = eINSTANCE.getComponent_VersionRange();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
+    	 * <!-- begin-user-doc -->
+                             * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
+    	 * @generated
+    	 */
     EClass ECLIPSE_INI_TASK = eINSTANCE.getEclipseIniTask();
 
     /**
@@ -5769,13 +5846,23 @@ public interface SetupPackage extends EPackage
     EDataType LICENSE_INFO = eINSTANCE.getLicenseInfo();
 
     /**
-     * The meta object literal for the '<em>Exception</em>' data type.
+     * The meta object literal for the '<em>Version Range</em>' data type.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-     * @see java.lang.Exception
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+     * <!-- end-user-doc -->
+     * @see org.eclipse.equinox.p2.metadata.VersionRange
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
      * @generated
      */
+    EDataType VERSION_RANGE = eINSTANCE.getVersionRange();
+
+    /**
+    	 * The meta object literal for the '<em>Exception</em>' data type.
+    	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+    	 * @see java.lang.Exception
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+    	 * @generated
+    	 */
     EDataType EXCEPTION = eINSTANCE.getException();
 
     /**

@@ -112,6 +112,8 @@
         <details key="name" value="id"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="versionRange" eType="#//VersionRange"
+        defaultValueLiteral="0.0.0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="P2Repository">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -142,6 +144,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ComponentType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="versionRange" eType="#//VersionRange"
+        defaultValueLiteral="0.0.0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SourceLocator" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="ManualSourceLocator" eSuperTypes="#//SourceLocator">
@@ -310,4 +314,5 @@
     <eLiterals name="FLOAT" value="12"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="LicenseInfo" instanceClassName="org.eclipse.emf.cdo.releng.setup.LicenseInfo"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="VersionRange" instanceClassName="org.eclipse.equinox.p2.metadata.VersionRange"/>
 </ecore:EPackage>

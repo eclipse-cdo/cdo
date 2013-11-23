@@ -68,6 +68,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.equinox.p2.metadata.VersionRange;
+
 import java.util.Set;
 
 /**
@@ -402,9 +404,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EDataType versionRangeEDataType = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EDataType exceptionEDataType = null;
 
   /**
@@ -805,9 +814,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getInstallableUnit_VersionRange()
+  {
+    return (EAttribute)installableUnitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getP2Repository()
   {
     return p2RepositoryEClass;
@@ -1625,9 +1644,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-                         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getComponent_VersionRange()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+                           * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getEclipseIniTask()
   {
     return eclipseIniTaskEClass;
@@ -1895,9 +1924,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EDataType getVersionRange()
+  {
+    return versionRangeEDataType;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EDataType getException()
   {
     return exceptionEDataType;
@@ -2018,6 +2057,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     installableUnitEClass = createEClass(INSTALLABLE_UNIT);
     createEAttribute(installableUnitEClass, INSTALLABLE_UNIT__ID);
+    createEAttribute(installableUnitEClass, INSTALLABLE_UNIT__VERSION_RANGE);
 
     p2RepositoryEClass = createEClass(P2_REPOSITORY);
     createEAttribute(p2RepositoryEClass, P2_REPOSITORY__URL);
@@ -2037,6 +2077,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     componentEClass = createEClass(COMPONENT);
     createEAttribute(componentEClass, COMPONENT__NAME);
     createEAttribute(componentEClass, COMPONENT__TYPE);
+    createEAttribute(componentEClass, COMPONENT__VERSION_RANGE);
 
     sourceLocatorEClass = createEClass(SOURCE_LOCATOR);
 
@@ -2132,6 +2173,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     exceptionEDataType = createEDataType(EXCEPTION);
     uriEDataType = createEDataType(URI);
     licenseInfoEDataType = createEDataType(LICENSE_INFO);
+    versionRangeEDataType = createEDataType(VERSION_RANGE);
   }
 
   /**
@@ -2363,6 +2405,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInstallableUnit_ID(), ecorePackage.getEString(), "iD", null, 1, 1, InstallableUnit.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInstallableUnit_VersionRange(), getVersionRange(), "versionRange", "0.0.0", 0, 1,
+        InstallableUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2RepositoryEClass, P2Repository.class, "P2Repository", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2401,6 +2446,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Type(), getComponentType(), "type", null, 1, 1, Component.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_VersionRange(), getVersionRange(), "versionRange", "0.0.0", 0, 1, Component.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sourceLocatorEClass, SourceLocator.class, "SourceLocator", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2623,6 +2670,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,
         !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(licenseInfoEDataType, LicenseInfo.class, "LicenseInfo", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(versionRangeEDataType, VersionRange.class, "VersionRange", IS_SERIALIZABLE,
+        !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

@@ -48,6 +48,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
 import org.eclipse.equinox.internal.p2.director.app.Messages;
+import org.eclipse.equinox.internal.p2.director.app.PrettyQuery;
 import org.eclipse.equinox.internal.p2.ui.ProvUI;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.engine.IProfile;
@@ -57,6 +58,8 @@ import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.ILicense;
 import org.eclipse.equinox.p2.metadata.MetadataFactory;
 import org.eclipse.equinox.p2.metadata.MetadataFactory.InstallableUnitDescription;
+import org.eclipse.equinox.p2.metadata.Version;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.equinox.p2.operations.InstallOperation;
 import org.eclipse.equinox.p2.operations.ProvisioningJob;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
@@ -147,7 +150,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    */
   protected boolean licenseConfirmationDisabled = LICENSE_CONFIRMATION_DISABLED_EDEFAULT;
 
-  private transient Set<String> neededInstallableUnits;
+  private transient List<InstallableUnit> neededInstallableUnits;
 
   /**
    * <!-- begin-user-doc -->
@@ -353,9 +356,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     return result.toString();
   }
 
-  private static Set<String> getInstalledUnits()
+  private static Set<IInstallableUnit> getInstalledUnits()
   {
-    Set<String> result = new HashSet<String>();
+    Set<IInstallableUnit> result = new HashSet<IInstallableUnit>();
     ProvisioningUI provisioningUI = ProvisioningUI.getDefaultUI();
     ProvisioningSession session = provisioningUI.getSession();
     String profileId = provisioningUI.getProfileId();
@@ -364,7 +367,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     for (IInstallableUnit installableUnit : queryResult)
     {
-      result.add(installableUnit.getId());
+      result.add(installableUnit);
     }
 
     return result;
@@ -412,19 +415,30 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return true;
     }
 
-    Set<String> installedUnits = getInstalledUnits();
-    for (InstallableUnit installableUnit : getInstallableUnits())
+    Set<IInstallableUnit> installedUnits = getInstalledUnits();
+    LOOP: for (InstallableUnit installableUnit : getInstallableUnits())
     {
       String id = installableUnit.getID();
-      if (!installedUnits.contains(id))
+      VersionRange versionRange = installableUnit.getVersionRange();
+      if (versionRange == null)
       {
-        if (neededInstallableUnits == null)
-        {
-          neededInstallableUnits = new HashSet<String>();
-        }
-
-        neededInstallableUnits.add(id);
+        versionRange = VersionRange.emptyRange;
       }
+
+      for (IInstallableUnit installedUnit : installedUnits)
+      {
+        if (id.equals(installedUnit.getId()) && versionRange.isIncluded(installedUnit.getVersion()))
+        {
+          continue LOOP;
+        }
+      }
+
+      if (neededInstallableUnits == null)
+      {
+        neededInstallableUnits = new ArrayList<InstallableUnit>();
+      }
+
+      neededInstallableUnits.add(installableUnit);
     }
 
     Set<String> knownRepositories = getKnownRepositories();
@@ -485,9 +499,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       if (neededInstallableUnits != null)
       {
         List<IInstallableUnit> toInstall = new ArrayList<IInstallableUnit>();
-        for (String installableUnit : neededInstallableUnits)
+        for (InstallableUnit installableUnit : neededInstallableUnits)
         {
-          IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(installableUnit);
+          IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(installableUnit.getID(),
+              installableUnit.getVersionRange());
           IInstallableUnit candidate = null;
           for (IMetadataRepository repository : repositories)
           {
@@ -512,7 +527,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
             // This will fail.
             // TODO
             InstallableUnitDescription installableUnitDescription = new InstallableUnitDescription();
-            installableUnitDescription.setId(installableUnit);
+            installableUnitDescription.setId(installableUnit.getID());
             toInstall.add(MetadataFactory.createInstallableUnit(installableUnitDescription));
           }
         }
@@ -768,6 +783,44 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           cleanupRepositories();
           cleanupServices();
         }
+      }
+
+      @Override
+      public void processArguments(String[] args) throws CoreException
+      {
+        super.processArguments(args);
+
+        processIUs();
+      }
+
+      private void processIUs()
+      {
+        List<IQuery<IInstallableUnit>> rootsToInstall = getRootsToInstall();
+        rootsToInstall.clear();
+
+        for (InstallableUnit installableUnit : getInstallableUnits())
+        {
+          String id = installableUnit.getID();
+          VersionRange versionRange = installableUnit.getVersionRange();
+          if (versionRange == null)
+          {
+            versionRange = VersionRange.emptyRange;
+          }
+
+          IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
+              Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
+              + versionRange);
+          rootsToInstall.add(query);
+        }
+      }
+
+      private List<IQuery<IInstallableUnit>> getRootsToInstall()
+      {
+        Field field = ReflectUtil.getField(DirectorApplication.class, "rootsToInstall");
+        @SuppressWarnings("unchecked")
+        List<IQuery<IInstallableUnit>> rootsToInstall = (List<IQuery<IInstallableUnit>>)ReflectUtil.getValue(field,
+            this);
+        return rootsToInstall;
       }
 
       private IProvisioningAgent getTargetAgent()

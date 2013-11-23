@@ -205,7 +205,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    */
   protected IMenuManager createSiblingMenuManager;
 
-  private PreferenceRecorderAction recordPreferencesAction = new PreferenceRecorderAction();
+  private PreferenceRecorderAction recordPreferencesAction = new PreferenceRecorderAction(true);
 
   private CommandTableAction commandTableAction = new CommandTableAction();
 
@@ -608,17 +608,28 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    */
   private class PreferenceRecorderAction extends Action
   {
+    private final boolean withDialog;
+
     private SetupTaskContainer container;
 
     private PreferenceNode rootPreferenceNode;
 
     private EContentAdapter preferenceAdapter;
 
-    public PreferenceRecorderAction()
+    public PreferenceRecorderAction(boolean withDialog)
     {
-      super("Record", AS_CHECK_BOX);
+      super("Record" + (withDialog ? "" : " Without Dialog"), AS_CHECK_BOX);
+      this.withDialog = withDialog;
+
       setImageDescriptor(Activator.imageDescriptorFromPlugin(SetupEditorPlugin.PLUGIN_ID, "icons/recorder.gif"));
-      setToolTipText("Record preference changes into the selected setup task container");
+      if (withDialog)
+      {
+        setToolTipText("Open the Preferences dialog and record changes into the selected setup task container");
+      }
+      else
+      {
+        setToolTipText("Record preference changes into the selected setup task container (without dialog)");
+      }
     }
 
     public void selectionChanged(SelectionChangedEvent event)
@@ -660,20 +671,23 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
         rootPreferenceNode = PreferencesUtil.getRootPreferenceNode(true);
         rootPreferenceNode.eAdapters().add(preferenceAdapter);
 
-        ChangeCommand command = new ChangeCommand(container.eResource())
+        if (withDialog)
         {
-          @Override
-          protected void doExecute()
+          ChangeCommand command = new ChangeCommand(container.eResource())
           {
-            PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(null, null, null,
-                null);
-            dialog.open();
-          }
-        };
+            @Override
+            protected void doExecute()
+            {
+              PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(null, null,
+                  null, null);
+              dialog.open();
+            }
+          };
 
-        EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(container);
-        CommandStack commandStack = editingDomain.getCommandStack();
-        commandStack.execute(command);
+          EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(container);
+          CommandStack commandStack = editingDomain.getCommandStack();
+          commandStack.execute(command);
+        }
 
         rootPreferenceNode.eAdapters().remove(preferenceAdapter);
         rootPreferenceNode = null;

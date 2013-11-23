@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -45,18 +46,26 @@ public class Activator extends AbstractUIPlugin
     bundleContext = context;
     plugin = this;
 
-    try
+    if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP)
     {
-      if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP)
+      Display.getDefault().asyncExec(new Runnable()
       {
-        SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
-        setupTaskPerformer.perform();
-      }
-    }
-    catch (Throwable ex)
-    {
-      log(ex);
-      ErrorDialog.open(ex);
+        public void run()
+        {
+          try
+          {
+            // IDEHelper.waitForIDE();
+
+            SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
+            setupTaskPerformer.perform();
+          }
+          catch (Throwable ex)
+          {
+            log(ex);
+            ErrorDialog.open(ex);
+          }
+        }
+      });
     }
   }
 
@@ -125,4 +134,15 @@ public class Activator extends AbstractUIPlugin
     {
     }
   }
+
+  // /**
+  // * @author Eike Stepper
+  // */
+  // public static final class IDEHelper
+  // {
+  // public static void waitForIDE()
+  // {
+  // PlatformUI.getWorkbench().addWorkbenchListener();
+  // }
+  // }
 }

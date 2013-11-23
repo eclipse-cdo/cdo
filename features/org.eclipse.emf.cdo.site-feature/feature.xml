@@ -63,14 +63,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.all"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.help"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.sdk"
          version="0.0.0"/>
 
@@ -148,6 +140,18 @@
 
    <includes
          id="org.gastro"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.all"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.help"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version"
          version="0.0.0"/>
 
    <plugin

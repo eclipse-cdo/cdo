@@ -77,6 +77,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private EList<SetupTask> triggeredSetupTasks;
 
+  private EList<SetupTask> neededSetupTasks;
+
   private List<String> logMessageBuffer;
 
   private PrintStream logStream;
@@ -422,7 +424,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private void perform(EList<SetupTask> setupTasks) throws Exception
   {
-    final EList<SetupTask> neededTasks = getNeededTasks(setupTasks);
+    final EList<SetupTask> neededTasks = initNeededTasks(setupTasks);
     if (neededTasks.isEmpty())
     {
       return;
@@ -611,16 +613,21 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return setup;
   }
 
-  private EList<SetupTask> getNeededTasks(EList<SetupTask> setupTasks) throws Exception
+  public EList<SetupTask> getNeededTasks()
   {
-    EList<SetupTask> result = new BasicEList<SetupTask>();
+    return neededSetupTasks;
+  }
+
+  private EList<SetupTask> initNeededTasks(EList<SetupTask> setupTasks) throws Exception
+  {
+    neededSetupTasks = new BasicEList<SetupTask>();
 
     for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
     {
       SetupTask setupTask = it.next();
       if (setupTask.isNeeded(this))
       {
-        result.add(setupTask);
+        neededSetupTasks.add(setupTask);
       }
       else
       {
@@ -628,7 +635,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       }
     }
 
-    return result;
+    return neededSetupTasks;
   }
 
   private EList<Map.Entry<String, Set<String>>> reorderVariables(final Map<String, Set<String>> variables)

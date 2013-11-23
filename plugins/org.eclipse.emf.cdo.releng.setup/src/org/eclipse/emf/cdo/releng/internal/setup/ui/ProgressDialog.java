@@ -28,8 +28,10 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.emf.common.ui.ImageURIRegistry;
 import org.eclipse.emf.common.ui.viewer.ColumnViewerInformationControlToolTipSupport;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProvider;
@@ -37,6 +39,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
+import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.runtime.CoreException;
@@ -49,6 +52,9 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -58,7 +64,10 @@ import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -75,7 +84,9 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -105,7 +116,74 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   private List<SetupTaskPerformer> setupTaskPerformers;
 
+  private SetupTask currentTask;
+
+  private SetupTaskPerformer currentPerformer;
+
+  private Map<SetupTask, Point> setupTaskSelections = new HashMap<SetupTask, Point>();
+
   private TreeViewer treeViewer;
+
+  private ISelectionChangedListener treeViewerSelectionChangedListener = new ISelectionChangedListener()
+  {
+    public void selectionChanged(SelectionChangedEvent event)
+    {
+      IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+      Object element = selection.getFirstElement();
+      if (element instanceof EObject)
+      {
+        for (EObject eObject = (EObject)element; eObject != null; eObject = eObject.eContainer())
+        {
+          if (eObject != currentTask && eObject instanceof SetupTask)
+          {
+            Point textSelection = setupTaskSelections.get(eObject);
+            if (textSelection != null)
+            {
+              // Force the first line to be scrolled into view
+              text.setSelection(textSelection.x, textSelection.x);
+
+              // Treat -1 so that at selects to the very end.
+              //
+              int end = textSelection.y;
+              if (end == -1)
+              {
+                end = text.getCharCount();
+              }
+
+              // Determine the number of lines of text to be selected
+              String selectedText = text.getText(textSelection.x, end);
+              int lineFeedCount = 0;
+              int carriageReturnCount = 0;
+              for (int i = 0, length = selectedText.length(); i < length; ++i)
+              {
+                char c = selectedText.charAt(i);
+                if (c == '\n')
+                {
+                  ++lineFeedCount;
+                }
+                else if (c == '\r')
+                {
+                  ++carriageReturnCount;
+                }
+              }
+
+              // If the number of visible lines is greater than the number of lines in the selection, invert the
+              // selection range to scroll the top line into view.
+              int visibleLineCount = text.getClientArea().height / text.getLineHeight();
+              if (lineFeedCount > visibleLineCount || carriageReturnCount > visibleLineCount)
+              {
+                text.setSelection(end, textSelection.x);
+              }
+              else
+              {
+                text.setSelection(textSelection.x, end);
+              }
+            }
+          }
+        }
+      }
+    }
+  };
 
   private ProgressDialog(Shell parentShell, List<SetupTaskPerformer> setupTaskPerformers)
   {
@@ -212,6 +290,42 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
         return result.length() == 0 ? null : result.toString();
       }
+
+      @Override
+      public Font getFont(Object element)
+      {
+        if (element == currentTask)
+        {
+          return ExtendedFontRegistry.INSTANCE.getFont(treeViewer.getControl().getFont(), IItemFontProvider.BOLD_FONT);
+        }
+
+        return super.getFont(element);
+      }
+
+      @Override
+      public Color getForeground(Object element)
+      {
+        if (currentPerformer != null)
+        {
+          if (element instanceof EObject)
+          {
+            for (EObject eObject = (EObject)element; eObject != null; eObject = eObject.eContainer())
+            {
+              if (eObject instanceof SetupTask)
+              {
+                if (!currentPerformer.getNeededTasks().contains(eObject))
+                {
+                  return treeViewer.getControl().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+                }
+
+                break;
+              }
+            }
+          }
+        }
+
+        return super.getForeground(element);
+      }
     };
 
     treeViewer.setLabelProvider(labelProvider);
@@ -242,6 +356,8 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     };
 
     treeViewer.setContentProvider(contentProvider);
+
+    treeViewer.addSelectionChangedListener(treeViewerSelectionChangedListener);
 
     new ColumnViewerInformationControlToolTipSupport(treeViewer, new LocationListener()
     {
@@ -366,7 +482,44 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     {
       public void run()
       {
-        treeViewer.setSelection(new StructuredSelection(setupTask), true);
+        SetupTask previousCurrentTask = currentTask;
+        currentTask = setupTask;
+
+        if (currentPerformer == null || !currentPerformer.getTriggeredSetupTasks().contains(setupTask))
+        {
+          for (SetupTaskPerformer performer : setupTaskPerformers)
+          {
+            if (performer.getTriggeredSetupTasks().contains(setupTask))
+            {
+              currentPerformer = performer;
+              treeViewer.refresh(true);
+              break;
+            }
+          }
+        }
+
+        int offset = 0;
+        if (previousCurrentTask != null)
+        {
+          Point previousTextSelection = setupTaskSelections.get(previousCurrentTask);
+          offset = text.getCharCount();
+          int start = previousTextSelection.x;
+          setupTaskSelections.put(previousCurrentTask, new Point(start, offset));
+          treeViewer.refresh(previousCurrentTask, true);
+        }
+
+        if (setupTask == null)
+        {
+          currentPerformer = null;
+        }
+        else
+        {
+          setupTaskSelections.put(setupTask, new Point(offset, -1));
+          treeViewer.refresh(setupTask, true);
+          treeViewer.removeSelectionChangedListener(treeViewerSelectionChangedListener);
+          treeViewer.setSelection(new StructuredSelection(setupTask), true);
+          treeViewer.addSelectionChangedListener(treeViewerSelectionChangedListener);
+        }
       }
     });
   }
@@ -380,6 +533,8 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
       {
         try
         {
+          task(null);
+
           okButton.setEnabled(true);
         }
         catch (Exception ex)

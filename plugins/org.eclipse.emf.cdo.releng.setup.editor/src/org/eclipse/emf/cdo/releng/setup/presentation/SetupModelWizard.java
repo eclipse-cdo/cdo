@@ -14,8 +14,11 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+
+import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -25,6 +28,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.resources.IContainer;
@@ -36,18 +41,29 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
@@ -65,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +146,9 @@ public class SetupModelWizard extends Wizard implements INewWizard
    */
   protected SetupModelWizardInitialObjectCreationPage initialObjectCreationPage;
 
-  protected SetupModelWizardInitialObjectCreationPage2 initialObjectCreationPage2;
+  protected ProjectInitializationPage projectInitializationPage;
+
+  protected TemplateUsagePage templateUsagePage;
 
   /**
    * Remember the selection during initialization for populating the default container.
@@ -171,6 +190,86 @@ public class SetupModelWizard extends Wizard implements INewWizard
   }
 
   /**
+   * The framework calls this to create the contents of the wizard.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public void addPages()
+  {
+    // Create a page, set the title, and the initial model file name.
+    //
+    newFileCreationPage = new SetupModelWizardNewFileCreationPage("Whatever", selection);
+    newFileCreationPage.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
+    newFileCreationPage.setDescription(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_description"));
+    newFileCreationPage.setFileName(SetupEditorPlugin.INSTANCE.getString("_UI_SetupEditorFilenameDefaultBase") + "."
+        + FILE_EXTENSIONS.get(0));
+    addPage(newFileCreationPage);
+
+    // Try and get the resource selection to determine a current directory for the file dialog.
+    //
+    if (selection != null && !selection.isEmpty())
+    {
+      // Get the resource...
+      //
+      Object selectedElement = selection.iterator().next();
+      if (selectedElement instanceof IResource)
+      {
+        // Get the resource parent, if its a file.
+        //
+        IResource selectedResource = (IResource)selectedElement;
+        if (selectedResource.getType() == IResource.FILE)
+        {
+          selectedResource = selectedResource.getParent();
+        }
+
+        // This gives us a directory...
+        //
+        if (selectedResource instanceof IFolder || selectedResource instanceof IProject)
+        {
+          // Set this for the container.
+          //
+          newFileCreationPage.setContainerFullPath(selectedResource.getFullPath());
+
+          // Make up a unique new name here.
+          //
+          String defaultModelBaseFilename = SetupEditorPlugin.INSTANCE.getString("_UI_SetupEditorFilenameDefaultBase");
+          String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
+          String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
+          for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i)
+          {
+            modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
+          }
+          newFileCreationPage.setFileName(modelFilename);
+        }
+      }
+    }
+
+    projectInitializationPage = new ProjectInitializationPage("Whatever2");
+    projectInitializationPage.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
+    projectInitializationPage.setDescription(SetupEditorPlugin.INSTANCE
+        .getString("_UI_Wizard_initial_object_description2"));
+    addPage(projectInitializationPage);
+
+    templateUsagePage = new TemplateUsagePage("Whatever3");
+    templateUsagePage.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
+    templateUsagePage.setDescription(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description3"));
+    addPage(templateUsagePage);
+  }
+
+  /**
+   * Get the file from the page.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IFile getModelFile()
+  {
+    return newFileCreationPage.getModelFile();
+  }
+
+  /**
    * Returns the names of the types that can be created as the root object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -205,19 +304,54 @@ public class SetupModelWizard extends Wizard implements INewWizard
    */
   protected EObject createInitialModel()
   {
-    Project project = SetupFactory.eINSTANCE.createProject();
-    project.setName(initialObjectCreationPage2.getProjectName());
-    project.setLabel(initialObjectCreationPage2.getProjectLabel());
+    Project project;
 
-    Branch masterBranch = SetupFactory.eINSTANCE.createBranch();
-    masterBranch.setName("master");
-    project.getBranches().add(masterBranch);
+    if (projectInitializationPage.isUseTemplate())
+    {
+      project = templateUsagePage.getProject();
+    }
+    else
+    {
+      project = SetupFactory.eINSTANCE.createProject();
+      Branch masterBranch = SetupFactory.eINSTANCE.createBranch();
+      masterBranch.setName("master");
+      project.getBranches().add(masterBranch);
 
-    Branch maintenanceBranch = SetupFactory.eINSTANCE.createBranch();
-    maintenanceBranch.setName("maintenance");
-    project.getBranches().add(maintenanceBranch);
+      Branch maintenanceBranch = SetupFactory.eINSTANCE.createBranch();
+      maintenanceBranch.setName("maintenance");
+      project.getBranches().add(maintenanceBranch);
+    }
 
+    project.setName(projectInitializationPage.getProjectName());
+    project.setLabel(projectInitializationPage.getProjectLabel());
     return project;
+  }
+
+  @Override
+  public boolean canFinish()
+  {
+    // return super.canFinish();
+    if (!newFileCreationPage.isPageComplete())
+    {
+      return false;
+    }
+
+    if (!projectInitializationPage.isPageComplete())
+    {
+      return false;
+    }
+
+    if (projectInitializationPage.isUseTemplate() && getContainer().getCurrentPage() == projectInitializationPage)
+    {
+      return false;
+    }
+
+    if (!templateUsagePage.isPageComplete())
+    {
+      return false;
+    }
+
+    return true;
   }
 
   /**
@@ -321,6 +455,22 @@ public class SetupModelWizard extends Wizard implements INewWizard
       SetupEditorPlugin.INSTANCE.log(exception);
       return false;
     }
+  }
+
+  public static GridData applyGridData(Control control)
+  {
+    GridData data = new GridData();
+    data.grabExcessHorizontalSpace = true;
+    data.horizontalAlignment = GridData.FILL;
+    control.setLayoutData(data);
+    return data;
+  }
+
+  public static GridData grabVertical(GridData data)
+  {
+    data.grabExcessVerticalSpace = true;
+    data.verticalAlignment = GridData.FILL;
+    return data;
   }
 
   /**
@@ -623,91 +773,75 @@ public class SetupModelWizard extends Wizard implements INewWizard
     }
   }
 
-  public class SetupModelWizardInitialObjectCreationPage2 extends WizardPage
+  /**
+   * @author Eike Stepper
+   */
+  public class ProjectInitializationPage extends WizardPage implements SelectionListener, ModifyListener
   {
     protected Text nameField;
 
     protected Text labelField;
 
-    public SetupModelWizardInitialObjectCreationPage2(String pageId)
+    protected Button useTemplateButton;
+
+    public ProjectInitializationPage(String pageId)
     {
       super(pageId);
     }
 
+    public String getProjectName()
+    {
+      return nameField.getText();
+    }
+
+    public String getProjectLabel()
+    {
+      return labelField.getText();
+    }
+
+    public boolean isUseTemplate()
+    {
+      return useTemplateButton.getSelection();
+    }
+
+    @Override
+    public boolean canFlipToNextPage()
+    {
+      return isUseTemplate();
+    }
+
     public void createControl(Composite parent)
     {
-      Composite composite = new Composite(parent, SWT.NONE);
-      {
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 1;
-        layout.verticalSpacing = 12;
-        composite.setLayout(layout);
+      GridLayout layout = new GridLayout();
+      layout.numColumns = 1;
+      layout.verticalSpacing = 10;
 
-        GridData data = new GridData();
-        data.verticalAlignment = GridData.FILL;
-        data.grabExcessVerticalSpace = true;
-        data.horizontalAlignment = GridData.FILL;
-        composite.setLayoutData(data);
-      }
+      Composite composite = new Composite(parent, SWT.NONE);
+      composite.setLayout(layout);
+      grabVertical(applyGridData(composite));
+      setControl(composite);
 
       Label containerLabel = new Label(composite, SWT.LEFT);
-      {
-        containerLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Name_label"));
-
-        GridData data = new GridData();
-        data.horizontalAlignment = GridData.FILL;
-        containerLabel.setLayoutData(data);
-      }
+      containerLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Name_label"));
+      applyGridData(containerLabel);
 
       nameField = new Text(composite, SWT.BORDER);
-      {
-        GridData data = new GridData();
-        data.horizontalAlignment = GridData.FILL;
-        data.grabExcessHorizontalSpace = true;
-        nameField.setLayoutData(data);
-      }
-
-      nameField.addModifyListener(validator);
+      nameField.addModifyListener(this);
+      applyGridData(nameField);
 
       Label labelLabel = new Label(composite, SWT.LEFT);
-      {
-        labelLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Label_label"));
-
-        GridData data = new GridData();
-        data.horizontalAlignment = GridData.FILL;
-        labelLabel.setLayoutData(data);
-      }
+      labelLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Label_label"));
+      applyGridData(labelLabel);
 
       labelField = new Text(composite, SWT.BORDER);
-      {
-        GridData data = new GridData();
-        data.horizontalAlignment = GridData.FILL;
-        data.grabExcessHorizontalSpace = true;
-        labelField.setLayoutData(data);
-      }
+      applyGridData(labelField);
 
-      initValues();
+      useTemplateButton = new Button(composite, SWT.CHECK);
+      useTemplateButton.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_UseTemplate_label"));
+      useTemplateButton.addSelectionListener(this);
+      applyGridData(useTemplateButton).horizontalAlignment = SWT.LEFT;
 
-      setPageComplete(validatePage());
-      setControl(composite);
-    }
-
-    private void initValues()
-    {
-    }
-
-    protected ModifyListener validator = new ModifyListener()
-    {
-      public void modifyText(ModifyEvent e)
-      {
-        setPageComplete(validatePage());
-      }
-    };
-
-    protected boolean validatePage()
-    {
-      String projectName = getProjectName();
-      return projectName.length() != 0;
+      validatePage();
     }
 
     @Override
@@ -729,90 +863,188 @@ public class SetupModelWizard extends Wizard implements INewWizard
       }
     }
 
-    public String getProjectName()
+    public void widgetSelected(SelectionEvent e)
     {
-      return nameField.getText();
+      validatePage();
     }
 
-    public String getProjectLabel()
+    public void widgetDefaultSelected(SelectionEvent e)
     {
-      return labelField.getText();
+      validatePage();
+    }
+
+    public void modifyText(ModifyEvent e)
+    {
+      validatePage();
+    }
+
+    protected void validatePage()
+    {
+      boolean pageValid = isPageValid();
+      setPageComplete(pageValid);
+
+      templateUsagePage.setVisible(isUseTemplate());
+      getContainer().updateButtons();
+    }
+
+    protected boolean isPageValid()
+    {
+      String projectName = getProjectName();
+      return projectName.length() != 0;
     }
   }
 
   /**
-   * The framework calls this to create the contents of the wizard.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
+   * @author Eike Stepper
    */
-  @Override
-  public void addPages()
+  public class TemplateUsagePage extends WizardPage implements ISelectionChangedListener
   {
-    // Create a page, set the title, and the initial model file name.
-    //
-    newFileCreationPage = new SetupModelWizardNewFileCreationPage("Whatever", selection);
-    newFileCreationPage.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
-    newFileCreationPage.setDescription(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_description"));
-    newFileCreationPage.setFileName(SetupEditorPlugin.INSTANCE.getString("_UI_SetupEditorFilenameDefaultBase") + "."
-        + FILE_EXTENSIONS.get(0));
-    addPage(newFileCreationPage);
+    private final List<ProjectTemplate> templates = new ArrayList<ProjectTemplate>();
 
-    // Try and get the resource selection to determine a current directory for the file dialog.
-    //
-    if (selection != null && !selection.isEmpty())
+    private final Map<ProjectTemplate, Control> templateControls = new HashMap<ProjectTemplate, Control>();
+
+    private ListViewer templatesViewer;
+
+    private Composite templatesContainer;
+
+    private StackLayout templatesStack;
+
+    private TreeViewer preViewer;
+
+    public TemplateUsagePage(String pageId)
     {
-      // Get the resource...
-      //
-      Object selectedElement = selection.iterator().next();
-      if (selectedElement instanceof IResource)
+      super(pageId);
+      setPageComplete(false);
+
+      for (String type : IPluginContainer.INSTANCE.getFactoryTypes(ProjectTemplate.PRODUCT_GROUP))
       {
-        // Get the resource parent, if its a file.
-        //
-        IResource selectedResource = (IResource)selectedElement;
-        if (selectedResource.getType() == IResource.FILE)
-        {
-          selectedResource = selectedResource.getParent();
-        }
+        templates.add((ProjectTemplate)IPluginContainer.INSTANCE.getFactory(ProjectTemplate.PRODUCT_GROUP, type));
+      }
 
-        // This gives us a directory...
-        //
-        if (selectedResource instanceof IFolder || selectedResource instanceof IProject)
+      Collections.sort(templates, new Comparator<ProjectTemplate>()
+      {
+        public int compare(ProjectTemplate t1, ProjectTemplate t2)
         {
-          // Set this for the container.
-          //
-          newFileCreationPage.setContainerFullPath(selectedResource.getFullPath());
-
-          // Make up a unique new name here.
-          //
-          String defaultModelBaseFilename = SetupEditorPlugin.INSTANCE.getString("_UI_SetupEditorFilenameDefaultBase");
-          String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
-          String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
-          for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i)
-          {
-            modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
-          }
-          newFileCreationPage.setFileName(modelFilename);
+          return t1.getLabel().compareTo(t2.getLabel());
         }
+      });
+    }
+
+    public Project getProject()
+    {
+      ProjectTemplate template = getSelectedTemplate();
+      return template.getProject();
+    }
+
+    public void createControl(Composite parent)
+    {
+      GridLayout layout = new GridLayout();
+      layout.numColumns = 1;
+      layout.verticalSpacing = 10;
+
+      Composite composite = new Composite(parent, SWT.NONE);
+      composite.setLayout(layout);
+      grabVertical(applyGridData(composite));
+      setControl(composite);
+
+      templatesViewer = new ListViewer(composite, SWT.BORDER);
+      templatesViewer.setLabelProvider(new LabelProvider());
+      templatesViewer.setContentProvider(ArrayContentProvider.getInstance());
+      templatesViewer.setInput(templates);
+      templatesViewer.addSelectionChangedListener(this);
+      applyGridData(templatesViewer.getControl()).heightHint = 100;
+
+      templatesStack = new StackLayout();
+
+      templatesContainer = new Composite(composite, SWT.NONE);
+      templatesContainer.setLayout(templatesStack);
+      applyGridData(templatesContainer);
+
+      for (ProjectTemplate template : templates)
+      {
+        Control control = template.createControl(templatesContainer);
+        templateControls.put(template, control);
+
+        // Project project = template.getProject();
+        // project.getSetupTasks().clear();
+        // project.getBranches().clear();
+      }
+
+      preViewer = new TreeViewer(composite, SWT.BORDER);
+      preViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
+      preViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY));
+      grabVertical(applyGridData(preViewer.getControl()));
+
+      templatesViewer.setSelection(new StructuredSelection(templates.get(0)));
+      validatePage();
+    }
+
+    @Override
+    public void setVisible(boolean visible)
+    {
+      if (templatesViewer == null)
+      {
+        return;
+      }
+
+      super.setVisible(visible);
+      if (visible)
+      {
+        templatesViewer.getControl().setFocus();
       }
     }
 
-    initialObjectCreationPage2 = new SetupModelWizardInitialObjectCreationPage2("Whatever2");
-    initialObjectCreationPage2.setTitle(SetupEditorPlugin.INSTANCE.getString("_UI_SetupModelWizard_label"));
-    initialObjectCreationPage2.setDescription(SetupEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description2"));
-    addPage(initialObjectCreationPage2);
-  }
+    public void selectionChanged(SelectionChangedEvent event)
+    {
+      Control control = getSelectedTemplateControl();
+      if (control != null)
+      {
+        templatesStack.topControl = control;
+        templatesContainer.layout();
 
-  /**
-   * Get the file from the page.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public IFile getModelFile()
-  {
-    return newFileCreationPage.getModelFile();
-  }
+        Project project = getSelectedTemplate().getProject();
+        preViewer.setInput(project);
+      }
 
+      validatePage();
+    }
+
+    // public void fillProject(Project project)
+    // {
+    // ProjectTemplate template = getSelectedTemplate();
+    // if (template != null)
+    // {
+    // template.fillProject(project);
+    // }
+    // }
+
+    protected void validatePage()
+    {
+      boolean pageValid = isPageValid();
+      setPageComplete(pageValid);
+      getContainer().updateButtons();
+    }
+
+    protected boolean isPageValid()
+    {
+      ProjectTemplate template = getSelectedTemplate();
+      if (template != null)
+      {
+        return template.isPageValid();
+      }
+
+      return false;
+    }
+
+    private ProjectTemplate getSelectedTemplate()
+    {
+      return (ProjectTemplate)((IStructuredSelection)templatesViewer.getSelection()).getFirstElement();
+    }
+
+    private Control getSelectedTemplateControl()
+    {
+      ProjectTemplate template = getSelectedTemplate();
+      return templateControls.get(template);
+    }
+  }
 }

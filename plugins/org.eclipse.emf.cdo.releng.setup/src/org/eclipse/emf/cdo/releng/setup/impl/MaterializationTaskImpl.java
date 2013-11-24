@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -62,9 +63,11 @@ import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,9 +75,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
@@ -324,6 +330,258 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return BuckminsterHelper.getMspec(context, getRootComponents(), getSourceLocators(), getP2Repositories());
   }
 
+  public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, List<String> locations)
+      throws ParserConfigurationException
+  {
+    Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
+
+    Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
+    for (Map.Entry<String, List<ComponentLocation>> entry : analyzeFolder(folder).entrySet())
+    {
+      String name = entry.getKey();
+      for (ComponentLocation location : entry.getValue())
+      {
+        ComponentType type = location.getComponentType();
+        if (locations != null)
+        {
+          locations.add(location.getLocation());
+        }
+
+        Pair<String, ComponentType> component = Pair.create(name, type);
+        roots.add(component);
+
+        Set<Pair<String, ComponentType>> children = location.getChildren();
+        components.put(component, children);
+      }
+    }
+
+    for (Set<Pair<String, ComponentType>> children : components.values())
+    {
+      for (Pair<String, ComponentType> child : children)
+      {
+        roots.remove(child);
+      }
+    }
+
+    return roots;
+  }
+
+  public static Map<String, List<ComponentLocation>> analyzeFolder(File folder) throws ParserConfigurationException
+  {
+    Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
+
+    DocumentBuilder documentBuilder = createDocumentBuilder();
+    analyze(componentMap, documentBuilder, folder);
+
+    return componentMap;
+  }
+
+  private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
+      File folder)
+  {
+    File projectFile = new File(folder, ".project");
+    if (projectFile.exists())
+    {
+      try
+      {
+        String componentName = null;
+        ComponentType componentType = null;
+        Set<Pair<String, ComponentType>> children = new HashSet<Pair<String, ComponentType>>();
+
+        File manifestFile = new File(folder, "META-INF/MANIFEST.MF");
+        if (manifestFile.exists())
+        {
+          FileInputStream manifestFileInputStream = null;
+
+          try
+          {
+            manifestFileInputStream = new FileInputStream(manifestFile);
+            Manifest manifest = new Manifest(manifestFileInputStream);
+            String bundleSymbolicName = manifest.getMainAttributes().getValue("Bundle-SymbolicName").trim();
+            int index = bundleSymbolicName.indexOf(';');
+            if (index != -1)
+            {
+              bundleSymbolicName = bundleSymbolicName.substring(0, index).trim();
+            }
+
+            componentName = bundleSymbolicName;
+            componentType = ComponentType.OSGI_BUNDLE;
+          }
+          catch (IOException ex)
+          {
+            Activator.log(ex);
+          }
+          finally
+          {
+            IOUtil.close(manifestFileInputStream);
+          }
+        }
+        else
+        {
+          File featureXMLFile = new File(folder, "feature.xml");
+          if (featureXMLFile.exists())
+          {
+            try
+            {
+              Element rootElement = load(documentBuilder, featureXMLFile);
+              componentName = rootElement.getAttribute("id").trim();
+              componentType = ComponentType.ECLIPSE_FEATURE;
+
+              addChildren(rootElement, "includes", "id", children, ComponentType.ECLIPSE_FEATURE);
+              addChildren(rootElement, "plugin", "id", children, ComponentType.OSGI_BUNDLE);
+            }
+            catch (Exception ex)
+            {
+              Activator.log(ex);
+            }
+          }
+          else
+          {
+            File cspecFile = new File(folder, "buckminster.cspec");
+            if (cspecFile.exists())
+            {
+              Element rootElement = load(documentBuilder, cspecFile);
+              componentName = rootElement.getAttribute("name").trim();
+              componentType = ComponentType.BUCKMINSTER;
+
+              NodeList dependenciesList = rootElement.getElementsByTagName("dependencies");
+              for (int i = 0; i < dependenciesList.getLength(); i++)
+              {
+                Element dependenciesElement = (Element)dependenciesList.item(i);
+                NodeList dependencyList = dependenciesElement.getElementsByTagName("dependency");
+                for (int j = 0; i < dependencyList.getLength(); j++)
+                {
+                  Element dependency = (Element)dependencyList.item(j);
+                  String id = dependency.getAttribute("name");
+                  String type = dependency.getAttribute("componentType");
+
+                  try
+                  {
+                    ComponentType enumValue = ComponentType.valueOf(type.toUpperCase());
+                    if (enumValue != null)
+                    {
+                      children.add(Pair.create(id, enumValue));
+                    }
+                  }
+                  catch (Exception ex)
+                  {
+                    Activator.log(ex);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // TODO Consider CSpec extensions (buckminster.cspex), which add their dependencies
+
+        if (componentName != null)
+        {
+          List<ComponentLocation> locations = componentMap.get(componentName);
+          if (locations == null)
+          {
+            locations = new ArrayList<ComponentLocation>();
+            componentMap.put(componentName, locations);
+          }
+
+          ComponentLocation componentLocation = new ComponentLocation(componentType, folder.toString());
+          componentLocation.addChildren(children);
+          locations.add(componentLocation);
+        }
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+    }
+
+    File[] listFiles = folder.listFiles();
+    if (listFiles != null)
+    {
+      for (File file : listFiles)
+      {
+        if (file.isDirectory())
+        {
+          analyze(componentMap, documentBuilder, file);
+        }
+      }
+    }
+  }
+
+  private static Element load(DocumentBuilder documentBuilder, File file) throws Exception
+  {
+    Document document = documentBuilder.parse(file);
+    return document.getDocumentElement();
+  }
+
+  private static DocumentBuilder createDocumentBuilder() throws ParserConfigurationException
+  {
+    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+    documentBuilderFactory.setNamespaceAware(true);
+    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+    return documentBuilder;
+  }
+
+  private static void addChildren(Element rootElement, String tag, String attribute,
+      Set<Pair<String, ComponentType>> children, ComponentType type)
+  {
+    NodeList features = rootElement.getElementsByTagName(tag);
+    for (int i = 0; i < features.getLength(); i++)
+    {
+      Element plugin = (Element)features.item(i);
+      String id = plugin.getAttribute(attribute);
+      children.add(Pair.create(id, type));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ComponentLocation
+  {
+    private final ComponentType componentType;
+
+    private final String location;
+
+    private Set<Pair<String, ComponentType>> children;
+
+    public ComponentLocation(ComponentType componentType, String location)
+    {
+      this.componentType = componentType;
+      this.location = location;
+    }
+
+    public ComponentType getComponentType()
+    {
+      return componentType;
+    }
+
+    public String getLocation()
+    {
+      return location;
+    }
+
+    public Set<Pair<String, ComponentType>> getChildren()
+    {
+      if (children == null)
+      {
+        return Collections.emptySet();
+      }
+
+      return children;
+    }
+
+    void addChildren(Set<Pair<String, ComponentType>> children)
+    {
+      if (this.children == null)
+      {
+        this.children = new HashSet<Pair<String, ComponentType>>();
+      }
+
+      this.children.addAll(children);
+    }
+  }
+
   private static class BuckminsterHelper
   {
     public static String getMspec(SetupTaskContext context, EList<Component> rootComponents,
@@ -506,10 +764,9 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           else
           {
             AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)sourceLocator;
+
             automaticSourceLocator.getRootFolder();
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setNamespaceAware(true);
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            DocumentBuilder documentBuilder = createDocumentBuilder();
             analyze(componentMap, documentBuilder, new File(automaticSourceLocator.getRootFolder()));
           }
         }
@@ -526,12 +783,12 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           {
             Provider provider = RmapFactory.eINSTANCE.createProvider();
 
-            provider.setComponentTypesAttr(componentLocation.componentType.toString());
+            provider.setComponentTypesAttr(componentLocation.getComponentType().toString());
             provider.setReaderType("local");
             provider.setSource(true);
 
             Format format = CommonFactory.eINSTANCE.createFormat();
-            format.setFormat(componentLocation.location);
+            format.setFormat(componentLocation.getLocation());
             provider.setURI(format);
 
             sourceProviders.add(provider);
@@ -584,126 +841,6 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     private static Pattern exactPattern(String componentName)
     {
       return Pattern.compile("^" + Pattern.quote(componentName) + "$");
-    }
-
-    private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
-        File folder)
-    {
-      File projectFile = new File(folder, ".project");
-      if (projectFile.exists())
-      {
-        try
-        {
-          String componentName = null;
-          ComponentType componentType = null;
-
-          File manifestFile = new File(folder, "META-INF/MANIFEST.MF");
-          if (manifestFile.exists())
-          {
-            FileInputStream manifestFileInputStream = null;
-
-            try
-            {
-              manifestFileInputStream = new FileInputStream(manifestFile);
-              Manifest manifest = new Manifest(manifestFileInputStream);
-              String bundleSymbolicName = manifest.getMainAttributes().getValue("Bundle-SymbolicName").trim();
-              int index = bundleSymbolicName.indexOf(';');
-              if (index != -1)
-              {
-                bundleSymbolicName = bundleSymbolicName.substring(0, index).trim();
-              }
-
-              componentName = bundleSymbolicName;
-              componentType = ComponentType.OSGI_BUNDLE;
-            }
-            catch (IOException ex)
-            {
-              Activator.log(ex);
-            }
-            finally
-            {
-              IOUtil.close(manifestFileInputStream);
-            }
-          }
-          else
-          {
-            File featureXMLFile = new File(folder, "feature.xml");
-            if (featureXMLFile.exists())
-            {
-              try
-              {
-                Element rootElement = load(documentBuilder, featureXMLFile);
-                componentName = rootElement.getAttribute("id").trim();
-                componentType = ComponentType.ECLIPSE_FEATURE;
-              }
-              catch (Exception ex)
-              {
-                Activator.log(ex);
-              }
-            }
-            else
-            {
-              File cspecFile = new File(folder, "buckminster.cspec");
-              if (cspecFile.exists())
-              {
-                Element rootElement = load(documentBuilder, cspecFile);
-                componentName = rootElement.getAttribute("name").trim();
-                componentType = ComponentType.BUCKMINSTER;
-              }
-            }
-          }
-
-          if (componentName != null)
-          {
-            List<ComponentLocation> locations = componentMap.get(componentName);
-            if (locations == null)
-            {
-              locations = new ArrayList<ComponentLocation>();
-              componentMap.put(componentName, locations);
-            }
-
-            locations.add(new ComponentLocation(componentType, folder.toString()));
-          }
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
-      }
-
-      File[] listFiles = folder.listFiles();
-      if (listFiles != null)
-      {
-        for (File file : listFiles)
-        {
-          if (file.isDirectory())
-          {
-            analyze(componentMap, documentBuilder, file);
-          }
-        }
-      }
-    }
-
-    private static Element load(DocumentBuilder documentBuilder, File file) throws Exception
-    {
-      Document document = documentBuilder.parse(file);
-      return document.getDocumentElement();
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private static class ComponentLocation
-    {
-      public ComponentType componentType;
-
-      public String location;
-
-      public ComponentLocation(ComponentType componentType, String location)
-      {
-        this.componentType = componentType;
-        this.location = location;
-      }
     }
   }
 } // MaterializationTaskImpl

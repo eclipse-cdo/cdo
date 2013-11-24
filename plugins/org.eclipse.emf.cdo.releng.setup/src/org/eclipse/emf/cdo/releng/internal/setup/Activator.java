@@ -54,8 +54,6 @@ public class Activator extends AbstractUIPlugin
         {
           try
           {
-            // IDEHelper.waitForIDE();
-
             SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
             setupTaskPerformer.perform();
           }
@@ -134,15 +132,4 @@ public class Activator extends AbstractUIPlugin
     {
     }
   }
-
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static final class IDEHelper
-  // {
-  // public static void waitForIDE()
-  // {
-  // PlatformUI.getWorkbench().addWorkbenchListener();
-  // }
-  // }
 }

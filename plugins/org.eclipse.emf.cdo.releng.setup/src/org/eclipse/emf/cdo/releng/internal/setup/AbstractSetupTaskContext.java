@@ -99,8 +99,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     String branchName = branch.getName();
 
     Project project = branch.getProject();
-    String projectName = project.getName();
-    String projectLabel = project.getLabel();
+    String projectName = project == null ? "<project>" : project.getName();
+    String projectLabel = project == null ? null : project.getLabel();
     if (StringUtil.isEmpty(projectLabel))
     {
       projectLabel = projectName;
@@ -126,7 +126,6 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     {
       put(entry.getKey(), entry.getValue());
     }
-
   }
 
   public Trigger getTrigger()

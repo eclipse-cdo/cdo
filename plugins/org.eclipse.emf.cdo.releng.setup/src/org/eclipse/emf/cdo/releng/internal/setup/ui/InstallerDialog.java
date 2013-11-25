@@ -93,6 +93,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
@@ -590,15 +591,16 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    createToolItem(toolBar, "icons/install_network.gif", "Preferences").addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        close();
-        setReturnCode(RETURN_WORKBENCH_NETWORK_PREFERENCES);
-      }
-    });
+    createToolItem(toolBar, "icons/install_network.gif", "Network connection settings").addSelectionListener(
+        new SelectionAdapter()
+        {
+          @Override
+          public void widgetSelected(SelectionEvent e)
+          {
+            close();
+            setReturnCode(RETURN_WORKBENCH_NETWORK_PREFERENCES);
+          }
+        });
 
     createToolItem(toolBar, "icons/install_update.gif", "Update").addSelectionListener(new SelectionAdapter()
     {
@@ -977,7 +979,38 @@ public class InstallerDialog extends AbstractSetupDialog
 
             Resource configurationResource = loadResourceSafely(EMFUtil.SETUP_URI);
 
-            configuration = (Configuration)configurationResource.getContents().get(0);
+            EList<EObject> contents = configurationResource.getContents();
+            if (contents.isEmpty())
+            {
+              final Display display = viewer.getControl().getDisplay();
+              display.syncExec(new Runnable()
+              {
+
+                public void run()
+                {
+
+                  boolean confirmation = MessageDialog.openQuestion(null, "Configuration Load Failure",
+                      "The configuration could not be loaded so it's likely you're not connected to the internet or are behind a firewall."
+                          + "The following URI is inaccessable:\n" + "  " + EMFUtil.SETUP_URI + "\n\n"
+                          + "Do you wish to configure your network connections?");
+                  if (confirmation)
+                  {
+                    display.asyncExec(new Runnable()
+                    {
+                      public void run()
+                      {
+                        close();
+                        setReturnCode(RETURN_WORKBENCH_NETWORK_PREFERENCES);
+                      }
+                    });
+                  }
+                }
+              });
+
+              throw new InterruptedException("Cannot load configuration");
+            }
+
+            configuration = (Configuration)contents.get(0);
 
             InternalEList<Project> configuredProjects = (InternalEList<Project>)configuration.getProjects();
 

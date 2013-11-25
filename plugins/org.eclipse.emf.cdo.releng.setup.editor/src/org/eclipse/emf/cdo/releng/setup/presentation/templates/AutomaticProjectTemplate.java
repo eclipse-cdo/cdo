@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
+import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -26,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -48,6 +50,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -72,21 +75,33 @@ import java.util.regex.Pattern;
  */
 public class AutomaticProjectTemplate extends ProjectTemplate
 {
-  private static final Pattern GIT_PATTERN = Pattern.compile("\\[remote \"origin\"].*?url *= *([^\\r\\n]*)",
+  private static final Pattern GIT_URL_PATTERN = Pattern.compile("\\[remote \"origin\"].*?url *= *([^\\r\\n]*)",
       Pattern.DOTALL | Pattern.MULTILINE);
 
-  private static final Pattern TARGET_PATTERN = Pattern.compile("<repository.*?location.*?=.*?\"([^\"]*)\"",
+  private static final Pattern TARGET_URL_PATTERN = Pattern.compile("<repository.*?location.*?=.*?\"([^\"]*)\"",
       Pattern.DOTALL | Pattern.MULTILINE);
 
-  private static final Pattern RMAP_PATTERN = Pattern.compile(
+  private static final Pattern RMAP_URL_PATTERN = Pattern.compile(
       "<(rm:)?provider.*?readerType[^=]*?=[^\"]*?\"p2\".*?format[^=]*?=[^\"]*?\"([^\"]*)\"", Pattern.DOTALL
           | Pattern.MULTILINE);
+
+  // private static final Pattern RMAP_PROPERTY1_PATTERN = Pattern.compile(
+  // "<(rm:)?property.*?key[^=]*?=[^\"]*?\"([^\"]*)\".*?value[^=]*?=[^\"]*?\"([^\"]*)\"", Pattern.DOTALL
+  // | Pattern.MULTILINE);
+  //
+  // private static final Pattern RMAP_PROPERTY2_PATTERN = Pattern.compile(
+  // "<(rm:)?property.*?value[^=]*?=[^\"]*?\"([^\"]*)\".*?key[^=]*?=[^\"]*?\"([^\"]*)\"", Pattern.DOTALL
+  // | Pattern.MULTILINE);
+  //
+  // private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("{([0-9]+)}");
 
   private static final String BRANCH_NAME = "master";
 
   private static final String REMOVE_TEXT = "Remove";
 
   private static final String ASSOCIATED_ELEMENTS = "associated-elements";
+
+  private static String lastFolder;
 
   public AutomaticProjectTemplate()
   {
@@ -138,6 +153,8 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     Text branchText = addBranchControl(composite, container, branch);
     branchText.setText(BRANCH_NAME);
 
+    // addVariablesControl(composite, container, branch);
+
     addFolderControl(composite, container, branch);
     return composite;
   }
@@ -161,6 +178,42 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     return branchText;
   }
 
+  // private Button addVariablesControl(Composite composite, final Container container, final Branch branch)
+  // {
+  // new Label(composite, SWT.NONE);
+  //
+  // final Button button = new Button(composite, SWT.CHECK);
+  // button.setText("Create variables for user IDs");
+  // button.addSelectionListener(new SelectionAdapter()
+  // {
+  // @Override
+  // public void widgetSelected(SelectionEvent e)
+  // {
+  // if (button.getSelection())
+  // {
+  // for (SetupTask task : branch.getSetupTasks())
+  // {
+  // if (task instanceof GitCloneTask)
+  // {
+  // GitCloneTask gitCloneTask = (GitCloneTask)task;
+  // addVariable(gitCloneTask);
+  // changeShellHeight(button.getShell(), 10);
+  // }
+  // }
+  // }
+  // else
+  // {
+  // // changeShellHeight(button.getShell(), -10);
+  // }
+  //
+  // container.validate();
+  // }
+  // });
+  //
+  // new Label(composite, SWT.NONE);
+  // return button;
+  // }
+
   private Text addFolderControl(final Composite composite, final Container container, final Branch branch)
   {
     final Label label = new Label(composite, SWT.NONE);
@@ -172,12 +225,14 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     final Button button = new Button(composite, SWT.NONE);
     button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     button.setBounds(0, 0, 75, 25);
-    button.setText("Add...");
+    button.setText("&Add...");
     button.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
+        final Shell shell = text.getShell();
+
         if (button.getText().equals(REMOVE_TEXT))
         {
           @SuppressWarnings("unchecked")
@@ -190,20 +245,26 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           label.dispose();
           text.dispose();
           button.dispose();
+
+          changeShellHeight(shell, -20);
           composite.getParent().getParent().layout();
           container.validate();
           return;
         }
 
-        Shell shell = text.getShell();
-
         DirectoryDialog dialog = new DirectoryDialog(shell);
         dialog.setText(AbstractSetupDialog.SHELL_TEXT);
-        dialog.setMessage("Select a folder to analyze");
+        dialog.setMessage("Select a folder to analyze:");
+        if (lastFolder != null)
+        {
+          dialog.setFilterPath(lastFolder);
+        }
 
         final String folder = dialog.open();
         if (folder != null)
         {
+          lastFolder = folder;
+
           try
           {
             ProgressMonitorDialog dlg = new ProgressMonitorDialog(shell);
@@ -247,6 +308,8 @@ public class AutomaticProjectTemplate extends ProjectTemplate
                 button.setText(REMOVE_TEXT);
 
                 addFolderControl(composite, container, branch);
+
+                changeShellHeight(shell, 20);
                 composite.getParent().getParent().layout();
                 container.validate();
               }
@@ -283,11 +346,15 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       {
         String content = IOUtil.readTextFile(config);
 
-        Matcher matcher = GIT_PATTERN.matcher(content);
+        Matcher matcher = GIT_URL_PATTERN.matcher(content);
         if (matcher.find())
         {
           URI baseURI = URI.createURI(matcher.group(1));
           String userID = baseURI.userInfo();
+          if (StringUtil.isEmpty(userID))
+          {
+            userID = GitCloneTask.ANONYMOUS;
+          }
 
           URI uri = URI.createHierarchicalURI(baseURI.scheme(), baseURI.host(), baseURI.device(), baseURI.segments(),
               baseURI.query(), baseURI.fragment());
@@ -300,8 +367,11 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           task.setRemoteName("origin");
           task.setCheckoutBranch("master");
 
-          elements.add(task);
           tasks.add(task);
+          elements.add(task);
+
+          ContextVariableTask variable = addVariable(task);
+          elements.add(variable);
           return location;
         }
       }
@@ -349,11 +419,11 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       }
       else if (file.getName().endsWith(".target"))
       {
-        analyzeFile(task, file, TARGET_PATTERN, 1);
+        analyzeFile(task, file, TARGET_URL_PATTERN, 1);
       }
       else if (file.getName().endsWith(".rmap"))
       {
-        analyzeFile(task, file, RMAP_PATTERN, 2);
+        analyzeFile(task, file, RMAP_URL_PATTERN, 2);
       }
     }
   }
@@ -371,5 +441,32 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       repository.setURL(url);
       task.getP2Repositories().add(repository);
     }
+  }
+
+  private static ContextVariableTask addVariable(GitCloneTask task)
+  {
+    String userID = task.getUserID();
+    String name = "git.user." + URI.createURI(task.getRemoteURI()).lastSegment().toLowerCase();
+    if (name.endsWith(".git"))
+    {
+      name = name.substring(0, name.length() - ".git".length());
+    }
+
+    ContextVariableTask variable = SetupFactory.eINSTANCE.createContextVariableTask();
+    variable.setName(name);
+    variable.setValue(userID);
+    variable.setDocumentation("Unset the value to prompt the user for the user ID.");
+
+    ((Branch)task.eContainer()).getProject().getSetupTasks().add(variable);
+    task.setUserID("${" + name + "}");
+
+    return variable;
+  }
+
+  private static void changeShellHeight(Shell shell, int delta)
+  {
+    Point size = shell.getSize();
+    size.y += delta;
+    shell.setSize(size);
   }
 }

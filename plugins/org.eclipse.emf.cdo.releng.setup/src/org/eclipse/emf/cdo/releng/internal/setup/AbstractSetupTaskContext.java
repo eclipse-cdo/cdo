@@ -65,6 +65,19 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
+  protected AbstractSetupTaskContext(Trigger trigger, Setup setup)
+  {
+    Branch branch = setup.getBranch();
+    Project project = branch.getProject();
+
+    String branchFolder = branch.getName().toLowerCase();
+    String projectFolder = project.getName().toLowerCase();
+    branchDir = new File("/${" + KEY_INSTALL_DIR + '}', projectFolder + "/" + branchFolder).getAbsoluteFile();
+
+    this.trigger = trigger;
+    initialize(setup);
+  }
+
   protected AbstractSetupTaskContext(Trigger trigger, File branchDir)
   {
     this.trigger = trigger;
@@ -74,10 +87,13 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     URI uri = URI.createFileURI(branchDir.toString() + "/setup.xmi");
     Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
+    initialize((Setup)resource.getContents().get(0));
+  }
 
-    setup = (Setup)resource.getContents().get(0);
+  private void initialize(Setup setup)
+  {
+    this.setup = setup;
     preferences = setup.getPreferences();
-    preferences.eResource().setTrackingModification(true);
 
     Branch branch = setup.getBranch();
     String branchName = branch.getName();
@@ -110,6 +126,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     {
       put(entry.getKey(), entry.getValue());
     }
+
   }
 
   public Trigger getTrigger()
@@ -348,7 +365,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     {
       public String filter(String value)
       {
-        return URI.createFileURI(value).toString();
+        return URI.decode(URI.createFileURI(value).toString());
       }
     });
 

@@ -82,6 +82,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private EList<SetupTask> triggeredSetupTasks;
 
+  private Map<EObject, EObject> copyMap;
+
   private EList<SetupTask> neededSetupTasks;
 
   private List<String> logMessageBuffer;
@@ -92,7 +94,18 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private List<ContextVariableTask> unresolvedVariables = new ArrayList<ContextVariableTask>();
 
+  private List<ContextVariableTask> resolvedVariables = new ArrayList<ContextVariableTask>();
+
+  private Set<String> undeclaredVariables = new HashSet<String>();
+
   private List<EStructuralFeature.Setting> unresolvedSettings = new ArrayList<EStructuralFeature.Setting>();
+
+  public SetupTaskPerformer(Trigger trigger, Setup setup)
+  {
+    super(trigger, setup);
+
+    initTriggeredSetupTasks();
+  }
 
   public SetupTaskPerformer(File branchDir)
   {
@@ -130,6 +143,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return triggeredSetupTasks;
   }
 
+  public Map<EObject, EObject> getCopyMap()
+  {
+    return copyMap;
+  }
+
   private void initTriggeredSetupTasks()
   {
     EList<SetupTask> setupTasks = getSetup().getSetupTasks(true, getTrigger());
@@ -137,7 +155,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     if (!setupTasks.isEmpty())
     {
-
       Map<SetupTask, SetupTask> substitutions = getSubstitutions(setupTasks);
       setSetup(copySetup(setupTasks, substitutions));
 
@@ -196,6 +213,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
           if (!contextVariableTask.isStringSubstitution())
           {
+            if (!unresolvedVariables.contains(contextVariableTask))
+            {
+              resolvedVariables.add(contextVariableTask);
+            }
+
             it.remove();
           }
         }
@@ -282,6 +304,16 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return unresolvedVariables;
   }
 
+  public List<ContextVariableTask> getResolvedVariables()
+  {
+    return resolvedVariables;
+  }
+
+  public Set<String> getUndeclaredVariables()
+  {
+    return undeclaredVariables;
+  }
+
   private void expandStrings(EList<SetupTask> orderedSetupTasks)
   {
     Set<String> keys = new HashSet<String>();
@@ -296,7 +328,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     if (!unresolvedSettings.isEmpty())
     {
-      Set<String> undeclaredKeys = new HashSet<String>();
       for (String key : keys)
       {
         boolean found = false;
@@ -316,13 +347,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         if (!found)
         {
-          undeclaredKeys.add(key);
+          undeclaredVariables.add(key);
         }
-      }
-
-      if (!undeclaredKeys.isEmpty())
-      {
-        throw new RuntimeException("Missing variables for " + undeclaredKeys);
       }
     }
   }
@@ -424,6 +450,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   public void perform() throws Exception
   {
+    if (!undeclaredVariables.isEmpty())
+    {
+      throw new RuntimeException("Missing variables for " + undeclaredVariables);
+    }
+
     perform(triggeredSetupTasks);
   }
 
@@ -608,6 +639,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       EObject copy = copier.get(overridingTask);
       copier.put(overriddenTask, copy);
     }
+
+    copyMap = copier;
 
     copier.copyReferences();
 

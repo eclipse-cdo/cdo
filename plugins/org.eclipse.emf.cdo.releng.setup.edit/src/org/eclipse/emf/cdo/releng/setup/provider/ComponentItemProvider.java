@@ -117,14 +117,15 @@ public class ComponentItemProvider extends ItemProviderAdapter implements IEditi
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Component_versionRange_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Component_versionRange_feature", "_UI_Component_type"),
-        SetupPackage.Literals.COMPONENT__VERSION_RANGE, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        SetupPackage.Literals.COMPONENT__VERSION_RANGE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean hasChildren(Object object)
   {

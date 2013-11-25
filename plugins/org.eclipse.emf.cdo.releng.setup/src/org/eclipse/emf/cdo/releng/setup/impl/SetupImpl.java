@@ -281,7 +281,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
         continue;
       }
 
-      if (!setupTask.getTriggers().contains(trigger))
+      if (trigger != null && !setupTask.getTriggers().contains(trigger))
       {
         continue;
       }

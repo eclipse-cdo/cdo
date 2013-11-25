@@ -16,6 +16,7 @@
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//SetupTaskScope/Project"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//SetupTaskScope/Branch"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//SetupTaskScope/User"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//SetupTaskScope/Configuration"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="setup.ecore#//Trigger">
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//Trigger/BOOTSTRAP"/>
@@ -46,13 +47,14 @@
     <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
     <genDataTypes ecoreDataType="setup.ecore#//LicenseInfo"/>
+    <genDataTypes ecoreDataType="setup.ecore#//VersionRange"/>
     <genClasses ecoreClass="setup.ecore#//Eclipse">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Eclipse/configuration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Eclipse/version"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Configuration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/projects"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/eclipseVersions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Configuration/projects"/>
     </genClasses>
     <genClasses image="false" ecoreClass="setup.ecore#//ConfigurableItem"/>
     <genClasses ecoreClass="setup.ecore#//Project">
@@ -129,6 +131,7 @@
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//InstallableUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/iD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/versionRange"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//P2Repository">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Repository/uRL"/>
@@ -149,6 +152,7 @@
     <genClasses ecoreClass="setup.ecore#//Component">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Component/versionRange"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//SourceLocator"/>
     <genClasses ecoreClass="setup.ecore#//ManualSourceLocator">
@@ -165,6 +169,7 @@
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ApiBaselineTask" labelFeature="#//setup/ApiBaselineTask/version">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/containerFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ApiBaselineTask/zipLocation"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//GitCloneTask">
@@ -199,6 +204,7 @@
     <genClasses ecoreClass="setup.ecore#//TextModifyTask" labelFeature="#//setup/TextModifyTask/uRL">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModifyTask/uRL"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TextModifyTask/modifications"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModifyTask/encoding"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//TextModification">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TextModification/pattern"/>
@@ -225,6 +231,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/summary"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/repositoryURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/relativeURL"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//JRETask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//JRETask/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//JRETask/location"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

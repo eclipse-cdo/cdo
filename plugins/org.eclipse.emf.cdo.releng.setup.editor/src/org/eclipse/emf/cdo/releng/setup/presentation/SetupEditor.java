@@ -10,14 +10,27 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
+import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
+import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -32,7 +45,11 @@ import org.eclipse.emf.common.ui.viewer.ColumnViewerInformationControlToolTipSup
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -43,8 +60,12 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedImage;
+import org.eclipse.emf.edit.provider.IItemFontProvider;
+import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
@@ -54,6 +75,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
+import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
@@ -71,6 +94,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -80,6 +105,9 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -98,6 +126,7 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -132,10 +161,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This is an example of a Setup model editor.
@@ -146,6 +177,32 @@ import java.util.Map;
 public class SetupEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
     IMenuListener, IViewerProvider, IGotoMarker
 {
+  private static final Object VARIABLE_GROUP_IMAGE = SetupEditorPlugin.INSTANCE.getImage("full/obj16/VariableGroup");
+
+  private static final Object UNDECLARED_VARIABLE_GROUP_IMAGE;
+
+  static
+  {
+    List<Object> images = new ArrayList<Object>(2);
+    images.add(VARIABLE_GROUP_IMAGE);
+    images.add(EMFEditUIPlugin.INSTANCE.getImage("full/ovr16/error_ovr.gif"));
+    ComposedImage composedImage = new ComposedImage(images)
+    {
+      @Override
+      public List<Point> getDrawPoints(Size size)
+      {
+        List<Point> result = new ArrayList<Point>();
+        result.add(new Point());
+        Point overlay = new Point();
+        overlay.y = 7;
+        result.add(overlay);
+        return result;
+      }
+    };
+
+    UNDECLARED_VARIABLE_GROUP_IMAGE = ExtendedImageRegistry.INSTANCE.getImage(composedImage);
+  }
+
   public static final String EDITOR_ID = "org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID";
 
   /**
@@ -168,9 +225,9 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This is the content outline page.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  protected IContentOutlinePage contentOutlinePage;
+  protected OutlinePreviewPage contentOutlinePage;
 
   /**
    * This is a kludge...
@@ -250,7 +307,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This listens for when the outline becomes active
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected IPartListener partListener = new IPartListener()
   {
@@ -276,6 +333,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       else if (p == SetupEditor.this)
       {
         handleActivate();
+        setCurrentViewer(selectionViewer);
       }
     }
 
@@ -765,8 +823,36 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   protected void initializeEditingDomain()
   {
     initializeEditingDomainGen();
+
+    // Create the editing domain with a special command stack.
+    //
+    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, editingDomain.getCommandStack(),
+        new HashMap<Resource, Boolean>()
+        {
+          private static final long serialVersionUID = 1L;
+
+          @Override
+          public Boolean get(Object key)
+          {
+            return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
+          }
+        });
+
     editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
         .put("xmi", new SetupResourceFactoryImpl());
+
+    // Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
+    //
+    editingDomain.getCommandStack().addCommandStackListener(new CommandStackListener()
+    {
+      public void commandStackChanged(final EventObject event)
+      {
+        if (contentOutlinePage != null)
+        {
+          contentOutlinePage.update();
+        }
+      }
+    });
   }
 
   /**
@@ -1011,7 +1097,9 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
 
     if (!(editingDomain.getResourceSet().getResources().get(0).getContents().get(0) instanceof Configuration))
     {
-      EMFUtil.loadResourceSafely(editingDomain.getResourceSet(), EMFUtil.SETUP_URI);
+      SetupResource configurationResource = EMFUtil.loadResourceSafely(editingDomain.getResourceSet(),
+          EMFUtil.SETUP_URI);
+      editingDomain.getResourceToReadOnlyMap().put(configurationResource, true);
     }
   }
 
@@ -1134,7 +1222,20 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
 
     Resource resource = editingDomain.getResourceSet().getResources().get(0);
     selectionViewer.setInput(resource);
-    selectionViewer.setSelection(new StructuredSelection(resource.getContents().get(0)), true);
+    EObject rootObject = resource.getContents().get(0);
+    if (rootObject instanceof Project)
+    {
+      for (Branch branch : ((Project)rootObject).getBranches())
+      {
+        selectionViewer.expandToLevel(branch, 1);
+      }
+    }
+    else
+    {
+      selectionViewer.expandToLevel(2);
+    }
+
+    selectionViewer.setSelection(new StructuredSelection(rootObject), true);
 
     getViewer().getControl().addMouseListener(new MouseListener()
     {
@@ -1249,6 +1350,494 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     }
   }
 
+  class OutlinePreviewPage extends ContentOutlinePage
+  {
+    private ILabelProvider labelProvider;
+
+    private Configuration configuration;
+
+    private Trigger trigger;
+
+    private Eclipse eclipseVersion;
+
+    private Map<Object, Object> copyMap = new HashMap<Object, Object>();
+
+    private Map<Object, Set<Object>> inverseCopyMap = new HashMap<Object, Set<Object>>();
+
+    private Map<Object, Object> parents = new HashMap<Object, Object>();
+
+    private AdapterFactoryEditingDomain.EditingDomainProvider editingDomainProvider = new AdapterFactoryEditingDomain.EditingDomainProvider(
+        editingDomain);
+
+    private class VariableContainer extends ItemProvider
+    {
+      private SetupTaskPerformer setupTaskPerformer;
+
+      public VariableContainer(SetupTaskPerformer setupTaskPerformer, String text, Object image)
+      {
+        super(text, image);
+        this.setupTaskPerformer = setupTaskPerformer;
+      }
+
+      public SetupTaskPerformer getSetupTaskPerformer()
+      {
+        return setupTaskPerformer;
+      }
+    }
+
+    @Override
+    public void createControl(Composite parent)
+    {
+      super.createControl(parent);
+      contentOutlineViewer = getTreeViewer();
+      contentOutlineViewer.addSelectionChangedListener(this);
+
+      contentOutlineViewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+        public void doubleClick(DoubleClickEvent event)
+        {
+          if (selectionViewer != null)
+          {
+            selectionViewer.getControl().setFocus();
+            SetupEditor.this.setSelection(selectionViewer.getSelection());
+          }
+        }
+      });
+
+      // Set up the tree viewer.
+      //
+      contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory)
+      {
+        @Override
+        public boolean hasChildren(Object object)
+        {
+          return object instanceof ContextVariableTask && parents.get(object) instanceof VariableContainer
+              || super.hasChildren(object);
+        }
+
+        @Override
+        public Object[] getChildren(Object object)
+        {
+          if (object instanceof ContextVariableTask && parents.get(object) instanceof VariableContainer)
+          {
+            Resource resource = editingDomain.getResourceSet().getResources().get(0);
+            SetupTaskPerformer setupTaskPerformer = ((VariableContainer)parents.get(object)).getSetupTaskPerformer();
+            ContextVariableTask contextVariableTask = (ContextVariableTask)object;
+            String name = contextVariableTask.getName();
+            List<EObject> variableUsages = new ArrayList<EObject>();
+            for (Object o : copyMap.keySet())
+            {
+              if (o instanceof EObject)
+              {
+                EObject eObject = (EObject)o;
+                if (eObject.eResource() == resource)
+                {
+                  for (EAttribute attribute : eObject.eClass().getEAllAttributes())
+                  {
+                    if (attribute.isChangeable()
+                        && attribute.getEAttributeType().getInstanceClassName() == "java.lang.String"
+                        && attribute != SetupPackage.Literals.CONTEXT_VARIABLE_TASK__NAME)
+                    {
+                      if (attribute.isMany())
+                      {
+                        @SuppressWarnings("unchecked")
+                        List<String> values = (List<String>)eObject.eGet(attribute);
+                        for (String value : values)
+                        {
+                          Set<String> variables = setupTaskPerformer.getVariables(value);
+                          if (variables.contains(name))
+                          {
+                            variableUsages.add(eObject);
+                            break;
+                          }
+                        }
+                      }
+                      else
+                      {
+                        String value = (String)eObject.eGet(attribute);
+                        if (value != null)
+                        {
+                          Set<String> variables = setupTaskPerformer.getVariables(value);
+                          if (variables.contains(name))
+                          {
+                            variableUsages.add(eObject);
+                            break;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            for (EObject eObject : variableUsages)
+            {
+              parents.put(eObject, object);
+            }
+
+            return variableUsages.toArray();
+          }
+
+          return super.getChildren(object);
+        }
+
+        @Override
+        public Object getParent(Object object)
+        {
+          Object parent = parents.get(object);
+          return parent != null ? parent : super.getParent(object);
+        }
+      });
+
+      final Font font = contentOutlineViewer.getControl().getFont();
+      labelProvider = new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(adapterFactory),
+          new DiagnosticDecorator(editingDomain, contentOutlineViewer, SetupEditorPlugin.getPlugin()
+              .getDialogSettings()))
+      {
+        @Override
+        public Font getFont(Object object)
+        {
+          Font result = super.getFont(object);
+          if (object instanceof SetupTask)
+          {
+            SetupTask setupTask = (SetupTask)object;
+            Resource resource = setupTask.eResource();
+            if (resource == null || resource.getURI().equals(EMFUtil.SETUP_URI))
+            {
+              result = ExtendedFontRegistry.INSTANCE.getFont(result != null ? result : font,
+                  IItemFontProvider.ITALIC_FONT);
+            }
+          }
+
+          return result;
+        }
+      };
+      contentOutlineViewer.setLabelProvider(labelProvider);
+
+      new ColumnViewerInformationControlToolTipSupport(contentOutlineViewer,
+          new DiagnosticDecorator.EditingDomainLocationListener(editingDomain, contentOutlineViewer));
+
+      // Make sure our popups work.
+      //
+      createContextMenuFor(contentOutlineViewer);
+
+      selectionViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+          if (selectionViewer != null && !selection.isEmpty())
+          {
+            ArrayList<Object> selectionList = new ArrayList<Object>();
+            for (Object object : selection.toArray())
+            {
+              collectSelection(selectionList, object);
+            }
+
+            if (!selectionList.isEmpty())
+            {
+              contentOutlinePage = null;
+              getTreeViewer().setSelection(new StructuredSelection(selectionList));
+              contentOutlinePage = OutlinePreviewPage.this;
+            }
+          }
+        }
+
+        private void collectSelection(List<Object> selection, Object object)
+        {
+          if (object instanceof CompoundSetupTask)
+          {
+            for (SetupTask setupTask : ((CompoundSetupTask)object).getSetupTasks())
+            {
+              collectSelection(selection, setupTask);
+            }
+          }
+          else
+          {
+            Object copy = contentOutlinePage.getCopy(object);
+            if (copy != null)
+            {
+              selection.add(copy);
+            }
+          }
+        }
+      });
+
+      update();
+
+      contentOutlineViewer.expandToLevel(2);
+    }
+
+    public Set<Object> getOriginals(Object object)
+    {
+      Set<Object> result = inverseCopyMap.get(object);
+      return result == null ? Collections.singleton(object) : result;
+    }
+
+    public Object getCopy(Object object)
+    {
+      return copyMap.get(object);
+    }
+
+    public void update()
+    {
+      copyMap.clear();
+
+      try
+      {
+        ResourceSet resourceSet = editingDomain.getResourceSet();
+        Resource resource = resourceSet.getResources().get(0);
+        EObject eObject = resource.getContents().get(0);
+        ItemProvider input = null;
+        if (eObject instanceof Project)
+        {
+          Resource configurationResource = resourceSet.getResource(EMFUtil.SETUP_URI, false);
+          configuration = (Configuration)configurationResource.getContents().get(0);
+          if (eclipseVersion == null)
+          {
+            EList<Eclipse> eclipseVersions = configuration.getEclipseVersions();
+            if (!eclipseVersions.isEmpty())
+            {
+              eclipseVersion = eclipseVersions.get(eclipseVersions.size() - 1);
+            }
+          }
+
+          if (eclipseVersion != null)
+          {
+            Project project = (Project)eObject;
+
+            input = getTriggeredTasks(project);
+          }
+        }
+        else if (eObject instanceof Configuration)
+        {
+          input = new ItemProvider("Preview");
+
+          EList<Object> children = input.getChildren();
+          configuration = (Configuration)eObject;
+          if (eclipseVersion == null)
+          {
+            EList<Eclipse> eclipseVersions = configuration.getEclipseVersions();
+            if (!eclipseVersions.isEmpty())
+            {
+              eclipseVersion = eclipseVersions.get(eclipseVersions.size() - 1);
+            }
+          }
+
+          if (eclipseVersion != null)
+          {
+            for (Project project : configuration.getProjects())
+            {
+              children.add(getTriggeredTasks(project));
+            }
+          }
+
+          copyMap.put(eObject, input);
+        }
+        else
+        {
+          configuration = null;
+        }
+
+        if (input != null)
+        {
+          getTreeViewer().setInput(input);
+        }
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+
+      for (Map.Entry<Object, Object> entry : copyMap.entrySet())
+      {
+        Object value = entry.getValue();
+        Set<Object> eObjects = inverseCopyMap.get(value);
+        if (eObjects == null)
+        {
+          eObjects = new HashSet<Object>();
+          inverseCopyMap.put(value, eObjects);
+        }
+        eObjects.add(entry.getKey());
+      }
+    }
+
+    private ItemProvider getTriggeredTasks(Project project)
+    {
+      final ItemProvider projectItem = new ItemProvider(labelProvider.getText(project), labelProvider.getImage(project));
+
+      EList<Object> projectItemChildren = projectItem.getChildren();
+      EList<Branch> branches = project.getBranches();
+      for (Branch branch : branches)
+      {
+        final ItemProvider branchItem = new ItemProvider(labelProvider.getText(branch), labelProvider.getImage(branch));
+        projectItemChildren.add(branchItem);
+
+        Setup setup = SetupFactory.eINSTANCE.createSetup();
+        Preferences preferences = SetupFactory.eINSTANCE.createPreferences();
+        setup.setPreferences(preferences);
+        setup.setEclipseVersion(eclipseVersion);
+        setup.setBranch(branch);
+
+        SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(trigger, setup);
+        List<SetupTask> triggeredSetupTasks = new ArrayList<SetupTask>(setupTaskPerformer.getTriggeredSetupTasks());
+
+        for (EObject eObject : setupTaskPerformer.getCopyMap().values())
+        {
+          Resource resource = ((InternalEObject)eObject).eDirectResource();
+          if (resource != null && !resource.eAdapters().contains(editingDomainProvider))
+          {
+            resource.eAdapters().add(editingDomainProvider);
+          }
+        }
+
+        ItemProvider undeclaredVariablesItem = new VariableContainer(setupTaskPerformer, "Undeclared Variables",
+            UNDECLARED_VARIABLE_GROUP_IMAGE);
+        EList<Object> undeclaredVariablesItemChildren = undeclaredVariablesItem.getChildren();
+        Set<String> undeclaredVariables = setupTaskPerformer.getUndeclaredVariables();
+        for (String key : undeclaredVariables)
+        {
+          ContextVariableTask contextVariableTask = SetupFactory.eINSTANCE.createContextVariableTask();
+          contextVariableTask.setName(key);
+          undeclaredVariablesItemChildren.add(contextVariableTask);
+          parents.put(contextVariableTask, undeclaredVariablesItem);
+        }
+
+        if (!undeclaredVariablesItemChildren.isEmpty())
+        {
+          branchItem.getChildren().add(undeclaredVariablesItem);
+        }
+
+        ItemProvider unresolvedVariablesItem = new VariableContainer(setupTaskPerformer, "Unresolved Variables",
+            VARIABLE_GROUP_IMAGE);
+        EList<Object> unresolvedVariablesItemChildren = unresolvedVariablesItem.getChildren();
+        List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
+        for (ContextVariableTask contextVariableTask : unresolvedVariables)
+        {
+          unresolvedVariablesItemChildren.add(contextVariableTask);
+          parents.put(contextVariableTask, unresolvedVariablesItem);
+        }
+
+        if (!unresolvedVariablesItemChildren.isEmpty())
+        {
+          branchItem.getChildren().add(unresolvedVariablesItem);
+        }
+
+        ItemProvider resolvedVariablesItem = new VariableContainer(setupTaskPerformer, "Resolved Variables",
+            VARIABLE_GROUP_IMAGE);
+        EList<Object> resolvedVariablesItemChildren = resolvedVariablesItem.getChildren();
+        List<ContextVariableTask> resolvedVariables = setupTaskPerformer.getResolvedVariables();
+        for (ContextVariableTask contextVariableTask : resolvedVariables)
+        {
+          resolvedVariablesItemChildren.add(contextVariableTask);
+          parents.put(contextVariableTask, resolvedVariablesItem);
+        }
+
+        if (!resolvedVariablesItemChildren.isEmpty())
+        {
+          branchItem.getChildren().add(resolvedVariablesItem);
+        }
+
+        branchItem.getChildren().addAll(triggeredSetupTasks);
+
+        for (SetupTask setupTask : triggeredSetupTasks)
+        {
+          parents.put(setupTask, branchItem);
+        }
+
+        copyMap.putAll(setupTaskPerformer.getCopyMap());
+        copyMap.put(branch, branchItem);
+      }
+
+      copyMap.put(project, projectItem);
+
+      return projectItem;
+    }
+
+    @Override
+    public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
+        IStatusLineManager statusLineManager)
+    {
+      super.makeContributions(menuManager, toolBarManager, statusLineManager);
+      contentOutlineStatusLineManager = statusLineManager;
+    }
+
+    @Override
+    public void setActionBars(IActionBars actionBars)
+    {
+      super.setActionBars(actionBars);
+
+      if (configuration != null)
+      {
+        final IMenuManager eclipse = actionBars.getMenuManager();
+
+        IAction defaultEclipseVersion = null;
+        for (final Eclipse eclipseVersion : configuration.getEclipseVersions())
+        {
+          OutlinePreviewPage.this.eclipseVersion = eclipseVersion;
+          defaultEclipseVersion = new Action("Eclispe " + eclipseVersion.getVersion(), IAction.AS_RADIO_BUTTON)
+          {
+            @Override
+            public void run()
+            {
+              OutlinePreviewPage.this.eclipseVersion = eclipseVersion;
+              update();
+              getTreeViewer().expandToLevel(2);
+            }
+          };
+          eclipse.add(defaultEclipseVersion);
+        }
+
+        if (defaultEclipseVersion != null)
+        {
+          defaultEclipseVersion.setChecked(true);
+        }
+      }
+
+      actionBars.getToolBarManager().add(new Action("Show tasks for all triggers", IAction.AS_RADIO_BUTTON)
+      {
+        {
+          setChecked(true);
+          setImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(SetupEditorPlugin.INSTANCE
+              .getImage("AllTrigger")));
+        }
+
+        @Override
+        public void run()
+        {
+          trigger = null;
+          update();
+          getTreeViewer().expandToLevel(2);
+        }
+      });
+
+      for (final Trigger trigger : Trigger.VALUES)
+      {
+        final String label = trigger.getLiteral().toLowerCase();
+        actionBars.getToolBarManager().add(
+            new Action("Show tasks for the " + label + " trigger", IAction.AS_RADIO_BUTTON)
+            {
+              {
+                setImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(SetupEditorPlugin.INSTANCE
+                    .getImage(StringUtil.cap(label) + "Trigger")));
+              }
+
+              @Override
+              public void run()
+              {
+                OutlinePreviewPage.this.trigger = trigger;
+                super.run();
+                update();
+                getTreeViewer().expandToLevel(2);
+              }
+            });
+      }
+
+      getActionBarContributor().shareGlobalActions(this, actionBars);
+    }
+  }
+
   /**
    * This accesses a cached version of the content outliner.
    * <!-- begin-user-doc -->
@@ -1261,51 +1850,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     {
       // The content outline is just a tree.
       //
-      class MyContentOutlinePage extends ContentOutlinePage
-      {
-        @Override
-        public void createControl(Composite parent)
-        {
-          super.createControl(parent);
-          contentOutlineViewer = getTreeViewer();
-          contentOutlineViewer.addSelectionChangedListener(this);
-
-          // Set up the tree viewer.
-          //
-          contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-          contentOutlineViewer.setInput(editingDomain.getResourceSet().getResources().get(0));
-
-          // Make sure our popups work.
-          //
-          createContextMenuFor(contentOutlineViewer);
-
-          if (!editingDomain.getResourceSet().getResources().isEmpty())
-          {
-            // Select the root object in the view.
-            //
-            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources()
-                .get(0)), true);
-          }
-        }
-
-        @Override
-        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
-            IStatusLineManager statusLineManager)
-        {
-          super.makeContributions(menuManager, toolBarManager, statusLineManager);
-          contentOutlineStatusLineManager = statusLineManager;
-        }
-
-        @Override
-        public void setActionBars(IActionBars actionBars)
-        {
-          super.setActionBars(actionBars);
-          getActionBarContributor().shareGlobalActions(this, actionBars);
-        }
-      }
-
-      contentOutlinePage = new MyContentOutlinePage();
+      contentOutlinePage = new OutlinePreviewPage();
 
       // Listen to selection so that we can handle it is a special way.
       //
@@ -1368,29 +1913,29 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This deals with how we want selection in the outliner to affect the other views.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void handleContentOutlineSelection(ISelection selection)
   {
-    if (selectionViewer != null && !selection.isEmpty() && selection instanceof IStructuredSelection)
+    if (contentOutlinePage != null && selectionViewer != null && !selection.isEmpty()
+        && selection instanceof IStructuredSelection)
     {
       Iterator<?> selectedElements = ((IStructuredSelection)selection).iterator();
       if (selectedElements.hasNext())
       {
-        // Get the first selected element.
-        //
         Object selectedElement = selectedElements.next();
 
         ArrayList<Object> selectionList = new ArrayList<Object>();
-        selectionList.add(selectedElement);
+        selectionList.addAll(contentOutlinePage.getOriginals(selectedElement));
         while (selectedElements.hasNext())
         {
-          selectionList.add(selectedElements.next());
+          selectionList.addAll(contentOutlinePage.getOriginals(selectedElements.next()));
         }
 
-        // Set the selection to the widget.
-        //
-        selectionViewer.setSelection(new StructuredSelection(selectionList));
+        TreeViewer oldSectionViewer = selectionViewer;
+        selectionViewer = null;
+        oldSectionViewer.setSelection(new StructuredSelection(selectionList));
+        selectionViewer = oldSectionViewer;
       }
     }
   }
@@ -1791,11 +2336,13 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * Returns whether the outline view should be presented to the user.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected boolean showOutlineView()
   {
-    return false;
+    EObject eObject = getEditingDomain().getResourceSet().getResources().get(0).getContents().get(0);
+
+    return eObject instanceof Configuration || eObject instanceof Project;
   }
 
   public static void openPreferences(final IWorkbenchPage page)

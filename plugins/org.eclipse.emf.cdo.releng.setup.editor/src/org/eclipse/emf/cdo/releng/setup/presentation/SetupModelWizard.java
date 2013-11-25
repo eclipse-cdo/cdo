@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.CommonPlugin;
@@ -29,6 +30,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -45,12 +49,16 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -59,6 +67,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -66,6 +75,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -898,7 +909,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
   /**
    * @author Eike Stepper
    */
-  public class TemplateUsagePage extends WizardPage implements ISelectionChangedListener, ProjectTemplate.Container
+  public class TemplateUsagePage extends WizardPage implements ProjectTemplate.Container
   {
     private final List<ProjectTemplate> templates = new ArrayList<ProjectTemplate>();
 
@@ -913,6 +924,8 @@ public class SetupModelWizard extends Wizard implements INewWizard
     private StackLayout templatesStack;
 
     private TreeViewer preViewer;
+
+    private TableViewer propertiesViewer;
 
     public TemplateUsagePage(String pageId)
     {
@@ -954,8 +967,24 @@ public class SetupModelWizard extends Wizard implements INewWizard
       templatesViewer.setLabelProvider(new LabelProvider());
       templatesViewer.setContentProvider(ArrayContentProvider.getInstance());
       templatesViewer.setInput(templates);
-      templatesViewer.addSelectionChangedListener(this);
-      applyGridData(templatesViewer.getControl()).heightHint = 100;
+      templatesViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          Control control = getSelectedTemplateControl();
+          if (control != null)
+          {
+            templatesStack.topControl = control;
+            templatesContainer.layout();
+
+            Project project = getProject();
+            preViewer.setInput(project);
+          }
+
+          validate();
+        }
+      });
+      applyGridData(templatesViewer.getControl()).heightHint = 64;
 
       templatesStack = new StackLayout();
 
@@ -975,7 +1004,43 @@ public class SetupModelWizard extends Wizard implements INewWizard
       preViewer = new TreeViewer(composite, SWT.BORDER);
       preViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
       preViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY));
+      preViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          if (propertiesViewer != null)
+          {
+            IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+            if (selection.size() == 1)
+            {
+              Object element = selection.getFirstElement();
+              propertiesViewer.setInput(element);
+              return;
+            }
+
+            propertiesViewer.setInput(new Object());
+          }
+        }
+      });
       grabVertical(applyGridData(preViewer.getControl()));
+
+      propertiesViewer = new TableViewer(composite, SWT.BORDER);
+      propertiesViewer.setLabelProvider(new PropertiesLabelProvider());
+      propertiesViewer.setContentProvider(new PropertiesContentProvider());
+
+      Table table = propertiesViewer.getTable();
+      applyGridData(table).heightHint = 64;
+
+      TableColumn idColumn = new TableColumn(table, SWT.NONE);
+      idColumn.setText("Property");
+      idColumn.setWidth(200);
+
+      TableColumn versionColumn = new TableColumn(table, SWT.NONE);
+      versionColumn.setText("Value");
+      versionColumn.setWidth(400);
+
+      table.setHeaderVisible(true);
+      table.setLinesVisible(true);
 
       templatesViewer.setSelection(new StructuredSelection(templates.get(0)));
       validate();
@@ -996,24 +1061,14 @@ public class SetupModelWizard extends Wizard implements INewWizard
       }
     }
 
-    public void selectionChanged(SelectionChangedEvent event)
-    {
-      Control control = getSelectedTemplateControl();
-      if (control != null)
-      {
-        templatesStack.topControl = control;
-        templatesContainer.layout();
-
-        Project project = getProject();
-        preViewer.setInput(project);
-      }
-
-      validate();
-    }
-
     public TreeViewer getPreViewer()
     {
       return preViewer;
+    }
+
+    public TableViewer getPropertiesViewer()
+    {
+      return propertiesViewer;
     }
 
     public void validate()
@@ -1064,6 +1119,72 @@ public class SetupModelWizard extends Wizard implements INewWizard
     {
       ProjectTemplate template = getSelectedTemplate();
       return templateControls.get(template);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider
+    {
+      public String getColumnText(Object element, int columnIndex)
+      {
+        return (String)((Object[])element)[columnIndex];
+      }
+
+      public Image getColumnImage(Object element, int columnIndex)
+      {
+        if (columnIndex == 1)
+        {
+          return (Image)((Object[])element)[2];
+        }
+
+        return null;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class PropertiesContentProvider implements IStructuredContentProvider
+    {
+      private final AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(EMFUtil.ADAPTER_FACTORY);
+
+      public void dispose()
+      {
+      }
+
+      public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+      {
+      }
+
+      public Object[] getElements(Object element)
+      {
+        List<Object[]> properties = new ArrayList<Object[]>();
+
+        List<IItemPropertyDescriptor> propertyDescriptors = itemDelegator.getPropertyDescriptors(element);
+        if (propertyDescriptors != null)
+        {
+          for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
+          {
+            String displayName = propertyDescriptor.getDisplayName(element);
+
+            IItemLabelProvider propertyLabelProvider = propertyDescriptor.getLabelProvider(element);
+            Object propertyValue = propertyDescriptor.getPropertyValue(element);
+            Object imageURL = propertyLabelProvider.getImage(propertyValue);
+            Image image = imageURL == null ? null : ExtendedImageRegistry.INSTANCE.getImage(imageURL);
+
+            String valueText = propertyLabelProvider.getText(propertyValue);
+            if (StringUtil.isEmpty(valueText))
+            {
+              valueText = "";
+            }
+
+            properties.add(new Object[] { displayName, valueText, image });
+          }
+        }
+
+        return properties.toArray();
+      }
     }
   }
 }

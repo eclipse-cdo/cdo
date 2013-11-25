@@ -17,30 +17,21 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogProvider;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.StringUtil;
 
-import org.eclipse.emf.common.ui.ImageURIRegistry;
 import org.eclipse.emf.common.ui.viewer.ColumnViewerInformationControlToolTipSupport;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
-import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
-import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -49,9 +40,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -66,7 +55,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -207,90 +195,76 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     treeViewer = new TreeViewer(sashForm, SWT.NONE);
     Tree tree = treeViewer.getTree();
 
-    ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-        ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-    final AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
-    ILabelProvider labelProvider = new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(adapterFactory),
-        new ILabelDecorator()
-        {
-          public void removeListener(ILabelProviderListener listener)
-          {
-          }
+    ILabelProvider labelProvider = createLabelProvider();
+    treeViewer.setLabelProvider(labelProvider);
 
-          public boolean isLabelProperty(Object element, String property)
-          {
-            return true;
-          }
-
-          public void dispose()
-          {
-          }
-
-          public void addListener(ILabelProviderListener listener)
-          {
-          }
-
-          public String decorateText(String text, Object element)
-          {
-            return text;
-          }
-
-          public Image decorateImage(Image image, Object element)
-          {
-            return image;
-          }
-        })
+    ItemProvider input = new ItemProvider();
+    final EList<Object> children = input.getChildren();
+    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
     {
       @Override
-      public String getToolTipText(Object element)
+      public Object getParent(Object object)
       {
-        StringBuilder result = new StringBuilder();
-        List<IItemPropertyDescriptor> propertyDescriptors = itemDelegator.getPropertyDescriptors(element);
-        if (propertyDescriptors != null)
+        if (object instanceof SetupTask)
         {
-          result.append("<table border='1'>");
-          for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
+          for (Object child : children)
           {
-            result.append("<tr>");
-
-            String displayName = propertyDescriptor.getDisplayName(element);
-            result.append("<td>").append(DiagnosticDecorator.escapeContent(displayName)).append("</td>");
-
-            result.append("<td>");
-            IItemLabelProvider propertyLabelProvider = propertyDescriptor.getLabelProvider(element);
-            Object propertyValue = propertyDescriptor.getPropertyValue(element);
-            Object image = propertyLabelProvider.getImage(propertyValue);
-            if (image != null)
+            for (Object grandChild : ((ItemProvider)child).getChildren())
             {
-              result.append(DiagnosticDecorator.enquote("<img src='"
-                  + ImageURIRegistry.INSTANCE.getImageURI(ExtendedImageRegistry.INSTANCE.getImage(image)) + "'/> "));
+              if (grandChild == object)
+              {
+                return child;
+              }
             }
-
-            String valueText = propertyLabelProvider.getText(propertyValue);
-            if (!StringUtil.isEmpty(valueText))
-            {
-              result.append(DiagnosticDecorator.escapeContent(valueText));
-            }
-            else
-            {
-              result.append("&nbsp;");
-            }
-
-            if (valueText == null && image == null)
-            {
-              result.append("&nbsp;");
-            }
-
-            result.append("</td>");
-            result.append("</tr>");
           }
-
-          result.append("</table>");
         }
 
-        return result.length() == 0 ? null : result.toString();
+        return super.getParent(object);
+      }
+    };
+
+    treeViewer.setContentProvider(contentProvider);
+    treeViewer.addSelectionChangedListener(treeViewerSelectionChangedListener);
+
+    new ColumnViewerInformationControlToolTipSupport(treeViewer, new LocationListener()
+    {
+      public void changing(LocationEvent event)
+      {
       }
 
+      public void changed(LocationEvent event)
+      {
+      }
+    });
+
+    for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+    {
+      final EList<SetupTask> triggeredSetupTasks = setupTaskPerformer.getTriggeredSetupTasks();
+      Setup setup = setupTaskPerformer.getSetup();
+      Branch branch = setup.getBranch();
+      ItemProvider branchPresentation = new ItemProvider(branch.getProject().getName() + " "
+          + labelProvider.getText(branch) + " (Eclipse " + setup.getEclipseVersion().getVersion() + ")",
+          labelProvider.getImage(branch));
+      branchPresentation.getChildren().addAll(triggeredSetupTasks);
+      children.add(branchPresentation);
+    }
+
+    treeViewer.setInput(input);
+    tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    tree.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+
+    text = new Text(sashForm, SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
+    text.setBackground(text.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+    text.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+    text.setEditable(false);
+    text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    text.getVerticalBar().addSelectionListener(scrollBarListener);
+  }
+
+  public ILabelProvider createLabelProvider()
+  {
+    return new ToolTipLabelProvider()
+    {
       @Override
       public Font getFont(Object element)
       {
@@ -327,71 +301,6 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
         return super.getForeground(element);
       }
     };
-
-    treeViewer.setLabelProvider(labelProvider);
-
-    ItemProvider input = new ItemProvider();
-    final EList<Object> children = input.getChildren();
-    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory)
-    {
-      @Override
-      public Object getParent(Object object)
-      {
-        if (object instanceof SetupTask)
-        {
-          for (Object child : children)
-          {
-            for (Object grandChild : ((ItemProvider)child).getChildren())
-            {
-              if (grandChild == object)
-              {
-                return child;
-              }
-            }
-          }
-        }
-
-        return super.getParent(object);
-      }
-    };
-
-    treeViewer.setContentProvider(contentProvider);
-
-    treeViewer.addSelectionChangedListener(treeViewerSelectionChangedListener);
-
-    new ColumnViewerInformationControlToolTipSupport(treeViewer, new LocationListener()
-    {
-      public void changing(LocationEvent event)
-      {
-      }
-
-      public void changed(LocationEvent event)
-      {
-      }
-    });
-
-    for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
-    {
-      final EList<SetupTask> triggeredSetupTasks = setupTaskPerformer.getTriggeredSetupTasks();
-      Setup setup = setupTaskPerformer.getSetup();
-      Branch branch = setup.getBranch();
-      ItemProvider branchPresentation = new ItemProvider(branch.getProject().getName() + " "
-          + labelProvider.getText(branch) + " (Eclipse " + setup.getEclipseVersion().getVersion() + ")",
-          labelProvider.getImage(branch));
-      branchPresentation.getChildren().addAll(triggeredSetupTasks);
-      children.add(branchPresentation);
-    }
-
-    treeViewer.setInput(input);
-    tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    tree.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-
-    text = new Text(sashForm, SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-    text.setBackground(text.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
-    text.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
-    text.setEditable(false);
-    text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    text.getVerticalBar().addSelectionListener(scrollBarListener);
   }
 
   @Override
@@ -790,6 +699,9 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
         + (setupTaskPerformers.size() > 1 ? "s" : "");
   }
 
+  /**
+   * @author Eike Stepper
+   */
   protected class ScrollBarListener extends SelectionAdapter
   {
     private boolean isDragging;

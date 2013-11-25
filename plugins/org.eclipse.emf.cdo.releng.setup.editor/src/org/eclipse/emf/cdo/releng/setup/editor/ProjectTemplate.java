@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -98,6 +99,8 @@ public abstract class ProjectTemplate extends Factory
   public interface Container
   {
     public TreeViewer getPreViewer();
+
+    public TableViewer getPropertiesViewer();
 
     public void validate();
   }

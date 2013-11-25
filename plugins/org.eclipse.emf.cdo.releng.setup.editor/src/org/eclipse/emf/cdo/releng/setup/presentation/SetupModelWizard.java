@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -308,7 +309,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
     if (projectInitializationPage.isUseTemplate())
     {
-      project = templateUsagePage.getProject();
+      project = EcoreUtil.copy(templateUsagePage.getProject());
     }
     else
     {
@@ -897,11 +898,13 @@ public class SetupModelWizard extends Wizard implements INewWizard
   /**
    * @author Eike Stepper
    */
-  public class TemplateUsagePage extends WizardPage implements ISelectionChangedListener
+  public class TemplateUsagePage extends WizardPage implements ISelectionChangedListener, ProjectTemplate.Container
   {
     private final List<ProjectTemplate> templates = new ArrayList<ProjectTemplate>();
 
     private final Map<ProjectTemplate, Control> templateControls = new HashMap<ProjectTemplate, Control>();
+
+    private final Map<ProjectTemplate, Project> templateProjects = new HashMap<ProjectTemplate, Project>();
 
     private ListViewer templatesViewer;
 
@@ -933,7 +936,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
     public Project getProject()
     {
       ProjectTemplate template = getSelectedTemplate();
-      return template.getProject();
+      return templateProjects.get(template);
     }
 
     public void createControl(Composite parent)
@@ -962,12 +965,11 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
       for (ProjectTemplate template : templates)
       {
-        Control control = template.createControl(templatesContainer);
-        templateControls.put(template, control);
+        Project project = SetupFactory.eINSTANCE.createProject();
+        templateProjects.put(template, project);
 
-        // Project project = template.getProject();
-        // project.getSetupTasks().clear();
-        // project.getBranches().clear();
+        Control control = template.createControl(templatesContainer, this, project);
+        templateControls.put(template, control);
       }
 
       preViewer = new TreeViewer(composite, SWT.BORDER);
@@ -976,7 +978,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
       grabVertical(applyGridData(preViewer.getControl()));
 
       templatesViewer.setSelection(new StructuredSelection(templates.get(0)));
-      validatePage();
+      validate();
     }
 
     @Override
@@ -1002,23 +1004,19 @@ public class SetupModelWizard extends Wizard implements INewWizard
         templatesStack.topControl = control;
         templatesContainer.layout();
 
-        Project project = getSelectedTemplate().getProject();
+        Project project = getProject();
         preViewer.setInput(project);
       }
 
-      validatePage();
+      validate();
     }
 
-    // public void fillProject(Project project)
-    // {
-    // ProjectTemplate template = getSelectedTemplate();
-    // if (template != null)
-    // {
-    // template.fillProject(project);
-    // }
-    // }
+    public TreeViewer getPreViewer()
+    {
+      return preViewer;
+    }
 
-    protected void validatePage()
+    public void validate()
     {
       boolean pageValid = isPageValid();
       setPageComplete(pageValid);
@@ -1027,10 +1025,31 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
     protected boolean isPageValid()
     {
-      ProjectTemplate template = getSelectedTemplate();
-      if (template != null)
+      try
       {
-        return template.isPageValid();
+        ProjectTemplate template = getSelectedTemplate();
+        if (template != null)
+        {
+          Project project = getProject();
+          if (!template.isValid(project))
+          {
+            return false;
+          }
+
+          for (Branch branch : project.getBranches())
+          {
+            if (!template.isValid(branch))
+            {
+              return false;
+            }
+          }
+
+          return true;
+        }
+      }
+      catch (Exception ex)
+      {
+        SetupEditorPlugin.getPlugin().log(ex);
       }
 
       return false;

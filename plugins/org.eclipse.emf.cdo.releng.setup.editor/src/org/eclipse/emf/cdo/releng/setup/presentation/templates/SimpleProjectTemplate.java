@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation.templates;
 
+import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 
 import org.eclipse.swt.SWT;
@@ -29,7 +30,7 @@ public class SimpleProjectTemplate extends ProjectTemplate
   }
 
   @Override
-  public Control createControl(Composite parent)
+  public Control createControl(Composite parent, Container container, Project project)
   {
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new FillLayout());

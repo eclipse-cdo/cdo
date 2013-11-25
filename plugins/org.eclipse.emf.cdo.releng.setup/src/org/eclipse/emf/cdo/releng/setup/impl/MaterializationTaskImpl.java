@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
+import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -56,6 +57,8 @@ import org.eclipse.buckminster.rmap.ResourceMap;
 import org.eclipse.buckminster.rmap.RmapFactory;
 import org.eclipse.buckminster.rmap.SearchPath;
 import org.eclipse.buckminster.sax.Utils;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.p2.metadata.Version;
@@ -330,13 +333,14 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return BuckminsterHelper.getMspec(context, getRootComponents(), getSourceLocators(), getP2Repositories());
   }
 
-  public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, List<String> locations)
-      throws ParserConfigurationException
+  public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, List<String> locations,
+      IProgressMonitor monitor) throws ParserConfigurationException
   {
     Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
-
     Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
-    for (Map.Entry<String, List<ComponentLocation>> entry : analyzeFolder(folder).entrySet())
+
+    Map<String, List<ComponentLocation>> componentLocations = analyzeFolder(folder, monitor);
+    for (Map.Entry<String, List<ComponentLocation>> entry : componentLocations.entrySet())
     {
       String name = entry.getKey();
       for (ComponentLocation location : entry.getValue())
@@ -366,19 +370,25 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return roots;
   }
 
-  public static Map<String, List<ComponentLocation>> analyzeFolder(File folder) throws ParserConfigurationException
+  public static Map<String, List<ComponentLocation>> analyzeFolder(File folder, IProgressMonitor monitor)
+      throws ParserConfigurationException
   {
     Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
 
     DocumentBuilder documentBuilder = createDocumentBuilder();
-    analyze(componentMap, documentBuilder, folder);
+    analyze(componentMap, documentBuilder, folder, monitor);
 
     return componentMap;
   }
 
   private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
-      File folder)
+      File folder, IProgressMonitor monitor)
   {
+    if (monitor != null && monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
+
     File projectFile = new File(folder, ".project");
     if (projectFile.exists())
     {
@@ -502,7 +512,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       {
         if (file.isDirectory())
         {
-          analyze(componentMap, documentBuilder, file);
+          analyze(componentMap, documentBuilder, file, monitor);
         }
       }
     }
@@ -706,10 +716,6 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         {
           if (sourceLocator instanceof ManualSourceLocator)
           {
-            SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
-            sourceSearchPath.setName("sources_" + sourceProviderIndex++);
-            EList<Provider> sourceProviders = sourceSearchPath.getProviders();
-
             ManualSourceLocator manualSourceLocator = (ManualSourceLocator)sourceLocator;
             String locationPattern = manualSourceLocator.getLocation();
             locationPattern = locationPattern.replace("*", "{0}");
@@ -722,6 +728,10 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
               locationPattern += "{0}";
             }
+
+            SearchPath sourceSearchPath = RmapFactory.eINSTANCE.createSearchPath();
+            sourceSearchPath.setName("sources_" + sourceProviderIndex++);
+            EList<Provider> sourceProviders = sourceSearchPath.getProviders();
 
             Provider provider = RmapFactory.eINSTANCE.createProvider();
 
@@ -767,7 +777,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
             automaticSourceLocator.getRootFolder();
             DocumentBuilder documentBuilder = createDocumentBuilder();
-            analyze(componentMap, documentBuilder, new File(automaticSourceLocator.getRootFolder()));
+            analyze(componentMap, documentBuilder, new File(automaticSourceLocator.getRootFolder()),
+                new ProgressLogMonitor(context));
           }
         }
 

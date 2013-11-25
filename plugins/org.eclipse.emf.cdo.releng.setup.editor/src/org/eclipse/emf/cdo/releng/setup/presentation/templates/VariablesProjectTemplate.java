@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.releng.setup.presentation.templates;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard;
 
@@ -28,19 +30,21 @@ import org.eclipse.swt.widgets.Text;
  */
 public class VariablesProjectTemplate extends ProjectTemplate
 {
-  private Branch maintenanceBranch;
-
   public VariablesProjectTemplate()
   {
     super("variables", "Simple project with variables");
-
-    addBranch("master");
-    maintenanceBranch = addBranch("4.2");
   }
 
   @Override
-  public Control createControl(Composite parent)
+  public Control createControl(Composite parent, final Container container, Project project)
   {
+    Branch master = SetupFactory.eINSTANCE.createBranch();
+    master.setName("master");
+    project.getBranches().add(master);
+
+    final Branch maintenance = SetupFactory.eINSTANCE.createBranch();
+    project.getBranches().add(maintenance);
+
     GridLayout layout = new GridLayout();
     layout.numColumns = 2;
     layout.verticalSpacing = 10;
@@ -51,22 +55,18 @@ public class VariablesProjectTemplate extends ProjectTemplate
 
     new Label(composite, SWT.NONE).setText("Maintenance branch name:");
 
-    final Text text = new Text(composite, SWT.BORDER);
-    SetupModelWizard.applyGridData(text);
-    text.addModifyListener(new ModifyListener()
+    final Text branchText = new Text(composite, SWT.BORDER);
+    SetupModelWizard.applyGridData(branchText);
+    branchText.addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)
       {
-        maintenanceBranch.setName(text.getText());
+        maintenance.setName(branchText.getText());
+        container.validate();
       }
     });
 
+    branchText.setText("4.2");
     return composite;
-  }
-
-  @Override
-  public boolean isPageValid()
-  {
-    return false;
   }
 }

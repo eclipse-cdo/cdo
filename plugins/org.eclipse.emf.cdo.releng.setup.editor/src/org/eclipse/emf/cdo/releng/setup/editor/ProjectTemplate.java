@@ -12,14 +12,16 @@ package org.eclipse.emf.cdo.releng.setup.editor;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
-import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -31,8 +33,6 @@ public abstract class ProjectTemplate extends Factory
   private final String label;
 
   private final String description;
-
-  private final Project project = SetupFactory.eINSTANCE.createProject();
 
   protected ProjectTemplate(String type, String label, String description)
   {
@@ -56,11 +56,6 @@ public abstract class ProjectTemplate extends Factory
     return description;
   }
 
-  public final Project getProject()
-  {
-    return project;
-  }
-
   public final ProjectTemplate create(String description) throws ProductCreationException
   {
     return this;
@@ -72,18 +67,38 @@ public abstract class ProjectTemplate extends Factory
     return getLabel();
   }
 
-  public boolean isPageValid()
+  public boolean isValid(Project project)
   {
-    return true;
+    return !project.getBranches().isEmpty();
   }
 
-  public abstract Control createControl(Composite parent);
-
-  protected final Branch addBranch(String name)
+  public boolean isValid(Branch branch)
   {
-    Branch branch = SetupFactory.eINSTANCE.createBranch();
-    branch.setName(name);
-    project.getBranches().add(branch);
-    return branch;
+    return !StringUtil.isEmpty(branch.getName());
+  }
+
+  public abstract Control createControl(Composite parent, Container container, Project project);
+
+  public static boolean contains(Collection<?> collection, Class<?> type)
+  {
+    for (Object object : collection)
+    {
+      if (type.isInstance(object))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Container
+  {
+    public TreeViewer getPreViewer();
+
+    public void validate();
   }
 }

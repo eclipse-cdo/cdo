@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
@@ -28,14 +29,20 @@ import org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -77,16 +84,23 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
   private static final String BRANCH_NAME = "master";
 
-  private Branch branch;
+  private static final String REMOVE_TEXT = "Remove";
+
+  private static final String ASSOCIATED_ELEMENTS = "associated-elements";
 
   public AutomaticProjectTemplate()
   {
     super("automatic", "Analyze a folder (such as a Git working tree)");
-    branch = addBranch(BRANCH_NAME);
   }
 
   @Override
-  public Control createControl(Composite parent)
+  public boolean isValid(Branch branch)
+  {
+    return super.isValid(branch) && contains(branch.getSetupTasks(), MaterializationTask.class);
+  }
+
+  @Override
+  public Control createControl(Composite parent, final Container container, final Project project)
   {
     GridLayout layout = new GridLayout();
     layout.numColumns = 3;
@@ -96,7 +110,41 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     composite.setLayout(layout);
     SetupModelWizard.applyGridData(composite);
 
-    new Label(composite, SWT.NONE).setText("Branch name:");
+    final Branch branch = SetupFactory.eINSTANCE.createBranch();
+    project.getBranches().add(branch);
+    branch.eAdapters().add(new EContentAdapter()
+    {
+      @Override
+      public void notifyChanged(Notification notification)
+      {
+        super.notifyChanged(notification);
+        if (!notification.isTouch())
+        {
+          final TreeViewer preViewer = container.getPreViewer();
+          if (preViewer != null)
+          {
+            preViewer.getControl().getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                preViewer.setExpandedState(branch, true);
+              }
+            });
+          }
+        }
+      }
+    });
+
+    Text branchText = addBranchControl(composite, container, branch);
+    branchText.setText(BRANCH_NAME);
+
+    addFolderControl(composite, container, branch);
+    return composite;
+  }
+
+  private Text addBranchControl(Composite composite, final Container container, final Branch branch)
+  {
+    new Label(composite, SWT.NONE).setText("Branch:");
 
     final Text branchText = new Text(composite, SWT.BORDER);
     SetupModelWizard.applyGridData(branchText);
@@ -105,26 +153,49 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       public void modifyText(ModifyEvent e)
       {
         branch.setName(branchText.getText());
+        container.validate();
       }
     });
 
     new Label(composite, SWT.NONE);
+    return branchText;
+  }
 
-    new Label(composite, SWT.NONE).setText("Folder:");
+  private Text addFolderControl(final Composite composite, final Container container, final Branch branch)
+  {
+    final Label label = new Label(composite, SWT.NONE);
+    label.setText("Folder:");
 
-    final Text folderText = new Text(composite, SWT.BORDER);
-    SetupModelWizard.applyGridData(folderText);
+    final Text text = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+    SetupModelWizard.applyGridData(text);
 
-    Button folderButton = new Button(composite, SWT.NONE);
-    folderButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    folderButton.setBounds(0, 0, 75, 25);
-    folderButton.setText("Browse...");
-    folderButton.addSelectionListener(new SelectionAdapter()
+    final Button button = new Button(composite, SWT.NONE);
+    button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    button.setBounds(0, 0, 75, 25);
+    button.setText("Add...");
+    button.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        Shell shell = folderText.getShell();
+        if (button.getText().equals(REMOVE_TEXT))
+        {
+          @SuppressWarnings("unchecked")
+          List<EObject> elements = (List<EObject>)text.getData(ASSOCIATED_ELEMENTS);
+          for (EObject element : elements)
+          {
+            EcoreUtil.delete(element, true);
+          }
+
+          label.dispose();
+          text.dispose();
+          button.dispose();
+          composite.getParent().getParent().layout();
+          container.validate();
+          return;
+        }
+
+        Shell shell = text.getShell();
 
         DirectoryDialog dialog = new DirectoryDialog(shell);
         dialog.setText(AbstractSetupDialog.SHELL_TEXT);
@@ -135,8 +206,6 @@ public class AutomaticProjectTemplate extends ProjectTemplate
         {
           try
           {
-            folderText.setText(folder);
-
             ProgressMonitorDialog dlg = new ProgressMonitorDialog(shell);
             dlg.run(true, true, new IRunnableWithProgress()
             {
@@ -146,7 +215,21 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
                 try
                 {
-                  analyzeFolder(new File(folder));
+                  final List<EObject> elements = new ArrayList<EObject>();
+                  analyzeFolder(branch, new File(folder), elements, monitor);
+
+                  text.getDisplay().syncExec(new Runnable()
+                  {
+                    public void run()
+                    {
+                      text.setData(ASSOCIATED_ELEMENTS, elements);
+                      updateControl(text, button, folder, container, branch);
+                    }
+                  });
+                }
+                catch (OperationCanceledException ex)
+                {
+                  throw new InterruptedException();
                 }
                 catch (Exception ex)
                 {
@@ -156,6 +239,16 @@ public class AutomaticProjectTemplate extends ProjectTemplate
                 {
                   monitor.done();
                 }
+              }
+
+              private void updateControl(Text text, Button button, String folder, Container container, Branch branch)
+              {
+                text.setText(folder);
+                button.setText(REMOVE_TEXT);
+
+                addFolderControl(composite, container, branch);
+                composite.getParent().getParent().layout();
+                container.validate();
               }
             });
           }
@@ -169,26 +262,18 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       }
     });
 
-    branchText.setText(BRANCH_NAME);
-    return composite;
+    return text;
   }
 
-  @Override
-  public boolean isPageValid()
-  {
-    return false;
-  }
-
-  protected void analyzeFolder(File folder) throws Exception
+  private void analyzeFolder(Branch branch, File folder, List<EObject> elements, IProgressMonitor monitor)
+      throws Exception
   {
     EList<SetupTask> tasks = branch.getSetupTasks();
-    tasks.clear();
-
-    String location = analyzeGit(folder, tasks);
-    analyzeMaterialization(folder, tasks, location);
+    String location = analyzeGit(folder, elements, tasks);
+    analyzeMaterialization(folder, elements, tasks, location, monitor);
   }
 
-  private String analyzeGit(File folder, EList<SetupTask> tasks)
+  private String analyzeGit(File folder, List<EObject> elements, EList<SetupTask> tasks)
   {
     File git = new File(folder, ".git");
     if (git.isDirectory())
@@ -215,6 +300,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           task.setRemoteName("origin");
           task.setCheckoutBranch("master");
 
+          elements.add(task);
           tasks.add(task);
           return location;
         }
@@ -224,18 +310,17 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     return folder.getAbsolutePath();
   }
 
-  private void analyzeMaterialization(File folder, EList<SetupTask> tasks, String location)
-      throws ParserConfigurationException
+  private void analyzeMaterialization(File folder, List<EObject> elements, EList<SetupTask> tasks, String location,
+      IProgressMonitor monitor) throws ParserConfigurationException
   {
     MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
-    tasks.add(task);
 
     AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
     sourceLocator.setRootFolder(location);
     task.getSourceLocators().add(sourceLocator);
 
     List<String> componentLocations = new ArrayList<String>();
-    for (Pair<String, ComponentType> root : MaterializationTaskImpl.analyzeRoots(folder, componentLocations))
+    for (Pair<String, ComponentType> root : MaterializationTaskImpl.analyzeRoots(folder, componentLocations, monitor))
     {
       Component component = SetupFactory.eINSTANCE.createComponent();
       component.setName(root.getElement1());
@@ -247,6 +332,9 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     {
       analyzeP2Repositories(task, new File(componentLocation));
     }
+
+    elements.add(task);
+    tasks.add(task);
   }
 
   private void analyzeP2Repositories(MaterializationTask task, File folder)

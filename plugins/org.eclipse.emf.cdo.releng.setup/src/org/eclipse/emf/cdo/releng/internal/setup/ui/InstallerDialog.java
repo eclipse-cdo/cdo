@@ -124,9 +124,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class InstallerDialog extends AbstractSetupDialog
 {
-  public static final int RETURN_WORKBENCH = -2;
+  public static final int RETURN_WORKBENCH_NETWORK_PREFERENCES = -2;
 
-  public static final int RETURN_RESTART = -3;
+  public static final int RETURN_WORKBENCH = -3;
+
+  public static final int RETURN_RESTART = -4;
 
   private static final String ECLIPSE_VERSION_COLUMN = "eclipse";
 
@@ -585,6 +587,16 @@ public class InstallerDialog extends AbstractSetupDialog
       {
         close();
         setReturnCode(RETURN_WORKBENCH);
+      }
+    });
+
+    createToolItem(toolBar, "icons/install_network.gif", "Preferences").addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        close();
+        setReturnCode(RETURN_WORKBENCH_NETWORK_PREFERENCES);
       }
     });
 

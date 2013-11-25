@@ -20,12 +20,14 @@ import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 
 /**
  * @author Eike Stepper
@@ -38,18 +40,18 @@ public class Application implements IApplication
     {
       final Display display = Display.getDefault();
 
-      int retcode;
       for (;;)
       {
         InstallerDialog dialog = new InstallerDialog(null);
-        retcode = dialog.open();
+        final int retcode = dialog.open();
 
         if (retcode == InstallerDialog.RETURN_RESTART)
         {
           return EXIT_RESTART;
         }
 
-        if (retcode != InstallerDialog.RETURN_WORKBENCH)
+        if (retcode != InstallerDialog.RETURN_WORKBENCH
+            && retcode != InstallerDialog.RETURN_WORKBENCH_NETWORK_PREFERENCES)
         {
           return EXIT_OK;
         }
@@ -76,6 +78,12 @@ public class Application implements IApplication
               catch (PartInitException ex)
               {
                 Activator.log(ex);
+              }
+
+              if (retcode == InstallerDialog.RETURN_WORKBENCH_NETWORK_PREFERENCES)
+              {
+                PreferenceDialog preferenceDialog = PreferencesUtil.createPreferenceDialogOn(null, null, null, null);
+                preferenceDialog.open();
               }
             }
           }

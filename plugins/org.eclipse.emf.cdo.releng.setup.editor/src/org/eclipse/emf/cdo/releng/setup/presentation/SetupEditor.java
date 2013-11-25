@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
@@ -823,6 +824,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   protected void initializeEditingDomain()
   {
     initializeEditingDomainGen();
+
+    editingDomain.getResourceSet().getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
 
     // Create the editing domain with a special command stack.
     //

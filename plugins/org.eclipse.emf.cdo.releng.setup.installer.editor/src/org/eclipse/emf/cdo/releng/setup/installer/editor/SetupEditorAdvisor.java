@@ -18,12 +18,14 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -48,6 +50,7 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 
 import java.io.File;
 import java.util.Arrays;
@@ -251,6 +254,15 @@ public final class SetupEditorAdvisor extends WorkbenchAdvisor
       menuBar.add(createFileMenu(window));
       menuBar.add(createEditMenu(window));
       menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+      menuBar.add(new Action()
+      {
+        @Override
+        public void run()
+        {
+          PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(null, null, null, null);
+          dialog.open();
+        }
+      });
       menuBar.add(createHelpMenu(window));
     }
 

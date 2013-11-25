@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.installer.editor;
 
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
@@ -632,6 +633,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     initializeEditingDomainGen();
     editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
         .put("xmi", new SetupResourceFactoryImpl());
+    editingDomain.getResourceSet().getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
   }
 
   /**

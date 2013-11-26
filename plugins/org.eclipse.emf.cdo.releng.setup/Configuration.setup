@@ -155,7 +155,7 @@
       <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
     </branches>
   </projects>
-  <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/" name="EMF"/>
+  <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/" name="EMF" label="EMF Core SDK"/>
   <projects href="../org.eclipse.emf.cdo.releng/local.setup#/" name="cdo" label="CDO Model Repository"/>
   <projects href="../org.eclipse.emf.cdo.releng/releng.setup#/" name="cdo.releng" label="CDO Release Engineering"/>
 </setup:Configuration>

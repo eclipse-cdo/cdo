@@ -146,12 +146,12 @@
 
 		<!-- MYLYN -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mylyn/snapshots/luna"/>
+			<rm:uri format="http://download.eclipse.org/mylyn/snapshots/nightly"/>
 		</rm:provider>
 
 		<!-- EGIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/egit/updates"/>
+			<rm:uri format="http://download.eclipse.org/egit/updates-nightly"/>
 		</rm:provider>
 
 		<!-- BUCKMINSTER -->

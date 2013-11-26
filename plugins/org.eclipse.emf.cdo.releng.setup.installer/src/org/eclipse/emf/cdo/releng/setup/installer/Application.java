@@ -12,22 +12,25 @@ package org.eclipse.emf.cdo.releng.setup.installer;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PreferenceRecorderAction;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.installer.editor.SetupEditorAdvisor;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.PreferencesUtil;
 
 /**
  * @author Eike Stepper
@@ -73,17 +76,31 @@ public class Application implements IApplication
               try
               {
                 IWorkbenchPage page = workbenchWindow.getActivePage();
-                page.openEditor(editorInput, "org.eclipse.emf.cdo.releng.setup.installer.editor.SetupEditorID");
+                IEditorPart editorPart = page.openEditor(editorInput,
+                    "org.eclipse.emf.cdo.releng.setup.installer.editor.SetupEditorID");
+
+                if (retcode == InstallerDialog.RETURN_WORKBENCH_NETWORK_PREFERENCES
+                    && editorPart instanceof ISelectionProvider)
+                {
+                  ISelectionProvider selectionProvider = (ISelectionProvider)editorPart;
+                  PreferenceRecorderAction preferenceRecorderAction = new PreferenceRecorderAction(true);
+                  preferenceRecorderAction.setChecked(false);
+                  preferenceRecorderAction.selectionChanged(new SelectionChangedEvent(selectionProvider,
+                      selectionProvider.getSelection()));
+                  preferenceRecorderAction.setChecked(true);
+                  preferenceRecorderAction.run();
+
+                  if (editorPart.isDirty())
+                  {
+                    editorPart.doSave(new NullProgressMonitor());
+                  }
+
+                  page.getWorkbenchWindow().close();
+                }
               }
               catch (PartInitException ex)
               {
                 Activator.log(ex);
-              }
-
-              if (retcode == InstallerDialog.RETURN_WORKBENCH_NETWORK_PREFERENCES)
-              {
-                PreferenceDialog preferenceDialog = PreferencesUtil.createPreferenceDialogOn(null, null, null, null);
-                preferenceDialog.open();
               }
             }
           }

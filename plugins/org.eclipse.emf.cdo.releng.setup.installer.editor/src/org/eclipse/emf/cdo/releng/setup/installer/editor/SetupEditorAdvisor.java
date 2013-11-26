@@ -254,7 +254,7 @@ public final class SetupEditorAdvisor extends WorkbenchAdvisor
       menuBar.add(createFileMenu(window));
       menuBar.add(createEditMenu(window));
       menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-      menuBar.add(new Action()
+      menuBar.add(new Action("Preferences...")
       {
         @Override
         public void run()

@@ -737,6 +737,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     try
     {
+      addRepository(agent, "http://download.eclipse.org/releases/luna", sub.newChild(200));
       addRepository(agent, SetupConstants.RELENG_URL, sub.newChild(200));
     }
     catch (ProvisionException ex)

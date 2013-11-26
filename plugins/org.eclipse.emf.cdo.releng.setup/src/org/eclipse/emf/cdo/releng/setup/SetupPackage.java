@@ -115,7 +115,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getInstallableUnit()
    * @generated
    */
-  int INSTALLABLE_UNIT = 15;
+  int INSTALLABLE_UNIT = 16;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
@@ -125,7 +125,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
    * @generated
    */
-  int P2_REPOSITORY = 16;
+  int P2_REPOSITORY = 17;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.
@@ -155,7 +155,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
    * @generated
    */
-  int LINK_LOCATION_TASK = 13;
+  int LINK_LOCATION_TASK = 14;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl <em>Eclipse Preference Task</em>}' class.
@@ -165,7 +165,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
    * @generated
    */
-  int ECLIPSE_PREFERENCE_TASK = 29;
+  int ECLIPSE_PREFERENCE_TASK = 30;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -185,7 +185,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Task()
    * @generated
    */
-  int P2_TASK = 14;
+  int P2_TASK = 15;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -206,9 +206,37 @@ public interface SetupPackage extends EPackage
   int SETUP_TASK_CONTAINER_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurableItemImpl <em>Configurable Item</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ScopeRoot <em>Scope Root</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.ScopeRoot
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getScopeRoot()
+   * @generated
+   */
+  int SCOPE_ROOT = 9;
+
+  /**
+   * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCOPE_ROOT__SETUP_TASKS = SETUP_TASK_CONTAINER__SETUP_TASKS;
+
+  /**
+   * The number of structural features of the '<em>Scope Root</em>' class.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCOPE_ROOT_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurableItemImpl <em>Configurable Item</em>}' class.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurableItemImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfigurableItem()
    * @generated
@@ -222,7 +250,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURABLE_ITEM__SETUP_TASKS = SETUP_TASK_CONTAINER__SETUP_TASKS;
+  int CONFIGURABLE_ITEM__SETUP_TASKS = SCOPE_ROOT__SETUP_TASKS;
 
   /**
    * The number of structural features of the '<em>Configurable Item</em>' class.
@@ -231,7 +259,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURABLE_ITEM_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
+  int CONFIGURABLE_ITEM_FEATURE_COUNT = SCOPE_ROOT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseImpl <em>Eclipse</em>}' class.
@@ -286,7 +314,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION__SETUP_TASKS = SETUP_TASK_CONTAINER__SETUP_TASKS;
+  int CONFIGURATION__SETUP_TASKS = SCOPE_ROOT__SETUP_TASKS;
 
   /**
    * The feature id for the '<em><b>Eclipse Versions</b></em>' containment reference list.
@@ -295,7 +323,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION__ECLIPSE_VERSIONS = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
+  int CONFIGURATION__ECLIPSE_VERSIONS = SCOPE_ROOT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Projects</b></em>' containment reference list.
@@ -304,7 +332,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION__PROJECTS = SETUP_TASK_CONTAINER_FEATURE_COUNT + 1;
+  int CONFIGURATION__PROJECTS = SCOPE_ROOT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Configuration</em>' class.
@@ -313,7 +341,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 2;
+  int CONFIGURATION_FEATURE_COUNT = SCOPE_ROOT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -412,7 +440,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__SETUP_TASKS = SETUP_TASK_CONTAINER__SETUP_TASKS;
+  int PREFERENCES__SETUP_TASKS = SCOPE_ROOT__SETUP_TASKS;
 
   /**
    * The feature id for the '<em><b>Install Folder</b></em>' attribute.
@@ -421,7 +449,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__INSTALL_FOLDER = SETUP_TASK_CONTAINER_FEATURE_COUNT + 0;
+  int PREFERENCES__INSTALL_FOLDER = SCOPE_ROOT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Bundle Pool Folder</b></em>' attribute.
@@ -430,7 +458,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__BUNDLE_POOL_FOLDER = SETUP_TASK_CONTAINER_FEATURE_COUNT + 1;
+  int PREFERENCES__BUNDLE_POOL_FOLDER = SCOPE_ROOT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
@@ -439,7 +467,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES__ACCEPTED_LICENSES = SETUP_TASK_CONTAINER_FEATURE_COUNT + 2;
+  int PREFERENCES__ACCEPTED_LICENSES = SCOPE_ROOT_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Preferences</em>' class.
@@ -448,7 +476,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = SETUP_TASK_CONTAINER_FEATURE_COUNT + 3;
+  int PREFERENCES_FEATURE_COUNT = SCOPE_ROOT_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl <em>Api Baseline Task</em>}' class.
@@ -458,7 +486,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
    * @generated
    */
-  int API_BASELINE_TASK = 25;
+  int API_BASELINE_TASK = 26;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl <em>Git Clone Task</em>}' class.
@@ -468,7 +496,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getGitCloneTask()
    * @generated
    */
-  int GIT_CLONE_TASK = 26;
+  int GIT_CLONE_TASK = 27;
 
   /**
    * The feature id for the '<em><b>Branch</b></em>' reference.
@@ -577,7 +605,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
    * @generated
    */
-  int WORKING_SET_TASK = 30;
+  int WORKING_SET_TASK = 31;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
@@ -587,7 +615,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCompoundSetupTask()
    * @generated
    */
-  int COMPOUND_SETUP_TASK = 9;
+  int COMPOUND_SETUP_TASK = 10;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -678,7 +706,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuckminsterImportTask()
    * @generated
    */
-  int BUCKMINSTER_IMPORT_TASK = 18;
+  int BUCKMINSTER_IMPORT_TASK = 19;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
@@ -688,7 +716,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
    * @generated
    */
-  int ECLIPSE_INI_TASK = 12;
+  int ECLIPSE_INI_TASK = 13;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BasicMaterializationTaskImpl <em>Basic Materialization Task</em>}' class.
@@ -698,7 +726,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBasicMaterializationTask()
    * @generated
    */
-  int BASIC_MATERIALIZATION_TASK = 17;
+  int BASIC_MATERIALIZATION_TASK = 18;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl <em>Resource Copy Task</em>}' class.
@@ -708,7 +736,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
    * @generated
    */
-  int RESOURCE_COPY_TASK = 31;
+  int RESOURCE_COPY_TASK = 32;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
@@ -718,7 +746,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
    */
-  int TEXT_MODIFY_TASK = 33;
+  int TEXT_MODIFY_TASK = 34;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
@@ -728,7 +756,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
    */
-  int TEXT_MODIFICATION = 34;
+  int TEXT_MODIFICATION = 35;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
@@ -738,7 +766,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
    * @generated
    */
-  int KEY_BINDING_TASK = 35;
+  int KEY_BINDING_TASK = 36;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
@@ -748,7 +776,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
    * @generated
    */
-  int COMMAND_PARAMETER = 37;
+  int COMMAND_PARAMETER = 38;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
@@ -758,7 +786,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getContextVariableTask()
    * @generated
    */
-  int CONTEXT_VARIABLE_TASK = 10;
+  int CONTEXT_VARIABLE_TASK = 11;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
@@ -768,7 +796,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
    * @generated
    */
-  int RESOURCE_CREATION_TASK = 32;
+  int RESOURCE_CREATION_TASK = 33;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl <em>Materialization Task</em>}' class.
@@ -778,7 +806,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMaterializationTask()
    * @generated
    */
-  int MATERIALIZATION_TASK = 19;
+  int MATERIALIZATION_TASK = 20;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SourceLocatorImpl <em>Source Locator</em>}' class.
@@ -788,7 +816,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSourceLocator()
    * @generated
    */
-  int SOURCE_LOCATOR = 21;
+  int SOURCE_LOCATOR = 22;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentImpl <em>Component</em>}' class.
@@ -798,7 +826,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponent()
    * @generated
    */
-  int COMPONENT = 20;
+  int COMPONENT = 21;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl <em>Mylyn Query Task</em>}' class.
@@ -808,7 +836,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
    * @generated
    */
-  int MYLYN_QUERY_TASK = 38;
+  int MYLYN_QUERY_TASK = 39;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
@@ -818,7 +846,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
    * @generated
    */
-  int AUTOMATIC_SOURCE_LOCATOR = 23;
+  int AUTOMATIC_SOURCE_LOCATOR = 24;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
@@ -828,7 +856,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
    * @generated
    */
-  int MANUAL_SOURCE_LOCATOR = 22;
+  int MANUAL_SOURCE_LOCATOR = 23;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
@@ -838,7 +866,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
    * @generated
    */
-  int REDIRECTION_TASK = 24;
+  int REDIRECTION_TASK = 25;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -965,7 +993,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableChoice()
    * @generated
    */
-  int VARIABLE_CHOICE = 11;
+  int VARIABLE_CHOICE = 12;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1220,22 +1248,22 @@ public interface SetupPackage extends EPackage
   int P2_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int P2_TASK__P2_REPOSITORIES = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Installable Units</b></em>' containment reference list.
    * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int P2_TASK__INSTALLABLE_UNITS = SETUP_TASK_FEATURE_COUNT + 1;
+  int P2_TASK__INSTALLABLE_UNITS = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+             * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int P2_TASK__P2_REPOSITORIES = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>License Confirmation Disabled</b></em>' attribute.
@@ -1274,12 +1302,12 @@ public interface SetupPackage extends EPackage
   int INSTALLABLE_UNIT__VERSION_RANGE = 1;
 
   /**
-  	 * The number of structural features of the '<em>Installable Unit</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Installable Unit</em>' class.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int INSTALLABLE_UNIT_FEATURE_COUNT = 2;
 
   /**
@@ -1607,12 +1635,12 @@ public interface SetupPackage extends EPackage
   int COMPONENT__VERSION_RANGE = 2;
 
   /**
-  	 * The number of structural features of the '<em>Component</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Component</em>' class.
+   * <!-- begin-user-doc -->
       	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int COMPONENT_FEATURE_COUNT = 3;
 
   /**
@@ -1965,7 +1993,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectSetImportTask()
    * @generated
    */
-  int PROJECT_SET_IMPORT_TASK = 27;
+  int PROJECT_SET_IMPORT_TASK = 28;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2047,7 +2075,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingContext()
    * @generated
    */
-  int KEY_BINDING_CONTEXT = 36;
+  int KEY_BINDING_CONTEXT = 37;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
@@ -2057,7 +2085,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
    * @generated
    */
-  int TARGET_PLATFORM_TASK = 28;
+  int TARGET_PLATFORM_TASK = 29;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2850,7 +2878,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
    * @generated
    */
-  int JRE_TASK = 39;
+  int JRE_TASK = 40;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2941,7 +2969,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 40;
+  int SETUP_TASK_SCOPE = 41;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -2951,7 +2979,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 41;
+  int TRIGGER = 42;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -2961,7 +2989,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 42;
+  int COMPONENT_TYPE = 43;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -2971,7 +2999,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 43;
+  int VARIABLE_TYPE = 44;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -2981,7 +3009,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 46;
+  int URI = 47;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -2991,7 +3019,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 47;
+  int LICENSE_INFO = 48;
 
   /**
    * The meta object id for the '<em>Version Range</em>' data type.
@@ -3001,16 +3029,16 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
-  int VERSION_RANGE = 48;
+  int VERSION_RANGE = 49;
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Eclipse</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Eclipse
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Eclipse</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Eclipse
+   * @generated
+   */
   EClass getEclipse();
 
   /**
@@ -3043,7 +3071,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 45;
+  int EXCEPTION = 46;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -3053,7 +3081,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 44;
+  int TRIGGER_SET = 45;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -3378,13 +3406,13 @@ public interface SetupPackage extends EPackage
   EAttribute getInstallableUnit_VersionRange();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Repository <em>P2 Repository</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Repository <em>P2 Repository</em>}'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>P2 Repository</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.P2Repository
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>P2 Repository</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.P2Repository
+   * @generated
+   */
   EClass getP2Repository();
 
   /**
@@ -4268,13 +4296,13 @@ public interface SetupPackage extends EPackage
   EAttribute getComponent_VersionRange();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
+   * <!-- begin-user-doc -->
                            * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Eclipse Ini Task</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Eclipse Ini Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
+   * @generated
+   */
   EClass getEclipseIniTask();
 
   /**
@@ -4499,9 +4527,19 @@ public interface SetupPackage extends EPackage
   EReference getSetupTaskContainer_SetupTasks();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask <em>Eclipse Preference Task</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ScopeRoot <em>Scope Root</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scope Root</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ScopeRoot
+   * @generated
+   */
+  EClass getScopeRoot();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask <em>Eclipse Preference Task</em>}'.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return the meta object for class '<em>Eclipse Preference Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask
    * @generated
@@ -4564,14 +4602,14 @@ public interface SetupPackage extends EPackage
   EDataType getVersionRange();
 
   /**
-  	 * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @return the meta object for data type '<em>Exception</em>'.
-  	 * @see java.lang.Exception
-  	 * @model instanceClass="java.lang.Exception"
-  	 * @generated
-  	 */
+   * @return the meta object for data type '<em>Exception</em>'.
+   * @see java.lang.Exception
+   * @model instanceClass="java.lang.Exception"
+   * @generated
+   */
   EDataType getException();
 
   /**
@@ -4892,13 +4930,13 @@ public interface SetupPackage extends EPackage
     EAttribute INSTALLABLE_UNIT__VERSION_RANGE = eINSTANCE.getInstallableUnit_VersionRange();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
+     * @generated
+     */
     EClass P2_REPOSITORY = eINSTANCE.getP2Repository();
 
     /**
@@ -5602,13 +5640,13 @@ public interface SetupPackage extends EPackage
     EAttribute COMPONENT__VERSION_RANGE = eINSTANCE.getComponent_VersionRange();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
+     * <!-- begin-user-doc -->
                              * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
+     * @generated
+     */
     EClass ECLIPSE_INI_TASK = eINSTANCE.getEclipseIniTask();
 
     /**
@@ -5800,9 +5838,19 @@ public interface SetupPackage extends EPackage
     EReference SETUP_TASK_CONTAINER__SETUP_TASKS = eINSTANCE.getSetupTaskContainer_SetupTasks();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl <em>Eclipse Preference Task</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.ScopeRoot <em>Scope Root</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.ScopeRoot
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getScopeRoot()
+     * @generated
+     */
+    EClass SCOPE_ROOT = eINSTANCE.getScopeRoot();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl <em>Eclipse Preference Task</em>}' class.
+     * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
      * @generated
@@ -5856,13 +5904,13 @@ public interface SetupPackage extends EPackage
     EDataType VERSION_RANGE = eINSTANCE.getVersionRange();
 
     /**
-    	 * The meta object literal for the '<em>Exception</em>' data type.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em>Exception</em>' data type.
+     * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-    	 * @see java.lang.Exception
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
-    	 * @generated
-    	 */
+     * @see java.lang.Exception
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
+     * @generated
+     */
     EDataType EXCEPTION = eINSTANCE.getException();
 
     /**

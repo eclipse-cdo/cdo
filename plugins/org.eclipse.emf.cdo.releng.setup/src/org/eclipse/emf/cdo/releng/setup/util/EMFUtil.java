@@ -11,14 +11,23 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.P2Task;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.core.runtime.Plugin;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -75,5 +84,52 @@ public final class EMFUtil extends Plugin
     }
 
     return URI.createURI(uri.replace('\\', '/'));
+  }
+
+  public static Set<String> getInstallableUnitIDs(ScopeRoot scope, boolean includeParentScopes)
+  {
+    Set<String> ids = new HashSet<String>();
+
+    EList<SetupTask> setupTasks = getSetupTasks(scope, includeParentScopes);
+    for (SetupTask setupTask : setupTasks)
+    {
+      if (setupTask instanceof P2Task)
+      {
+        P2Task p2Task = (P2Task)setupTask;
+        EList<InstallableUnit> ius = p2Task.getInstallableUnits();
+        for (InstallableUnit iu : ius)
+        {
+          ids.add(iu.getID());
+        }
+      }
+    }
+
+    return ids;
+  }
+
+  public static EList<SetupTask> getSetupTasks(ScopeRoot scope, boolean includeParentScopes)
+  {
+    EList<SetupTask> setupTasks = new BasicEList<SetupTask>();
+
+    if (scope != null)
+    {
+      collectSetupTasks(scope, includeParentScopes, setupTasks);
+    }
+
+    return setupTasks;
+  }
+
+  private static void collectSetupTasks(ScopeRoot scope, boolean includeParentScopes, EList<SetupTask> setupTasks)
+  {
+    if (includeParentScopes)
+    {
+      ScopeRoot parentScope = scope.getParentScopeRoot();
+      if (parentScope != null)
+      {
+        collectSetupTasks(parentScope, true, setupTasks);
+      }
+    }
+
+    setupTasks.addAll(scope.getSetupTasks());
   }
 }

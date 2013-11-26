@@ -91,20 +91,20 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       SetupPackage.eINSTANCE.getVersionRange(), "0.0.0");
 
   /**
-  	 * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getVersionRange()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getVersionRange()
+   * @generated
+   * @ordered
+   */
   protected VersionRange versionRange = VERSION_RANGE_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ComponentImpl()
   {
     super();
@@ -182,10 +182,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setVersionRange(VersionRange newVersionRange)
   {
     VersionRange oldVersionRange = versionRange;
@@ -198,10 +198,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

@@ -41,6 +41,14 @@ import java.util.Set;
  */
 public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 {
+  private static final String[] REQUIRED_IUS = { "org.eclipse.mylyn.ide_feature.feature.group",
+      "org.eclipse.mylyn.java_feature.feature.group", "org.eclipse.mylyn.pde_feature.feature.group",
+      "org.eclipse.mylyn.team_feature.feature.group", "org.eclipse.mylyn.gerrit.feature.feature.group",
+      "org.eclipse.mylyn_feature.feature.group", "org.eclipse.mylyn.bugzilla_feature.feature.group",
+      "org.eclipse.mylyn.git.feature.group" };
+
+  private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/mylyn/snapshots/weekly" };
+
   /**
    * The default value of the '{@link #getConnectorKind() <em>Connector Kind</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -371,6 +379,18 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   public Set<Trigger> getValidTriggers()
   {
     return Trigger.IDE_TRIGGERS;
+  }
+
+  @Override
+  protected String[] getRequiredInstallableUnits()
+  {
+    return REQUIRED_IUS;
+  }
+
+  @Override
+  protected String[] getRequiredP2Repositories()
+  {
+    return REQUIRED_REPOSITORIES;
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception

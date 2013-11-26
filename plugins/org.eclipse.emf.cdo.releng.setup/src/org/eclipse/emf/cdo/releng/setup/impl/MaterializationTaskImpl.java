@@ -104,6 +104,12 @@ import java.util.regex.Pattern;
  */
 public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implements MaterializationTask
 {
+  private static final String[] REQUIRED_IUS = { "org.eclipse.buckminster.core.headless.feature.feature.group",
+      "org.eclipse.buckminster.pde.headless.feature.feature.group",
+      "org.eclipse.buckminster.git.headless.feature.feature.group" };
+
+  private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/tools/buckminster/headless-4.3" };
+
   /**
    * The cached value of the '{@link #getRootComponents() <em>Root Components</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -328,6 +334,18 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
   }
 
   @Override
+  protected String[] getRequiredInstallableUnits()
+  {
+    return REQUIRED_IUS;
+  }
+
+  @Override
+  protected String[] getRequiredP2Repositories()
+  {
+    return REQUIRED_REPOSITORIES;
+  }
+
+  @Override
   protected String getMspec(SetupTaskContext context) throws Exception
   {
     return BuckminsterHelper.getMspec(context, getRootComponents(), getSourceLocators(), getP2Repositories());
@@ -454,39 +472,33 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
               componentName = rootElement.getAttribute("name").trim();
               componentType = ComponentType.BUCKMINSTER;
 
-              NodeList dependenciesList = rootElement.getElementsByTagName("dependencies");
-              for (int i = 0; i < dependenciesList.getLength(); i++)
-              {
-                Element dependenciesElement = (Element)dependenciesList.item(i);
-                NodeList dependencyList = dependenciesElement.getElementsByTagName("dependency");
-                for (int j = 0; i < dependencyList.getLength(); j++)
-                {
-                  Element dependency = (Element)dependencyList.item(j);
-                  String id = dependency.getAttribute("name");
-                  String type = dependency.getAttribute("componentType");
+              analyzeComponentSpec(rootElement, children);
+            }
+            else
+            {
+              Element rootElement = load(documentBuilder, projectFile);
 
-                  try
-                  {
-                    ComponentType enumValue = ComponentType.valueOf(type.toUpperCase());
-                    if (enumValue != null)
-                    {
-                      children.add(Pair.create(id, enumValue));
-                    }
-                  }
-                  catch (Exception ex)
-                  {
-                    Activator.log(ex);
-                  }
-                }
+              NodeList namesList = rootElement.getElementsByTagName("name");
+              if (namesList.getLength() != 0)
+              {
+                Element nameElement = (Element)namesList.item(0);
+
+                componentName = nameElement.getTextContent().trim();
+                componentType = ComponentType.OTHER;
               }
             }
           }
         }
 
-        // TODO Consider CSpec extensions (buckminster.cspex), which add their dependencies
-
         if (componentName != null)
         {
+          File cspexFile = new File(folder, "buckminster.cspex");
+          if (cspexFile.exists())
+          {
+            Element rootElement = load(documentBuilder, cspexFile);
+            analyzeComponentSpec(rootElement, children);
+          }
+
           List<ComponentLocation> locations = componentMap.get(componentName);
           if (locations == null)
           {
@@ -513,6 +525,35 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         if (file.isDirectory())
         {
           analyze(componentMap, documentBuilder, file, monitor);
+        }
+      }
+    }
+  }
+
+  private static void analyzeComponentSpec(Element rootElement, Set<Pair<String, ComponentType>> children)
+  {
+    NodeList dependenciesList = rootElement.getElementsByTagName("dependencies");
+    for (int i = 0; i < dependenciesList.getLength(); i++)
+    {
+      Element dependenciesElement = (Element)dependenciesList.item(i);
+      NodeList dependencyList = dependenciesElement.getElementsByTagName("dependency");
+      for (int j = 0; j < dependencyList.getLength(); j++)
+      {
+        Element dependency = (Element)dependencyList.item(j);
+        String id = dependency.getAttribute("name");
+        String type = dependency.getAttribute("componentType");
+
+        try
+        {
+          ComponentType enumValue = ComponentType.get(type);
+          if (enumValue != null)
+          {
+            children.add(Pair.create(id, enumValue));
+          }
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
         }
       }
     }

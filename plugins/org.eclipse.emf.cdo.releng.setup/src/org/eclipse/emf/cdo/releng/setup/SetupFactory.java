@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.ecore.EFactory;
 
+import java.util.Set;
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
@@ -101,6 +103,10 @@ public interface SetupFactory extends EFactory
    * @generated
    */
   P2Task createP2Task();
+
+  P2Task createP2Task(String[] ius, String[] repositories);
+
+  P2Task createP2Task(String[] ius, String[] repositories, Set<String> existingIUs);
 
   /**
    * Returns a new object of class '<em>Installable Unit</em>'.

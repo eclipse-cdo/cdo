@@ -13,7 +13,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -436,6 +438,18 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     result.append(label);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public SetupTaskScope getScope()
+  {
+    return SetupTaskScope.PROJECT;
+  }
+
+  @Override
+  public ScopeRoot getParentScopeRoot()
+  {
+    return null;
   }
 
 } // ProjectImpl

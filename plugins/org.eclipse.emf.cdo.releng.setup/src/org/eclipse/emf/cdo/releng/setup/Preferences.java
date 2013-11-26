@@ -33,7 +33,7 @@ import java.io.File;
  * @model
  * @generated
  */
-public interface Preferences extends SetupTaskContainer
+public interface Preferences extends ScopeRoot
 {
   public static final String PREFERENCES_NAME = "setup-eclipse.xmi";
 

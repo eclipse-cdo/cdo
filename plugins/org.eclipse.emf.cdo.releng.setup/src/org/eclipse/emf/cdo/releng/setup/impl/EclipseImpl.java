@@ -12,11 +12,14 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -331,4 +334,23 @@ public class EclipseImpl extends ConfigurableItemImpl implements Eclipse
     result.append(')');
     return result.toString();
   }
+
+  @Override
+  public SetupTaskScope getScope()
+  {
+    return SetupTaskScope.ECLIPSE;
+  }
+
+  @Override
+  public ScopeRoot getParentScopeRoot()
+  {
+    EObject container = eContainer();
+    if (container instanceof ScopeRoot)
+    {
+      return (ScopeRoot)container;
+    }
+
+    return null;
+  }
+
 } // EclipseImpl

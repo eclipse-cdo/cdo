@@ -93,18 +93,17 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private ProgressLogFilter logFilter = new ProgressLogFilter();
 
+  private List<EStructuralFeature.Setting> unresolvedSettings = new ArrayList<EStructuralFeature.Setting>();
+
   private List<ContextVariableTask> unresolvedVariables = new ArrayList<ContextVariableTask>();
 
   private List<ContextVariableTask> resolvedVariables = new ArrayList<ContextVariableTask>();
 
-  private Set<String> undeclaredVariables = new HashSet<String>();
-
-  private List<EStructuralFeature.Setting> unresolvedSettings = new ArrayList<EStructuralFeature.Setting>();
+  private Set<String> undeclaredVariables = new HashSet<String>(); // TODO Should these be called "Unspecified"?
 
   public SetupTaskPerformer(Trigger trigger, Setup setup)
   {
     super(trigger, setup);
-
     initTriggeredSetupTasks();
   }
 

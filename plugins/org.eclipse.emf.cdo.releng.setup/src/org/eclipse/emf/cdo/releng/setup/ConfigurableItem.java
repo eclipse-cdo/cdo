@@ -20,6 +20,6 @@ package org.eclipse.emf.cdo.releng.setup;
  * @model abstract="true"
  * @generated
  */
-public interface ConfigurableItem extends SetupTaskContainer
+public interface ConfigurableItem extends ScopeRoot
 {
 } // ConfigurableItem

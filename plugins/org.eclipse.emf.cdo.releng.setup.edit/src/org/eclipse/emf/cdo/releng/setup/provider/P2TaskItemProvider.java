@@ -99,8 +99,8 @@ public class P2TaskItemProvider extends SetupTaskItemProvider implements IEditin
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.P2_TASK__P2_REPOSITORIES);
       childrenFeatures.add(SetupPackage.Literals.P2_TASK__INSTALLABLE_UNITS);
+      childrenFeatures.add(SetupPackage.Literals.P2_TASK__P2_REPOSITORIES);
     }
     return childrenFeatures;
   }
@@ -171,8 +171,8 @@ public class P2TaskItemProvider extends SetupTaskItemProvider implements IEditin
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
+    case SetupPackage.P2_TASK__P2_REPOSITORIES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -191,11 +191,11 @@ public class P2TaskItemProvider extends SetupTaskItemProvider implements IEditin
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.P2_TASK__P2_REPOSITORIES,
-        SetupFactory.eINSTANCE.createP2Repository()));
-
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.P2_TASK__INSTALLABLE_UNITS,
         SetupFactory.eINSTANCE.createInstallableUnit()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.P2_TASK__P2_REPOSITORIES,
+        SetupFactory.eINSTANCE.createP2Repository()));
   }
 
 }

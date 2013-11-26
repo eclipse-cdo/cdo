@@ -36,6 +36,11 @@ import java.util.Set;
  */
 public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl implements BuckminsterImportTask
 {
+  private static final String[] REQUIRED_IUS = { "org.eclipse.buckminster.core.feature.feature.group",
+      "org.eclipse.buckminster.pde.feature.feature.group", "org.eclipse.buckminster.git.feature.feature.group" };
+
+  private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/tools/buckminster/updates-4.3" };
+
   /**
    * The default value of the '{@link #getMspec() <em>Mspec</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -193,6 +198,18 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
   public Set<Trigger> getValidTriggers()
   {
     return Trigger.IDE_TRIGGERS;
+  }
+
+  @Override
+  protected String[] getRequiredInstallableUnits()
+  {
+    return REQUIRED_IUS;
+  }
+
+  @Override
+  protected String[] getRequiredP2Repositories()
+  {
+    return REQUIRED_REPOSITORIES;
   }
 
   @Override

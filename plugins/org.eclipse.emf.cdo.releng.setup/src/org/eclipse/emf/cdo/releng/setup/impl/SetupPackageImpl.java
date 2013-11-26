@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -386,6 +387,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass scopeRootEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass eclipsePreferenceTaskEClass = null;
 
   /**
@@ -410,10 +418,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   private EDataType versionRangeEDataType = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EDataType exceptionEDataType = null;
 
   /**
@@ -769,7 +777,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EReference getP2Task_InstallableUnits()
   {
-    return (EReference)p2TaskEClass.getEStructuralFeatures().get(1);
+    return (EReference)p2TaskEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -789,7 +797,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EReference getP2Task_P2Repositories()
   {
-    return (EReference)p2TaskEClass.getEStructuralFeatures().get(0);
+    return (EReference)p2TaskEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -823,10 +831,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getP2Repository()
   {
     return p2RepositoryEClass;
@@ -1653,10 +1661,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
                            * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getEclipseIniTask()
   {
     return eclipseIniTaskEClass;
@@ -1877,6 +1885,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getScopeRoot()
+  {
+    return scopeRootEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getEclipsePreferenceTask()
   {
     return eclipsePreferenceTaskEClass;
@@ -1933,10 +1951,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EDataType getException()
   {
     return exceptionEDataType;
@@ -2026,6 +2044,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     setupTaskContainerEClass = createEClass(SETUP_TASK_CONTAINER);
     createEReference(setupTaskContainerEClass, SETUP_TASK_CONTAINER__SETUP_TASKS);
 
+    scopeRootEClass = createEClass(SCOPE_ROOT);
+
     compoundSetupTaskEClass = createEClass(COMPOUND_SETUP_TASK);
     createEAttribute(compoundSetupTaskEClass, COMPOUND_SETUP_TASK__NAME);
 
@@ -2051,8 +2071,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(linkLocationTaskEClass, LINK_LOCATION_TASK__NAME);
 
     p2TaskEClass = createEClass(P2_TASK);
-    createEReference(p2TaskEClass, P2_TASK__P2_REPOSITORIES);
     createEReference(p2TaskEClass, P2_TASK__INSTALLABLE_UNITS);
+    createEReference(p2TaskEClass, P2_TASK__P2_REPOSITORIES);
     createEAttribute(p2TaskEClass, P2_TASK__LICENSE_CONFIRMATION_DISABLED);
 
     installableUnitEClass = createEClass(INSTALLABLE_UNIT);
@@ -2213,11 +2233,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     // Add supertypes to classes
     eclipseEClass.getESuperTypes().add(getConfigurableItem());
-    configurationEClass.getESuperTypes().add(getSetupTaskContainer());
-    configurableItemEClass.getESuperTypes().add(getSetupTaskContainer());
+    configurationEClass.getESuperTypes().add(getScopeRoot());
+    configurableItemEClass.getESuperTypes().add(getScopeRoot());
     projectEClass.getESuperTypes().add(getConfigurableItem());
     branchEClass.getESuperTypes().add(getConfigurableItem());
-    preferencesEClass.getESuperTypes().add(getSetupTaskContainer());
+    preferencesEClass.getESuperTypes().add(getScopeRoot());
+    scopeRootEClass.getESuperTypes().add(getSetupTaskContainer());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTask());
     compoundSetupTaskEClass.getESuperTypes().add(getSetupTaskContainer());
     contextVariableTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2329,6 +2350,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         SetupTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
+    addEOperation(setupTaskEClass, getScopeRoot(), "getScopeRoot", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     op = addEOperation(setupTaskEClass, ecorePackage.getEBoolean(), "requires", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, getSetupTask(), "setupTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -2341,6 +2364,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getSetupTaskContainer_SetupTasks(), getSetupTask(), null, "setupTasks", null, 0, -1,
         SetupTaskContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scopeRootEClass, ScopeRoot.class, "ScopeRoot", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    addEOperation(scopeRootEClass, getSetupTaskScope(), "getScope", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+    addEOperation(scopeRootEClass, getScopeRoot(), "getParentScopeRoot", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(compoundSetupTaskEClass, CompoundSetupTask.class, "CompoundSetupTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2391,12 +2420,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(p2TaskEClass, P2Task.class, "P2Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getP2Task_P2Repositories(), getP2Repository(), null, "p2Repositories", null, 1, -1, P2Task.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
     initEReference(getP2Task_InstallableUnits(), getInstallableUnit(), null, "installableUnits", null, 1, -1,
         P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getP2Task_P2Repositories(), getP2Repository(), null, "p2Repositories", null, 1, -1, P2Task.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getP2Task_LicenseConfirmationDisabled(), ecorePackage.getEBoolean(), "licenseConfirmationDisabled",
         null, 0, 1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
@@ -2647,6 +2676,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addEEnumLiteral(componentTypeEEnum, ComponentType.ECLIPSE_FEATURE);
     addEEnumLiteral(componentTypeEEnum, ComponentType.OSGI_BUNDLE);
     addEEnumLiteral(componentTypeEEnum, ComponentType.BUCKMINSTER);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.JAR);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.BOM);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.OTHER);
 
     initEEnum(variableTypeEEnum, VariableType.class, "VariableType");
     addEEnumLiteral(variableTypeEEnum, VariableType.STRING);

@@ -53,6 +53,7 @@ import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -345,6 +346,42 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     P2TaskImpl p2Task = new P2TaskImpl();
     return p2Task;
+  }
+
+  public P2Task createP2Task(String[] ius, String[] repositories, Set<String> existingIUs)
+  {
+    P2Task p2Task = createP2Task();
+
+    EList<InstallableUnit> installableUnits = p2Task.getInstallableUnits();
+    for (String id : ius)
+    {
+      if (existingIUs == null || !existingIUs.contains(id))
+      {
+        InstallableUnit iu = createInstallableUnit();
+        iu.setID(id);
+        installableUnits.add(iu);
+      }
+    }
+
+    if (installableUnits.isEmpty())
+    {
+      return null;
+    }
+
+    EList<P2Repository> p2Repositories = p2Task.getP2Repositories();
+    for (String url : repositories)
+    {
+      P2Repository repository = createP2Repository();
+      repository.setURL(url);
+      p2Repositories.add(repository);
+    }
+
+    return p2Task;
+  }
+
+  public P2Task createP2Task(String[] ius, String[] repositories)
+  {
+    return createP2Task(ius, repositories, null);
   }
 
   /**
@@ -809,10 +846,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public Exception createExceptionFromString(EDataType eDataType, String initialValue)
   {
     return (Exception)super.createFromString(eDataType, initialValue);

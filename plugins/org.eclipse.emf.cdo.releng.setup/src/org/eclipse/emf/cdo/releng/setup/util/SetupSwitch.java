@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
@@ -129,6 +130,10 @@ public class SetupSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
+        result = caseScopeRoot(eclipse);
+      }
+      if (result == null)
+      {
         result = caseSetupTaskContainer(eclipse);
       }
       if (result == null)
@@ -143,6 +148,10 @@ public class SetupSwitch<T> extends Switch<T>
       T result = caseConfiguration(configuration);
       if (result == null)
       {
+        result = caseScopeRoot(configuration);
+      }
+      if (result == null)
+      {
         result = caseSetupTaskContainer(configuration);
       }
       if (result == null)
@@ -155,6 +164,10 @@ public class SetupSwitch<T> extends Switch<T>
     {
       ConfigurableItem configurableItem = (ConfigurableItem)theEObject;
       T result = caseConfigurableItem(configurableItem);
+      if (result == null)
+      {
+        result = caseScopeRoot(configurableItem);
+      }
       if (result == null)
       {
         result = caseSetupTaskContainer(configurableItem);
@@ -172,6 +185,10 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseConfigurableItem(project);
+      }
+      if (result == null)
+      {
+        result = caseScopeRoot(project);
       }
       if (result == null)
       {
@@ -193,6 +210,10 @@ public class SetupSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
+        result = caseScopeRoot(branch);
+      }
+      if (result == null)
+      {
         result = caseSetupTaskContainer(branch);
       }
       if (result == null)
@@ -205,6 +226,10 @@ public class SetupSwitch<T> extends Switch<T>
     {
       Preferences preferences = (Preferences)theEObject;
       T result = casePreferences(preferences);
+      if (result == null)
+      {
+        result = caseScopeRoot(preferences);
+      }
       if (result == null)
       {
         result = caseSetupTaskContainer(preferences);
@@ -239,6 +264,20 @@ public class SetupSwitch<T> extends Switch<T>
     {
       SetupTaskContainer setupTaskContainer = (SetupTaskContainer)theEObject;
       T result = caseSetupTaskContainer(setupTaskContainer);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.SCOPE_ROOT:
+    {
+      ScopeRoot scopeRoot = (ScopeRoot)theEObject;
+      T result = caseScopeRoot(scopeRoot);
+      if (result == null)
+      {
+        result = caseSetupTaskContainer(scopeRoot);
+      }
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -729,11 +768,27 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Scope Root</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scope Root</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScopeRoot(ScopeRoot object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
+   * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)

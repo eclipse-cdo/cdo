@@ -25,13 +25,16 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl;
+import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -41,6 +44,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -66,7 +70,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,7 +82,7 @@ import java.util.regex.Pattern;
  */
 public class AutomaticProjectTemplate extends ProjectTemplate
 {
-  private static final Pattern GIT_URL_PATTERN = Pattern.compile("\\[remote \"origin\"].*?url *= *([^\\r\\n]*)",
+  private static final Pattern GIT_URL_PATTERN = Pattern.compile("\\[remote \"([^\"]*)\"].*?url *= *([^\\r\\n]*)",
       Pattern.DOTALL | Pattern.MULTILINE);
 
   private static final Pattern TARGET_URL_PATTERN = Pattern.compile("<repository.*?location.*?=.*?\"([^\"]*)\"",
@@ -106,6 +113,9 @@ public class AutomaticProjectTemplate extends ProjectTemplate
   public AutomaticProjectTemplate()
   {
     super("automatic", "Analyze a folder (such as a Git working tree)");
+
+    IDialogSettings section = getSettings();
+    lastFolder = section.get("lastFolder");
   }
 
   @Override
@@ -265,6 +275,9 @@ public class AutomaticProjectTemplate extends ProjectTemplate
         {
           lastFolder = folder;
 
+          IDialogSettings section = getSettings();
+          section.put("lastFolder", lastFolder);
+
           try
           {
             ProgressMonitorDialog dlg = new ProgressMonitorDialog(shell);
@@ -346,10 +359,25 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       {
         String content = IOUtil.readTextFile(config);
 
+        Map<String, String> uris = new LinkedHashMap<String, String>();
         Matcher matcher = GIT_URL_PATTERN.matcher(content);
-        if (matcher.find())
+        while (matcher.find())
         {
-          URI baseURI = URI.createURI(matcher.group(1));
+          uris.put(matcher.group(1), matcher.group(2));
+        }
+
+        if (!uris.isEmpty())
+        {
+          String remoteName = "origin";
+          String mainURI = uris.get(remoteName);
+          if (mainURI == null)
+          {
+            Map.Entry<String, String> entry = uris.entrySet().iterator().next();
+            remoteName = entry.getKey();
+            mainURI = entry.getValue();
+          }
+
+          URI baseURI = URI.createURI(mainURI);
           String userID = baseURI.userInfo();
           if (StringUtil.isEmpty(userID))
           {
@@ -364,7 +392,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           task.setLocation(location);
           task.setUserID(userID);
           task.setRemoteURI(uri.toString());
-          task.setRemoteName("origin");
+          task.setRemoteName(remoteName);
           task.setCheckoutBranch("master");
 
           tasks.add(task);
@@ -403,6 +431,22 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       analyzeP2Repositories(task, new File(componentLocation));
     }
 
+    ECollections.sort(task.getRootComponents(), new Comparator<Component>()
+    {
+      public int compare(Component o1, Component o2)
+      {
+        return o1.getName().compareTo(o2.getName());
+      }
+    });
+
+    ECollections.sort(task.getP2Repositories(), new Comparator<P2Repository>()
+    {
+      public int compare(P2Repository o1, P2Repository o2)
+      {
+        return o1.getURL().compareTo(o2.getURL());
+      }
+    });
+
     elements.add(task);
     tasks.add(task);
   }
@@ -436,11 +480,30 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     while (matcher.find())
     {
       String url = matcher.group(group);
+      if (url.endsWith("/"))
+      {
+        url = url.substring(0, url.length() - 1);
+      }
 
-      P2Repository repository = SetupFactory.eINSTANCE.createP2Repository();
-      repository.setURL(url);
-      task.getP2Repositories().add(repository);
+      addP2Repository(task, url);
     }
+  }
+
+  private void addP2Repository(MaterializationTask task, String url)
+  {
+    EList<P2Repository> p2Repositories = task.getP2Repositories();
+    for (P2Repository repository : p2Repositories)
+    {
+      if (ObjectUtil.equals(repository.getURL(), url))
+      {
+        return;
+      }
+    }
+
+    P2Repository repository = SetupFactory.eINSTANCE.createP2Repository();
+    repository.setURL(url);
+
+    p2Repositories.add(repository);
   }
 
   private static ContextVariableTask addVariable(GitCloneTask task)
@@ -468,5 +531,17 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     Point size = shell.getSize();
     size.y += delta;
     shell.setSize(size);
+  }
+
+  private static IDialogSettings getSettings()
+  {
+    IDialogSettings dialogSettings = SetupEditorPlugin.getPlugin().getDialogSettings();
+    IDialogSettings section = dialogSettings.getSection(AutomaticProjectTemplate.class.getName());
+    if (section == null)
+    {
+      section = dialogSettings.addNewSection(AutomaticProjectTemplate.class.getName());
+    }
+
+    return section;
   }
 }

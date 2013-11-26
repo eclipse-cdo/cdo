@@ -7,7 +7,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//SetupTaskContainer">
+  <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="#//ScopeRoot">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseVersions" lowerBound="1"
         upperBound="-1" eType="#//Eclipse" containment="true" eOpposite="#//Eclipse/configuration"
         eKeys="#//Eclipse/version"/>
@@ -15,7 +15,7 @@
         upperBound="-1" eType="#//Project" containment="true" eOpposite="#//Project/configuration"
         eKeys="#//Project/name"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//SetupTaskContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigurableItem" abstract="true" eSuperTypes="#//ScopeRoot"/>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ConfigurableItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"
         transient="true" eOpposite="#//Configuration/projects"/>
@@ -30,7 +30,7 @@
         eOpposite="#//Project/branches"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Preferences" eSuperTypes="#//SetupTaskContainer">
+  <eClassifiers xsi:type="ecore:EClass" name="Preferences" eSuperTypes="#//ScopeRoot">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="installFolder" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundlePoolFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -50,6 +50,7 @@
         eType="#//Preferences"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SetupTask" abstract="true">
+    <eOperations name="getScopeRoot" eType="#//ScopeRoot"/>
     <eOperations name="requires" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="setupTask" eType="#//SetupTask"/>
     </eOperations>
@@ -69,6 +70,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="SetupTaskContainer" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="setupTasks" upperBound="-1"
         eType="#//SetupTask" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopeRoot" abstract="true" interface="true"
+      eSuperTypes="#//SetupTaskContainer">
+    <eOperations name="getScope" lowerBound="1" eType="#//SetupTaskScope"/>
+    <eOperations name="getParentScopeRoot" eType="#//ScopeRoot"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompoundSetupTask" eSuperTypes="#//SetupTask #//SetupTaskContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -98,10 +104,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="P2Task" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Repositories" lowerBound="1"
-        upperBound="-1" eType="#//P2Repository" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="installableUnits" lowerBound="1"
         upperBound="-1" eType="#//InstallableUnit" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Repositories" lowerBound="1"
+        upperBound="-1" eType="#//P2Repository" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="licenseConfirmationDisabled"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
@@ -296,7 +302,10 @@
   <eClassifiers xsi:type="ecore:EEnum" name="ComponentType">
     <eLiterals name="ECLIPSE_FEATURE" literal="eclipse.feature"/>
     <eLiterals name="OSGI_BUNDLE" value="1" literal="osgi.bundle"/>
-    <eLiterals name="BUCKMINSTER" value="3" literal="buckminster"/>
+    <eLiterals name="BUCKMINSTER" value="2" literal="buckminster"/>
+    <eLiterals name="JAR" value="3" literal="jar"/>
+    <eLiterals name="BOM" value="4" literal="bom"/>
+    <eLiterals name="OTHER" value="5" literal="other"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="VariableType">
     <eLiterals name="STRING"/>

@@ -55,7 +55,31 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  BUCKMINSTER(3, "BUCKMINSTER", "buckminster");
+  BUCKMINSTER(2, "BUCKMINSTER", "buckminster"), /**
+                                                * The '<em><b>JAR</b></em>' literal object.
+                                                * <!-- begin-user-doc -->
+                                                * <!-- end-user-doc -->
+                                                * @see #JAR_VALUE
+                                                * @generated
+                                                * @ordered
+                                                */
+  JAR(3, "JAR", "jar"), /**
+                        * The '<em><b>BOM</b></em>' literal object.
+                        * <!-- begin-user-doc -->
+                        * <!-- end-user-doc -->
+                        * @see #BOM_VALUE
+                        * @generated
+                        * @ordered
+                        */
+  BOM(4, "BOM", "bom"), /**
+                        * The '<em><b>OTHER</b></em>' literal object.
+                        * <!-- begin-user-doc -->
+                        * <!-- end-user-doc -->
+                        * @see #OTHER_VALUE
+                        * @generated
+                        * @ordered
+                        */
+  OTHER(5, "OTHER", "other");
 
   /**
    * The '<em><b>ECLIPSE FEATURE</b></em>' literal value.
@@ -100,15 +124,61 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int BUCKMINSTER_VALUE = 3;
+  public static final int BUCKMINSTER_VALUE = 2;
+
+  /**
+   * The '<em><b>JAR</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>JAR</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #JAR
+   * @model literal="jar"
+   * @generated
+   * @ordered
+   */
+  public static final int JAR_VALUE = 3;
+
+  /**
+   * The '<em><b>BOM</b></em>' literal value.
+   * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of '<em><b>BOM</b></em>' literal object isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+   * @see #BOM
+   * @model literal="bom"
+   * @generated
+   * @ordered
+   */
+  public static final int BOM_VALUE = 4;
+
+  /**
+   * The '<em><b>OTHER</b></em>' literal value.
+   * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of '<em><b>OTHER</b></em>' literal object isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+   * @see #OTHER
+   * @model literal="other"
+   * @generated
+   * @ordered
+   */
+  public static final int OTHER_VALUE = 5;
 
   /**
    * An array of all the '<em><b>Component Type</b></em>' enumerators.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
-  private static final ComponentType[] VALUES_ARRAY = new ComponentType[] { ECLIPSE_FEATURE, OSGI_BUNDLE, BUCKMINSTER, };
+  private static final ComponentType[] VALUES_ARRAY = new ComponentType[] { ECLIPSE_FEATURE, OSGI_BUNDLE, BUCKMINSTER,
+      JAR, BOM, OTHER, };
 
   /**
    * A public read-only list of all the '<em><b>Component Type</b></em>' enumerators.
@@ -188,6 +258,12 @@ public enum ComponentType implements Enumerator
       return OSGI_BUNDLE;
     case BUCKMINSTER_VALUE:
       return BUCKMINSTER;
+    case JAR_VALUE:
+      return JAR;
+    case BOM_VALUE:
+      return BOM;
+    case OTHER_VALUE:
+      return OTHER;
     }
     return null;
   }

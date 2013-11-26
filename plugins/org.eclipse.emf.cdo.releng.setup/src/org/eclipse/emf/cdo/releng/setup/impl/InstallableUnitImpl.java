@@ -69,20 +69,20 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
       SetupPackage.eINSTANCE.getVersionRange(), "0.0.0");
 
   /**
-  	 * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getVersionRange()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getVersionRange()
+   * @generated
+   * @ordered
+   */
   protected VersionRange versionRange = VERSION_RANGE_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected InstallableUnitImpl()
   {
     super();
@@ -135,10 +135,10 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setVersionRange(VersionRange newVersionRange)
   {
     VersionRange oldVersionRange = versionRange;
@@ -151,10 +151,10 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

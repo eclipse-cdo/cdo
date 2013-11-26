@@ -29,7 +29,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Configuration extends SetupTaskContainer
+public interface Configuration extends ScopeRoot
 {
   /**
    * Returns the value of the '<em><b>Projects</b></em>' containment reference list.

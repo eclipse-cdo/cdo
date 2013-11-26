@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -179,9 +181,29 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
+   * <!-- end-user-doc -->
+   * @generated NOT
    */
+  public SetupTaskScope getScope()
+  {
+    return SetupTaskScope.USER;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ScopeRoot getParentScopeRoot()
+  {
+    return null;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

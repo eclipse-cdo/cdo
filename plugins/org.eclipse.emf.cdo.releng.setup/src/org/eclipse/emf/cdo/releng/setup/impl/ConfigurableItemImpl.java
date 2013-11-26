@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -46,5 +48,19 @@ public abstract class ConfigurableItemImpl extends SetupTaskContainerImpl implem
   {
     return SetupPackage.Literals.CONFIGURABLE_ITEM;
   }
+
+  /**
+   * <!-- begin-user-doc -->
+  * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public abstract SetupTaskScope getScope();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public abstract ScopeRoot getParentScopeRoot();
 
 } // ConfigurableItemImpl

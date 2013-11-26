@@ -63,6 +63,10 @@ import java.util.Set;
  */
 public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 {
+  private static final String[] REQUIRED_IUS = { "org.eclipse.egit.feature.group" };
+
+  private static final String[] REQUIRED_REPOSITORIES = { "${train.url}" };
+
   /**
    * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -454,6 +458,18 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public Set<Trigger> getValidTriggers()
   {
     return Trigger.IDE_TRIGGERS;
+  }
+
+  @Override
+  protected String[] getRequiredInstallableUnits()
+  {
+    return REQUIRED_IUS;
+  }
+
+  @Override
+  protected String[] getRequiredP2Repositories()
+  {
+    return REQUIRED_REPOSITORIES;
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception

@@ -20,8 +20,8 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#getInstallableUnits <em>Installable Units</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.P2Task#isLicenseConfirmationDisabled <em>License Confirmation Disabled</em>}</li>
  * </ul>
  * </p>

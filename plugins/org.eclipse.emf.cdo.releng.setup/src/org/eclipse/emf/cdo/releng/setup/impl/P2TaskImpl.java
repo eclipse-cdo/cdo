@@ -97,8 +97,8 @@ import java.util.Set;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getInstallableUnits <em>Installable Units</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#isLicenseConfirmationDisabled <em>License Confirmation Disabled</em>}</li>
  * </ul>
  * </p>
@@ -110,17 +110,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   private static final boolean SKIP = "true".equals(System.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
 
   /**
-   * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-    EList<SetupTask> setupTasks = preferences.getSetupTasks();
-   * <!-- end-user-doc -->
-   * @see #getP2Repositories()
-   * @generated
-   * @ordered
-   */
-  protected EList<P2Repository> p2Repositories;
-
-  /**
    * The cached value of the '{@link #getInstallableUnits() <em>Installable Units</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -129,6 +118,17 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    * @ordered
    */
   protected EList<InstallableUnit> installableUnits;
+
+  /**
+   * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+      EList<SetupTask> setupTasks = preferences.getSetupTasks();
+     * <!-- end-user-doc -->
+   * @see #getP2Repositories()
+   * @generated
+   * @ordered
+   */
+  protected EList<P2Repository> p2Repositories;
 
   /**
    * The default value of the '{@link #isLicenseConfirmationDisabled() <em>License Confirmation Disabled</em>}' attribute.
@@ -239,10 +239,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     switch (featureID)
     {
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
-      return ((InternalEList<?>)getP2Repositories()).basicRemove(otherEnd, msgs);
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return ((InternalEList<?>)getInstallableUnits()).basicRemove(otherEnd, msgs);
+    case SetupPackage.P2_TASK__P2_REPOSITORIES:
+      return ((InternalEList<?>)getP2Repositories()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -257,10 +257,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     switch (featureID)
     {
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
-      return getP2Repositories();
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return getInstallableUnits();
+    case SetupPackage.P2_TASK__P2_REPOSITORIES:
+      return getP2Repositories();
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       return isLicenseConfirmationDisabled();
     }
@@ -278,13 +278,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     switch (featureID)
     {
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
-      getP2Repositories().clear();
-      getP2Repositories().addAll((Collection<? extends P2Repository>)newValue);
-      return;
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       getInstallableUnits().clear();
       getInstallableUnits().addAll((Collection<? extends InstallableUnit>)newValue);
+      return;
+    case SetupPackage.P2_TASK__P2_REPOSITORIES:
+      getP2Repositories().clear();
+      getP2Repositories().addAll((Collection<? extends P2Repository>)newValue);
       return;
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       setLicenseConfirmationDisabled((Boolean)newValue);
@@ -303,11 +303,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     switch (featureID)
     {
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
-      getP2Repositories().clear();
-      return;
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       getInstallableUnits().clear();
+      return;
+    case SetupPackage.P2_TASK__P2_REPOSITORIES:
+      getP2Repositories().clear();
       return;
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       setLicenseConfirmationDisabled(LICENSE_CONFIRMATION_DISABLED_EDEFAULT);
@@ -326,10 +326,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     switch (featureID)
     {
-    case SetupPackage.P2_TASK__P2_REPOSITORIES:
-      return p2Repositories != null && !p2Repositories.isEmpty();
     case SetupPackage.P2_TASK__INSTALLABLE_UNITS:
       return installableUnits != null && !installableUnits.isEmpty();
+    case SetupPackage.P2_TASK__P2_REPOSITORIES:
+      return p2Repositories != null && !p2Repositories.isEmpty();
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       return licenseConfirmationDisabled != LICENSE_CONFIRMATION_DISABLED_EDEFAULT;
     }

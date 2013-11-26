@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -327,6 +329,18 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
     result.append(name);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public SetupTaskScope getScope()
+  {
+    return SetupTaskScope.BRANCH;
+  }
+
+  @Override
+  public ScopeRoot getParentScopeRoot()
+  {
+    return null;
   }
 
 } // BranchImpl

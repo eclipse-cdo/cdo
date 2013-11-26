@@ -141,13 +141,21 @@ public interface SetupTask extends EObject
   void setDocumentation(String value);
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  ScopeRoot getScopeRoot();
+
+  /**
    * Returns the value of the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+       * <p>
+       * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
+       * there really should be more of a description here...
+       * </p>
+       * <!-- end-user-doc -->
    * @return the value of the '<em>Disabled</em>' attribute.
    * @see #setDisabled(boolean)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetupTask_Disabled()
@@ -192,7 +200,9 @@ public interface SetupTask extends EObject
 
   Object getOverrideToken();
 
-  void overrideFor(SetupTask overriddensetupTask);
+  void overrideFor(SetupTask overriddenTask);
+
+  EList<? extends SetupTask> generateAdditionalRequirements();
 
   boolean isNeeded(SetupTaskContext context) throws Exception;
 

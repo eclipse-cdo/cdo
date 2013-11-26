@@ -106,10 +106,10 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public boolean hasChildren(Object object)
   {

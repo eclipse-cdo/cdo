@@ -14,14 +14,19 @@ import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
+import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -254,6 +259,24 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public ScopeRoot getScopeRoot()
+  {
+    for (EObject container = eContainer(); container != null; container = container.eContainer())
+    {
+      if (container instanceof ScopeRoot)
+      {
+        return (ScopeRoot)container;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public boolean isDisabled()
@@ -379,7 +402,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * Subclasses may override to indicate that this task overrides another task with the same token.
-   * 
+   *
    * @see #createToken(String)
    */
   public Object getOverrideToken()
@@ -398,6 +421,38 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
    */
   public void dispose()
   {
+  }
+
+  public EList<? extends SetupTask> generateAdditionalRequirements()
+  {
+    String[] ius = getRequiredInstallableUnits();
+    if (ius != null && ius.length != 0)
+    {
+      String[] repositories = getRequiredP2Repositories();
+
+      ScopeRoot scope = getScopeRoot();
+      Set<String> existingIDs = EMFUtil.getInstallableUnitIDs(scope, true);
+
+      P2Task p2Task = SetupFactory.eINSTANCE.createP2Task(ius, repositories, existingIDs);
+      if (p2Task != null)
+      {
+        EList<SetupTask> result = new BasicEList<SetupTask>();
+        result.add(p2Task);
+        return result;
+      }
+    }
+
+    return null;
+  }
+
+  protected String[] getRequiredInstallableUnits()
+  {
+    return null;
+  }
+
+  protected String[] getRequiredP2Repositories()
+  {
+    return null;
   }
 
   /**

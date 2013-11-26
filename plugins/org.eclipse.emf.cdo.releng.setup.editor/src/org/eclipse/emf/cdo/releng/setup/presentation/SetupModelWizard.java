@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.internal.setup.AdditionalRequirementsGenerator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
@@ -995,6 +996,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
       for (ProjectTemplate template : templates)
       {
         Project project = SetupFactory.eINSTANCE.createProject();
+        project.eAdapters().add(new AdditionalRequirementsGenerator());
         templateProjects.put(template, project);
 
         Control control = template.createControl(templatesContainer, this, project);

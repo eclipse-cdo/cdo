@@ -150,7 +150,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private void initTriggeredSetupTasks()
   {
-    EList<SetupTask> setupTasks = getSetup().getSetupTasks(true, getTrigger());
+    Setup setup = getSetup();
+    Trigger trigger = getTrigger();
+
+    EList<SetupTask> setupTasks = setup.getSetupTasks(true, trigger);
     triggeredSetupTasks = setupTasks; // Debugging help
 
     if (!setupTasks.isEmpty())

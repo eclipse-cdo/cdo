@@ -404,6 +404,21 @@
 
       <if>
         <not>
+          <equals arg1="${skip.generate.products.windows32}" arg2="true" />
+        </not>
+        <then>
+          <generate.product.platform id="@{id}"
+                                     profile="@{profile}"
+                                     platform="Windows-32bit"
+                                     os="win32"
+                                     ws="win32"
+                                     arch="x86"
+                                     priority="@{priority}45" />
+        </then>
+      </if>
+
+      <if>
+        <not>
           <equals arg1="${skip.generate.products.linux}" arg2="true" />
         </not>
         <then>

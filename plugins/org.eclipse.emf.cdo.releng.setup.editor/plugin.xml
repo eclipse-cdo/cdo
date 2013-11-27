@@ -101,11 +101,11 @@
          point="org.eclipse.net4j.util.factories">
       <factory
             productGroup="org.eclipse.emf.cdo.releng.setup.projectTemplates"
-            class="org.eclipse.emf.cdo.releng.setup.presentation.templates.AutomaticProjectTemplate"
+            class="org.eclipse.emf.cdo.releng.setup.presentation.templates.AutomaticProjectTemplate$Factory"
             type="automatic"/>
       <factory
             productGroup="org.eclipse.emf.cdo.releng.setup.projectTemplates"
-            class="org.eclipse.emf.cdo.releng.setup.presentation.templates.VariablesProjectTemplate"
+            class="org.eclipse.emf.cdo.releng.setup.presentation.templates.VariablesProjectTemplate$Factory"
             type="variables"/>
    </extension>
 

@@ -10,13 +10,14 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
-import org.eclipse.emf.cdo.releng.internal.setup.AdditionalRequirementsGenerator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
+import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate.Factory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
+import org.eclipse.emf.cdo.releng.setup.provider.SetupTaskItemProvider;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -63,6 +64,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -963,8 +965,6 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
     private final Map<ProjectTemplate, Control> templateControls = new HashMap<ProjectTemplate, Control>();
 
-    private final Map<ProjectTemplate, Project> templateProjects = new HashMap<ProjectTemplate, Project>();
-
     private ListViewer templatesViewer;
 
     private Composite templatesContainer;
@@ -982,7 +982,11 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
       for (String type : IPluginContainer.INSTANCE.getFactoryTypes(ProjectTemplate.PRODUCT_GROUP))
       {
-        templates.add((ProjectTemplate)IPluginContainer.INSTANCE.getFactory(ProjectTemplate.PRODUCT_GROUP, type));
+        Factory factory = (Factory)IPluginContainer.INSTANCE.getFactory(ProjectTemplate.PRODUCT_GROUP, type);
+
+        ProjectTemplate template = factory.createProjectTemplate();
+        template.init(this);
+        templates.add(template);
       }
 
       Collections.sort(templates, new Comparator<ProjectTemplate>()
@@ -997,7 +1001,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
     public Project getProject()
     {
       ProjectTemplate template = getSelectedTemplate();
-      return templateProjects.get(template);
+      return template.getProject();
     }
 
     public void createControl(Composite parent)
@@ -1040,17 +1044,10 @@ public class SetupModelWizard extends Wizard implements INewWizard
       templatesContainer.setLayout(templatesStack);
       applyGridData(templatesContainer);
 
-      for (ProjectTemplate template : templates)
-      {
-        Project project = SetupFactory.eINSTANCE.createProject();
-        project.eAdapters().add(new AdditionalRequirementsGenerator());
-        templateProjects.put(template, project);
+      SashForm sash = new SashForm(composite, SWT.VERTICAL);
+      grabVertical(applyGridData(sash));
 
-        Control control = template.createControl(templatesContainer, this, project);
-        templateControls.put(template, control);
-      }
-
-      preViewer = new TreeViewer(composite, SWT.BORDER);
+      preViewer = new TreeViewer(sash, SWT.BORDER);
       preViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
       preViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY));
       preViewer.addSelectionChangedListener(new ISelectionChangedListener()
@@ -1073,23 +1070,31 @@ public class SetupModelWizard extends Wizard implements INewWizard
       });
       grabVertical(applyGridData(preViewer.getControl()));
 
-      propertiesViewer = new TableViewer(composite, SWT.BORDER);
+      propertiesViewer = new TableViewer(sash, SWT.BORDER);
       propertiesViewer.setLabelProvider(new PropertiesLabelProvider());
       propertiesViewer.setContentProvider(new PropertiesContentProvider());
 
       Table table = propertiesViewer.getTable();
       applyGridData(table).heightHint = 64;
 
-      TableColumn idColumn = new TableColumn(table, SWT.NONE);
-      idColumn.setText("Property");
-      idColumn.setWidth(200);
+      TableColumn propertyColumn = new TableColumn(table, SWT.NONE);
+      propertyColumn.setText("Property");
+      propertyColumn.setWidth(200);
 
-      TableColumn versionColumn = new TableColumn(table, SWT.NONE);
-      versionColumn.setText("Value");
-      versionColumn.setWidth(400);
+      TableColumn valueColumn = new TableColumn(table, SWT.NONE);
+      valueColumn.setText("Value");
+      valueColumn.setWidth(400);
 
       table.setHeaderVisible(true);
       table.setLinesVisible(true);
+
+      sash.setWeights(new int[] { 2, 1 });
+
+      for (ProjectTemplate template : templates)
+      {
+        Control control = template.createControl(templatesContainer);
+        templateControls.put(template, control);
+      }
 
       templatesViewer.setSelection(new StructuredSelection(templates.get(0)));
       validate();
@@ -1215,6 +1220,11 @@ public class SetupModelWizard extends Wizard implements INewWizard
         {
           for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
           {
+            if (isExpertProperty(propertyDescriptor, element))
+            {
+              continue;
+            }
+
             String displayName = propertyDescriptor.getDisplayName(element);
 
             IItemLabelProvider propertyLabelProvider = propertyDescriptor.getLabelProvider(element);
@@ -1233,6 +1243,23 @@ public class SetupModelWizard extends Wizard implements INewWizard
         }
 
         return properties.toArray();
+      }
+
+      private boolean isExpertProperty(IItemPropertyDescriptor propertyDescriptor, Object element)
+      {
+        String[] filterFlags = propertyDescriptor.getFilterFlags(element);
+        if (filterFlags != null)
+        {
+          for (String filterFlag : filterFlags)
+          {
+            if (SetupTaskItemProvider.EXPERT_FILTER[0].equals(filterFlag))
+            {
+              return true;
+            }
+          }
+        }
+
+        return false;
       }
     }
   }

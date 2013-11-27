@@ -10,11 +10,12 @@
  */
 package org.eclipse.emf.cdo.releng.setup.editor;
 
+import org.eclipse.emf.cdo.releng.internal.setup.AdditionalRequirementsGenerator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.jface.viewers.TableViewer;
@@ -27,7 +28,7 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public abstract class ProjectTemplate extends Factory
+public abstract class ProjectTemplate
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.releng.setup.projectTemplates";
 
@@ -35,16 +36,22 @@ public abstract class ProjectTemplate extends Factory
 
   private final String description;
 
-  protected ProjectTemplate(String type, String label, String description)
+  private final Project project;
+
+  private Container container;
+
+  protected ProjectTemplate(String label, String description)
   {
-    super(PRODUCT_GROUP, type);
-    this.label = label == null ? type : label;
+    this.label = label;
     this.description = StringUtil.safe(description);
+
+    project = SetupFactory.eINSTANCE.createProject();
+    project.eAdapters().add(new AdditionalRequirementsGenerator());
   }
 
-  protected ProjectTemplate(String type, String label)
+  protected ProjectTemplate(String label)
   {
-    this(type, label, null);
+    this(label, null);
   }
 
   public final String getLabel()
@@ -57,9 +64,30 @@ public abstract class ProjectTemplate extends Factory
     return description;
   }
 
-  public final ProjectTemplate create(String description) throws ProductCreationException
+  public final Project getProject()
   {
-    return this;
+    return getProject(false);
+  }
+
+  public final Project getProject(boolean clear)
+  {
+    if (clear)
+    {
+      project.getSetupTasks().clear();
+      project.getBranches().clear();
+    }
+
+    return project;
+  }
+
+  public Container getContainer()
+  {
+    return container;
+  }
+
+  public void init(Container container)
+  {
+    this.container = container;
   }
 
   @Override
@@ -78,7 +106,21 @@ public abstract class ProjectTemplate extends Factory
     return !StringUtil.isEmpty(branch.getName());
   }
 
-  public abstract Control createControl(Composite parent, Container container, Project project);
+  public abstract Control createControl(Composite parent);
+
+  protected final Branch addBranch()
+  {
+    return addBranch(null);
+  }
+
+  protected final Branch addBranch(String name)
+  {
+    Branch branch = SetupFactory.eINSTANCE.createBranch();
+    branch.setName(name);
+
+    project.getBranches().add(branch);
+    return branch;
+  }
 
   public static boolean contains(Collection<?> collection, Class<?> type)
   {
@@ -103,5 +145,27 @@ public abstract class ProjectTemplate extends Factory
     public TableViewer getPropertiesViewer();
 
     public void validate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+  {
+    public Factory(String type)
+    {
+      super(PRODUCT_GROUP, type);
+    }
+
+    /**
+     * @deprecated Use {@link #createProjectTemplate()} instead.
+     */
+    @Deprecated
+    public final Object create(String description) throws ProductCreationException
+    {
+      throw new ProductCreationException();
+    }
+
+    public abstract ProjectTemplate createProjectTemplate();
   }
 }

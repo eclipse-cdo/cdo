@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
-import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
@@ -110,33 +109,16 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
   private static String lastFolder;
 
+  private final Branch branch;
+
   public AutomaticProjectTemplate()
   {
-    super("automatic", "Analyze a folder (such as a Git working tree)");
+    super("Analyze folders such as a Git working trees");
 
     IDialogSettings section = getSettings();
     lastFolder = section.get("lastFolder");
-  }
 
-  @Override
-  public boolean isValid(Branch branch)
-  {
-    return super.isValid(branch) && contains(branch.getSetupTasks(), MaterializationTask.class);
-  }
-
-  @Override
-  public Control createControl(Composite parent, final Container container, final Project project)
-  {
-    GridLayout layout = new GridLayout();
-    layout.numColumns = 3;
-    layout.verticalSpacing = 10;
-
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(layout);
-    SetupModelWizard.applyGridData(composite);
-
-    final Branch branch = SetupFactory.eINSTANCE.createBranch();
-    project.getBranches().add(branch);
+    branch = addBranch();
     branch.eAdapters().add(new EContentAdapter()
     {
       @Override
@@ -145,7 +127,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
         super.notifyChanged(notification);
         if (!notification.isTouch())
         {
-          final TreeViewer preViewer = container.getPreViewer();
+          final TreeViewer preViewer = getContainer().getPreViewer();
           if (preViewer != null)
           {
             preViewer.getControl().getDisplay().asyncExec(new Runnable()
@@ -159,17 +141,35 @@ public class AutomaticProjectTemplate extends ProjectTemplate
         }
       }
     });
+  }
 
-    Text branchText = addBranchControl(composite, container, branch);
+  @Override
+  public boolean isValid(Branch branch)
+  {
+    return super.isValid(branch) && contains(branch.getSetupTasks(), MaterializationTask.class);
+  }
+
+  @Override
+  public Control createControl(Composite parent)
+  {
+    GridLayout layout = new GridLayout();
+    layout.numColumns = 3;
+    layout.verticalSpacing = 5;
+
+    Composite composite = new Composite(parent, SWT.NONE);
+    composite.setLayout(layout);
+    SetupModelWizard.applyGridData(composite);
+
+    Text branchText = addBranchControl(composite);
     branchText.setText(BRANCH_NAME);
 
     // addVariablesControl(composite, container, branch);
 
-    addFolderControl(composite, container, branch);
+    addFolderControl(composite);
     return composite;
   }
 
-  private Text addBranchControl(Composite composite, final Container container, final Branch branch)
+  private Text addBranchControl(Composite composite)
   {
     new Label(composite, SWT.NONE).setText("Branch:");
 
@@ -180,7 +180,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       public void modifyText(ModifyEvent e)
       {
         branch.setName(branchText.getText());
-        container.validate();
+        getContainer().validate();
       }
     });
 
@@ -224,7 +224,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
   // return button;
   // }
 
-  private Text addFolderControl(final Composite composite, final Container container, final Branch branch)
+  private Text addFolderControl(final Composite composite)
   {
     final Label label = new Label(composite, SWT.NONE);
     label.setText("Folder:");
@@ -258,7 +258,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
           changeShellHeight(shell, -20);
           composite.getParent().getParent().layout();
-          container.validate();
+          getContainer().validate();
           return;
         }
 
@@ -290,14 +290,14 @@ public class AutomaticProjectTemplate extends ProjectTemplate
                 try
                 {
                   final List<EObject> elements = new ArrayList<EObject>();
-                  analyzeFolder(branch, new File(folder), elements, monitor);
+                  analyzeFolder(new File(folder), elements, monitor);
 
                   text.getDisplay().syncExec(new Runnable()
                   {
                     public void run()
                     {
                       text.setData(ASSOCIATED_ELEMENTS, elements);
-                      updateControl(text, button, folder, container, branch);
+                      updateControl(text, button, folder);
                     }
                   });
                 }
@@ -315,16 +315,16 @@ public class AutomaticProjectTemplate extends ProjectTemplate
                 }
               }
 
-              private void updateControl(Text text, Button button, String folder, Container container, Branch branch)
+              private void updateControl(Text text, Button button, String folder)
               {
                 text.setText(folder);
                 button.setText(REMOVE_TEXT);
 
-                addFolderControl(composite, container, branch);
+                addFolderControl(composite);
 
                 changeShellHeight(shell, 20);
                 composite.getParent().getParent().layout();
-                container.validate();
+                getContainer().validate();
               }
             });
           }
@@ -341,8 +341,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     return text;
   }
 
-  private void analyzeFolder(Branch branch, File folder, List<EObject> elements, IProgressMonitor monitor)
-      throws Exception
+  private void analyzeFolder(File folder, List<EObject> elements, IProgressMonitor monitor) throws Exception
   {
     EList<SetupTask> tasks = branch.getSetupTasks();
     String location = analyzeGit(folder, elements, tasks);
@@ -543,5 +542,22 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     }
 
     return section;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Factory extends ProjectTemplate.Factory
+  {
+    public Factory()
+    {
+      super("automatic");
+    }
+
+    @Override
+    public ProjectTemplate createProjectTemplate()
+    {
+      return new AutomaticProjectTemplate();
+    }
   }
 }

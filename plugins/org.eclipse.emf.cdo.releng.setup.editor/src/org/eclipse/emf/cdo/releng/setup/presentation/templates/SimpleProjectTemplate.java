@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation.templates;
 
-import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 
 import org.eclipse.swt.SWT;
@@ -26,11 +25,11 @@ public class SimpleProjectTemplate extends ProjectTemplate
 {
   public SimpleProjectTemplate()
   {
-    super("simple", "Simple project");
+    super("Simple project");
   }
 
   @Override
-  public Control createControl(Composite parent, Container container, Project project)
+  public Control createControl(Composite parent)
   {
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new FillLayout());
@@ -38,5 +37,22 @@ public class SimpleProjectTemplate extends ProjectTemplate
     new Label(composite, SWT.NONE).setText(getLabel());
 
     return composite;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Factory extends ProjectTemplate.Factory
+  {
+    public Factory()
+    {
+      super("simple");
+    }
+
+    @Override
+    public ProjectTemplate createProjectTemplate()
+    {
+      return new SimpleProjectTemplate();
+    }
   }
 }

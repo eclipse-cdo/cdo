@@ -125,6 +125,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class InstallerDialog extends AbstractSetupDialog
 {
+  public static final String TRAIN_URL = "http://download.eclipse.org/releases/luna";
+
   public static final int RETURN_WORKBENCH_NETWORK_PREFERENCES = -2;
 
   public static final int RETURN_WORKBENCH = -3;
@@ -737,7 +739,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     try
     {
-      addRepository(agent, "http://download.eclipse.org/releases/luna", sub.newChild(200));
+      addRepository(agent, TRAIN_URL, sub.newChild(200));
       addRepository(agent, SetupConstants.RELENG_URL, sub.newChild(200));
     }
     catch (ProvisionException ex)

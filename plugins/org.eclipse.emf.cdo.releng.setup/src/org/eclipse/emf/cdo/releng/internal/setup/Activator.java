@@ -29,7 +29,9 @@ public class Activator extends AbstractUIPlugin
 {
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.setup";
 
-  public static final String CDO_URL = "http://download.eclipse.org/modeling/emf/cdo/updates/integration";
+  // public static final String CDO_URL = "http://download.eclipse.org/modeling/emf/cdo/updates/integration";
+
+  public static final String CDO_URL = "http://hudson.eclipse.org/cdo/job/emf-cdo-integration/lastSuccessfulBuild/artifact";
 
   private static Activator plugin;
 

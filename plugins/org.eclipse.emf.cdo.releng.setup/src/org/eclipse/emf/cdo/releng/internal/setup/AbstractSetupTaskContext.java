@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -22,16 +23,19 @@ import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -94,6 +98,39 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   {
     this.setup = setup;
     preferences = setup.getPreferences();
+
+    // Apply network preferences early
+    if (getTrigger() != Trigger.BOOTSTRAP)
+    {
+      for (Iterator<EObject> it = preferences.eAllContents(); it.hasNext();)
+      {
+        EObject eObject = it.next();
+        if (eObject instanceof EclipsePreferenceTask)
+        {
+          EclipsePreferenceTask preferenceTask = (EclipsePreferenceTask)eObject;
+          String key = preferenceTask.getKey();
+          if (key != null && key.startsWith("/configuration/org.eclipse.core.net/") && !key.contains("${"))
+          {
+            String value = preferenceTask.getValue();
+            if (value != null && !value.contains("${"))
+            {
+              EclipsePreferenceTask preferenceTaskCopy = EcoreUtil.copy(preferenceTask);
+              try
+              {
+                if (preferenceTaskCopy.isNeeded(this))
+                {
+                  preferenceTaskCopy.perform(this);
+                }
+              }
+              catch (Exception ex)
+              {
+                // Ignore
+              }
+            }
+          }
+        }
+      }
+    }
 
     Branch branch = setup.getBranch();
     String branchName = branch.getName();

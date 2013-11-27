@@ -25,8 +25,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.core.runtime.Path;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -138,11 +136,7 @@ public class EclipsePreferenceTaskItemProvider extends SetupTaskItemProvider imp
     String key = ((EclipsePreferenceTask)object).getKey();
     String value = ((EclipsePreferenceTask)object).getValue();
 
-    if (key != null && key.length() != 0)
-    {
-      key = new Path(key).removeFirstSegments(1).toString();
-    }
-    else if (value == null || value.length() == 0)
+    if ((key == null || key.length() == 0) && (value == null || value.length() == 0))
     {
       return getString("_UI_EclipsePreferenceTask_type");
     }

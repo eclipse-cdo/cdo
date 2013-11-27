@@ -244,31 +244,35 @@ public class PreferenceRecorderAction extends Action
       public void notifyChanged(Notification notification)
       {
         super.notifyChanged(notification);
-        switch (notification.getEventType())
+
+        if (!notification.isTouch())
         {
-        case Notification.SET:
-          if (notification.getFeature() == PreferencesPackage.Literals.PROPERTY__VALUE)
+          switch (notification.getEventType())
           {
-            Property property = (Property)notification.getNotifier();
-            notifyChanged(property, property.getValue());
-          }
-          break;
+          case Notification.SET:
+            if (notification.getFeature() == PreferencesPackage.Literals.PROPERTY__VALUE)
+            {
+              Property property = (Property)notification.getNotifier();
+              notifyChanged(property, property.getValue());
+            }
+            break;
 
-        case Notification.ADD:
-          if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
-          {
-            Property property = (Property)notification.getNewValue();
-            notifyChanged(property, property.getValue());
-          }
-          break;
+          case Notification.ADD:
+            if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
+            {
+              Property property = (Property)notification.getNewValue();
+              notifyChanged(property, property.getValue());
+            }
+            break;
 
-        case Notification.REMOVE:
-          if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
-          {
-            Property property = (Property)notification.getOldValue();
-            notifyChanged(property, null);
+          case Notification.REMOVE:
+            if (notification.getFeature() == PreferencesPackage.Literals.PREFERENCE_NODE__PROPERTIES)
+            {
+              Property property = (Property)notification.getOldValue();
+              notifyChanged(property, null);
+            }
+            break;
           }
-          break;
         }
       }
 

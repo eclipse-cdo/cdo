@@ -351,6 +351,20 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return BuckminsterHelper.getMspec(context, getRootComponents(), getSourceLocators(), getP2Repositories());
   }
 
+  public static DocumentBuilder createDocumentBuilder() throws ParserConfigurationException
+  {
+    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+    documentBuilderFactory.setNamespaceAware(true);
+    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+    return documentBuilder;
+  }
+
+  public static Element load(DocumentBuilder documentBuilder, File file) throws Exception
+  {
+    Document document = documentBuilder.parse(file);
+    return document.getDocumentElement();
+  }
+
   public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, List<String> locations,
       IProgressMonitor monitor) throws ParserConfigurationException
   {
@@ -557,20 +571,6 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         }
       }
     }
-  }
-
-  private static Element load(DocumentBuilder documentBuilder, File file) throws Exception
-  {
-    Document document = documentBuilder.parse(file);
-    return document.getDocumentElement();
-  }
-
-  private static DocumentBuilder createDocumentBuilder() throws ParserConfigurationException
-  {
-    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-    documentBuilderFactory.setNamespaceAware(true);
-    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-    return documentBuilder;
   }
 
   private static void addChildren(Element rootElement, String tag, String attribute,

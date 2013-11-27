@@ -66,8 +66,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -343,7 +343,6 @@ public class SetupModelWizard extends Wizard implements INewWizard
   @Override
   public boolean canFinish()
   {
-    // return super.canFinish();
     if (!newFileCreationPage.isPageComplete())
     {
       return false;
@@ -354,14 +353,12 @@ public class SetupModelWizard extends Wizard implements INewWizard
       return false;
     }
 
-    if (projectInitializationPage.isUseTemplate() && getContainer().getCurrentPage() == projectInitializationPage)
+    if (projectInitializationPage.isUseTemplate() /* && getContainer().getCurrentPage() == projectInitializationPage */)
     {
-      return false;
-    }
-
-    if (!templateUsagePage.isPageComplete())
-    {
-      return false;
+      if (!templateUsagePage.isPageComplete())
+      {
+        return false;
+      }
     }
 
     return true;
@@ -789,7 +786,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
   /**
    * @author Eike Stepper
    */
-  public class ProjectInitializationPage extends WizardPage implements SelectionListener, ModifyListener
+  public class ProjectInitializationPage extends WizardPage
   {
     protected Text nameField;
 
@@ -839,7 +836,23 @@ public class SetupModelWizard extends Wizard implements INewWizard
       applyGridData(containerLabel);
 
       nameField = new Text(composite, SWT.BORDER);
-      nameField.addModifyListener(this);
+      nameField.addModifyListener(new ModifyListener()
+      {
+        private String lastName;
+
+        public void modifyText(ModifyEvent e)
+        {
+          String label = getProjectLabel();
+          if (label.length() == 0 || label.equals(generateProjectLabel(lastName)))
+          {
+            label = generateProjectLabel(getProjectName());
+            labelField.setText(label);
+          }
+
+          lastName = getProjectName();
+          validatePage();
+        }
+      });
       applyGridData(nameField);
 
       Label labelLabel = new Label(composite, SWT.LEFT);
@@ -851,7 +864,14 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
       useTemplateButton = new Button(composite, SWT.CHECK);
       useTemplateButton.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_UseTemplate_label"));
-      useTemplateButton.addSelectionListener(this);
+      useTemplateButton.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          validatePage();
+        }
+      });
       applyGridData(useTemplateButton).horizontalAlignment = SWT.LEFT;
 
       validatePage();
@@ -876,21 +896,6 @@ public class SetupModelWizard extends Wizard implements INewWizard
       }
     }
 
-    public void widgetSelected(SelectionEvent e)
-    {
-      validatePage();
-    }
-
-    public void widgetDefaultSelected(SelectionEvent e)
-    {
-      validatePage();
-    }
-
-    public void modifyText(ModifyEvent e)
-    {
-      validatePage();
-    }
-
     protected void validatePage()
     {
       boolean pageValid = isPageValid();
@@ -902,8 +907,50 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
     protected boolean isPageValid()
     {
+      setErrorMessage(null);
+
       String projectName = getProjectName();
-      return projectName.length() != 0;
+      if (projectName.length() == 0)
+      {
+        return false;
+      }
+
+      if (!new Path("").isValidSegment(projectName))
+      {
+        setErrorMessage("The project name is invalid.");
+        return false;
+      }
+
+      return true;
+    }
+
+    private String generateProjectLabel(String projectName)
+    {
+      String label = projectName.replace('.', ' ').replace('_', ' ').replace('/', ' ');
+      label = label.replaceAll("([A-Za-z0-9])([A-Z][a-z])", "$1 $2");
+      label = label.replaceAll("([a-z])([A-Z])", "$1 $2");
+
+      StringBuilder builder = new StringBuilder(label);
+      boolean space = false;
+
+      for (int i = 0; i < builder.length(); i++)
+      {
+        char c = builder.charAt(i);
+        if (c == ' ')
+        {
+          space = true;
+        }
+        else
+        {
+          if (space)
+          {
+            builder.setCharAt(i, Character.toUpperCase(c));
+            space = false;
+          }
+        }
+      }
+
+      return builder.toString();
     }
   }
 

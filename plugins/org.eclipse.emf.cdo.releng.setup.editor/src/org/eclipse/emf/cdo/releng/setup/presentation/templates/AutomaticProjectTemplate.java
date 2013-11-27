@@ -104,7 +104,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
   private static final String BRANCH_NAME = "master";
 
-  private static final String REMOVE_TEXT = "Remove";
+  private static final String REMOVE_TEXT = "&Remove";
 
   private static final String ASSOCIATED_ELEMENTS = "associated-elements";
 

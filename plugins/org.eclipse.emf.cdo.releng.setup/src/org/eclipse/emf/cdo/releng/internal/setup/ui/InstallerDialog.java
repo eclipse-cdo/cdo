@@ -1042,10 +1042,8 @@ public class InstallerDialog extends AbstractSetupDialog
               final Display display = viewer.getControl().getDisplay();
               display.syncExec(new Runnable()
               {
-
                 public void run()
                 {
-
                   boolean confirmation = MessageDialog.openQuestion(null, "Configuration Load Failure",
                       "The configuration could not be loaded so it's likely you're not connected to the internet or are behind a firewall."
                           + "The following URI is inaccessable:\n" + "  " + EMFUtil.SETUP_URI + "\n\n"
@@ -1056,6 +1054,15 @@ public class InstallerDialog extends AbstractSetupDialog
                     {
                       public void run()
                       {
+                        if (!resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
+                        {
+                          Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
+                          preferences = SetupFactory.eINSTANCE.createPreferences();
+                          resource.getContents().add(preferences);
+                          saveEObject(preferences);
+
+                        }
+
                         close();
                         setReturnCode(RETURN_WORKBENCH_NETWORK_PREFERENCES);
                       }

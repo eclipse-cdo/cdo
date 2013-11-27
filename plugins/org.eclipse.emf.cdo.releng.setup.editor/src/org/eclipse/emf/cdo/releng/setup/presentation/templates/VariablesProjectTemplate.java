@@ -228,7 +228,6 @@ public class VariablesProjectTemplate extends ProjectTemplate
 
     MaterializationTask materialization = SetupFactory.eINSTANCE.createMaterializationTask();
     materialization.setTargetPlatform("${setup.branch.dir/tp}");
-    materialization.setBundlePool("${setup.install.dir/.p2pool-tp}");
     materialization.getRootComponents().add(rootComponent);
     materialization.getSourceLocators().add(sourceLocator);
     materialization.getP2Repositories().add(p2Repository);

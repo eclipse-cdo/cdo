@@ -63,6 +63,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
 
       addInstallFolderPropertyDescriptor(object);
       addBundlePoolFolderPropertyDescriptor(object);
+      addBundlePoolFolderTPPropertyDescriptor(object);
       addAcceptedLicensesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
@@ -104,11 +105,28 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   }
 
   /**
-   * This adds a property descriptor for the Accepted Licenses feature.
+   * This adds a property descriptor for the Bundle Pool Folder TP feature.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-   * @generated NOT
+   * <!-- end-user-doc -->
+   * @generated
    */
+  protected void addBundlePoolFolderTPPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_Preferences_bundlePoolFolderTP_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePoolFolderTP_feature",
+            "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__BUNDLE_POOL_FOLDER_TP, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+     * This adds a property descriptor for the Accepted Licenses feature.
+     * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+     * @generated NOT
+     */
   protected void addAcceptedLicensesPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
@@ -171,6 +189,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
     {
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
     case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
+    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP:
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

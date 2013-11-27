@@ -38,10 +38,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -151,7 +153,9 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private Text installFolderText;
 
-  private Text bundlePoolFolderText;
+  private Text bundlePoolText;
+
+  private Text bundlePoolTPText;
 
   private ComboBoxViewerCellEditor cellEditor;
 
@@ -466,95 +470,145 @@ public class InstallerDialog extends AbstractSetupDialog
     group.setLayout(layout);
     group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
-    Label installFolderLabel = new Label(group, SWT.NONE);
-    installFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    installFolderLabel.setBounds(0, 0, 55, 15);
-    installFolderLabel.setText("Install Folder:");
-
-    installFolderText = new Text(group, SWT.BORDER);
-    installFolderText.setToolTipText("Points to the folder where the setup tool will create the project folders.");
-    installFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-    installFolderText.addModifyListener(new ModifyListener()
     {
-      private String previousText;
+      Label label = new Label(group, SWT.NONE);
+      label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+      label.setBounds(0, 0, 55, 15);
+      label.setText("Install Folder:");
 
-      public void modifyText(ModifyEvent e)
+      installFolderText = new Text(group, SWT.BORDER);
+      installFolderText.setToolTipText("Points to the folder where the setup tool will create the project folders.");
+      installFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+      installFolderText.addModifyListener(new ModifyListener()
       {
-        setups = null;
+        private String previousText;
 
-        String text = installFolderText.getText();
-        preferences.setInstallFolder(text);
-        String defaultBundlePoolFolder = text + File.separator + ".p2pool-ide";
-        if (previousText == null
-            || bundlePoolFolderText.getText().equals(previousText + File.separator + ".p2pool-ide"))
+        public void modifyText(ModifyEvent e)
         {
-          bundlePoolFolderText.setText(defaultBundlePoolFolder);
+          setups = null;
+
+          String text = installFolderText.getText();
+          preferences.setInstallFolder(text);
+
+          String defaultBundlePoolSuffix = File.separator + ".p2pool-ide";
+          if (previousText == null || bundlePoolText.getText().equals(previousText + defaultBundlePoolSuffix))
+          {
+            bundlePoolText.setText(text + defaultBundlePoolSuffix);
+          }
+
+          String defaultBundlePoolTPSuffix = File.separator + ".p2pool-tp";
+          if (previousText == null || bundlePoolTPText.getText().equals(previousText + defaultBundlePoolTPSuffix))
+          {
+            bundlePoolTPText.setText(text + defaultBundlePoolTPSuffix);
+          }
+
+          previousText = text;
+
+          saveEObject(preferences);
+          validate();
         }
+      });
 
-        previousText = text;
-
-        saveEObject(preferences);
-        validate();
-      }
-    });
-
-    Button installFolderButton = new Button(group, SWT.NONE);
-    installFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    installFolderButton.setBounds(0, 0, 75, 25);
-    installFolderButton.setText("Browse...");
-    installFolderButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      Button button = new Button(group, SWT.NONE);
+      button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+      button.setBounds(0, 0, 75, 25);
+      button.setText("Browse...");
+      button.addSelectionListener(new SelectionAdapter()
       {
-        DirectoryDialog dlg = new DirectoryDialog(getShell());
-        dlg.setText("Select Install Folder");
-        dlg.setMessage("Select a folder");
-        String dir = dlg.open();
-        if (dir != null)
+        @Override
+        public void widgetSelected(SelectionEvent e)
         {
-          installFolderText.setText(dir);
+          DirectoryDialog dlg = new DirectoryDialog(getShell());
+          dlg.setText("Select Install Folder");
+          dlg.setMessage("Select a folder");
+          String dir = dlg.open();
+          if (dir != null)
+          {
+            installFolderText.setText(dir);
+          }
         }
-      }
-    });
+      });
+    }
 
-    Label bundlePoolFolderLabel = new Label(group, SWT.NONE);
-    bundlePoolFolderLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    bundlePoolFolderLabel.setText("Bundle Pool Folder:");
-
-    bundlePoolFolderText = new Text(group, SWT.BORDER);
-    bundlePoolFolderText
-        .setToolTipText("Points to your native Git installation in order to reuse the 'etc/gitconfig' file.");
-    bundlePoolFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-    bundlePoolFolderText.addModifyListener(new ModifyListener()
     {
-      public void modifyText(ModifyEvent e)
-      {
-        preferences.setBundlePoolFolder(bundlePoolFolderText.getText());
-        saveEObject(preferences);
-        validate();
-      }
-    });
+      Label label = new Label(group, SWT.NONE);
+      label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+      label.setText("Bundle Pool:");
 
-    Button bundlePoolFolderButton = new Button(group, SWT.NONE);
-    bundlePoolFolderButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    bundlePoolFolderButton.setBounds(0, 0, 75, 25);
-    bundlePoolFolderButton.setText("Browse...");
-    bundlePoolFolderButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      bundlePoolText = new Text(group, SWT.BORDER);
+      bundlePoolText
+          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
+      bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+      bundlePoolText.addModifyListener(new ModifyListener()
       {
-        DirectoryDialog dlg = new DirectoryDialog(getShell());
-        dlg.setText("Select IDE Bundle Pool Folder");
-        dlg.setMessage("Select a folder");
-        String dir = dlg.open();
-        if (dir != null)
+        public void modifyText(ModifyEvent e)
         {
-          bundlePoolFolderText.setText(dir);
+          preferences.setBundlePoolFolder(bundlePoolText.getText());
+          saveEObject(preferences);
+          validate();
         }
-      }
-    });
+      });
+
+      Button button = new Button(group, SWT.NONE);
+      button.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, false, false, 1, 1));
+      button.setBounds(0, 0, 75, 25);
+      button.setText("Browse...");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          DirectoryDialog dlg = new DirectoryDialog(getShell());
+          dlg.setText("Bundle Pool Folder");
+          dlg.setMessage("Select a p2 bundle pool folder for IDEs.");
+          String dir = dlg.open();
+          if (dir != null)
+          {
+            bundlePoolText.setText(dir);
+          }
+        }
+      });
+    }
+
+    {
+      Label label = new Label(group, SWT.NONE);
+      label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+      label.setText("TP Bundle Pool:");
+
+      bundlePoolTPText = new Text(group, SWT.BORDER);
+      bundlePoolTPText
+          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+      bundlePoolTPText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+      bundlePoolTPText.addModifyListener(new ModifyListener()
+      {
+        public void modifyText(ModifyEvent e)
+        {
+          preferences.setBundlePoolFolderTP(bundlePoolTPText.getText());
+          saveEObject(preferences);
+          validate();
+        }
+      });
+
+      Button button = new Button(group, SWT.NONE);
+      button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+      button.setBounds(0, 0, 75, 25);
+      button.setText("Browse...");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          DirectoryDialog dlg = new DirectoryDialog(getShell());
+          dlg.setText("Bundle Pool Folder");
+          dlg.setMessage("Select a p2 bundle pool folder for target platforms.");
+          String dir = dlg.open();
+          if (dir != null)
+          {
+            bundlePoolTPText.setText(dir);
+          }
+        }
+      });
+    }
 
     parent.getDisplay().asyncExec(new Runnable()
     {
@@ -1090,7 +1144,7 @@ public class InstallerDialog extends AbstractSetupDialog
             public void run()
             {
               installFolderText.setText(installFolder);
-              bundlePoolFolderText.setText(bundlePoolFolder);
+              bundlePoolText.setText(bundlePoolFolder);
 
               viewer.setInput(input);
 
@@ -1165,9 +1219,18 @@ public class InstallerDialog extends AbstractSetupDialog
   private void validate()
   {
     String text = installFolderText.getText();
-    String defaultBundlePoolFolder = text + File.separator + ".p2pool-ide";
-    bundlePoolFolderText.setForeground(getShell().getDisplay().getSystemColor(
-        bundlePoolFolderText.getText().equals(defaultBundlePoolFolder) ? SWT.COLOR_DARK_GRAY : SWT.COLOR_BLACK));
+
+    {
+      String defaultFolder = text + File.separator + ".p2pool-ide";
+      bundlePoolText.setFont(bundlePoolText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE.getFont(
+          installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
+    }
+
+    {
+      String defaultFolder = text + File.separator + ".p2pool-tp";
+      bundlePoolTPText.setFont(bundlePoolTPText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE
+          .getFont(installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
+    }
 
     if (viewer != null)
     {
@@ -1253,7 +1316,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     final Object[] checkedElements = viewer.getCheckedElements();
     final String installFolder = installFolderText.getText();
-    final String gitPrefix = safe(bundlePoolFolderText.getText());
+    final String gitPrefix = safe(bundlePoolText.getText());
 
     File folder = new File(installFolder);
     folder.mkdirs();

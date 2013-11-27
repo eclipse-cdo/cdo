@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -68,7 +69,6 @@ import java.util.regex.Pattern;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BasicMaterializationTaskImpl#getTargetPlatform <em>Target Platform</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BasicMaterializationTaskImpl#getBundlePool <em>Bundle Pool</em>}</li>
  * </ul>
  * </p>
  *
@@ -97,26 +97,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
    * @ordered
    */
   protected String targetPlatform = TARGET_PLATFORM_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getBundlePool() <em>Bundle Pool</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePool()
-   * @generated
-   * @ordered
-   */
-  protected static final String BUNDLE_POOL_EDEFAULT = "${setup.install.dir/.p2pool-tp}";
-
-  /**
-   * The cached value of the '{@link #getBundlePool() <em>Bundle Pool</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePool()
-   * @generated
-   * @ordered
-   */
-  protected String bundlePool = BUNDLE_POOL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -170,32 +150,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getBundlePool()
-  {
-    return bundlePool;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBundlePool(String newBundlePool)
-  {
-    String oldBundlePool = bundlePool;
-    bundlePool = newBundlePool;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL,
-          oldBundlePool, bundlePool));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -203,8 +157,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       return getTargetPlatform();
-    case SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL:
-      return getBundlePool();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -221,9 +173,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       setTargetPlatform((String)newValue);
-      return;
-    case SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL:
-      setBundlePool((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -242,9 +191,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       setTargetPlatform(TARGET_PLATFORM_EDEFAULT);
       return;
-    case SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL:
-      setBundlePool(BUNDLE_POOL_EDEFAULT);
-      return;
     }
     super.eUnset(featureID);
   }
@@ -262,8 +208,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       return TARGET_PLATFORM_EDEFAULT == null ? targetPlatform != null : !TARGET_PLATFORM_EDEFAULT
           .equals(targetPlatform);
-    case SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL:
-      return BUNDLE_POOL_EDEFAULT == null ? bundlePool != null : !BUNDLE_POOL_EDEFAULT.equals(bundlePool);
     }
     return super.eIsSet(featureID);
   }
@@ -284,8 +228,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (targetPlatform: ");
     result.append(targetPlatform);
-    result.append(", bundlePool: ");
-    result.append(bundlePool);
     result.append(')');
     return result.toString();
   }
@@ -375,12 +317,10 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
   private static File updateTargetPlatformPool(SetupTaskContext context) throws Exception
   {
-    File installFolder = new File(context.getSetup().getPreferences().getInstallFolder());
+    Preferences preferences = context.getSetup().getPreferences();
 
-    File idePool = new File(installFolder, ".p2pool-ide");
-    idePool.mkdirs();
-
-    File tpPool = new File(installFolder, ".p2pool-tp");
+    File idePool = new File(preferences.getBundlePoolFolder());
+    File tpPool = new File(preferences.getBundlePoolFolderTP());
     tpPool.mkdirs();
 
     FileLock idePoolLock = FileLock.forWrite(idePool);

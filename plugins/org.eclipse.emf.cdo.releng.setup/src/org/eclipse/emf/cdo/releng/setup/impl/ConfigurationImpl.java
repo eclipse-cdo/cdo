@@ -119,10 +119,10 @@ public class ConfigurationImpl extends SetupTaskContainerImpl implements Configu
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EList<Eclipse> getEclipseVersions()
   {
     if (eclipseVersions == null)

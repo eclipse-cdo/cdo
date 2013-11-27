@@ -34,6 +34,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="installFolder" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundlePoolFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundlePoolFolderTP" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="acceptedLicenses" upperBound="-1"
         eType="#//LicenseInfo"/>
   </eClassifiers>
@@ -133,8 +134,6 @@
       eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetPlatform" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="${setup.branch.dir/tp}"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundlePool" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="${setup.install.dir/.p2pool-tp}"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BuckminsterImportTask" eSuperTypes="#//BasicMaterializationTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mspec" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

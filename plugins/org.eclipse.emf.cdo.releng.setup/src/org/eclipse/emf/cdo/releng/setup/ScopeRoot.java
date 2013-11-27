@@ -23,11 +23,11 @@ public interface ScopeRoot extends SetupTaskContainer
   SetupTaskScope getScope();
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @model kind="operation"
-  	 * @generated
-  	 */
+   * @model kind="operation"
+   * @generated
+   */
   ScopeRoot getParentScopeRoot();
 
 } // ScopeRoot

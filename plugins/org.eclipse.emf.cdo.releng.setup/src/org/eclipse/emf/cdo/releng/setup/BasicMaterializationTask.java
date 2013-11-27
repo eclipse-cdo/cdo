@@ -19,7 +19,6 @@ package org.eclipse.emf.cdo.releng.setup;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getTargetPlatform <em>Target Platform</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getBundlePool <em>Bundle Pool</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,32 +54,5 @@ public interface BasicMaterializationTask extends SetupTask
    * @generated
    */
   void setTargetPlatform(String value);
-
-  /**
-   * Returns the value of the '<em><b>Bundle Pool</b></em>' attribute.
-   * The default value is <code>"${setup.install.dir/.p2pool-tp}"</code>.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Bundle Pool</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Bundle Pool</em>' attribute.
-   * @see #setBundlePool(String)
-   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask_BundlePool()
-   * @model default="${setup.install.dir/.p2pool-tp}" required="true"
-   * @generated
-   */
-  String getBundlePool();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getBundlePool <em>Bundle Pool</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Bundle Pool</em>' attribute.
-   * @see #getBundlePool()
-   * @generated
-   */
-  void setBundlePool(String value);
 
 } // BasicMaterializationTask

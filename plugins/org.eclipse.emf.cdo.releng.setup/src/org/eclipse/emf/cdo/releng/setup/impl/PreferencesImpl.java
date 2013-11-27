@@ -93,23 +93,23 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   protected static final String BUNDLE_POOL_FOLDER_TP_EDEFAULT = null;
 
   /**
-  	 * The cached value of the '{@link #getBundlePoolFolderTP() <em>Bundle Pool Folder TP</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getBundlePoolFolderTP() <em>Bundle Pool Folder TP</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getBundlePoolFolderTP()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getBundlePoolFolderTP()
+   * @generated
+   * @ordered
+   */
   protected String bundlePoolFolderTP = BUNDLE_POOL_FOLDER_TP_EDEFAULT;
 
   /**
-  	 * The cached value of the '{@link #getAcceptedLicenses() <em>Accepted Licenses</em>}' attribute list.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getAcceptedLicenses() <em>Accepted Licenses</em>}' attribute list.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @see #getAcceptedLicenses()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getAcceptedLicenses()
+   * @generated
+   * @ordered
+   */
   protected EList<LicenseInfo> acceptedLicenses;
 
   /**
@@ -196,10 +196,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setBundlePoolFolderTP(String newBundlePoolFolderTP)
   {
     String oldBundlePoolFolderTP = bundlePoolFolderTP;
@@ -212,10 +212,10 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EList<LicenseInfo> getAcceptedLicenses()
   {
     if (acceptedLicenses == null)

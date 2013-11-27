@@ -304,7 +304,7 @@
     <eLiterals name="BUCKMINSTER" value="2" literal="buckminster"/>
     <eLiterals name="JAR" value="3" literal="jar"/>
     <eLiterals name="BOM" value="4" literal="bom"/>
-    <eLiterals name="OTHER" value="5" literal="other"/>
+    <eLiterals name="UNKNOWN" value="5" literal="unknown"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="VariableType">
     <eLiterals name="STRING"/>

@@ -683,10 +683,6 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//BasicMaterializationTask/targetPlatform"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_MVAjgQmrEeOuXPWwsMY9fA"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_One8cAmrEeOuXPWwsMY9fA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="setup.ecore#//BasicMaterializationTask/bundlePool"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_One8cQmrEeOuXPWwsMY9fA"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_kJnngkLrEeO5EtrbFL2WrA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_kJnng0LrEeO5EtrbFL2WrA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_kJnnhELrEeO5EtrbFL2WrA"/>
@@ -724,7 +720,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_bVgf0VZuEeOfmPeDPaABfQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_boNZYFZuEeOfmPeDPaABfQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//ComponentType/OTHER"/>
+        <element xmi:type="ecore:EEnumLiteral" href="setup.ecore#//ComponentType/UNKNOWN"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_boNZYVZuEeOfmPeDPaABfQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_pSElskMEEeO5EtrbFL2WrA"/>

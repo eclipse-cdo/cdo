@@ -1821,10 +1821,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getPreferences_AcceptedLicenses()
   {
     return (EAttribute)preferencesEClass.getEStructuralFeatures().get(3);
@@ -2678,7 +2678,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addEEnumLiteral(componentTypeEEnum, ComponentType.BUCKMINSTER);
     addEEnumLiteral(componentTypeEEnum, ComponentType.JAR);
     addEEnumLiteral(componentTypeEEnum, ComponentType.BOM);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.OTHER);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.UNKNOWN);
 
     initEEnum(variableTypeEEnum, VariableType.class, "VariableType");
     addEEnumLiteral(variableTypeEEnum, VariableType.STRING);

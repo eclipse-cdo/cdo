@@ -470,12 +470,12 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__BUNDLE_POOL_FOLDER_TP = SCOPE_ROOT_FEATURE_COUNT + 2;
 
   /**
-  	 * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int PREFERENCES__ACCEPTED_LICENSES = SCOPE_ROOT_FEATURE_COUNT + 3;
 
   /**
@@ -4445,14 +4445,14 @@ public interface SetupPackage extends EPackage
   EAttribute getPreferences_BundlePoolFolderTP();
 
   /**
-  	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}'.
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute list '<em>Accepted Licenses</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses()
-  	 * @see #getPreferences()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute list '<em>Accepted Licenses</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses()
+   * @see #getPreferences()
+   * @generated
+   */
   EAttribute getPreferences_AcceptedLicenses();
 
   /**
@@ -5768,11 +5768,11 @@ public interface SetupPackage extends EPackage
     EAttribute PREFERENCES__BUNDLE_POOL_FOLDER_TP = eINSTANCE.getPreferences_BundlePoolFolderTP();
 
     /**
-    	 * The meta object literal for the '<em><b>Accepted Licenses</b></em>' attribute list feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Accepted Licenses</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
            * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute PREFERENCES__ACCEPTED_LICENSES = eINSTANCE.getPreferences_AcceptedLicenses();
 
     /**

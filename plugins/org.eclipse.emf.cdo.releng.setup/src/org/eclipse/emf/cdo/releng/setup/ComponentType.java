@@ -72,14 +72,14 @@ public enum ComponentType implements Enumerator
                         * @ordered
                         */
   BOM(4, "BOM", "bom"), /**
-                        * The '<em><b>OTHER</b></em>' literal object.
+                        * The '<em><b>UNKNOWN</b></em>' literal object.
                         * <!-- begin-user-doc -->
                         * <!-- end-user-doc -->
-                        * @see #OTHER_VALUE
+                        * @see #UNKNOWN_VALUE
                         * @generated
                         * @ordered
                         */
-  OTHER(5, "OTHER", "other");
+  UNKNOWN(5, "UNKNOWN", "unknown");
 
   /**
    * The '<em><b>ECLIPSE FEATURE</b></em>' literal value.
@@ -157,28 +157,28 @@ public enum ComponentType implements Enumerator
   public static final int BOM_VALUE = 4;
 
   /**
-   * The '<em><b>OTHER</b></em>' literal value.
+   * The '<em><b>UNKNOWN</b></em>' literal value.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of '<em><b>OTHER</b></em>' literal object isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
-   * @see #OTHER
-   * @model literal="other"
+   * <p>
+   * If the meaning of '<em><b>UNKNOWN</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #UNKNOWN
+   * @model literal="unknown"
    * @generated
    * @ordered
    */
-  public static final int OTHER_VALUE = 5;
+  public static final int UNKNOWN_VALUE = 5;
 
   /**
-   * An array of all the '<em><b>Component Type</b></em>' enumerators.
-   * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * An array of all the '<em><b>Component Type</b></em>' enumerators.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private static final ComponentType[] VALUES_ARRAY = new ComponentType[] { ECLIPSE_FEATURE, OSGI_BUNDLE, BUCKMINSTER,
-      JAR, BOM, OTHER, };
+      JAR, BOM, UNKNOWN, };
 
   /**
    * A public read-only list of all the '<em><b>Component Type</b></em>' enumerators.
@@ -262,8 +262,8 @@ public enum ComponentType implements Enumerator
       return JAR;
     case BOM_VALUE:
       return BOM;
-    case OTHER_VALUE:
-      return OTHER;
+    case UNKNOWN_VALUE:
+      return UNKNOWN;
     }
     return null;
   }

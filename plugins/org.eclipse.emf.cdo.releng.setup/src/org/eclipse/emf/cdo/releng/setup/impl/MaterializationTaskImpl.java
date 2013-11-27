@@ -109,7 +109,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       "org.eclipse.buckminster.git.headless.feature.feature.group", "org.eclipse.buckminster.mspec",
       "org.eclipse.buckminster.rmap" };
 
-  private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/tools/buckminster/updates-4.3" };
+  private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/tools/buckminster/headless-4.3",
+      "http://download.eclipse.org/tools/buckminster/updates-4.3" };
 
   /**
    * The cached value of the '{@link #getRootComponents() <em>Root Components</em>}' containment reference list.

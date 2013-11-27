@@ -79,7 +79,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     branchDir = new File("/${" + KEY_INSTALL_DIR + '}', projectFolder + "/" + branchFolder).getAbsoluteFile();
 
     this.trigger = trigger;
-    initialize(setup);
+    initialize(setup, false);
   }
 
   protected AbstractSetupTaskContext(Trigger trigger, File branchDir)
@@ -91,16 +91,16 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     URI uri = URI.createFileURI(branchDir.toString() + "/setup.xmi");
     Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
-    initialize((Setup)resource.getContents().get(0));
+    initialize((Setup)resource.getContents().get(0), true);
   }
 
-  private void initialize(Setup setup)
+  private void initialize(Setup setup, boolean considerNetworkPreferences)
   {
     this.setup = setup;
     preferences = setup.getPreferences();
 
     // Apply network preferences early
-    if (getTrigger() != Trigger.BOOTSTRAP)
+    if (considerNetworkPreferences && getTrigger() != Trigger.BOOTSTRAP)
     {
       for (Iterator<EObject> it = preferences.eAllContents(); it.hasNext();)
       {

@@ -289,7 +289,7 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String toString()
@@ -299,9 +299,27 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
       return super.toString();
     }
 
+    String line = content;
+    if (line != null)
+    {
+      int newLine = line.indexOf('\n');
+      int lineFeed = line.indexOf('\r');
+
+      int pos = newLine != -1 && lineFeed != -1 ? Math.min(newLine, lineFeed) : newLine != -1 ? newLine : lineFeed;
+      if (pos != -1)
+      {
+        line = line.substring(0, pos);
+      }
+
+      if (line.length() > 100)
+      {
+        line = line.substring(0, 100);
+      }
+    }
+
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (content: ");
-    result.append(content);
+    result.append(line);
     result.append(", targetURL: ");
     result.append(targetURL);
     result.append(", encoding: ");

@@ -1080,6 +1080,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
             String installFolder;
             String bundlePoolFolder;
+            String bundlePoolTPFolder;
 
             if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
             {
@@ -1088,6 +1089,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
               installFolder = safe(preferences.getInstallFolder());
               bundlePoolFolder = safe(preferences.getBundlePoolFolder());
+              bundlePoolTPFolder = safe(preferences.getBundlePoolFolderTP());
             }
             else
             {
@@ -1100,6 +1102,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
               installFolder = safe(getAbsolutePath(rootFolder));
               bundlePoolFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-ide")));
+              bundlePoolTPFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-tp")));
             }
 
             ItemProvider input = new ItemProvider();
@@ -1132,7 +1135,7 @@ public class InstallerDialog extends AbstractSetupDialog
               projects.add(project);
             }
 
-            initUI(input, installFolder, bundlePoolFolder);
+            initUI(input, installFolder, bundlePoolFolder, bundlePoolTPFolder);
           }
           catch (UpdatingException ex)
           {
@@ -1144,7 +1147,8 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         }
 
-        private void initUI(final ItemProvider input, final String installFolder, final String bundlePoolFolder)
+        private void initUI(final ItemProvider input, final String installFolder, final String bundlePoolFolder,
+            final String bundlePoolTPFolder)
         {
           viewer.getControl().getDisplay().asyncExec(new Runnable()
           {
@@ -1152,9 +1156,9 @@ public class InstallerDialog extends AbstractSetupDialog
             {
               installFolderText.setText(installFolder);
               bundlePoolText.setText(bundlePoolFolder);
+              bundlePoolTPText.setText(bundlePoolTPFolder);
 
               viewer.setInput(input);
-
               cellEditor.setInput(this);
             }
           });
@@ -1323,7 +1327,6 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     final Object[] checkedElements = viewer.getCheckedElements();
     final String installFolder = installFolderText.getText();
-    final String gitPrefix = safe(bundlePoolText.getText());
 
     File folder = new File(installFolder);
     folder.mkdirs();
@@ -1337,7 +1340,7 @@ public class InstallerDialog extends AbstractSetupDialog
         Setup setup = getSetup(branch);
         if (setup != null)
         {
-          SetupTaskPerformer taskPerformer = createTaskPerformer(setup, installFolder, gitPrefix);
+          SetupTaskPerformer taskPerformer = createTaskPerformer(setup, installFolder);
           setupTaskPerformers.add(taskPerformer);
         }
       }
@@ -1362,7 +1365,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }, setupTaskPerformers);
   }
 
-  private SetupTaskPerformer createTaskPerformer(Setup setup, String installFolder, String gitPrefix)
+  private SetupTaskPerformer createTaskPerformer(Setup setup, String installFolder)
   {
     saveEObject(setup);
 
@@ -1373,8 +1376,7 @@ public class InstallerDialog extends AbstractSetupDialog
     String projectFolder = project.getName().toLowerCase();
     File branchDir = new File(installFolder, projectFolder + "/" + branchFolder);
 
-    SetupTaskPerformer performer = new SetupTaskPerformer(branchDir);
-    return performer;
+    return new SetupTaskPerformer(branchDir);
   }
 
   private void install(SetupTaskPerformer performer) throws Exception

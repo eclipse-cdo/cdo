@@ -382,15 +382,24 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           {
             userID = GitCloneTask.ANONYMOUS;
           }
+          else
+          {
+            String host = baseURI.host();
+            if (!StringUtil.isEmpty(baseURI.port()))
+            {
+              host += ":" + baseURI.port();
+            }
 
-          URI uri = URI.createHierarchicalURI(baseURI.scheme(), baseURI.host(), baseURI.device(), baseURI.segments(),
-              baseURI.query(), baseURI.fragment());
-          String location = "${setup.branch.dir/git/" + new Path(uri.path()).lastSegment() + "}";
+            baseURI = URI.createHierarchicalURI(baseURI.scheme(), host, baseURI.device(), baseURI.segments(),
+                baseURI.query(), baseURI.fragment());
+          }
+
+          String location = "${setup.branch.dir/git/" + new Path(baseURI.path()).lastSegment() + "}";
 
           GitCloneTask task = SetupFactory.eINSTANCE.createGitCloneTask();
           task.setLocation(location);
           task.setUserID(userID);
-          task.setRemoteURI(uri.toString());
+          task.setRemoteURI(baseURI.toString());
           task.setRemoteName(remoteName);
           task.setCheckoutBranch("master");
 

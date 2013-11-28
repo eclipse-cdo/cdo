@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.installer.editor;
 
+import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
@@ -996,6 +997,10 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   {
     createPagesGen();
 
+    selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
+        selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
+        .getDialogSettings())));
+
     Resource resource = editingDomain.getResourceSet().getResources().get(0);
     selectionViewer.setInput(resource);
     selectionViewer.setSelection(new StructuredSelection(resource.getContents().get(0)), true);
@@ -1133,8 +1138,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
           // Set up the tree viewer.
           //
           contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(
-              adapterFactory), new DiagnosticDecorator(editingDomain, contentOutlineViewer, SetupEditorPlugin
+          contentOutlineViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
+              contentOutlineViewer), new DiagnosticDecorator(editingDomain, contentOutlineViewer, SetupEditorPlugin
               .getPlugin().getDialogSettings())));
           contentOutlineViewer.setInput(editingDomain.getResourceSet().getResources().get(0));
 

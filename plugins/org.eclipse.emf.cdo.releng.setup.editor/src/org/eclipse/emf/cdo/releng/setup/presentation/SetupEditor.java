@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
@@ -1223,6 +1224,10 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   {
     createPagesGen();
 
+    selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
+        selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
+        .getDialogSettings())));
+
     Resource resource = editingDomain.getResourceSet().getResources().get(0);
     selectionViewer.setInput(resource);
     EObject rootObject = resource.getContents().get(0);
@@ -1353,6 +1358,9 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     }
   }
 
+  /**
+   * @author Ed Merks
+   */
   class OutlinePreviewPage extends ContentOutlinePage
   {
     private ILabelProvider labelProvider;
@@ -1494,7 +1502,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       });
 
       final Font font = contentOutlineViewer.getControl().getFont();
-      labelProvider = new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(adapterFactory),
+      labelProvider = new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory, contentOutlineViewer),
           new DiagnosticDecorator(editingDomain, contentOutlineViewer, SetupEditorPlugin.getPlugin()
               .getDialogSettings()))
       {

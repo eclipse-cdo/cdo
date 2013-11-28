@@ -35,5 +35,21 @@
       </startup>
    </extension>
    
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.eclipse.emf.cdo.releng.setup.contribution1"
+            objectClass="org.eclipse.emf.cdo.releng.setup.SetupTask">
+         <action
+               class="org.eclipse.emf.cdo.releng.internal.setup.ui.ToggleDisabledAction"
+               enablesFor="multiple"
+               id="org.eclipse.emf.cdo.releng.setup.ToggleDisabledAction"
+               label="Disabled"
+               state="false"
+               style="toggle"
+               tooltip="Changes the enablement of the task">
+         </action>
+      </objectContribution>
+   </extension>
    
 </plugin>

@@ -473,7 +473,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     if (SetupConstants.SETUP_IDE && getTrigger() != Trigger.MANUAL)
     {
-      Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
+      // Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
+      Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
       ProgressDialog.run(shell, new ProgressLogRunnable()
       {
         public Set<String> run(ProgressLog log) throws Exception

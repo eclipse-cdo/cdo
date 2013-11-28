@@ -475,7 +475,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void notifyChanged(Notification notification)
@@ -485,6 +485,8 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
     switch (notification.getFeatureID(SetupTask.class))
     {
     case SetupPackage.SETUP_TASK__DISABLED:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, true));
+      return;
     case SetupPackage.SETUP_TASK__SCOPE:
     case SetupPackage.SETUP_TASK__EXCLUDED_TRIGGERS:
     case SetupPackage.SETUP_TASK__DOCUMENTATION:

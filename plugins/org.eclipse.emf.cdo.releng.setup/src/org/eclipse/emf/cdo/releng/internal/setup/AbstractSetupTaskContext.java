@@ -72,6 +72,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private AbstractSetupTaskContext(Trigger trigger)
   {
+    this.trigger = trigger;
+
     uriConverter.getURIHandlers().add(4, new ECFURIHandlerImpl());
   }
 

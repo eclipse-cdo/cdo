@@ -1155,8 +1155,16 @@ public class InstallerDialog extends AbstractSetupDialog
             public void run()
             {
               installFolderText.setText(installFolder);
-              bundlePoolText.setText(bundlePoolFolder);
-              bundlePoolTPText.setText(bundlePoolTPFolder);
+
+              if (bundlePoolFolder.length() != 0)
+              {
+                bundlePoolText.setText(bundlePoolFolder);
+              }
+
+              if (bundlePoolTPFolder.length() != 0)
+              {
+                bundlePoolTPText.setText(bundlePoolTPFolder);
+              }
 
               viewer.setInput(input);
               cellEditor.setInput(this);

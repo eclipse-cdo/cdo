@@ -112,11 +112,7 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
    */
   protected String zipLocation = ZIP_LOCATION_EDEFAULT;
 
-  private transient String baselineName;
-
-  private transient File baselineDir;
-
-  private transient Object cachedBaseline;
+  private transient APIBaselineHelper helper;
 
   /**
    * <!-- begin-user-doc -->
@@ -336,95 +332,134 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    ApiPlugin apiPlugin = ApiPlugin.getDefault();
-    if (apiPlugin == null)
-    {
-      // Might be deactivated
-      return false;
-    }
-
-    String containerFolder = getContainerFolder();
-    if (StringUtil.isEmpty(containerFolder))
-    {
-      containerFolder = new File(context.getProjectDir(), ".baselines").getAbsolutePath();
-    }
-
-    baselineName = context.getSetup().getBranch().getProject().getName() + " Baseline";
-    baselineDir = new File(containerFolder, getVersion());
-
-    IApiBaselineManager baselineManager = apiPlugin.getApiBaselineManager();
-    IApiBaseline baseline = baselineManager.getApiBaseline(baselineName);
-    if (baseline == null)
-    {
-      return true;
-    }
-
-    ((ApiBaselineManager)baselineManager).loadBaselineInfos(baseline);
-
-    if (!new File(baseline.getLocation()).equals(baselineDir))
-    {
-      baselineManager.removeApiBaseline(baselineName);
-      baseline.setName(baselineName + " " + System.currentTimeMillis());
-      baselineManager.addApiBaseline(baseline);
-      return true;
-    }
-
-    if (baselineManager.getDefaultApiBaseline() != baseline)
-    {
-      cachedBaseline = baseline;
-      return true;
-    }
-
-    return false;
+    helper = new APIBaselineHelperImpl(getContainerFolder(), getZipLocation(), getVersion());
+    return helper.isNeeded(context);
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    IApiBaselineManager baselineManager = ApiPlugin.getDefault().getApiBaselineManager();
-    IApiBaseline baseline = (IApiBaseline)cachedBaseline;
-    if (baseline == null)
-    {
-      if (!baselineDir.exists())
-      {
-        downloadAndUnzip(context);
-      }
-
-      String location = baselineDir.toString();
-      context.log("Creating API baseline from " + location);
-
-      baseline = ApiModelFactory.newApiBaseline(baselineName, location);
-      ApiModelFactory.addComponents(baseline, location, new ProgressLogMonitor(context));
-      baselineManager.addApiBaseline(baseline);
-    }
-
-    context.log("Activating API baseline: " + baselineName);
-    baselineManager.setDefaultApiBaseline(baselineName);
+    helper.perform(context);
   }
 
-  private void downloadAndUnzip(final SetupTaskContext context)
+  private interface APIBaselineHelper
   {
-    final File baselinesDir = baselineDir.getParentFile();
-    baselinesDir.mkdirs();
+    public boolean isNeeded(SetupTaskContext context) throws Exception;
 
-    File zipFile = DownloadUtil.downloadURL(getZipLocation(), context);
+    public void perform(SetupTaskContext context) throws Exception;
+  }
 
-    final File[] rootDir = { null };
-    ZIPUtil.unzip(zipFile, new ZIPUtil.FileSystemUnzipHandler(baselinesDir, ZIPUtil.DEFAULT_BUFFER_SIZE)
+  private static class APIBaselineHelperImpl implements APIBaselineHelper
+  {
+    private transient String baselineName;
+
+    private transient File baselineDir;
+
+    private transient Object cachedBaseline;
+
+    private String containerFolder;
+
+    private String zipLocation;
+
+    private String version;
+
+    public APIBaselineHelperImpl(String containerFolder, String zipLocation, String version)
     {
-      @Override
-      public void unzipFile(String name, InputStream zipStream)
+      this.containerFolder = containerFolder;
+      this.zipLocation = zipLocation;
+      this.version = version;
+    }
+
+    private void downloadAndUnzip(final SetupTaskContext context)
+    {
+      final File baselinesDir = baselineDir.getParentFile();
+      baselinesDir.mkdirs();
+
+      File zipFile = DownloadUtil.downloadURL(zipLocation, context);
+
+      final File[] rootDir = { null };
+      ZIPUtil.unzip(zipFile, new ZIPUtil.FileSystemUnzipHandler(baselinesDir, ZIPUtil.DEFAULT_BUFFER_SIZE)
       {
-        if (rootDir[0] == null)
+        @Override
+        public void unzipFile(String name, InputStream zipStream)
         {
-          rootDir[0] = new File(baselinesDir, new Path(name).segment(0));
+          if (rootDir[0] == null)
+          {
+            rootDir[0] = new File(baselinesDir, new Path(name).segment(0));
+          }
+
+          context.log("Unzipping " + name);
+          super.unzipFile(name, zipStream);
+        }
+      });
+
+      rootDir[0].renameTo(baselineDir);
+    }
+
+    public boolean isNeeded(SetupTaskContext context) throws Exception
+    {
+      ApiPlugin apiPlugin = ApiPlugin.getDefault();
+      if (apiPlugin == null)
+      {
+        // Might be deactivated
+        return false;
+      }
+
+      if (StringUtil.isEmpty(containerFolder))
+      {
+        containerFolder = new File(context.getProjectDir(), ".baselines").getAbsolutePath();
+      }
+
+      baselineName = context.getSetup().getBranch().getProject().getName() + " Baseline";
+      baselineDir = new File(containerFolder, version);
+
+      IApiBaselineManager baselineManager = apiPlugin.getApiBaselineManager();
+      IApiBaseline baseline = baselineManager.getApiBaseline(baselineName);
+      if (baseline == null)
+      {
+        return true;
+      }
+
+      ((ApiBaselineManager)baselineManager).loadBaselineInfos(baseline);
+
+      if (!new File(baseline.getLocation()).equals(baselineDir))
+      {
+        baselineManager.removeApiBaseline(baselineName);
+        baseline.setName(baselineName + " " + System.currentTimeMillis());
+        baselineManager.addApiBaseline(baseline);
+        return true;
+      }
+
+      if (baselineManager.getDefaultApiBaseline() != baseline)
+      {
+        cachedBaseline = baseline;
+        return true;
+      }
+
+      return false;
+    }
+
+    public void perform(SetupTaskContext context) throws Exception
+    {
+      IApiBaselineManager baselineManager = ApiPlugin.getDefault().getApiBaselineManager();
+      IApiBaseline baseline = (IApiBaseline)cachedBaseline;
+      if (baseline == null)
+      {
+        if (!baselineDir.exists())
+        {
+          downloadAndUnzip(context);
         }
 
-        context.log("Unzipping " + name);
-        super.unzipFile(name, zipStream);
-      }
-    });
+        String location = baselineDir.toString();
+        context.log("Creating API baseline from " + location);
 
-    rootDir[0].renameTo(baselineDir);
+        baseline = ApiModelFactory.newApiBaseline(baselineName, location);
+        ApiModelFactory.addComponents(baseline, location, new ProgressLogMonitor(context));
+        baselineManager.addApiBaseline(baseline);
+      }
+
+      context.log("Activating API baseline: " + baselineName);
+      baselineManager.setDefaultApiBaseline(baselineName);
+    }
   }
 
 } // ApiBaselineTaskImpl

@@ -581,7 +581,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
       if (!hasCheckout)
       {
-        GitUtil.createBranch(context, cachedGit, checkoutBranch);
+        GitUtil.createBranch(context, cachedGit, checkoutBranch, remoteName);
         GitUtil.checkout(context, cachedGit, checkoutBranch);
         GitUtil.resetHard(context, cachedGit);
       }
@@ -733,14 +733,15 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return false;
     }
 
-    private static void createBranch(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
+    private static void createBranch(SetupTaskContext context, Git git, String checkoutBranch, String remoteName)
+        throws Exception
     {
       context.log("Creating local branch " + checkoutBranch);
 
       CreateBranchCommand command = git.branchCreate();
       command.setUpstreamMode(SetupUpstreamMode.SET_UPSTREAM);
       command.setName(checkoutBranch);
-      command.setStartPoint("refs/remotes/origin/" + checkoutBranch);
+      command.setStartPoint("refs/remotes/" + remoteName + "/" + checkoutBranch);
       command.call();
 
       StoredConfig config = git.getRepository().getConfig();

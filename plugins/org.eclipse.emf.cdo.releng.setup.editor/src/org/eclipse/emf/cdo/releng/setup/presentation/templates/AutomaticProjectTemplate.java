@@ -16,12 +16,14 @@ import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
@@ -43,6 +45,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -53,7 +56,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -64,15 +66,24 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,25 +92,12 @@ import java.util.regex.Pattern;
  */
 public class AutomaticProjectTemplate extends ProjectTemplate
 {
+  private static final String BC = "http://www.eclipse.org/buckminster/Common-1.0";
+
+  private static final String RM = "http://www.eclipse.org/buckminster/RMap-1.0";
+
   private static final Pattern GIT_URL_PATTERN = Pattern.compile("\\[remote \"([^\"]*)\"].*?url *= *([^\\r\\n]*)",
       Pattern.DOTALL | Pattern.MULTILINE);
-
-  private static final Pattern TARGET_URL_PATTERN = Pattern.compile("<repository.*?location.*?=.*?\"([^\"]*)\"",
-      Pattern.DOTALL | Pattern.MULTILINE);
-
-  private static final Pattern RMAP_URL_PATTERN = Pattern.compile(
-      "<(rm:)?provider.*?readerType[^=]*?=[^\"]*?\"p2\".*?format[^=]*?=[^\"]*?\"([^\"]*)\"", Pattern.DOTALL
-          | Pattern.MULTILINE);
-
-  // private static final Pattern RMAP_PROPERTY1_PATTERN = Pattern.compile(
-  // "<(rm:)?property.*?key[^=]*?=[^\"]*?\"([^\"]*)\".*?value[^=]*?=[^\"]*?\"([^\"]*)\"", Pattern.DOTALL
-  // | Pattern.MULTILINE);
-  //
-  // private static final Pattern RMAP_PROPERTY2_PATTERN = Pattern.compile(
-  // "<(rm:)?property.*?value[^=]*?=[^\"]*?\"([^\"]*)\".*?key[^=]*?=[^\"]*?\"([^\"]*)\"", Pattern.DOTALL
-  // | Pattern.MULTILINE);
-  //
-  // private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("{([0-9]+)}");
 
   private static final String BRANCH_NAME = "master";
 
@@ -110,6 +108,10 @@ public class AutomaticProjectTemplate extends ProjectTemplate
   private static String lastFolder;
 
   private final Branch branch;
+
+  private int folders;
+
+  private DocumentBuilder documentBuilder;
 
   public AutomaticProjectTemplate()
   {
@@ -146,7 +148,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
   @Override
   public boolean isValid(Branch branch)
   {
-    return super.isValid(branch) && contains(branch.getSetupTasks(), MaterializationTask.class);
+    return super.isValid(branch) && folders > 1;
   }
 
   @Override
@@ -163,13 +165,11 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     Text branchText = addBranchControl(composite);
     branchText.setText(BRANCH_NAME);
 
-    // addVariablesControl(composite, container, branch);
-
     addFolderControl(composite);
     return composite;
   }
 
-  private Text addBranchControl(Composite composite)
+  protected Text addBranchControl(Composite composite)
   {
     new Label(composite, SWT.NONE).setText("Branch:");
 
@@ -188,44 +188,10 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     return branchText;
   }
 
-  // private Button addVariablesControl(Composite composite, final Container container, final Branch branch)
-  // {
-  // new Label(composite, SWT.NONE);
-  //
-  // final Button button = new Button(composite, SWT.CHECK);
-  // button.setText("Create variables for user IDs");
-  // button.addSelectionListener(new SelectionAdapter()
-  // {
-  // @Override
-  // public void widgetSelected(SelectionEvent e)
-  // {
-  // if (button.getSelection())
-  // {
-  // for (SetupTask task : branch.getSetupTasks())
-  // {
-  // if (task instanceof GitCloneTask)
-  // {
-  // GitCloneTask gitCloneTask = (GitCloneTask)task;
-  // addVariable(gitCloneTask);
-  // changeShellHeight(button.getShell(), 10);
-  // }
-  // }
-  // }
-  // else
-  // {
-  // // changeShellHeight(button.getShell(), -10);
-  // }
-  //
-  // container.validate();
-  // }
-  // });
-  //
-  // new Label(composite, SWT.NONE);
-  // return button;
-  // }
-
-  private Text addFolderControl(final Composite composite)
+  protected Text addFolderControl(final Composite composite)
   {
+    ++folders;
+
     final Label label = new Label(composite, SWT.NONE);
     label.setText("Folder:");
 
@@ -258,6 +224,8 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
           changeShellHeight(shell, -20);
           composite.getParent().getParent().layout();
+
+          --folders;
           getContainer().validate();
           return;
         }
@@ -343,12 +311,39 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
   private void analyzeFolder(File folder, List<EObject> elements, IProgressMonitor monitor) throws Exception
   {
-    EList<SetupTask> tasks = branch.getSetupTasks();
-    String location = analyzeGit(folder, elements, tasks);
-    analyzeMaterialization(folder, elements, tasks, location, monitor);
+    Set<String> variableNames = new HashSet<String>();
+
+    EList<SetupTask> projectTasks = getProject().getSetupTasks();
+    for (SetupTask setupTask : projectTasks)
+    {
+      if (setupTask instanceof ContextVariableTask)
+      {
+        ContextVariableTask variable = (ContextVariableTask)setupTask;
+        variableNames.add(variable.getName());
+      }
+    }
+
+    Set<String> newVariableNames = new HashSet<String>();
+
+    String location = analyzeGit(folder, elements, newVariableNames);
+    analyzeMaterialization(folder, location, elements, newVariableNames, monitor);
+
+    List<String> list = new ArrayList<String>(newVariableNames);
+    Collections.sort(list);
+
+    for (String variableName : list)
+    {
+      if (!variableNames.contains(variableName))
+      {
+        ContextVariableTask variable = SetupFactory.eINSTANCE.createContextVariableTask();
+        variable.setName(variableName);
+
+        projectTasks.add(variable);
+      }
+    }
   }
 
-  private String analyzeGit(File folder, List<EObject> elements, EList<SetupTask> tasks)
+  private String analyzeGit(File folder, List<EObject> elements, Set<String> variableNames)
   {
     File git = new File(folder, ".git");
     if (git.isDirectory())
@@ -377,12 +372,9 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           }
 
           URI baseURI = URI.createURI(mainURI);
+
           String userID = baseURI.userInfo();
-          if (StringUtil.isEmpty(userID))
-          {
-            userID = GitCloneTask.ANONYMOUS;
-          }
-          else
+          if (!StringUtil.isEmpty(userID))
           {
             String host = baseURI.host();
             if (!StringUtil.isEmpty(baseURI.port()))
@@ -398,16 +390,15 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
           GitCloneTask task = SetupFactory.eINSTANCE.createGitCloneTask();
           task.setLocation(location);
-          task.setUserID(userID);
+          task.setUserID("${git.user.id}");
           task.setRemoteURI(baseURI.toString());
           task.setRemoteName(remoteName);
           task.setCheckoutBranch("master");
 
-          tasks.add(task);
+          branch.getSetupTasks().add(task);
           elements.add(task);
 
-          ContextVariableTask variable = addVariable(task);
-          elements.add(variable);
+          variableNames.add("git.user.id");
           return location;
         }
       }
@@ -416,50 +407,100 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     return folder.getAbsolutePath();
   }
 
-  private void analyzeMaterialization(File folder, List<EObject> elements, EList<SetupTask> tasks, String location,
-      IProgressMonitor monitor) throws ParserConfigurationException
+  private void analyzeMaterialization(File folder, String location, List<EObject> elements, Set<String> variableNames,
+      IProgressMonitor monitor) throws Exception
   {
-    MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
-
-    AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
-    sourceLocator.setRootFolder(location);
-    task.getSourceLocators().add(sourceLocator);
-
     List<String> componentLocations = new ArrayList<String>();
-    for (Pair<String, ComponentType> root : MaterializationTaskImpl.analyzeRoots(folder, componentLocations, monitor))
+    Set<Pair<String, ComponentType>> roots = MaterializationTaskImpl.analyzeRoots(folder, componentLocations, monitor);
+
+    SetupTaskContainer container = branch;
+    MaterializationTask lastTask = null;
+
+    List<File> additionalResources = analyzeAdditionalResources(componentLocations);
+    if (additionalResources.size() > 1)
     {
-      Component component = SetupFactory.eINSTANCE.createComponent();
-      component.setName(root.getElement1());
-      component.setType(root.getElement2());
-      task.getRootComponents().add(component);
+      CompoundSetupTask compound = SetupFactory.eINSTANCE.createCompoundSetupTask();
+      compound.setName("Possible Materializations");
+      compound
+          .setDocumentation("There are several possible materializations. By default all but the last one are disabled.");
+
+      elements.add(compound);
+      branch.getSetupTasks().add(compound);
+      container = compound;
     }
 
+    for (File additionalResource : additionalResources)
+    {
+      MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
+      task.setDocumentation("Generated from " + additionalResource);
+      task.setDisabled(true);
+
+      AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+      sourceLocator.setRootFolder(location);
+      task.getSourceLocators().add(sourceLocator);
+
+      for (Pair<String, ComponentType> root : roots)
+      {
+        Component component = SetupFactory.eINSTANCE.createComponent();
+        component.setName(root.getElement1());
+        component.setType(root.getElement2());
+        task.getRootComponents().add(component);
+      }
+
+      DocumentBuilder documentBuilder = getDocumentBuilder();
+      Document document = MaterializationTaskImpl.loadDocument(documentBuilder, additionalResource);
+
+      String name = additionalResource.getName();
+      if (name.endsWith(".target"))
+      {
+        analyzeTargetDefinition(task, document);
+      }
+      else if (additionalResource.getName().endsWith(".rmap"))
+      {
+        analyzeResourceMap(task, document, variableNames);
+      }
+
+      sortChildren(task);
+
+      if (container == branch)
+      {
+        elements.add(task);
+      }
+
+      container.getSetupTasks().add(task);
+      lastTask = task;
+    }
+
+    if (lastTask != null)
+    {
+      lastTask.setDisabled(false);
+    }
+    else
+    {
+      // TODO
+    }
+  }
+
+  private List<File> analyzeAdditionalResources(List<String> componentLocations)
+  {
+    List<File> additionalResources = new ArrayList<File>();
     for (String componentLocation : componentLocations)
     {
-      analyzeP2Repositories(task, new File(componentLocation));
+      analyzeAdditionalResources(additionalResources, new File(componentLocation));
     }
 
-    ECollections.sort(task.getRootComponents(), new Comparator<Component>()
+    Collections.sort(additionalResources, new Comparator<File>()
     {
-      public int compare(Component o1, Component o2)
+      public int compare(File o1, File o2)
       {
         return o1.getName().compareTo(o2.getName());
       }
     });
 
-    ECollections.sort(task.getP2Repositories(), new Comparator<P2Repository>()
-    {
-      public int compare(P2Repository o1, P2Repository o2)
-      {
-        return o1.getURL().compareTo(o2.getURL());
-      }
-    });
-
-    elements.add(task);
-    tasks.add(task);
+    return additionalResources;
   }
 
-  private void analyzeP2Repositories(MaterializationTask task, File folder)
+  private void analyzeAdditionalResources(List<File> result, File folder)
   {
     File[] files = folder.listFiles();
     for (int i = 0; i < files.length; i++)
@@ -467,37 +508,123 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       File file = files[i];
       if (file.isDirectory())
       {
-        analyzeP2Repositories(task, file);
+        analyzeAdditionalResources(result, file);
       }
-      else if (file.getName().endsWith(".target"))
+      else
       {
-        analyzeFile(task, file, TARGET_URL_PATTERN, 1);
-      }
-      else if (file.getName().endsWith(".rmap"))
-      {
-        analyzeFile(task, file, RMAP_URL_PATTERN, 2);
+        String name = file.getName();
+        if (name.endsWith(".target") || name.endsWith(".rmap"))
+        {
+          result.add(file);
+        }
       }
     }
   }
 
-  private void analyzeFile(MaterializationTask task, File file, Pattern pattern, int group)
+  private void analyzeTargetDefinition(MaterializationTask task, Document document)
   {
-    String content = IOUtil.readTextFile(file);
-
-    Matcher matcher = pattern.matcher(content);
-    while (matcher.find())
+    NodeList units = document.getElementsByTagNameNS("*", "unit");
+    for (int i = 0; i < units.getLength(); i++)
     {
-      String url = matcher.group(group);
-      if (url.endsWith("/"))
-      {
-        url = url.substring(0, url.length() - 1);
-      }
+      Element unit = (Element)units.item(i);
+      String id = unit.getAttribute("id");
+      String version = unit.getAttribute("version");
 
-      addP2Repository(task, url);
+      ComponentType type = id.endsWith(".feature.group") ? ComponentType.ECLIPSE_FEATURE : ComponentType.OSGI_BUNDLE;
+      addRootComponent(task, id, type, version);
+    }
+
+    NodeList repositories = document.getElementsByTagNameNS("*", "repository");
+    for (int i = 0; i < repositories.getLength(); i++)
+    {
+      Element repository = (Element)repositories.item(i);
+      String location = repository.getAttribute("location");
+
+      addP2Repository(task, location);
     }
   }
 
-  private void addP2Repository(MaterializationTask task, String url)
+  private void analyzeResourceMap(MaterializationTask task, Document document, Set<String> variableNames)
+  {
+    Map<String, String> propertiesMap = new HashMap<String, String>();
+
+    NodeList properties = document.getElementsByTagNameNS(RM, "property");
+    for (int i = 0; i < properties.getLength(); i++)
+    {
+      Element property = (Element)properties.item(i);
+      String key = property.getAttribute("key");
+      String value = property.getAttribute("value");
+
+      if (value != null)
+      {
+        propertiesMap.put(key, value);
+      }
+    }
+
+    NodeList providers = document.getElementsByTagNameNS(RM, "provider");
+    for (int i = 0; i < providers.getLength(); i++)
+    {
+      Element provider = (Element)providers.item(i);
+      String readerType = provider.getAttribute("readerType");
+      if ("p2".equals(readerType))
+      {
+        NodeList uris = provider.getElementsByTagNameNS(RM, "uri");
+        for (int j = 0; j < uris.getLength(); j++)
+        {
+          Element uri = (Element)uris.item(j);
+          String format = uri.getAttribute("format");
+
+          NodeList propertyRefs = provider.getElementsByTagNameNS(BC, "propertyRef");
+          for (int k = 0; k < propertyRefs.getLength(); k++)
+          {
+            Element propertyRef = (Element)propertyRefs.item(k);
+            String key = propertyRef.getAttribute("key");
+
+            if (key != null)
+            {
+              String value = propertiesMap.get(key);
+              if (value == null)
+              {
+                value = "#{" + key + "}";
+                variableNames.add(key);
+              }
+
+              format = format.replace("{" + k + "}", value);
+            }
+          }
+
+          format = format.replace('#', '$');
+          addP2Repository(task, format);
+        }
+      }
+    }
+  }
+
+  private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException
+  {
+    if (documentBuilder == null)
+    {
+      documentBuilder = MaterializationTaskImpl.createDocumentBuilder();
+    }
+
+    return documentBuilder;
+  }
+
+  private static void addRootComponent(MaterializationTask task, String id, ComponentType type, String version)
+  {
+    Component rootComponent = SetupFactory.eINSTANCE.createComponent();
+    rootComponent.setName(id);
+    rootComponent.setType(type);
+
+    if (!StringUtil.isEmpty(version))
+    {
+      rootComponent.setVersionRange(new VersionRange(version));
+    }
+
+    task.getRootComponents().add(rootComponent);
+  }
+
+  private static void addP2Repository(MaterializationTask task, String url)
   {
     EList<P2Repository> p2Repositories = task.getP2Repositories();
     for (P2Repository repository : p2Repositories)
@@ -514,31 +641,30 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     p2Repositories.add(repository);
   }
 
-  private static ContextVariableTask addVariable(GitCloneTask task)
+  private static void sortChildren(MaterializationTask task)
   {
-    String userID = task.getUserID();
-    String name = "git.user." + URI.createURI(task.getRemoteURI()).lastSegment().toLowerCase();
-    if (name.endsWith(".git"))
+    ECollections.sort(task.getRootComponents(), new Comparator<Component>()
     {
-      name = name.substring(0, name.length() - ".git".length());
-    }
+      public int compare(Component o1, Component o2)
+      {
+        return o1.getName().compareTo(o2.getName());
+      }
+    });
 
-    ContextVariableTask variable = SetupFactory.eINSTANCE.createContextVariableTask();
-    variable.setName(name);
-    variable.setValue(userID);
-    variable.setDocumentation("Unset the value to prompt the user for the user ID.");
-
-    ((Branch)task.eContainer()).getProject().getSetupTasks().add(variable);
-    task.setUserID("${" + name + "}");
-
-    return variable;
+    ECollections.sort(task.getP2Repositories(), new Comparator<P2Repository>()
+    {
+      public int compare(P2Repository o1, P2Repository o2)
+      {
+        return o1.getURL().compareTo(o2.getURL());
+      }
+    });
   }
 
   private static void changeShellHeight(Shell shell, int delta)
   {
-    Point size = shell.getSize();
-    size.y += delta;
-    shell.setSize(size);
+    // Point size = shell.getSize();
+    // size.y += delta;
+    // shell.setSize(size);
   }
 
   private static IDialogSettings getSettings()

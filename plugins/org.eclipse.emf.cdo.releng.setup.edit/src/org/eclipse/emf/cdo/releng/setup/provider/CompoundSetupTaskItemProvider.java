@@ -64,9 +64,10 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
     {
       itemPropertyDescriptors = new ArrayList<IItemPropertyDescriptor>();
 
-      addScopePropertyDescriptor(object);
-      addNamePropertyDescriptor(object);
       addDisabledPropertyDescriptor(object);
+      addScopePropertyDescriptor(object);
+      addDocumentationPropertyDescriptor(object);
+      addNamePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }

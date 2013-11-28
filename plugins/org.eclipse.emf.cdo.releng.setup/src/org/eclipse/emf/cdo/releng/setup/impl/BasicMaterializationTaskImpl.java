@@ -402,6 +402,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
           PrintStream errStream = Logger.getErrStream();
           PrintStream outStream = Logger.getOutStream();
           PrintStream printStream = null;
+
           try
           {
             printStream = new PrintStream(new ByteArrayOutputStream()
@@ -445,6 +446,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
                 flush();
               }
             }, true, "UTF-8");
+
             Logger.setErrStream(printStream);
             Logger.setOutStream(printStream);
             return super.run(monitor);
@@ -469,12 +471,12 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
           BillOfMaterials bom = context.getBillOfMaterials();
 
           Queue<MaterializerJob> allJobs = prepareJobs(monitor, bom);
-
           if (allJobs != null)
           {
             triggerJobs(monitor, allJobs);
             waitForJobs(monitor, allJobs, bom);
           }
+
           if (context.getStatus().getSeverity() == IStatus.ERROR)
           {
             throw BuckminsterException.wrap(context.getStatus());
@@ -484,7 +486,13 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
           installerJob.run(monitor);
         }
       };
-      job.run(MonitorUtils.subMonitor(monitor, 80));
+
+      IStatus status = job.run(MonitorUtils.subMonitor(monitor, 80));
+      int severity = status.getSeverity();
+      if (severity != IStatus.OK && severity != IStatus.INFO)
+      {
+        throw new CoreException(status);
+      }
     }
   }
 

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup;
 
+import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 
@@ -77,8 +78,19 @@ public class AdditionalRequirementsGenerator extends EContentAdapter
   protected void addAdditionalRequirement(SetupTaskContainer container, SetupTask addedTask,
       SetupTask additionalRequirement)
   {
+    ScopeRoot scopeRoot = addedTask.getScopeRoot();
+    if (scopeRoot != null)
+    {
+      container = scopeRoot;
+    }
+
     EList<SetupTask> setupTasks = container.getSetupTasks();
     int index = setupTasks.indexOf(addedTask);
+    if (index == -1)
+    {
+      index = 0;
+    }
+
     setupTasks.add(index, additionalRequirement);
     addedTask.getRequirements().add(additionalRequirement);
   }

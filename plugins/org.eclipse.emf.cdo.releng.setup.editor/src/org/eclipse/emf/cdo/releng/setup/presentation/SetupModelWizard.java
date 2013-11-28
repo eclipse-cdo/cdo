@@ -49,6 +49,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -70,6 +71,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -1178,7 +1180,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
     /**
      * @author Eike Stepper
      */
-    private final class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider
+    private final class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
     {
       public String getColumnText(Object element, int columnIndex)
       {
@@ -1192,6 +1194,22 @@ public class SetupModelWizard extends Wizard implements INewWizard
           return (Image)((Object[])element)[2];
         }
 
+        return null;
+      }
+
+      public Color getForeground(Object element)
+      {
+        boolean expert = (Boolean)((Object[])element)[3];
+        if (expert)
+        {
+          return propertiesViewer.getControl().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+        }
+
+        return null;
+      }
+
+      public Color getBackground(Object element)
+      {
         return null;
       }
     }
@@ -1214,17 +1232,13 @@ public class SetupModelWizard extends Wizard implements INewWizard
       public Object[] getElements(Object element)
       {
         List<Object[]> properties = new ArrayList<Object[]>();
+        List<Object[]> expertProperties = new ArrayList<Object[]>();
 
         List<IItemPropertyDescriptor> propertyDescriptors = itemDelegator.getPropertyDescriptors(element);
         if (propertyDescriptors != null)
         {
           for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
           {
-            if (isExpertProperty(propertyDescriptor, element))
-            {
-              continue;
-            }
-
             String displayName = propertyDescriptor.getDisplayName(element);
 
             IItemLabelProvider propertyLabelProvider = propertyDescriptor.getLabelProvider(element);
@@ -1238,10 +1252,18 @@ public class SetupModelWizard extends Wizard implements INewWizard
               valueText = "";
             }
 
-            properties.add(new Object[] { displayName, valueText, image });
+            if (isExpertProperty(propertyDescriptor, element))
+            {
+              expertProperties.add(new Object[] { displayName, valueText, image, true });
+            }
+            else
+            {
+              properties.add(new Object[] { displayName, valueText, image, false });
+            }
           }
         }
 
+        properties.addAll(expertProperties);
         return properties.toArray();
       }
 

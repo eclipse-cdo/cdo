@@ -67,6 +67,7 @@ import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -361,10 +362,15 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return documentBuilder;
   }
 
-  public static Element load(DocumentBuilder documentBuilder, File file) throws Exception
+  public static Element loadRootElement(DocumentBuilder documentBuilder, File file) throws Exception
   {
-    Document document = documentBuilder.parse(file);
+    Document document = loadDocument(documentBuilder, file);
     return document.getDocumentElement();
+  }
+
+  public static Document loadDocument(DocumentBuilder documentBuilder, File file) throws SAXException, IOException
+  {
+    return documentBuilder.parse(file);
   }
 
   public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, List<String> locations,
@@ -467,7 +473,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           {
             try
             {
-              Element rootElement = load(documentBuilder, featureXMLFile);
+              Element rootElement = loadRootElement(documentBuilder, featureXMLFile);
               componentName = rootElement.getAttribute("id").trim();
               componentType = ComponentType.ECLIPSE_FEATURE;
 
@@ -484,7 +490,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             File cspecFile = new File(folder, "buckminster.cspec");
             if (cspecFile.exists())
             {
-              Element rootElement = load(documentBuilder, cspecFile);
+              Element rootElement = loadRootElement(documentBuilder, cspecFile);
               componentName = rootElement.getAttribute("name").trim();
               componentType = ComponentType.BUCKMINSTER;
 
@@ -492,7 +498,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             }
             else
             {
-              Element rootElement = load(documentBuilder, projectFile);
+              Element rootElement = loadRootElement(documentBuilder, projectFile);
 
               NodeList namesList = rootElement.getElementsByTagName("name");
               if (namesList.getLength() != 0)
@@ -511,7 +517,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           File cspexFile = new File(folder, "buckminster.cspex");
           if (cspexFile.exists())
           {
-            Element rootElement = load(documentBuilder, cspexFile);
+            Element rootElement = loadRootElement(documentBuilder, cspexFile);
             analyzeComponentSpec(rootElement, children);
           }
 

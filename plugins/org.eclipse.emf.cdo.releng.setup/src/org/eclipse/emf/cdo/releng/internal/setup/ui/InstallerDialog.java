@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
@@ -36,6 +37,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
@@ -117,6 +120,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -161,16 +165,19 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private Link versionLink;
 
-  public InstallerDialog(Shell parentShell)
+  private boolean considerVisibleProjects;
+
+  public InstallerDialog(Shell parentShell, boolean considerVisibleProjects)
   {
     super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
         "/help/InstallerDialog.html");
     resourceSet = EMFUtil.createResourceSet();
+    this.considerVisibleProjects = considerVisibleProjects;
   }
 
   public InstallerDialog(Shell parentShell, Project project)
   {
-    this(parentShell);
+    this(parentShell, false);
 
     URI uri = project.eResource().getURI();
     if (uri.isPlatformResource())
@@ -1022,6 +1029,45 @@ public class InstallerDialog extends AbstractSetupDialog
     return resource;
   }
 
+  /**
+   * Returns a list of project proxies.
+   */
+  private List<Project> getVisibleProjects()
+  {
+    Set<File> directories = new LinkedHashSet<File>();
+    directories.add(new File("").getAbsoluteFile());
+    directories.add(new File(System.getProperty("user.dir")).getAbsoluteFile());
+    directories.add(new File(System.getProperty("user.home")).getAbsoluteFile());
+
+    List<Project> projects = new ArrayList<Project>();
+    for (File directory : directories)
+    {
+      if (directory.isDirectory())
+      {
+        for (String file : directory.list())
+        {
+          if (file.endsWith(".setup"))
+          {
+            ResourceSet resourceSet = new ResourceSetImpl();
+            URI projectURI = URI.createFileURI(new File(directory, file).toString());
+            SetupResource resource = EMFUtil.loadResourceSafely(resourceSet, projectURI);
+            Project project = (Project)EcoreUtil.getObjectByType(resource.getContents(), SetupPackage.Literals.PROJECT);
+            if (project != null)
+            {
+              Project projectProxy = SetupFactory.eINSTANCE.createProject();
+              ((InternalEObject)projectProxy).eSetProxyURI(EcoreUtil.getURI(project));
+              projectProxy.setName(project.getName());
+              projectProxy.setLabel(project.getLabel());
+              projects.add(project);
+            }
+          }
+        }
+      }
+    }
+
+    return projects;
+  }
+
   private void init()
   {
     try
@@ -1077,6 +1123,10 @@ public class InstallerDialog extends AbstractSetupDialog
             configuration = (Configuration)contents.get(0);
 
             InternalEList<Project> configuredProjects = (InternalEList<Project>)configuration.getProjects();
+            if (considerVisibleProjects)
+            {
+              configuredProjects.addAllUnique(0, getVisibleProjects());
+            }
 
             String installFolder;
             String bundlePoolFolder;

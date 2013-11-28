@@ -45,7 +45,7 @@ public class Application implements IApplication
 
       for (;;)
       {
-        InstallerDialog dialog = new InstallerDialog(null);
+        InstallerDialog dialog = new InstallerDialog(null, true);
         final int retcode = dialog.open();
 
         if (retcode == InstallerDialog.RETURN_RESTART)

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.ecf.core.security.ConnectContextFactory;
 import org.eclipse.ecf.core.util.Proxy;
 import org.eclipse.ecf.filetransfer.IFileTransferListener;
+import org.eclipse.ecf.filetransfer.IRetrieveFileTransferOptions;
 import org.eclipse.ecf.filetransfer.IncomingFileTransferException;
 import org.eclipse.ecf.filetransfer.events.IFileTransferEvent;
 import org.eclipse.ecf.filetransfer.events.IIncomingFileTransferReceiveDoneEvent;
@@ -31,9 +32,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -44,6 +47,12 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
   {
     UrlConnectionRetrieveFileTransfer x = new UrlConnectionRetrieveFileTransfer();
     x.setProxy(null);
+  }
+
+  @Override
+  public boolean exists(URI uri, Map<?, ?> options)
+  {
+    return super.exists(uri, options);
   }
 
   @Override
@@ -71,6 +80,8 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
     final CountDownLatch latch = new CountDownLatch(1);
 
+    final AtomicReference<Exception> exception = new AtomicReference<Exception>();
+
     class FileTransferListener implements IFileTransferListener
     {
       public ByteArrayOutputStream out;
@@ -86,12 +97,17 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
           }
           catch (IOException ex)
           {
-            // TODO
-            ex.printStackTrace();
+            exception.set(ex);
           }
         }
         else if (event instanceof IIncomingFileTransferReceiveDoneEvent)
         {
+          IIncomingFileTransferReceiveDoneEvent done = (IIncomingFileTransferReceiveDoneEvent)event;
+          Exception ex = done.getException();
+          if (ex != null)
+          {
+            exception.set(ex);
+          }
           latch.countDown();
         }
       }
@@ -101,6 +117,9 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
     try
     {
       FileTransferID fileTransferID = new FileTransferID(new FileTransferNamespace(), new java.net.URI(uriString));
+      Map<Object, Object> requestOptions = new HashMap<Object, Object>();
+      requestOptions.put(IRetrieveFileTransferOptions.CONNECT_TIMEOUT, 5000);
+      requestOptions.put(IRetrieveFileTransferOptions.READ_TIMEOUT, 5000);
       fileTransfer.sendRetrieveRequest(fileTransferID, transferListener, Collections.emptyMap());
     }
     catch (URISyntaxException ex)
@@ -119,6 +138,11 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
     catch (InterruptedException ex)
     {
       throw new IOException(ex);
+    }
+
+    if (exception.get() != null)
+    {
+      throw new IOException(exception.get());
     }
 
     return new ByteArrayInputStream(transferListener.out.toByteArray());

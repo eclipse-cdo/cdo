@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.util.StringExpander;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
 
 import java.io.File;
 import java.util.Map;
@@ -56,7 +57,7 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
 
   public Setup getSetup();
 
-  public void redirect(URI sourceURI, URI targetURI);
-
+  public URIConverter getURIConverter();
+  
   public URI redirect(URI uri);
 }

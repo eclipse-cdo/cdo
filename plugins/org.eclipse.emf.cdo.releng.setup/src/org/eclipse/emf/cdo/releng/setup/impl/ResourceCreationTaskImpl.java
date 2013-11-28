@@ -330,14 +330,18 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    URI targetURI = context.redirect(URI.createURI(getTargetURL()));
-    return !URIConverter.INSTANCE.exists(targetURI, null);
+    URI targetURI = createResolvedURI(getTargetURL());
+    return !context.getURIConverter().exists(targetURI, null);
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    URI targetURI = context.redirect(URI.createURI(getTargetURL()));
-    OutputStream outputStream = URIConverter.INSTANCE.createOutputStream(targetURI);
+    URI targetURI = createResolvedURI(getTargetURL());
+    URIConverter uriConverter = context.getURIConverter();
+
+    context.log("Creating " + uriConverter.normalize(targetURI));
+
+    OutputStream outputStream = uriConverter.createOutputStream(targetURI);
     String encoding = getEncoding();
     Writer writer = encoding == null ? new OutputStreamWriter(outputStream) : new OutputStreamWriter(outputStream,
         encoding);

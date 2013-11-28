@@ -325,13 +325,14 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     BufferedInputStream bufferedInputStream = null;
     try
     {
-      bufferedInputStream = new BufferedInputStream(URIConverter.INSTANCE.createInputStream(uri));
+      URIConverter uriConverter = context.getURIConverter();
+      bufferedInputStream = new BufferedInputStream(uriConverter.createInputStream(uri));
       byte[] input = new byte[bufferedInputStream.available()];
       bufferedInputStream.read(input);
 
       if (encoding == null)
       {
-        Map<String, ?> contentDescription = URIConverter.INSTANCE.contentDescription(
+        Map<String, ?> contentDescription = uriConverter.contentDescription(
             uri,
             Collections.singletonMap(ContentHandler.OPTION_REQUESTED_PROPERTIES,
                 Collections.singleton(ContentHandler.CONTENT_TYPE_PROPERTY)));
@@ -372,6 +373,11 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    URI uri = createResolvedURI(getURL());
+    URIConverter uriConverter = context.getURIConverter();
+
+    context.log("Modifying " + uriConverter.normalize(uri));
+
     String text = getText(context);
     int index = 0;
     for (TextModification modification : getModifications())
@@ -395,11 +401,10 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
       text = result.toString();
     }
 
-    URI uri = context.redirect(URI.createURI(getURL()));
     PrintStream printStream = null;
     try
     {
-      OutputStream outputStream = URIConverter.INSTANCE.createOutputStream(uri);
+      OutputStream outputStream = uriConverter.createOutputStream(uri);
       printStream = encoding == null ? new PrintStream(outputStream) : new PrintStream(outputStream, false, encoding);
       printStream.print(text);
     }

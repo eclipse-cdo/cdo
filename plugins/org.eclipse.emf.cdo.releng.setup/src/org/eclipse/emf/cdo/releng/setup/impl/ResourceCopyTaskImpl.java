@@ -254,22 +254,23 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    URI sourceURI = context.redirect(URI.createURI(getSourceURL()));
-    URI targetURI = context.redirect(URI.createURI(getTargetURL()));
+    URI sourceURI = createResolvedURI(getSourceURL());
+    URI targetURI = createResolvedURI(getTargetURL());
+    URIConverter uriConverter = context.getURIConverter();
     if (targetURI.hasTrailingPathSeparator())
     {
       if (sourceURI.hasTrailingPathSeparator())
       {
         // TODO
       }
-      else if (URIConverter.INSTANCE.exists(sourceURI, null))
+      else if (uriConverter.exists(sourceURI, null))
       {
-        return !URIConverter.INSTANCE.exists(targetURI.appendSegment(sourceURI.lastSegment()), null);
+        return !uriConverter.exists(targetURI.appendSegment(sourceURI.lastSegment()), null);
       }
     }
-    else if (URIConverter.INSTANCE.exists(sourceURI, null))
+    else if (uriConverter.exists(sourceURI, null))
     {
-      return !URIConverter.INSTANCE.exists(targetURI, null);
+      return !uriConverter.exists(targetURI, null);
     }
 
     return false;
@@ -277,10 +278,11 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    URI sourceURI = context.redirect(URI.createURI(getSourceURL()));
-    URI targetURI = context.redirect(URI.createURI(getTargetURL()));
+    URI sourceURI = createResolvedURI(getSourceURL());
+    URI targetURI = createResolvedURI(getTargetURL());
+    URIConverter uriConverter = context.getURIConverter();
 
-    context.log("Copying " + sourceURI + " to " + targetURI);
+    context.log("Copying " + uriConverter.normalize(sourceURI) + " to " + uriConverter.normalize(targetURI));
 
     if (targetURI.hasTrailingPathSeparator())
     {
@@ -288,15 +290,15 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
       {
         // TODO
       }
-      else if (URIConverter.INSTANCE.exists(sourceURI, null))
+      else if (uriConverter.exists(sourceURI, null))
       {
         InputStream input = null;
         OutputStream output = null;
 
         try
         {
-          input = URIConverter.INSTANCE.createInputStream(sourceURI);
-          output = URIConverter.INSTANCE.createOutputStream(targetURI.appendSegment(sourceURI.lastSegment()), null);
+          input = uriConverter.createInputStream(sourceURI);
+          output = uriConverter.createOutputStream(targetURI.appendSegment(sourceURI.lastSegment()), null);
           IOUtil.copy(input, output);
         }
         finally
@@ -306,15 +308,15 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
         }
       }
     }
-    else if (URIConverter.INSTANCE.exists(sourceURI, null))
+    else if (uriConverter.exists(sourceURI, null))
     {
       InputStream input = null;
       OutputStream output = null;
 
       try
       {
-        input = URIConverter.INSTANCE.createInputStream(sourceURI);
-        output = URIConverter.INSTANCE.createOutputStream(targetURI, null);
+        input = uriConverter.createInputStream(sourceURI);
+        output = uriConverter.createOutputStream(targetURI, null);
         IOUtil.copy(input, output);
       }
       finally

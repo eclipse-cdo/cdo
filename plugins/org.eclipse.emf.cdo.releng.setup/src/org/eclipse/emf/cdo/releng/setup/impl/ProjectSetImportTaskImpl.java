@@ -22,7 +22,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.URIConverter;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -221,7 +220,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    URI uri = context.redirect(URI.createURI(getURL()));
+    URI uri = createResolvedURI(getURL());
     helper = new Helper(uri);
     return helper.isNeeded(context);
   }
@@ -253,7 +252,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
         documentBuilderFactory.setNamespaceAware(true);
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-        inputStream = URIConverter.INSTANCE.createInputStream(uri, null);
+        inputStream = context.getURIConverter().createInputStream(uri, null);
         Document document = documentBuilder.parse(inputStream);
         document.getDocumentElement();
         NodeList nodeList = document.getDocumentElement().getElementsByTagName("project");

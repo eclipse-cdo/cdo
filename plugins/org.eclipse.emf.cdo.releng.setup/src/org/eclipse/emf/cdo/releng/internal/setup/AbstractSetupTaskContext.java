@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 
@@ -69,8 +70,15 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
+  private AbstractSetupTaskContext(Trigger trigger)
+  {
+    uriConverter.getURIHandlers().add(4, new ECFURIHandlerImpl());
+  }
+
   protected AbstractSetupTaskContext(Trigger trigger, Setup setup)
   {
+    this(trigger);
+
     Branch branch = setup.getBranch();
     Project project = branch.getProject();
 
@@ -78,13 +86,13 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     String projectFolder = project.getName().toLowerCase();
     branchDir = new File("/${" + KEY_INSTALL_DIR + '}', projectFolder + "/" + branchFolder).getAbsoluteFile();
 
-    this.trigger = trigger;
     initialize(setup, false);
   }
 
   protected AbstractSetupTaskContext(Trigger trigger, File branchDir)
   {
-    this.trigger = trigger;
+    this(trigger);
+
     this.branchDir = branchDir;
 
     ResourceSet resourceSet = EMFUtil.createResourceSet();
@@ -294,14 +302,14 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     return result.toString();
   }
 
-  public void redirect(URI sourceURI, URI targetURI)
-  {
-    uriConverter.getURIMap().put(sourceURI, targetURI);
-  }
-
   public URI redirect(URI uri)
   {
     return uriConverter.normalize(uri);
+  }
+
+  public URIConverter getURIConverter()
+  {
+    return uriConverter;
   }
 
   public OS getOS()

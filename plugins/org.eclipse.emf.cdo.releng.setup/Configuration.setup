@@ -28,9 +28,9 @@
     <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/luna/201310040900"/>
   </eclipseVersions>
   <projects href="file:/example.setup#/"/>
-  <projects href="Platform.setup#/" name="Platform" label="Eclipse Platform SDK"/>
-  <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/" name="EMF" label="EMF Core SDK"/>
   <projects href="../org.eclipse.emf.cdo.releng/local.setup#/" name="cdo" label="CDO Model Repository"/>
   <projects href="../org.eclipse.emf.cdo.releng/releng.setup#/" name="cdo.releng" label="CDO Release Engineering"/>
+  <projects href="Platform.setup#/" name="Platform" label="Eclipse Platform SDK"/>
+  <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/" name="EMF" label="EMF Core SDK"/>
   <projects href="http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git/plain/org.eclipse.emf.compare-parent/emf.compare.setup#/" name="EMF.Compare" label="EMF Compare"/>
 </setup:Configuration>

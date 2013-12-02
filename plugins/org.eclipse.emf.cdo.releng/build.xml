@@ -543,9 +543,9 @@
                 </then>
               </if>
               <if>
-            	  <available file="${temp.products}/@{profile}-@{platform}@{extension}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" />
+            	  <available file="${temp.products}/@{profile}-@{platform}@{extension}/Contents/MacOS/@{profile}-eclipse.ini" />
                 <then>
-                	<echo file="${temp.products}/@{profile}-@{platform}@{extension}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                	<echo file="${temp.products}/@{profile}-@{platform}@{extension}/Contents/MacOS/@{profile}-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
                 </then>
               </if>
             </then>
@@ -558,14 +558,16 @@
             </fileset>
           </copy>
 
+          <echo message="build = ${build.qualifier}" file="${temp.products}/@{profile}-@{platform}@{extension}/version.txt" />
+
           <mkdir dir="${zips}" />
           <zip destfile="${zips}/@{profile}-@{platform}.zip" >
-            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}@{extension}" includes="@{profile}-eclipse.app/**/*" />
-            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}@{extension}" includes="@{profile}-eclipse" />
+            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}@{extension}" includes="Contents/MacOS/*-eclipse" />
+            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}@{extension}" includes="*-eclipse" />
             <zipfileset dir="${temp.products}/@{profile}-@{platform}@{extension}">
               <include name="**" />
-              <exclude name="@{profile}-eclipse.app/**/*" />
-              <exclude name="@{profile}-eclipse" />
+              <exclude name="Contents/MacOS/*-eclipse" />
+              <exclude name="*-eclipse" />
             </zipfileset>
           </zip>
 

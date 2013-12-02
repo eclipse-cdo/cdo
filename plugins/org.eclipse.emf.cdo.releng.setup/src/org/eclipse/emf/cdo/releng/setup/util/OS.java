@@ -99,6 +99,8 @@ public abstract class OS
     }
   }
 
+  public abstract String getEclipseDir();
+
   public abstract String getEclipseExecutable();
 
   public abstract String getEclipseIni();
@@ -156,6 +158,12 @@ public abstract class OS
     }
 
     @Override
+    public String getEclipseDir()
+    {
+      return "eclipse";
+    }
+
+    @Override
     public String getEclipseExecutable()
     {
       return "eclipse.exe";
@@ -186,15 +194,21 @@ public abstract class OS
   private static final class Mac extends OS
   {
     @Override
+    public String getEclipseDir()
+    {
+      return "Eclipse.app";
+    }
+
+    @Override
     public String getEclipseExecutable()
     {
-      return "Eclipse.app/Contents/MacOS/eclipse";
+      return "Contents/MacOS/eclipse";
     }
 
     @Override
     public String getEclipseIni()
     {
-      return "Eclipse.app/Contents/MacOS/eclipse.ini";
+      return "Contents/MacOS/eclipse.ini";
     }
 
     @Override
@@ -215,6 +229,12 @@ public abstract class OS
    */
   private static final class Linux extends OS
   {
+    @Override
+    public String getEclipseDir()
+    {
+      return "eclipse";
+    }
+
     @Override
     public String getEclipseExecutable()
     {

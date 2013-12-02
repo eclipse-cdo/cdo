@@ -360,7 +360,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public File getEclipseDir()
   {
-    return new File(branchDir, "eclipse");
+    return new File(branchDir, getOS().getEclipseDir());
   }
 
   public File getWorkspaceDir()

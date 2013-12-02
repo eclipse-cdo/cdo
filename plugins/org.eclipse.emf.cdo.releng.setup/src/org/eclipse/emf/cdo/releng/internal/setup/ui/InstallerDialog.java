@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
@@ -1443,8 +1444,12 @@ public class InstallerDialog extends AbstractSetupDialog
     performer.perform();
 
     performer.log("Launching IDE");
-    String eclipseExecutable = performer.getOS().getEclipseExecutable();
-    String eclipsePath = new File(performer.getBranchDir(), "eclipse/" + eclipseExecutable).getAbsolutePath();
+
+    OS os = performer.getOS();
+    String eclipseDir = os.getEclipseDir();
+    String eclipseExecutable = os.getEclipseExecutable();
+
+    String eclipsePath = new File(performer.getBranchDir(), eclipseDir + "/" + eclipseExecutable).getAbsolutePath();
     File ws = new File(performer.getBranchDir(), "ws");
 
     ProcessBuilder builder = new ProcessBuilder(eclipsePath);

@@ -443,7 +443,8 @@
                                      os="macosx"
                                      ws="cocoa"
                                      arch="x86_64"
-                                     priority="@{priority}30" />
+                                     priority="@{priority}30"
+                                     extension=".app" />
         </then>
       </if>
     </sequential>
@@ -461,6 +462,7 @@
     <attribute name="ws" />
     <attribute name="arch" />
     <attribute name="priority" />
+    <attribute name="extension" default="" />
     <sequential>
       <if>
         <or>
@@ -472,7 +474,7 @@
         <then>
           <echo message="" />
           <echo message="Generating @{profile} for @{platform}" />
-          <mkdir dir="${temp.products}/@{profile}-@{platform}" />
+          <mkdir dir="${temp.products}/@{profile}-@{platform}@{extension}" />
 
           <eclipse app="director">
             <properties>
@@ -497,7 +499,7 @@
               <arg value="http://download.eclipse.org/eclipse/updates/${eclipse}-I-builds" />
 
             	<arg value="-d" />
-              <arg value="${temp.products}/@{profile}-@{platform}" />
+              <arg value="${temp.products}/@{profile}-@{platform}@{extension}" />
 
             	<arg value="-p" />
               <arg value="@{profile}" />
@@ -523,7 +525,7 @@
           </eclipse>
 
           <delete includeemptydirs="true" failonerror="false" quiet="true">
-            <fileset dir="${temp.products}/@{profile}-@{platform}">
+            <fileset dir="${temp.products}/@{profile}-@{platform}@{extension}">
               <include name="readme/**" />
               <include name="artifacts.xml" />
               <include name="launcher.exe" />
@@ -535,21 +537,21 @@
           	<equals arg1="${build.type}" arg2="N" />
             <then>
               <if>
-            	  <available file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" />
+            	  <available file="${temp.products}/@{profile}-@{platform}@{extension}/setup-eclipse.ini" />
                 <then>
-                	<echo file="${temp.products}/@{profile}-@{platform}/setup-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                	<echo file="${temp.products}/@{profile}-@{platform}@{extension}/setup-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
                 </then>
               </if>
               <if>
-            	  <available file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" />
+            	  <available file="${temp.products}/@{profile}-@{platform}@{extension}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" />
                 <then>
-                	<echo file="${temp.products}/@{profile}-@{platform}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                	<echo file="${temp.products}/@{profile}-@{platform}@{extension}/@{profile}-eclipse.app/Contents/MacOS/@{profile}-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
                 </then>
               </if>
             </then>
           </if>
 
-          <copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
+          <copy todir="${temp.products}/@{profile}-@{platform}@{extension}" failonerror="true">
             <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">
               <include name="epl-v10.html" />
               <include name="notice.html" />
@@ -558,9 +560,9 @@
 
           <mkdir dir="${zips}" />
           <zip destfile="${zips}/@{profile}-@{platform}.zip" >
-            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}" includes="@{profile}-eclipse.app/**/*" />
-            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}" includes="@{profile}-eclipse" />
-            <zipfileset dir="${temp.products}/@{profile}-@{platform}">
+            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}@{extension}" includes="@{profile}-eclipse.app/**/*" />
+            <zipfileset filemode="755" dir="${temp.products}/@{profile}-@{platform}@{extension}" includes="@{profile}-eclipse" />
+            <zipfileset dir="${temp.products}/@{profile}-@{platform}@{extension}">
               <include name="**" />
               <exclude name="@{profile}-eclipse.app/**/*" />
               <exclude name="@{profile}-eclipse" />

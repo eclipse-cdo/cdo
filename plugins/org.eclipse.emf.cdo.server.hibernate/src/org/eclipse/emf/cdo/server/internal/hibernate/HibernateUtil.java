@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -134,6 +136,26 @@ public class HibernateUtil
   public void setDataTypeFactory(DatatypeFactory dataTypeFactory)
   {
     this.dataTypeFactory = dataTypeFactory;
+  }
+
+  /**
+   * @return true if the efeature is {@link CDOResource#getContents()} efeature.
+   */
+  public boolean isCDOResourceContents(EStructuralFeature eFeature)
+  {
+    if (!eFeature.getEContainingClass().getEPackage().getNsURI().equals(EresourcePackage.eNS_URI))
+    {
+      return false;
+    }
+    if (!eFeature.getEContainingClass().getName().equals(EresourcePackage.eINSTANCE.getCDOResource().getName()))
+    {
+      return false;
+    }
+    if (!eFeature.getName().equals(EresourcePackage.eINSTANCE.getCDOResource_Contents().getName()))
+    {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -340,7 +362,7 @@ public class HibernateUtil
   @Deprecated
   public String getEntityName(CDORevision revision)
   {
-    return HibernateThreadContext.getCurrentStoreAccessor().getStore().getEntityName(revision.getEClass());
+    return getEntityName((Object)revision);
   }
 
   /**
@@ -676,7 +698,8 @@ public class HibernateUtil
    */
   public String getEntityName(CDOID id)
   {
-    final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(id);
+    final CDOID localId = resolvePossibleTempId(id);
+    final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(localId);
     if (classifierRef == null)
     {
       throw new IllegalArgumentException("This CDOID type of " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
@@ -684,6 +707,34 @@ public class HibernateUtil
 
     final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
     return accessor.getStore().getEntityName(classifierRef);
+  }
+
+  /**
+   * If the passed in id is a temp id, resolve it against the {@link HibernateThreadContext#getCommitContext()}
+   */
+  public CDOID resolvePossibleTempId(CDOID cdoId)
+  {
+    if (!(cdoId instanceof CDOIDTemp))
+    {
+      return cdoId;
+    }
+    if (HibernateThreadContext.isCommitContextSet())
+    {
+      final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
+
+      final CDOID newID = commitContext.getCommitContext().getIDMappings().get(cdoId);
+      if (newID != null)
+      {
+        return newID;
+      }
+
+      InternalCDORevision revision;
+      if ((revision = commitContext.getNewObject(cdoId)) != null)
+      {
+        return revision.getID();
+      }
+    }
+    return cdoId;
   }
 
   /**

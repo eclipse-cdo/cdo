@@ -334,6 +334,22 @@ public class StubCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public boolean isListPreserving()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void setListPreserving()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
    * @since 4.0
    */
   public void freeze()

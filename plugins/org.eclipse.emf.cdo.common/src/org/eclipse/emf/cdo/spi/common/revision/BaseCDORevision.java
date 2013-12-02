@@ -93,6 +93,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte BYPASS_PERMISSION_CHECKS_FLAG = 1 << 4; // 16
 
+  private static final byte LIST_PRESERVING_FLAG = 1 << 5; // 32;
+
   private static final byte PERMISSION_MASK = READ_PERMISSION_FLAG | WRITE_PERMISSION_FLAG; // 3
 
   private CDOID id;
@@ -725,7 +727,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void clear(EStructuralFeature feature)
   {
-    setValue(feature, null);
+    if (feature.isMany() && isListPreserving())
+    {
+      getList(feature).clear();
+    }
+    else
+    {
+      setValue(feature, null);
+    }
   }
 
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
@@ -753,7 +762,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void unset(EStructuralFeature feature)
   {
-    setValue(feature, null);
+    if (feature.isMany() && isListPreserving())
+    {
+      getList(feature).clear();
+    }
+    else
+    {
+      setValue(feature, null);
+    }
   }
 
   /**
@@ -934,6 +950,22 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
 
     return old;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public boolean isListPreserving()
+  {
+    return (flags & LIST_PRESERVING_FLAG) != 0;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void setListPreserving()
+  {
+    flags |= LIST_PRESERVING_FLAG;
   }
 
   /**

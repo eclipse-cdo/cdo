@@ -440,6 +440,22 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   /**
+   * @since 4.3
+   */
+  public boolean isListPreserving()
+  {
+    return getDelegate().isListPreserving();
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void setListPreserving()
+  {
+    getDelegate().setListPreserving();
+  }
+
+  /**
    * @since 4.0
    */
   public void freeze()

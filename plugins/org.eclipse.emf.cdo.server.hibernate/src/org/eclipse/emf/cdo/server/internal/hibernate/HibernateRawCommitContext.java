@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IView;
@@ -37,7 +36,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,6 +47,7 @@ import java.util.Set;
  */
 public class HibernateRawCommitContext implements InternalCommitContext
 {
+
   private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private List<InternalCDORevision> dirtyObjects = new ArrayList<InternalCDORevision>();
@@ -63,8 +62,6 @@ public class HibernateRawCommitContext implements InternalCommitContext
 
   private boolean usingEtypes;
 
-  private Map<Object, Object> data;
-
   public CDORevision getRevision(CDOID id)
   {
     for (CDORevision cdoRevision : newObjects)
@@ -74,7 +71,6 @@ public class HibernateRawCommitContext implements InternalCommitContext
         return cdoRevision;
       }
     }
-
     for (CDORevision cdoRevision : dirtyObjects)
     {
       if (id.equals(cdoRevision.getID()))
@@ -82,7 +78,6 @@ public class HibernateRawCommitContext implements InternalCommitContext
         return cdoRevision;
       }
     }
-
     return null;
   }
 
@@ -92,7 +87,6 @@ public class HibernateRawCommitContext implements InternalCommitContext
     {
       branchPoint = new CDOHibernateBranchPointImpl(System.currentTimeMillis());
     }
-
     return branchPoint;
   }
 
@@ -133,15 +127,6 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return HibernateThreadContext.getCurrentStoreAccessor().getStore().getRepository().getPackageRegistry();
-  }
-
-  public byte getSecurityImpact()
-  {
-    return CommitNotificationInfo.IMPACT_NONE;
-  }
-
-  public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules)
-  {
   }
 
   public boolean isClearResourcePathCache()
@@ -250,6 +235,16 @@ public class HibernateRawCommitContext implements InternalCommitContext
     return null;
   }
 
+  public void setDirtyObjects(List<InternalCDORevision> dirtyObjects)
+  {
+    this.dirtyObjects = dirtyObjects;
+  }
+
+  public void setNewObjects(List<InternalCDORevision> newObjects)
+  {
+    this.newObjects = newObjects;
+  }
+
   public void preWrite()
   {
   }
@@ -349,27 +344,22 @@ public class HibernateRawCommitContext implements InternalCommitContext
     return null;
   }
 
-  public <T> T getData(Object key)
+  public byte getSecurityImpact()
   {
-    if (data == null)
-    {
-      return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    T result = (T)data.get(key);
-    return result;
+    return 0;
   }
 
-  public synchronized <T extends Object> T setData(Object key, T value)
+  public <T> T getData(Object key)
   {
-    if (data == null)
-    {
-      data = new HashMap<Object, Object>();
-    }
+    return null;
+  }
 
-    @SuppressWarnings("unchecked")
-    T old = (T)data.put(key, value);
-    return old;
+  public <T> T setData(Object key, T data)
+  {
+    return null;
+  }
+
+  public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules)
+  {
   }
 }

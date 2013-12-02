@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -168,13 +169,29 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   /**
    * Enables or disables permission checking for this revision.
    * <p>
-   * This method is used on the client side if the framework changes the revision on another 
+   * This method is used on the client side if the framework changes the revision on another
    * user's behalf, e.g., during invalidation or general revision copying. It's safe to offer this method
    * on the client side because the server is always the permission checking authority (during load or commit).
-   * 
+   *
    * @since 4.3
    */
   public boolean bypassPermissionChecks(boolean on);
+
+  /**
+   * @since 4.3
+   */
+  public boolean isListPreserving();
+
+  /**
+   * The default behavior of a revision for calls to the {@link #clear(EStructuralFeature)} and
+   * {@link #unset(EStructuralFeature)} methods is to set the feature's value to null (discarding the
+   * value itself, a List). By calling this {@link #setListPreserving()} method the default behavior
+   * is changed; instead of setting the feature's value to null, the {@link List#clear()} method is
+   * called on the feature's list instance.
+   *
+   * @since 4.3
+   */
+  public void setListPreserving();
 
   /**
    * @since 4.0

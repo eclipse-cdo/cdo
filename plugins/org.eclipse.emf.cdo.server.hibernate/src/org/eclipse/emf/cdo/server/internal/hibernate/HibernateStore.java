@@ -224,7 +224,7 @@ public class HibernateStore extends Store implements IHibernateStore
     return epacks;
   }
 
-  boolean isAuditEPackage(EPackage ePackage)
+  private boolean isAuditEPackage(EPackage ePackage)
   {
     return TeneoauditingPackage.eNS_URI.equals(ePackage.getNsURI())
         || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null;

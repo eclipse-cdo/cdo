@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -221,9 +222,13 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
     else
     {
-
       EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
-      if (feature instanceof EReference && feature.isMany())
+      if (feature instanceof EReference && feature.isMany()
+          && HibernateUtil.getInstance().isCDOResourceContents(feature))
+      {
+        getter = new CDOManyAttributeGetter(this, mappedProperty.getName());
+      }
+      else if (feature instanceof EReference && feature.isMany())
       {
         getter = new CDOManyReferenceGetter(this, mappedProperty.getName());
       }
@@ -270,9 +275,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       setter = new CDOVersionPropertySetter(this, mappedProperty.getName());
     }
-    else
-
-    if (mappedProperty.getName().compareTo(CDOHibernateConstants.RESOURCE_PROPERTY) == 0)
+    else if (mappedProperty.getName().compareTo(CDOHibernateConstants.RESOURCE_PROPERTY) == 0)
     {
       setter = new CDOResourceIDSetter(this, mappedProperty.getName());
     }
@@ -287,7 +290,12 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     else
     {
       EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
-      if (feature instanceof EReference && feature.isMany())
+      if (feature instanceof EReference && feature.isMany()
+          && HibernateUtil.getInstance().isCDOResourceContents(feature))
+      {
+        setter = new CDOManyAttributeSetter(this, mappedProperty.getName());
+      }
+      else if (feature instanceof EReference && feature.isMany())
       {
         setter = new CDOManyReferenceSetter(this, mappedProperty.getName());
       }

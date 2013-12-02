@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.collection.spi.PersistentCollection;
+import org.hibernate.type.CollectionType;
 
 /**
  * @author Martin Taal
@@ -60,7 +61,12 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
 
     if (list instanceof WrappedHibernateList)
     {
-      final Object delegate = ((WrappedHibernateList)list).getDelegate();
+      final WrappedHibernateList wrappedHibernateList = (WrappedHibernateList)list;
+      if (wrappedHibernateList.isUninitializedCollection())
+      {
+        return CollectionType.UNFETCHED_COLLECTION;
+      }
+      final Object delegate = wrappedHibernateList.getDelegate();
       if (delegate instanceof PersistentCollection)
       {
         return delegate;
@@ -69,6 +75,7 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
 
     // Wrap the moveablearraylist
     HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();
+    wrapper.setEFeature(getEStructuralFeature());
     wrapper.setDelegate(list);
 
     // And return it

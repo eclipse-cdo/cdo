@@ -104,10 +104,10 @@
     </workingSets>
   </setupTasks>
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Mylyn Queries">
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.repository" value="https://bugs.eclipse.org/bugs" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.prefix" value="/buglist.cgi?classification=Modeling&amp;product=EMF" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.components" value="component=cdo.core&amp;component=cdo.legacy&amp;component=cdo.dawn&amp;component=cdo.db&amp;component=cdo.docs&amp;component=cdo.hibernate&amp;component=cdo.net4j&amp;component=cdo.net4j.db&amp;component=cdo.net4j.ui&amp;component=cdo.objy&amp;component=cdo.releng&amp;component=cdo.ui" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.open" value="bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.repository" value="https://bugs.eclipse.org/bugs"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.prefix" value="/buglist.cgi?classification=Modeling&amp;product=EMF"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.components" value="component=cdo.core&amp;component=cdo.legacy&amp;component=cdo.dawn&amp;component=cdo.db&amp;component=cdo.docs&amp;component=cdo.hibernate&amp;component=cdo.net4j&amp;component=cdo.net4j.db&amp;component=cdo.net4j.ui&amp;component=cdo.objy&amp;component=cdo.releng&amp;component=cdo.ui"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.open" value="bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED"/>
     <setupTasks xsi:type="setup:MylynQueryTask" summary="0_REVIEWS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;query_format=advanced&amp;field0-0-0=flagtypes.name&amp;type0-0-0=equals&amp;value0-0-0=review%3F"/>
     <setupTasks xsi:type="setup:MylynQueryTask" summary="1_BUGS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial"/>
     <setupTasks xsi:type="setup:MylynQueryTask" summary="2_FEATURES" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=enhancement"/>

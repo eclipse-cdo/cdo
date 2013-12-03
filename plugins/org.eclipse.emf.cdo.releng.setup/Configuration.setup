@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<setup:Configuration setup:toolVersion="1" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" toolVersion="1">
+<setup:Configuration setup:toolVersion="2" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" toolVersion="1">
   <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse user ID for Git/Gerrit commits.  Use 'anonymous' if you have no Eclipse user ID." name="git.user.id" label="Eclipse user ID for Git/Gerrit"/>
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Eclipse Tasks">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name"/>
     <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/${train.name|lower}"/>
     <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@setupTasks.1/@setupTasks.1" name="platform.url" value="${train.url}"/>
     <setupTasks xsi:type="setup:P2Task" requirements="//@setupTasks.1/@setupTasks.2">
-      <p2Repositories url="${platform.url}"/>
-      <p2Repositories url="${releng.url}"/>
       <installableUnits id="org.eclipse.sdk.ide"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.setup.feature.group"/>
+      <p2Repositories url="${platform.url}"/>
+      <p2Repositories url="${releng.url}"/>
     </setupTasks>
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@setupTasks.1/@setupTasks.3" option="--launcher.XXMaxPermSize" value="512m"/>
     <setupTasks xsi:type="setup:EclipseIniTask" requirements="//@setupTasks.1/@setupTasks.3" option="-data" value="${setup.branch.dir/ws}"/>

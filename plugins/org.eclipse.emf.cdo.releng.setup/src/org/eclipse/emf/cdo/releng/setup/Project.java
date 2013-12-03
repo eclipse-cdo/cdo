@@ -133,19 +133,19 @@ public interface Project extends ConfigurableItem
   void setLabel(String value);
 
   /**
-  	 * Returns the value of the '<em><b>Restrictions</b></em>' reference list.
-  	 * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
-  	 * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Restrictions</em>' reference list isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
-  	 * @return the value of the '<em>Restrictions</em>' reference list.
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_Restrictions()
-  	 * @model
-  	 * @generated
-  	 */
+   * Returns the value of the '<em><b>Restrictions</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Restrictions</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Restrictions</em>' reference list.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_Restrictions()
+   * @model
+   * @generated
+   */
   EList<Eclipse> getRestrictions();
 
 } // Project

@@ -153,6 +153,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private static final String PRODUCT_ID = "org.eclipse.emf.cdo.releng.setup.installer.product";
 
+  private static final Object[] NO_ELEMENTS = new Object[0];
+
   private Map<Branch, Setup> setups;
 
   private ResourceSet resourceSet;
@@ -327,7 +329,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
         if (object instanceof Branch)
         {
-          return new Object[0];
+          return NO_ELEMENTS;
         }
 
         return super.getChildren(object);
@@ -399,23 +401,15 @@ public class InstallerDialog extends AbstractSetupDialog
 
       public Object[] getElements(Object inputElement)
       {
-        Set<Eclipse> restrictions = new HashSet<Eclipse>();
-
         Object selection = ((IStructuredSelection)viewer.getSelection()).getFirstElement();
         if (selection instanceof Branch)
         {
           Branch branch = (Branch)selection;
-          restrictions.addAll(branch.getRestrictions());
-          restrictions.addAll(branch.getProject().getRestrictions());
+          EList<Eclipse> eclipses = getAllowedEclipseVersions(branch);
+          return eclipses.toArray(new Eclipse[eclipses.size()]);
         }
 
-        EList<Eclipse> eclipses = new BasicEList<Eclipse>(configuration.getEclipseVersions());
-        if (!restrictions.isEmpty())
-        {
-          eclipses.retainAll(restrictions);
-        }
-
-        return eclipses.toArray(new Eclipse[eclipses.size()]);
+        return NO_ELEMENTS;
       }
     });
 
@@ -1317,7 +1311,7 @@ public class InstallerDialog extends AbstractSetupDialog
       else
       {
         setup = SetupFactory.eINSTANCE.createSetup();
-        setup.setEclipseVersion(getDefaultEclipseVersion());
+        setup.setEclipseVersion(getDefaultEclipseVersion(branch));
         setup.setBranch(branch);
         setup.setPreferences(preferences);
 
@@ -1331,9 +1325,24 @@ public class InstallerDialog extends AbstractSetupDialog
     return setup;
   }
 
-  private Eclipse getDefaultEclipseVersion()
+  private EList<Eclipse> getAllowedEclipseVersions(Branch branch)
   {
-    EList<Eclipse> eclipses = configuration.getEclipseVersions();
+    Set<Eclipse> restrictions = new HashSet<Eclipse>();
+    restrictions.addAll(branch.getRestrictions());
+    restrictions.addAll(branch.getProject().getRestrictions());
+
+    EList<Eclipse> eclipses = new BasicEList<Eclipse>(configuration.getEclipseVersions());
+    if (!restrictions.isEmpty())
+    {
+      eclipses.retainAll(restrictions);
+    }
+
+    return eclipses;
+  }
+
+  private Eclipse getDefaultEclipseVersion(Branch branch)
+  {
+    EList<Eclipse> eclipses = getAllowedEclipseVersions(branch);
     return eclipses.get(eclipses.size() - 1);
   }
 

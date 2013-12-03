@@ -398,12 +398,12 @@ public interface SetupPackage extends EPackage
   int PROJECT__RESTRICTIONS = CONFIGURABLE_ITEM_FEATURE_COUNT + 4;
 
   /**
-  	 * The number of structural features of the '<em>Project</em>' class.
-  	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The number of structural features of the '<em>Project</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   int PROJECT_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 5;
 
   /**
@@ -443,12 +443,12 @@ public interface SetupPackage extends EPackage
   int BRANCH__RESTRICTIONS = CONFIGURABLE_ITEM_FEATURE_COUNT + 2;
 
   /**
-  	 * The number of structural features of the '<em>Branch</em>' class.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The number of structural features of the '<em>Branch</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   int BRANCH_FEATURE_COUNT = CONFIGURABLE_ITEM_FEATURE_COUNT + 3;
 
   /**
@@ -1311,12 +1311,12 @@ public interface SetupPackage extends EPackage
   int P2_TASK__MERGE_DISABLED = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
-  	 * The number of structural features of the '<em>P2 Task</em>' class.
-  	 * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The number of structural features of the '<em>P2 Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   int P2_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
@@ -3190,13 +3190,13 @@ public interface SetupPackage extends EPackage
   EReference getProject_Restrictions();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
-  	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Branch</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.Branch
-  	 * @generated
-  	 */
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Branch <em>Branch</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Branch</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Branch
+   * @generated
+   */
   EClass getBranch();
 
   /**
@@ -3233,13 +3233,13 @@ public interface SetupPackage extends EPackage
   EReference getBranch_Restrictions();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask <em>Api Baseline Task</em>}'.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Api Baseline Task</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.ApiBaselineTask
-  	 * @generated
-  	 */
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask <em>Api Baseline Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Api Baseline Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ApiBaselineTask
+   * @generated
+   */
   EClass getApiBaselineTask();
 
   /**
@@ -3405,14 +3405,14 @@ public interface SetupPackage extends EPackage
   EAttribute getP2Task_MergeDisabled();
 
   /**
-  	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
-  	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-  	 * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
-  	 * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories()
-  	 * @see #getP2Task()
-  	 * @generated
-  	 */
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories <em>P2 Repositories</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.P2Task#getP2Repositories()
+   * @see #getP2Task()
+   * @generated
+   */
   EReference getP2Task_P2Repositories();
 
   /**
@@ -4792,13 +4792,13 @@ public interface SetupPackage extends EPackage
     EReference PROJECT__RESTRICTIONS = eINSTANCE.getProject_Restrictions();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
+     * <!-- begin-user-doc -->
            * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
+     * @generated
+     */
     EClass BRANCH = eINSTANCE.getBranch();
 
     /**
@@ -4826,13 +4826,13 @@ public interface SetupPackage extends EPackage
     EReference BRANCH__RESTRICTIONS = eINSTANCE.getBranch_Restrictions();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl <em>Api Baseline Task</em>}' class.
-    	 * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl
-    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
-    	 * @generated
-    	 */
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl <em>Api Baseline Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
+     * @generated
+     */
     EClass API_BASELINE_TASK = eINSTANCE.getApiBaselineTask();
 
     /**
@@ -4962,11 +4962,11 @@ public interface SetupPackage extends EPackage
     EAttribute P2_TASK__MERGE_DISABLED = eINSTANCE.getP2Task_MergeDisabled();
 
     /**
-    	 * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
-    	 * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     EReference P2_TASK__P2_REPOSITORIES = eINSTANCE.getP2Task_P2Repositories();
 
     /**

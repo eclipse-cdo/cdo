@@ -99,11 +99,11 @@ public class BranchItemProvider extends ConfigurableItemItemProvider implements 
   }
 
   /**
-  	 * This returns Branch.gif.
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * This returns Branch.gif.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object getImage(Object object)
   {

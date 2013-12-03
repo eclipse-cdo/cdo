@@ -110,6 +110,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 {
   private static final boolean SKIP = "true".equals(System.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
 
+  private static final Object FIRST_CALL_DETECTION_KEY = new Object();
+
   /**
    * The cached value of the '{@link #getInstallableUnits() <em>Installable Units</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -162,13 +164,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   protected static final boolean MERGE_DISABLED_EDEFAULT = false;
 
   /**
-  	 * The cached value of the '{@link #isMergeDisabled() <em>Merge Disabled</em>}' attribute.
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @see #isMergeDisabled()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The cached value of the '{@link #isMergeDisabled() <em>Merge Disabled</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMergeDisabled()
+   * @generated
+   * @ordered
+   */
   protected boolean mergeDisabled = MERGE_DISABLED_EDEFAULT;
 
   private transient List<InstallableUnit> neededInstallableUnits;
@@ -246,10 +248,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public void setMergeDisabled(boolean newMergeDisabled)
   {
     boolean oldMergeDisabled = mergeDisabled;
@@ -262,10 +264,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<P2Repository> getP2Repositories()
   {
     if (p2Repositories == null)
@@ -737,9 +739,14 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void callDirectorApp(final SetupTaskContext context) throws Exception
   {
-    FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
+    File eclipseDir = context.getEclipseDir();
+    if (context.put(FIRST_CALL_DETECTION_KEY, Boolean.TRUE) == null)
+    {
+      FileUtil.delete(eclipseDir, new ProgressLogMonitor(context));
+      FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
+    }
 
-    String destination = context.getEclipseDir().toString();
+    String destination = eclipseDir.toString();
     final File p2PoolDir = context.getP2PoolDir();
     String bundlePool = p2PoolDir.toString();
     String bundleAgent = context.getP2AgentDir().toString();

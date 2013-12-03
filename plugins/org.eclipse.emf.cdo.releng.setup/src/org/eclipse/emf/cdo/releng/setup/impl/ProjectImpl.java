@@ -111,10 +111,10 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   protected EList<Eclipse> restrictions;
 
   /**
-  	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   protected ProjectImpl()
   {
     super();
@@ -287,10 +287,10 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)

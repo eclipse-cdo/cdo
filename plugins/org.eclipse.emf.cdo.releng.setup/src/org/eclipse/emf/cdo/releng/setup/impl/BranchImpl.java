@@ -76,10 +76,10 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   protected EList<Eclipse> restrictions;
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   protected BranchImpl()
   {
     super();
@@ -210,10 +210,10 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {

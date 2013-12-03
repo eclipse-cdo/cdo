@@ -142,7 +142,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_mgNekeoOEeKpRf481yfX-g" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="8047085" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//InstallableUnit"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mgNekuoOEeKpRf481yfX-g" x="723" y="1061" width="171"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mgNekuoOEeKpRf481yfX-g" x="723" y="1061"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_q3yi0OoOEeKpRf481yfX-g" type="1001">
     <children xmi:type="notation:Node" xmi:id="_q3zJ4OoOEeKpRf481yfX-g" type="4001"/>
@@ -798,6 +798,10 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//AutomaticSourceLocator/rootFolder"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_qQvd8EelEeODEt3bbTuUDw"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_6lO7EFwoEeOc1e-GidYCsw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//AutomaticSourceLocator/locateNestedProjects"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_6lO7EVwoEeOc1e-GidYCsw"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_bAMsEUelEeODEt3bbTuUDw"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_bAMsEkelEeODEt3bbTuUDw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_bAMsE0elEeODEt3bbTuUDw"/>
@@ -809,7 +813,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_bAK24UelEeODEt3bbTuUDw" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="8047085" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//AutomaticSourceLocator"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_bAK24kelEeODEt3bbTuUDw" x="570" y="1169"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_bAK24kelEeODEt3bbTuUDw" x="510" y="1171"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_ojznQEjzEeOiw6cRhJAxgw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_oj3RoEjzEeOiw6cRhJAxgw" type="4001"/>

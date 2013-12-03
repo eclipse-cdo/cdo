@@ -1365,6 +1365,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getAutomaticSourceLocator_LocateNestedProjects()
+  {
+    return (EAttribute)automaticSourceLocatorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getRedirectionTask()
   {
     return redirectionTaskEClass;
@@ -2141,6 +2151,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     automaticSourceLocatorEClass = createEClass(AUTOMATIC_SOURCE_LOCATOR);
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
+    createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS);
 
     redirectionTaskEClass = createEClass(REDIRECTION_TASK);
     createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__SOURCE_URL);
@@ -2539,6 +2550,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getAutomaticSourceLocator_RootFolder(), ecorePackage.getEString(), "rootFolder", null, 1, 1,
         AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAutomaticSourceLocator_LocateNestedProjects(), ecorePackage.getEBoolean(),
+        "locateNestedProjects", null, 0, 1, AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(redirectionTaskEClass, RedirectionTask.class, "RedirectionTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

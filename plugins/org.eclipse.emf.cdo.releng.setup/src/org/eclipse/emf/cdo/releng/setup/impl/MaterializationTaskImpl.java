@@ -373,13 +373,13 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return documentBuilder.parse(file);
   }
 
-  public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, List<String> locations,
-      IProgressMonitor monitor) throws ParserConfigurationException
+  public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, boolean locateNestedProjects,
+      List<String> locations, IProgressMonitor monitor) throws ParserConfigurationException
   {
     Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
     Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
 
-    Map<String, List<ComponentLocation>> componentLocations = analyzeFolder(folder, monitor);
+    Map<String, List<ComponentLocation>> componentLocations = analyzeFolder(folder, locateNestedProjects, monitor);
     for (Map.Entry<String, List<ComponentLocation>> entry : componentLocations.entrySet())
     {
       String name = entry.getKey();
@@ -410,19 +410,19 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return roots;
   }
 
-  public static Map<String, List<ComponentLocation>> analyzeFolder(File folder, IProgressMonitor monitor)
-      throws ParserConfigurationException
+  public static Map<String, List<ComponentLocation>> analyzeFolder(File folder, boolean locateNestedProjects,
+      IProgressMonitor monitor) throws ParserConfigurationException
   {
     Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
 
     DocumentBuilder documentBuilder = createDocumentBuilder();
-    analyze(componentMap, documentBuilder, folder, monitor);
+    analyze(componentMap, documentBuilder, folder, locateNestedProjects, monitor);
 
     return componentMap;
   }
 
   private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
-      File folder, IProgressMonitor monitor)
+      File folder, boolean locateNestedProjects, IProgressMonitor monitor)
   {
     if (monitor != null && monitor.isCanceled())
     {
@@ -531,6 +531,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           ComponentLocation componentLocation = new ComponentLocation(componentType, folder.toString());
           componentLocation.addChildren(children);
           locations.add(componentLocation);
+
+          if (!locateNestedProjects)
+          {
+            return;
+          }
         }
       }
       catch (Exception ex)
@@ -546,7 +551,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       {
         if (file.isDirectory())
         {
-          analyze(componentMap, documentBuilder, file, monitor);
+          analyze(componentMap, documentBuilder, file, locateNestedProjects, monitor);
         }
       }
     }
@@ -823,11 +828,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           else
           {
             AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)sourceLocator;
+            File rootFolder = new File(automaticSourceLocator.getRootFolder());
+            boolean locateNestedProjects = automaticSourceLocator.isLocateNestedProjects();
 
-            automaticSourceLocator.getRootFolder();
             DocumentBuilder documentBuilder = createDocumentBuilder();
-            analyze(componentMap, documentBuilder, new File(automaticSourceLocator.getRootFolder()),
-                new ProgressLogMonitor(context));
+            analyze(componentMap, documentBuilder, rootFolder, locateNestedProjects, new ProgressLogMonitor(context));
           }
         }
 

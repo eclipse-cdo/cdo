@@ -63,6 +63,7 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
       super.getPropertyDescriptors(object);
 
       addRootFolderPropertyDescriptor(object);
+      addLocateNestedProjectsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -85,11 +86,28 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   }
 
   /**
-   * This returns AutomaticSourceLocator.gif.
+   * This adds a property descriptor for the Locate Nested Projects feature.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  protected void addLocateNestedProjectsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_AutomaticSourceLocator_locateNestedProjects_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AutomaticSourceLocator_locateNestedProjects_feature",
+            "_UI_AutomaticSourceLocator_type"), SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS,
+        true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+  	 * This returns AutomaticSourceLocator.gif.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object getImage(Object object)
   {
@@ -135,6 +153,7 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
     switch (notification.getFeatureID(AutomaticSourceLocator.class))
     {
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

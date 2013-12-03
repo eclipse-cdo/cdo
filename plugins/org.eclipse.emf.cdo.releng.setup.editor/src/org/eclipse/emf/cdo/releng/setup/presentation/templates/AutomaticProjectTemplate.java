@@ -411,7 +411,8 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       IProgressMonitor monitor) throws Exception
   {
     List<String> componentLocations = new ArrayList<String>();
-    Set<Pair<String, ComponentType>> roots = MaterializationTaskImpl.analyzeRoots(folder, componentLocations, monitor);
+    Set<Pair<String, ComponentType>> roots = MaterializationTaskImpl.analyzeRoots(folder, false, componentLocations,
+        monitor);
 
     SetupTaskContainer container = branch;
     MaterializationTask lastTask = null;

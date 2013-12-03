@@ -742,7 +742,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     File eclipseDir = context.getEclipseDir();
     if (context.put(FIRST_CALL_DETECTION_KEY, Boolean.TRUE) == null)
     {
-      FileUtil.delete(eclipseDir, new ProgressLogMonitor(context));
+      // FileUtil.delete(eclipseDir, new ProgressLogMonitor(context));
       FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
     }
 

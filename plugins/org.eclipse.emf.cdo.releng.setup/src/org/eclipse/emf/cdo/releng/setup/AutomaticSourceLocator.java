@@ -19,6 +19,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#getRootFolder <em>Root Folder</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects <em>Locate Nested Projects</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,5 +54,31 @@ public interface AutomaticSourceLocator extends SourceLocator
    * @generated
    */
   void setRootFolder(String value);
+
+  /**
+  	 * Returns the value of the '<em><b>Locate Nested Projects</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Locate Nested Projects</em>' attribute isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Locate Nested Projects</em>' attribute.
+  	 * @see #setLocateNestedProjects(boolean)
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getAutomaticSourceLocator_LocateNestedProjects()
+  	 * @model
+  	 * @generated
+  	 */
+  boolean isLocateNestedProjects();
+
+  /**
+  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects <em>Locate Nested Projects</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @param value the new value of the '<em>Locate Nested Projects</em>' attribute.
+  	 * @see #isLocateNestedProjects()
+  	 * @generated
+  	 */
+  void setLocateNestedProjects(boolean value);
 
 } // AutomaticSourceLocator

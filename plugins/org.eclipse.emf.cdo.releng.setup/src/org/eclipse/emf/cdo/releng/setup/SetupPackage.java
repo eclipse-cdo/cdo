@@ -1707,13 +1707,22 @@ public interface SetupPackage extends EPackage
   int AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER = SOURCE_LOCATOR_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Automatic Source Locator</em>' class.
+   * The feature id for the '<em><b>Locate Nested Projects</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTOMATIC_SOURCE_LOCATOR_FEATURE_COUNT = SOURCE_LOCATOR_FEATURE_COUNT + 1;
+  int AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS = SOURCE_LOCATOR_FEATURE_COUNT + 1;
+
+  /**
+  	 * The number of structural features of the '<em>Automatic Source Locator</em>' class.
+  	 * <!-- begin-user-doc -->
+        	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int AUTOMATIC_SOURCE_LOCATOR_FEATURE_COUNT = SOURCE_LOCATOR_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -3984,13 +3993,24 @@ public interface SetupPackage extends EPackage
   EAttribute getAutomaticSourceLocator_RootFolder();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask <em>Redirection Task</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects <em>Locate Nested Projects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Redirection Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask
+   * @return the meta object for the attribute '<em>Locate Nested Projects</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects()
+   * @see #getAutomaticSourceLocator()
    * @generated
    */
+  EAttribute getAutomaticSourceLocator_LocateNestedProjects();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask <em>Redirection Task</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Redirection Task</em>'.
+  	 * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask
+  	 * @generated
+  	 */
   EClass getRedirectionTask();
 
   /**
@@ -5424,13 +5444,22 @@ public interface SetupPackage extends EPackage
     EAttribute AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER = eINSTANCE.getAutomaticSourceLocator_RootFolder();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
+     * The meta object literal for the '<em><b>Locate Nested Projects</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
      * @generated
      */
+    EAttribute AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS = eINSTANCE
+        .getAutomaticSourceLocator_LocateNestedProjects();
+
+    /**
+    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
+    	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl
+    	 * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
+    	 * @generated
+    	 */
     EClass REDIRECTION_TASK = eINSTANCE.getRedirectionTask();
 
     /**

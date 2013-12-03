@@ -168,6 +168,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="AutomaticSourceLocator" eSuperTypes="#//SourceLocator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rootFolder" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="locateNestedProjects" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RedirectionTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceURL" lowerBound="1"

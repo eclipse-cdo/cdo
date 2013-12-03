@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl#getRootFolder <em>Root Folder</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl#isLocateNestedProjects <em>Locate Nested Projects</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,10 +54,30 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
   protected String rootFolder = ROOT_FOLDER_EDEFAULT;
 
   /**
+   * The default value of the '{@link #isLocateNestedProjects() <em>Locate Nested Projects</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLocateNestedProjects()
    * @generated
+   * @ordered
    */
+  protected static final boolean LOCATE_NESTED_PROJECTS_EDEFAULT = false;
+
+  /**
+  	 * The cached value of the '{@link #isLocateNestedProjects() <em>Locate Nested Projects</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #isLocateNestedProjects()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected boolean locateNestedProjects = LOCATE_NESTED_PROJECTS_EDEFAULT;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected AutomaticSourceLocatorImpl()
   {
     super();
@@ -101,9 +122,35 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isLocateNestedProjects()
+  {
+    return locateNestedProjects;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setLocateNestedProjects(boolean newLocateNestedProjects)
+  {
+    boolean oldLocateNestedProjects = locateNestedProjects;
+    locateNestedProjects = newLocateNestedProjects;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS, oldLocateNestedProjects, locateNestedProjects));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -111,6 +158,8 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     {
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
       return getRootFolder();
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
+      return isLocateNestedProjects();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -127,6 +176,9 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     {
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
       setRootFolder((String)newValue);
+      return;
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
+      setLocateNestedProjects((Boolean)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -145,6 +197,9 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
       setRootFolder(ROOT_FOLDER_EDEFAULT);
       return;
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
+      setLocateNestedProjects(LOCATE_NESTED_PROJECTS_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -161,6 +216,8 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     {
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
       return ROOT_FOLDER_EDEFAULT == null ? rootFolder != null : !ROOT_FOLDER_EDEFAULT.equals(rootFolder);
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
+      return locateNestedProjects != LOCATE_NESTED_PROJECTS_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -181,6 +238,8 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (rootFolder: ");
     result.append(rootFolder);
+    result.append(", locateNestedProjects: ");
+    result.append(locateNestedProjects);
     result.append(')');
     return result.toString();
   }

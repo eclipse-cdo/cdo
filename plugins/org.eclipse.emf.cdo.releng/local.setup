@@ -124,7 +124,6 @@
   <branches name="master">
     <setupTasks xsi:type="setup:P2Task" mergeDisabled="true">
       <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
-      <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>

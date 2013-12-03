@@ -62,6 +62,7 @@ public class BranchItemProvider extends ConfigurableItemItemProvider implements 
       super.getPropertyDescriptors(object);
 
       addNamePropertyDescriptor(object);
+      addRestrictionsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -83,11 +84,26 @@ public class BranchItemProvider extends ConfigurableItemItemProvider implements 
   }
 
   /**
-   * This returns Branch.gif.
+   * This adds a property descriptor for the Restrictions feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
+  protected void addRestrictionsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Branch_restrictions_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Branch_restrictions_feature", "_UI_Branch_type"),
+        SetupPackage.Literals.BRANCH__RESTRICTIONS, true, false, true, null, null, null));
+  }
+
+  /**
+  	 * This returns Branch.gif.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public Object getImage(Object object)
   {

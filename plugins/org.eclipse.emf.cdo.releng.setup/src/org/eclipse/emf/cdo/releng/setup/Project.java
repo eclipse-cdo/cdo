@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Project#getRestrictions <em>Restrictions</em>}</li>
  * </ul>
  * </p>
  *
@@ -130,5 +131,21 @@ public interface Project extends ConfigurableItem
    * @generated
    */
   void setLabel(String value);
+
+  /**
+  	 * Returns the value of the '<em><b>Restrictions</b></em>' reference list.
+  	 * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
+  	 * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Restrictions</em>' reference list isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Restrictions</em>' reference list.
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getProject_Restrictions()
+  	 * @model
+  	 * @generated
+  	 */
+  EList<Eclipse> getRestrictions();
 
 } // Project

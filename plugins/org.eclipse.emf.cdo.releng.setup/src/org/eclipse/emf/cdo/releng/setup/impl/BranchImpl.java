@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -18,10 +19,14 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +37,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl#getRestrictions <em>Restrictions</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,10 +66,20 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   protected String name = NAME_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getRestrictions() <em>Restrictions</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getRestrictions()
    * @generated
+   * @ordered
    */
+  protected EList<Eclipse> restrictions;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected BranchImpl()
   {
     super();
@@ -184,6 +200,20 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Eclipse> getRestrictions()
+  {
+    if (restrictions == null)
+    {
+      restrictions = new EObjectResolvingEList<Eclipse>(Eclipse.class, this, SetupPackage.BRANCH__RESTRICTIONS);
+    }
+    return restrictions;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -249,6 +279,8 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
       return basicGetProject();
     case SetupPackage.BRANCH__NAME:
       return getName();
+    case SetupPackage.BRANCH__RESTRICTIONS:
+      return getRestrictions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -258,6 +290,7 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -268,6 +301,10 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
       return;
     case SetupPackage.BRANCH__NAME:
       setName((String)newValue);
+      return;
+    case SetupPackage.BRANCH__RESTRICTIONS:
+      getRestrictions().clear();
+      getRestrictions().addAll((Collection<? extends Eclipse>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -289,6 +326,9 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
     case SetupPackage.BRANCH__NAME:
       setName(NAME_EDEFAULT);
       return;
+    case SetupPackage.BRANCH__RESTRICTIONS:
+      getRestrictions().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -307,6 +347,8 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
       return basicGetProject() != null;
     case SetupPackage.BRANCH__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case SetupPackage.BRANCH__RESTRICTIONS:
+      return restrictions != null && !restrictions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

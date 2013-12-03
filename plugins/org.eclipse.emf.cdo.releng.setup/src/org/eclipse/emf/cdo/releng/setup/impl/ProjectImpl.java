@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -40,6 +42,7 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getBranches <em>Branches</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectImpl#getRestrictions <em>Restrictions</em>}</li>
  * </ul>
  * </p>
  *
@@ -98,10 +101,20 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   protected String label = LABEL_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getRestrictions() <em>Restrictions</em>}' reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRestrictions()
    * @generated
+   * @ordered
    */
+  protected EList<Eclipse> restrictions;
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ProjectImpl()
   {
     super();
@@ -261,9 +274,23 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Eclipse> getRestrictions()
+  {
+    if (restrictions == null)
+    {
+      restrictions = new EObjectResolvingEList<Eclipse>(Eclipse.class, this, SetupPackage.PROJECT__RESTRICTIONS);
+    }
+    return restrictions;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -338,6 +365,8 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
       return getName();
     case SetupPackage.PROJECT__LABEL:
       return getLabel();
+    case SetupPackage.PROJECT__RESTRICTIONS:
+      return getRestrictions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -366,6 +395,10 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     case SetupPackage.PROJECT__LABEL:
       setLabel((String)newValue);
       return;
+    case SetupPackage.PROJECT__RESTRICTIONS:
+      getRestrictions().clear();
+      getRestrictions().addAll((Collection<? extends Eclipse>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -392,6 +425,9 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
     case SetupPackage.PROJECT__LABEL:
       setLabel(LABEL_EDEFAULT);
       return;
+    case SetupPackage.PROJECT__RESTRICTIONS:
+      getRestrictions().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -414,6 +450,8 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case SetupPackage.PROJECT__LABEL:
       return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+    case SetupPackage.PROJECT__RESTRICTIONS:
+      return restrictions != null && !restrictions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

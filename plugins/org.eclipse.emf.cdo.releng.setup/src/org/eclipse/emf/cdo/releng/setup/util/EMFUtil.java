@@ -43,6 +43,8 @@ public final class EMFUtil extends Plugin
   public static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
       ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
+  private static final String DEFAULT_SETUP_URI = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";
+
   private EMFUtil()
   {
   }
@@ -52,6 +54,12 @@ public final class EMFUtil extends Plugin
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new SetupResourceFactoryImpl());
     resourceSet.getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
+
+    if (!SETUP_URI.equals(DEFAULT_SETUP_URI))
+    {
+      URI setupURI = URI.createURI(DEFAULT_SETUP_URI);
+      resourceSet.getURIConverter().getURIMap().put(setupURI, SETUP_URI);
+    }
 
     if (EXAMPLE_URI != null)
     {
@@ -80,7 +88,7 @@ public final class EMFUtil extends Plugin
     String uri = System.getProperty(SetupConstants.PROP_SETUP_URI);
     if (uri == null || !uri.startsWith("file:"))
     {
-      uri = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";
+      uri = DEFAULT_SETUP_URI;
     }
 
     return URI.createURI(uri.replace('\\', '/'));

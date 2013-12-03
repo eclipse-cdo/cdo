@@ -19,8 +19,11 @@ public interface SetupTaskMigrator
 
   public static final SetupTaskMigrator[] MIGRATORS = {
 
-  // v0 -> v1
-  null,
+      // v0 -> v1
+      null,
+
+      // v2: Add P2Task.isMergeDisabled(), Project.getRestrictions(), Branch.getRestrictions()
+      null,
 
   };
 

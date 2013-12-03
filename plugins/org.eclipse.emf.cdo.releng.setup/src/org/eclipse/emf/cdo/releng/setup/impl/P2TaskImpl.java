@@ -100,6 +100,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getInstallableUnits <em>Installable Units</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#getP2Repositories <em>P2 Repositories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#isLicenseConfirmationDisabled <em>License Confirmation Disabled</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl#isMergeDisabled <em>Merge Disabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -149,6 +150,26 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    * @ordered
    */
   protected boolean licenseConfirmationDisabled = LICENSE_CONFIRMATION_DISABLED_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isMergeDisabled() <em>Merge Disabled</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMergeDisabled()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MERGE_DISABLED_EDEFAULT = false;
+
+  /**
+  	 * The cached value of the '{@link #isMergeDisabled() <em>Merge Disabled</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #isMergeDisabled()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected boolean mergeDisabled = MERGE_DISABLED_EDEFAULT;
 
   private transient List<InstallableUnit> neededInstallableUnits;
 
@@ -216,9 +237,35 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isMergeDisabled()
+  {
+    return mergeDisabled;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setMergeDisabled(boolean newMergeDisabled)
+  {
+    boolean oldMergeDisabled = mergeDisabled;
+    mergeDisabled = newMergeDisabled;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.P2_TASK__MERGE_DISABLED, oldMergeDisabled,
+          mergeDisabled));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EList<P2Repository> getP2Repositories()
   {
     if (p2Repositories == null)
@@ -263,6 +310,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return getP2Repositories();
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       return isLicenseConfirmationDisabled();
+    case SetupPackage.P2_TASK__MERGE_DISABLED:
+      return isMergeDisabled();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -289,6 +338,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       setLicenseConfirmationDisabled((Boolean)newValue);
       return;
+    case SetupPackage.P2_TASK__MERGE_DISABLED:
+      setMergeDisabled((Boolean)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -312,6 +364,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       setLicenseConfirmationDisabled(LICENSE_CONFIRMATION_DISABLED_EDEFAULT);
       return;
+    case SetupPackage.P2_TASK__MERGE_DISABLED:
+      setMergeDisabled(MERGE_DISABLED_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -332,6 +387,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       return p2Repositories != null && !p2Repositories.isEmpty();
     case SetupPackage.P2_TASK__LICENSE_CONFIRMATION_DISABLED:
       return licenseConfirmationDisabled != LICENSE_CONFIRMATION_DISABLED_EDEFAULT;
+    case SetupPackage.P2_TASK__MERGE_DISABLED:
+      return mergeDisabled != MERGE_DISABLED_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -352,6 +409,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (licenseConfirmationDisabled: ");
     result.append(licenseConfirmationDisabled);
+    result.append(", mergeDisabled: ");
+    result.append(mergeDisabled);
     result.append(')');
     return result.toString();
   }
@@ -389,6 +448,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   @Override
   public Object getOverrideToken()
   {
+    if (isMergeDisabled())
+    {
+      return super.getOverrideToken();
+    }
+
     return getClass();
   }
 

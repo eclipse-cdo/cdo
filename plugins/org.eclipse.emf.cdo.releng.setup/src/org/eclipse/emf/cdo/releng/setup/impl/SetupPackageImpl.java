@@ -612,9 +612,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getProject_Restrictions()
+  {
+    return (EReference)projectEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getBranch()
   {
     return branchEClass;
@@ -645,6 +655,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getBranch_Restrictions()
+  {
+    return (EReference)branchEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getApiBaselineTask()
   {
     return apiBaselineTaskEClass;
@@ -792,9 +812,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getP2Task_MergeDisabled()
+  {
+    return (EAttribute)p2TaskEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EReference getP2Task_P2Repositories()
   {
     return (EReference)p2TaskEClass.getEStructuralFeatures().get(1);
@@ -2018,10 +2048,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(projectEClass, PROJECT__BRANCHES);
     createEAttribute(projectEClass, PROJECT__NAME);
     createEAttribute(projectEClass, PROJECT__LABEL);
+    createEReference(projectEClass, PROJECT__RESTRICTIONS);
 
     branchEClass = createEClass(BRANCH);
     createEReference(branchEClass, BRANCH__PROJECT);
     createEAttribute(branchEClass, BRANCH__NAME);
+    createEReference(branchEClass, BRANCH__RESTRICTIONS);
 
     preferencesEClass = createEClass(PREFERENCES);
     createEAttribute(preferencesEClass, PREFERENCES__INSTALL_FOLDER);
@@ -2075,6 +2107,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(p2TaskEClass, P2_TASK__INSTALLABLE_UNITS);
     createEReference(p2TaskEClass, P2_TASK__P2_REPOSITORIES);
     createEAttribute(p2TaskEClass, P2_TASK__LICENSE_CONFIRMATION_DISABLED);
+    createEAttribute(p2TaskEClass, P2_TASK__MERGE_DISABLED);
 
     installableUnitEClass = createEClass(INSTALLABLE_UNIT);
     createEAttribute(installableUnitEClass, INSTALLABLE_UNIT__ID);
@@ -2298,6 +2331,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProject_Label(), ecorePackage.getEString(), "label", null, 0, 1, Project.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_Restrictions(), getEclipse(), null, "restrictions", null, 0, -1, Project.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(branchEClass, Branch.class, "Branch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBranch_Project(), getProject(), getProject_Branches(), "project", null, 0, 1, Branch.class,
@@ -2305,6 +2341,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBranch_Name(), ecorePackage.getEString(), "name", null, 1, 1, Branch.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBranch_Restrictions(), getEclipse(), null, "restrictions", null, 0, -1, Branch.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(preferencesEClass, Preferences.class, "Preferences", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -2432,6 +2471,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getP2Task_LicenseConfirmationDisabled(), ecorePackage.getEBoolean(), "licenseConfirmationDisabled",
         null, 0, 1, P2Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getP2Task_MergeDisabled(), ecorePackage.getEBoolean(), "mergeDisabled", null, 0, 1, P2Task.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(installableUnitEClass, InstallableUnit.class, "InstallableUnit", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

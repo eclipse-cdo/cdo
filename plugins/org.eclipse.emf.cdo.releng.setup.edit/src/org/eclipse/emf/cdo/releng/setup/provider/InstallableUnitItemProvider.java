@@ -160,7 +160,7 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public void notifyChanged(Notification notification)
@@ -170,12 +170,8 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
     switch (notification.getFeatureID(InstallableUnit.class))
     {
     case SetupPackage.INSTALLABLE_UNIT__ID:
+    case SetupPackage.INSTALLABLE_UNIT__VERSION_RANGE:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-      // EObject container = ((EObject)notification.getNotifier()).eContainer();
-      // if (container != null)
-      // {
-      // fireNotifyChanged(new ViewerNotification(notification, container, false, true));
-      // }
       return;
     }
     super.notifyChanged(notification);

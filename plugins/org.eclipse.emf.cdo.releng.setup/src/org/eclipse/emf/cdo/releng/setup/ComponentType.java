@@ -172,11 +172,11 @@ public enum ComponentType implements Enumerator
   public static final int UNKNOWN_VALUE = 5;
 
   /**
-  	 * An array of all the '<em><b>Component Type</b></em>' enumerators.
-  	 * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * An array of all the '<em><b>Component Type</b></em>' enumerators.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private static final ComponentType[] VALUES_ARRAY = new ComponentType[] { ECLIPSE_FEATURE, OSGI_BUNDLE, BUCKMINSTER,
       JAR, BOM, UNKNOWN, };
 

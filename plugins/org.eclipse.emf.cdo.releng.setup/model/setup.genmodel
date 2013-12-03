@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.releng.setup/src" creationIcons="false"
-    modelPluginID="org.eclipse.emf.cdo.releng.setup" modelName="Setup" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    containmentProxies="true" complianceLevel="5.0" optimizedHasChildren="true" runtimeVersion="2.9"
-    usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
+    modelPluginID="org.eclipse.emf.cdo.releng.setup" modelName="Setup" updateClasspath="false"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
+    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" containmentProxies="true"
+    complianceLevel="5.0" optimizedHasChildren="true" runtimeVersion="2.9" usedGenPackages="../../org.eclipse.emf.cdo.releng.workingsets/model/workingsets.genmodel#//workingsets ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates"
     importOrganizing="true" decoration="Live">
   <foreignModel>setup.ecore</foreignModel>
   <genPackages prefix="Setup" basePackage="org.eclipse.emf.cdo.releng" resource="XMI"
@@ -27,6 +27,9 @@
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/ECLIPSE_FEATURE"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/OSGI_BUNDLE"/>
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/BUCKMINSTER"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/JAR"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/BOM"/>
+      <genEnumLiterals ecoreEnumLiteral="setup.ecore#//ComponentType/UNKNOWN"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="setup.ecore#//VariableType">
       <genEnumLiterals ecoreEnumLiteral="setup.ecore#//VariableType/STRING"/>
@@ -70,6 +73,7 @@
     <genClasses ecoreClass="setup.ecore#//Preferences">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/bundlePoolFolder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/bundlePoolFolderTP"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/acceptedLicenses"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Setup">
@@ -91,6 +95,7 @@
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/scope"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/excludedTriggers"/>
       <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute setup.ecore#//SetupTask/documentation"/>
+      <genOperations ecoreOperation="setup.ecore#//SetupTask/getScopeRoot"/>
       <genOperations ecoreOperation="setup.ecore#//SetupTask/requires">
         <genParameters ecoreParameter="setup.ecore#//SetupTask/requires/setupTask"/>
       </genOperations>
@@ -99,6 +104,10 @@
     </genClasses>
     <genClasses image="false" ecoreClass="setup.ecore#//SetupTaskContainer">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//SetupTaskContainer/setupTasks"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="setup.ecore#//ScopeRoot">
+      <genOperations ecoreOperation="setup.ecore#//ScopeRoot/getScope"/>
+      <genOperations ecoreOperation="setup.ecore#//ScopeRoot/getParentScopeRoot"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//CompoundSetupTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//CompoundSetupTask/name"/>
@@ -125,8 +134,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//LinkLocationTask/name"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//P2Task">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/p2Repositories"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/installableUnits"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/p2Repositories"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Task/licenseConfirmationDisabled"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//InstallableUnit">
@@ -139,7 +148,6 @@
     <genClasses image="false" ecoreClass="setup.ecore#//BasicMaterializationTask"
         labelFeature="#//setup/BasicMaterializationTask/targetPlatform">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BasicMaterializationTask/targetPlatform"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BasicMaterializationTask/bundlePool"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//BuckminsterImportTask" labelFeature="#//setup/BuckminsterImportTask/mspec">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BuckminsterImportTask/mspec"/>

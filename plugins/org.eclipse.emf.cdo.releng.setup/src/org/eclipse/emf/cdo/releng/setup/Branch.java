@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.common.util.EList;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Branch</b></em>'.
@@ -20,6 +22,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.Branch#getRestrictions <em>Restrictions</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,5 +85,21 @@ public interface Branch extends ConfigurableItem
    * @generated
    */
   void setName(String value);
+
+  /**
+  	 * Returns the value of the '<em><b>Restrictions</b></em>' reference list.
+  	 * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
+  	 * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Restrictions</em>' reference list isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+  	 * @return the value of the '<em>Restrictions</em>' reference list.
+  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBranch_Restrictions()
+  	 * @model
+  	 * @generated
+  	 */
+  EList<Eclipse> getRestrictions();
 
 } // Branch

@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -78,11 +79,16 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ILabelDecorator;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -121,6 +127,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -335,19 +342,16 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       public boolean canModify(Object element, String property)
       {
-        return !isInstalled(element);
+        Setup setup = getElementSetup(element, property);
+        return setup != null;
       }
 
       public Object getValue(Object element, String property)
       {
-        if (element instanceof Branch && ECLIPSE_VERSION_COLUMN.equals(property))
+        Setup setup = getElementSetup(element, property);
+        if (setup != null)
         {
-          Branch branch = (Branch)element;
-          Setup setup = getSetup(branch);
-          if (setup != null)
-          {
-            return setup.getEclipseVersion();
-          }
+          return setup.getEclipseVersion();
         }
 
         return null;
@@ -355,18 +359,29 @@ public class InstallerDialog extends AbstractSetupDialog
 
       public void modify(Object element, String property, Object value)
       {
-        TreeItem item = (TreeItem)element;
-        Object modelElement = item.getData();
-        if (modelElement instanceof Branch && ECLIPSE_VERSION_COLUMN.equals(property))
+        Setup setup = getElementSetup(element, property);
+        if (setup != null)
         {
-          Branch branch = (Branch)modelElement;
-          Setup setup = getSetup(branch);
-          if (setup != null)
-          {
-            setup.setEclipseVersion((Eclipse)value);
-            viewer.update(modelElement, new String[] { property });
-          }
+          setup.setEclipseVersion((Eclipse)value);
+          viewer.update(setup.getBranch(), new String[] { property });
         }
+      }
+
+      private Setup getElementSetup(Object element, String property)
+      {
+        if (element instanceof TreeItem)
+        {
+          TreeItem item = (TreeItem)element;
+          element = item.getData();
+        }
+
+        if (element instanceof Branch && ECLIPSE_VERSION_COLUMN.equals(property))
+        {
+          Branch branch = (Branch)element;
+          return getSetup(branch);
+        }
+
+        return null;
       }
     });
     viewer.setColumnProperties(new String[] { "project", ECLIPSE_VERSION_COLUMN });
@@ -384,13 +399,49 @@ public class InstallerDialog extends AbstractSetupDialog
 
       public Object[] getElements(Object inputElement)
       {
-        EList<Eclipse> eclipses = configuration.getEclipseVersions();
+        Set<Eclipse> restrictions = new HashSet<Eclipse>();
+
+        Object selection = ((IStructuredSelection)viewer.getSelection()).getFirstElement();
+        if (selection instanceof Branch)
+        {
+          Branch branch = (Branch)selection;
+          restrictions.addAll(branch.getRestrictions());
+          restrictions.addAll(branch.getProject().getRestrictions());
+        }
+
+        EList<Eclipse> eclipses = new BasicEList<Eclipse>(configuration.getEclipseVersions());
+        if (!restrictions.isEmpty())
+        {
+          eclipses.retainAll(restrictions);
+        }
+
         return eclipses.toArray(new Eclipse[eclipses.size()]);
       }
     });
 
     viewer.setCellEditors(new CellEditor[] { null, cellEditor });
     cellEditor.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
+
+    viewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        ComboViewer comboViewer = cellEditor.getViewer();
+        comboViewer.refresh();
+
+        Object selection = ((IStructuredSelection)viewer.getSelection()).getFirstElement();
+        if (selection instanceof Branch)
+        {
+          Branch branch = (Branch)selection;
+          Setup setup = getSetup(branch);
+          if (setup != null)
+          {
+            Eclipse eclipse = setup.getEclipseVersion();
+            comboViewer.setSelection(new StructuredSelection(eclipse));
+          }
+        }
+      }
+    });
 
     viewer.addCheckStateListener(new ICheckStateListener()
     {

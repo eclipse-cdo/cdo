@@ -387,7 +387,13 @@ public class AutomaticProjectTemplate extends ProjectTemplate
                 baseURI.query(), baseURI.fragment());
           }
 
-          String location = "${setup.branch.dir/git/" + new Path(baseURI.path()).lastSegment() + "}";
+          String cloneName = new Path(baseURI.path()).lastSegment();
+          if (cloneName.endsWith(".git"))
+          {
+            cloneName = cloneName.substring(0, cloneName.length() - ".git".length());
+          }
+
+          String location = "${setup.branch.dir/git/" + cloneName + "}";
 
           GitCloneTask task = SetupFactory.eINSTANCE.createGitCloneTask();
           task.setLocation(location);

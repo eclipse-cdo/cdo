@@ -324,9 +324,10 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     }
 
     Set<String> newVariableNames = new HashSet<String>();
+    GitCloneTask gitCloneTask = analyzeGit(folder, elements, newVariableNames);
 
-    String location = analyzeGit(folder, elements, newVariableNames);
-    analyzeMaterialization(folder, location, elements, newVariableNames, monitor);
+    String location = gitCloneTask == null ? folder.getAbsolutePath() : gitCloneTask.getLocation();
+    analyzeMaterialization(folder, location, elements, newVariableNames, gitCloneTask, monitor);
 
     List<String> list = new ArrayList<String>(newVariableNames);
     Collections.sort(list);
@@ -343,7 +344,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     }
   }
 
-  private String analyzeGit(File folder, List<EObject> elements, Set<String> variableNames)
+  private GitCloneTask analyzeGit(File folder, List<EObject> elements, Set<String> variableNames)
   {
     File git = new File(folder, ".git");
     if (git.isDirectory())
@@ -399,16 +400,16 @@ public class AutomaticProjectTemplate extends ProjectTemplate
           elements.add(task);
 
           variableNames.add("git.user.id");
-          return location;
+          return task;
         }
       }
     }
 
-    return folder.getAbsolutePath();
+    return null;
   }
 
   private void analyzeMaterialization(File folder, String location, List<EObject> elements, Set<String> variableNames,
-      IProgressMonitor monitor) throws Exception
+      SetupTask requirement, IProgressMonitor monitor) throws Exception
   {
     List<String> componentLocations = new ArrayList<String>();
     Set<Pair<String, ComponentType>> roots = MaterializationTaskImpl.analyzeRoots(folder, false, componentLocations,
@@ -435,6 +436,11 @@ public class AutomaticProjectTemplate extends ProjectTemplate
       MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
       task.setDocumentation("Generated from " + additionalResource);
       task.setDisabled(true);
+
+      if (requirement != null)
+      {
+        task.getRequirements().add(requirement);
+      }
 
       AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
       sourceLocator.setRootFolder(location);
@@ -613,13 +619,19 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
   private static void addRootComponent(MaterializationTask task, String id, ComponentType type, String version)
   {
+    if (id.endsWith(".source"))
+    {
+      return;
+    }
+
     Component rootComponent = SetupFactory.eINSTANCE.createComponent();
     rootComponent.setName(id);
     rootComponent.setType(type);
 
     if (!StringUtil.isEmpty(version))
     {
-      rootComponent.setVersionRange(new VersionRange(version));
+      VersionRange versionRange = new VersionRange("[" + version + "," + version + "]");
+      rootComponent.setVersionRange(versionRange);
     }
 
     task.getRootComponents().add(rootComponent);
@@ -627,6 +639,11 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
   private static void addP2Repository(MaterializationTask task, String url)
   {
+    if (url.endsWith("/"))
+    {
+      url = url.substring(0, url.length() - 1);
+    }
+
     EList<P2Repository> p2Repositories = task.getP2Repositories();
     for (P2Repository repository : p2Repositories)
     {

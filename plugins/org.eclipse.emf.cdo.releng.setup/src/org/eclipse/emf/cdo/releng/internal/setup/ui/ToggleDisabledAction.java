@@ -78,6 +78,7 @@ public class ToggleDisabledAction implements IObjectActionDelegate
 
   public void run(IAction action)
   {
+    // TODO Use command
     for (SetupTask task : tasks)
     {
       boolean disabled = task.isDisabled();

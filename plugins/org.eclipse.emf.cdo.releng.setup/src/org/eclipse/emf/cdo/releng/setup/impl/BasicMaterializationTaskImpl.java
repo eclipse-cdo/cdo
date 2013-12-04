@@ -253,11 +253,18 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     try
     {
+      context.log("Clearing caches for remote files and URLs");
+      CorePlugin plugin = CorePlugin.getDefault();
+      plugin.clearRemoteFileCache();
+      plugin.clearURLCache();
+
       File tpOld = null;
       File tp = new File(getTargetPlatform());
       if (tp.exists())
       {
-        tpOld = new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis());
+        String oldName = tp.getName() + "." + System.currentTimeMillis();
+        context.log("Renaming old target platform to " + oldName);
+        tpOld = new File(tp.getParentFile(), oldName);
         FileUtil.rename(tp, tpOld);
       }
 

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
+import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -60,15 +61,16 @@ public final class ProjectConfigUtil
 
   public static final String PROJECT_CONF_PROJECT_KEY = "project";
 
-  public static final String PROJECT_CONF_PROFILES_KEY = "profiles";
-
-  public static final String PROJECT_CONF_REFERENCES_KEY = "references";
-
   public static final String PROJECT_CONFIG_SCHEME = "configuration";
 
   public static final URI PROJECT_CONFIG_URI = URI.createURI(PROJECT_CONFIG_SCHEME + ":/");
 
   public static final WorkspaceConfiguration getWorkspaceConfiguration()
+  {
+    return getWorkspaceConfiguration(null);
+  }
+
+  public static final WorkspaceConfiguration getWorkspaceConfiguration(PreferenceNode cachedProjectsPreferenceNode)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
     Resource resource = resourceSet.createResource(URI.createURI("*.projectconfig"));
@@ -87,11 +89,15 @@ public final class ProjectConfigUtil
     {
       String name = iProject.getName();
       PreferenceNode projectPreferenceNode = projectsPreferenceNode.getNode(name);
-      if (projectPreferenceNode != null)
+      PreferenceNode cachedProjectPreferenceNode = cachedProjectsPreferenceNode == null ? null
+          : cachedProjectsPreferenceNode.getNode(name);
+      if (projectPreferenceNode != null
+          && (cachedProjectsPreferenceNode == null || cachedProjectPreferenceNode != null))
       {
         Project project = ProjectConfigFactory.eINSTANCE.createProject();
 
-        PreferenceNode projectConfNode = projectPreferenceNode.getNode(PROJECT_CONF_NODE_NAME);
+        PreferenceNode projectConfNode = (cachedProjectPreferenceNode == null ? projectPreferenceNode
+            : cachedProjectPreferenceNode).getNode(PROJECT_CONF_NODE_NAME);
         if (projectConfNode != null)
         {
           Property projectProperty = projectConfNode.getProperty(PROJECT_CONF_PROJECT_KEY);
@@ -110,6 +116,7 @@ public final class ProjectConfigUtil
               {
                 // Ignore.
               }
+
               EList<EObject> contents = projectResource.getContents();
               if (!contents.isEmpty())
               {
@@ -117,11 +124,6 @@ public final class ProjectConfigUtil
               }
             }
           }
-        }
-
-        if (project == null)
-        {
-          project = ProjectConfigFactory.eINSTANCE.createProject();
         }
 
         project.setPreferenceNode(projectPreferenceNode);
@@ -146,7 +148,7 @@ public final class ProjectConfigUtil
         for (PreferenceProfile requiredPreferenceProfile : preferenceProfile.getPrerequisites())
         {
           // Resolve proxies.
-          requiredPreferenceProfile.getClass();
+          requiredPreferenceProfile.eClass();
         }
       }
       EList<PreferenceProfile> profileReferences = project.getPreferenceProfileReferences();
@@ -163,12 +165,33 @@ public final class ProjectConfigUtil
   public static final void saveWorkspaceConfiguration(WorkspaceConfiguration workspaceConfiguration)
       throws BackingStoreException
   {
+    saveWorkspaceConfiguration(workspaceConfiguration, false);
+  }
+
+  public static final PreferenceNode cacheWorkspaceConfiguration(WorkspaceConfiguration workspaceConfiguration)
+  {
+    try
+    {
+      return saveWorkspaceConfiguration(workspaceConfiguration, true);
+    }
+    catch (BackingStoreException ex)
+    {
+      // Can't occur when only caching.
+      return null;
+    }
+  }
+
+  private static final PreferenceNode saveWorkspaceConfiguration(WorkspaceConfiguration workspaceConfiguration,
+      boolean cache) throws BackingStoreException
+  {
+    PreferenceNode projectsPreferenceNode = null;
+
     for (Project project : workspaceConfiguration.getProjects())
     {
       PreferenceNode projectPreferenceNode = project.getPreferenceNode();
       String projectName = projectPreferenceNode.getName();
 
-      Preferences projectPreferences = PreferencesUtil.getPreferences(projectPreferenceNode, true);
+      Preferences projectPreferences = cache ? null : PreferencesUtil.getPreferences(projectPreferenceNode, true);
 
       EList<PreferenceProfile> preferenceProfiles = project.getPreferenceProfiles();
       EList<PreferenceProfile> preferenceProfileReferences = project.getPreferenceProfileReferences();
@@ -244,14 +267,23 @@ public final class ProjectConfigUtil
           }
           catch (IOException ex)
           {
-            ex.printStackTrace();
+            ProjectConfigPlugin.INSTANCE.log(ex);
           }
         }
       }
 
       if (projectPropertyValue == null)
       {
-        if (projectPreferences.nodeExists(PROJECT_CONF_NODE_NAME))
+        if (cache)
+        {
+          projectsPreferenceNode = projectPreferenceNode.getParent();
+          PreferenceNode projectConfPreferenceNode = projectPreferenceNode.getNode(PROJECT_CONF_NODE_NAME);
+          if (projectConfPreferenceNode != null)
+          {
+            projectConfPreferenceNode.getChildren().remove(projectConfPreferenceNode);
+          }
+        }
+        else if (projectPreferences.nodeExists(PROJECT_CONF_NODE_NAME))
         {
           projectPreferences.node(PROJECT_CONF_NODE_NAME).removeNode();
           projectPreferences.flush();
@@ -261,11 +293,38 @@ public final class ProjectConfigUtil
       {
         System.err.println(projectName + " -> project = " + projectPropertyValue);
 
-        Preferences projectConfPreferences = projectPreferences.node(PROJECT_CONF_NODE_NAME);
-        projectConfPreferences.put(PROJECT_CONF_PROJECT_KEY, projectPropertyValue);
-        projectConfPreferences.flush();
+        if (cache)
+        {
+          projectsPreferenceNode = projectPreferenceNode.getParent();
+
+          PreferenceNode projectConfPreferenceNode = projectPreferenceNode.getNode(PROJECT_CONF_NODE_NAME);
+          if (projectConfPreferenceNode == null)
+          {
+            projectConfPreferenceNode = PreferencesFactory.eINSTANCE.createPreferenceNode();
+            projectConfPreferenceNode.setName(PROJECT_CONF_NODE_NAME);
+            projectPreferenceNode.getChildren().add(projectConfPreferenceNode);
+          }
+
+          Property projectConfProperty = projectConfPreferenceNode.getProperty(PROJECT_CONF_PROJECT_KEY);
+          if (projectConfProperty == null)
+          {
+            projectConfProperty = PreferencesFactory.eINSTANCE.createProperty();
+            projectConfProperty.setName(PROJECT_CONF_PROJECT_KEY);
+            projectConfPreferenceNode.getProperties().add(projectConfProperty);
+          }
+
+          projectConfProperty.setValue(projectPropertyValue);
+        }
+        else
+        {
+          Preferences projectConfPreferences = projectPreferences.node(PROJECT_CONF_NODE_NAME);
+          projectConfPreferences.put(PROJECT_CONF_PROJECT_KEY, projectPropertyValue);
+          projectConfPreferences.flush();
+        }
       }
     }
+
+    return projectsPreferenceNode;
   }
 
   public static IProject getProject(Project project)

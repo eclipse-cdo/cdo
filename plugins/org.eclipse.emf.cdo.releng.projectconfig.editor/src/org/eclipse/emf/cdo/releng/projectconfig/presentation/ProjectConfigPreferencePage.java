@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -89,39 +90,64 @@ public class ProjectConfigPreferencePage extends PreferencePage implements IWork
     super.contributeButtons(parent);
 
     GridLayout gridLayout = (GridLayout)parent.getLayout();
-    gridLayout.numColumns = 1;
+    gridLayout.numColumns = 2;
 
-    Button editButton = new Button(parent, SWT.PUSH);
-    editButton.setText("Edit...");
-
-    Dialog.applyDialogFont(editButton);
-    int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-    Point minButtonSize = editButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-    GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-    data.widthHint = Math.max(widthHint, minButtonSize.x);
-
-    editButton.setLayoutData(data);
-    editButton.addSelectionListener(new SelectionAdapter()
     {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      Button applyButton = new Button(parent, SWT.PUSH);
+      applyButton.setText("Apply");
+
+      Dialog.applyDialogFont(applyButton);
+      int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+      Point minButtonSize = applyButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+      GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+      data.widthHint = Math.max(widthHint, minButtonSize.x);
+
+      applyButton.setLayoutData(data);
+      applyButton.addSelectionListener(new SelectionAdapter()
       {
-        // Invoke the close method on the preference dialog, but avoid using internal API, so do it reflectively.
-        IPreferencePageContainer container = getContainer();
-
-        try
+        @Override
+        public void widgetSelected(SelectionEvent e)
         {
-          Method method = container.getClass().getMethod("close");
-          method.invoke(container);
+          WorkspaceConfiguration workspaceConfiguration = ProjectConfigUtil.getWorkspaceConfiguration();
+          workspaceConfiguration.updatePreferenceProfileReferences();
+          workspaceConfiguration.applyPreferenceProfiles();
         }
-        catch (Throwable ex)
-        {
-          ProjectConfigEditorPlugin.INSTANCE.log(ex);
-        }
+      });
+    }
 
-        openWorkingSetsEditor();
-      }
-    });
+    {
+      Button editButton = new Button(parent, SWT.PUSH);
+      editButton.setText("Edit...");
+
+      Dialog.applyDialogFont(editButton);
+      int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+      Point minButtonSize = editButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+      GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+      data.widthHint = Math.max(widthHint, minButtonSize.x);
+
+      editButton.setLayoutData(data);
+      editButton.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          // Invoke the close method on the preference dialog, but avoid using internal API, so do it reflectively.
+          IPreferencePageContainer container = getContainer();
+
+          try
+          {
+            Method method = container.getClass().getMethod("close");
+            method.invoke(container);
+          }
+          catch (Throwable ex)
+          {
+            ProjectConfigEditorPlugin.INSTANCE.log(ex);
+          }
+
+          openWorkingSetsEditor();
+        }
+      });
+    }
 
   }
 

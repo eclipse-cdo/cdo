@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
+import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedImage;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -96,6 +99,37 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
             "_UI_PreferenceFilter_type"), ProjectConfigPackage.Literals.PREFERENCE_FILTER__PREFERENCE_NODE, true,
         false, true, null, null, null)
     {
+      private IItemLabelProvider itemLabelProvider = new IItemLabelProvider()
+      {
+        public String getText(Object object)
+        {
+          if (object == null)
+          {
+            return "";
+          }
+
+          PreferenceNode preferenceNode = (PreferenceNode)object;
+          List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
+          StringBuilder result = new StringBuilder();
+          for (int i = 3, size = path.size(); i < size; ++i)
+          {
+            if (result.length() != 0)
+            {
+              result.append('/');
+            }
+
+            result.append(path.get(i).getName());
+          }
+
+          return result.toString();
+        }
+
+        public Object getImage(Object object)
+        {
+          return null;
+        }
+      };
+
       @Override
       public Collection<?> getChoiceOfValues(Object object)
       {
@@ -110,11 +144,25 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
             PreferenceNode preferenceNode = project.getPreferenceNode();
             if (preferenceNode != null)
             {
-              result.addAll(preferenceNode.getChildren());
+              for (Iterator<EObject> it = preferenceNode.eAllContents(); it.hasNext();)
+              {
+                EObject eObject = it.next();
+                if (eObject instanceof PreferenceNode)
+                {
+                  result.add(eObject);
+                }
+              }
             }
           }
         }
+
         return result;
+      }
+
+      @Override
+      public IItemLabelProvider getLabelProvider(Object object)
+      {
+        return itemLabelProvider;
       }
     });
   }

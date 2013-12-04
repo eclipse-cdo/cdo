@@ -133,8 +133,10 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
       if (preferenceNode != oldPreferenceNode)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_NODE, oldPreferenceNode, preferenceNode));
+        }
       }
     }
     return preferenceNode;
@@ -160,8 +162,10 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
     PreferenceNode oldPreferenceNode = preferenceNode;
     preferenceNode = newPreferenceNode;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_NODE,
           oldPreferenceNode, preferenceNode));
+    }
   }
 
   /**
@@ -172,7 +176,9 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
   public PreferenceProfile getPreferenceProfile()
   {
     if (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE)
+    {
       return null;
+    }
     return (PreferenceProfile)eInternalContainer();
   }
 
@@ -196,23 +202,34 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
   public void setPreferenceProfile(PreferenceProfile newPreferenceProfile)
   {
     if (newPreferenceProfile != eInternalContainer()
-        || (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE && newPreferenceProfile != null))
+        || eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE
+        && newPreferenceProfile != null)
     {
       if (EcoreUtil.isAncestor(this, newPreferenceProfile))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newPreferenceProfile != null)
+      {
         msgs = ((InternalEObject)newPreferenceProfile).eInverseAdd(this,
             ProjectConfigPackage.PREFERENCE_PROFILE__PREFERENCE_FILTERS, PreferenceProfile.class, msgs);
+      }
       msgs = basicSetPreferenceProfile(newPreferenceProfile, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE,
           newPreferenceProfile, newPreferenceProfile));
+    }
   }
 
   /**
@@ -235,8 +252,10 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
     Pattern oldInclusions = inclusions;
     inclusions = newInclusions;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_FILTER__INCLUSIONS,
           oldInclusions, inclusions));
+    }
   }
 
   /**
@@ -259,8 +278,10 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
     Pattern oldExclusions = exclusions;
     exclusions = newExclusions;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_FILTER__EXCLUSIONS,
           oldExclusions, exclusions));
+    }
   }
 
   /**
@@ -285,7 +306,9 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
     {
     case ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetPreferenceProfile((PreferenceProfile)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -336,7 +359,9 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
     {
     case ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_NODE:
       if (resolve)
+      {
         return getPreferenceNode();
+      }
       return basicGetPreferenceNode();
     case ProjectConfigPackage.PREFERENCE_FILTER__PREFERENCE_PROFILE:
       return getPreferenceProfile();
@@ -447,7 +472,9 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (inclusions: ");

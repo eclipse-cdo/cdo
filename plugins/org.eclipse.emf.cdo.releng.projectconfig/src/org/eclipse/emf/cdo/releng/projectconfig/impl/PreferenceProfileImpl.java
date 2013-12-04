@@ -189,8 +189,10 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_PROFILE__NAME, oldName,
           name));
+    }
   }
 
   /**
@@ -201,7 +203,9 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   public Project getProject()
   {
     if (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT)
+    {
       return null;
+    }
     return (Project)eInternalContainer();
   }
 
@@ -223,24 +227,34 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
    */
   public void setProject(Project newProject)
   {
-    if (newProject != eInternalContainer()
-        || (eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT && newProject != null))
+    if (newProject != eInternalContainer() || eContainerFeatureID() != ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT
+        && newProject != null)
     {
       if (EcoreUtil.isAncestor(this, newProject))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newProject != null)
+      {
         msgs = ((InternalEObject)newProject).eInverseAdd(this, ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES,
             Project.class, msgs);
+      }
       msgs = basicSetProject(newProject, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT,
           newProject, newProject));
+    }
   }
 
   /**
@@ -317,7 +331,9 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getReferentProjects()).basicAdd(otherEnd, msgs);
     case ProjectConfigPackage.PREFERENCE_PROFILE__PROJECT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetProject((Project)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -508,7 +524,9 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

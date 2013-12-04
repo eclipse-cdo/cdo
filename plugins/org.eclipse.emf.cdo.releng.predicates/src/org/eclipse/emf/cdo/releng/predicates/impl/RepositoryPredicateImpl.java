@@ -135,7 +135,8 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
   {
     IPath prototypeGitDirAbsolutePath = getGitDirAbsolutePath(getProject());
     IPath gitDirAbsolutePath = getGitDirAbsolutePath(project);
-    return prototypeGitDirAbsolutePath != null && prototypeGitDirAbsolutePath.equals(gitDirAbsolutePath);
+    return prototypeGitDirAbsolutePath == null ? gitDirAbsolutePath == null : prototypeGitDirAbsolutePath
+        .equals(gitDirAbsolutePath);
   }
 
   /**

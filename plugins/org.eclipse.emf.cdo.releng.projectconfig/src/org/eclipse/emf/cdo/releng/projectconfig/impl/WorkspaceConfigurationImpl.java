@@ -35,7 +35,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
@@ -147,9 +150,11 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
       if (defaultPreferenceNode != oldDefaultPreferenceNode)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, oldDefaultPreferenceNode,
               defaultPreferenceNode));
+        }
       }
     }
     return defaultPreferenceNode;
@@ -175,9 +180,11 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
     PreferenceNode oldDefaultPreferenceNode = defaultPreferenceNode;
     defaultPreferenceNode = newDefaultPreferenceNode;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, oldDefaultPreferenceNode,
           defaultPreferenceNode));
+    }
   }
 
   /**
@@ -194,9 +201,11 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
       if (instancePreferenceNode != oldInstancePreferenceNode)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, oldInstancePreferenceNode,
               instancePreferenceNode));
+        }
       }
     }
     return instancePreferenceNode;
@@ -222,9 +231,11 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
     PreferenceNode oldInstancePreferenceNode = instancePreferenceNode;
     instancePreferenceNode = newInstancePreferenceNode;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, oldInstancePreferenceNode,
           instancePreferenceNode));
+    }
   }
 
   /**
@@ -234,65 +245,91 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
    */
   public void applyPreferenceProfiles()
   {
-    for (Project project : getProjects())
+    try
     {
-      try
+      WORKSPACE_ROOT.getWorkspace().run(new IWorkspaceRunnable()
       {
-        Preferences projectPreferences = PreferencesUtil.getPreferences(project.getPreferenceNode(), true);
-
-        Set<Preferences> clearedPreferences = new HashSet<Preferences>();
-        for (PreferenceProfile preferenceProfile : project.getPreferenceProfileReferences())
+        public void run(IProgressMonitor monitor) throws CoreException
         {
-          if (preferenceProfile.getProject() != project)
+          Preferences projectsPreferences = null;
+          for (Project project : getProjects())
           {
-            for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
+            try
             {
-              PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
-              try
+              Preferences projectPreferences = PreferencesUtil.getPreferences(project.getPreferenceNode(), true);
+              projectsPreferences = projectPreferences.parent();
+
+              Set<Preferences> clearedPreferences = new HashSet<Preferences>();
+              for (PreferenceProfile preferenceProfile : project.getPreferenceProfileReferences())
               {
-                Preferences sourcePreferences = PreferencesUtil.getPreferences(preferenceNode, true);
-                if (projectPreferences == null)
+                if (preferenceProfile.getProject() != project)
                 {
-                  projectPreferences = PreferencesUtil.getPreferences(project.getPreferenceNode(), true);
-                }
-                Preferences targetPreferences = projectPreferences.node(sourcePreferences.name());
-                if (clearedPreferences.add(targetPreferences))
-                {
-                  targetPreferences.clear();
-                }
-                for (String key : sourcePreferences.keys())
-                {
-                  if (preferenceFilter.matches(key))
+                  for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
                   {
-                    targetPreferences.put(key, sourcePreferences.get(key, null));
+                    PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
+                    Preferences sourcePreferences = PreferencesUtil.getPreferences(preferenceNode, true);
+                    if (projectPreferences == null)
+                    {
+                      projectPreferences = PreferencesUtil.getPreferences(project.getPreferenceNode(), true);
+                    }
+
+                    Preferences targetPreferences = projectPreferences;
+                    List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
+                    for (int i = 3, size = path.size(); i < size; ++i)
+                    {
+                      targetPreferences = targetPreferences.node(path.get(i).getName());
+                    }
+
+                    if (clearedPreferences.add(targetPreferences))
+                    {
+                      targetPreferences.clear();
+                    }
+
+                    for (String key : sourcePreferences.keys())
+                    {
+                      if (preferenceFilter.matches(key))
+                      {
+                        targetPreferences.put(key, sourcePreferences.get(key, null));
+                      }
+                    }
                   }
                 }
               }
-              catch (BackingStoreException ex)
+
+              if (!clearedPreferences.isEmpty())
               {
-                ex.printStackTrace();
+                for (Preferences preferences : clearedPreferences)
+                {
+                  if (preferences.keys().length == 0)
+                  {
+                    preferences.removeNode();
+                  }
+                }
               }
             }
-          }
-        }
-
-        if (!clearedPreferences.isEmpty())
-        {
-          for (Preferences preferences : clearedPreferences)
-          {
-            if (preferences.keys().length == 0)
+            catch (BackingStoreException ex)
             {
-              preferences.removeNode();
+              ProjectConfigPlugin.INSTANCE.log(ex);
             }
           }
 
-          projectPreferences.flush();
+          if (projectsPreferences != null)
+          {
+            try
+            {
+              projectsPreferences.flush();
+            }
+            catch (BackingStoreException ex)
+            {
+              ProjectConfigPlugin.INSTANCE.log(ex);
+            }
+          }
         }
-      }
-      catch (BackingStoreException ex1)
-      {
-        ex1.printStackTrace();
-      }
+      }, null);
+    }
+    catch (CoreException ex)
+    {
+      ProjectConfigPlugin.INSTANCE.log(ex);
     }
   }
 
@@ -409,11 +446,15 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
       return getProjects();
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
       if (resolve)
+      {
         return getDefaultPreferenceNode();
+      }
       return basicGetDefaultPreferenceNode();
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE:
       if (resolve)
+      {
         return getInstancePreferenceNode();
+      }
       return basicGetInstancePreferenceNode();
     }
     return super.eGet(featureID, resolve, coreType);

@@ -128,14 +128,6 @@ public class ProjectConfigItemProviderAdapterFactory extends ProjectConfigAdapte
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected PreferenceProfileItemProvider preferenceProfileItemProvider;
-
-  /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -144,12 +136,7 @@ public class ProjectConfigItemProviderAdapterFactory extends ProjectConfigAdapte
   @Override
   public Adapter createPreferenceProfileAdapter()
   {
-    if (preferenceProfileItemProvider == null)
-    {
-      preferenceProfileItemProvider = new PreferenceProfileItemProvider(this);
-    }
-
-    return preferenceProfileItemProvider;
+    return new PreferenceProfileItemProvider(this);
   }
 
   /**
@@ -220,7 +207,7 @@ public class ProjectConfigItemProviderAdapterFactory extends ProjectConfigAdapte
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }

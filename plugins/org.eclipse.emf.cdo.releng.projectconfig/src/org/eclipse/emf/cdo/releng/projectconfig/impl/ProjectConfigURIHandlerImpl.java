@@ -99,6 +99,7 @@ public class ProjectConfigURIHandlerImpl extends URIHandlerImpl
 
       return new ProjectConfigOutput();
     }
+
     throw new IOException("Output not supported");
   }
 

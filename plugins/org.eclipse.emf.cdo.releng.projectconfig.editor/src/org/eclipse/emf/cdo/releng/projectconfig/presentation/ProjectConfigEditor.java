@@ -11,17 +11,23 @@
 package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.projectconfig.provider.ProjectConfigItemProviderAdapterFactory;
+import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.ui.viewer.ColumnViewerInformationControlToolTipSupport;
@@ -35,12 +41,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
@@ -98,6 +107,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
@@ -123,12 +133,14 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -306,9 +318,9 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * Resources that have been changed since last activation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  protected Collection<Resource> changedResources = new ArrayList<Resource>();
+  protected Collection<Resource> changedResources = new LinkedHashSet<Resource>();
 
   /**
    * Resources that have been saved.
@@ -412,7 +424,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * This listens for workspace changes.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected IResourceChangeListener resourceChangeListener = new IResourceChangeListener()
   {
@@ -425,18 +437,26 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
         {
           protected ResourceSet resourceSet = editingDomain.getResourceSet();
 
-          protected Collection<Resource> changedResources = new ArrayList<Resource>();
+          protected Collection<Resource> changedResources = new LinkedHashSet<Resource>();
 
           protected Collection<Resource> removedResources = new ArrayList<Resource>();
+
+          protected Resource mainResource = resourceSet.getResources().get(0);
 
           public boolean visit(final IResourceDelta delta)
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
+              IPath fullPath = delta.getFullPath();
+              if (".settings".equals(fullPath.segment(1)))
+              {
+                changedResources.add(mainResource);
+              }
+
               if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED)
               {
                 final Resource resource = resourceSet.getResource(
-                    URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+                    URI.createPlatformResourceURI(fullPath.toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -562,12 +582,17 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * Handles what to do with changed resources on activation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void handleChangedResources()
   {
-    if (!changedResources.isEmpty() && (!isDirty() || handleDirtyConflict()))
+    if (!changedResources.isEmpty())
     {
+      final List<Object> expandedElements = selectionViewer == null ? Collections.emptyList() : Arrays
+          .asList(selectionViewer.getExpandedElements());
+      final ISelection selection = selectionViewer == null ? null : selectionViewer.getSelection();
+
+      boolean discard = !isDirty() || handleDirtyConflict();
       if (isDirty())
       {
         changedResources.addAll(editingDomain.getResourceSet().getResources());
@@ -575,14 +600,50 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
       editingDomain.getCommandStack().flush();
 
       updateProblemIndication = false;
-      for (Resource resource : changedResources)
+      for (final Resource resource : changedResources)
       {
         if (resource.isLoaded())
         {
+          WorkspaceConfiguration cachedWorkspaceConfiguration = null;
+          if (!discard)
+          {
+            EList<EObject> contents = resource.getContents();
+            if (!contents.isEmpty())
+            {
+              EObject object = contents.get(0);
+              if (object instanceof WorkspaceConfiguration)
+              {
+                WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)object;
+                PreferenceNode cache = ProjectConfigUtil.cacheWorkspaceConfiguration(workspaceConfiguration);
+                if (cache != null)
+                {
+                  cachedWorkspaceConfiguration = ProjectConfigUtil.getWorkspaceConfiguration(cache);
+                }
+              }
+            }
+          }
+
           resource.unload();
           try
           {
             resource.load(Collections.EMPTY_MAP);
+            if (cachedWorkspaceConfiguration != null)
+            {
+              final WorkspaceConfiguration workspaceConfiguration = cachedWorkspaceConfiguration;
+              CompoundCommand command = new CompoundCommand("Restore Contents",
+                  "Restore the contents of the resource with the editor's previous changes")
+              {
+                @Override
+                protected boolean prepare()
+                {
+                  EList<EObject> contents = resource.getContents();
+                  return appendIfCanExecute(new RemoveCommand(editingDomain, contents, contents))
+                      && appendIfCanExecute(new AddCommand(editingDomain, contents, new ArrayList<EObject>(
+                          workspaceConfiguration.eResource().getContents())));
+                }
+              };
+              editingDomain.getCommandStack().execute(command);
+            }
           }
           catch (IOException exception)
           {
@@ -594,9 +655,73 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
         }
       }
 
-      if (AdapterFactoryEditingDomain.isStale(editorSelection))
+      if (selectionViewer != null)
       {
-        setSelection(StructuredSelection.EMPTY);
+        class DummyNotification extends ViewerNotification
+        {
+          boolean trigger;
+
+          public DummyNotification()
+          {
+            super(null, editingDomain.getResourceSet(), false, false);
+          }
+
+          @Override
+          public Object getElement()
+          {
+            if (trigger)
+            {
+              final Display display = getSite().getShell().getDisplay();
+              display.asyncExec(new Runnable()
+              {
+                public void run()
+                {
+                  synchronized (editingDomain.getResourceSet())
+                  {
+                    for (Object object : expandedElements)
+                    {
+                      if (object instanceof EObject)
+                      {
+                        EObject eObject = (EObject)object;
+                        if (eObject.eIsProxy())
+                        {
+                          eObject.eAdapters().clear();
+                        }
+                      }
+                    }
+
+                    selectionViewer.setExpandedElements(editingDomain.resolve(expandedElements).toArray());
+
+                    if (selection != null)
+                    {
+                      List<?> selectedObjects = ((IStructuredSelection)selection).toList();
+                      for (Object object : selectedObjects)
+                      {
+                        if (object instanceof EObject)
+                        {
+                          EObject eObject = (EObject)object;
+                          if (eObject.eIsProxy())
+                          {
+                            eObject.eAdapters().clear();
+                          }
+                        }
+                      }
+
+                      setSelectionToViewer(editingDomain.resolve(selectedObjects));
+                    }
+                  }
+                }
+              });
+            }
+
+            return super.getElement();
+          }
+        }
+
+        // Do it like this so it happens after the notifications have been processed to update the view.
+        DummyNotification notification = new DummyNotification();
+        adapterFactory.fireNotifyChanged(notification);
+        notification.trigger = true;
       }
 
       updateProblemIndication = true;
@@ -1017,6 +1142,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     }
 
     selectionViewer.setInput(resource);
+    selectionViewer.expandToLevel(resource.getContents().get(0), 1);
   }
 
   public void createModel()
@@ -1031,6 +1157,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
       Resource resource = resourceSet.getResource(resourceURI, false);
       if (resource != null)
       {
+        resourceSet.getURIConverter().getURIMap().put(ProjectConfigUtil.PROJECT_CONFIG_URI, resource.getURI());
         EList<EObject> contents = resource.getContents();
         if (!contents.isEmpty())
         {
@@ -1038,16 +1165,30 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
           if (object instanceof WorkspaceConfiguration)
           {
             WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)object;
-            if (workspaceConfiguration.getProjects().isEmpty()
-                && ResourcesPlugin.getWorkspace().getRoot().getProjects().length != 0)
+            final int projectCount = ResourcesPlugin.getWorkspace().getRoot().getProjects().length;
+            if (workspaceConfiguration.getProjects().isEmpty() && projectCount != 0)
             {
-              getSite().getShell().getDisplay().timerExec(3000, new Runnable()
+              final PreferenceNode projectPreferenceNode = PreferencesUtil.getRootPreferenceNode(true).getNode(
+                  "project");
+              Adapter projectNodeListener = new AdapterImpl()
               {
-                public void run()
+                @Override
+                public synchronized void notifyChanged(Notification msg)
                 {
-                  reload();
+                  if (projectPreferenceNode.getChildren().size() == projectCount
+                      && projectPreferenceNode.eAdapters().remove(this))
+                  {
+                    getSite().getShell().getDisplay().asyncExec(new Runnable()
+                    {
+                      public void run()
+                      {
+                        reload();
+                      }
+                    });
+                  }
                 }
-              });
+              };
+              projectPreferenceNode.eAdapters().add(projectNodeListener);
             }
           }
         }
@@ -1122,7 +1263,9 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     EList<Resource> resources = getEditingDomain().getResourceSet().getResources();
     if (!resources.isEmpty())
     {
-      selectionViewer.setInput(resources.get(0));
+      Resource resource = resources.get(0);
+      selectionViewer.setInput(resource);
+      selectionViewer.expandToLevel(resource.getContents().get(0), 1);
     }
 
     DiagnosticDecorator labelDecorator = new DiagnosticDecorator(editingDomain, selectionViewer,
@@ -1514,7 +1657,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     {
       // This runs the options, and shows progress.
       //
-      new ProgressMonitorDialog(getSite().getShell()).run(true, false, operation);
+      new ProgressMonitorDialog(getSite().getShell()).run(false, false, operation);
 
       // Refresh the necessary state.
       //

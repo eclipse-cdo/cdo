@@ -116,7 +116,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
   public static ProjectConfigPackage init()
   {
     if (isInited)
+    {
       return (ProjectConfigPackage)EPackage.Registry.INSTANCE.getEPackage(ProjectConfigPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     ProjectConfigPackageImpl theProjectConfigPackage = (ProjectConfigPackageImpl)(EPackage.Registry.INSTANCE
@@ -439,7 +441,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -493,7 +497,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -516,9 +522,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     // Initialize classes, features, and operations; add parameters
     initEClass(workspaceConfigurationEClass, WorkspaceConfiguration.class, "WorkspaceConfiguration", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWorkspaceConfiguration_Projects(), this.getProject(), this.getProject_Configuration(),
-        "projects", null, 0, -1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWorkspaceConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 0,
+        -1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWorkspaceConfiguration_DefaultPreferenceNode(), thePreferencesPackage.getPreferenceNode(), null,
         "defaultPreferenceNode", null, 1, 1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -533,60 +539,57 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
         "updatePreferenceProfileReferences", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProject_Configuration(), this.getWorkspaceConfiguration(),
-        this.getWorkspaceConfiguration_Projects(), "configuration", null, 1, 1, Project.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getProject_PreferenceProfiles(), this.getPreferenceProfile(), this.getPreferenceProfile_Project(),
+    initEReference(getProject_Configuration(), getWorkspaceConfiguration(), getWorkspaceConfiguration_Projects(),
+        "configuration", null, 1, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_PreferenceProfiles(), getPreferenceProfile(), getPreferenceProfile_Project(),
         "preferenceProfiles", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProject_PreferenceNode(), thePreferencesPackage.getPreferenceNode(), null, "preferenceNode",
         null, 1, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProject_PreferenceProfileReferences(), this.getPreferenceProfile(),
-        this.getPreferenceProfile_ReferentProjects(), "preferenceProfileReferences", null, 0, -1, Project.class,
+    initEReference(getProject_PreferenceProfileReferences(), getPreferenceProfile(),
+        getPreferenceProfile_ReferentProjects(), "preferenceProfileReferences", null, 0, -1, Project.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(preferenceProfileEClass, PreferenceProfile.class, "PreferenceProfile", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPreferenceProfile_PreferenceFilters(), this.getPreferenceFilter(),
-        this.getPreferenceFilter_PreferenceProfile(), "preferenceFilters", null, 0, -1, PreferenceProfile.class,
+    initEReference(getPreferenceProfile_PreferenceFilters(), getPreferenceFilter(),
+        getPreferenceFilter_PreferenceProfile(), "preferenceFilters", null, 0, -1, PreferenceProfile.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getPreferenceProfile_ReferentProjects(), this.getProject(),
-        this.getProject_PreferenceProfileReferences(), "referentProjects", null, 0, -1, PreferenceProfile.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getPreferenceProfile_ReferentProjects(), getProject(), getProject_PreferenceProfileReferences(),
+        "referentProjects", null, 0, -1, PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPreferenceProfile_Name(), ecorePackage.getEString(), "name", null, 1, 1, PreferenceProfile.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPreferenceProfile_Project(), this.getProject(), this.getProject_PreferenceProfiles(), "project",
-        null, 0, 1, PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPreferenceProfile_Project(), getProject(), getProject_PreferenceProfiles(), "project", null, 0,
+        1, PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPreferenceProfile_Predicates(), thePredicatesPackage.getPredicate(), null, "predicates", null, 0,
         -1, PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPreferenceProfile_Prerequisites(), this.getPreferenceProfile(), null, "prerequisites", null, 0,
-        -1, PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getPreferenceProfile_Prerequisites(), getPreferenceProfile(), null, "prerequisites", null, 0, -1,
+        PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     EOperation op = initEOperation(getPreferenceProfile__Requires__PreferenceProfile(), ecorePackage.getEBoolean(),
         "requires", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getPreferenceProfile(), "preferenceProfile", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getPreferenceProfile(), "preferenceProfile", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(preferenceFilterEClass, PreferenceFilter.class, "PreferenceFilter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPreferenceFilter_PreferenceNode(), thePreferencesPackage.getPreferenceNode(), null,
         "preferenceNode", null, 1, 1, PreferenceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPreferenceFilter_PreferenceProfile(), this.getPreferenceProfile(),
-        this.getPreferenceProfile_PreferenceFilters(), "preferenceProfile", null, 1, 1, PreferenceFilter.class,
+    initEReference(getPreferenceFilter_PreferenceProfile(), getPreferenceProfile(),
+        getPreferenceProfile_PreferenceFilters(), "preferenceProfile", null, 1, 1, PreferenceFilter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPreferenceFilter_Inclusions(), this.getPattern(), "inclusions", ".*", 1, 1,
-        PreferenceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPreferenceFilter_Exclusions(), this.getPattern(), "exclusions", "", 1, 1, PreferenceFilter.class,
+    initEAttribute(getPreferenceFilter_Inclusions(), getPattern(), "inclusions", ".*", 1, 1, PreferenceFilter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPreferenceFilter_Exclusions(), getPattern(), "exclusions", "", 1, 1, PreferenceFilter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     op = initEOperation(getPreferenceFilter__Matches__String(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE,

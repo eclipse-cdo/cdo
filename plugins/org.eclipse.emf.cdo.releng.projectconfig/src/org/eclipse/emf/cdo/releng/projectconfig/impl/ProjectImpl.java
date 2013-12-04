@@ -110,7 +110,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   public WorkspaceConfiguration getConfiguration()
   {
     if (eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION)
+    {
       return null;
+    }
     return (WorkspaceConfiguration)eInternalContainer();
   }
 
@@ -133,23 +135,33 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   public void setConfiguration(WorkspaceConfiguration newConfiguration)
   {
     if (newConfiguration != eInternalContainer()
-        || (eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION && newConfiguration != null))
+        || eContainerFeatureID() != ProjectConfigPackage.PROJECT__CONFIGURATION && newConfiguration != null)
     {
       if (EcoreUtil.isAncestor(this, newConfiguration))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newConfiguration != null)
+      {
         msgs = ((InternalEObject)newConfiguration).eInverseAdd(this,
             ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS, WorkspaceConfiguration.class, msgs);
+      }
       msgs = basicSetConfiguration(newConfiguration, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROJECT__CONFIGURATION,
           newConfiguration, newConfiguration));
+    }
   }
 
   /**
@@ -181,8 +193,10 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       if (preferenceNode != oldPreferenceNode)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, ProjectConfigPackage.PROJECT__PREFERENCE_NODE,
               oldPreferenceNode, preferenceNode));
+        }
       }
     }
     return preferenceNode;
@@ -208,8 +222,10 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     PreferenceNode oldPreferenceNode = preferenceNode;
     preferenceNode = newPreferenceNode;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROJECT__PREFERENCE_NODE,
           oldPreferenceNode, preferenceNode));
+    }
   }
 
   /**
@@ -241,7 +257,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
     {
     case ProjectConfigPackage.PROJECT__CONFIGURATION:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetConfiguration((WorkspaceConfiguration)otherEnd, msgs);
     case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getPreferenceProfiles()).basicAdd(otherEnd, msgs);
@@ -305,7 +323,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       return getPreferenceProfiles();
     case ProjectConfigPackage.PROJECT__PREFERENCE_NODE:
       if (resolve)
+      {
         return getPreferenceNode();
+      }
       return basicGetPreferenceNode();
     case ProjectConfigPackage.PROJECT__PREFERENCE_PROFILE_REFERENCES:
       return getPreferenceProfileReferences();

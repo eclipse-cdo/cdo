@@ -35,6 +35,7 @@ import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -46,6 +47,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubContributionItem;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -204,9 +206,27 @@ public class ProjectConfigActionBarContributor extends EditingDomainActionBarCon
         EList<Resource> resources = editingDomain.getResourceSet().getResources();
         if (!resources.isEmpty())
         {
+          if (activeEditorPart.isDirty())
+          {
+            boolean confirmation = MessageDialog.openQuestion(null, "Save",
+                "The project configuration needs to be saved.\n\nDo you wish to save?");
+            if (!confirmation)
+            {
+              return;
+            }
+          }
+          else
+          {
+            boolean confirmation = MessageDialog.openQuestion(null, "Save",
+                "The preference profile references need to be updated and saved.\n\nDo you wish to save?");
+            if (!confirmation)
+            {
+              return;
+            }
+          }
+
           final WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)resources.get(0).getContents()
               .get(0);
-
           editingDomain.getCommandStack().execute(new ChangeCommand(workspaceConfiguration)
           {
             @Override
@@ -225,9 +245,11 @@ public class ProjectConfigActionBarContributor extends EditingDomainActionBarCon
             protected void doExecute()
             {
               workspaceConfiguration.updatePreferenceProfileReferences();
-              workspaceConfiguration.applyPreferenceProfiles();
             }
           });
+
+          activeEditor.doSave(new NullProgressMonitor());
+          workspaceConfiguration.applyPreferenceProfiles();
         }
       }
     }

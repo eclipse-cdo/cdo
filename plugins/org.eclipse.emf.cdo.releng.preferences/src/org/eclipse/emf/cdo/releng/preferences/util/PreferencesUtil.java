@@ -255,7 +255,7 @@ public final class PreferencesUtil
     return null;
   }
 
-  private static List<PreferenceNode> getPath(PreferenceNode preferenceNode)
+  public static List<PreferenceNode> getPath(PreferenceNode preferenceNode)
   {
     List<PreferenceNode> path = new ArrayList<PreferenceNode>();
     while (preferenceNode != null)

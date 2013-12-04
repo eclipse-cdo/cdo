@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -72,6 +73,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.Project} object.
@@ -104,8 +106,9 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
 
     IWORKBENCH_ADAPTER_CLASS = workbenchAdapterClass;
     GET_IMAGE_DESCRIPTOR_METHOD = method;
-
   }
+
+  private static final Pattern PROJECT_ENCODING_PROPERTY_PATTERN = Pattern.compile("<project>");
 
   /**
    * This constructs an instance from a factory and a notifier.
@@ -614,51 +617,70 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
 
     for (PreferenceNode preferenceNode : unmanagedPreferenceNodes)
     {
-      String preferenceNodeName = preferenceNode.getName();
-      String[] nameComponents = preferenceNodeName.split("\\.");
-      int start = 0;
-      while (start < nameComponents.length)
+      String[] rootNameComponents = null;
+      StringBuilder qualifiedPreferenceNodeName = new StringBuilder();
+      List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
+      int pathSize = path.size();
+      for (int i = 3; i < pathSize; ++i)
       {
-        if (!IGNORE_NAME_COMPONENTS.contains(nameComponents[start]))
-        {
-          break;
-        }
-        ++start;
-      }
+        String preferenceNodeName = path.get(i).getName();
+        String[] nameComponents = preferenceNodeName.split("\\.");
 
-      StringBuilder builder = new StringBuilder();
-      for (int i = start; i < nameComponents.length; ++i)
-      {
-        if (builder.length() > 0)
+        int start = 0;
+        if (rootNameComponents == null)
         {
-          builder.append(' ');
-        }
-        String nameComponent = nameComponents[i];
-        String acronym = ACRYONYMS.get(nameComponent);
-        if (acronym != null)
-        {
-          builder.append(acronym);
-        }
-        else
-        {
-          int length = nameComponent.length();
-          if (length >= 1)
+          rootNameComponents = nameComponents;
+
+          while (start < nameComponents.length)
           {
-            builder.append(Character.toUpperCase(nameComponent.charAt(0)));
-            builder.append(nameComponent, 1, length);
+            if (!IGNORE_NAME_COMPONENTS.contains(nameComponents[start]))
+            {
+              break;
+            }
+            ++start;
+          }
+        }
+
+        for (int j = start; j < nameComponents.length; ++j)
+        {
+          if (qualifiedPreferenceNodeName.length() > 0)
+          {
+            qualifiedPreferenceNodeName.append(' ');
+          }
+
+          String nameComponent = nameComponents[j];
+          String acronym = ACRYONYMS.get(nameComponent);
+          if (acronym != null)
+          {
+            qualifiedPreferenceNodeName.append(acronym);
+          }
+          else
+          {
+            int length = nameComponent.length();
+            if (length >= 1)
+            {
+              qualifiedPreferenceNodeName.append(Character.toUpperCase(nameComponent.charAt(0)));
+              qualifiedPreferenceNodeName.append(nameComponent, 1, length);
+            }
           }
         }
       }
 
       PreferenceProfile preferenceProfile = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
-      if (builder.length() > 0)
+      if (qualifiedPreferenceNodeName.length() > 0)
       {
-        preferenceProfile.setName(builder.toString());
+        preferenceProfile.setName(qualifiedPreferenceNodeName.toString());
       }
 
       PreferenceFilter preferenceFilter = ProjectConfigFactory.eINSTANCE.createPreferenceFilter();
       preferenceFilter.setPreferenceNode(preferenceNode);
       preferenceProfile.getPreferenceFilters().add(preferenceFilter);
+
+      if (pathSize == 5 && "encoding".equals(path.get(4).getName())
+          && "org.eclipse.core.resources".equals(path.get(3).getName()))
+      {
+        preferenceFilter.setInclusions(PROJECT_ENCODING_PROPERTY_PATTERN);
+      }
 
       AndPredicate andPredicate = PredicatesFactory.eINSTANCE.createAndPredicate();
       preferenceProfile.getPredicates().add(andPredicate);
@@ -677,9 +699,9 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
         {
           String[] natureComponents = natureId.split("\\.");
           int index = 0;
-          while (index < natureComponents.length && index < nameComponents.length)
+          while (index < natureComponents.length && index < rootNameComponents.length)
           {
-            if (!nameComponents[index].equals(natureComponents[index]))
+            if (!rootNameComponents[index].equals(natureComponents[index]))
             {
               break;
             }
@@ -741,10 +763,19 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
         PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
         if (preferenceNode != null)
         {
-          String name = preferenceNode.getName();
-          if (name != null)
+          List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
+          StringBuilder qualifiedName = new StringBuilder();
+          for (int i = 3, size = path.size(); i < size; ++i)
           {
-            text += " for " + name;
+            if (qualifiedName.length() != 0)
+            {
+              qualifiedName.append('/');
+            }
+            qualifiedName.append(path.get(i).getName());
+          }
+          if (qualifiedName.length() != 0)
+          {
+            text += " for " + qualifiedName;
           }
         }
       }

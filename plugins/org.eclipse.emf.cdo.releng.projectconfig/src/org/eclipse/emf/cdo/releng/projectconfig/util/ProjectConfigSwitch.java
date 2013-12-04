@@ -88,7 +88,9 @@ public class ProjectConfigSwitch<T> extends Switch<T>
       WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)theEObject;
       T result = caseWorkspaceConfiguration(workspaceConfiguration);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ProjectConfigPackage.PROJECT:
@@ -96,7 +98,9 @@ public class ProjectConfigSwitch<T> extends Switch<T>
       Project project = (Project)theEObject;
       T result = caseProject(project);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ProjectConfigPackage.PREFERENCE_PROFILE:
@@ -104,7 +108,9 @@ public class ProjectConfigSwitch<T> extends Switch<T>
       PreferenceProfile preferenceProfile = (PreferenceProfile)theEObject;
       T result = casePreferenceProfile(preferenceProfile);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ProjectConfigPackage.PREFERENCE_FILTER:
@@ -112,7 +118,9 @@ public class ProjectConfigSwitch<T> extends Switch<T>
       PreferenceFilter preferenceFilter = (PreferenceFilter)theEObject;
       T result = casePreferenceFilter(preferenceFilter);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

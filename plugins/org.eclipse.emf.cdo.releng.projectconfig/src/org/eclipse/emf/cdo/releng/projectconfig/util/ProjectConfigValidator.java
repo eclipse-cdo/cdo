@@ -141,24 +141,42 @@ public class ProjectConfigValidator extends EObjectValidator
   public boolean validateProject(Project project, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     if (!validate_NoCircularContainment(project, diagnostics, context))
+    {
       return false;
+    }
     boolean result = validate_EveryMultiplicityConforms(project, diagnostics, context);
     if (result || diagnostics != null)
+    {
       result &= validate_EveryDataValueConforms(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validate_EveryReferenceIsContained(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validate_EveryBidirectionalReferenceIsPaired(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validate_EveryProxyResolves(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validate_UniqueID(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validate_EveryKeyUnique(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validate_EveryMapEntryUnique(project, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validateProject_AllPreferencesManaged(project, diagnostics, context);
+    }
     return result;
   }
 
@@ -168,13 +186,7 @@ public class ProjectConfigValidator extends EObjectValidator
     PreferenceNode preferenceNode = project.getPreferenceNode();
     if (preferenceNode != null)
     {
-      for (PreferenceNode child : preferenceNode.getChildren())
-      {
-        if (!child.getProperties().isEmpty())
-        {
-          result.put(child.getName(), child);
-        }
-      }
+      collectPreferenceNodes(null, result, preferenceNode.getChildren());
 
       result.remove(ProjectConfigUtil.PROJECT_CONF_NODE_NAME);
 
@@ -203,6 +215,22 @@ public class ProjectConfigValidator extends EObjectValidator
       }
     }
     return result;
+  }
+
+  private static void collectPreferenceNodes(String qualifiedName, Map<String, PreferenceNode> result,
+      List<PreferenceNode> preferenceNodes)
+  {
+    for (PreferenceNode child : preferenceNodes)
+    {
+      String name = child.getName();
+      String nodeName = qualifiedName == null ? name : qualifiedName + "/" + name;
+      if (!child.getProperties().isEmpty())
+      {
+        result.put(name, child);
+      }
+
+      collectPreferenceNodes(nodeName, result, child.getChildren());
+    }
   }
 
   /**

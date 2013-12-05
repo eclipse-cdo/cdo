@@ -363,7 +363,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     {
       public void run()
       {
-        if (!okButton.isEnabled())
+        if (okButton != null && !okButton.isDisposed() && !okButton.isEnabled())
         {
           String string = "[" + TIME.format(date) + "] " + message;
 

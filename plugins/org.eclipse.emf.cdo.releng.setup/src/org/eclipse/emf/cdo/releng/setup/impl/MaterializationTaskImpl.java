@@ -63,7 +63,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
+import org.eclipse.osgi.util.ManifestElement;
 
+import org.osgi.framework.BundleException;
+import org.osgi.framework.Constants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -457,6 +460,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
             componentName = bundleSymbolicName;
             componentType = ComponentType.OSGI_BUNDLE;
+
+            addChildren(manifest, children);
           }
           catch (IOException ex)
           {
@@ -583,6 +588,20 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         {
           Activator.log(ex);
         }
+      }
+    }
+  }
+
+  private static void addChildren(Manifest manifest, Set<Pair<String, ComponentType>> children) throws BundleException
+  {
+    String requireBundle = manifest.getMainAttributes().getValue(Constants.REQUIRE_BUNDLE).trim();
+    ManifestElement[] manifestElements = ManifestElement.parseHeader(Constants.REQUIRE_BUNDLE, requireBundle);
+    for (ManifestElement manifestElement : manifestElements)
+    {
+      String[] valueComponents = manifestElement.getValueComponents();
+      for (String valueComponent : valueComponents)
+      {
+        children.add(Pair.create(valueComponent, ComponentType.OSGI_BUNDLE));
       }
     }
   }
@@ -867,7 +886,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
               out = new PrintStream(new File(buckminsterFolder, "analysis.txt"));
             }
 
-            out.println(componentName + " - " + type + "(" + location + ")");
+            out.println(componentName + " - " + type + " - " + location);
             for (Pair<String, ComponentType> child : componentLocation.getChildren())
             {
               out.println("    " + child.getElement1() + " - " + child.getElement2());

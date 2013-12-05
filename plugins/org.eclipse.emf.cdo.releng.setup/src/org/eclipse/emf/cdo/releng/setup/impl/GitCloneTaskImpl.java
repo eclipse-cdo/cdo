@@ -774,6 +774,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     {
       private SetupTaskContext context;
 
+      private String title;
+
+      private int totalWork;
+
       public ProgressLogWrapper(SetupTaskContext context)
       {
         this.context = context;
@@ -781,6 +785,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
       public void update(int completed)
       {
+        if (title != null)
+        {
+          context.log(title + " (" + completed + "/" + totalWork + ")");
+        }
       }
 
       public void start(int totalTasks)
@@ -794,11 +802,20 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
       public void endTask()
       {
+        if (title != null)
+        {
+          context.log(title + " (Done)");
+        }
+
+        title = null;
       }
 
       public void beginTask(String title, int totalWork)
       {
         context.log(title);
+
+        this.title = title;
+        this.totalWork = totalWork;
       }
     }
   }

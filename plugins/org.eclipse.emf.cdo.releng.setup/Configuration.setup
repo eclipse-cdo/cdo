@@ -34,4 +34,5 @@
   <projects href="setups/Platform.setup#/" name="Platform" label="Eclipse Platform SDK"/>
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/" name="EMF" label="EMF Core SDK"/>
   <projects href="http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git/plain/org.eclipse.emf.compare-parent/emf.compare.setup#/" name="EMF.Compare" label="EMF Compare"/>
+  <projects href="setups/mylyn.tasks.setup#/" name="Mylyn.Tasks" label="Mylyn Tasks"/>
 </setup:Configuration>

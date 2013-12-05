@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -634,7 +635,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     rootComponent.setName(id);
     rootComponent.setType(type);
 
-    if (!StringUtil.isEmpty(version))
+    if (!Version.emptyVersion.equals(Version.parseVersion(version)))
     {
       VersionRange versionRange = new VersionRange("[" + version + "," + version + "]");
       rootComponent.setVersionRange(versionRange);

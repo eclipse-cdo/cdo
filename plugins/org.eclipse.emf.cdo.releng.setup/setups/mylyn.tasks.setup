@@ -16,6 +16,9 @@
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Dorg.eclipse.buckminster.core.bundle.pool" value="=${setup.install.dir/.p2pool-tp}" vm="true"/>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Xmx" value="1g" vm="true"/>
   <setupTasks xsi:type="setup:ResourceCreationTask" excludedTriggers="STARTUP MANUAL" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;section name=&quot;Workbench&quot;>&#xD;&#xA;&#x9;&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>&#xD;&#xA;&#x9;&lt;/section>&#xD;&#xA;&lt;/section>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" encoding="UTF-8"/>
+  <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.pde.api.tools">
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile" value="Warning"/>
+  </setupTasks>
   <branches name="master">
     <setupTasks xsi:type="setup:GitCloneTask" requirements="//@setupTasks.0" location="${setup.branch.dir/git/mylyn.tasks}" remoteURI="ssh://git.eclipse.org:29418/mylyn/org.eclipse.mylyn.tasks" checkoutBranch="master"/>
     <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.0 //@setupTasks.1" documentation="Generated from C:\develop\git\org.eclipse.mylyn.tasks\org.eclipse.mylyn.tasks-target\mylyn-tasks-e3.6.target">
@@ -46,54 +49,35 @@
       <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/3.9"/>
       <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/nightly/commons"/>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.0 //@setupTasks.1" disabled="true" documentation="Generated from C:\develop\git\org.eclipse.mylyn.tasks\org.eclipse.mylyn.tasks-target\mylyn-tasks-e3.6.target">
-      <rootComponents name="javax.xml" type="osgi.bundle" versionRange="[1.3.4.v201005080400,1.3.4.v201005080400]"/>
-      <rootComponents name="org.apache.lucene.core" type="osgi.bundle" versionRange="[2.9.1.v201101211721,2.9.1.v201101211721]"/>
-      <rootComponents name="org.apache.xerces" type="osgi.bundle" versionRange="[2.9.0.v201101211617,2.9.0.v201101211617]"/>
-      <rootComponents name="org.apache.xml.resolver" type="osgi.bundle" versionRange="[1.2.0.v201005080400,1.2.0.v201005080400]"/>
-      <rootComponents name="org.apache.xml.serializer" type="osgi.bundle" versionRange="[2.7.1.v201005080400,2.7.1.v201005080400]"/>
-      <rootComponents name="org.eclipse.jdt.annotation" type="osgi.bundle" versionRange="[1.0.1.v20130111-135246,1.0.1.v20130111-135246]"/>
-      <rootComponents name="org.eclipse.mylyn.bugzilla.releng" type="unknown"/>
-      <rootComponents name="org.eclipse.mylyn.bugzilla.rest"/>
-      <rootComponents name="org.eclipse.mylyn.bugzilla.rest.core.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.bugzilla.rest.ui.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.commons.sdk.feature.group"/>
-      <rootComponents name="org.eclipse.mylyn.commons.tck.feature.group"/>
-      <rootComponents name="org.eclipse.mylyn.context.core" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.help.sdk" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.sdk_feature"/>
-      <rootComponents name="org.eclipse.mylyn.tasks-site" type="unknown"/>
-      <rootComponents name="org.eclipse.mylyn.tasks-target" type="unknown"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.activity.core" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.activity.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.activity.ui" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.core.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.ide"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.index"/>
-      <rootComponents name="org.eclipse.mylyn.tasks.index.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.test_feature"/>
-      <rootComponents name="org.eclipse.mylyn.trac.core.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.mylyn.trac.releng" type="unknown"/>
-      <rootComponents name="org.eclipse.mylyn.trac.ui.tests" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.sdk.ide" type="osgi.bundle" versionRange="[3.6.2.M20110210-1200,3.6.2.M20110210-1200]"/>
-      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/mylyn.tasks}"/>
-      <p2Repositories url="http://download.eclipse.org/eclipse/updates/3.8/R-3.8.2-201301310800"/>
-      <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/3.9"/>
-      <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/nightly/commons"/>
-      <p2Repositories url="http://download.eclipse.org/releases/helios"/>
-      <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/I20131123181249/repository"/>
-    </setupTasks>
-    <setupTasks xsi:type="setup:WorkingSetTask" disabled="true">
-      <workingSets name="EGit">
+    <setupTasks xsi:type="setup:WorkingSetTask">
+      <workingSets name="Tasks">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.egit.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.3/@workingSets.2 //@branches[name='master']/@setupTasks.3/@workingSets.3"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\tasks.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>
-      <workingSets name="JGit">
+      <workingSets name="Bugzilla">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.jgit.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.3/@workingSets.2 //@branches[name='master']/@setupTasks.3/@workingSets.3"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\bugzilla.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Trac">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\trac.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="OSLC">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\oslc.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Help">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\help.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Tests">

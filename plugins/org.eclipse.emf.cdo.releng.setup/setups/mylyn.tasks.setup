@@ -52,31 +52,31 @@
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="Tasks">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\tasks.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.tasks.*"/>
           <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Bugzilla">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\bugzilla.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.bugzilla.*"/>
           <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Trac">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\trac.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.trac.*"/>
           <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="OSLC">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\oslc.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.oslc.*"/>
           <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Help">
         <predicates xsi:type="predicates:AndPredicate">
-          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\help.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.help.*"/>
           <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
         </predicates>
       </workingSets>

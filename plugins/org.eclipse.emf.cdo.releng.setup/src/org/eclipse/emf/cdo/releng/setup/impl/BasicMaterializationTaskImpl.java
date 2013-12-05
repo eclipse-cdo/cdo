@@ -259,11 +259,6 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     try
     {
-      context.log("Clearing caches for remote files and URLs");
-      CorePlugin plugin = CorePlugin.getDefault();
-      plugin.clearRemoteFileCache();
-      plugin.clearURLCache();
-
       File tpOld = null;
       File tp = new File(getTargetPlatform());
       if (tp.exists())
@@ -387,6 +382,11 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
     {
+      context.log("Clearing caches for remote files and URLs");
+      CorePlugin plugin = CorePlugin.getDefault();
+      plugin.clearRemoteFileCache();
+      plugin.clearURLCache();
+
       URL mSpecURL = new URL(mSpec);
       MaterializationSpec mspec = BuckminsterHelper.getMSpec(mSpecURL, monitor); // 20 ticks
       ComponentQuery cquery = BuckminsterHelper.getCQuery(mspec.getResolvedURL(), monitor); // 20 ticks

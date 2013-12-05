@@ -13,10 +13,10 @@ package org.eclipse.emf.cdo.releng.setup.util;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
-import org.eclipse.buckminster.runtime.MonitorUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
@@ -186,14 +186,14 @@ public final class TargetPlatformUtil
 
   public static void setTargetActive(ITargetDefinition target, IProgressMonitor monitor) throws Exception
   {
-    MonitorUtils.begin(monitor, 100);
+    monitor.beginTask("Set active target platform", 100);
 
     try
     {
-      target.resolve(MonitorUtils.subMonitor(monitor, 50));
+      target.resolve(new SubProgressMonitor(monitor, 50));
 
       LoadTargetDefinitionJob job = new LoadTargetDefinitionJob(target);
-      IStatus status = job.run(MonitorUtils.subMonitor(monitor, 50));
+      IStatus status = job.run(new SubProgressMonitor(monitor, 50));
       if (status.getSeverity() == IStatus.ERROR)
       {
         throw new CoreException(status);
@@ -201,7 +201,7 @@ public final class TargetPlatformUtil
     }
     finally
     {
-      MonitorUtils.done(monitor);
+      monitor.done();
     }
   }
 }

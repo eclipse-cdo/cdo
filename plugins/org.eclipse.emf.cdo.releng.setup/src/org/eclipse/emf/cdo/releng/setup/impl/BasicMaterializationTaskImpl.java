@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -21,8 +22,10 @@ import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.io.FileLock;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -43,6 +46,7 @@ import org.eclipse.buckminster.download.DownloadManager;
 import org.eclipse.buckminster.runtime.BuckminsterException;
 import org.eclipse.buckminster.runtime.Logger;
 import org.eclipse.buckminster.runtime.MonitorUtils;
+import org.eclipse.buckminster.sax.Utils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -52,7 +56,9 @@ import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherAppli
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -390,6 +396,35 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
       monitor.subTask("Resolving components");
       BillOfMaterials bom = resolver.resolve(MonitorUtils.subMonitor(monitor, 40));
+
+      OutputStream out = null;
+
+      try
+      {
+        URI uri = URI.createURI(mSpec);
+        if (uri.isFile())
+        {
+          String path = uri.trimSegments(1).appendSegment("buckminster.bom").toFileString();
+          context.log("Writing bill of materials: " + path);
+          out = new FileOutputStream(path);
+        }
+        else
+        {
+          File file = TMPUtil.createTempFile("buckminster-", ".bom");
+          context.log("Writing bill of materials: " + file);
+          out = new FileOutputStream(file);
+        }
+
+        Utils.serialize(bom, out);
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+      finally
+      {
+        IOUtil.close(out);
+      }
 
       MaterializationSpecBuilder mspecBuilder = new MaterializationSpecBuilder();
       mspecBuilder.initFrom(mspec);

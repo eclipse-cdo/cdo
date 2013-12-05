@@ -77,6 +77,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -836,6 +837,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           }
         }
 
+        PrintStream out = null;
         for (Map.Entry<String, List<ComponentLocation>> entry : componentMap.entrySet())
         {
           String componentName = entry.getKey();
@@ -846,17 +848,30 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
           for (ComponentLocation componentLocation : entry.getValue())
           {
-            Provider provider = RmapFactory.eINSTANCE.createProvider();
+            String type = componentLocation.getComponentType().toString();
+            String location = componentLocation.getLocation();
 
-            provider.setComponentTypesAttr(componentLocation.getComponentType().toString());
+            Provider provider = RmapFactory.eINSTANCE.createProvider();
+            provider.setComponentTypesAttr(type);
             provider.setReaderType("local");
             provider.setSource(true);
 
             Format format = CommonFactory.eINSTANCE.createFormat();
-            format.setFormat(componentLocation.getLocation());
+            format.setFormat(location);
             provider.setURI(format);
 
             sourceProviders.add(provider);
+
+            if (out == null)
+            {
+              out = new PrintStream(new File(buckminsterFolder, "analysis.txt"));
+            }
+
+            out.println(componentName + " - " + type + "(" + location + ")");
+            for (Pair<String, ComponentType> child : componentLocation.getChildren())
+            {
+              out.println("    " + child.getElement1() + " - " + child.getElement2());
+            }
           }
 
           Locator locator = RmapFactory.eINSTANCE.createLocator();
@@ -867,6 +882,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           matchers.add(locator);
 
           rmap.getSearchPaths().add(sourceSearchPath);
+        }
+
+        if (out != null)
+        {
+          IOUtil.close(out);
         }
       }
 

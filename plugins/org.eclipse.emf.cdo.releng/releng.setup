@@ -39,7 +39,7 @@
       <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
       <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
       <p2Repositories url="http://download.eclipse.org/technology/nebula/snapshot"/>
-      <p2Repositories url="${train.url}"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna/201310040900"/>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="Development Environment Setup">

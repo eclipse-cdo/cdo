@@ -594,14 +594,20 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
   private static void addChildren(Manifest manifest, Set<Pair<String, ComponentType>> children) throws BundleException
   {
-    String requireBundle = manifest.getMainAttributes().getValue(Constants.REQUIRE_BUNDLE).trim();
-    ManifestElement[] manifestElements = ManifestElement.parseHeader(Constants.REQUIRE_BUNDLE, requireBundle);
-    for (ManifestElement manifestElement : manifestElements)
+    String requireBundle = manifest.getMainAttributes().getValue(Constants.REQUIRE_BUNDLE);
+    if (requireBundle != null)
     {
-      String[] valueComponents = manifestElement.getValueComponents();
-      for (String valueComponent : valueComponents)
+      ManifestElement[] manifestElements = ManifestElement.parseHeader(Constants.REQUIRE_BUNDLE, requireBundle.trim());
+      if (manifestElements != null)
       {
-        children.add(Pair.create(valueComponent, ComponentType.OSGI_BUNDLE));
+        for (ManifestElement manifestElement : manifestElements)
+        {
+          String[] valueComponents = manifestElement.getValueComponents();
+          for (String valueComponent : valueComponents)
+          {
+            children.add(Pair.create(valueComponent, ComponentType.OSGI_BUNDLE));
+          }
+        }
       }
     }
   }

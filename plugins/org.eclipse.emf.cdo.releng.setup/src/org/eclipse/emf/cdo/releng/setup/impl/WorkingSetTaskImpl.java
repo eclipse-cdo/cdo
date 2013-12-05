@@ -220,6 +220,7 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
       newIds.add(id);
     }
 
+    // TODO Do deeper equality check to also perform for changed workingset definitions
     return !existingIds.containsAll(newIds);
   }
 

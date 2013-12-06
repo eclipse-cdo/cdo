@@ -1054,12 +1054,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         excludeNewObject(id);
         localLookupObject = createObject(id);
 
-        // CDOResource have a special way to register to the view.
-        if (!CDOModelUtil.isResource(localLookupObject.eClass()))
-        {
-          registerObject(localLookupObject);
-        }
-        else if (id == getSession().getRepositoryInfo().getRootResourceID())
+        if (id == getSession().getRepositoryInfo().getRootResourceID())
         {
           setRootResource((CDOResourceImpl)localLookupObject);
         }
@@ -1243,6 +1238,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
+
+    // Before setting the state to CLEAN (that can trigger a duplicate loading and instantiation of the current object)
+    // we make sure that object is registered - without throwing exception if it is already the case
+    registerObjectIfNotRegistered(object);
+
     object.cdoInternalSetState(CDOState.CLEAN);
     object.cdoInternalPostLoad();
   }
@@ -1450,6 +1450,27 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       throw new InvalidURIException(uri, ex);
     }
+  }
+
+  /**
+   * Does the same as {@link AbstractCDOView#registerObject(InternalCDOObject)}, but without
+   * throwing any exception if object is already registered (in that case it will simply do nothing).
+   *
+   * @param object the object to register
+   */
+  private void registerObjectIfNotRegistered(InternalCDOObject object)
+  {
+    if (CDOModelUtil.isResource(object.eClass()))
+    {
+      return;
+    }
+
+    if (objects.containsKey(object.cdoID()))
+    {
+      return;
+    }
+
+    registerObject(object);
   }
 
   public synchronized void registerObject(InternalCDOObject object)

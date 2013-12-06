@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -88,6 +89,7 @@ import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -294,7 +296,9 @@ public class InstallerDialog extends AbstractSetupDialog
 
                 // Force proxy reference from the configuration to resolve too.
                 EList<Project> projects = configuration.getProjects();
-                projects.get(projects.indexOf(eObject));
+                int index = projects.indexOf(eObject);
+                Project resolvedProject = projects.get(index);
+                // projects.set(index, resolvedProject);
 
                 final Project project = (Project)object;
                 Object[] children = project.getBranches().toArray();
@@ -473,14 +477,55 @@ public class InstallerDialog extends AbstractSetupDialog
             {
               public void run()
               {
-                viewer.editElement(element, 1);
+                Branch branch = (Branch)element;
+                boolean allChecked = true;
+                for (Branch branch2 : branch.getProject().getBranches())
+                {
+                  if (!viewer.getChecked(branch2))
+                  {
+                    allChecked = false;
+                    break;
+                  }
+                }
+
+                if (allChecked)
+                {
+                  Object[] children = ((ITreeContentProvider)viewer.getContentProvider()).getChildren(viewer.getInput());
+                  for (Object object : children)
+                  {
+                    if (object instanceof Project)
+                    {
+                      Project child = (Project)object;
+                      if (ObjectUtil.equals(child.getName(), branch.getProject().getName()))
+                      {
+                        viewer.setChecked(child, true);
+                        break;
+                      }
+                    }
+                  }
+                }
+
+                viewer.editElement(branch, 1);
               }
             });
           }
           else
           {
             Branch branch = (Branch)element;
-            viewer.setChecked(branch.getProject(), false);
+            Project project = branch.getProject();
+            Object[] children = ((ITreeContentProvider)viewer.getContentProvider()).getChildren(viewer.getInput());
+            for (Object object : children)
+            {
+              if (object instanceof Project)
+              {
+                Project child = (Project)object;
+                if (ObjectUtil.equals(child.getName(), project.getName()))
+                {
+                  viewer.setChecked(child, false);
+                  break;
+                }
+              }
+            }
           }
         }
 
@@ -961,7 +1006,7 @@ public class InstallerDialog extends AbstractSetupDialog
         }
         catch (Exception ex)
         {
-          ex.printStackTrace();
+          Activator.log(ex);
         }
       }
     }.start();
@@ -992,9 +1037,13 @@ public class InstallerDialog extends AbstractSetupDialog
             ServiceUtil.ungetService(agent);
           }
         }
+        catch (OperationCanceledException ex)
+        {
+          // Ignore
+        }
         catch (Exception ex)
         {
-          ex.printStackTrace();
+          Activator.log(ex);
         }
       }
     }.start();

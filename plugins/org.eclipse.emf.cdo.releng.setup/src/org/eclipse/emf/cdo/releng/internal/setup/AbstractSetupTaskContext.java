@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
@@ -99,7 +100,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     ResourceSet resourceSet = EMFUtil.createResourceSet();
 
-    URI uri = URI.createFileURI(branchDir.toString() + "/setup.xmi");
+    URI uri = getSetupURI(branchDir);
     Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
     initialize((Setup)resource.getContents().get(0), true);
   }
@@ -403,6 +404,24 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     }
 
     return value;
+  }
+
+  public static File getCurrentBranchDir()
+  {
+    return new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1).toOSString());
+  }
+
+  public static URI getSetupURI(File branchFolder)
+  {
+    File setupFile = new File(branchFolder, "setup.xmi");
+    return URI.createFileURI(setupFile.getAbsolutePath());
+  }
+
+  public static boolean existsCurrentSetup()
+  {
+    File branchDir = getCurrentBranchDir();
+    URI uri = getSetupURI(branchDir);
+    return URIConverter.INSTANCE.exists(uri, null);
   }
 
   static

@@ -11,38 +11,28 @@
 package org.eclipse.emf.cdo.releng.setup.presentation.actions;
 
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditor;
+import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 /**
  * @author Eike Stepper
  */
-public class PreferencesAction implements IWorkbenchWindowActionDelegate
+public class OpenBranchAction extends AbstractSetupAction
 {
-  private IWorkbenchWindow window;
-
-  public PreferencesAction()
-  {
-  }
-
-  public void init(IWorkbenchWindow window)
-  {
-    this.window = window;
-  }
-
-  public void selectionChanged(IAction action, ISelection selection)
-  {
-  }
-
-  public void dispose()
+  public OpenBranchAction()
   {
   }
 
   public void run(IAction action)
   {
-    SetupEditor.openPreferences(window.getActivePage());
+    try
+    {
+      SetupEditor.openBranch(getWindow().getActivePage());
+    }
+    catch (Exception ex)
+    {
+      SetupEditorPlugin.INSTANCE.log(ex);
+    }
   }
 }

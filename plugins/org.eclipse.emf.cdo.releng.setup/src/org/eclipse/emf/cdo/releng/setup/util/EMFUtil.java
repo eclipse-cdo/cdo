@@ -55,7 +55,7 @@ public final class EMFUtil extends Plugin
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new SetupResourceFactoryImpl());
     resourceSet.getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
 
-    if (!SETUP_URI.equals(DEFAULT_SETUP_URI))
+    if (!SETUP_URI.toString().equals(DEFAULT_SETUP_URI))
     {
       URI setupURI = URI.createURI(DEFAULT_SETUP_URI);
       resourceSet.getURIConverter().getURIMap().put(setupURI, SETUP_URI);

@@ -59,19 +59,28 @@
             </separator>
          </menu>
          <action
-               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.PreferencesAction"
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
+               icon="icons/Branch.gif"
+               label="Setup &amp;Branch"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Opens an editor on the setup branch">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"
                icon="icons/prefs.gif"
-               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.PreferencesAction"
-               label="&amp;Preferences"
+               label="&amp;Setup Preferences"
                style="push"
                toolbarPath="setupGroup"
                tooltip="Opens an editor on the setup preferences">
          </action>
          <action
-               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.ManualPerformAction"
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.PerformSetupAction"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.PerformSetupAction"
                icon="icons/update.gif"
-               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.ManualPerformAction"
-               label="&amp;Perform"
+               label="&amp;Perform Setup"
                style="push"
                toolbarPath="setupGroup"
                tooltip="Perform setup tasks">

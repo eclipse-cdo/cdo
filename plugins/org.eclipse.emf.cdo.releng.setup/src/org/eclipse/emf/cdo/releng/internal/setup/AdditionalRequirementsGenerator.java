@@ -21,6 +21,8 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import java.util.List;
 
 /**
+ * TODO Use in editors.
+ *
  * @author Eike Stepper
  */
 public class AdditionalRequirementsGenerator extends EContentAdapter

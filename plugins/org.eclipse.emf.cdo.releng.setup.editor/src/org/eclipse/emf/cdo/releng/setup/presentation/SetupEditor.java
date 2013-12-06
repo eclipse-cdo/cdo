@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.internal.setup.AbstractSetupTaskContext;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
@@ -54,7 +55,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -156,6 +156,7 @@ import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetSorter;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -1099,7 +1100,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   {
     createModelGen();
 
-    if (!(editingDomain.getResourceSet().getResources().get(0).getContents().get(0) instanceof Configuration))
+    EObject rootObject = editingDomain.getResourceSet().getResources().get(0).getContents().get(0);
+    if (!(rootObject instanceof Configuration))
     {
       SetupResource configurationResource = EMFUtil.loadResourceSafely(editingDomain.getResourceSet(),
           EMFUtil.SETUP_URI);
@@ -2356,7 +2358,52 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     return eObject instanceof Configuration || eObject instanceof Project;
   }
 
-  public static void openPreferences(final IWorkbenchPage page)
+  public static void openPreferences(IWorkbenchPage page)
+  {
+    URI uri = Preferences.PREFERENCES_URI;
+
+    ResourceSet resourceSet = EMFUtil.createResourceSet();
+    if (!resourceSet.getURIConverter().exists(uri, null))
+    {
+      Resource resource = resourceSet.createResource(uri);
+      Preferences preferences = SetupFactory.eINSTANCE.createPreferences();
+      resource.getContents().add(preferences);
+
+      try
+      {
+        resource.save(null);
+      }
+      catch (IOException ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    }
+
+    open(page, uri);
+  }
+
+  public static void openBranch(IWorkbenchPage page)
+  {
+    File branchDir = AbstractSetupTaskContext.getCurrentBranchDir();
+    URI setupURI = AbstractSetupTaskContext.getSetupURI(branchDir);
+
+    ResourceSet resourceSet = EMFUtil.createResourceSet();
+    SetupResource setupResource = EMFUtil.loadResourceSafely(resourceSet, setupURI);
+    Setup setup = (Setup)setupResource.getContents().get(0);
+
+    Branch branch = setup.getBranch();
+    if (branch != null)
+    {
+      Resource branchResource = branch.eResource();
+      if (branchResource != null)
+      {
+        URI uri = branchResource.getURI();
+        open(page, uri);
+      }
+    }
+  }
+
+  public static void open(final IWorkbenchPage page, final URI uri)
   {
     Display display = page.getWorkbenchWindow().getShell().getDisplay();
     display.asyncExec(new Runnable()
@@ -2365,17 +2412,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       {
         try
         {
-          URI uri = Preferences.PREFERENCES_URI;
-
-          ResourceSet resourceSet = new ResourceSetImpl();
-          if (!resourceSet.getURIConverter().exists(uri, null))
-          {
-            Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
-            Preferences preferences = SetupFactory.eINSTANCE.createPreferences();
-            resource.getContents().add(preferences);
-            resource.save(null);
-          }
-
           IEditorInput editorInput = new URIEditorInput(uri, uri.lastSegment());
           page.openEditor(editorInput, EDITOR_ID);
         }

@@ -116,8 +116,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   public SetupTaskPerformer(boolean manual) throws Exception
   {
-    super(manual ? Trigger.MANUAL : Trigger.STARTUP, new File(ResourcesPlugin.getWorkspace().getRoot().getLocation()
-        .removeLastSegments(1).toOSString()).getCanonicalFile());
+    super(manual ? Trigger.MANUAL : Trigger.STARTUP, getCurrentBranchDir().getCanonicalFile());
     initialize();
   }
 

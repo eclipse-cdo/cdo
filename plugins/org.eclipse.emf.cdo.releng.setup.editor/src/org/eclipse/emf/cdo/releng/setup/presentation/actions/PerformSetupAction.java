@@ -12,16 +12,15 @@ package org.eclipse.emf.cdo.releng.setup.presentation.actions;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkbenchWindowActionDelegate;
-import org.eclipse.ui.PlatformUI;
 
 import java.util.Collections;
 import java.util.Set;
@@ -29,21 +28,11 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class ManualPerformAction implements IWorkbenchWindowActionDelegate
+public class PerformSetupAction extends AbstractSetupAction
 {
-  public ManualPerformAction()
-  {
-  }
+  private static final boolean TEST_SINGLE_TASK = false;
 
-  public void init(IWorkbenchWindow window)
-  {
-  }
-
-  public void selectionChanged(IAction action, ISelection selection)
-  {
-  }
-
-  public void dispose()
+  public PerformSetupAction()
   {
   }
 
@@ -53,33 +42,38 @@ public class ManualPerformAction implements IWorkbenchWindowActionDelegate
     {
       final SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(true);
 
-      // if (true)
-      // {
-      // KeyBindingTask task = SetupFactory.eINSTANCE.createKeyBindingTask();
-      // task.setKeys("F12");
-      // task.setCommand("org.eclipse.emf.cdo.releng.OpenManifest");
-      //
-      // if (task.isNeeded(setupTaskPerformer))
-      // {
-      // task.perform(setupTaskPerformer);
-      // }
-      //
-      // return;
-      // }
-
-      Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
-      ProgressDialog.run(shell, new ProgressLogRunnable()
+      if (TEST_SINGLE_TASK)
       {
-        public Set<String> run(ProgressLog log) throws Exception
+        SetupTask task = createTestTask();
+        if (task.isNeeded(setupTaskPerformer))
         {
-          setupTaskPerformer.perform();
-          return setupTaskPerformer.getRestartReasons();
+          task.perform(setupTaskPerformer);
         }
-      }, Collections.singletonList(setupTaskPerformer));
+      }
+      else
+      {
+        Shell shell = getWindow().getShell();
+        ProgressDialog.run(shell, new ProgressLogRunnable()
+        {
+          public Set<String> run(ProgressLog log) throws Exception
+          {
+            setupTaskPerformer.perform();
+            return setupTaskPerformer.getRestartReasons();
+          }
+        }, Collections.singletonList(setupTaskPerformer));
+      }
     }
     catch (Exception ex)
     {
       SetupEditorPlugin.INSTANCE.log(ex);
     }
+  }
+
+  private KeyBindingTask createTestTask()
+  {
+    KeyBindingTask task = SetupFactory.eINSTANCE.createKeyBindingTask();
+    task.setKeys("F12");
+    task.setCommand("org.eclipse.emf.cdo.releng.OpenManifest");
+    return task;
   }
 }

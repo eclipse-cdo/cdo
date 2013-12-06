@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
+import org.eclipse.emf.cdo.releng.internal.setup.AbstractSetupTaskContext;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskMigrator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
@@ -1422,8 +1423,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     File projectFolder = new File(installFolder, branch.getProject().getName().toLowerCase());
     File branchFolder = new File(projectFolder, branch.getName().toLowerCase());
-    File setupFile = new File(branchFolder, "setup.xmi");
-    return URI.createFileURI(setupFile.getAbsolutePath());
+    return AbstractSetupTaskContext.getSetupURI(branchFolder);
   }
 
   private boolean isInstalled(Object object)

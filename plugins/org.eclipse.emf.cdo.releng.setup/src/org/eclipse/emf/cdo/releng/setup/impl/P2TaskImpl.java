@@ -77,7 +77,6 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -839,14 +838,17 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           initializeRepositories();
           performProvisioningActions();
 
-          printMessage(NLS.bind(Messages.Operation_complete, new Long(System.currentTimeMillis() - time)));
+          context.log(NLS.bind(Messages.Operation_complete, new Long(System.currentTimeMillis() - time)));
           return IApplication.EXIT_OK;
         }
-        catch (CoreException e)
+        catch (Exception ex)
         {
-          printMessage(Messages.Operation_failed);
-          deeplyPrint(e.getStatus(), System.err, 0);
-          Activator.log(e.getStatus());
+          context.log(Messages.Operation_failed);
+
+          IStatus status = Activator.getStatus(ex);
+          context.log(status);
+          // deeplyPrint(status, System.err, 0);
+          Activator.log(status);
           return EXIT_ERROR;
         }
         finally
@@ -860,7 +862,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       public void processArguments(String[] args) throws CoreException
       {
         super.processArguments(args);
-
         processIUs();
       }
 
@@ -930,18 +931,18 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         ReflectUtil.invokeMethod(method, this);
       }
 
-      private void deeplyPrint(IStatus status, PrintStream err, int i)
-      {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "deeplyPrint", IStatus.class,
-            PrintStream.class, int.class);
-        ReflectUtil.invokeMethod(method, this, status, err, i);
-      }
-
-      private void printMessage(String str)
-      {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "printMessage", String.class);
-        ReflectUtil.invokeMethod(method, this, str);
-      }
+      // private void deeplyPrint(IStatus status, PrintStream err, int i)
+      // {
+      // Method method = ReflectUtil.getMethod(DirectorApplication.class, "deeplyPrint", IStatus.class,
+      // PrintStream.class, int.class);
+      // ReflectUtil.invokeMethod(method, this, status, err, i);
+      // }
+      //
+      // private void printMessage(String str)
+      // {
+      // Method method = ReflectUtil.getMethod(DirectorApplication.class, "printMessage", String.class);
+      // ReflectUtil.invokeMethod(method, this, str);
+      // }
     };
 
     app.setLog(new ILog()

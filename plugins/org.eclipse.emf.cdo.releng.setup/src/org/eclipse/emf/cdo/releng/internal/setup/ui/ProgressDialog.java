@@ -566,9 +566,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
               {
                 Activator.log(ex);
 
-                IStatus status = ex instanceof CoreException ? ((CoreException)ex).getStatus() : new Status(
-                    IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex);
-
+                IStatus status = Activator.getStatus(ex);
                 dialog.log("An error occured: ");
                 dialog.log(status);
               }

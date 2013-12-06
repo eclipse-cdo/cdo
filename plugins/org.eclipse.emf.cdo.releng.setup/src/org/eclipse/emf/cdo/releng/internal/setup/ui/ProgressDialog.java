@@ -558,13 +558,19 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
               try
               {
                 dialog.log(JOB_NAME);
-                result.set(runnable.run(dialog));
+
+                Set<String> restartReasons = runnable.run(dialog);
+                result.set(restartReasons);
               }
               catch (Throwable ex)
               {
                 Activator.log(ex);
-                dialog.log("An error occured: " + ex.getMessage());
-                dialog.log("The Error Log contains more infos...");
+
+                IStatus status = ex instanceof CoreException ? ((CoreException)ex).getStatus() : new Status(
+                    IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex);
+
+                dialog.log("An error occured: ");
+                dialog.log(status);
               }
               finally
               {
@@ -628,6 +634,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     PrintStream printStream;
+
     try
     {
       printStream = new PrintStream(out, false, "UTF-8");

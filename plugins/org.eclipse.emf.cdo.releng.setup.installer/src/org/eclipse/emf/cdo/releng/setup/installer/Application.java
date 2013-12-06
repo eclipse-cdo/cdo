@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.installer;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog.StartType;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PreferenceRecorderAction;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.installer.editor.SetupEditorAdvisor;
@@ -32,6 +33,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
@@ -39,17 +42,45 @@ public class Application implements IApplication
 {
   public Object start(final IApplicationContext context) throws Exception
   {
+    StartType startType = StartType.APPLICATION;
+    File restarting = new File(Activator.getDefault().getStateLocation().toString(), "restarting");
+
+    try
+    {
+      if (restarting.exists())
+      {
+        startType = StartType.RESTART;
+        if (!restarting.delete())
+        {
+          restarting.deleteOnExit();
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      // Ignore
+    }
+
     try
     {
       final Display display = Display.getDefault();
 
       for (;;)
       {
-        InstallerDialog dialog = new InstallerDialog(null, true);
+        InstallerDialog dialog = new InstallerDialog(null, startType, true);
         final int retcode = dialog.open();
 
         if (retcode == InstallerDialog.RETURN_RESTART)
         {
+          try
+          {
+            restarting.createNewFile();
+          }
+          catch (Exception ex)
+          {
+            // Ignore
+          }
+
           return EXIT_RESTART;
         }
 

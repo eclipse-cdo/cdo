@@ -58,6 +58,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
@@ -115,6 +116,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
@@ -156,6 +158,10 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private static final Object[] NO_ELEMENTS = new Object[0];
 
+  private static final IStatus UPDATE_FOUND_STATUS = new Status(IStatus.OK, Activator.PLUGIN_ID, "Updates found");
+
+  private StartType startType;
+
   private Map<Branch, Setup> setups;
 
   private ResourceSet resourceSet;
@@ -178,17 +184,22 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private boolean considerVisibleProjects;
 
-  public InstallerDialog(Shell parentShell, boolean considerVisibleProjects)
+  private ToolItem updateToolItem;
+
+  private UpdateSearchState updateSearchState;
+
+  public InstallerDialog(Shell parentShell, StartType startType, boolean considerVisibleProjects)
   {
     super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
         "/help/InstallerDialog.html");
-    resourceSet = EMFUtil.createResourceSet();
+    this.startType = startType;
     this.considerVisibleProjects = considerVisibleProjects;
+    resourceSet = EMFUtil.createResourceSet();
   }
 
   public InstallerDialog(Shell parentShell, Project project)
   {
-    this(parentShell, false);
+    this(parentShell, StartType.EDITOR, false);
 
     URI uri = project.eResource().getURI();
     if (uri.isPlatformResource())
@@ -712,7 +723,9 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         });
 
-    createToolItem(toolBar, "icons/install_update.gif", "Update").addSelectionListener(new SelectionAdapter()
+    updateToolItem = createToolItem(toolBar, "icons/install_update0.gif", "Update");
+    updateToolItem.setDisabledImage(getDefaultImage("icons/install_searching0.gif"));
+    updateToolItem.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
@@ -720,6 +733,8 @@ public class InstallerDialog extends AbstractSetupDialog
         update(false);
       }
     });
+
+    initUpdateSearch();
   }
 
   @Override
@@ -776,14 +791,14 @@ public class InstallerDialog extends AbstractSetupDialog
             SubMonitor sub = SubMonitor.convert(monitor, needsEarlyConfirmation ? "Updating..."
                 : "Checking for updates...", 1000);
 
-            IStatus updateStatus = checkForUpdates(agent, sub);
+            IStatus updateStatus = checkForUpdates(agent, false, sub);
             if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
             {
               InstallerDialog.this.getShell().getDisplay().asyncExec(new Runnable()
               {
                 public void run()
                 {
-                  MessageDialog.openInformation(null, "Update", "No updates were found");
+                  MessageDialog.openInformation(null, "Update", "No updates were found.");
                 }
               });
             }
@@ -793,13 +808,13 @@ public class InstallerDialog extends AbstractSetupDialog
               {
                 public void run()
                 {
-                  close();
-                  setReturnCode(RETURN_RESTART);
-
                   if (!needsEarlyConfirmation)
                   {
-                    MessageDialog.openInformation(null, "Update", "Updates were installed, restart required");
+                    MessageDialog.openInformation(null, "Update", "Updates were installed. Press OK to restart.");
                   }
+
+                  close();
+                  setReturnCode(RETURN_RESTART);
                 }
               });
             }
@@ -843,50 +858,185 @@ public class InstallerDialog extends AbstractSetupDialog
     return true;
   }
 
-  private IStatus checkForUpdates(IProvisioningAgent agent, SubMonitor sub)
+  private IStatus checkForUpdates(IProvisioningAgent agent, boolean resolveOnly, SubMonitor sub)
   {
     try
     {
-      addRepository(agent, TRAIN_URL, sub.newChild(200));
-      addRepository(agent, SetupConstants.RELENG_URL, sub.newChild(200));
-    }
-    catch (ProvisionException ex)
-    {
-      return ex.getStatus();
-    }
-
-    ProvisioningSession session = new ProvisioningSession(agent);
-    List<IInstallableUnit> ius = getInstalledUnits(session, PRODUCT_PREFIXES).getElement2();
-
-    UpdateOperation operation = new UpdateOperation(session, ius);
-    IStatus status = operation.resolveModal(sub.newChild(300));
-    if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
-    {
-      return status;
-    }
-
-    if (status.getSeverity() == IStatus.CANCEL)
-    {
-      throw new OperationCanceledException();
-    }
-
-    if (status.getSeverity() != IStatus.ERROR)
-    {
-      ProvisioningJob job = operation.getProvisioningJob(null);
-      if (job == null)
+      try
       {
-        String resolutionDetails = operation.getResolutionDetails();
-        throw new IllegalStateException(resolutionDetails);
+        addRepositories(agent, true, sub);
+      }
+      catch (ProvisionException ex)
+      {
+        return ex.getStatus();
       }
 
-      status = job.runModal(sub.newChild(300));
+      ProvisioningSession session = new ProvisioningSession(agent);
+      List<IInstallableUnit> ius = getInstalledUnits(session, PRODUCT_PREFIXES).getElement2();
+
+      UpdateOperation operation = new UpdateOperation(session, ius);
+      IStatus status = operation.resolveModal(sub.newChild(300));
+      if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
+      {
+        return status;
+      }
+
       if (status.getSeverity() == IStatus.CANCEL)
       {
         throw new OperationCanceledException();
       }
+
+      if (status.getSeverity() != IStatus.ERROR)
+      {
+        ProvisioningJob job = operation.getProvisioningJob(null);
+        if (job == null)
+        {
+          String resolutionDetails = operation.getResolutionDetails();
+          throw new IllegalStateException(resolutionDetails);
+        }
+
+        if (resolveOnly)
+        {
+          return UPDATE_FOUND_STATUS;
+        }
+
+        sub.setTaskName("Installing updates...");
+
+        try
+        {
+          addRepositories(agent, false, sub);
+        }
+        catch (ProvisionException ex)
+        {
+          return ex.getStatus();
+        }
+
+        status = job.runModal(sub.newChild(300));
+        if (status.getSeverity() == IStatus.CANCEL)
+        {
+          throw new OperationCanceledException();
+        }
+      }
+
+      return status;
+    }
+    finally
+    {
+      if (!resolveOnly)
+      {
+        setUpdateIcon(0);
+      }
+    }
+  }
+
+  private void initUpdateSearch()
+  {
+    if (startType != StartType.APPLICATION)
+    {
+      return;
     }
 
-    return status;
+    updateSearchState = UpdateSearchState.SEARCHING;
+
+    new Thread("Update Icon Setter")
+    {
+      @Override
+      public void run()
+      {
+        try
+        {
+          for (int i = 0; updateSearchState != UpdateSearchState.DONE; i = ++i % 10)
+          {
+            if (updateToolItem == null || updateToolItem.isDisposed())
+            {
+              return;
+            }
+
+            int icon = i > 3 ? 0 : i;
+            setUpdateIcon(icon);
+            sleep(200);
+          }
+
+          setUpdateIcon(0);
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+        }
+      }
+    }.start();
+
+    new Thread("Update Searcher")
+    {
+      @Override
+      public void run()
+      {
+        try
+        {
+          IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
+
+          try
+          {
+            IStatus status = checkForUpdates(agent, true, SubMonitor.convert(null));
+            if (status == UPDATE_FOUND_STATUS)
+            {
+              updateSearchState = UpdateSearchState.FOUND;
+            }
+            else
+            {
+              updateSearchState = UpdateSearchState.DONE;
+            }
+          }
+          finally
+          {
+            ServiceUtil.ungetService(agent);
+          }
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+        }
+      }
+    }.start();
+  }
+
+  private void setUpdateIcon(final int icon)
+  {
+    updateToolItem.getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        if (updateToolItem == null || updateToolItem.isDisposed())
+        {
+          return;
+        }
+
+        try
+        {
+          switch (updateSearchState)
+          {
+          case SEARCHING:
+            updateToolItem.setDisabledImage(getDefaultImage("icons/install_searching" + icon + ".gif"));
+            updateToolItem.setEnabled(false);
+            break;
+
+          case FOUND:
+            updateToolItem.setImage(getDefaultImage("icons/install_update" + icon + ".gif"));
+            updateToolItem.setEnabled(true);
+            break;
+
+          case DONE:
+            updateToolItem.setImage(getDefaultImage("icons/install_update0.gif"));
+            updateToolItem.setEnabled(true);
+            break;
+          }
+        }
+        catch (Exception ex)
+        {
+          // Ignore
+        }
+      }
+    });
   }
 
   private Pair<String, List<IInstallableUnit>> getInstalledUnits(ProvisioningSession session, String... iuPrefixes)
@@ -1019,16 +1169,29 @@ public class InstallerDialog extends AbstractSetupDialog
     }.start();
   }
 
-  private void addRepository(IProvisioningAgent agent, String location, IProgressMonitor monitor)
+  private void addRepositories(IProvisioningAgent agent, boolean metadata, SubMonitor sub) throws ProvisionException
+  {
+    addRepository(agent, TRAIN_URL, metadata, sub.newChild(200));
+    addRepository(agent, SetupConstants.RELENG_URL, metadata, sub.newChild(200));
+  }
+
+  private void addRepository(IProvisioningAgent agent, String location, boolean metadata, IProgressMonitor monitor)
       throws ProvisionException
   {
-    SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 1000);
+    SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 500);
 
     try
     {
       java.net.URI uri = new java.net.URI(location);
-      addMetadataRepository(agent, uri, sub.newChild(500));
-      addArtifactRepository(agent, uri, sub.newChild(500));
+
+      if (metadata)
+      {
+        addMetadataRepository(agent, uri, sub);
+      }
+      else
+      {
+        addArtifactRepository(agent, uri, sub);
+      }
     }
     catch (URISyntaxException ex)
     {
@@ -1558,10 +1721,28 @@ public class InstallerDialog extends AbstractSetupDialog
     ErrorDialog.open(ex);
   }
 
-  class UpdatingException extends Exception
+  /**
+   * @author Eike Stepper
+   */
+  public enum StartType
+  {
+    APPLICATION, RESTART, EDITOR
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private enum UpdateSearchState
+  {
+    SEARCHING, FOUND, DONE
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class UpdatingException extends Exception
   {
     private static final long serialVersionUID = 1L;
-
   }
 
   /**

@@ -96,6 +96,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -112,6 +114,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -222,8 +225,9 @@ public class InstallerDialog extends AbstractSetupDialog
   @Override
   protected void createUI(Composite parent)
   {
-    viewer = new CheckboxTreeViewer(parent, SWT.FULL_SELECTION);
-    Tree tree = viewer.getTree();
+    viewer = new CheckboxTreeViewer(parent, SWT.FULL_SELECTION | SWT.NO_SCROLL | SWT.V_SCROLL);
+
+    final Tree tree = viewer.getTree();
     tree.setLinesVisible(true);
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -533,14 +537,16 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    TreeViewerColumn treeViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
-    treeViewerColumn.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new DialogLabelDecorator()));
-    TreeColumn trclmnProjectBranch = treeViewerColumn.getColumn();
-    trclmnProjectBranch.setWidth(300);
-    trclmnProjectBranch.setText("Project / Branch");
+    TreeViewerColumn projectViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
+    projectViewerColumn.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new DialogLabelDecorator()));
 
-    TreeViewerColumn treeViewerColumn_1 = new TreeViewerColumn(viewer, SWT.NONE);
-    treeViewerColumn_1.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new DialogLabelDecorator())
+    final TreeColumn projectColumn = projectViewerColumn.getColumn();
+    projectColumn.setText("Project / Branch");
+    projectColumn.setResizable(false);
+    projectColumn.setMoveable(false);
+
+    TreeViewerColumn eclipseViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
+    eclipseViewerColumn.setLabelProvider(new DecoratingColumLabelProvider(labelProvider, new DialogLabelDecorator())
     {
       @Override
       public String getText(Object element)
@@ -566,9 +572,10 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     });
 
-    TreeColumn eclipseVersionColumn = treeViewerColumn_1.getColumn();
-    eclipseVersionColumn.setWidth(150);
-    eclipseVersionColumn.setText("Eclipse Version");
+    final TreeColumn eclipseColumn = eclipseViewerColumn.getColumn();
+    eclipseColumn.setText("Eclipse Version");
+    eclipseColumn.setMoveable(false);
+    eclipseColumn.setResizable(false);
 
     createSeparator(parent);
 
@@ -1477,6 +1484,38 @@ public class InstallerDialog extends AbstractSetupDialog
 
               viewer.setInput(input);
               cellEditor.setInput(this);
+
+              final Tree tree = viewer.getTree();
+              final TreeColumn projectColumn = tree.getColumn(0);
+              final TreeColumn eclipseColumn = tree.getColumn(1);
+
+              final ControlAdapter columnResizer = new ControlAdapter()
+              {
+                @Override
+                public void controlResized(ControlEvent e)
+                {
+                  Point size = tree.getSize();
+                  ScrollBar bar = tree.getVerticalBar();
+                  if (bar != null && bar.isVisible())
+                  {
+                    size.x -= bar.getSize().x;
+                  }
+
+                  projectColumn.setWidth(size.x - eclipseColumn.getWidth());
+                }
+              };
+
+              eclipseColumn.pack();
+              eclipseColumn.setWidth(eclipseColumn.getWidth() + 10);
+
+              tree.addControlListener(columnResizer);
+              tree.getDisplay().asyncExec(new Runnable()
+              {
+                public void run()
+                {
+                  columnResizer.controlResized(null);
+                }
+              });
             }
           });
         }
@@ -1855,19 +1894,20 @@ public class InstallerDialog extends AbstractSetupDialog
     @Override
     protected void createUI(Composite parent)
     {
-      Table table = new Table(parent, SWT.FULL_SELECTION);
-      table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-      TableColumn idColumn = new TableColumn(table, SWT.NONE);
-      idColumn.setText("Installed Unit");
-      idColumn.setWidth(400);
-
-      TableColumn versionColumn = new TableColumn(table, SWT.NONE);
-      versionColumn.setText("Version");
-      versionColumn.setWidth(400);
-
+      final Table table = new Table(parent, SWT.FULL_SELECTION | SWT.NO_SCROLL | SWT.V_SCROLL);
       table.setHeaderVisible(true);
       table.setLinesVisible(true);
+      table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+      final TableColumn idColumn = new TableColumn(table, SWT.NONE);
+      idColumn.setText("Installed Unit");
+      idColumn.setResizable(false);
+      idColumn.setMoveable(false);
+
+      final TableColumn versionColumn = new TableColumn(table, SWT.NONE);
+      versionColumn.setText("Version");
+      versionColumn.setResizable(false);
+      versionColumn.setMoveable(false);
 
       IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
 
@@ -1909,8 +1949,33 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         }
 
-        idColumn.pack();
+        final ControlAdapter columnResizer = new ControlAdapter()
+        {
+          @Override
+          public void controlResized(ControlEvent e)
+          {
+            Point size = table.getSize();
+            ScrollBar bar = table.getVerticalBar();
+            if (bar != null && bar.isVisible())
+            {
+              size.x -= bar.getSize().x;
+            }
+
+            idColumn.setWidth(size.x - versionColumn.getWidth());
+          }
+        };
+
         versionColumn.pack();
+        versionColumn.setWidth(versionColumn.getWidth() + 10);
+
+        table.addControlListener(columnResizer);
+        table.getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            columnResizer.controlResized(null);
+          }
+        });
       }
       finally
       {

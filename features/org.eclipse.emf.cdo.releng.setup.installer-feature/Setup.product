@@ -3,6 +3,7 @@
 
 <product name="Installer" id="org.eclipse.emf.cdo.releng.setup.installer.product" application="org.eclipse.emf.cdo.releng.setup.installer.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
+
    <configIni use="">
    </configIni>
 
@@ -17,14 +18,18 @@ configuration</programArgs>
 -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_16.gif" i32="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_32.gif" i48="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_48.gif" i64="/org.eclipse.emf.cdo.releng.setup.installer/icons/alt_window_64.gif"/>
+   <windowImages i16="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_16.gif" i32="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_32.gif" i48="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_48.gif" i64="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_64.gif"/>
 
    <launcher name="setup-eclipse">
+      <linux icon="/org.eclipse.emf.cdo.releng.setup.installer/icons/window.xpm"/>
+      <macosx icon="/org.eclipse.emf.cdo.releng.setup.installer/icons/window.icns"/>
       <solaris/>
-      <win useIco="false">
+      <win useIco="true">
+         <ico path="/org.eclipse.emf.cdo.releng.setup.installer/icons/window.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>

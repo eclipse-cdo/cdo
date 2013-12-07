@@ -253,16 +253,24 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
     EList<SetupTask> setupTasks = new BasicEList<SetupTask>();
 
     Eclipse eclipse = getEclipseVersion();
-    Configuration configuration = eclipse.getConfiguration();
-    Project project = branch.getProject();
     Branch branch = getBranch();
-    Preferences preferences = getPreferences();
 
-    getSetupTasks(filterRestrictions, trigger, setupTasks, configuration);
-    getSetupTasks(filterRestrictions, trigger, setupTasks, eclipse);
-    getSetupTasks(filterRestrictions, trigger, setupTasks, project);
-    getSetupTasks(filterRestrictions, trigger, setupTasks, branch);
-    getSetupTasks(filterRestrictions, trigger, setupTasks, preferences);
+    if (!eclipse.eIsProxy() && !branch.eIsProxy())
+    {
+      Configuration configuration = eclipse.getConfiguration();
+      Project project = branch.getProject();
+
+      getSetupTasks(filterRestrictions, trigger, setupTasks, configuration);
+      getSetupTasks(filterRestrictions, trigger, setupTasks, eclipse);
+      getSetupTasks(filterRestrictions, trigger, setupTasks, project);
+      getSetupTasks(filterRestrictions, trigger, setupTasks, branch);
+
+      Preferences preferences = getPreferences();
+      if (!preferences.eIsProxy())
+      {
+        getSetupTasks(filterRestrictions, trigger, setupTasks, preferences);
+      }
+    }
 
     return setupTasks;
   }

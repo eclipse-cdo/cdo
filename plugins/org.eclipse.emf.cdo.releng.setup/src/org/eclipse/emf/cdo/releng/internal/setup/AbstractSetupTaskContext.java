@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.util.OS;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -71,6 +72,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
+  private ResourceSet resourceSet = EMFUtil.createResourceSet();
+
   private AbstractSetupTaskContext(Trigger trigger)
   {
     this.trigger = trigger;
@@ -98,11 +101,18 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     this.branchDir = branchDir;
 
-    ResourceSet resourceSet = EMFUtil.createResourceSet();
-
     URI uri = getSetupURI(branchDir);
     Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
-    initialize((Setup)resource.getContents().get(0), true);
+    EList<EObject> contents = resource.getContents();
+    if (!contents.isEmpty())
+    {
+      initialize((Setup)contents.get(0), true);
+    }
+  }
+
+  public ResourceSet getResourceSet()
+  {
+    return resourceSet;
   }
 
   private void initialize(Setup setup, boolean considerNetworkPreferences)

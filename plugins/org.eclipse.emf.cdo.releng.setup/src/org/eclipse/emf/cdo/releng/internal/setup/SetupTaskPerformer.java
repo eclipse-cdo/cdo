@@ -151,77 +151,85 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void initTriggeredSetupTasks()
   {
     Setup setup = getSetup();
-    Trigger trigger = getTrigger();
 
-    EList<SetupTask> setupTasks = setup.getSetupTasks(true, trigger);
-    triggeredSetupTasks = setupTasks; // Debugging help
-
-    if (!setupTasks.isEmpty())
+    if (setup == null)
     {
-      Map<SetupTask, SetupTask> substitutions = getSubstitutions(setupTasks);
-      setSetup(copySetup(setupTasks, substitutions));
+      triggeredSetupTasks = new BasicEList<SetupTask>();
+    }
+    else
+    {
+      Trigger trigger = getTrigger();
 
-      Set<String> keys = new HashSet<String>();
-      for (SetupTask setupTask : setupTasks)
+      EList<SetupTask> setupTasks = setup.getSetupTasks(true, trigger);
+      triggeredSetupTasks = setupTasks; // Debugging help
+
+      if (!setupTasks.isEmpty())
       {
-        if (setupTask instanceof ContextVariableTask)
+        Map<SetupTask, SetupTask> substitutions = getSubstitutions(setupTasks);
+        setSetup(copySetup(setupTasks, substitutions));
+
+        Set<String> keys = new HashSet<String>();
+        for (SetupTask setupTask : setupTasks)
         {
-          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
-
-          String name = contextVariableTask.getName();
-          keys.add(name);
-
-          String value = contextVariableTask.getValue();
-          put(name, value);
-        }
-      }
-
-      Map<String, Set<String>> variables = new HashMap<String, Set<String>>();
-      for (Map.Entry<Object, Object> entry : entrySet())
-      {
-        Object entryKey = entry.getKey();
-        if (keys.contains(entryKey))
-        {
-          Object entryValue = entry.getValue();
-          if (entryKey instanceof String && entryValue != null)
+          if (setupTask instanceof ContextVariableTask)
           {
-            String key = (String)entryKey;
-            String value = entryValue.toString();
+            ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
 
-            variables.put(key, getVariables(value));
+            String name = contextVariableTask.getName();
+            keys.add(name);
+
+            String value = contextVariableTask.getValue();
+            put(name, value);
           }
         }
-      }
 
-      EList<Map.Entry<String, Set<String>>> orderedVariables = reorderVariables(variables);
-      for (Map.Entry<String, Set<String>> entry : orderedVariables)
-      {
-        String key = entry.getKey();
-        Object object = get(key);
-        if (object != null)
+        Map<String, Set<String>> variables = new HashMap<String, Set<String>>();
+        for (Map.Entry<Object, Object> entry : entrySet())
         {
-          String value = expandString(object.toString());
-          put(key, value);
-        }
-      }
-
-      reorderSetupTasks(setupTasks);
-      expandStrings(setupTasks);
-
-      for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
-      {
-        SetupTask setupTask = it.next();
-        if (setupTask instanceof ContextVariableTask)
-        {
-          ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
-          if (!contextVariableTask.isStringSubstitution())
+          Object entryKey = entry.getKey();
+          if (keys.contains(entryKey))
           {
-            if (!unresolvedVariables.contains(contextVariableTask))
+            Object entryValue = entry.getValue();
+            if (entryKey instanceof String && entryValue != null)
             {
-              resolvedVariables.add(contextVariableTask);
-            }
+              String key = (String)entryKey;
+              String value = entryValue.toString();
 
-            it.remove();
+              variables.put(key, getVariables(value));
+            }
+          }
+        }
+
+        EList<Map.Entry<String, Set<String>>> orderedVariables = reorderVariables(variables);
+        for (Map.Entry<String, Set<String>> entry : orderedVariables)
+        {
+          String key = entry.getKey();
+          Object object = get(key);
+          if (object != null)
+          {
+            String value = expandString(object.toString());
+            put(key, value);
+          }
+        }
+
+        reorderSetupTasks(setupTasks);
+        expandStrings(setupTasks);
+
+        for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
+        {
+          SetupTask setupTask = it.next();
+          if (setupTask instanceof ContextVariableTask)
+          {
+            ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
+            if (!contextVariableTask.isStringSubstitution())
+            {
+              if (!unresolvedVariables.contains(contextVariableTask))
+              {
+                resolvedVariables.add(contextVariableTask);
+              }
+
+              it.remove();
+            }
           }
         }
       }
@@ -732,16 +740,19 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   {
     neededSetupTasks = new BasicEList<SetupTask>();
 
-    for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
+    if (setupTasks != null)
     {
-      SetupTask setupTask = it.next();
-      if (setupTask.isNeeded(this))
+      for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
       {
-        neededSetupTasks.add(setupTask);
-      }
-      else
-      {
-        setupTask.dispose();
+        SetupTask setupTask = it.next();
+        if (setupTask.isNeeded(this))
+        {
+          neededSetupTasks.add(setupTask);
+        }
+        else
+        {
+          setupTask.dispose();
+        }
       }
     }
 

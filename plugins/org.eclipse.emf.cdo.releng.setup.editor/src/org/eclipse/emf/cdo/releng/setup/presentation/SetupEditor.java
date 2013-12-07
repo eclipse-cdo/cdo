@@ -1717,74 +1717,77 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
         SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(trigger, setup);
         List<SetupTask> triggeredSetupTasks = new ArrayList<SetupTask>(setupTaskPerformer.getTriggeredSetupTasks());
 
-        for (EObject eObject : setupTaskPerformer.getCopyMap().values())
+        if (!triggeredSetupTasks.isEmpty())
         {
-          Resource resource = ((InternalEObject)eObject).eDirectResource();
-          if (resource != null && !resource.eAdapters().contains(editingDomainProvider))
+          for (EObject eObject : setupTaskPerformer.getCopyMap().values())
           {
-            resource.eAdapters().add(editingDomainProvider);
+            Resource resource = ((InternalEObject)eObject).eDirectResource();
+            if (resource != null && !resource.eAdapters().contains(editingDomainProvider))
+            {
+              resource.eAdapters().add(editingDomainProvider);
+            }
           }
+
+          ItemProvider undeclaredVariablesItem = new VariableContainer(setupTaskPerformer, "Undeclared Variables",
+              UNDECLARED_VARIABLE_GROUP_IMAGE);
+          EList<Object> undeclaredVariablesItemChildren = undeclaredVariablesItem.getChildren();
+          Set<String> undeclaredVariables = setupTaskPerformer.getUndeclaredVariables();
+          for (String key : undeclaredVariables)
+          {
+            ContextVariableTask contextVariableTask = SetupFactory.eINSTANCE.createContextVariableTask();
+            contextVariableTask.setName(key);
+            undeclaredVariablesItemChildren.add(contextVariableTask);
+            parents.put(contextVariableTask, undeclaredVariablesItem);
+          }
+
+          if (!undeclaredVariablesItemChildren.isEmpty())
+          {
+            branchItem.getChildren().add(undeclaredVariablesItem);
+          }
+
+          ItemProvider unresolvedVariablesItem = new VariableContainer(setupTaskPerformer, "Unresolved Variables",
+              VARIABLE_GROUP_IMAGE);
+          EList<Object> unresolvedVariablesItemChildren = unresolvedVariablesItem.getChildren();
+          List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
+          for (ContextVariableTask contextVariableTask : unresolvedVariables)
+          {
+            unresolvedVariablesItemChildren.add(contextVariableTask);
+            parents.put(contextVariableTask, unresolvedVariablesItem);
+          }
+
+          if (!unresolvedVariablesItemChildren.isEmpty())
+          {
+            branchItem.getChildren().add(unresolvedVariablesItem);
+          }
+
+          ItemProvider resolvedVariablesItem = new VariableContainer(setupTaskPerformer, "Resolved Variables",
+              VARIABLE_GROUP_IMAGE);
+          EList<Object> resolvedVariablesItemChildren = resolvedVariablesItem.getChildren();
+          List<ContextVariableTask> resolvedVariables = setupTaskPerformer.getResolvedVariables();
+          for (ContextVariableTask contextVariableTask : resolvedVariables)
+          {
+            resolvedVariablesItemChildren.add(contextVariableTask);
+            parents.put(contextVariableTask, resolvedVariablesItem);
+          }
+
+          if (!resolvedVariablesItemChildren.isEmpty())
+          {
+            branchItem.getChildren().add(resolvedVariablesItem);
+          }
+
+          branchItem.getChildren().addAll(triggeredSetupTasks);
+
+          for (SetupTask setupTask : triggeredSetupTasks)
+          {
+            parents.put(setupTask, branchItem);
+          }
+
+          copyMap.putAll(setupTaskPerformer.getCopyMap());
+          copyMap.put(branch, branchItem);
         }
 
-        ItemProvider undeclaredVariablesItem = new VariableContainer(setupTaskPerformer, "Undeclared Variables",
-            UNDECLARED_VARIABLE_GROUP_IMAGE);
-        EList<Object> undeclaredVariablesItemChildren = undeclaredVariablesItem.getChildren();
-        Set<String> undeclaredVariables = setupTaskPerformer.getUndeclaredVariables();
-        for (String key : undeclaredVariables)
-        {
-          ContextVariableTask contextVariableTask = SetupFactory.eINSTANCE.createContextVariableTask();
-          contextVariableTask.setName(key);
-          undeclaredVariablesItemChildren.add(contextVariableTask);
-          parents.put(contextVariableTask, undeclaredVariablesItem);
-        }
-
-        if (!undeclaredVariablesItemChildren.isEmpty())
-        {
-          branchItem.getChildren().add(undeclaredVariablesItem);
-        }
-
-        ItemProvider unresolvedVariablesItem = new VariableContainer(setupTaskPerformer, "Unresolved Variables",
-            VARIABLE_GROUP_IMAGE);
-        EList<Object> unresolvedVariablesItemChildren = unresolvedVariablesItem.getChildren();
-        List<ContextVariableTask> unresolvedVariables = setupTaskPerformer.getUnresolvedVariables();
-        for (ContextVariableTask contextVariableTask : unresolvedVariables)
-        {
-          unresolvedVariablesItemChildren.add(contextVariableTask);
-          parents.put(contextVariableTask, unresolvedVariablesItem);
-        }
-
-        if (!unresolvedVariablesItemChildren.isEmpty())
-        {
-          branchItem.getChildren().add(unresolvedVariablesItem);
-        }
-
-        ItemProvider resolvedVariablesItem = new VariableContainer(setupTaskPerformer, "Resolved Variables",
-            VARIABLE_GROUP_IMAGE);
-        EList<Object> resolvedVariablesItemChildren = resolvedVariablesItem.getChildren();
-        List<ContextVariableTask> resolvedVariables = setupTaskPerformer.getResolvedVariables();
-        for (ContextVariableTask contextVariableTask : resolvedVariables)
-        {
-          resolvedVariablesItemChildren.add(contextVariableTask);
-          parents.put(contextVariableTask, resolvedVariablesItem);
-        }
-
-        if (!resolvedVariablesItemChildren.isEmpty())
-        {
-          branchItem.getChildren().add(resolvedVariablesItem);
-        }
-
-        branchItem.getChildren().addAll(triggeredSetupTasks);
-
-        for (SetupTask setupTask : triggeredSetupTasks)
-        {
-          parents.put(setupTask, branchItem);
-        }
-
-        copyMap.putAll(setupTaskPerformer.getCopyMap());
-        copyMap.put(branch, branchItem);
+        copyMap.put(project, projectItem);
       }
-
-      copyMap.put(project, projectItem);
 
       return projectItem;
     }

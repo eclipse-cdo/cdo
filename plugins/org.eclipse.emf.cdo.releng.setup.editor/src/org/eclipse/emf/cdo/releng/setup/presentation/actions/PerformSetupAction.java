@@ -10,15 +10,27 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation.actions;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
+import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
+import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.widgets.Shell;
 
@@ -52,6 +64,47 @@ public class PerformSetupAction extends AbstractSetupAction
       }
       else
       {
+        MultiStatus status = new MultiStatus(Activator.PLUGIN_ID, 0, "Resource load errors", null);
+
+        Setup setup = setupTaskPerformer.getSetup();
+        Branch branch = setup.getBranch();
+        if (branch.eIsProxy())
+        {
+          status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Branch cannot be resolved: "
+              + EcoreUtil.getURI(branch)));
+        }
+
+        Eclipse eclipse = setup.getEclipseVersion();
+        if (eclipse.eIsProxy())
+        {
+          status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Eclipse version cannot be resolved: "
+              + EcoreUtil.getURI(eclipse)));
+        }
+
+        for (Resource resource : setupTaskPerformer.getResourceSet().getResources())
+        {
+          for (Resource.Diagnostic diagnostic : resource.getErrors())
+          {
+            if (diagnostic instanceof Throwable)
+            {
+              status
+                  .add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, diagnostic.getMessage(), (Throwable)diagnostic));
+            }
+            else
+            {
+              status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, diagnostic.getMessage()));
+            }
+          }
+        }
+
+        if (!status.isOK())
+        {
+          CoreException exception = new CoreException(status);
+          exception.setStackTrace(new StackTraceElement[0]);
+          ErrorDialog.open(exception);
+          return;
+        }
+
         Shell shell = getWindow().getShell();
         ProgressDialog.run(shell, new ProgressLogRunnable()
         {

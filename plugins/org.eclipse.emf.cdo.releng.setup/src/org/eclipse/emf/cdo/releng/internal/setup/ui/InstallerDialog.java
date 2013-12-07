@@ -1348,7 +1348,6 @@ public class InstallerDialog extends AbstractSetupDialog
                           preferences = SetupFactory.eINSTANCE.createPreferences();
                           resource.getContents().add(preferences);
                           saveEObject(preferences);
-
                         }
 
                         close();

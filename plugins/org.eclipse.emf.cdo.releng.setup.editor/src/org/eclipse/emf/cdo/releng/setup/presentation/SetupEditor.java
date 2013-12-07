@@ -39,6 +39,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.MarkerHelper;
@@ -66,6 +67,7 @@ import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProvider;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
@@ -160,6 +162,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
@@ -826,6 +829,24 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   protected void initializeEditingDomain()
   {
     initializeEditingDomainGen();
+
+    adapterFactory.insertAdapterFactory(new ResourceItemProviderAdapterFactory()
+    {
+      @Override
+      public Adapter createResourceAdapter()
+      {
+        return new ResourceItemProvider(this)
+        {
+          @Override
+          public Collection<?> getChildren(Object object)
+          {
+            Resource resource = (Resource)object;
+            Object[] contents = getContents(resource);
+            return Arrays.asList(contents);
+          }
+        };
+      }
+    });
 
     editingDomain.getResourceSet().getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
 

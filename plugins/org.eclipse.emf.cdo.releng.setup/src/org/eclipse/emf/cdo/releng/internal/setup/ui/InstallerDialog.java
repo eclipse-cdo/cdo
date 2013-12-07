@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -89,7 +88,6 @@ import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -232,10 +230,9 @@ public class InstallerDialog extends AbstractSetupDialog
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+    final Map<Object, Object> parentMap = new HashMap<Object, Object>();
     final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
     {
-      private Map<Object, Object> parentMap = new HashMap<Object, Object>();
-
       @Override
       public boolean hasChildren(Object object)
       {
@@ -301,8 +298,7 @@ public class InstallerDialog extends AbstractSetupDialog
                 // Force proxy reference from the configuration to resolve too.
                 EList<Project> projects = configuration.getProjects();
                 int index = projects.indexOf(eObject);
-                Project resolvedProject = projects.get(index);
-                // projects.set(index, resolvedProject);
+                projects.get(index);
 
                 final Project project = (Project)object;
                 Object[] children = project.getBranches().toArray();
@@ -494,19 +490,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
                 if (allChecked)
                 {
-                  Object[] children = ((ITreeContentProvider)viewer.getContentProvider()).getChildren(viewer.getInput());
-                  for (Object object : children)
-                  {
-                    if (object instanceof Project)
-                    {
-                      Project child = (Project)object;
-                      if (ObjectUtil.equals(child.getName(), branch.getProject().getName()))
-                      {
-                        viewer.setChecked(child, true);
-                        break;
-                      }
-                    }
-                  }
+                  Object project = parentMap.get(branch);
+                  viewer.setChecked(project, true);
                 }
 
                 viewer.editElement(branch, 1);
@@ -516,20 +501,8 @@ public class InstallerDialog extends AbstractSetupDialog
           else
           {
             Branch branch = (Branch)element;
-            Project project = branch.getProject();
-            Object[] children = ((ITreeContentProvider)viewer.getContentProvider()).getChildren(viewer.getInput());
-            for (Object object : children)
-            {
-              if (object instanceof Project)
-              {
-                Project child = (Project)object;
-                if (ObjectUtil.equals(child.getName(), project.getName()))
-                {
-                  viewer.setChecked(child, false);
-                  break;
-                }
-              }
-            }
+            Object project = parentMap.get(branch);
+            viewer.setChecked(project, false);
           }
         }
 
@@ -1072,18 +1045,21 @@ public class InstallerDialog extends AbstractSetupDialog
           switch (updateSearchState)
           {
           case SEARCHING:
+            updateToolItem.setToolTipText("Checking for updates...");
             updateToolItem.setDisabledImage(getDefaultImage("icons/install_searching" + icon + ".gif"));
             updateToolItem.setEnabled(false);
             break;
 
           case FOUND:
+            updateToolItem.setToolTipText("Install available updates");
             updateToolItem.setImage(getDefaultImage("icons/install_update" + icon + ".gif"));
             updateToolItem.setEnabled(true);
             break;
 
           case DONE:
-            updateToolItem.setImage(getDefaultImage("icons/install_update0.gif"));
-            updateToolItem.setEnabled(true);
+            updateToolItem.setToolTipText("No updates available");
+            updateToolItem.setDisabledImage(getDefaultImage("icons/install_update_disabled.gif"));
+            updateToolItem.setEnabled(false);
             break;
           }
         }

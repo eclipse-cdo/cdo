@@ -26,12 +26,16 @@ import org.eclipse.swt.events.HelpEvent;
 import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Sash;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -106,6 +110,59 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
   public String getHelp()
   {
     return help;
+  }
+
+  @Override
+  public void openTray(DialogTray tray) throws IllegalStateException, UnsupportedOperationException
+  {
+    super.openTray(tray);
+
+    final Control trayControl = getFieldValue("trayControl");
+    final Label rightSeparator = getFieldValue("rightSeparator");
+    final Sash sash = getFieldValue("sash");
+    if (trayControl == null || rightSeparator == null || sash == null)
+    {
+      return;
+    }
+
+    final GridData data = (GridData)trayControl.getLayoutData();
+    sash.addListener(SWT.Selection, new Listener()
+    {
+      public void handleEvent(Event event)
+      {
+        if (event.detail == SWT.DRAG)
+        {
+          Shell shell = getShell();
+          Rectangle clientArea = shell.getClientArea();
+          int newWidth = clientArea.width - event.x - (sash.getSize().x + rightSeparator.getSize().x);
+          if (newWidth != data.widthHint)
+          {
+            data.widthHint = newWidth;
+            shell.layout();
+          }
+        }
+      }
+    });
+  }
+
+  private <T> T getFieldValue(String name)
+  {
+    try
+    {
+      Field field = ReflectUtil.getField(TrayDialog.class, name);
+      if (field != null)
+      {
+        @SuppressWarnings("unchecked")
+        T value = (T)ReflectUtil.getValue(field, this);
+        return value;
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return null;
   }
 
   @Override

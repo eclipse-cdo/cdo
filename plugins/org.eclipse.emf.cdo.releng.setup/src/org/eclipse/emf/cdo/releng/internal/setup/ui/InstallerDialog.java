@@ -970,16 +970,16 @@ public class InstallerDialog extends AbstractSetupDialog
       {
         try
         {
-          for (int i = 0; updateSearchState != UpdateSearchState.DONE; i = ++i % 10)
+          for (int i = 0; updateSearchState != UpdateSearchState.DONE; i = ++i % 20)
           {
             if (updateToolItem == null || updateToolItem.isDisposed())
             {
               return;
             }
 
-            int icon = i > 3 ? 0 : i;
+            int icon = i > 7 ? 0 : i;
             setUpdateIcon(icon);
-            sleep(200);
+            sleep(80);
           }
 
           setUpdateIcon(0);

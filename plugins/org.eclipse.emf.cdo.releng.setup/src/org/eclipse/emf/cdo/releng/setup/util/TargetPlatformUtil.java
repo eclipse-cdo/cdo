@@ -38,7 +38,11 @@ public final class TargetPlatformUtil
     try
     {
       service = ServiceUtil.getService(ITargetPlatformService.class);
-      return service.getWorkspaceTargetHandle().getTargetDefinition();
+      ITargetHandle workspaceTargetHandle = service.getWorkspaceTargetHandle();
+      if (workspaceTargetHandle != null)
+      {
+        return workspaceTargetHandle.getTargetDefinition();
+      }
     }
     catch (CoreException ex)
     {

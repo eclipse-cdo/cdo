@@ -357,9 +357,9 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
   public void perform(SetupTaskContext context) throws Exception
   {
     String filePattern = getFilePattern();
-    EditorRegistry registry = (EditorRegistry)PlatformUI.getWorkbench().getEditorRegistry();
+    final EditorRegistry registry = (EditorRegistry)PlatformUI.getWorkbench().getEditorRegistry();
 
-    Map<String, FileEditorMapping> mappings = getMappings();
+    final Map<String, FileEditorMapping> mappings = getMappings();
     FileEditorMapping mapping = mappings.get(filePattern);
     if (mapping == null)
     {
@@ -395,10 +395,16 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       }
     }
 
-    registry.setFileEditorMappings(mappings.values().toArray(new FileEditorMapping[mappings.size()]));
-    registry.saveAssociations();
+    performUI(context, new RunnableWithContext()
+    {
+      public void run(SetupTaskContext context) throws Exception
+      {
+        registry.setFileEditorMappings(mappings.values().toArray(new FileEditorMapping[mappings.size()]));
+        registry.saveAssociations();
 
-    PrefUtil.savePrefs();
+        PrefUtil.savePrefs();
+      }
+    });
   }
 
   private static Map<String, FileEditorMapping> getMappings()

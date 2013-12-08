@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.ui.PlatformUI;
 
 import java.util.Set;
 
@@ -296,36 +295,23 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
   {
     context.log("Setting preference " + getKey() + " = " + getValue());
 
-    final Exception[] exception = { null };
-    PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay().syncExec(new Runnable()
+    performUI(context, new RunnableWithContext()
     {
-      public void run()
+      public void run(SetupTaskContext context) throws Exception
       {
-        try
+        org.osgi.service.prefs.Preferences node = (org.osgi.service.prefs.Preferences)cachedNode;
+        if (getValue() != null)
         {
-          org.osgi.service.prefs.Preferences node = (org.osgi.service.prefs.Preferences)cachedNode;
-          if (getValue() != null)
-          {
-            node.put(property, getValue());
-          }
-          else
-          {
-            node.remove(property);
-          }
+          node.put(property, getValue());
+        }
+        else
+        {
+          node.remove(property);
+        }
 
-          node.flush();
-        }
-        catch (Exception ex)
-        {
-          exception[0] = ex;
-        }
+        node.flush();
       }
     });
-
-    if (exception[0] != null)
-    {
-      throw exception[0];
-    }
   }
 
 } // EclipsePreferenceTaskImpl

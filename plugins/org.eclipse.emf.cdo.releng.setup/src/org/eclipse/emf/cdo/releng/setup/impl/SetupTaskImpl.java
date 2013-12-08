@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
@@ -35,6 +36,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
+import org.eclipse.ui.PlatformUI;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -594,6 +597,59 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     return result.toString();
   }
 
+  protected URI createResolvedURI(String uri)
+  {
+    if (uri == null)
+    {
+      return null;
+    }
+
+    URI result = URI.createURI(uri);
+    if (result.isRelative() && result.hasRelativePath())
+    {
+      Resource resource = eResource();
+      URI baseURI = resource.getURI();
+      if (baseURI != null && baseURI.isHierarchical() && !baseURI.isRelative())
+      {
+        return result.resolve(baseURI);
+      }
+    }
+
+    return result;
+  }
+
+  protected final void performUI(final SetupTaskContext context, final RunnableWithContext runnable) throws Exception
+  {
+    final Exception[] exception = { null };
+    PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay().syncExec(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          runnable.run(context);
+        }
+        catch (Exception ex)
+        {
+          exception[0] = ex;
+        }
+      }
+    });
+
+    if (exception[0] != null)
+    {
+      throw exception[0];
+    }
+  }
+
+  /**
+     * @author Eike Stepper
+     */
+  protected interface RunnableWithContext
+  {
+    public void run(SetupTaskContext context) throws Exception;
+  }
+
   /**
      * @author Eike Stepper
      */
@@ -664,26 +720,5 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
       return true;
     }
-  }
-
-  protected URI createResolvedURI(String uri)
-  {
-    if (uri == null)
-    {
-      return null;
-    }
-
-    URI result = URI.createURI(uri);
-    if (result.isRelative() && result.hasRelativePath())
-    {
-      Resource resource = eResource();
-      URI baseURI = resource.getURI();
-      if (baseURI != null && baseURI.isHierarchical() && !baseURI.isRelative())
-      {
-        return result.resolve(baseURI);
-      }
-    }
-
-    return result;
   }
 } // SetupTaskImpl

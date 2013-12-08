@@ -21,11 +21,11 @@ configuration</programArgs>
    <windowImages i16="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_16.gif" i32="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_32.gif" i48="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_48.gif" i64="/org.eclipse.emf.cdo.releng.setup.installer/icons/window_64.gif"/>
 
    <launcher name="setup-eclipse">
-      <linux icon="/org.eclipse.emf.cdo.releng.setup.installer/icons/window.xpm"/>
-      <macosx icon="/org.eclipse.emf.cdo.releng.setup.installer/icons/window.icns"/>
+      <linux icon="icons/window.xpm"/>
+      <macosx icon="icons/window.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.eclipse.emf.cdo.releng.setup.installer/icons/window.ico"/>
+         <ico path="icons/window.ico"/>
          <bmp/>
       </win>
    </launcher>

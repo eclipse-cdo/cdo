@@ -208,7 +208,9 @@ public class TargetPlatformTaskImpl extends SetupTaskImpl implements TargetPlatf
     }
 
     initTargetPlatform(context);
-    return targetPlatform == null || !targetPlatform.equals(TargetPlatformUtil.getActiveTargetPlatform());
+    ITargetDefinition activeTargetPlatform = TargetPlatformUtil.getActiveTargetPlatform();
+    return targetPlatform == null || activeTargetPlatform == null
+        || !targetPlatform.getHandle().equals(activeTargetPlatform.getHandle());
   }
 
   private void initTargetPlatform(SetupTaskContext context)

@@ -12,9 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.installer.editor;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
-import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -632,9 +630,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   protected void initializeEditingDomain()
   {
     initializeEditingDomainGen();
-    editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put("xmi", new SetupResourceFactoryImpl());
-    editingDomain.getResourceSet().getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
+    EMFUtil.configureResourceSet(editingDomain.getResourceSet());
   }
 
   /**
@@ -876,8 +872,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   public void createModel()
   {
     createModelGen();
-
-    EMFUtil.loadResourceSafely(editingDomain.getResourceSet(), EMFUtil.SETUP_URI);
+    EMFUtil.loadResourceSafely(editingDomain.getResourceSet(), EMFUtil.CONFIGURATION_URI);
   }
 
   /**

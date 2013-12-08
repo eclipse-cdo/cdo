@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
@@ -848,7 +847,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       }
     });
 
-    editingDomain.getResourceSet().getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
+    EMFUtil.configureResourceSet(editingDomain.getResourceSet());
 
     // Create the editing domain with a special command stack.
     //
@@ -1125,7 +1124,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     if (!(rootObject instanceof Configuration))
     {
       SetupResource configurationResource = EMFUtil.loadResourceSafely(editingDomain.getResourceSet(),
-          EMFUtil.SETUP_URI);
+          EMFUtil.CONFIGURATION_URI);
       editingDomain.getResourceToReadOnlyMap().put(configurationResource, true);
     }
   }
@@ -1537,7 +1536,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
           {
             SetupTask setupTask = (SetupTask)object;
             Resource resource = setupTask.eResource();
-            if (resource == null || resource.getURI().equals(EMFUtil.SETUP_URI))
+            if (resource == null || resource.getURI().equals(EMFUtil.CONFIGURATION_URI))
             {
               result = ExtendedFontRegistry.INSTANCE.getFont(result != null ? result : font,
                   IItemFontProvider.ITALIC_FONT);
@@ -1626,7 +1625,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
         ItemProvider input = null;
         if (eObject instanceof Project)
         {
-          Resource configurationResource = resourceSet.getResource(EMFUtil.SETUP_URI, false);
+          Resource configurationResource = resourceSet.getResource(EMFUtil.CONFIGURATION_URI, false);
           configuration = (Configuration)configurationResource.getContents().get(0);
           if (eclipseVersion == null)
           {

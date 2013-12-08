@@ -30,6 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,12 +44,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ECFURIHandlerImpl extends URIHandlerImpl
 {
-  void foo()
-  {
-    UrlConnectionRetrieveFileTransfer x = new UrlConnectionRetrieveFileTransfer();
-    x.setProxy(null);
-  }
-
   @Override
   public boolean exists(URI uri, Map<?, ?> options)
   {
@@ -113,38 +108,46 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
       }
     }
 
-    FileTransferListener transferListener = new FileTransferListener();
-    try
+    for (int i = 0;; ++i)
     {
-      FileTransferID fileTransferID = new FileTransferID(new FileTransferNamespace(), new java.net.URI(uriString));
-      Map<Object, Object> requestOptions = new HashMap<Object, Object>();
-      requestOptions.put(IRetrieveFileTransferOptions.CONNECT_TIMEOUT, 5000);
-      requestOptions.put(IRetrieveFileTransferOptions.READ_TIMEOUT, 5000);
-      fileTransfer.sendRetrieveRequest(fileTransferID, transferListener, Collections.emptyMap());
-    }
-    catch (URISyntaxException ex)
-    {
-      throw new IOException(ex);
-    }
-    catch (IncomingFileTransferException ex)
-    {
-      throw new IOException(ex);
-    }
+      FileTransferListener transferListener = new FileTransferListener();
+      try
+      {
+        FileTransferID fileTransferID = new FileTransferID(new FileTransferNamespace(), new java.net.URI(uriString));
+        Map<Object, Object> requestOptions = new HashMap<Object, Object>();
+        requestOptions.put(IRetrieveFileTransferOptions.CONNECT_TIMEOUT, 5000);
+        requestOptions.put(IRetrieveFileTransferOptions.READ_TIMEOUT, 5000);
+        fileTransfer.sendRetrieveRequest(fileTransferID, transferListener, Collections.emptyMap());
+      }
+      catch (URISyntaxException ex)
+      {
+        throw new IOException(ex);
+      }
+      catch (IncomingFileTransferException ex)
+      {
+        throw new IOException(ex);
+      }
 
-    try
-    {
-      latch.await(60, TimeUnit.SECONDS);
-    }
-    catch (InterruptedException ex)
-    {
-      throw new IOException(ex);
-    }
+      try
+      {
+        latch.await(60, TimeUnit.SECONDS);
+      }
+      catch (InterruptedException ex)
+      {
+        throw new IOException(ex);
+      }
 
-    if (exception.get() != null)
-    {
-      throw new IOException(exception.get());
-    }
+      if (exception.get() != null)
+      {
+        if (!(exception.get().getCause() instanceof SocketTimeoutException) || i < 3)
+        {
+          throw new IOException(exception.get());
+        }
 
-    return new ByteArrayInputStream(transferListener.out.toByteArray());
+        continue;
+      }
+
+      return new ByteArrayInputStream(transferListener.out.toByteArray());
+    }
   }
 }

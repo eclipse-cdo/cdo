@@ -13,7 +13,10 @@ package org.eclipse.emf.cdo.releng.internal.setup;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
+import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
+import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
+import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
@@ -34,6 +37,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -467,6 +471,43 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
 
     perform(triggeredSetupTasks);
+
+    if (getTrigger() == Trigger.BOOTSTRAP)
+    {
+      {
+        EclipseIniTask ideEnvironmentVariableTask = SetupFactory.eINSTANCE.createEclipseIniTask();
+        ideEnvironmentVariableTask.setVm(true);
+        ideEnvironmentVariableTask.setValue("=true");
+        ideEnvironmentVariableTask.setOption("-Dorg.eclipse.emf.cdo.releng.setup.ide");
+        if (ideEnvironmentVariableTask.isNeeded(this))
+        {
+          ideEnvironmentVariableTask.perform(this);
+        }
+      }
+
+      {
+        EclipseIniTask relengURLEnvironmentVariableTask = SetupFactory.eINSTANCE.createEclipseIniTask();
+        relengURLEnvironmentVariableTask.setVm(true);
+        relengURLEnvironmentVariableTask.setValue("="
+            + redirect(URI.createURI((String)get(SetupConstants.PROP_RELENG_URL))));
+        relengURLEnvironmentVariableTask.setOption("-D" + SetupConstants.PROP_RELENG_URL);
+        if (relengURLEnvironmentVariableTask.isNeeded(this))
+        {
+          relengURLEnvironmentVariableTask.perform(this);
+        }
+      }
+
+      {
+        EclipseIniTask setupURIEnvironmentVariableTask = SetupFactory.eINSTANCE.createEclipseIniTask();
+        setupURIEnvironmentVariableTask.setVm(true);
+        setupURIEnvironmentVariableTask.setValue("=" + redirect(EMFUtil.CONFIGURATION_URI));
+        setupURIEnvironmentVariableTask.setOption("-D" + SetupConstants.PROP_SETUP_URI);
+        if (setupURIEnvironmentVariableTask.isNeeded(this))
+        {
+          setupURIEnvironmentVariableTask.perform(this);
+        }
+      }
+    }
   }
 
   private void perform(EList<SetupTask> setupTasks) throws Exception
@@ -620,18 +661,41 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private Setup copySetup(EList<SetupTask> setupTasks, Map<SetupTask, SetupTask> substitutions)
   {
-    Setup setup = getSetup();
+    Setup originalSetup = getSetup();
     Set<EObject> roots = new LinkedHashSet<EObject>();
-    roots.add(setup);
+    roots.add(originalSetup);
 
-    for (EObject eObject : setup.eCrossReferences())
+    for (EObject eObject : originalSetup.eCrossReferences())
     {
       EObject rootContainer = EcoreUtil.getRootContainer(eObject);
       roots.add(rootContainer);
     }
 
-    EcoreUtil.Copier copier = new EcoreUtil.Copier();
-    setup = (Setup)copier.copyAll(roots).iterator().next();
+    EcoreUtil.Copier copier = new EcoreUtil.Copier()
+    {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      protected void copyContainment(EReference eReference, EObject eObject, EObject copyEObject)
+      {
+        // Don't copy projects.
+        if (eReference != SetupPackage.Literals.CONFIGURATION__PROJECTS)
+        {
+          super.copyContainment(eReference, eObject, copyEObject);
+        }
+      }
+    };
+
+    Setup setup = (Setup)copier.copyAll(roots).iterator().next();
+
+    Project originalProject = originalSetup.getBranch().getProject();
+    Project project = (Project)copier.get(originalProject);
+    if (project == null)
+    {
+      project = (Project)copier.copy(originalProject);
+    }
+
+    ((Configuration)copier.get(originalSetup.getEclipseVersion().getConfiguration())).getProjects().add(project);
 
     // Shorten the paths through the substitutions map
     Map<SetupTask, SetupTask> directSubstitutions = new HashMap<SetupTask, SetupTask>(substitutions);

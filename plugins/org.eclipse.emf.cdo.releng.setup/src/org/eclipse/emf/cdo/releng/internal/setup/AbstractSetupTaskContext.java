@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
-import org.eclipse.emf.cdo.releng.setup.util.ECFURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 
@@ -29,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -70,15 +68,11 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private Set<String> restartReasons = new LinkedHashSet<String>();
 
-  private URIConverter uriConverter = new ExtensibleURIConverterImpl();
-
   private ResourceSet resourceSet = EMFUtil.createResourceSet();
 
   private AbstractSetupTaskContext(Trigger trigger)
   {
     this.trigger = trigger;
-
-    uriConverter.getURIHandlers().add(4, new ECFURIHandlerImpl());
   }
 
   protected AbstractSetupTaskContext(Trigger trigger, Setup setup)
@@ -317,12 +311,12 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public URI redirect(URI uri)
   {
-    return uriConverter.normalize(uri);
+    return resourceSet.getURIConverter().normalize(uri);
   }
 
   public URIConverter getURIConverter()
   {
-    return uriConverter;
+    return resourceSet.getURIConverter();
   }
 
   public OS getOS()

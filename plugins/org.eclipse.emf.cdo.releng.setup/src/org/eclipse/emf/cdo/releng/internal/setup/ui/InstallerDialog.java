@@ -283,58 +283,55 @@ public class InstallerDialog extends AbstractSetupDialog
         if (object instanceof Project)
         {
           final InternalEObject eObject = (InternalEObject)object;
-          URI eProxyURI = eObject.eProxyURI();
+          final URI eProxyURI = eObject.eProxyURI();
           if (eProxyURI != null)
           {
-            try
+            final URI resourceURI = eProxyURI.trimFragment();
+            Resource resource = resourceSet.getResource(resourceURI, false);
+            if (resource == null)
             {
-              URI resourceURI = eProxyURI.trimFragment();
-              Resource resource = resourceSet.getResource(resourceURI, false);
-              if (resource == null)
+              tree.getDisplay().asyncExec(new Runnable()
               {
-                resource = loadResourceSafely(resourceURI);
-                object = resource.getEObject(eProxyURI.fragment());
-
-                // Force proxy reference from the configuration to resolve too.
-                EList<Project> projects = configuration.getProjects();
-                int index = projects.indexOf(eObject);
-                projects.get(index);
-
-                final Project project = (Project)object;
-                Object[] children = project.getBranches().toArray();
-
-                for (Object child : children)
+                public void run()
                 {
-                  parentMap.put(child, eObject);
-                }
-
-                viewer.getControl().getDisplay().asyncExec(new Runnable()
-                {
-                  public void run()
+                  try
                   {
-                    String label = project.getLabel();
-                    if (label == null)
+                    Resource resource = loadResourceSafely(resourceURI);
+                    final Project project = (Project)resource.getEObject(eProxyURI.fragment());
+                    if (project != null)
                     {
-                      label = project.getName();
+                      // Force proxy reference from the configuration to resolve too.
+                      EList<Project> projects = configuration.getProjects();
+                      int index = projects.indexOf(eObject);
+                      if (index != -1)
+                      {
+                        projects.get(index);
+                      }
+
+                      ItemProvider input = (ItemProvider)viewer.getInput();
+                      EList<Object> children = input.getChildren();
+                      index = children.indexOf(eObject);
+                      children.set(index, project);
+                      tree.getDisplay().asyncExec(new Runnable()
+                      {
+                        public void run()
+                        {
+                          InstallerDialog.this.viewer.expandToLevel(project, 1);
+                        }
+                      });
                     }
-
-                    ((Project)eObject).setLabel(label);
-                    InstallerDialog.this.viewer.update(project, null);
                   }
-                });
+                  catch (UpdatingException ex)
+                  {
+                    // Ignore
+                  }
+                }
+              });
 
-                return children;
-              }
+              return NO_ELEMENTS;
+            }
 
-              object = resource.getEObject(eProxyURI.fragment());
-            }
-            catch (UpdatingException ex)
-            {
-              // Ignore
-            }
-          }
-          else
-          {
+            object = resource.getEObject(eProxyURI.fragment());
           }
         }
 
@@ -457,17 +454,43 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       public void checkStateChanged(CheckStateChangedEvent event)
       {
-        boolean checked = event.getChecked();
+        final boolean checked = event.getChecked();
         final Object element = event.getElement();
         if (element instanceof Project)
         {
-          Project project = (Project)element;
-          for (Object branch : contentProvider.getChildren(project))
+          final Project project = (Project)element;
+          if (project.eIsProxy())
           {
-            viewer.setChecked(branch, checked);
+            // Force the proxy to resolve.
+            contentProvider.getChildren(project);
+            viewer.getControl().getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                final EObject resolvedProject = EcoreUtil.resolve(project, resourceSet);
+                viewer.getControl().getDisplay().asyncExec(new Runnable()
+                {
+                  public void run()
+                  {
+                    viewer.setChecked(resolvedProject, checked);
+                    for (Object branch : contentProvider.getChildren(resolvedProject))
+                    {
+                      viewer.setChecked(branch, checked);
+                    }
+                  }
+                });
+              }
+            });
           }
+          else
+          {
+            for (Object branch : contentProvider.getChildren(project))
+            {
+              viewer.setChecked(branch, checked);
+            }
 
-          viewer.expandToLevel(project, 1);
+            viewer.expandToLevel(project, 1);
+          }
         }
         else if (element instanceof Branch)
         {
@@ -490,8 +513,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
                 if (allChecked)
                 {
-                  Object project = parentMap.get(branch);
-                  viewer.setChecked(project, true);
+                  viewer.setChecked(branch.getProject(), true);
                 }
 
                 viewer.editElement(branch, 1);
@@ -501,8 +523,7 @@ public class InstallerDialog extends AbstractSetupDialog
           else
           {
             Branch branch = (Branch)element;
-            Object project = parentMap.get(branch);
-            viewer.setChecked(project, false);
+            viewer.setChecked(branch.getProject(), false);
           }
         }
 
@@ -1320,9 +1341,11 @@ public class InstallerDialog extends AbstractSetupDialog
         {
           try
           {
-            monitor.beginTask("Loading " + EMFUtil.SETUP_URI.trimFragment(), IProgressMonitor.UNKNOWN);
+            monitor.beginTask("Loading "
+                + resourceSet.getURIConverter().normalize(EMFUtil.CONFIGURATION_URI).trimFragment(),
+                IProgressMonitor.UNKNOWN);
 
-            Resource configurationResource = loadResourceSafely(EMFUtil.SETUP_URI);
+            Resource configurationResource = loadResourceSafely(EMFUtil.CONFIGURATION_URI);
 
             EList<EObject> contents = configurationResource.getContents();
             if (contents.isEmpty())
@@ -1334,7 +1357,7 @@ public class InstallerDialog extends AbstractSetupDialog
                 {
                   boolean confirmation = MessageDialog.openQuestion(null, "Configuration Load Failure",
                       "The configuration could not be loaded so it's likely you're not connected to the internet or are behind a firewall."
-                          + "The following URI is inaccessable:\n" + "  " + EMFUtil.SETUP_URI + "\n\n"
+                          + "The following URI is inaccessable:\n" + "  " + EMFUtil.CONFIGURATION_URI + "\n\n"
                           + "Do you wish to configure your network connections?");
                   if (confirmation)
                   {
@@ -1396,7 +1419,7 @@ public class InstallerDialog extends AbstractSetupDialog
               bundlePoolTPFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-tp")));
             }
 
-            ItemProvider input = new ItemProvider();
+            ItemProvider input = new ItemProvider(EMFUtil.ADAPTER_FACTORY);
             EList<Object> projects = input.getChildren();
 
             for (int i = 0; i < configuredProjects.size(); i++)
@@ -1863,7 +1886,7 @@ public class InstallerDialog extends AbstractSetupDialog
     @Override
     protected String getDefaultMessage()
     {
-      return "The current product version is " + version + ".\n" + EMFUtil.SETUP_URI;
+      return "The current product version is " + version + ".\n" + EMFUtil.CONFIGURATION_URI;
     }
 
     @Override

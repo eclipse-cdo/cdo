@@ -34,7 +34,8 @@ import java.util.Set;
  */
 public final class EMFUtil extends Plugin
 {
-  public static final URI SETUP_URI = getSetupURI();
+  public static final URI CONFIGURATION_URI = URI
+      .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup");
 
   public static final String EXAMPLE_URI = System.getProperty(SetupConstants.PROP_EXAMPLE_URI);
 
@@ -43,7 +44,7 @@ public final class EMFUtil extends Plugin
   public static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
       ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-  private static final String DEFAULT_SETUP_URI = "http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup";
+  private static final URI REDIRECTED_CONFIGURATION_URI = getSetupURI();
 
   private EMFUtil()
   {
@@ -52,13 +53,18 @@ public final class EMFUtil extends Plugin
   public static ResourceSet createResourceSet()
   {
     ResourceSet resourceSet = new ResourceSetImpl();
+    configureResourceSet(resourceSet);
+    return resourceSet;
+  }
+
+  public static void configureResourceSet(ResourceSet resourceSet)
+  {
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new SetupResourceFactoryImpl());
     resourceSet.getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
 
-    if (!SETUP_URI.toString().equals(DEFAULT_SETUP_URI))
+    if (!CONFIGURATION_URI.equals(REDIRECTED_CONFIGURATION_URI))
     {
-      URI setupURI = URI.createURI(DEFAULT_SETUP_URI);
-      resourceSet.getURIConverter().getURIMap().put(setupURI, SETUP_URI);
+      resourceSet.getURIConverter().getURIMap().put(CONFIGURATION_URI, REDIRECTED_CONFIGURATION_URI);
     }
 
     if (EXAMPLE_URI != null)
@@ -66,8 +72,6 @@ public final class EMFUtil extends Plugin
       URI exampleURI = URI.createURI(EXAMPLE_URI);
       resourceSet.getURIConverter().getURIMap().put(EXAMPLE_PROXY_URI, exampleURI);
     }
-
-    return resourceSet;
   }
 
   public static SetupResource loadResourceSafely(ResourceSet resourceSet, URI uri)
@@ -88,7 +92,7 @@ public final class EMFUtil extends Plugin
     String uri = System.getProperty(SetupConstants.PROP_SETUP_URI);
     if (uri == null || !uri.startsWith("file:"))
     {
-      uri = DEFAULT_SETUP_URI;
+      return CONFIGURATION_URI;
     }
 
     return URI.createURI(uri.replace('\\', '/'));

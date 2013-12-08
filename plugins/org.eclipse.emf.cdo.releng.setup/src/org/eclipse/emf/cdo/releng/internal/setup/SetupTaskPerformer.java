@@ -11,12 +11,15 @@
 package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.Project;
+import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
@@ -505,6 +508,30 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         if (setupURIEnvironmentVariableTask.isNeeded(this))
         {
           setupURIEnvironmentVariableTask.perform(this);
+        }
+      }
+
+      {
+        PreferenceNode configurationPreferences = PreferencesUtil.getRootPreferenceNode().getNode("configuration");
+        if (configurationPreferences != null)
+        {
+          PreferenceNode networkPreferences = configurationPreferences.getNode("org.eclipse.core.net");
+          if (networkPreferences != null)
+          {
+            ResourceCopyTask resourceCopyTask = SetupFactory.eINSTANCE.createResourceCopyTask();
+            URI sourceLocation = URI.createFileURI(networkPreferences.getLocation());
+            resourceCopyTask.setSourceURL(sourceLocation.toString());
+            int segmentCount = sourceLocation.segmentCount();
+            URI targetURI = URI.createFileURI(new File(getEclipseDir(), "configuration").toString())
+                .appendSegment(sourceLocation.segment(segmentCount - 2))
+                .appendSegment(sourceLocation.segment(segmentCount - 1));
+            resourceCopyTask.setTargetURL(targetURI.toString());
+
+            if (resourceCopyTask.isNeeded(this))
+            {
+              resourceCopyTask.perform(this);
+            }
+          }
         }
       }
     }

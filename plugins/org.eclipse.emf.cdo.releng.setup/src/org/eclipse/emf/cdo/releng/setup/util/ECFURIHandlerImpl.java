@@ -139,7 +139,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
       if (exception.get() != null)
       {
-        if (!(exception.get().getCause() instanceof SocketTimeoutException) || i < 3)
+        if (!(exception.get().getCause() instanceof SocketTimeoutException) || i > 2)
         {
           throw new IOException(exception.get());
         }

@@ -1,21 +1,15 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
+import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -23,20 +17,20 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileEditor} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvider implements
-    IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-    IItemPropertySource
+public class FileEditorItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -44,7 +38,7 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
    * <!-- end-user-doc -->
    * @generated
    */
-  public AutomaticSourceLocatorItemProvider(AdapterFactory adapterFactory)
+  public FileEditorItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -62,56 +56,48 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
     {
       super.getPropertyDescriptors(object);
 
-      addRootFolderPropertyDescriptor(object);
-      addLocateNestedProjectsPropertyDescriptor(object);
+      addIDPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Root Folder feature.
+   * This adds a property descriptor for the ID feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addRootFolderPropertyDescriptor(Object object)
+  protected void addIDPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_AutomaticSourceLocator_rootFolder_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AutomaticSourceLocator_rootFolder_feature",
-            "_UI_AutomaticSourceLocator_type"), SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER, true,
-        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_FileEditor_iD_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_FileEditor_iD_feature", "_UI_FileEditor_type"),
+        SetupPackage.Literals.FILE_EDITOR__ID, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
   }
 
   /**
-   * This adds a property descriptor for the Locate Nested Projects feature.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
+   * This returns FileEditor.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addLocateNestedProjectsPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_AutomaticSourceLocator_locateNestedProjects_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AutomaticSourceLocator_locateNestedProjects_feature",
-            "_UI_AutomaticSourceLocator_type"), SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS,
-        true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This returns AutomaticSourceLocator.gif.
-   * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/AutomaticSourceLocator"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/FileEditor"));
   }
 
   /**
@@ -134,8 +120,8 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   @Override
   public String getText(Object object)
   {
-    AutomaticSourceLocator automaticSourceLocator = (AutomaticSourceLocator)object;
-    return "" + automaticSourceLocator.getRootFolder();
+    String label = ((FileEditor)object).getID();
+    return label == null || label.length() == 0 ? getString("_UI_FileEditor_type") : label;
   }
 
   /**
@@ -150,10 +136,9 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(AutomaticSourceLocator.class))
+    switch (notification.getFeatureID(FileEditor.class))
     {
-    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER:
-    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
+    case SetupPackage.FILE_EDITOR__ID:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }
@@ -171,6 +156,18 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+  }
+
+  /**
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ResourceLocator getResourceLocator()
+  {
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

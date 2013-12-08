@@ -217,9 +217,27 @@ public interface SetupFactory extends EFactory
   JRETask createJRETask();
 
   /**
+   * Returns a new object of class '<em>File Association Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>File Association Task</em>'.
+   * @generated
+   */
+  FileAssociationTask createFileAssociationTask();
+
+  /**
+   * Returns a new object of class '<em>File Editor</em>'.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @return a new object of class '<em>File Editor</em>'.
+   * @generated
+   */
+  FileEditor createFileEditor();
+
+  /**
    * Returns a new object of class '<em>Target Platform Task</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @return a new object of class '<em>Target Platform Task</em>'.
    * @generated
    */

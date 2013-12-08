@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
@@ -230,7 +232,21 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fileAssociationTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fileEditorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   private EClass targetPlatformTaskEClass = null;
@@ -1322,9 +1338,69 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getFileAssociationTask()
+  {
+    return fileAssociationTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFileAssociationTask_FilePattern()
+  {
+    return (EAttribute)fileAssociationTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFileAssociationTask_DefaultEditorID()
+  {
+    return (EAttribute)fileAssociationTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFileAssociationTask_Editors()
+  {
+    return (EReference)fileAssociationTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFileEditor()
+  {
+    return fileEditorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFileEditor_ID()
+  {
+    return (EAttribute)fileEditorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getTargetPlatformTask()
   {
     return targetPlatformTaskEClass;
@@ -1371,10 +1447,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getRedirectionTask()
   {
     return redirectionTaskEClass;
@@ -2179,6 +2255,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__KEY);
     createEAttribute(eclipsePreferenceTaskEClass, ECLIPSE_PREFERENCE_TASK__VALUE);
 
+    fileAssociationTaskEClass = createEClass(FILE_ASSOCIATION_TASK);
+    createEAttribute(fileAssociationTaskEClass, FILE_ASSOCIATION_TASK__FILE_PATTERN);
+    createEAttribute(fileAssociationTaskEClass, FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID);
+    createEReference(fileAssociationTaskEClass, FILE_ASSOCIATION_TASK__EDITORS);
+
+    fileEditorEClass = createEClass(FILE_EDITOR);
+    createEAttribute(fileEditorEClass, FILE_EDITOR__ID);
+
     workingSetTaskEClass = createEClass(WORKING_SET_TASK);
     createEReference(workingSetTaskEClass, WORKING_SET_TASK__WORKING_SETS);
 
@@ -2300,6 +2384,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     projectSetImportTaskEClass.getESuperTypes().add(getSetupTask());
     targetPlatformTaskEClass.getESuperTypes().add(getSetupTask());
     eclipsePreferenceTaskEClass.getESuperTypes().add(getSetupTask());
+    fileAssociationTaskEClass.getESuperTypes().add(getSetupTask());
     workingSetTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCreationTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2612,6 +2697,23 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         EclipsePreferenceTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    initEClass(fileAssociationTaskEClass, FileAssociationTask.class, "FileAssociationTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFileAssociationTask_FilePattern(), ecorePackage.getEString(), "filePattern", null, 1, 1,
+        FileAssociationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFileAssociationTask_DefaultEditorID(), ecorePackage.getEString(), "defaultEditorID", null, 0, 1,
+        FileAssociationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getFileAssociationTask_Editors(), getFileEditor(), null, "editors", null, 0, -1,
+        FileAssociationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fileEditorEClass, FileEditor.class, "FileEditor", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFileEditor_ID(), ecorePackage.getEString(), "iD", null, 1, 1, FileEditor.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(workingSetTaskEClass, WorkingSetTask.class, "WorkingSetTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getWorkingSetTask_WorkingSets(), theWorkingSetsPackage.getWorkingSet(), null, "workingSets", null,
@@ -2779,6 +2881,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
     addAnnotation(getInstallableUnit_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getP2Repository_URL(), source, new String[] { "kind", "attribute", "name", "url" });
+    addAnnotation(getFileEditor_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getKeyBindingContext_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getCommandParameter_ID(), source, new String[] { "kind", "attribute", "name", "id" });

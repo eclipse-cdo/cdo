@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editors version="3.1">
+  <info extension="class without source" name="*">
+    <editor id="org.eclipse.jdt.ui.ClassFileEditorNoSource"/>
+  </info>
+  <info extension="ecorediag" name="*">
+    <editor id="org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID"/>
+    <defaultEditor id="org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID"/>
+  </info>
+  <info extension="xslt" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor.xsl"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor.xsl"/>
+  </info>
+  <info extension="bom" name="*">
+    <editor id="org.eclipse.buckminster.dependency.visualizer.editor1"/>
+    <defaultEditor id="org.eclipse.buckminster.dependency.visualizer.editor1"/>
+  </info>
+  <info extension="jpage" name="*">
+    <editor id="org.eclipse.jdt.debug.ui.SnippetEditor"/>
+  </info>
+  <info extension="shtml" name="*">
+    <editor id="org.eclipse.ui.browser.editorSupport"/>
+  </info>
+  <info extension="mspec" name="*">
+    <editor id="org.eclipse.buckminster.mspec.presentation.MspecEditorID"/>
+  </info>
+  <info extension="dtd" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor.dtd"/>
+  </info>
+  <info extension="setup" name="*">
+    <editor id="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID"/>
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <defaultEditor id="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID"/>
+  </info>
+  <info extension="xsl" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor.xsl"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor.xsl"/>
+  </info>
+  <info extension="gmfgraph" name="*">
+    <editor id="org.eclipse.gmf.gmfgraph.presentation.GMFGraphEditorID"/>
+    <defaultEditor id="org.eclipse.gmf.gmfgraph.presentation.GMFGraphEditorID"/>
+  </info>
+  <info extension="preferences" name="*">
+    <editor id="org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditorID"/>
+  </info>
+  <info extension="cspec" name="*">
+    <editor id="org.eclipse.buckminster.ui.editors.CSPECEditor"/>
+    <defaultEditor id="org.eclipse.buckminster.ui.editors.CSPECEditor"/>
+  </info>
+  <info extension="projectconfig" name="*">
+    <editor id="org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigEditorID"/>
+  </info>
+  <info extension="htm" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <editor id="org.eclipse.ui.browser.editorSupport"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor"/>
+  </info>
+  <info extension="html" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <editor id="org.eclipse.ui.browser.editorSupport"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor"/>
+  </info>
+  <info extension="tld" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor"/>
+  </info>
+  <info extension="xsd" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor.xsd"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor.xsd"/>
+  </info>
+  <info extension="xml" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor"/>
+  </info>
+  <info extension="gmfmap" name="*">
+    <editor id="org.eclipse.gmf.mappings.presentation.GMFMapEditorID"/>
+  </info>
+  <info extension="ecore_diagram" name="*">
+    <editor id="org.eclipse.gmf.ecore.part.EcoreDiagramEditorID"/>
+    <defaultEditor id="org.eclipse.gmf.ecore.part.EcoreDiagramEditorID"/>
+  </info>
+  <info extension="xhtml" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor"/>
+  </info>
+  <info extension="gmfgen" name="*">
+    <editor id="org.eclipse.gmf.codegen.gmfgen.presentation.GMFGenEditorID"/>
+  </info>
+  <info extension="rmap" name="*">
+    <editor id="org.eclipse.buckminster.rmap.presentation.RmapEditorID"/>
+    <defaultEditor id="org.eclipse.buckminster.rmap.presentation.RmapEditorID"/>
+  </info>
+  <info extension="xml" name="build">
+    <editor id="org.eclipse.ant.ui.internal.editor.AntEditor"/>
+    <defaultEditor id="org.eclipse.ant.ui.internal.editor.AntEditor"/>
+  </info>
+  <info extension="properties" name="sample">
+    <editor id="org.eclipse.pde.ui.sampleEditor"/>
+    <defaultEditor id="org.eclipse.pde.ui.sampleEditor"/>
+  </info>
+  <info extension="rng" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor.rng"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor.rng"/>
+  </info>
+  <info extension="php" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <defaultEditor id="com.objfac.xmleditor.XMLEditor"/>
+  </info>
+  <info extension="rnc" name="*">
+    <editor id="com.objfac.rnceditor.RNCEditor"/>
+    <defaultEditor id="com.objfac.rnceditor.RNCEditor"/>
+  </info>
+  <info extension="gmftool" name="*">
+    <editor id="org.eclipse.gmf.tooldef.presentation.GMFToolEditorID"/>
+  </info>
+  <info extension="cquery" name="*">
+    <editor id="org.eclipse.buckminster.ui.editor.QueryEditor"/>
+    <defaultEditor id="org.eclipse.buckminster.ui.editor.QueryEditor"/>
+  </info>
+  <info extension="mod" name="*">
+    <editor id="com.objfac.xmleditor.XMLEditor.dtd"/>
+  </info>
+  <info extension="xml" name="plugin">
+    <editor id="org.eclipse.pde.ui.manifestEditor"/>
+    <editor id="com.objfac.xmleditor.XMLEditor"/>
+    <defaultEditor id="org.eclipse.pde.ui.manifestEditor"/>
+  </info>
+  <info extension="workingsets" name="*">
+    <editor id="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsEditorID"/>
+  </info>
+  <info extension="sketch" name="*"/>
+  <info extension="jardesc" name="*">
+    <editor id="org.eclipse.jdt.ui.JARDescEditor"/>
+    <defaultEditor id="org.eclipse.jdt.ui.JARDescEditor"/>
+  </info>
+  <info extension="xpt" name="*">
+    <editor id="org.eclipse.gmf.xpand.XpandEditor"/>
+  </info>
+</editors>

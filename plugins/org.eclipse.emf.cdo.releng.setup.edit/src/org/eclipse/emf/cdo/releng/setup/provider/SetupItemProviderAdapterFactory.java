@@ -597,9 +597,59 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected FileAssociationTaskItemProvider fileAssociationTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createFileAssociationTaskAdapter()
+  {
+    if (fileAssociationTaskItemProvider == null)
+    {
+      fileAssociationTaskItemProvider = new FileAssociationTaskItemProvider(this);
+    }
+
+    return fileAssociationTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileEditor} instances.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  protected FileEditorItemProvider fileEditorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileEditor}.
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createFileEditorAdapter()
+  {
+    if (fileEditorItemProvider == null)
+    {
+      fileEditorItemProvider = new FileEditorItemProvider(this);
+    }
+
+    return fileEditorItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   protected TargetPlatformTaskItemProvider targetPlatformTaskItemProvider;
@@ -1027,7 +1077,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -1113,145 +1163,79 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   public void dispose()
   {
     if (eclipseItemProvider != null)
-    {
       eclipseItemProvider.dispose();
-    }
     if (configurationItemProvider != null)
-    {
       configurationItemProvider.dispose();
-    }
     if (projectItemProvider != null)
-    {
       projectItemProvider.dispose();
-    }
     if (branchItemProvider != null)
-    {
       branchItemProvider.dispose();
-    }
     if (preferencesItemProvider != null)
-    {
       preferencesItemProvider.dispose();
-    }
     if (setupItemProvider != null)
-    {
       setupItemProvider.dispose();
-    }
     if (compoundSetupTaskItemProvider != null)
-    {
       compoundSetupTaskItemProvider.dispose();
-    }
     if (contextVariableTaskItemProvider != null)
-    {
       contextVariableTaskItemProvider.dispose();
-    }
     if (variableChoiceItemProvider != null)
-    {
       variableChoiceItemProvider.dispose();
-    }
     if (eclipseIniTaskItemProvider != null)
-    {
       eclipseIniTaskItemProvider.dispose();
-    }
     if (linkLocationTaskItemProvider != null)
-    {
       linkLocationTaskItemProvider.dispose();
-    }
     if (p2TaskItemProvider != null)
-    {
       p2TaskItemProvider.dispose();
-    }
     if (installableUnitItemProvider != null)
-    {
       installableUnitItemProvider.dispose();
-    }
     if (p2RepositoryItemProvider != null)
-    {
       p2RepositoryItemProvider.dispose();
-    }
     if (buckminsterImportTaskItemProvider != null)
-    {
       buckminsterImportTaskItemProvider.dispose();
-    }
     if (materializationTaskItemProvider != null)
-    {
       materializationTaskItemProvider.dispose();
-    }
     if (componentItemProvider != null)
-    {
       componentItemProvider.dispose();
-    }
     if (manualSourceLocatorItemProvider != null)
-    {
       manualSourceLocatorItemProvider.dispose();
-    }
     if (automaticSourceLocatorItemProvider != null)
-    {
       automaticSourceLocatorItemProvider.dispose();
-    }
     if (redirectionTaskItemProvider != null)
-    {
       redirectionTaskItemProvider.dispose();
-    }
     if (apiBaselineTaskItemProvider != null)
-    {
       apiBaselineTaskItemProvider.dispose();
-    }
     if (gitCloneTaskItemProvider != null)
-    {
       gitCloneTaskItemProvider.dispose();
-    }
     if (projectSetImportTaskItemProvider != null)
-    {
       projectSetImportTaskItemProvider.dispose();
-    }
     if (targetPlatformTaskItemProvider != null)
-    {
       targetPlatformTaskItemProvider.dispose();
-    }
     if (eclipsePreferenceTaskItemProvider != null)
-    {
       eclipsePreferenceTaskItemProvider.dispose();
-    }
+    if (fileAssociationTaskItemProvider != null)
+      fileAssociationTaskItemProvider.dispose();
+    if (fileEditorItemProvider != null)
+      fileEditorItemProvider.dispose();
     if (workingSetTaskItemProvider != null)
-    {
       workingSetTaskItemProvider.dispose();
-    }
     if (resourceCopyTaskItemProvider != null)
-    {
       resourceCopyTaskItemProvider.dispose();
-    }
     if (resourceCreationTaskItemProvider != null)
-    {
       resourceCreationTaskItemProvider.dispose();
-    }
     if (textModifyTaskItemProvider != null)
-    {
       textModifyTaskItemProvider.dispose();
-    }
     if (textModificationItemProvider != null)
-    {
       textModificationItemProvider.dispose();
-    }
     if (keyBindingTaskItemProvider != null)
-    {
       keyBindingTaskItemProvider.dispose();
-    }
     if (keyBindingContextItemProvider != null)
-    {
       keyBindingContextItemProvider.dispose();
-    }
     if (commandParameterItemProvider != null)
-    {
       commandParameterItemProvider.dispose();
-    }
     if (mylynQueryTaskItemProvider != null)
-    {
       mylynQueryTaskItemProvider.dispose();
-    }
     if (jreTaskItemProvider != null)
-    {
       jreTaskItemProvider.dispose();
-    }
   }
 
 }

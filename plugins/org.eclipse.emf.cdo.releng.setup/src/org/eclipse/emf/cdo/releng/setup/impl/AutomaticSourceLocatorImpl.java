@@ -64,20 +64,20 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
   protected static final boolean LOCATE_NESTED_PROJECTS_EDEFAULT = false;
 
   /**
-  	 * The cached value of the '{@link #isLocateNestedProjects() <em>Locate Nested Projects</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #isLocateNestedProjects() <em>Locate Nested Projects</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #isLocateNestedProjects()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #isLocateNestedProjects()
+   * @generated
+   * @ordered
+   */
   protected boolean locateNestedProjects = LOCATE_NESTED_PROJECTS_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected AutomaticSourceLocatorImpl()
   {
     super();
@@ -131,10 +131,10 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setLocateNestedProjects(boolean newLocateNestedProjects)
   {
     boolean oldLocateNestedProjects = locateNestedProjects;
@@ -147,10 +147,10 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

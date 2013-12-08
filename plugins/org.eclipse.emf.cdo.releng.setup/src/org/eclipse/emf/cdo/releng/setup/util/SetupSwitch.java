@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
@@ -564,6 +566,30 @@ public class SetupSwitch<T> extends Switch<T>
       {
         result = caseSetupTask(eclipsePreferenceTask);
       }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.FILE_ASSOCIATION_TASK:
+    {
+      FileAssociationTask fileAssociationTask = (FileAssociationTask)theEObject;
+      T result = caseFileAssociationTask(fileAssociationTask);
+      if (result == null)
+      {
+        result = caseSetupTask(fileAssociationTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.FILE_EDITOR:
+    {
+      FileEditor fileEditor = (FileEditor)theEObject;
+      T result = caseFileEditor(fileEditor);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -1120,11 +1146,43 @@ public class SetupSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>File Association Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>File Association Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFileAssociationTask(FileAssociationTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>File Editor</em>'.
+   * <!-- begin-user-doc -->
+  	 * This implementation returns null;
+  	 * returning a non-null result will terminate the switch.
+  	 * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>File Editor</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFileEditor(FileEditor object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Target Platform Task</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+       * This implementation returns null;
+       * returning a non-null result will terminate the switch.
+       * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Target Platform Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)

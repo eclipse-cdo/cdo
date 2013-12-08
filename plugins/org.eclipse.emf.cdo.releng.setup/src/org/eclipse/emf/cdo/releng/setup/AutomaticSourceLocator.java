@@ -56,29 +56,29 @@ public interface AutomaticSourceLocator extends SourceLocator
   void setRootFolder(String value);
 
   /**
-  	 * Returns the value of the '<em><b>Locate Nested Projects</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Locate Nested Projects</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <p>
   	 * If the meaning of the '<em>Locate Nested Projects</em>' attribute isn't clear,
   	 * there really should be more of a description here...
   	 * </p>
   	 * <!-- end-user-doc -->
-  	 * @return the value of the '<em>Locate Nested Projects</em>' attribute.
-  	 * @see #setLocateNestedProjects(boolean)
-  	 * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getAutomaticSourceLocator_LocateNestedProjects()
-  	 * @model
-  	 * @generated
-  	 */
+   * @return the value of the '<em>Locate Nested Projects</em>' attribute.
+   * @see #setLocateNestedProjects(boolean)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getAutomaticSourceLocator_LocateNestedProjects()
+   * @model
+   * @generated
+   */
   boolean isLocateNestedProjects();
 
   /**
-  	 * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects <em>Locate Nested Projects</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects <em>Locate Nested Projects</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @param value the new value of the '<em>Locate Nested Projects</em>' attribute.
-  	 * @see #isLocateNestedProjects()
-  	 * @generated
-  	 */
+   * @param value the new value of the '<em>Locate Nested Projects</em>' attribute.
+   * @see #isLocateNestedProjects()
+   * @generated
+   */
   void setLocateNestedProjects(boolean value);
 
 } // AutomaticSourceLocator

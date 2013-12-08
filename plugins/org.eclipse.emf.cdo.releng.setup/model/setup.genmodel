@@ -65,10 +65,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Project/branches"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Project/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Project/label"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Project/restrictions"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Branch">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Branch/project"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Branch/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference setup.ecore#//Branch/restrictions"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Preferences">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Preferences/installFolder"/>
@@ -137,6 +139,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/installableUnits"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//P2Task/p2Repositories"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Task/licenseConfirmationDisabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//P2Task/mergeDisabled"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//InstallableUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//InstallableUnit/iD"/>
@@ -170,6 +173,7 @@
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//AutomaticSourceLocator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/rootFolder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/locateNestedProjects"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//RedirectionTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/sourceURL"/>
@@ -196,6 +200,14 @@
     <genClasses ecoreClass="setup.ecore#//EclipsePreferenceTask" labelFeature="#//setup/EclipsePreferenceTask/key">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipsePreferenceTask/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//EclipsePreferenceTask/value"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//FileAssociationTask" labelFeature="#//setup/FileAssociationTask/filePattern">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//FileAssociationTask/filePattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//FileAssociationTask/defaultEditorID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//FileAssociationTask/editors"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//FileEditor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//FileEditor/iD"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//WorkingSetTask">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//WorkingSetTask/workingSets"/>

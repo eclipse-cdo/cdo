@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
@@ -304,6 +306,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseEclipsePreferenceTask(EclipsePreferenceTask object)
     {
       return createEclipsePreferenceTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseFileAssociationTask(FileAssociationTask object)
+    {
+      return createFileAssociationTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseFileEditor(FileEditor object)
+    {
+      return createFileEditorAdapter();
     }
 
     @Override
@@ -703,11 +717,41 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask <em>File Association Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.FileAssociationTask
+   * @generated
+   */
+  public Adapter createFileAssociationTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.FileEditor <em>File Editor</em>}'.
+   * <!-- begin-user-doc -->
+  	 * This default implementation returns null so that we can easily ignore cases;
+  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+  	 * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.FileEditor
+   * @generated
+   */
+  public Adapter createFileEditorAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+       * This default implementation returns null so that we can easily ignore cases;
+       * it's useful to ignore a case when inheritance will catch all the cases anyway.
+       * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask
    * @generated

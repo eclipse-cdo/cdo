@@ -52,12 +52,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
@@ -190,6 +185,8 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
 
   private CommandTableAction commandTableAction = new CommandTableAction();
 
+  private EditorTableAction editorTableAction = new EditorTableAction();
+
   private TestInstallAction testInstallAction = new TestInstallAction();
 
   /**
@@ -220,6 +217,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
     toolBarManager.add(new Separator("setup-settings"));
     toolBarManager.add(recordPreferencesAction);
     toolBarManager.add(commandTableAction);
+    toolBarManager.add(editorTableAction);
     toolBarManager.add(testInstallAction);
     toolBarManager.add(new Separator("setup-additions"));
   }
@@ -271,12 +269,14 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
    * When the active editor changes, this remembers the change and registers with it as a selection provider.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void setActiveEditor(IEditorPart part)
   {
     super.setActiveEditor(part);
+    commandTableAction.setActivePart(part);
+    editorTableAction.setActivePart(part);
     activeEditorPart = part;
 
     // Switch to the new selection provider.
@@ -599,7 +599,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
   /**
    * @author Eike Stepper
    */
-  private final class CommandTableAction extends Action
+  private static final class CommandTableAction extends AbstractTableAction
   {
     public CommandTableAction()
     {
@@ -608,149 +608,149 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
       setToolTipText("Show a table of all available commands");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void run()
+    protected String renderHTML()
     {
-      Dialog dialog = new CommandTableDialog(activeEditorPart.getSite().getShell());
-      dialog.open();
-    }
+      IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
+      Binding[] bindings = bindingService.getBindings();
+      Map<String, List<Command>> map = new HashMap<String, List<Command>>();
 
-    /**
-     * @author Eike Stepper
-     */
-    private final class CommandTableDialog extends Dialog
-    {
-      public CommandTableDialog(Shell parentShell)
+      ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+      for (Command command : commandService.getDefinedCommands())
       {
-        super(parentShell);
-        setShellStyle(getShellStyle() ^ SWT.APPLICATION_MODAL | SWT.MODELESS | SWT.RESIZE | SWT.MIN | SWT.MAX
-            | SWT.DIALOG_TRIM);
-        setBlockOnOpen(false);
-      }
-
-      @Override
-      protected Control createDialogArea(Composite parent)
-      {
-        getShell().setText("Command Table");
-
-        Browser browser = new Browser(parent, SWT.NONE);
-        browser.setText(render());
-
-        GridData layoutData = new GridData(GridData.FILL_BOTH);
-        layoutData.heightHint = 800;
-        layoutData.widthHint = 1000;
-        browser.setLayoutData(layoutData);
-
-        applyDialogFont(browser);
-
-        return browser;
-      }
-
-      @Override
-      protected Control createButtonBar(Composite parent)
-      {
-        return null;
-      }
-
-      @SuppressWarnings("unchecked")
-      private String render()
-      {
-        IBindingService bindingService = (IBindingService)PlatformUI.getWorkbench().getService(IBindingService.class);
-        Binding[] bindings = bindingService.getBindings();
-        Map<String, List<Command>> map = new HashMap<String, List<Command>>();
-
-        ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
-        for (Command command : commandService.getDefinedCommands())
+        try
         {
+          String category = command.getCategory().getName();
+          if (category == null || category.length() == 0)
+          {
+            category = command.getCategory().getId();
+          }
+
+          List<Command> commands = map.get(category);
+          if (commands == null)
+          {
+            commands = new ArrayList<Command>();
+            map.put(category, commands);
+          }
+
+          commands.add(command);
+        }
+        catch (NotDefinedException ex)
+        {
+          SetupEditorPlugin.getPlugin().log(ex);
+        }
+      }
+
+      List<String> categories = new ArrayList<String>(map.keySet());
+      Collections.sort(categories);
+
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      PrintStream out = new PrintStream(baos);
+      out.println("<table border=\"1\">");
+
+      for (String category : categories)
+      {
+        out.println("<tr><td colspan=\"3\" bgcolor=\"eae6ff\"><br><h2>" + category + "</h2></td></tr>");
+
+        List<Command> commands = map.get(category);
+        Collections.sort(commands);
+
+        for (Command command : commands)
+        {
+          StringBuilder keys = new StringBuilder();
+          for (Binding binding : bindings)
+          {
+            ParameterizedCommand parameterizedCommand = binding.getParameterizedCommand();
+            if (parameterizedCommand != null)
+            {
+              if (parameterizedCommand.getId().equals(command.getId()))
+              {
+                if (keys.length() != 0)
+                {
+                  keys.append("<br>");
+                }
+
+                keys.append(binding.getTriggerSequence());
+              }
+            }
+          }
+
+          if (keys.length() == 0)
+          {
+            keys.append("&nbsp;");
+          }
+
+          String name;
           try
           {
-            String category = command.getCategory().getName();
-            if (category == null || category.length() == 0)
-            {
-              category = command.getCategory().getId();
-            }
-
-            List<Command> commands = map.get(category);
-            if (commands == null)
-            {
-              commands = new ArrayList<Command>();
-              map.put(category, commands);
-            }
-
-            commands.add(command);
+            name = command.getName();
           }
           catch (NotDefinedException ex)
           {
-            SetupEditorPlugin.getPlugin().log(ex);
+            name = command.getId();
           }
-        }
 
-        List<String> categories = new ArrayList<String>(map.keySet());
-        Collections.sort(categories);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(baos);
-        out.println("<table border=\"1\">");
-
-        for (String category : categories)
-        {
-          out.println("<tr><td colspan=\"3\" bgcolor=\"eae6ff\"><br><h2>" + category + "</h2></td></tr>");
-
-          List<Command> commands = map.get(category);
-          Collections.sort(commands);
-
-          for (Command command : commands)
-          {
-            StringBuilder keys = new StringBuilder();
-            for (Binding binding : bindings)
-            {
-              ParameterizedCommand parameterizedCommand = binding.getParameterizedCommand();
-              if (parameterizedCommand != null)
-              {
-                if (parameterizedCommand.getId().equals(command.getId()))
-                {
-                  if (keys.length() != 0)
-                  {
-                    keys.append("<br>");
-                  }
-
-                  keys.append(binding.getTriggerSequence());
-                }
-              }
-            }
-
-            if (keys.length() == 0)
-            {
-              keys.append("&nbsp;");
-            }
-
-            String name;
-            try
-            {
-              name = command.getName();
-            }
-            catch (NotDefinedException ex)
-            {
-              name = command.getId();
-            }
-
-            out.println("<tr><td valign=\"top\" width=\"200\">" + name + "</td><td valign=\"top\" width=\"400\">"
-                + command.getId() + "</td><td valign=\"top\" width=\"100\">" + keys + "</td></tr>");
-          }
-        }
-
-        out.println("</table>");
-
-        try
-        {
-          out.flush();
-          return baos.toString("UTF-8");
-        }
-        catch (UnsupportedEncodingException ex)
-        {
-          return "UTF-8 is unsupported";
+          out.println("<tr><td valign=\"top\" width=\"200\">" + name + "</td><td valign=\"top\" width=\"400\">"
+              + command.getId() + "</td><td valign=\"top\" width=\"100\">" + keys + "</td></tr>");
         }
       }
+
+      out.println("</table>");
+
+      try
+      {
+        out.flush();
+        return baos.toString("UTF-8");
+      }
+      catch (UnsupportedEncodingException ex)
+      {
+        return "UTF-8 is unsupported";
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class EditorTableAction extends AbstractTableAction
+  {
+    public EditorTableAction()
+    {
+      super("Editor Table");
+      setImageDescriptor(Activator.imageDescriptorFromPlugin(SetupEditorPlugin.PLUGIN_ID, "icons/FileEditor.gif"));
+      setToolTipText("Show a table of all available editors");
+    }
+
+    @SuppressWarnings("restriction")
+    @Override
+    protected String renderHTML()
+    {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      PrintStream out = new PrintStream(baos);
+      out.println("<table border=\"1\">");
+      out.println("<tr><td bgcolor=\"eae6ff\">ID</td><td bgcolor=\"eae6ff\">Label</td></tr>");
+
+      org.eclipse.ui.internal.registry.EditorRegistry registry = (org.eclipse.ui.internal.registry.EditorRegistry)PlatformUI
+          .getWorkbench().getEditorRegistry();
+      IEditorDescriptor[] editors = registry.getSortedEditorsFromPlugins();
+      for (IEditorDescriptor editor : editors)
+      {
+        out.println("<tr><td>" + editor.getId() + "</td><td>" + editor.getLabel() + "</td></tr>");
+      }
+
+      out.println("</table>");
+
+      try
+      {
+        out.flush();
+        return baos.toString("UTF-8");
+      }
+      catch (UnsupportedEncodingException ex)
+      {
+        return "UTF-8 is unsupported";
+      }
+
     }
   }
 

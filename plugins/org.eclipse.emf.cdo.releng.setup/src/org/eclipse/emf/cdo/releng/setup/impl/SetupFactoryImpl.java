@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
@@ -169,6 +171,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createTargetPlatformTask();
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
       return createEclipsePreferenceTask();
+    case SetupPackage.FILE_ASSOCIATION_TASK:
+      return createFileAssociationTask();
+    case SetupPackage.FILE_EDITOR:
+      return createFileEditor();
     case SetupPackage.WORKING_SET_TASK:
       return createWorkingSetTask();
     case SetupPackage.RESOURCE_COPY_TASK:
@@ -518,7 +524,29 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FileAssociationTask createFileAssociationTask()
+  {
+    FileAssociationTaskImpl fileAssociationTask = new FileAssociationTaskImpl();
+    return fileAssociationTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public FileEditor createFileEditor()
+  {
+    FileEditorImpl fileEditor = new FileEditorImpl();
+    return fileEditor;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
    * @generated
    */
   public TargetPlatformTask createTargetPlatformTask()

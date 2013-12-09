@@ -17,9 +17,11 @@
   </setupTasks>
   <eclipseVersions version="3.8">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Juno"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/juno"/>
   </eclipseVersions>
   <eclipseVersions version="4.3">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Kepler"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/kepler"/>
   </eclipseVersions>
   <eclipseVersions version="4.4">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Luna"/>

@@ -334,8 +334,9 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
     String defaultEditorID = getDefaultEditorID();
     if (!StringUtil.isEmpty(defaultEditorID))
     {
-      IEditorDescriptor defaultEditor = mapping.getDefaultEditor();
-      String mappingDefaultEditorID = defaultEditor == null ? null : defaultEditor.getId();
+
+      IEditorDescriptor mappingDefaultEditor = mapping.getDefaultEditor();
+      String mappingDefaultEditorID = mappingDefaultEditor == null ? null : mappingDefaultEditor.getId();
       if (!ObjectUtil.equals(mappingDefaultEditorID, defaultEditorID))
       {
         return true;
@@ -366,6 +367,12 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       int lastDot = filePattern.lastIndexOf('.');
       String name = lastDot == -1 ? filePattern : filePattern.substring(0, lastDot);
       String extension = lastDot == -1 ? null : filePattern.substring(lastDot + 1);
+
+      if (StringUtil.isEmpty(name))
+      {
+        name = "." + extension;
+        extension = null;
+      }
 
       mapping = new FileEditorMapping(name, extension);
       mappings.put(filePattern, mapping);
@@ -416,7 +423,10 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       IFileEditorMapping mapping = mappings[i];
       if (mapping instanceof FileEditorMapping)
       {
-        String pattern = mapping.getName() + "." + mapping.getExtension();
+        String name = mapping.getName();
+        String extension = mapping.getExtension();
+
+        String pattern = name + (StringUtil.isEmpty(extension) ? "" : "." + extension);
         result.put(pattern, (FileEditorMapping)mapping);
       }
     }

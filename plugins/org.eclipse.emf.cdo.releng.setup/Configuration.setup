@@ -17,11 +17,9 @@
   </setupTasks>
   <eclipseVersions version="3.8">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Juno"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/juno"/>
   </eclipseVersions>
   <eclipseVersions version="4.3">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Kepler"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/kepler"/>
   </eclipseVersions>
   <eclipseVersions version="4.4">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name" value="Luna"/>
@@ -35,4 +33,5 @@
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng.setup.core/core.setup#/" name="EMF" label="EMF Core SDK"/>
   <projects href="http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git/plain/org.eclipse.emf.compare-parent/emf.compare.setup#/" name="EMF.Compare" label="EMF Compare"/>
   <projects href="setups/mylyn.tasks.setup#/" name="Mylyn.Tasks" label="Mylyn Tasks"/>
+  <projects href="setups/test.setup#/" name="Test" label="Test"/>
 </setup:Configuration>

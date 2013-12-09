@@ -21,11 +21,14 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
+import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.util.DownloadUtil;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -77,6 +80,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -85,9 +90,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <!-- begin-user-doc -->
@@ -481,6 +489,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     Set<IInstallableUnit> installedUnits = getInstalledUnits();
+    Trigger trigger = context.getTrigger();
     LOOP: for (InstallableUnit installableUnit : getInstallableUnits())
     {
       String id = installableUnit.getID();
@@ -490,11 +499,14 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         versionRange = VersionRange.emptyRange;
       }
 
-      for (IInstallableUnit installedUnit : installedUnits)
+      if (trigger != Trigger.MANUAL)
       {
-        if (id.equals(installedUnit.getId()) && versionRange.isIncluded(installedUnit.getVersion()))
+        for (IInstallableUnit installedUnit : installedUnits)
         {
-          continue LOOP;
+          if (id.equals(installedUnit.getId()) && versionRange.isIncluded(installedUnit.getVersion()))
+          {
+            continue LOOP;
+          }
         }
       }
 
@@ -738,12 +750,15 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void callDirectorApp(final SetupTaskContext context) throws Exception
   {
-    File eclipseDir = context.getEclipseDir();
     if (context.put(FIRST_CALL_DETECTION_KEY, Boolean.TRUE) == null)
     {
       // FileUtil.delete(eclipseDir, new ProgressLogMonitor(context));
       FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
     }
+
+    File eclipseDir = context.getEclipseDir();
+    File iniFile = new File(eclipseDir, "eclipse.ini");
+    boolean checkForDuplicates = iniFile.exists();
 
     String destination = eclipseDir.toString();
     final File p2PoolDir = context.getP2PoolDir();
@@ -1032,6 +1047,58 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     Object exitCode = app.run(args);
     poolMonitorThread.interrupt();
+
+    if (checkForDuplicates)
+    {
+      FileOutputStream out = null;
+      try
+      {
+        String contents = DownloadUtil.load(context.getURIConverter(),
+            org.eclipse.emf.common.util.URI.createFileURI(iniFile.toString()), null);
+        Pattern section = Pattern.compile(
+            "^(-vmargs)([\n\r]+.*)\\z|^(-[^\\n\\r]*[\\n\\r]*)((?:^[^-][^\\n\\r]*)*[\\n\\r]*)", Pattern.MULTILINE
+                | Pattern.DOTALL);
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        for (Matcher matcher = section.matcher(contents); matcher.find();)
+        {
+          String argument = matcher.group(3);
+          String extension;
+          if (argument == null)
+          {
+            argument = matcher.group(1);
+            extension = matcher.group(2);
+          }
+          else
+          {
+            extension = matcher.group(4);
+          }
+
+          if (!argument.startsWith("--launcher.XXMaxPermSize"))
+          {
+            map.put(argument, extension);
+          }
+        }
+
+        StringBuilder newContents = new StringBuilder();
+        for (Map.Entry<String, String> entry : map.entrySet())
+        {
+          newContents.append(entry.getKey());
+          newContents.append(entry.getValue());
+        }
+
+        out = new FileOutputStream(iniFile);
+        out.write(newContents.toString().getBytes());
+      }
+      catch (IOException ex)
+      {
+        // Ignore.
+      }
+      finally
+      {
+        IOUtil.close(out);
+      }
+    }
+
     if (EXIT_ERROR.equals(exitCode))
     {
       throw new CoreException(Status.CANCEL_STATUS);

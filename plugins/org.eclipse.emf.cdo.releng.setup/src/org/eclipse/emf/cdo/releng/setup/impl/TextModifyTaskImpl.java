@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.util.DownloadUtil;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -24,18 +25,14 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -321,30 +318,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   private String getText(SetupTaskContext context) throws IOException
   {
-    URI uri = context.redirect(URI.createURI(getURL()));
-    BufferedInputStream bufferedInputStream = null;
-    try
-    {
-      URIConverter uriConverter = context.getURIConverter();
-      bufferedInputStream = new BufferedInputStream(uriConverter.createInputStream(uri));
-      byte[] input = new byte[bufferedInputStream.available()];
-      bufferedInputStream.read(input);
-
-      if (encoding == null)
-      {
-        Map<String, ?> contentDescription = uriConverter.contentDescription(
-            uri,
-            Collections.singletonMap(ContentHandler.OPTION_REQUESTED_PROPERTIES,
-                Collections.singleton(ContentHandler.CONTENT_TYPE_PROPERTY)));
-        encoding = (String)contentDescription.get(ContentHandler.CHARSET_PROPERTY);
-      }
-
-      return encoding == null ? new String(input) : new String(input, encoding);
-    }
-    finally
-    {
-      IOUtil.close(bufferedInputStream);
-    }
+    return DownloadUtil.load(context.getURIConverter(), URI.createURI(getURL()), encoding);
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception

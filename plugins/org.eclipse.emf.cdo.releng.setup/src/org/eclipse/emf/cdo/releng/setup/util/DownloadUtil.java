@@ -12,6 +12,12 @@ package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ContentHandler;
+import org.eclipse.emf.ecore.resource.URIConverter;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +25,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -119,5 +127,31 @@ public final class DownloadUtil
     }
 
     return builder.toString();
+  }
+
+  public static String load(URIConverter uriConverter, URI uri, String encoding) throws IOException
+  {
+    BufferedInputStream bufferedInputStream = null;
+    try
+    {
+      bufferedInputStream = new BufferedInputStream(uriConverter.createInputStream(uri));
+      byte[] input = new byte[bufferedInputStream.available()];
+      bufferedInputStream.read(input);
+  
+      if (encoding == null)
+      {
+        Map<String, ?> contentDescription = uriConverter.contentDescription(
+            uri,
+            Collections.singletonMap(ContentHandler.OPTION_REQUESTED_PROPERTIES,
+                Collections.singleton(ContentHandler.CONTENT_TYPE_PROPERTY)));
+        encoding = (String)contentDescription.get(ContentHandler.CHARSET_PROPERTY);
+      }
+
+      return encoding == null ? new String(input) : new String(input, encoding);
+    }
+    finally
+    {
+      IOUtil.close(bufferedInputStream);
+    }
   }
 }

@@ -1071,12 +1071,14 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private synchronized void unlockObjects()
   {
+    // Unlock objects locked during commit
     if (!lockedObjects.isEmpty())
     {
       lockManager.unlock2(LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
     }
 
+    // Release durable locks that have been acquired on detached objects
     if (detachedObjects.length > 0)
     {
       boolean branching = repository.isSupportingBranches();
@@ -1097,7 +1099,16 @@ public class TransactionCommitContext implements InternalCommitContext
         unlockables = Arrays.asList(detachedObjects);
       }
 
-      lockManager.unlock2(transaction, unlockables);
+      // We only need to consider detached objects that have been explicitly locked
+      Collection<Object> detachedObjectsToUnlock = new ArrayList<Object>();
+      for (Object unlockable : unlockables)
+      {
+        if (lockManager.hasLock(LockType.WRITE, transaction, unlockable))
+        {
+          detachedObjectsToUnlock.add(unlockable);
+        }
+      }
+      lockManager.unlock2(true, LockType.WRITE, transaction, detachedObjectsToUnlock, false);
     }
   }
 

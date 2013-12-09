@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -233,6 +234,30 @@ public class LockingManager extends RWOLockManager<Object, IView>implements Inte
     return newLockStates;
   }
 
+  @Override
+  public void lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context,
+      Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
+  {
+    lock2(false, type, context, objectsToLock, false, timeout);
+  }
+
+  @Override
+  public void lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context, Object objectToLock,
+      long timeout) throws InterruptedException
+  {
+    Collection<Object> objectsToLock = new LinkedHashSet<Object>();
+    objectsToLock.add(objectToLock);
+    lock2(false, type, context, objectsToLock, false, timeout);
+  }
+
+  @Override
+  public List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> lock2(
+      org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context,
+      Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
+  {
+    return lock2(false, type, context, objectsToLock, false, timeout);
+  }
+
   private Set<? extends Object> createContentSet(Collection<? extends Object> objectsToLock, IView view)
   {
     CDOBranch branch = view.getBranch();
@@ -319,6 +344,42 @@ public class LockingManager extends RWOLockManager<Object, IView>implements Inte
     }
 
     return super.unlock2(view);
+  }
+
+  @Override
+  public synchronized List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> unlock2(
+      IView context)
+  {
+    return unlock2(false, context);
+  }
+
+  @Override
+  public synchronized List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> unlock2(
+      IView context, Collection<? extends Object> objectsToUnlock)
+  {
+    // If no locktype is specified, use the LockType.WRITE
+    return unlock2(false, LockType.WRITE, context, objectsToUnlock, false);
+  }
+
+  @Override
+  public synchronized List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> unlock2(
+      org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context,
+      Collection<? extends Object> objectsToUnlock)
+  {
+    return unlock2(false, type, context, objectsToUnlock, false);
+  }
+
+  @Override
+  public synchronized void unlock(IView context)
+  {
+    unlock2(context);
+  }
+
+  @Override
+  public synchronized void unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context,
+      Collection<? extends Object> objectsToUnlock)
+  {
+    unlock2(type, context, objectsToUnlock);
   }
 
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,

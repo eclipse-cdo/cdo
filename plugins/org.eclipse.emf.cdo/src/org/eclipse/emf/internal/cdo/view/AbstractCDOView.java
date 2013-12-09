@@ -1565,8 +1565,33 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     boolean hasConflictResolvers = this instanceof CDOTransaction
         && ((CDOTransaction)this).options().getConflictResolvers().length != 0;
-
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
+    // 363355 : manage detached objects before changed objects to avoid issue on eContainer
+    for (CDOIDAndVersion key : allDetachedObjects)
+    {
+      InternalCDOObject detachedObject = removeObject(key.getID());
+      if (detachedObject != null)
+      {
+        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create((CDORevision)detachedObject.cdoRevision(),
+            CDORevisionDelta.DETACHED);
+        // if (!isLocked(detachedObject))
+        {
+          CDOStateMachine.INSTANCE.detachRemote(detachedObject);
+        }
+
+        detachedObjects.add(detachedObject);
+        if (detachedObject.cdoConflict())
+        {
+          if (conflicts == null)
+          {
+            conflicts = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>();
+          }
+
+          conflicts.put(detachedObject, oldInfo);
+        }
+      }
+    }
+
     for (CDORevisionKey key : allChangedObjects)
     {
       CDORevisionDelta delta = null;
@@ -1603,32 +1628,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         }
       }
     }
-
-    for (CDOIDAndVersion key : allDetachedObjects)
-    {
-      InternalCDOObject detachedObject = removeObject(key.getID());
-      if (detachedObject != null)
-      {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create((CDORevision)detachedObject.cdoRevision(),
-            CDORevisionDelta.DETACHED);
-        // if (!isLocked(detachedObject))
-        {
-          CDOStateMachine.INSTANCE.detachRemote(detachedObject);
-        }
-
-        detachedObjects.add(detachedObject);
-        if (detachedObject.cdoConflict())
-        {
-          if (conflicts == null)
-          {
-            conflicts = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>();
-          }
-
-          conflicts.put(detachedObject, oldInfo);
-        }
-      }
-    }
-
+        
     return conflicts;
   }
 

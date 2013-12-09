@@ -477,7 +477,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   {
     if (remote)
     {
-      // Do nothing
+      eSetDeliver(false);
+      eBasicSetContainer(null, eContainerFeatureID());
+      eSetDeliver(true);
       return;
     }
 
@@ -728,7 +730,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final InternalEObject eInternalContainer()
   {
-    if (FSMUtil.isTransient(this))
+    if (FSMUtil.isTransient(this) || FSMUtil.isInvalid(this))
     {
       return eBasicInternalContainer();
     }
@@ -739,7 +741,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final int eContainerFeatureID()
   {
-    if (FSMUtil.isTransient(this))
+    if (FSMUtil.isTransient(this) || FSMUtil.isInvalid(this))
     {
       return eBasicContainerFeatureID();
     }
@@ -935,7 +937,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID); //$NON-NLS-1$
     }
 
-    if (FSMUtil.isTransient(this))
+    if (FSMUtil.isTransient(this) || FSMUtil.isInvalid(this))
     {
       super.eBasicSetContainer(newEContainer, newContainerFeatureID);
     }

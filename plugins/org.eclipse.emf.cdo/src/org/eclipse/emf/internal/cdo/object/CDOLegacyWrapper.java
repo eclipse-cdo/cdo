@@ -42,6 +42,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -273,7 +274,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (remote)
     {
-      // Do nothing??
+      setInstanceContainer(null, eContainerFeatureID());
       return;
     }
 
@@ -619,7 +620,27 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
             TRACER.format("Adding " + object + " to feature " + feature + "in instance " + instance); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
           }
 
+          // Disable notifications from value during the
+          // invalidation in case of
+          // eInverseAdd/eInverseRemove
+          boolean eDeliver = false;
+          if (object instanceof Notifier)
+          {
+            Notifier notifier = (Notifier)object;
+            eDeliver = notifier.eDeliver();
+            if (eDeliver)
+            {
+              notifier.eSetDeliver(false);
+            }
+          }
+
           list.basicAdd(object, null);
+
+          if (object instanceof Notifier && eDeliver)
+          {
+            Notifier notifier = (Notifier)object;
+            notifier.eSetDeliver(eDeliver);
+          }
         }
       }
     }
@@ -659,6 +680,35 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         if (TRACER.isEnabled())
         {
           TRACER.format("Adding object " + object + " to feature " + feature + " in instance " + instance); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        }
+
+        // Disable notifications from value during the
+        // invalidation in case of
+        // eInverseAdd/eInverseRemove
+        boolean eDeliver = false;
+        if (object instanceof Notifier)
+        {
+          Notifier notifier = (Notifier)object;
+          eDeliver = notifier.eDeliver();
+          if (eDeliver)
+          {
+            notifier.eSetDeliver(false);
+          }
+        }
+        EObject oldContainerOfValue = null;
+        boolean eDeliverForOldContainerOfValue = false;
+        if (object instanceof InternalEObject)
+        {
+          InternalEObject eObject = (InternalEObject)object;
+          oldContainerOfValue = eObject.eInternalContainer();
+          if (oldContainerOfValue != null)
+          {
+            eDeliverForOldContainerOfValue = oldContainerOfValue.eDeliver();
+            if (eDeliverForOldContainerOfValue)
+            {
+              oldContainerOfValue.eSetDeliver(false);
+            }
+          }
         }
 
         int featureID = instance.eClass().getFeatureID(feature);
@@ -716,6 +766,16 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
           {
             instance.eSet(feature, null);
           }
+        }
+
+        if (object instanceof Notifier && eDeliver)
+        {
+          Notifier notifier = (Notifier)object;
+          notifier.eSetDeliver(eDeliver);
+        }
+        if (oldContainerOfValue != null && eDeliverForOldContainerOfValue)
+        {
+          oldContainerOfValue.eSetDeliver(eDeliverForOldContainerOfValue);
         }
 
         if (TRACER.isEnabled())
@@ -879,7 +939,28 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     for (int i = list.size() - 1; i >= 0; --i)
     {
       Object obj = list.get(i);
+
+      // Disable notifications from value during the
+      // invalidation in case of
+      // eInverseAdd/eInverseRemove
+      boolean eDeliver = false;
+      if (obj instanceof Notifier)
+      {
+        Notifier notifier = (Notifier)obj;
+        eDeliver = notifier.eDeliver();
+        if (eDeliver)
+        {
+          notifier.eSetDeliver(false);
+        }
+      }
+
       list.basicRemove(obj, null);
+
+      if (obj instanceof Notifier && eDeliver)
+      {
+        Notifier notifier = (Notifier)obj;
+        notifier.eSetDeliver(eDeliver);
+      }
     }
   }
 

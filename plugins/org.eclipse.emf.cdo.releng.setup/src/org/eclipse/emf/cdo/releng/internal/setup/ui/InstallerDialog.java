@@ -194,7 +194,7 @@ public class InstallerDialog extends AbstractSetupDialog
   public InstallerDialog(Shell parentShell, StartType startType, boolean considerVisibleProjects)
   {
     super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
-        "/help/InstallerDialog.html");
+        "/help/installer/InstallerDialog.html");
     this.startType = startType;
     this.considerVisibleProjects = considerVisibleProjects;
     resourceSet = EMFUtil.createResourceSet();

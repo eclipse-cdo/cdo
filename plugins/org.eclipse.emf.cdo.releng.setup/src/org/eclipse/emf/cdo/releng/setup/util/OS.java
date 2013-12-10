@@ -33,6 +33,36 @@ public abstract class OS
 {
   public static final OS INSTANCE = create();
 
+  // public static final OS INSTANCE = new Mac(Platform.WS_COCOA, Platform.ARCH_X86_64);
+
+  private final String osgiOS;
+
+  private final String osgiWS;
+
+  private final String osgiArch;
+
+  protected OS(String osgiOS, String osgiWS, String osgiArch)
+  {
+    this.osgiOS = osgiOS;
+    this.osgiWS = osgiWS;
+    this.osgiArch = osgiArch;
+  }
+
+  public String getOsgiOS()
+  {
+    return osgiOS;
+  }
+
+  public String getOsgiWS()
+  {
+    return osgiWS;
+  }
+
+  public String getOsgiArch()
+  {
+    return osgiArch;
+  }
+
   public boolean isLineEndingConversionNeeded()
   {
     return false;
@@ -127,20 +157,27 @@ public abstract class OS
   private static OS create()
   {
     String os = Platform.getOS();
+    String ws = Platform.getWS();
+    String arch = Platform.getOSArch();
 
     if (Platform.OS_WIN32.equals(os))
     {
-      return new Win();
+      if (Platform.ARCH_X86_64.equals(arch))
+      {
+        return new Win64(ws);
+      }
+
+      return new Win32(ws, arch);
     }
 
     if (Platform.OS_MACOSX.equals(os))
     {
-      return new Mac();
+      return new Mac(ws, arch);
     }
 
     if (Platform.OS_LINUX.equals(os))
     {
-      return new Linux();
+      return new Linux(ws, arch);
     }
 
     throw new IllegalStateException("Operating system not supported: " + os);
@@ -149,8 +186,13 @@ public abstract class OS
   /**
    * @author Eike Stepper
    */
-  private static final class Win extends OS
+  private static class Win32 extends OS
   {
+    public Win32(String osgiWS, String osgiArch)
+    {
+      super(Platform.OS_WIN32, osgiWS, osgiArch);
+    }
+
     @Override
     public boolean isLineEndingConversionNeeded()
     {
@@ -184,7 +226,24 @@ public abstract class OS
     @Override
     public String getJREsRoot()
     {
-      return Platform.getOSArch().endsWith("_64") ? "C:\\Program Files\\Java" : "C:\\Program Files (x86)\\Java";
+      return "C:\\Program Files (x86)\\Java";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class Win64 extends Win32
+  {
+    public Win64(String osgiWS)
+    {
+      super(osgiWS, Platform.ARCH_X86_64);
+    }
+
+    @Override
+    public String getJREsRoot()
+    {
+      return "C:\\Program Files\\Java";
     }
   }
 
@@ -193,6 +252,11 @@ public abstract class OS
    */
   private static final class Mac extends OS
   {
+    public Mac(String osgiWS, String osgiArch)
+    {
+      super(Platform.OS_MACOSX, osgiWS, osgiArch);
+    }
+
     @Override
     public String getEclipseDir()
     {
@@ -202,13 +266,13 @@ public abstract class OS
     @Override
     public String getEclipseExecutable()
     {
-      return "Contents/MacOS/eclipse";
+      return "Eclipse.app/Contents/MacOS/eclipse";
     }
 
     @Override
     public String getEclipseIni()
     {
-      return "Contents/MacOS/eclipse.ini";
+      return "Eclipse.app/Contents/MacOS/eclipse.ini";
     }
 
     @Override
@@ -229,6 +293,11 @@ public abstract class OS
    */
   private static final class Linux extends OS
   {
+    public Linux(String osgiWS, String osgiArch)
+    {
+      super(Platform.OS_LINUX, osgiWS, osgiArch);
+    }
+
     @Override
     public String getEclipseDir()
     {

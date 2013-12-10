@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.DirectorApplication;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.LicenseDialog;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
@@ -45,10 +46,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
 import org.eclipse.equinox.internal.p2.director.app.Messages;
 import org.eclipse.equinox.internal.p2.director.app.PrettyQuery;
@@ -116,6 +115,8 @@ import java.util.regex.Pattern;
 public class P2TaskImpl extends SetupTaskImpl implements P2Task
 {
   private static final boolean SKIP = "true".equals(System.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
+
+  private static final Class<DirectorApplication> DIRECTOR_CLASS = DirectorApplication.class;
 
   private static final Object FIRST_CALL_DETECTION_KEY = new Object();
 
@@ -761,13 +762,14 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     boolean checkForDuplicates = iniFile.exists();
 
     String destination = eclipseDir.toString();
+
     final File p2PoolDir = context.getP2PoolDir();
     String bundlePool = p2PoolDir.toString();
     String bundleAgent = context.getP2AgentDir().toString();
 
-    String os = Platform.getOS();
-    String ws = Platform.getWS();
-    String arch = Platform.getOSArch();
+    String os = context.getOS().getOsgiOS();
+    String ws = context.getOS().getOsgiWS();
+    String arch = context.getOS().getOsgiArch();
 
     EList<P2Repository> p2Repositories = getP2Repositories();
     EList<InstallableUnit> installableUnits = getInstallableUnits();
@@ -847,7 +849,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
 
-          Field field = ReflectUtil.getField(DirectorApplication.class, "planner");
+          Field field = ReflectUtil.getField(DIRECTOR_CLASS, "planner");
           ReflectUtil.setValue(field, this, planner);
 
           initializeRepositories();
@@ -858,12 +860,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         }
         catch (Exception ex)
         {
+          Activator.log(ex);
           context.log(Messages.Operation_failed);
+          context.log(ex);
 
-          IStatus status = Activator.getStatus(ex);
-          context.log(status);
+          // IStatus status = Activator.getStatus(ex);
+          // context.log(status);
           // deeplyPrint(status, System.err, 0);
-          Activator.log(status);
           return EXIT_ERROR;
         }
         finally
@@ -903,7 +906,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       private List<IQuery<IInstallableUnit>> getRootsToInstall()
       {
-        Field field = ReflectUtil.getField(DirectorApplication.class, "rootsToInstall");
+        Field field = ReflectUtil.getField(DIRECTOR_CLASS, "rootsToInstall");
         @SuppressWarnings("unchecked")
         List<IQuery<IInstallableUnit>> rootsToInstall = (List<IQuery<IInstallableUnit>>)ReflectUtil.getValue(field,
             this);
@@ -912,37 +915,37 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       private IProvisioningAgent getTargetAgent()
       {
-        Field field = ReflectUtil.getField(DirectorApplication.class, "targetAgent");
+        Field field = ReflectUtil.getField(DIRECTOR_CLASS, "targetAgent");
         return (IProvisioningAgent)ReflectUtil.getValue(field, this);
       }
 
       private void initializeServices()
       {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "initializeServices");
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "initializeServices");
         ReflectUtil.invokeMethod(method, this);
       }
 
       private void performProvisioningActions()
       {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "performProvisioningActions");
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "performProvisioningActions");
         ReflectUtil.invokeMethod(method, this);
       }
 
       private void initializeRepositories()
       {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "initializeRepositories");
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "initializeRepositories");
         ReflectUtil.invokeMethod(method, this);
       }
 
       private void cleanupServices()
       {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "cleanupServices");
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "cleanupServices");
         ReflectUtil.invokeMethod(method, this);
       }
 
       private void cleanupRepositories()
       {
-        Method method = ReflectUtil.getMethod(DirectorApplication.class, "cleanupRepositories");
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "cleanupRepositories");
         ReflectUtil.invokeMethod(method, this);
       }
 

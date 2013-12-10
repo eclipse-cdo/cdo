@@ -325,7 +325,8 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    FileEditorMapping mapping = getMappings().get(getFilePattern());
+    Map<String, FileEditorMapping> mappings = getMappings();
+    FileEditorMapping mapping = mappings.get(getFilePattern());
     if (mapping == null)
     {
       return true;
@@ -407,7 +408,7 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       public void run(SetupTaskContext context) throws Exception
       {
         registry.setFileEditorMappings(mappings.values().toArray(new FileEditorMapping[mappings.size()]));
-        registry.saveAssociations();
+        registry.saveAssociations(); // TODO This call takes comparinlgy long. Optimize!
 
         PrefUtil.savePrefs();
       }

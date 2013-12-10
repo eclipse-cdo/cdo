@@ -26,4 +26,6 @@ public interface ProgressLog
   public void log(String line);
 
   public void log(IStatus status);
+
+  public void log(Throwable t);
 }

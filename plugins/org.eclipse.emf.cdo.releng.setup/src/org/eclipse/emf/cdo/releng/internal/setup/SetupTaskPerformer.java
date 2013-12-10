@@ -261,12 +261,22 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
+  public void log(Throwable t)
+  {
+    log(ProgressDialog.toString(t), false);
+  }
+
   public void log(IStatus status)
   {
-    log(ProgressDialog.toString(status));
+    log(ProgressDialog.toString(status), false);
   }
 
   public void log(String line)
+  {
+    log(line, true);
+  }
+
+  private void log(String line, boolean filter)
   {
     if (progress != null)
     {
@@ -274,13 +284,13 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       {
         for (String value : logMessageBuffer)
         {
-          doLog(value);
+          doLog(value, filter);
         }
 
         logMessageBuffer = null;
       }
 
-      doLog(line);
+      doLog(line, filter);
     }
     else
     {
@@ -293,9 +303,13 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
-  private void doLog(String line)
+  private void doLog(String line, boolean filter)
   {
-    line = logFilter.filter(line);
+    if (filter)
+    {
+      line = logFilter.filter(line);
+    }
+
     if (line == null)
     {
       return;

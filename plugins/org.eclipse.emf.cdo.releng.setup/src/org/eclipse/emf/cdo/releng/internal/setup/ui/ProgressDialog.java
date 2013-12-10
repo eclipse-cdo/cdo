@@ -345,12 +345,21 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   public void log(String line)
   {
+    log(line, true);
+  }
+
+  private void log(String line, boolean filter)
+  {
     if (isCancelled())
     {
       throw new OperationCanceledException();
     }
 
-    line = logFilter.filter(line);
+    if (filter)
+    {
+      line = logFilter.filter(line);
+    }
+
     if (line == null)
     {
       return;
@@ -382,7 +391,12 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   public void log(IStatus status)
   {
-    log(toString(status));
+    log(toString(status), false);
+  }
+
+  public void log(Throwable t)
+  {
+    log(toString(t), false);
   }
 
   public void task(final SetupTask setupTask)
@@ -565,10 +579,10 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
               catch (Throwable ex)
               {
                 Activator.log(ex);
+                dialog.log(ex);
 
-                IStatus status = Activator.getStatus(ex);
-                dialog.log("An error occured: ");
-                dialog.log(status);
+                // IStatus status = Activator.getStatus(ex);
+                // dialog.log(status);
               }
               finally
               {
@@ -625,6 +639,24 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     {
       Activator.log(ex);
       ErrorDialog.open(ex);
+    }
+  }
+
+  public static String toString(Throwable t)
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    PrintStream printStream;
+
+    try
+    {
+      printStream = new PrintStream(out, false, "UTF-8");
+      t.printStackTrace(printStream);
+      printStream.close();
+      return new String(out.toByteArray(), "UTF-8");
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      return t.toString();
     }
   }
 

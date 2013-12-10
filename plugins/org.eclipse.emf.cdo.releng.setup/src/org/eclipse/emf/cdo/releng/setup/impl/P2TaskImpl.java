@@ -500,7 +500,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         versionRange = VersionRange.emptyRange;
       }
 
-      if (trigger != Trigger.MANUAL)
+      // TODO Check why it fails if no updates are found
+      if (!Boolean.getBoolean("ed.manual.p2.update") || trigger != Trigger.MANUAL)
       {
         for (IInstallableUnit installedUnit : installedUnits)
         {

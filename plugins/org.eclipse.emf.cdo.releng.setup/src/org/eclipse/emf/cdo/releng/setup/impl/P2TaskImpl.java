@@ -491,7 +491,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     Set<IInstallableUnit> installedUnits = getInstalledUnits();
     Trigger trigger = context.getTrigger();
-    LOOP: for (InstallableUnit installableUnit : getInstallableUnits())
+    for (InstallableUnit installableUnit : getInstallableUnits())
     {
       String id = installableUnit.getID();
       VersionRange versionRange = installableUnit.getVersionRange();
@@ -500,16 +500,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         versionRange = VersionRange.emptyRange;
       }
 
-      // TODO Check why it fails if no updates are found
-      if (!Boolean.getBoolean("ed.manual.p2.update") || trigger != Trigger.MANUAL)
+      if (trigger != Trigger.MANUAL && isInstalled(installedUnits, id, versionRange))
       {
-        for (IInstallableUnit installedUnit : installedUnits)
-        {
-          if (id.equals(installedUnit.getId()) && versionRange.isIncluded(installedUnit.getVersion()))
-          {
-            continue LOOP;
-          }
-        }
+        continue;
       }
 
       if (neededInstallableUnits == null)
@@ -531,6 +524,19 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     return neededInstallableUnits != null;
+  }
+
+  private boolean isInstalled(Set<IInstallableUnit> installedUnits, String id, VersionRange versionRange)
+  {
+    for (IInstallableUnit installedUnit : installedUnits)
+    {
+      if (id.equals(installedUnit.getId()) && versionRange.isIncluded(installedUnit.getVersion()))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public void perform(SetupTaskContext context) throws Exception
@@ -575,6 +581,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         }
       }
 
+      Set<IInstallableUnit> installedUnits = context.getTrigger() == Trigger.MANUAL ? getInstalledUnits() : null;
       if (neededInstallableUnits != null)
       {
         List<IInstallableUnit> toInstall = new ArrayList<IInstallableUnit>();
@@ -599,7 +606,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           if (candidate != null)
           {
-            toInstall.add(candidate);
+            if (installedUnits == null || !installedUnits.contains(candidate))
+            {
+              toInstall.add(candidate);
+            }
           }
           else
           {
@@ -611,6 +621,12 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           }
         }
 
+        if (toInstall.isEmpty())
+        {
+          context.log("All units are up-to-date.");
+          return;
+        }
+
         context.log("Resolving...");
         InstallOperation installOperation = new InstallOperation(session, toInstall);
         String profileId = provisioningUI.getProfileId();
@@ -620,7 +636,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         installOperation.setProvisioningContext(provisioningContext);
 
         IStatus status = installOperation.resolveModal(monitor);
-        if (status.isOK())
+        if (status.getSeverity() != IStatus.ERROR && status.getSeverity() != IStatus.CANCEL)
         {
           IProvisioningPlan provisioningPlan = installOperation.getProvisioningPlan();
           processLicenses(context, provisioningPlan, monitor);
@@ -754,7 +770,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     if (context.put(FIRST_CALL_DETECTION_KEY, Boolean.TRUE) == null)
     {
-      // FileUtil.delete(eclipseDir, new ProgressLogMonitor(context));
+      FileUtil.delete(new File(context.getEclipseDir(),
+          "configuration/org.eclipse.equinox.simpleconfigurator/bundles.info"), new ProgressLogMonitor(context));
       FileUtil.delete(context.getP2ProfileDir(), new ProgressLogMonitor(context));
     }
 

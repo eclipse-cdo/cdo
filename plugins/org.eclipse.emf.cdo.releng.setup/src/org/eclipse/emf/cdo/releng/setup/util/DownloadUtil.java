@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
@@ -69,23 +70,57 @@ public final class DownloadUtil
 
     try
     {
-      URLConnection connection = new URL(url).openConnection();
-      if (connection instanceof HttpURLConnection)
-      {
-        connection.connect();
+      SocketTimeoutException exception = null;
+      String fileName = file.getName();
+      float factor = 0;
 
-        int result = ((HttpURLConnection)connection).getResponseCode();
-        if (result >= 400)
+      long start = System.currentTimeMillis();
+      while (System.currentTimeMillis() < start + 30000)
+      {
+        exception = null;
+
+        try
         {
-          throw new IOException("HTTP error " + result);
+          URLConnection connection = new URL(url).openConnection();
+          if (connection instanceof HttpURLConnection)
+          {
+            connection.connect();
+
+            int result = ((HttpURLConnection)connection).getResponseCode();
+            if (result >= 400)
+            {
+              throw new IOException("HTTP error " + result);
+            }
+          }
+
+          int length = connection.getContentLength();
+          factor = 100f / length;
+          fileName = new File(connection.getURL().getFile()).getName();
+
+          in = new BufferedInputStream(connection.getInputStream());
+          break;
+        }
+        catch (SocketTimeoutException ex)
+        {
+          exception = ex;
+          progress.log("Connection timed out. Retrying in 2 seconds...");
+
+          try
+          {
+            Thread.sleep(2000);
+          }
+          catch (InterruptedException ex1)
+          {
+            throw ex;
+          }
         }
       }
 
-      int length = connection.getContentLength();
-      float factor = 100f / length;
-      String fileName = new File(connection.getURL().getFile()).getName();
+      if (exception != null)
+      {
+        throw exception;
+      }
 
-      in = new BufferedInputStream(connection.getInputStream());
       out = new FileOutputStream(file);
 
       int lastPercent = 0;
@@ -137,7 +172,7 @@ public final class DownloadUtil
       bufferedInputStream = new BufferedInputStream(uriConverter.createInputStream(uri));
       byte[] input = new byte[bufferedInputStream.available()];
       bufferedInputStream.read(input);
-  
+
       if (encoding == null)
       {
         Map<String, ?> contentDescription = uriConverter.contentDescription(

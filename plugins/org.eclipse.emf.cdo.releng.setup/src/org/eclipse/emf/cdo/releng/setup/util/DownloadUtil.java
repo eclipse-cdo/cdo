@@ -62,6 +62,7 @@ public final class DownloadUtil
     }
   }
 
+  @SuppressWarnings("resource")
   private static void downloadURL(String url, File file, ProgressLog progress)
   {
     final byte data[] = new byte[BUFFER_SIZE];
@@ -125,9 +126,25 @@ public final class DownloadUtil
 
       int lastPercent = 0;
       int read = 0;
-      int n;
-      while ((n = in.read(data, 0, BUFFER_SIZE)) != -1)
+      for (;;)
       {
+        long startRead = System.currentTimeMillis();
+        int n;
+
+        try
+        {
+          n = in.read(data, 0, BUFFER_SIZE);
+          if (n == -1)
+          {
+            break;
+          }
+        }
+        catch (SocketTimeoutException ex)
+        {
+          progress.log("Timeout during read after " + (System.currentTimeMillis() - startRead) + " millis");
+          throw ex;
+        }
+
         out.write(data, 0, n);
         read += n;
 

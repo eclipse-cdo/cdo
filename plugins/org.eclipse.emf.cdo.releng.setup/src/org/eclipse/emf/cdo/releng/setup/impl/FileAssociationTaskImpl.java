@@ -335,12 +335,16 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
     String defaultEditorID = getDefaultEditorID();
     if (!StringUtil.isEmpty(defaultEditorID))
     {
-
-      IEditorDescriptor mappingDefaultEditor = mapping.getDefaultEditor();
-      String mappingDefaultEditorID = mappingDefaultEditor == null ? null : mappingDefaultEditor.getId();
-      if (!ObjectUtil.equals(mappingDefaultEditorID, defaultEditorID))
+      EditorRegistry registry = (EditorRegistry)PlatformUI.getWorkbench().getEditorRegistry();
+      IEditorDescriptor defaultEditor = registry.findEditor(defaultEditorID);
+      if (defaultEditor != null)
       {
-        return true;
+        IEditorDescriptor mappingDefaultEditor = mapping.getDefaultEditor();
+        String mappingDefaultEditorID = mappingDefaultEditor == null ? null : mappingDefaultEditor.getId();
+        if (!ObjectUtil.equals(mappingDefaultEditorID, defaultEditorID))
+        {
+          return true;
+        }
       }
     }
 

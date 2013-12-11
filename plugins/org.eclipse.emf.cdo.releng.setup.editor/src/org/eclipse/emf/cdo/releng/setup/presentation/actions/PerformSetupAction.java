@@ -129,7 +129,7 @@ public class PerformSetupAction extends AbstractSetupAction
     // task.setCommand("org.eclipse.emf.cdo.releng.OpenManifest");
 
     FileAssociationTask task = SetupFactory.eINSTANCE.createFileAssociationTask();
-    task.setFilePattern("*.xyz");
+    task.setFilePattern(".project");
     task.setDefaultEditorID("com.objfac.xmleditor.XMLEditor");
 
     return task;

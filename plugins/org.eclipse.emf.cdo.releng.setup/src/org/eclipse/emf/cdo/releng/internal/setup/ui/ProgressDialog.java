@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogProvider;
@@ -401,7 +402,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   public void task(final SetupTask setupTask)
   {
-    getShell().getDisplay().asyncExec(new Runnable()
+    UIUtil.getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {
@@ -472,7 +473,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   {
     try
     {
-      getShell().getDisplay().asyncExec(runnable);
+      UIUtil.getDisplay().asyncExec(runnable);
     }
     catch (NullPointerException ex)
     {
@@ -514,13 +515,13 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     final PromptDialog promptDialog = new PromptDialog(shell, setupTaskPerformers);
 
     final AtomicInteger result = new AtomicInteger();
-    if (Display.getCurrent() == shell.getDisplay())
+    if (shell != null && shell.getDisplay() == Display.getCurrent())
     {
       result.set(promptDialog.open());
     }
     else
     {
-      shell.getDisplay().syncExec(new Runnable()
+      UIUtil.getDisplay().syncExec(new Runnable()
       {
         public void run()
         {
@@ -611,7 +612,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
             }
           };
 
-          shell.getDisplay().asyncExec(new Runnable()
+          UIUtil.getDisplay().asyncExec(new Runnable()
           {
             public void run()
             {
@@ -626,13 +627,13 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
         }
       };
 
-      if (Display.getCurrent() == shell.getDisplay())
+      if (shell != null && shell.getDisplay() == Display.getCurrent())
       {
         jobRunnable.run();
       }
       else
       {
-        shell.getDisplay().asyncExec(jobRunnable);
+        UIUtil.getDisplay().asyncExec(jobRunnable);
       }
     }
     catch (Throwable ex)

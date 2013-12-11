@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
@@ -57,9 +58,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -563,19 +561,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     if (SetupConstants.SETUP_IDE && getTrigger() != Trigger.MANUAL)
     {
-      // Shell shell = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell();
-
-      final Display display = PlatformUI.getWorkbench().getDisplay();
-      final Shell[] shell = { null };
-      display.syncExec(new Runnable()
-      {
-        public void run()
-        {
-          shell[0] = display.getActiveShell();
-        }
-      });
-
-      ProgressDialog.run(shell[0], new ProgressLogRunnable()
+      ProgressDialog.run(UIUtil.getShell(), new ProgressLogRunnable()
       {
         public Set<String> run(ProgressLog log) throws Exception
         {

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
@@ -36,8 +37,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
-import org.eclipse.ui.PlatformUI;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -621,7 +620,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   protected final void performUI(final SetupTaskContext context, final RunnableWithContext runnable) throws Exception
   {
     final Exception[] exception = { null };
-    PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay().syncExec(new Runnable()
+    UIUtil.getDisplay().syncExec(new Runnable()
     {
       public void run()
       {

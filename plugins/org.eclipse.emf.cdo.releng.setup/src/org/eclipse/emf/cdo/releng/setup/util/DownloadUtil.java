@@ -34,6 +34,10 @@ import java.util.Map;
  */
 public final class DownloadUtil
 {
+  private static final int CONNECT_TIMEOUT = 10000;
+
+  private static final int READ_TIMEOUT = 30000;
+
   private static final int BUFFER_SIZE = 4096;
 
   public static File downloadURL(String url, ProgressLog progress)
@@ -50,13 +54,33 @@ public final class DownloadUtil
       File file = new File(tmp.getParentFile(), name + ".zip");
       if (!file.exists())
       {
-        downloadURL(url, tmp, progress);
+        try
+        {
+          downloadURL(url, tmp, progress);
+        }
+        catch (Exception ex)
+        {
+          if (tmp.exists())
+          {
+            if (!tmp.delete())
+            {
+              tmp.deleteOnExit();
+            }
+          }
+
+          throw ex;
+        }
+
         tmp.renameTo(file);
       }
 
       return file;
     }
-    catch (IOException ex)
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
     {
       throw new RuntimeException(ex);
     }
@@ -83,6 +107,9 @@ public final class DownloadUtil
         try
         {
           URLConnection connection = new URL(url).openConnection();
+          connection.setConnectTimeout(CONNECT_TIMEOUT - (int)(System.currentTimeMillis() - start));
+          connection.setReadTimeout(READ_TIMEOUT);
+
           if (connection instanceof HttpURLConnection)
           {
             connection.connect();

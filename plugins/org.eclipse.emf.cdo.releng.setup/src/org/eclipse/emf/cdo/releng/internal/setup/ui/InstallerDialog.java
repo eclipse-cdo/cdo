@@ -1752,18 +1752,25 @@ public class InstallerDialog extends AbstractSetupDialog
     performer.getWorkspaceDir().mkdirs();
     performer.perform();
 
-    performer.log("Launching IDE");
-
     OS os = performer.getOS();
-    String eclipseDir = os.getEclipseDir();
-    String eclipseExecutable = os.getEclipseExecutable();
+    if (os.isCurrent())
+    {
+      performer.log("Launching IDE...");
 
-    String eclipsePath = new File(performer.getBranchDir(), eclipseDir + "/" + eclipseExecutable).getAbsolutePath();
-    File ws = new File(performer.getBranchDir(), "ws");
+      String eclipseDir = os.getEclipseDir();
+      String eclipseExecutable = os.getEclipseExecutable();
 
-    ProcessBuilder builder = new ProcessBuilder(eclipsePath);
-    builder.directory(ws);
-    builder.start();
+      String eclipsePath = new File(performer.getBranchDir(), eclipseDir + "/" + eclipseExecutable).getAbsolutePath();
+      File ws = new File(performer.getBranchDir(), "ws");
+
+      ProcessBuilder builder = new ProcessBuilder(eclipsePath);
+      builder.directory(ws);
+      builder.start();
+    }
+    else
+    {
+      performer.log("Launching IDE is not possible for cross-platform installs. Skipping.");
+    }
   }
 
   private void saveEObject(EObject eObject)

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.equinox.p2.core.spi.Constants;
+import org.eclipse.equinox.p2.engine.IProfile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,6 +27,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -61,6 +64,16 @@ public abstract class OS
   public String getOsgiArch()
   {
     return osgiArch;
+  }
+
+  public boolean isCurrent()
+  {
+    return Platform.getOS().equals(osgiOS) && Platform.getWS().equals(osgiWS) && Platform.getOSArch().equals(osgiArch);
+  }
+
+  public void modifyProfileProperties(Map<String, String> properties)
+  {
+    // Do nothing
   }
 
   public boolean isLineEndingConversionNeeded()
@@ -252,9 +265,22 @@ public abstract class OS
    */
   private static final class Mac extends OS
   {
+    private static final String BUNDLED_SUFFIX = ',' + Constants.MACOSX_BUNDLED + "=true";
+
     public Mac(String osgiWS, String osgiArch)
     {
       super(Platform.OS_MACOSX, osgiWS, osgiArch);
+    }
+
+    @Override
+    public void modifyProfileProperties(Map<String, String> properties)
+    {
+      String env = properties.get(IProfile.PROP_ENVIRONMENTS);
+      if (env.endsWith(BUNDLED_SUFFIX))
+      {
+        env = env.substring(0, env.length() - BUNDLED_SUFFIX.length());
+        properties.put(IProfile.PROP_ENVIRONMENTS, env);
+      }
     }
 
     @Override

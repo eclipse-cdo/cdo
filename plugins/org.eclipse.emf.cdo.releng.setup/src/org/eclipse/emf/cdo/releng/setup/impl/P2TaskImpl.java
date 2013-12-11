@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
-import org.eclipse.emf.cdo.releng.internal.setup.DirectorApplication;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.LicenseDialog;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
@@ -48,12 +47,15 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
 import org.eclipse.equinox.internal.p2.director.app.Messages;
 import org.eclipse.equinox.internal.p2.director.app.PrettyQuery;
 import org.eclipse.equinox.internal.p2.ui.ProvUI;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
+import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IProfile;
+import org.eclipse.equinox.p2.engine.IProfileRegistry;
 import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
@@ -825,53 +827,20 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           initializeServices();
 
           final IProvisioningAgent targetAgent = getTargetAgent();
-          IPlanner planner = new IPlanner()
-          {
-            IPlanner delegate = (IPlanner)targetAgent.getService(IPlanner.SERVICE_NAME);
-
-            public IProvisioningPlan getProvisioningPlan(IProfileChangeRequest profileChangeRequest,
-                ProvisioningContext provisioningContext, IProgressMonitor monitor)
-            {
-              IProvisioningPlan provisioningPlan = delegate.getProvisioningPlan(profileChangeRequest,
-                  provisioningContext, monitor);
-
-              try
-              {
-                processLicenses(context, provisioningPlan, monitor);
-              }
-              catch (Exception ex)
-              {
-                throw new RuntimeException(ex);
-              }
-
-              return provisioningPlan;
-            }
-
-            public IProvisioningPlan getDiffPlan(IProfile currentProfile, IProfile targetProfile,
-                IProgressMonitor monitor)
-            {
-              return delegate.getDiffPlan(currentProfile, targetProfile, monitor);
-            }
-
-            public IProfileChangeRequest createChangeRequest(IProfile profileToChange)
-            {
-              return delegate.createChangeRequest(profileToChange);
-            }
-
-            public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
-                IProgressMonitor monitor)
-            {
-              return delegate.updatesFor(iu, context, monitor);
-            }
-          };
-
-          targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
-
-          Field field = ReflectUtil.getField(DIRECTOR_CLASS, "planner");
-          ReflectUtil.setValue(field, this, planner);
+          registerPlanner(context, targetAgent);
+          registerProfileRegistry(context, targetAgent);
 
           initializeRepositories();
           performProvisioningActions();
+
+          // try
+          // {
+          // }
+          // finally
+          // {
+          // targetAgent.unregisterService(IProfileRegistry.SERVICE_NAME, profileRegistry);
+          // // targetAgent.registerService(IProfileRegistry.SERVICE_NAME, delegate);
+          // }
 
           context.log(NLS.bind(Messages.Operation_complete, new Long(System.currentTimeMillis() - time)));
           return IApplication.EXIT_OK;
@@ -929,6 +898,147 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         List<IQuery<IInstallableUnit>> rootsToInstall = (List<IQuery<IInstallableUnit>>)ReflectUtil.getValue(field,
             this);
         return rootsToInstall;
+      }
+
+      private IPlanner registerPlanner(final SetupTaskContext context, final IProvisioningAgent targetAgent)
+      {
+        IPlanner planner = new IPlanner()
+        {
+          IPlanner delegate = (IPlanner)targetAgent.getService(IPlanner.SERVICE_NAME);
+
+          public IProvisioningPlan getProvisioningPlan(IProfileChangeRequest profileChangeRequest,
+              ProvisioningContext provisioningContext, IProgressMonitor monitor)
+          {
+            IProvisioningPlan provisioningPlan = delegate.getProvisioningPlan(profileChangeRequest,
+                provisioningContext, monitor);
+
+            try
+            {
+              processLicenses(context, provisioningPlan, monitor);
+            }
+            catch (Exception ex)
+            {
+              throw new RuntimeException(ex);
+            }
+
+            return provisioningPlan;
+          }
+
+          public IProvisioningPlan getDiffPlan(IProfile currentProfile, IProfile targetProfile, IProgressMonitor monitor)
+          {
+            return delegate.getDiffPlan(currentProfile, targetProfile, monitor);
+          }
+
+          public IProfileChangeRequest createChangeRequest(IProfile profileToChange)
+          {
+            return delegate.createChangeRequest(profileToChange);
+          }
+
+          public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
+              IProgressMonitor monitor)
+          {
+            return delegate.updatesFor(iu, context, monitor);
+          }
+        };
+
+        targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
+
+        Field field = ReflectUtil.getField(DIRECTOR_CLASS, "planner");
+        ReflectUtil.setValue(field, this, planner);
+
+        return planner;
+      }
+
+      private IProfileRegistry registerProfileRegistry(final SetupTaskContext context,
+          final IProvisioningAgent targetAgent)
+      {
+        IProfileRegistry profileRegistry = new IProfileRegistry()
+        {
+          IProfileRegistry delegate = (IProfileRegistry)targetAgent.getService(IProfileRegistry.SERVICE_NAME);
+
+          public IProfile getProfile(String id)
+          {
+            return delegate.getProfile(id);
+          }
+
+          public IProfile getProfile(String id, long timestamp)
+          {
+            return delegate.getProfile(id, timestamp);
+          }
+
+          public long[] listProfileTimestamps(String id)
+          {
+            return delegate.listProfileTimestamps(id);
+          }
+
+          public IProfile[] getProfiles()
+          {
+            return delegate.getProfiles();
+          }
+
+          public IProfile addProfile(String id) throws ProvisionException
+          {
+            return delegate.addProfile(id);
+          }
+
+          public IProfile addProfile(String id, Map<String, String> properties) throws ProvisionException
+          {
+            context.getOS().modifyProfileProperties(properties);
+
+            // Put the original registry back because it will be cast to SimpleProfileRegistry later on
+            targetAgent.registerService(IProfileRegistry.SERVICE_NAME, delegate);
+
+            return delegate.addProfile(id, properties);
+          }
+
+          public boolean containsProfile(String profileId)
+          {
+            return delegate.containsProfile(profileId);
+          }
+
+          public void removeProfile(String id, long timestamp) throws ProvisionException
+          {
+            delegate.removeProfile(id, timestamp);
+          }
+
+          public void removeProfile(String id)
+          {
+            delegate.removeProfile(id);
+          }
+
+          public boolean isCurrent(IProfile profile)
+          {
+            return delegate.isCurrent(profile);
+          }
+
+          public IStatus setProfileStateProperties(String id, long timestamp, Map<String, String> properties)
+          {
+            return delegate.setProfileStateProperties(id, timestamp, properties);
+          }
+
+          public IStatus setProfileStateProperty(String id, long timestamp, String key, String value)
+          {
+            return delegate.setProfileStateProperty(id, timestamp, key, value);
+          }
+
+          public Map<String, String> getProfileStateProperties(String id, long timestamp)
+          {
+            return delegate.getProfileStateProperties(id, timestamp);
+          }
+
+          public Map<String, String> getProfileStateProperties(String id, String key)
+          {
+            return delegate.getProfileStateProperties(id, key);
+          }
+
+          public IStatus removeProfileStateProperties(String id, long timestamp, Collection<String> keys)
+          {
+            return delegate.removeProfileStateProperties(id, timestamp, keys);
+          }
+        };
+
+        targetAgent.registerService(IProfileRegistry.SERVICE_NAME, profileRegistry);
+        return profileRegistry;
       }
 
       private IProvisioningAgent getTargetAgent()

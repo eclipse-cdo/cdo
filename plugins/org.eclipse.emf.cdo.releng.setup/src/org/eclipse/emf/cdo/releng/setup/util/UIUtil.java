@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
@@ -21,8 +20,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public final class UIUtil
 {
-  private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
-
   private UIUtil()
   {
   }
@@ -34,7 +31,7 @@ public final class UIUtil
     {
       try
       {
-        display = WORKBENCH.getDisplay();
+        display = PlatformUI.getWorkbench().getDisplay();
       }
       catch (Throwable ignore)
       {
@@ -68,19 +65,26 @@ public final class UIUtil
 
         if (shell[0] == null)
         {
-          IWorkbenchWindow window = WORKBENCH.getActiveWorkbenchWindow();
-          if (window == null)
+          try
           {
-            IWorkbenchWindow[] windows = WORKBENCH.getWorkbenchWindows();
-            if (windows.length != 0)
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            if (window == null)
             {
-              window = windows[0];
+              IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+              if (windows.length != 0)
+              {
+                window = windows[0];
+              }
+            }
+
+            if (window != null)
+            {
+              shell[0] = window.getShell();
             }
           }
-
-          if (window != null)
+          catch (Throwable ignore)
           {
-            shell[0] = window.getShell();
+            //$FALL-THROUGH$
           }
         }
       }

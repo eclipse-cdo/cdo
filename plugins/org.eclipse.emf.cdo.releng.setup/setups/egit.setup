@@ -24,9 +24,7 @@
     <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile" value="Warning"/>
   </setupTasks>
   <branches name="master">
-    <setupTasks xsi:type="setup:GitCloneTask" location="${setup.branch.dir/git/jgit}" remoteURI="ssh://git.eclipse.org:29418/jgit/jgit" checkoutBranch="master">
-      <requirements xsi:type="setup:P2Task" href="egit.setup#//@branches[name='master']/@setupTasks.1"/>
-    </setupTasks>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${setup.branch.dir/git/jgit}" remoteURI="ssh://git.eclipse.org:29418/jgit/jgit" checkoutBranch="master"/>
     <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.0" documentation="Generated from C:\develop\egit\master\git\jgit.git\org.eclipse.jgit.packaging\org.eclipse.jgit.target\jgit-4.4.target">
       <rootComponents name="com.jcraft.jsch" type="osgi.bundle" versionRange="[0.1.50.v201310081430,0.1.50.v201310081430]"/>
       <rootComponents name="javaewah" type="osgi.bundle" versionRange="[0.5.6.v201307211000,0.5.6.v201307211000]"/>

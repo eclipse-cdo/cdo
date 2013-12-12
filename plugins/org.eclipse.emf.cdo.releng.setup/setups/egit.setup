@@ -127,14 +127,12 @@
       <rootComponents name="org.eclipse.jgit.junit"/>
       <rootComponents name="org.eclipse.jgit.pgm"/>
       <rootComponents name="org.eclipse.jgit.pgm.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.repository" type="unknown"/>
       <rootComponents name="org.eclipse.jgit.target" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.jgit.test" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.egit"/>
       <rootComponents name="org.eclipse.egit.core.test" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.egit.mylyn"/>
       <rootComponents name="org.eclipse.egit.mylyn.ui.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.egit.repository" type="unknown"/>
       <rootComponents name="org.eclipse.egit.target" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.egit.ui.test" type="osgi.bundle"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/egit}"/>

@@ -30,6 +30,15 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Workspace</b></em>'.
@@ -250,7 +259,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
    */
   public EList<SetupTask> getSetupTasks(boolean filterRestrictions, Trigger trigger)
   {
-    EList<SetupTask> setupTasks = new BasicEList<SetupTask>();
+    Map<Integer, EList<SetupTask>> setupTasks = new HashMap<Integer, EList<SetupTask>>();
 
     Eclipse eclipse = getEclipseVersion();
     Branch branch = getBranch();
@@ -272,10 +281,26 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       }
     }
 
-    return setupTasks;
+    Set<Map.Entry<Integer, EList<SetupTask>>> entrySet = setupTasks.entrySet();
+    List<Map.Entry<Integer, EList<SetupTask>>> list = new ArrayList<Map.Entry<Integer, EList<SetupTask>>>(entrySet);
+    Collections.sort(list, new Comparator<Map.Entry<Integer, EList<SetupTask>>>()
+    {
+      public int compare(Entry<Integer, EList<SetupTask>> o1, Entry<Integer, EList<SetupTask>> o2)
+      {
+        return o1.getKey().compareTo(o2.getKey());
+      }
+    });
+
+    EList<SetupTask> result = new BasicEList<SetupTask>();
+    for (Map.Entry<Integer, EList<SetupTask>> entry : list)
+    {
+      result.addAll(entry.getValue());
+    }
+
+    return result;
   }
 
-  private void getSetupTasks(boolean filterRestrictions, Trigger trigger, EList<SetupTask> setupTasks,
+  private void getSetupTasks(boolean filterRestrictions, Trigger trigger, Map<Integer, EList<SetupTask>> setupTasks,
       SetupTaskContainer setupTaskContainer)
   {
     Branch branch = getBranch();
@@ -308,7 +333,16 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
       }
       else
       {
-        setupTasks.add(setupTask);
+        int priority = setupTask.getPriority();
+
+        EList<SetupTask> list = setupTasks.get(priority);
+        if (list == null)
+        {
+          list = new BasicEList<SetupTask>();
+          setupTasks.put(priority, list);
+        }
+
+        list.add(setupTask);
       }
     }
   }

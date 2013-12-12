@@ -38,6 +38,8 @@ import java.util.Set;
  */
 public interface SetupTask extends EObject
 {
+  public static final int DEFAULT_PRIORITY = 100;
+
   /**
    * Returns the value of the '<em><b>Requirements</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.SetupTask}.
@@ -197,6 +199,8 @@ public interface SetupTask extends EObject
    * @generated
    */
   Set<Trigger> getTriggers();
+
+  int getPriority();
 
   Object getOverrideToken();
 

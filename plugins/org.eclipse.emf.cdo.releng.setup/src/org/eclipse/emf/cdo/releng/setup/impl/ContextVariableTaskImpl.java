@@ -173,7 +173,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
    */
   protected ContextVariableTaskImpl()
   {
-    super();
+    super(PRIORITY);
   }
 
   /**

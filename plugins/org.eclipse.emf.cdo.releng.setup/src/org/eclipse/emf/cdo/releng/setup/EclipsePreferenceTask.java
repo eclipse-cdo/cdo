@@ -29,6 +29,8 @@ package org.eclipse.emf.cdo.releng.setup;
  */
 public interface EclipsePreferenceTask extends SetupTask
 {
+  public static final int PRIORITY = 10;
+
   /**
    * Returns the value of the '<em><b>Key</b></em>' attribute.
    * <!-- begin-user-doc -->

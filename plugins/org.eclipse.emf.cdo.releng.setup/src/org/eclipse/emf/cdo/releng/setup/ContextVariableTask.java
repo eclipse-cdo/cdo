@@ -35,6 +35,8 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ContextVariableTask extends SetupTask
 {
+  public static final int PRIORITY = 0;
+
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
    * The default value is <code>"STRING"</code>.

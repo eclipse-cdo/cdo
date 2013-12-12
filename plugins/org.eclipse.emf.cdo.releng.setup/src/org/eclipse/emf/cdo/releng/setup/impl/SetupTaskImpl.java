@@ -96,7 +96,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   /**
    * The cached value of the '{@link #isDisabled() <em>Disabled</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #isDisabled()
    * @generated
    * @ordered
@@ -106,7 +106,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   /**
    * The default value of the '{@link #getScope() <em>Scope</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getScope()
    * @generated
    * @ordered
@@ -116,7 +116,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   /**
    * The cached value of the '{@link #getExcludedTriggers() <em>Excluded Triggers</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getExcludedTriggers()
    * @generated
    * @ordered
@@ -126,7 +126,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   /**
    * The default value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getDocumentation()
    * @generated
    * @ordered
@@ -136,21 +136,28 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   /**
    * The cached value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getDocumentation()
    * @generated
    * @ordered
    */
   protected String documentation = DOCUMENTATION_EDEFAULT;
 
+  private final int priority;
+
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-   * @generated
+   * <!-- end-user-doc -->
+   * @generated NOT
    */
   protected SetupTaskImpl()
   {
-    super();
+    this(DEFAULT_PRIORITY);
+  }
+
+  protected SetupTaskImpl(int priority)
+  {
+    this.priority = priority;
   }
 
   /**
@@ -358,6 +365,11 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   public Set<Trigger> getValidTriggers()
   {
     return Trigger.ALL_TRIGGERS;
+  }
+
+  public final int getPriority()
+  {
+    return priority;
   }
 
   /**

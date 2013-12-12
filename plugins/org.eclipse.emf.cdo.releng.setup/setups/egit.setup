@@ -25,7 +25,7 @@
   </setupTasks>
   <branches name="master">
     <setupTasks xsi:type="setup:GitCloneTask" location="${setup.branch.dir/git/jgit}" remoteURI="ssh://git.eclipse.org:29418/jgit/jgit" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.0" documentation="Generated from C:\develop\egit\master\git\jgit.git\org.eclipse.jgit.packaging\org.eclipse.jgit.target\jgit-4.4.target">
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.0" disabled="true" documentation="Generated from C:\develop\egit\master\git\jgit.git\org.eclipse.jgit.packaging\org.eclipse.jgit.target\jgit-4.4.target">
       <rootComponents name="com.jcraft.jsch" type="osgi.bundle" versionRange="[0.1.50.v201310081430,0.1.50.v201310081430]"/>
       <rootComponents name="javaewah" type="osgi.bundle" versionRange="[0.5.6.v201307211000,0.5.6.v201307211000]"/>
       <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="[2.5.0.v201103041518,2.5.0.v201103041518]"/>
@@ -65,7 +65,7 @@
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository"/>
     </setupTasks>
     <setupTasks xsi:type="setup:GitCloneTask" location="${setup.branch.dir/git/egit}" remoteURI="ssh://git.eclipse.org:29418/egit/egit" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.2" documentation="Generated from C:\develop\egit\master\git\egit.git\org.eclipse.egit.target\egit-4.4.target">
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.2" disabled="true" documentation="Generated from C:\develop\egit\master\git\egit.git\org.eclipse.egit.target\egit-4.4.target">
       <rootComponents name="com.jcraft.jsch" type="osgi.bundle" versionRange="[0.1.50.v201310081430,0.1.50.v201310081430]"/>
       <rootComponents name="javaewah" type="osgi.bundle" versionRange="[0.5.6.v201307211000,0.5.6.v201307211000]"/>
       <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="[2.5.0.v201103041518,2.5.0.v201103041518]"/>
@@ -117,17 +117,43 @@
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/2.1.0"/>
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository"/>
     </setupTasks>
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.2" documentation="Generated from C:\develop\egit\master\git\egit.git\org.eclipse.egit.target\egit-4.4.target">
+      <rootComponents name="org.eclipse.jgit.ant" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.ant.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.console" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.http.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.java7"/>
+      <rootComponents name="org.eclipse.jgit.java7.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.junit"/>
+      <rootComponents name="org.eclipse.jgit.pgm"/>
+      <rootComponents name="org.eclipse.jgit.pgm.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.repository" type="unknown"/>
+      <rootComponents name="org.eclipse.jgit.target" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.jgit.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.egit"/>
+      <rootComponents name="org.eclipse.egit.core.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.egit.mylyn"/>
+      <rootComponents name="org.eclipse.egit.mylyn.ui.test" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.egit.repository" type="unknown"/>
+      <rootComponents name="org.eclipse.egit.target" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.egit.ui.test" type="osgi.bundle"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/egit}"/>
+      <p2Repositories url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
+      <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/2.1.0"/>
+      <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository"/>
+    </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="EGit">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.egit.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.2 //@branches[name='master']/@setupTasks.4/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.5/@workingSets.2 //@branches[name='master']/@setupTasks.5/@workingSets.3"/>
         </predicates>
       </workingSets>
       <workingSets name="JGit">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.jgit.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.2 //@branches[name='master']/@setupTasks.4/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.5/@workingSets.2 //@branches[name='master']/@setupTasks.5/@workingSets.3"/>
         </predicates>
       </workingSets>
       <workingSets name="Tests">

@@ -127,7 +127,7 @@ public final class TargetPlatformUtil
     return false;
   }
 
-  public static void setTargetPlatform(String targetPlatformPath, String name, boolean active, ProgressLog progress)
+  public static void setTargetPlatform(String targetPlatformPath, String name, boolean activate, ProgressLog progress)
       throws Exception
   {
     ITargetPlatformService service = null;
@@ -135,7 +135,6 @@ public final class TargetPlatformUtil
     try
     {
       service = ServiceUtil.getService(ITargetPlatformService.class);
-      ITargetDefinition target = null;
       for (ITargetHandle targetHandle : service.getTargets(new ProgressLogMonitor(progress)))
       {
         ITargetDefinition candidate = targetHandle.getTargetDefinition();
@@ -147,37 +146,29 @@ public final class TargetPlatformUtil
 
         if (targetPlatformPath.equals(containers[0].getLocation(true)))
         {
-          ITargetHandle activeHandle = service.getWorkspaceTargetHandle();
-          if (activeHandle != null && activeHandle.equals(targetHandle))
-          {
-            // This target is already active. Nothing left to do here
-            return;
-          }
-
-          target = candidate;
+          service.deleteTarget(targetHandle);
           break;
         }
       }
 
-      if (target == null)
+      ITargetDefinition target = service.newTarget();
+      target.setName(name);
+      File tpDir = new File(targetPlatformPath);
+      if (!tpDir.isDirectory())
       {
-        target = service.newTarget();
-        ITargetLocation container = service.newDirectoryLocation(targetPlatformPath);
-        target.setTargetLocations(new ITargetLocation[] { container });
-        target.setName(name);
-        File tpDir = new File(targetPlatformPath);
+        tpDir.mkdirs();
         if (!tpDir.isDirectory())
         {
-          tpDir.mkdirs();
-          if (!tpDir.isDirectory())
-          {
-            throw new IOException("Unable to create target platform directory: " + tpDir);
-          }
+          throw new IOException("Unable to create target platform directory: " + tpDir);
         }
       }
 
+      ITargetLocation container = service.newDirectoryLocation(targetPlatformPath);
+      target.setTargetLocations(new ITargetLocation[] { container });
       service.saveTargetDefinition(target);
-      if (active)
+      target.resolve(null);
+
+      if (activate)
       {
         setTargetActive(target, new ProgressLogMonitor(progress));
       }

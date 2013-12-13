@@ -899,12 +899,15 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             }
           }
 
-          Locator locator = RmapFactory.eINSTANCE.createLocator();
-          locator.setPattern(exactPattern(componentName));
+          for (String searchName : new String[] { componentName, componentName + ".source" })
+          {
+            Locator locator = RmapFactory.eINSTANCE.createLocator();
+            locator.setPattern(exactPattern(searchName));
 
-          locator.setSearchPath(sourceSearchPath);
-          locator.setFailOnError(true);
-          matchers.add(locator);
+            locator.setSearchPath(sourceSearchPath);
+            locator.setFailOnError(true);
+            matchers.add(locator);
+          }
 
           rmap.getSearchPaths().add(sourceSearchPath);
         }

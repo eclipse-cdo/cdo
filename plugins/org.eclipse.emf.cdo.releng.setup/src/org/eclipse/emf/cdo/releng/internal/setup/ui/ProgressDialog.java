@@ -652,6 +652,21 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     {
       printStream = new PrintStream(out, false, "UTF-8");
       t.printStackTrace(printStream);
+
+      for (Throwable throwable = t; throwable != null; throwable = throwable.getCause())
+      {
+        if (throwable instanceof CoreException)
+        {
+          IStatus status = ((CoreException)throwable).getStatus();
+          if (status != null)
+          {
+            deeplyPrint(status, printStream, 0);
+          }
+
+          break;
+        }
+      }
+
       printStream.close();
       return new String(out.toByteArray(), "UTF-8");
     }

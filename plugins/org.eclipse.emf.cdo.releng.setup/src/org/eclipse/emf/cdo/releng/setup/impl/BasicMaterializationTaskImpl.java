@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.TargetPlatformUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.FileLock;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
@@ -50,6 +51,7 @@ import org.eclipse.buckminster.sax.Utils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
 import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherApplication;
 
@@ -61,6 +63,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Queue;
@@ -386,6 +389,18 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       CorePlugin plugin = CorePlugin.getDefault();
       plugin.clearRemoteFileCache();
       plugin.clearURLCache();
+
+      // Stop the old provisioning agent so that a new one will be created.
+      Field field = ReflectUtil.getField(CorePlugin.class, "resolverAgent");
+      field.setAccessible(true);
+      IProvisioningAgent agent = (IProvisioningAgent)field.get(plugin);
+      if (agent != null)
+      {
+        agent.stop();
+      }
+
+      // Clear out the existing provisioning agent because it likely contains cached state we want to discard.
+      field.set(plugin, null);
 
       URL mSpecURL = new URL(mSpec);
       MaterializationSpec mspec = BuckminsterHelper.getMSpec(mSpecURL, monitor); // 20 ticks

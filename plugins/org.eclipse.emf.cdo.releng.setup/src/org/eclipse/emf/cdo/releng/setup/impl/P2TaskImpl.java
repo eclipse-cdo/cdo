@@ -1141,7 +1141,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       @Override
       public void run()
       {
-
         try
         {
           for (; !interrupted(); sleep(1000))

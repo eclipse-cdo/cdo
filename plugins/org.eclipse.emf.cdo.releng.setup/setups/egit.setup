@@ -136,6 +136,7 @@
       <rootComponents name="org.eclipse.egit.target" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.egit.ui.test" type="osgi.bundle"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/egit}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/jgit}"/>
       <p2Repositories url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/2.1.0"/>

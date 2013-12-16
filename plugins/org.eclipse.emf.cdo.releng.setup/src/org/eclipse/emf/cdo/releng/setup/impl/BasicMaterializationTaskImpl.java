@@ -51,6 +51,8 @@ import org.eclipse.buckminster.sax.Utils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
 import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherApplication;
@@ -506,7 +508,25 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
             Logger.setErrStream(printStream);
             Logger.setOutStream(printStream);
-            return super.run(monitor);
+
+            try
+            {
+              internalRun(monitor, true);
+            }
+            catch (CoreException ex)
+            {
+              CorePlugin.getLogger().error(ex, ex.getMessage());
+              getMaterializationContext().emitWarningAndErrorTags();
+              return ex.getStatus();
+            }
+            catch (OperationCanceledException ex)
+            {
+              return Status.CANCEL_STATUS;
+            }
+
+            getMaterializationContext().emitWarningAndErrorTags();
+
+            return Status.OK_STATUS;
           }
           catch (UnsupportedEncodingException ex)
           {

@@ -95,7 +95,7 @@
       <rootComponents name="org.mortbay.jetty.server" type="osgi.bundle"/>
       <rootComponents name="org.mortbay.jetty.util" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.pde"/>
-      <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="(2.6.0,2.7.0]"/>
+      <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="(2.5.0,4.0.0]"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${eclipse.license.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.swt.git.location}"/>

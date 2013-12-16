@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertiesViewer;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -57,8 +58,6 @@ import java.util.Set;
 public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
-  public static final String[] EXPERT_FILTER = { "org.eclipse.ui.views.properties.expert" };
-
   private static final Map<Set<Trigger>, IItemLabelProvider> EXCLUSION_LABEL_PROVIDERS = new HashMap<Set<Trigger>, IItemLabelProvider>();
 
   static
@@ -134,7 +133,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
     itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_SetupTask_requirements_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_SetupTask_requirements_feature", "_UI_SetupTask_type"),
-        SetupPackage.Literals.SETUP_TASK__REQUIREMENTS, true, false, true, null, null, EXPERT_FILTER)
+        SetupPackage.Literals.SETUP_TASK__REQUIREMENTS, true, false, true, null, null, PropertiesViewer.EXPERT_FILTER)
     {
       private IItemLabelProvider labelProvider = new HierarchicalItemLabelProvider(itemDelegator);
 
@@ -283,7 +282,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
     itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_SetupTask_restrictions_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_SetupTask_restrictions_feature", "_UI_SetupTask_type"),
-        SetupPackage.Literals.SETUP_TASK__RESTRICTIONS, true, false, true, null, null, EXPERT_FILTER)
+        SetupPackage.Literals.SETUP_TASK__RESTRICTIONS, true, false, true, null, null, PropertiesViewer.EXPERT_FILTER)
     {
       private IItemLabelProvider labelProvider = new HierarchicalItemLabelProvider(itemDelegator);
 
@@ -348,7 +347,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
         getString("_UI_SetupTask_scope_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_SetupTask_scope_feature", "_UI_SetupTask_type"),
         SetupPackage.Literals.SETUP_TASK__SCOPE, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-        EXPERT_FILTER));
+        PropertiesViewer.EXPERT_FILTER));
   }
 
   /**
@@ -363,7 +362,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_SetupTask_excludedTriggers_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_SetupTask_excludedTriggers_feature", "_UI_SetupTask_type"),
         SetupPackage.Literals.SETUP_TASK__EXCLUDED_TRIGGERS, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, EXPERT_FILTER)
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, PropertiesViewer.EXPERT_FILTER)
     {
       @Override
       public IItemLabelProvider getLabelProvider(Object object)
@@ -416,7 +415,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
         getString("_UI_SetupTask_documentation_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_SetupTask_documentation_feature", "_UI_SetupTask_type"),
         SetupPackage.Literals.SETUP_TASK__DOCUMENTATION, true, true, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, EXPERT_FILTER));
+        null, PropertiesViewer.EXPERT_FILTER));
   }
 
   /**
@@ -432,7 +431,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
         getString("_UI_SetupTask_disabled_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_SetupTask_disabled_feature", "_UI_SetupTask_type"),
         SetupPackage.Literals.SETUP_TASK__DISABLED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-        null, EXPERT_FILTER));
+        null, PropertiesViewer.EXPERT_FILTER));
   }
 
   /**

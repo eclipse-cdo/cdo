@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.editor;
 
 import org.eclipse.emf.cdo.releng.internal.setup.AdditionalRequirementsGenerator;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertiesViewer;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
@@ -18,7 +19,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -142,7 +142,7 @@ public abstract class ProjectTemplate
   {
     public TreeViewer getPreViewer();
 
-    public TableViewer getPropertiesViewer();
+    public PropertiesViewer getPropertiesViewer();
 
     public void validate();
   }

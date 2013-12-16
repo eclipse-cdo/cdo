@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.presentation.actions;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ConfirmationDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -21,9 +22,11 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -53,6 +56,7 @@ public class PerformSetupAction extends AbstractSetupAction
     try
     {
       final SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(true);
+      Setup setup = setupTaskPerformer.getSetup();
 
       if (TEST_SINGLE_TASK)
       {
@@ -61,56 +65,61 @@ public class PerformSetupAction extends AbstractSetupAction
         {
           task.perform(setupTaskPerformer);
         }
+
+        return;
       }
-      else
+
+      MultiStatus status = new MultiStatus(Activator.PLUGIN_ID, 0, "Resource load errors", null);
+
+      Branch branch = setup.getBranch();
+      if (branch.eIsProxy())
       {
-        MultiStatus status = new MultiStatus(Activator.PLUGIN_ID, 0, "Resource load errors", null);
+        status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Branch cannot be resolved: "
+            + EcoreUtil.getURI(branch)));
+      }
 
-        Setup setup = setupTaskPerformer.getSetup();
-        Branch branch = setup.getBranch();
-        if (branch.eIsProxy())
-        {
-          status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Branch cannot be resolved: "
-              + EcoreUtil.getURI(branch)));
-        }
+      Eclipse eclipse = setup.getEclipseVersion();
+      if (eclipse.eIsProxy())
+      {
+        status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Eclipse version cannot be resolved: "
+            + EcoreUtil.getURI(eclipse)));
+      }
 
-        Eclipse eclipse = setup.getEclipseVersion();
-        if (eclipse.eIsProxy())
+      for (Resource resource : setupTaskPerformer.getResourceSet().getResources())
+      {
+        for (Resource.Diagnostic diagnostic : resource.getErrors())
         {
-          status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Eclipse version cannot be resolved: "
-              + EcoreUtil.getURI(eclipse)));
-        }
-
-        for (Resource resource : setupTaskPerformer.getResourceSet().getResources())
-        {
-          for (Resource.Diagnostic diagnostic : resource.getErrors())
+          String message = diagnostic.getMessage();
+          if (diagnostic instanceof Throwable)
           {
-            String message = diagnostic.getMessage();
-            if (diagnostic instanceof Throwable)
-            {
-              status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, (Throwable)diagnostic));
-            }
-            else
-            {
-              status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message));
-            }
+            status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, (Throwable)diagnostic));
+          }
+          else
+          {
+            status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message));
           }
         }
+      }
 
-        if (!status.isOK())
-        {
-          CoreException exception = new CoreException(status);
-          exception.setStackTrace(new StackTraceElement[0]);
-          ErrorDialog.open(exception);
-          return;
-        }
+      if (!status.isOK())
+      {
+        CoreException exception = new CoreException(status);
+        exception.setStackTrace(new StackTraceElement[0]);
+        ErrorDialog.open(exception);
+        return;
+      }
 
+      EList<SetupTask> neededSetupTasks = setupTaskPerformer.initNeededSetupTasks();
+
+      ConfirmationDialog dialog = new ConfirmationDialog(UIUtil.getShell(), setup, neededSetupTasks);
+      if (dialog.open() == ConfirmationDialog.OK)
+      {
         Shell shell = getWindow().getShell();
         ProgressDialog.run(shell, new ProgressLogRunnable()
         {
           public Set<String> run(ProgressLog log) throws Exception
           {
-            setupTaskPerformer.perform();
+            setupTaskPerformer.performNeededSetupTasks();
             return setupTaskPerformer.getRestartReasons();
           }
         }, Collections.singletonList(setupTaskPerformer));

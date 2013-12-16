@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
-import org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -64,7 +64,7 @@ public class VariablesProjectTemplate extends ProjectTemplate
 
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(layout);
-    SetupModelWizard.applyGridData(composite);
+    UIUtil.applyGridData(composite);
 
     new Label(composite, SWT.NONE).setText("Branches:");
     branches = new Spinner(composite, SWT.BORDER);

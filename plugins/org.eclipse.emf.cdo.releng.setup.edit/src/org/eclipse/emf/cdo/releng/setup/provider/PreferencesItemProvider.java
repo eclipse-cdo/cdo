@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertiesViewer;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
@@ -101,7 +102,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
         getString("_UI_Preferences_bundlePoolFolder_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePoolFolder_feature",
             "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__BUNDLE_POOL_FOLDER, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, SetupTaskItemProvider.EXPERT_FILTER));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, PropertiesViewer.EXPERT_FILTER));
   }
 
   /**
@@ -135,7 +136,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
         getString("_UI_Preferences_acceptedLicenses_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Preferences_acceptedLicenses_feature",
             "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__ACCEPTED_LICENSES, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, SetupTaskItemProvider.EXPERT_FILTER));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, PropertiesViewer.EXPERT_FILTER));
   }
 
   /**

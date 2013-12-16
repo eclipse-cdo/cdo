@@ -420,7 +420,7 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       public void run(SetupTaskContext context) throws Exception
       {
         registry.setFileEditorMappings(mappings.values().toArray(new FileEditorMapping[mappings.size()]));
-        registry.saveAssociations(); // TODO This call takes comparinlgy long. Optimize!
+        registry.saveAssociations(); // TODO This call takes comparingly long. Optimize!
 
         PrefUtil.savePrefs();
       }

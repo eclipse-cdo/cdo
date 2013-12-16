@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
-import org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizard;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -161,7 +161,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
 
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(layout);
-    SetupModelWizard.applyGridData(composite);
+    UIUtil.applyGridData(composite);
 
     Text branchText = addBranchControl(composite);
     branchText.setText(BRANCH_NAME);
@@ -175,7 +175,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     new Label(composite, SWT.NONE).setText("Branch:");
 
     final Text branchText = new Text(composite, SWT.BORDER);
-    SetupModelWizard.applyGridData(branchText);
+    UIUtil.applyGridData(branchText);
     branchText.addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)
@@ -197,7 +197,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     label.setText("Folder:");
 
     final Text text = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
-    SetupModelWizard.applyGridData(text);
+    UIUtil.applyGridData(text);
 
     final Button button = new Button(composite, SWT.NONE);
     button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.presentation;
 
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertiesViewer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -18,10 +19,9 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate.Factory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
-import org.eclipse.emf.cdo.releng.setup.provider.SetupTaskItemProvider;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.CommonPlugin;
@@ -33,9 +33,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
@@ -49,19 +46,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -71,8 +63,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -80,8 +70,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -471,22 +459,6 @@ public class SetupModelWizard extends Wizard implements INewWizard
     }
   }
 
-  public static GridData applyGridData(Control control)
-  {
-    GridData data = new GridData();
-    data.grabExcessHorizontalSpace = true;
-    data.horizontalAlignment = GridData.FILL;
-    control.setLayoutData(data);
-    return data;
-  }
-
-  public static GridData grabVertical(GridData data)
-  {
-    data.grabExcessVerticalSpace = true;
-    data.verticalAlignment = GridData.FILL;
-    return data;
-  }
-
   /**
    * This is the one page of the wizard.
    * <!-- begin-user-doc -->
@@ -832,12 +804,12 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
       Composite composite = new Composite(parent, SWT.NONE);
       composite.setLayout(layout);
-      grabVertical(applyGridData(composite));
+      UIUtil.grabVertical(UIUtil.applyGridData(composite));
       setControl(composite);
 
       Label containerLabel = new Label(composite, SWT.LEFT);
       containerLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Name_label"));
-      applyGridData(containerLabel);
+      UIUtil.applyGridData(containerLabel);
 
       nameField = new Text(composite, SWT.BORDER);
       nameField.addModifyListener(new ModifyListener()
@@ -857,14 +829,14 @@ public class SetupModelWizard extends Wizard implements INewWizard
           validatePage();
         }
       });
-      applyGridData(nameField);
+      UIUtil.applyGridData(nameField);
 
       Label labelLabel = new Label(composite, SWT.LEFT);
       labelLabel.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_Label_label"));
-      applyGridData(labelLabel);
+      UIUtil.applyGridData(labelLabel);
 
       labelField = new Text(composite, SWT.BORDER);
-      applyGridData(labelField);
+      UIUtil.applyGridData(labelField);
 
       useTemplateButton = new Button(composite, SWT.CHECK);
       useTemplateButton.setText(SetupEditorPlugin.INSTANCE.getString("_UI_Wizard_UseTemplate_label"));
@@ -876,7 +848,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
           validatePage();
         }
       });
-      applyGridData(useTemplateButton).horizontalAlignment = SWT.LEFT;
+      UIUtil.applyGridData(useTemplateButton).horizontalAlignment = SWT.LEFT;
 
       validatePage();
     }
@@ -975,7 +947,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
     private TreeViewer preViewer;
 
-    private TableViewer propertiesViewer;
+    private PropertiesViewer propertiesViewer;
 
     public TemplateUsagePage(String pageId)
     {
@@ -1014,7 +986,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
 
       Composite composite = new Composite(parent, SWT.NONE);
       composite.setLayout(layout);
-      grabVertical(applyGridData(composite));
+      UIUtil.grabVertical(UIUtil.applyGridData(composite));
       setControl(composite);
 
       templatesViewer = new ListViewer(composite, SWT.BORDER);
@@ -1038,16 +1010,16 @@ public class SetupModelWizard extends Wizard implements INewWizard
           validate();
         }
       });
-      applyGridData(templatesViewer.getControl()).heightHint = 64;
+      UIUtil.applyGridData(templatesViewer.getControl()).heightHint = 64;
 
       templatesStack = new StackLayout();
 
       templatesContainer = new Composite(composite, SWT.NONE);
       templatesContainer.setLayout(templatesStack);
-      applyGridData(templatesContainer);
+      UIUtil.applyGridData(templatesContainer);
 
       SashForm sash = new SashForm(composite, SWT.VERTICAL);
-      grabVertical(applyGridData(sash));
+      UIUtil.grabVertical(UIUtil.applyGridData(sash));
 
       preViewer = new TreeViewer(sash, SWT.BORDER);
       preViewer.setLabelProvider(new SetupLabelProvider(EMFUtil.ADAPTER_FACTORY, preViewer));
@@ -1070,26 +1042,9 @@ public class SetupModelWizard extends Wizard implements INewWizard
           }
         }
       });
-      grabVertical(applyGridData(preViewer.getControl()));
+      UIUtil.grabVertical(UIUtil.applyGridData(preViewer.getControl()));
 
-      propertiesViewer = new TableViewer(sash, SWT.BORDER);
-      propertiesViewer.setLabelProvider(new PropertiesLabelProvider());
-      propertiesViewer.setContentProvider(new PropertiesContentProvider());
-
-      Table table = propertiesViewer.getTable();
-      applyGridData(table).heightHint = 64;
-
-      TableColumn propertyColumn = new TableColumn(table, SWT.NONE);
-      propertyColumn.setText("Property");
-      propertyColumn.setWidth(200);
-
-      TableColumn valueColumn = new TableColumn(table, SWT.NONE);
-      valueColumn.setText("Value");
-      valueColumn.setWidth(400);
-
-      table.setHeaderVisible(true);
-      table.setLinesVisible(true);
-
+      propertiesViewer = new PropertiesViewer(sash, SWT.BORDER);
       sash.setWeights(new int[] { 2, 1 });
 
       for (ProjectTemplate template : templates)
@@ -1122,7 +1077,7 @@ public class SetupModelWizard extends Wizard implements INewWizard
       return preViewer;
     }
 
-    public TableViewer getPropertiesViewer()
+    public PropertiesViewer getPropertiesViewer()
     {
       return propertiesViewer;
     }
@@ -1175,114 +1130,6 @@ public class SetupModelWizard extends Wizard implements INewWizard
     {
       ProjectTemplate template = getSelectedTemplate();
       return templateControls.get(template);
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
-    {
-      public String getColumnText(Object element, int columnIndex)
-      {
-        return (String)((Object[])element)[columnIndex];
-      }
-
-      public Image getColumnImage(Object element, int columnIndex)
-      {
-        if (columnIndex == 1)
-        {
-          return (Image)((Object[])element)[2];
-        }
-
-        return null;
-      }
-
-      public Color getForeground(Object element)
-      {
-        boolean expert = (Boolean)((Object[])element)[3];
-        if (expert)
-        {
-          return propertiesViewer.getControl().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
-        }
-
-        return null;
-      }
-
-      public Color getBackground(Object element)
-      {
-        return null;
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class PropertiesContentProvider implements IStructuredContentProvider
-    {
-      private final AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(EMFUtil.ADAPTER_FACTORY);
-
-      public void dispose()
-      {
-      }
-
-      public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-      {
-      }
-
-      public Object[] getElements(Object element)
-      {
-        List<Object[]> properties = new ArrayList<Object[]>();
-        List<Object[]> expertProperties = new ArrayList<Object[]>();
-
-        List<IItemPropertyDescriptor> propertyDescriptors = itemDelegator.getPropertyDescriptors(element);
-        if (propertyDescriptors != null)
-        {
-          for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
-          {
-            String displayName = propertyDescriptor.getDisplayName(element);
-
-            IItemLabelProvider propertyLabelProvider = propertyDescriptor.getLabelProvider(element);
-            Object propertyValue = propertyDescriptor.getPropertyValue(element);
-            Object imageURL = propertyLabelProvider.getImage(propertyValue);
-            Image image = imageURL == null ? null : ExtendedImageRegistry.INSTANCE.getImage(imageURL);
-
-            String valueText = propertyLabelProvider.getText(propertyValue);
-            if (StringUtil.isEmpty(valueText))
-            {
-              valueText = "";
-            }
-
-            if (isExpertProperty(propertyDescriptor, element))
-            {
-              expertProperties.add(new Object[] { displayName, valueText, image, true });
-            }
-            else
-            {
-              properties.add(new Object[] { displayName, valueText, image, false });
-            }
-          }
-        }
-
-        properties.addAll(expertProperties);
-        return properties.toArray();
-      }
-
-      private boolean isExpertProperty(IItemPropertyDescriptor propertyDescriptor, Object element)
-      {
-        String[] filterFlags = propertyDescriptor.getFilterFlags(element);
-        if (filterFlags != null)
-        {
-          for (String filterFlag : filterFlags)
-          {
-            if (SetupTaskItemProvider.EXPERT_FILTER[0].equals(filterFlag))
-            {
-              return true;
-            }
-          }
-        }
-
-        return false;
-      }
     }
   }
 }

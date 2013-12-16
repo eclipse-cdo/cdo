@@ -148,11 +148,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return triggeredSetupTasks;
   }
 
-  public Map<EObject, EObject> getCopyMap()
-  {
-    return copyMap;
-  }
-
   private void initTriggeredSetupTasks()
   {
     Setup setup = getSetup();
@@ -239,6 +234,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         }
       }
     }
+  }
+
+  public Map<EObject, EObject> getCopyMap()
+  {
+    return copyMap;
   }
 
   public boolean isCancelled()
@@ -485,7 +485,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       throw new RuntimeException("Missing variables for " + undeclaredVariables);
     }
 
-    perform(triggeredSetupTasks);
+    performTriggeredSetupTasks();
 
     if (getTrigger() == Trigger.BOOTSTRAP)
     {
@@ -549,60 +549,38 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
-  private void perform(EList<SetupTask> setupTasks) throws Exception
+  private void performTriggeredSetupTasks() throws Exception
   {
-    final EList<SetupTask> neededTasks = initNeededTasks(setupTasks);
-    if (neededTasks.isEmpty())
+    initNeededSetupTasks();
+    if (neededSetupTasks.isEmpty())
     {
       return;
     }
 
-    setPerforming(true);
-
-    if (SetupConstants.SETUP_IDE && getTrigger() != Trigger.MANUAL)
+    if (SetupConstants.SETUP_IDE && getTrigger() == Trigger.MANUAL)
+    {
+      performNeededSetupTasks();
+    }
+    else
     {
       ProgressDialog.run(UIUtil.getShell(), new ProgressLogRunnable()
       {
         public Set<String> run(ProgressLog log) throws Exception
         {
-          doPerform(neededTasks);
+          performNeededSetupTasks();
           return getRestartReasons();
         }
       }, Collections.singletonList(this));
     }
-    else
-    {
-      doPerform(neededTasks);
-    }
   }
 
-  public static boolean disableAutoBuilding() throws CoreException
+  public void performNeededSetupTasks() throws Exception
   {
-    boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
-    if (autoBuilding)
-    {
-      restoreAutoBuilding(false);
-    }
+    setPerforming(true);
 
-    return autoBuilding;
-  }
-
-  public static void restoreAutoBuilding(boolean autoBuilding) throws CoreException
-  {
-    if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
-    {
-      IWorkspaceDescription description = ResourcesPlugin.getWorkspace().getDescription();
-      description.setAutoBuilding(autoBuilding);
-
-      ResourcesPlugin.getWorkspace().setDescription(description);
-    }
-  }
-
-  private void doPerform(final EList<SetupTask> neededTasks) throws Exception
-  {
     if (getTrigger() == Trigger.BOOTSTRAP)
     {
-      doPerformHelper(neededTasks);
+      doPerformNeededSetupTasks();
     }
     else
     {
@@ -612,7 +590,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         {
           try
           {
-            doPerformHelper(neededTasks);
+            doPerformNeededSetupTasks();
           }
           catch (Exception ex)
           {
@@ -623,7 +601,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
-  private void doPerformHelper(EList<SetupTask> neededTasks) throws Exception
+  private void doPerformNeededSetupTasks() throws Exception
   {
     Boolean autoBuilding = null;
     try
@@ -636,7 +614,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       Branch branch = getSetup().getBranch();
       log("Setting up " + branch.getProject().getName() + " " + branch.getName());
 
-      for (SetupTask neededTask : neededTasks)
+      for (SetupTask neededTask : neededSetupTasks)
       {
         task(neededTask);
         log("Performing setup task " + getLabel(neededTask));
@@ -827,22 +805,25 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return neededSetupTasks;
   }
 
-  private EList<SetupTask> initNeededTasks(EList<SetupTask> setupTasks) throws Exception
+  public EList<SetupTask> initNeededSetupTasks() throws Exception
   {
-    neededSetupTasks = new BasicEList<SetupTask>();
-
-    if (setupTasks != null)
+    if (neededSetupTasks == null)
     {
-      for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
+      neededSetupTasks = new BasicEList<SetupTask>();
+
+      if (triggeredSetupTasks != null)
       {
-        SetupTask setupTask = it.next();
-        if (setupTask.isNeeded(this))
+        for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
         {
-          neededSetupTasks.add(setupTask);
-        }
-        else
-        {
-          setupTask.dispose();
+          SetupTask setupTask = it.next();
+          if (setupTask.isNeeded(this))
+          {
+            neededSetupTasks.add(setupTask);
+          }
+          else
+          {
+            setupTask.dispose();
+          }
         }
       }
     }
@@ -948,6 +929,28 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       {
         count = 0;
       }
+    }
+  }
+
+  public static boolean disableAutoBuilding() throws CoreException
+  {
+    boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
+    if (autoBuilding)
+    {
+      restoreAutoBuilding(false);
+    }
+
+    return autoBuilding;
+  }
+
+  public static void restoreAutoBuilding(boolean autoBuilding) throws CoreException
+  {
+    if (autoBuilding != ResourcesPlugin.getWorkspace().isAutoBuilding())
+    {
+      IWorkspaceDescription description = ResourcesPlugin.getWorkspace().getDescription();
+      description.setAutoBuilding(autoBuilding);
+
+      ResourcesPlugin.getWorkspace().setDescription(description);
     }
   }
 

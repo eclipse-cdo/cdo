@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -91,5 +93,21 @@ public final class UIUtil
     });
 
     return shell[0];
+  }
+
+  public static GridData applyGridData(Control control)
+  {
+    GridData data = new GridData();
+    data.grabExcessHorizontalSpace = true;
+    data.horizontalAlignment = GridData.FILL;
+    control.setLayoutData(data);
+    return data;
+  }
+
+  public static GridData grabVertical(GridData data)
+  {
+    data.grabExcessVerticalSpace = true;
+    data.verticalAlignment = GridData.FILL;
+    return data;
   }
 }

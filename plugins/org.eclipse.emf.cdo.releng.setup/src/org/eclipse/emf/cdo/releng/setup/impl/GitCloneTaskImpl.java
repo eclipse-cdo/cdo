@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
+import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
@@ -516,6 +517,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    */
   private static class GitUtil implements GitDelegate
   {
+    private boolean workDirExisted;
+
     private File workDir;
 
     private boolean hasCheckout;
@@ -538,6 +541,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         return true;
       }
 
+      workDirExisted = true;
+
       if (workDir.list().length > 1)
       {
         return false;
@@ -545,45 +550,69 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
       context.log("Opening Git clone " + workDir);
 
-      Git git = Git.open(workDir);
-      if (!GitUtil.hasWorkTree(git))
+      try
       {
-        FileUtil.rename(workDir);
-        return true;
+        Git git = Git.open(workDir);
+        if (!GitUtil.hasWorkTree(git))
+        {
+          FileUtil.rename(workDir);
+          return true;
+        }
+
+        Repository repository = git.getRepository();
+        GitUtil.configureRepository(context, repository, checkoutBranch, remoteName);
+
+        hasCheckout = repository.getAllRefs().containsKey("refs/heads/" + checkoutBranch);
+        if (!hasCheckout)
+        {
+          cachedGit = git;
+          cachedRepository = repository;
+          return true;
+        }
+
+        return false;
       }
-
-      Repository repository = git.getRepository();
-      GitUtil.configureRepository(context, repository, checkoutBranch, remoteName);
-
-      hasCheckout = repository.getAllRefs().containsKey("refs/heads/" + checkoutBranch);
-      if (!hasCheckout)
+      catch (Throwable ex)
       {
-        cachedGit = git;
-        cachedRepository = repository;
-        return true;
-      }
+        if (!workDirExisted)
+        {
+          FileUtil.delete(workDir, new ProgressLogMonitor(context));
+        }
 
-      return false;
+        throw new Exception(ex);
+      }
     }
 
     public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
         String userID) throws Exception
     {
-      if (cachedGit == null)
+      try
       {
-        cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, remoteURI, userID);
-        cachedRepository = cachedGit.getRepository();
-        if (!URI.createURI(remoteURI).isFile())
+        if (cachedGit == null)
         {
-          GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName);
+          cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, remoteURI, userID);
+          cachedRepository = cachedGit.getRepository();
+          if (!URI.createURI(remoteURI).isFile())
+          {
+            GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName);
+          }
+        }
+
+        if (!hasCheckout)
+        {
+          GitUtil.createBranch(context, cachedGit, checkoutBranch, remoteName);
+          GitUtil.checkout(context, cachedGit, checkoutBranch);
+          GitUtil.resetHard(context, cachedGit);
         }
       }
-
-      if (!hasCheckout)
+      catch (Throwable ex)
       {
-        GitUtil.createBranch(context, cachedGit, checkoutBranch, remoteName);
-        GitUtil.checkout(context, cachedGit, checkoutBranch);
-        GitUtil.resetHard(context, cachedGit);
+        if (!workDirExisted)
+        {
+          FileUtil.delete(workDir, new ProgressLogMonitor(context));
+        }
+
+        throw new Exception(ex);
       }
     }
 

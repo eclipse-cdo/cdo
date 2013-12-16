@@ -88,14 +88,14 @@
         <substitutions>qualifier</substitutions>
       </modifications>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.9">
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.10 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.3 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.5/@setupTasks.18">
       <rootComponents name="org.eclipse.platform"/>
       <rootComponents name="org.eclipse.osgi" type="osgi.bundle"/>
       <rootComponents name="org.mortbay.jetty" type="osgi.bundle"/>
       <rootComponents name="org.mortbay.jetty.server" type="osgi.bundle"/>
       <rootComponents name="org.mortbay.jetty.util" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.pde"/>
-      <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="(2.4.0,2.6.0]"/>
+      <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="(2.5.0,2.6.0]"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${eclipse.license.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.swt.git.location}"/>
@@ -104,7 +104,7 @@
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.releng.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.resources.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.runtime.git.location}"/>
-      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.team.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.team.git.location}" locateNestedProjects="true"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.text.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.ua.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${rt.equinox.bundles.git.location}"/>
@@ -123,6 +123,6 @@
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.5" location="${jre.1.5.location}"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.6 JDK/JRE." type="FOLDER" name="jre.1.6.location"/>
     <setupTasks xsi:type="setup:JRETask" version="JavaSE-1.6" location="${jre.1.6.location}"/>
-    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" requirements="//@branches[name='master']/@setupTasks.11" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
   </branches>
 </setup:Project>

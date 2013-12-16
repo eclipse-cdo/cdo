@@ -135,12 +135,21 @@
       <rootComponents name="org.eclipse.egit.mylyn.ui.test" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.egit.target" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.egit.ui.test" type="osgi.bundle"/>
-      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/egit}"/>
+      <rootComponents name="org.eclipse.platform"/>
+      <rootComponents name="org.eclipse.sdk.ide" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.emf.sdk.feature.group"/>
+      <rootComponents name="org.eclipse.jetty.bundles.f" versionRange="[7.6.0,8.0.0)"/>
+      <rootComponents name="org.eclipse.swtbot.eclipse.feature.group"/>
+      <rootComponents name="org.eclipse.swtbot.eclipse.test.junit.feature.group"/>
+      <rootComponents name="org.eclipse.swtbot.feature.group"/>
+      <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="[2.5.0,2.6.0)"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/jgit}"/>
-      <p2Repositories url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/egit}"/>
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
+      <p2Repositories url="http://download.eclipse.org/releases/juno"/>
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/2.1.0"/>
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository"/>
+      <p2Repositories url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="EGit">

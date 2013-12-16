@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <setup:Configuration setup:toolVersion="2" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" toolVersion="1">
-  <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse user ID for Git/Gerrit commits.  Use 'anonymous' if you have no Eclipse user ID." name="git.user.id" label="Eclipse user ID for Git/Gerrit"/>
+  <setupTasks xsi:type="setup:CompoundSetupTask" name="Global Variables">
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.4 JDK/JRE." type="FOLDER" name="jre.1.4.location"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.5 JDK/JRE." type="FOLDER" name="jre.1.5.location"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.6 JDK/JRE." type="FOLDER" name="jre.1.6.location"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.6 JDK/JRE." type="FOLDER" name="jre.1.7.location"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.6 JDK/JRE." type="FOLDER" name="jre.1.8.location"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse user ID for Git/Gerrit commits.  Use 'anonymous' if you have no Eclipse user ID." name="git.user.id" label="Eclipse user ID for Git/Gerrit"/>
+  </setupTasks>
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Eclipse Tasks">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name"/>
     <setupTasks xsi:type="setup:ContextVariableTask" requirements="//@eclipseVersions[version='4.4']/@setupTasks.0" name="train.url" value="http://download.eclipse.org/releases/${train.name|lower}"/>

@@ -117,11 +117,8 @@
     <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.pde.api.tools">
       <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/MISSING_EE_DESCRIPTIONS" value="Warning"/>
     </setupTasks>
-    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.4 JDK/JRE." type="FOLDER" name="jre.1.4.location"/>
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.4" location="${jre.1.4.location}"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.5 JDK/JRE." type="FOLDER" name="jre.1.5.location"/>
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.5" location="${jre.1.5.location}"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.6 JDK/JRE." type="FOLDER" name="jre.1.6.location"/>
     <setupTasks xsi:type="setup:JRETask" version="JavaSE-1.6" location="${jre.1.6.location}"/>
     <setupTasks xsi:type="setup:EclipsePreferenceTask" requirements="//@branches[name='master']/@setupTasks.11" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
   </branches>

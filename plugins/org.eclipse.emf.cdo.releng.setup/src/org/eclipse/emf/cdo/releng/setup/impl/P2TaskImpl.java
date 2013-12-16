@@ -1203,7 +1203,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
             extension = matcher.group(4);
           }
 
-          if (!argument.startsWith("--launcher.XXMaxPermSize"))
+          if (!argument.startsWith("--launcher.XXMaxPermSize") || !map.containsKey(argument))
           {
             map.put(argument, extension);
           }

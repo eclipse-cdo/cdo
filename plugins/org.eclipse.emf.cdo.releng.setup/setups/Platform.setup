@@ -83,7 +83,7 @@
     </setupTasks>
     <setupTasks xsi:type="setup:ContextVariableTask" name="eclipse.license.git.location" value="${setup.branch.dir/git/eclipse.license}"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${eclipse.license.git.location}" remoteURI="http://git.eclipse.org/gitroot/cbi/org.eclipse.license.git" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${eclipse.license.git.location/org.eclipse.license/feature.xml|uri}">
+    <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.9" excludedTriggers="BOOTSTRAP" url="${eclipse.license.git.location/org.eclipse.license/feature.xml|uri}">
       <modifications pattern="version=&quot;[0-9]+\.[0-9]+\.[0-9]+\.(v[^&quot;]+)&quot;">
         <substitutions>qualifier</substitutions>
       </modifications>

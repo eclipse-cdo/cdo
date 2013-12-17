@@ -10,14 +10,21 @@
  */
 package org.eclipse.emf.cdo.releng.manifests.handlers;
 
+import org.eclipse.emf.cdo.releng.manifests.Activator;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -41,10 +48,48 @@ public class CleanBuildHandler extends AbstractHandler
     IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
     if (window != null)
     {
-      IStructuredSelection selection = getSelection(event);
-
-      if (selection != null)
+      final IStructuredSelection selection = getSelection(event);
+      if (selection != null && !selection.isEmpty())
       {
+        try
+        {
+          ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable()
+          {
+            public void run(IProgressMonitor monitor) throws CoreException
+            {
+              Object[] array = selection.toArray();
+              for (int i = 0; i < array.length; i++)
+              {
+                IProject project = (IProject)array[i];
+
+                try
+                {
+                  IMarker[] markers = project.findMarkers(null, true, IResource.DEPTH_INFINITE);
+                  for (IMarker marker : markers)
+                  {
+                    try
+                    {
+                      marker.delete();
+                    }
+                    catch (CoreException ex)
+                    {
+                      log(ex);
+                    }
+                  }
+                }
+                catch (CoreException ex)
+                {
+                  log(ex);
+                }
+              }
+            }
+          }, null, IWorkspace.AVOID_UPDATE, null);
+        }
+        catch (CoreException ex)
+        {
+          log(ex);
+        }
+
         BuildAction buildAction = new BuildAction(window, IncrementalProjectBuilder.CLEAN_BUILD);
         buildAction.selectionChanged(selection);
         buildAction.run();
@@ -109,5 +154,10 @@ public class CleanBuildHandler extends AbstractHandler
     }
 
     return null;
+  }
+
+  private void log(CoreException ex)
+  {
+    Activator.getDefault().getLog().log(ex.getStatus());
   }
 }

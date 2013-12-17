@@ -88,8 +88,20 @@
         <substitutions>qualifier</substitutions>
       </modifications>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.10 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.3 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.5/@setupTasks.18">
-      <rootComponents name="org.eclipse.platform"/>
+    <setupTasks xsi:type="setup:CompoundSetupTask" name="EMF Git Clone">
+      <setupTasks xsi:type="setup:ContextVariableTask" name="emf.git.location" value="${setup.branch.dir/git/emf}"/>
+      <setupTasks xsi:type="setup:ContextVariableTask" name="emf.git.url" value="ssh://git.eclipse.org:29418/emf/org.eclipse.emf"/>
+      <setupTasks xsi:type="setup:GitCloneTask" requirements="//@branches[name='master']/@setupTasks.11/@setupTasks.1" location="${emf.git.location}" remoteURI="${emf.git.url}" checkoutBranch="master"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:CompoundSetupTask" name="ECF Git Clone">
+      <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.location" value="${setup.branch.dir/git/ecf}"/>
+      <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.url" value="ssh://git.eclipse.org/gitroot/ecf/org.eclipse.ecf.git"/>
+      <setupTasks xsi:type="setup:GitCloneTask" requirements="//@branches[name='master']/@setupTasks.12/@setupTasks.1" location="${ecf.git.location}" remoteURI="${ecf.git.url}" checkoutBranch="master"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.10 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.3 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.5/@setupTasks.18 //@branches[name='master']/@setupTasks.11/@setupTasks.2 //@branches[name='master']/@setupTasks.12/@setupTasks.2">
+      <rootComponents name="org.eclipse.sdk"/>
+      <rootComponents name="org.eclipse.equinox.core.sdk"/>
+      <rootComponents name="org.eclipse.equinox.concurrent" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.osgi" type="osgi.bundle"/>
       <rootComponents name="org.mortbay.jetty" type="osgi.bundle"/>
       <rootComponents name="org.mortbay.jetty.server" type="osgi.bundle"/>
@@ -98,7 +110,9 @@
       <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="(2.5.0,4.0.0]"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${eclipse.license.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.common.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.swt.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.swt.binaries.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.debug.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.ui.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.releng.git.location}"/>
@@ -107,9 +121,20 @@
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.team.git.location}" locateNestedProjects="true"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.text.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${platform.ua.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${rt.equinox.binaries.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${rt.equinox.bundles.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${rt.equinox.framework.git.location}"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${rt.equinox.p2.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${pde.build.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${pde.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${pde.ui.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${jdt.core.binaries.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${jdt.core.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${jdt.debug.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${jdt.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${jdt.ui.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${emf.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${ecf.git.location}"/>
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository/"/>
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4-I-builds "/>
       <p2Repositories url="http://download.eclipse.org/cbi/updates/license"/>
@@ -120,6 +145,6 @@
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.4" location="${jre.1.4.location}"/>
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.5" location="${jre.1.5.location}"/>
     <setupTasks xsi:type="setup:JRETask" version="JavaSE-1.6" location="${jre.1.6.location}"/>
-    <setupTasks xsi:type="setup:EclipsePreferenceTask" requirements="//@branches[name='master']/@setupTasks.11" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" requirements="//@branches[name='master']/@setupTasks.13" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
   </branches>
 </setup:Project>

@@ -109,8 +109,7 @@ public final class TargetPlatformUtil
           if (targetPlatformPath.equals(location))
           {
             File file = new File(location);
-            // Check that it's a directory that contains not only "." and ".."
-            return file.isDirectory() && file.listFiles().length > 2;
+            return file.isDirectory() && file.listFiles().length >= 2;
           }
         }
         catch (CoreException ex)

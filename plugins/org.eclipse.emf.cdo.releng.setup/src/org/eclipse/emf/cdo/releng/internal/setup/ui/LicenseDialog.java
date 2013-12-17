@@ -77,12 +77,6 @@ public class LicenseDialog extends AbstractSetupDialog
     return rememberAcceptedLicenses;
   }
 
-  // @Override
-  // protected int getContainerMargin()
-  // {
-  // return 10;
-  // }
-
   @Override
   protected String getDefaultMessage()
   {
@@ -145,8 +139,6 @@ public class LicenseDialog extends AbstractSetupDialog
     GridData gd = new GridData(GridData.FILL_BOTH);
     composite.setLayoutData(gd);
 
-    // Label label = new Label(composite, SWT.NONE);
-    // label.setText("&Licenses:");
     viewer = new TreeViewer(composite, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(new LicenseContentProvider());
     viewer.setLabelProvider(new LicenseLabelProvider());
@@ -177,16 +169,6 @@ public class LicenseDialog extends AbstractSetupDialog
     composite.setLayout(layout);
     GridData gd = new GridData(GridData.FILL_BOTH);
     composite.setLayoutData(gd);
-
-    // Label label = new Label(composite, SWT.NONE);
-    // if (singleIU == null)
-    // {
-    // label.setText("License &text:");
-    // }
-    // else
-    // {
-    // label.setText(NLS.bind("License &text (for {0}):", getIUName(singleIU)));
-    // }
 
     licenseTextBox = new Text(composite, SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.READ_ONLY);
     licenseTextBox.setBackground(licenseTextBox.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));

@@ -27,9 +27,13 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -43,62 +47,49 @@ public class PropertiesViewer extends TableViewer
 {
   public static final String[] EXPERT_FILTER = { "org.eclipse.ui.views.properties.expert" };
 
+  private TableColumn propertyColumn;
+
+  private TableColumn valueColumn;
+
+  private ControlAdapter columnResizer;
+
   public PropertiesViewer(Composite parent, int style)
   {
-    super(parent, style);
+    super(parent, style | SWT.NO_SCROLL | SWT.V_SCROLL);
     setLabelProvider(new PropertiesLabelProvider());
     setContentProvider(new PropertiesContentProvider());
 
-    Table table = getTable();
+    final Table table = getTable();
     UIUtil.applyGridData(table).heightHint = 64;
 
-    TableColumn propertyColumn = new TableColumn(table, SWT.NONE);
+    propertyColumn = new TableColumn(table, SWT.NONE);
     propertyColumn.setText("Property");
     propertyColumn.setWidth(200);
 
-    TableColumn valueColumn = new TableColumn(table, SWT.NONE);
+    valueColumn = new TableColumn(table, SWT.NONE);
     valueColumn.setText("Value");
     valueColumn.setWidth(400);
 
     table.setHeaderVisible(true);
     table.setLinesVisible(true);
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  private final class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
-  {
-    public String getColumnText(Object element, int columnIndex)
+    columnResizer = new ControlAdapter()
     {
-      return (String)((Object[])element)[columnIndex];
-    }
-
-    public Image getColumnImage(Object element, int columnIndex)
-    {
-      if (columnIndex == 1)
+      @Override
+      public void controlResized(ControlEvent e)
       {
-        return (Image)((Object[])element)[2];
+        Point size = table.getSize();
+        ScrollBar bar = table.getVerticalBar();
+        if (bar != null && bar.isVisible())
+        {
+          size.x -= bar.getSize().x;
+        }
+
+        valueColumn.setWidth(size.x - propertyColumn.getWidth());
       }
+    };
 
-      return null;
-    }
-
-    public Color getForeground(Object element)
-    {
-      boolean expert = (Boolean)((Object[])element)[3];
-      if (expert)
-      {
-        return getTable().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
-      }
-
-      return null;
-    }
-
-    public Color getBackground(Object element)
-    {
-      return null;
-    }
+    table.addControlListener(columnResizer);
   }
 
   /**
@@ -114,6 +105,21 @@ public class PropertiesViewer extends TableViewer
 
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
+      Class<?> oldClass = oldInput == null ? null : oldInput.getClass();
+      Class<?> newClass = newInput == null ? null : newInput.getClass();
+      if (oldClass != newClass)
+      {
+        getTable().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            propertyColumn.pack();
+            propertyColumn.setWidth(propertyColumn.getWidth() + 20);
+
+            columnResizer.controlResized(null);
+          }
+        });
+      }
     }
 
     public Object[] getElements(Object element)
@@ -169,6 +175,43 @@ public class PropertiesViewer extends TableViewer
       }
 
       return false;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
+  {
+    public String getColumnText(Object element, int columnIndex)
+    {
+      return (String)((Object[])element)[columnIndex];
+    }
+
+    public Image getColumnImage(Object element, int columnIndex)
+    {
+      if (columnIndex == 1)
+      {
+        return (Image)((Object[])element)[2];
+      }
+
+      return null;
+    }
+
+    public Color getForeground(Object element)
+    {
+      boolean expert = (Boolean)((Object[])element)[3];
+      if (expert)
+      {
+        return getTable().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+      }
+
+      return null;
+    }
+
+    public Color getBackground(Object element)
+    {
+      return null;
     }
   }
 }

@@ -35,9 +35,13 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
@@ -105,33 +109,7 @@ public class ConfirmationDialog extends AbstractSetupDialog
 
     SashForm verticalSash = new SashForm(horizontalSash, SWT.VERTICAL);
 
-    childrenViewer = new TreeViewer(verticalSash, SWT.NONE);
-    childrenViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
-    {
-      @Override
-      public Object[] getElements(Object object)
-      {
-        List<Object> result = new ArrayList<Object>();
-        for (Object child : super.getElements(object))
-        {
-          if (!(child instanceof SetupTask))
-          {
-            result.add(child);
-          }
-        }
-
-        return result.toArray();
-      }
-    });
-    childrenViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
-    childrenViewer.setInput(new Object());
-
-    Tree tree = childrenViewer.getTree();
-    tree.setHeaderVisible(true);
-
-    TreeColumn column = new TreeColumn(tree, SWT.NONE);
-    column.setText("Nested Elements");
-    column.setWidth(600);
+    fillChildrenPane(verticalSash);
 
     propertiesViewer = new PropertiesViewer(verticalSash, SWT.NONE);
 
@@ -281,6 +259,63 @@ public class ConfirmationDialog extends AbstractSetupDialog
         {
           button.setEnabled(!getCheckedTasks().isEmpty());
         }
+      }
+    });
+
+  }
+
+  private void fillChildrenPane(SashForm verticalSash)
+  {
+    childrenViewer = new TreeViewer(verticalSash, SWT.NO_SCROLL | SWT.V_SCROLL);
+    childrenViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
+    {
+      @Override
+      public Object[] getElements(Object object)
+      {
+        List<Object> result = new ArrayList<Object>();
+        for (Object child : super.getElements(object))
+        {
+          if (!(child instanceof SetupTask))
+          {
+            result.add(child);
+          }
+        }
+
+        return result.toArray();
+      }
+    });
+    childrenViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
+    childrenViewer.setInput(new Object());
+
+    final Tree tree = childrenViewer.getTree();
+    tree.setHeaderVisible(true);
+
+    final TreeColumn column = new TreeColumn(tree, SWT.NONE);
+    column.setText("Nested Elements");
+    column.setWidth(600);
+
+    final ControlAdapter columnResizer = new ControlAdapter()
+    {
+      @Override
+      public void controlResized(ControlEvent e)
+      {
+        Point size = tree.getSize();
+        ScrollBar bar = tree.getVerticalBar();
+        if (bar != null && bar.isVisible())
+        {
+          size.x -= bar.getSize().x;
+        }
+
+        column.setWidth(size.x);
+      }
+    };
+
+    tree.addControlListener(columnResizer);
+    tree.getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        columnResizer.controlResized(null);
       }
     });
 

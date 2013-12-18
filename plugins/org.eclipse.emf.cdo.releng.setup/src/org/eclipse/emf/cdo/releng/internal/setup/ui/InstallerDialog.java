@@ -1752,6 +1752,11 @@ public class InstallerDialog extends AbstractSetupDialog
     performer.getWorkspaceDir().mkdirs();
     performer.perform();
 
+    launchIDE(performer);
+  }
+
+  private void launchIDE(SetupTaskPerformer performer) throws Exception
+  {
     OS os = performer.getOS();
     if (os.isCurrent())
     {

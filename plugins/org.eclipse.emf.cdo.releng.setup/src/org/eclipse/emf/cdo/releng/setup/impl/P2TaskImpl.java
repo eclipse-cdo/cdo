@@ -826,21 +826,12 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           processArguments(args);
           initializeServices();
 
-          final IProvisioningAgent targetAgent = getTargetAgent();
+          IProvisioningAgent targetAgent = getTargetAgent();
+
           registerPlanner(context, targetAgent);
-          registerProfileRegistry(context, targetAgent);
-
           initializeRepositories();
+          initProfile(context, targetAgent);
           performProvisioningActions();
-
-          // try
-          // {
-          // }
-          // finally
-          // {
-          // targetAgent.unregisterService(IProfileRegistry.SERVICE_NAME, profileRegistry);
-          // // targetAgent.registerService(IProfileRegistry.SERVICE_NAME, delegate);
-          // }
 
           context.log(NLS.bind(Messages.Operation_complete, new Long(System.currentTimeMillis() - time)));
           return IApplication.EXIT_OK;
@@ -850,10 +841,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           Activator.log(ex);
           context.log(Messages.Operation_failed);
           context.log(ex);
-
-          // IStatus status = Activator.getStatus(ex);
-          // context.log(status);
-          // deeplyPrint(status, System.err, 0);
           return EXIT_ERROR;
         }
         finally
@@ -868,36 +855,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       {
         super.processArguments(args);
         processIUs();
-      }
-
-      private void processIUs()
-      {
-        List<IQuery<IInstallableUnit>> rootsToInstall = getRootsToInstall();
-        rootsToInstall.clear();
-
-        for (InstallableUnit installableUnit : getInstallableUnits())
-        {
-          String id = installableUnit.getID();
-          VersionRange versionRange = installableUnit.getVersionRange();
-          if (versionRange == null)
-          {
-            versionRange = VersionRange.emptyRange;
-          }
-
-          IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
-              Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
-              + versionRange);
-          rootsToInstall.add(query);
-        }
-      }
-
-      private List<IQuery<IInstallableUnit>> getRootsToInstall()
-      {
-        Field field = ReflectUtil.getField(DIRECTOR_CLASS, "rootsToInstall");
-        @SuppressWarnings("unchecked")
-        List<IQuery<IInstallableUnit>> rootsToInstall = (List<IQuery<IInstallableUnit>>)ReflectUtil.getValue(field,
-            this);
-        return rootsToInstall;
       }
 
       private IPlanner registerPlanner(final SetupTaskContext context, final IProvisioningAgent targetAgent)
@@ -949,102 +906,145 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         return planner;
       }
 
-      private IProfileRegistry registerProfileRegistry(final SetupTaskContext context,
-          final IProvisioningAgent targetAgent)
+      private void initProfile(final SetupTaskContext context, final IProvisioningAgent targetAgent)
       {
-        IProfileRegistry profileRegistry = new IProfileRegistry()
+        final IProfileRegistry oldProfileRegistry = (IProfileRegistry)targetAgent
+            .getService(IProfileRegistry.SERVICE_NAME);
+        IProfileRegistry newProfileRegistry = new IProfileRegistry()
         {
-          IProfileRegistry delegate = (IProfileRegistry)targetAgent.getService(IProfileRegistry.SERVICE_NAME);
-
           public IProfile getProfile(String id)
           {
-            return delegate.getProfile(id);
+            return oldProfileRegistry.getProfile(id);
           }
 
           public IProfile getProfile(String id, long timestamp)
           {
-            return delegate.getProfile(id, timestamp);
+            return oldProfileRegistry.getProfile(id, timestamp);
           }
 
           public long[] listProfileTimestamps(String id)
           {
-            return delegate.listProfileTimestamps(id);
+            return oldProfileRegistry.listProfileTimestamps(id);
           }
 
           public IProfile[] getProfiles()
           {
-            return delegate.getProfiles();
+            return oldProfileRegistry.getProfiles();
           }
 
           public IProfile addProfile(String id) throws ProvisionException
           {
-            return delegate.addProfile(id);
+            return oldProfileRegistry.addProfile(id);
           }
 
           public IProfile addProfile(String id, Map<String, String> properties) throws ProvisionException
           {
             context.getOS().modifyProfileProperties(properties);
 
-            // Put the original registry back because it will be cast to SimpleProfileRegistry later on
-            targetAgent.registerService(IProfileRegistry.SERVICE_NAME, delegate);
+            // // Put the original registry back because it will be cast to SimpleProfileRegistry later on
+            // targetAgent.registerService(IProfileRegistry.SERVICE_NAME, oldProfileRegistry);
 
-            return delegate.addProfile(id, properties);
+            return oldProfileRegistry.addProfile(id, properties);
           }
 
           public boolean containsProfile(String profileId)
           {
-            return delegate.containsProfile(profileId);
+            return oldProfileRegistry.containsProfile(profileId);
           }
 
           public void removeProfile(String id, long timestamp) throws ProvisionException
           {
-            delegate.removeProfile(id, timestamp);
+            oldProfileRegistry.removeProfile(id, timestamp);
           }
 
           public void removeProfile(String id)
           {
-            delegate.removeProfile(id);
+            oldProfileRegistry.removeProfile(id);
           }
 
           public boolean isCurrent(IProfile profile)
           {
-            return delegate.isCurrent(profile);
+            return oldProfileRegistry.isCurrent(profile);
           }
 
           public IStatus setProfileStateProperties(String id, long timestamp, Map<String, String> properties)
           {
-            return delegate.setProfileStateProperties(id, timestamp, properties);
+            return oldProfileRegistry.setProfileStateProperties(id, timestamp, properties);
           }
 
           public IStatus setProfileStateProperty(String id, long timestamp, String key, String value)
           {
-            return delegate.setProfileStateProperty(id, timestamp, key, value);
+            return oldProfileRegistry.setProfileStateProperty(id, timestamp, key, value);
           }
 
           public Map<String, String> getProfileStateProperties(String id, long timestamp)
           {
-            return delegate.getProfileStateProperties(id, timestamp);
+            return oldProfileRegistry.getProfileStateProperties(id, timestamp);
           }
 
           public Map<String, String> getProfileStateProperties(String id, String key)
           {
-            return delegate.getProfileStateProperties(id, key);
+            return oldProfileRegistry.getProfileStateProperties(id, key);
           }
 
           public IStatus removeProfileStateProperties(String id, long timestamp, Collection<String> keys)
           {
-            return delegate.removeProfileStateProperties(id, timestamp, keys);
+            return oldProfileRegistry.removeProfileStateProperties(id, timestamp, keys);
           }
         };
 
-        targetAgent.registerService(IProfileRegistry.SERVICE_NAME, profileRegistry);
-        return profileRegistry;
+        targetAgent.registerService(IProfileRegistry.SERVICE_NAME, newProfileRegistry);
+
+        try
+        {
+          getProfile();
+        }
+        finally
+        {
+          targetAgent.registerService(IProfileRegistry.SERVICE_NAME, oldProfileRegistry);
+        }
+      }
+
+      private void processIUs()
+      {
+        List<IQuery<IInstallableUnit>> rootsToInstall = getRootsToInstall();
+        rootsToInstall.clear();
+
+        for (InstallableUnit installableUnit : getInstallableUnits())
+        {
+          String id = installableUnit.getID();
+          VersionRange versionRange = installableUnit.getVersionRange();
+          if (versionRange == null)
+          {
+            versionRange = VersionRange.emptyRange;
+          }
+
+          IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
+              Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
+              + versionRange);
+          rootsToInstall.add(query);
+        }
+      }
+
+      private List<IQuery<IInstallableUnit>> getRootsToInstall()
+      {
+        Field field = ReflectUtil.getField(DIRECTOR_CLASS, "rootsToInstall");
+        @SuppressWarnings("unchecked")
+        List<IQuery<IInstallableUnit>> rootsToInstall = (List<IQuery<IInstallableUnit>>)ReflectUtil.getValue(field,
+            this);
+        return rootsToInstall;
       }
 
       private IProvisioningAgent getTargetAgent()
       {
         Field field = ReflectUtil.getField(DIRECTOR_CLASS, "targetAgent");
         return (IProvisioningAgent)ReflectUtil.getValue(field, this);
+      }
+
+      private IProfile getProfile()
+      {
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "getProfile");
+        return (IProfile)ReflectUtil.invokeMethod(method, this);
       }
 
       private void initializeServices()
@@ -1076,19 +1076,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "cleanupRepositories");
         ReflectUtil.invokeMethod(method, this);
       }
-
-      // private void deeplyPrint(IStatus status, PrintStream err, int i)
-      // {
-      // Method method = ReflectUtil.getMethod(DirectorApplication.class, "deeplyPrint", IStatus.class,
-      // PrintStream.class, int.class);
-      // ReflectUtil.invokeMethod(method, this, status, err, i);
-      // }
-      //
-      // private void printMessage(String str)
-      // {
-      // Method method = ReflectUtil.getMethod(DirectorApplication.class, "printMessage", String.class);
-      // ReflectUtil.invokeMethod(method, this, str);
-      // }
     };
 
     app.setLog(new ILog()

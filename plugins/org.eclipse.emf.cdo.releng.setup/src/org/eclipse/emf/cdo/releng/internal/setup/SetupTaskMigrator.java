@@ -19,11 +19,14 @@ public interface SetupTaskMigrator
 
   public static final SetupTaskMigrator[] MIGRATORS = {
 
-      // v0 -> v1
-      null,
+    // v1
+    null,
 
-      // v2: Add P2Task.isMergeDisabled(), Project.getRestrictions(), Branch.getRestrictions()
-      null,
+    // v2: Add P2Task.isMergeDisabled(), Project.getRestrictions(), Branch.getRestrictions()
+    null,
+
+    // v3: Add "setup.p2.pool.dir" and "setup.p2.pool.tp.dir" variables
+    null,
 
   };
 

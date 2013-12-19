@@ -45,6 +45,8 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
 
   public File getP2PoolDir();
 
+  public File getP2PoolTPDir();
+
   public File getInstallDir();
 
   public File getProjectDir();

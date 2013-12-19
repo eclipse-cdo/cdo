@@ -159,6 +159,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     }
 
     put(KEY_INSTALL_DIR, getInstallDir());
+    put(KEY_P2_POOL_DIR, getP2PoolDir());
+    put(KEY_P2_POOL_TP_DIR, getP2PoolTPDir());
     put(KEY_PROJECT_DIR, getProjectDir());
     put(KEY_BRANCH_DIR, getBranchDir());
     put(KEY_ECLIPSE_DIR, getEclipseDir());
@@ -346,6 +348,11 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   public File getP2PoolDir()
   {
     return new File(preferences.getBundlePoolFolder());
+  }
+
+  public File getP2PoolTPDir()
+  {
+    return new File(preferences.getBundlePoolFolderTP());
   }
 
   public File getInstallDir()

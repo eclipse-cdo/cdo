@@ -19,6 +19,10 @@ public interface SetupConstants
 {
   public static final String KEY_INSTALL_DIR = "setup.install.dir";
 
+  public static final String KEY_P2_POOL_DIR = "setup.p2.pool.dir";
+
+  public static final String KEY_P2_POOL_TP_DIR = "setup.p2.pool.tp.dir";
+
   public static final String KEY_PROJECT_DIR = "setup.project.dir";
 
   public static final String KEY_BRANCH_DIR = "setup.branch.dir";

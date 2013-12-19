@@ -159,6 +159,7 @@ public final class VersionUtil
     }
   }
 
+  @SuppressWarnings("resource")
   public static String getLineDelimiter(IFile file) throws IOException
   {
     InputStream inputStream = null;
@@ -166,7 +167,6 @@ public final class VersionUtil
     {
       inputStream = file.getContents();
       String encoding = file.getCharset();
-      @SuppressWarnings("resource")
       Reader reader = encoding == null ? new InputStreamReader(inputStream) : new InputStreamReader(inputStream,
           encoding);
       char[] text = new char[4048];

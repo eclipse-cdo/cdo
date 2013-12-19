@@ -26,7 +26,7 @@ import java.lang.reflect.Field;
  */
 public class ToggleApiBuilderAction implements IWorkbenchWindowActionDelegate
 {
-  private Field disabledField;
+  private Field buildDisabledField;
 
   public ToggleApiBuilderAction()
   {
@@ -34,8 +34,8 @@ public class ToggleApiBuilderAction implements IWorkbenchWindowActionDelegate
     {
       Bundle bundle = Activator.getPlugin().getBundle();
       Class<?> c = bundle.loadClass("org.eclipse.pde.api.tools.internal.builder.ApiAnalysisBuilder");
-      disabledField = c.getDeclaredField("disabled");
-      disabledField.setAccessible(true);
+      buildDisabledField = c.getDeclaredField("buildDisabled");
+      buildDisabledField.setAccessible(true);
     }
     catch (Throwable ex)
     {
@@ -76,11 +76,11 @@ public class ToggleApiBuilderAction implements IWorkbenchWindowActionDelegate
 
   private boolean isDisabled()
   {
-    if (disabledField != null)
+    if (buildDisabledField != null)
     {
       try
       {
-        return (Boolean)disabledField.get(null);
+        return (Boolean)buildDisabledField.get(null);
       }
       catch (Throwable ex)
       {
@@ -93,11 +93,11 @@ public class ToggleApiBuilderAction implements IWorkbenchWindowActionDelegate
 
   private void setDisabled(boolean disabled)
   {
-    if (disabledField != null)
+    if (buildDisabledField != null)
     {
       try
       {
-        disabledField.set(null, disabled);
+        buildDisabledField.set(null, disabled);
       }
       catch (Throwable ex)
       {

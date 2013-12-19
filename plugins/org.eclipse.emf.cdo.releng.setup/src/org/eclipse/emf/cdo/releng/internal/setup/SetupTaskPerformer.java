@@ -480,11 +480,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   public void perform() throws Exception
   {
-    if (!undeclaredVariables.isEmpty())
-    {
-      throw new RuntimeException("Missing variables for " + undeclaredVariables);
-    }
-
     performTriggeredSetupTasks();
 
     if (getTrigger() == Trigger.BOOTSTRAP)
@@ -552,12 +547,13 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void performTriggeredSetupTasks() throws Exception
   {
     initNeededSetupTasks();
+
     if (neededSetupTasks.isEmpty())
     {
       return;
     }
 
-    if (SetupConstants.SETUP_IDE && getTrigger() == Trigger.MANUAL)
+    if (!SetupConstants.SETUP_IDE || getTrigger() == Trigger.MANUAL)
     {
       performNeededSetupTasks();
     }
@@ -810,6 +806,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     if (neededSetupTasks == null)
     {
       neededSetupTasks = new BasicEList<SetupTask>();
+
+      if (!undeclaredVariables.isEmpty())
+      {
+        throw new RuntimeException("Missing variables for " + undeclaredVariables);
+      }
 
       if (triggeredSetupTasks != null)
       {

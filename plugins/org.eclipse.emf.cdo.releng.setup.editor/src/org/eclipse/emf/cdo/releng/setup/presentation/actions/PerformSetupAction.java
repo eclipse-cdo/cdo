@@ -105,8 +105,7 @@ public class PerformSetupAction extends AbstractSetupAction
       {
         CoreException exception = new CoreException(status);
         exception.setStackTrace(new StackTraceElement[0]);
-        ErrorDialog.open(exception);
-        return;
+        throw exception;
       }
 
       EList<SetupTask> neededSetupTasks = setupTaskPerformer.initNeededSetupTasks();
@@ -128,6 +127,7 @@ public class PerformSetupAction extends AbstractSetupAction
     catch (Exception ex)
     {
       SetupEditorPlugin.INSTANCE.log(ex);
+      ErrorDialog.open(ex);
     }
   }
 

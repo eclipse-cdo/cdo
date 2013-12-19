@@ -58,6 +58,7 @@ public class PrintLogHandler extends AbstractLogHandler
   @Override
   protected void writeLog(OMLogger logger, Level level, String msg, Throwable t) throws Throwable
   {
+    @SuppressWarnings("resource")
     PrintStream stream = level == Level.ERROR ? err : out;
     stream.println(toString(level) + " " + msg); //$NON-NLS-1$
     if (t != null)

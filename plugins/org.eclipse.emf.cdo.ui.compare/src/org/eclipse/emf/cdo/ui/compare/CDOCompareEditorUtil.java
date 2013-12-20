@@ -110,7 +110,8 @@ public class CDOCompareEditorUtil
     private Input(CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
         AdapterFactory adapterFactory)
     {
-      super(configuration, comparison, editingDomain, adapterFactory);
+      super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration),
+          comparison, editingDomain, adapterFactory);
       setTitle("Model Comparison");
     }
 

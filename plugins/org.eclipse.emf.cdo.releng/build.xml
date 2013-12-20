@@ -827,7 +827,7 @@
             <arg value="-i" />
             <arg value="org.eclipse.ant.launching" />
             <arg value="-i" />
-            <arg value="org.eclipse.pde.api.tools.ee.j2se15.group" />
+            <arg value="org.eclipse.pde.api.tools.ee.feature.feature.group" />
             <arg value="-i" />
             <arg value="org.eclipse.emf.cdo.releng.version.headless.feature.group" />
             <arg value="-i" />

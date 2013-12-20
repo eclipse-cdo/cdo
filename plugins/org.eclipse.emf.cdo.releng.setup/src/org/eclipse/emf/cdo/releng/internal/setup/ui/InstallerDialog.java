@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
@@ -153,7 +154,9 @@ public class InstallerDialog extends AbstractSetupDialog
 
   public static final int RETURN_RESTART = -4;
 
-  private static final String ECLIPSE_VERSION_COLUMN = "eclipse";
+  private static final int ECLIPSE_VERSION_COLUMN_INDEX = 1;
+
+  private static final String ECLIPSE_VERSION_COLUMN_NAME = "eclipse";
 
   private static final String[] PRODUCT_PREFIXES = { "org.eclipse.emf.cdo.releng", "org.eclipse.net4j" };
 
@@ -165,7 +168,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private StartType startType;
 
-  private Map<Branch, Setup> setups;
+  private Map<Branch, BranchInfo> branchInfos;
 
   private ResourceSet resourceSet;
 
@@ -390,7 +393,7 @@ public class InstallerDialog extends AbstractSetupDialog
           element = item.getData();
         }
 
-        if (element instanceof Branch && ECLIPSE_VERSION_COLUMN.equals(property))
+        if (element instanceof Branch && ECLIPSE_VERSION_COLUMN_NAME.equals(property))
         {
           Branch branch = (Branch)element;
           return getSetup(branch);
@@ -399,7 +402,7 @@ public class InstallerDialog extends AbstractSetupDialog
         return null;
       }
     });
-    viewer.setColumnProperties(new String[] { "project", ECLIPSE_VERSION_COLUMN });
+    viewer.setColumnProperties(new String[] { "project", ECLIPSE_VERSION_COLUMN_NAME });
 
     cellEditor = new ComboBoxViewerCellEditor(viewer.getTree());
     cellEditor.setContentProvider(new IStructuredContentProvider()
@@ -516,7 +519,7 @@ public class InstallerDialog extends AbstractSetupDialog
                   viewer.setChecked(branch.getProject(), true);
                 }
 
-                viewer.editElement(branch, 1);
+                viewer.editElement(branch, ECLIPSE_VERSION_COLUMN_INDEX);
               }
             });
           }
@@ -596,7 +599,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
         public void modifyText(ModifyEvent e)
         {
-          setups = null;
+          branchInfos = null;
 
           String text = installFolderText.getText();
           preferences.setInstallFolder(text);
@@ -648,7 +651,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
       bundlePoolText = new Text(group, SWT.BORDER);
       bundlePoolText
-          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
+      .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
       bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
       bundlePoolText.addModifyListener(new ModifyListener()
       {
@@ -688,7 +691,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
       bundlePoolTPText = new Text(group, SWT.BORDER);
       bundlePoolTPText
-          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+      .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
       bundlePoolTPText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
       bundlePoolTPText.addModifyListener(new ModifyListener()
       {
@@ -1230,7 +1233,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private void addRepository(IProvisioningAgent agent, String location, boolean metadata, IProgressMonitor monitor)
       throws ProvisionException
-  {
+      {
     SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 500);
 
     try
@@ -1250,11 +1253,11 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       throw new IllegalArgumentException(ex);
     }
-  }
+      }
 
   private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
       throws ProvisionException
-  {
+      {
     IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
         .getService(IMetadataRepositoryManager.SERVICE_NAME);
     if (manager == null)
@@ -1263,11 +1266,11 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-  }
+      }
 
   private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
       throws ProvisionException
-  {
+      {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
         .getService(IArtifactRepositoryManager.SERVICE_NAME);
     if (manager == null)
@@ -1276,7 +1279,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-  }
+      }
 
   private SetupResource loadResourceSafely(URI uri) throws UpdatingException
   {
@@ -1485,7 +1488,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
               final Tree tree = viewer.getTree();
               final TreeColumn projectColumn = tree.getColumn(0);
-              final TreeColumn eclipseColumn = tree.getColumn(1);
+              final TreeColumn eclipseColumn = tree.getColumn(ECLIPSE_VERSION_COLUMN_INDEX);
 
               final ControlAdapter columnResizer = new ControlAdapter()
               {
@@ -1535,16 +1538,18 @@ public class InstallerDialog extends AbstractSetupDialog
     }
   }
 
-  private Setup getSetup(Branch branch)
+  private BranchInfo getBranchInfo(Branch branch)
   {
-    if (setups == null)
+    if (branchInfos == null)
     {
-      setups = new HashMap<Branch, Setup>();
+      branchInfos = new HashMap<Branch, BranchInfo>();
     }
 
-    Setup setup = setups.get(branch);
-    if (setup == null)
+    BranchInfo branchInfo = branchInfos.get(branch);
+    if (branchInfo == null)
     {
+      Setup setup;
+
       URI uri = getSetupURI(branch);
       if (resourceSet.getURIConverter().exists(uri, null))
       {
@@ -1569,10 +1574,35 @@ public class InstallerDialog extends AbstractSetupDialog
         resource.getContents().add(setup);
       }
 
-      setups.put(branch, setup);
+      String installFolder = installFolderText.getText();
+
+      branchInfo = new BranchInfo(installFolder, setup);
+      branchInfos.put(branch, branchInfo);
     }
 
-    return setup;
+    return branchInfo;
+  }
+
+  private Setup getSetup(Branch branch)
+  {
+    BranchInfo branchInfo = getBranchInfo(branch);
+    if (branchInfo == null)
+    {
+      return null;
+    }
+
+    return branchInfo.getOriginalSetup();
+  }
+
+  private SetupTaskPerformer getPerformer(Branch branch)
+  {
+    BranchInfo branchInfo = getBranchInfo(branch);
+    if (branchInfo == null)
+    {
+      return null;
+    }
+
+    return branchInfo.getPerformer();
   }
 
   private EList<Eclipse> getAllowedEclipseVersions(Branch branch)
@@ -1705,11 +1735,15 @@ public class InstallerDialog extends AbstractSetupDialog
       if (checkedElement instanceof Branch)
       {
         Branch branch = (Branch)checkedElement;
-        Setup setup = getSetup(branch);
-        if (setup != null)
+        SetupTaskPerformer performer = getPerformer(branch);
+        if (performer != null)
         {
-          SetupTaskPerformer taskPerformer = createTaskPerformer(setup, installFolder);
-          setupTaskPerformers.add(taskPerformer);
+          Setup setup = performer.getSetup();
+          if (setup != null)
+          {
+            saveEObject(setup);
+            setupTaskPerformers.add(performer);
+          }
         }
       }
     }
@@ -1731,20 +1765,6 @@ public class InstallerDialog extends AbstractSetupDialog
         return null;
       }
     }, setupTaskPerformers);
-  }
-
-  private SetupTaskPerformer createTaskPerformer(Setup setup, String installFolder)
-  {
-    saveEObject(setup);
-
-    Branch branch = setup.getBranch();
-    Project project = branch.getProject();
-
-    String branchFolder = branch.getName().toLowerCase();
-    String projectFolder = project.getName().toLowerCase();
-    File branchDir = new File(installFolder, projectFolder + "/" + branchFolder);
-
-    return new SetupTaskPerformer(branchDir);
   }
 
   private void install(SetupTaskPerformer performer) throws Exception
@@ -1793,7 +1813,7 @@ public class InstallerDialog extends AbstractSetupDialog
   }
 
   private void runInProgressDialog(IRunnableWithProgress runnable) throws InvocationTargetException,
-      InterruptedException
+  InterruptedException
   {
     ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell())
     {
@@ -1833,6 +1853,32 @@ public class InstallerDialog extends AbstractSetupDialog
   private enum UpdateSearchState
   {
     SEARCHING, FOUND, DONE
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class BranchInfo
+  {
+    private final Setup originalSetup;
+
+    private final SetupTaskPerformer performer;
+
+    public BranchInfo(String installFolder, Setup originalSetup)
+    {
+      this.originalSetup = originalSetup;
+      performer = new SetupTaskPerformer(Trigger.BOOTSTRAP, installFolder, originalSetup);
+    }
+
+    public Setup getOriginalSetup()
+    {
+      return originalSetup;
+    }
+
+    public SetupTaskPerformer getPerformer()
+    {
+      return performer;
+    }
   }
 
   /**
@@ -1934,12 +1980,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-        {
+            {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-        });
+            });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 
@@ -1950,8 +1996,8 @@ public class InstallerDialog extends AbstractSetupDialog
           String id = rows[i][0];
           item.setText(0, id);
 
-          String version = rows[i][1];
-          item.setText(1, version);
+          String version = rows[i][ECLIPSE_VERSION_COLUMN_INDEX];
+          item.setText(ECLIPSE_VERSION_COLUMN_INDEX, version);
 
           if (hasPrefix(id, PRODUCT_PREFIXES))
           {

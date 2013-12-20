@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
@@ -1713,7 +1714,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
         setup.setEclipseVersion(eclipseVersion);
         setup.setBranch(branch);
 
-        SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(trigger, setup);
+        String installFolder = "/${" + SetupConstants.KEY_INSTALL_DIR + '}';
+        SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(trigger, installFolder, setup);
         List<SetupTask> triggeredSetupTasks = new ArrayList<SetupTask>(setupTaskPerformer.getTriggeredSetupTasks());
 
         if (!triggeredSetupTasks.isEmpty())

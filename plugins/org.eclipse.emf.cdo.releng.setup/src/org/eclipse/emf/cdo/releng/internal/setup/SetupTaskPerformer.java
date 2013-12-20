@@ -107,51 +107,21 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private Set<String> undeclaredVariables = new HashSet<String>(); // TODO Should these be called "Unspecified"?
 
-  public SetupTaskPerformer(Trigger trigger, Setup setup)
+  public SetupTaskPerformer(Trigger trigger, String installFolder, Setup setup)
   {
-    super(trigger, setup);
+    super(trigger, installFolder, setup);
     initTriggeredSetupTasks();
-  }
-
-  public SetupTaskPerformer(File branchDir)
-  {
-    super(Trigger.BOOTSTRAP, branchDir);
-    initialize();
   }
 
   public SetupTaskPerformer(boolean manual) throws Exception
   {
     super(manual ? Trigger.MANUAL : Trigger.STARTUP, getCurrentBranchDir().getCanonicalFile());
-    initialize();
-  }
-
-  private void initialize()
-  {
-    try
-    {
-      File logFile = new File(getBranchDir(), "setup.log");
-      logFile.getParentFile().mkdirs();
-
-      FileOutputStream out = new FileOutputStream(logFile, true);
-      logStream = new PrintStream(out);
-    }
-    catch (FileNotFoundException ex)
-    {
-      throw new RuntimeException(ex);
-    }
-
     initTriggeredSetupTasks();
-  }
-
-  public EList<SetupTask> getTriggeredSetupTasks()
-  {
-    return triggeredSetupTasks;
   }
 
   private void initTriggeredSetupTasks()
   {
     Setup setup = getSetup();
-
     if (setup == null)
     {
       triggeredSetupTasks = new BasicEList<SetupTask>();
@@ -236,6 +206,47 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
+  public EList<SetupTask> getTriggeredSetupTasks()
+  {
+    return triggeredSetupTasks;
+  }
+
+  public EList<SetupTask> initNeededSetupTasks() throws Exception
+  {
+    if (neededSetupTasks == null)
+    {
+      neededSetupTasks = new BasicEList<SetupTask>();
+
+      if (!undeclaredVariables.isEmpty())
+      {
+        throw new RuntimeException("Missing variables for " + undeclaredVariables);
+      }
+
+      if (triggeredSetupTasks != null)
+      {
+        for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
+        {
+          SetupTask setupTask = it.next();
+          if (setupTask.isNeeded(this))
+          {
+            neededSetupTasks.add(setupTask);
+          }
+          else
+          {
+            setupTask.dispose();
+          }
+        }
+      }
+    }
+
+    return neededSetupTasks;
+  }
+
+  public EList<SetupTask> getNeededTasks()
+  {
+    return neededSetupTasks;
+  }
+
   public Map<EObject, EObject> getCopyMap()
   {
     return copyMap;
@@ -313,20 +324,39 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       return;
     }
 
-    if (logStream != null)
+    try
     {
-      try
-      {
-        logStream.println("[" + ProgressDialog.DATE_TIME.format(new Date()) + "] " + line);
-        logStream.flush();
-      }
-      catch (Exception ex)
-      {
-        Activator.log(ex);
-      }
+      PrintStream logStream = getLogStream();
+      logStream.println("[" + ProgressDialog.DATE_TIME.format(new Date()) + "] " + line);
+      logStream.flush();
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
     }
 
     progress.log(line);
+  }
+
+  private PrintStream getLogStream()
+  {
+    if (logStream == null)
+    {
+      try
+      {
+        File logFile = new File(getBranchDir(), "setup.log");
+        logFile.getParentFile().mkdirs();
+
+        FileOutputStream out = new FileOutputStream(logFile, true);
+        logStream = new PrintStream(out);
+      }
+      catch (FileNotFoundException ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    }
+
+    return logStream;
   }
 
   public List<ContextVariableTask> getUnresolvedVariables()
@@ -600,6 +630,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void doPerformNeededSetupTasks() throws Exception
   {
     Boolean autoBuilding = null;
+
     try
     {
       if (getTrigger() != Trigger.BOOTSTRAP)
@@ -626,18 +657,23 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
     finally
     {
-      if (logStream != null)
+      if (autoBuilding != null)
       {
+        restoreAutoBuilding(autoBuilding);
+      }
+
+      try
+      {
+        PrintStream logStream = getLogStream();
         logStream.println();
         logStream.println();
         logStream.println();
         logStream.println();
         IOUtil.closeSilent(logStream);
       }
-
-      if (autoBuilding != null)
+      catch (Exception ex)
       {
-        restoreAutoBuilding(autoBuilding);
+        Activator.log(ex);
       }
     }
   }
@@ -734,6 +770,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     // Determine all the copied objects for which the original object is directly contained in a resource.
     // For each such resource, create a copy of that resource.
     Map<Resource, Resource> resourceCopies = new HashMap<Resource, Resource>();
+
     @SuppressWarnings("unchecked")
     Set<InternalEObject> originals = (Set<InternalEObject>)(Set<?>)copier.keySet();
     for (InternalEObject original : originals)
@@ -761,7 +798,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
     // For each original resource, ensure that the copied resource contains the either the corresponding copies or
     // a placeholder object.
-    //
     for (Map.Entry<Resource, Resource> entry : resourceCopies.entrySet())
     {
       Resource originalResource = entry.getKey();
@@ -796,48 +832,12 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return setup;
   }
 
-  public EList<SetupTask> getNeededTasks()
-  {
-    return neededSetupTasks;
-  }
-
-  public EList<SetupTask> initNeededSetupTasks() throws Exception
-  {
-    if (neededSetupTasks == null)
-    {
-      neededSetupTasks = new BasicEList<SetupTask>();
-
-      if (!undeclaredVariables.isEmpty())
-      {
-        throw new RuntimeException("Missing variables for " + undeclaredVariables);
-      }
-
-      if (triggeredSetupTasks != null)
-      {
-        for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
-        {
-          SetupTask setupTask = it.next();
-          if (setupTask.isNeeded(this))
-          {
-            neededSetupTasks.add(setupTask);
-          }
-          else
-          {
-            setupTask.dispose();
-          }
-        }
-      }
-    }
-
-    return neededSetupTasks;
-  }
-
   private EList<Map.Entry<String, Set<String>>> reorderVariables(final Map<String, Set<String>> variables)
   {
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
 
     reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
-    {
+        {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
       {
         Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
@@ -854,7 +854,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         return result;
       }
-    });
+        });
 
     return list;
   }
@@ -862,12 +862,12 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void reorderSetupTasks(EList<SetupTask> setupTasks)
   {
     reorder(setupTasks, new DependencyProvider<SetupTask>()
-    {
+        {
       public Collection<SetupTask> getDependencies(SetupTask setupTask)
       {
         return setupTask.getRequirements();
       }
-    });
+        });
   }
 
   private static String getLabel(SetupTask setupTask)
@@ -875,6 +875,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     IItemLabelProvider labelProvider = (IItemLabelProvider)EMFUtil.ADAPTER_FACTORY.adapt(setupTask,
         IItemLabelProvider.class);
     String type;
+
     try
     {
       Method getTypeTextMethod = ReflectUtil.getMethod(labelProvider.getClass(), "getTypeText", Object.class);
@@ -885,6 +886,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     {
       type = setupTask.eClass().getName();
     }
+
     String label = labelProvider.getText(setupTask);
     return label.startsWith(type) ? label : type + " " + label;
   }
@@ -910,6 +912,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       }
 
       boolean changed = false;
+
       // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
       for (T dependency : dependencyProvider.getDependencies(value))
       {

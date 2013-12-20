@@ -76,7 +76,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     this.trigger = trigger;
   }
 
-  protected AbstractSetupTaskContext(Trigger trigger, Setup setup)
+  protected AbstractSetupTaskContext(Trigger trigger, String installFolder, Setup setup)
   {
     this(trigger);
 
@@ -85,7 +85,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     String branchFolder = branch.getName().toLowerCase();
     String projectFolder = project.getName().toLowerCase();
-    branchDir = new File("/${" + KEY_INSTALL_DIR + '}', projectFolder + "/" + branchFolder).getAbsoluteFile();
+    branchDir = new File(installFolder, projectFolder + "/" + branchFolder).getAbsoluteFile();
 
     initialize(setup, false);
   }
@@ -93,7 +93,6 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   protected AbstractSetupTaskContext(Trigger trigger, File branchDir)
   {
     this(trigger);
-
     this.branchDir = branchDir;
 
     URI uri = getSetupURI(branchDir);

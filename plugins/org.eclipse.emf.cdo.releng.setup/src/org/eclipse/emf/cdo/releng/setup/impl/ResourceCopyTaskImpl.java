@@ -261,19 +261,13 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     {
       if (sourceURI.hasTrailingPathSeparator())
       {
-        // TODO
+        return true;
       }
-      else if (uriConverter.exists(sourceURI, null))
-      {
-        return !uriConverter.exists(targetURI.appendSegment(sourceURI.lastSegment()), null);
-      }
-    }
-    else if (uriConverter.exists(sourceURI, null))
-    {
-      return !uriConverter.exists(targetURI, null);
+
+      return !uriConverter.exists(targetURI.appendSegment(sourceURI.lastSegment()), null);
     }
 
-    return false;
+    return !uriConverter.exists(targetURI, null);
   }
 
   public void perform(SetupTaskContext context) throws Exception
@@ -282,23 +276,26 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     URI targetURI = createResolvedURI(getTargetURL());
     URIConverter uriConverter = context.getURIConverter();
 
-    context.log("Copying " + uriConverter.normalize(sourceURI) + " to " + uriConverter.normalize(targetURI));
-
     if (targetURI.hasTrailingPathSeparator())
     {
       if (sourceURI.hasTrailingPathSeparator())
       {
-        // TODO
+        context.log("Unsupported copying folder " + uriConverter.normalize(sourceURI) + " to "
+            + uriConverter.normalize(targetURI));
       }
       else if (uriConverter.exists(sourceURI, null))
       {
+        URI targetResourceURI = targetURI.appendSegment(sourceURI.lastSegment());
+        context.log("Copying resource " + uriConverter.normalize(sourceURI) + " to "
+            + uriConverter.normalize(targetResourceURI));
+
         InputStream input = null;
         OutputStream output = null;
 
         try
         {
           input = uriConverter.createInputStream(sourceURI);
-          output = uriConverter.createOutputStream(targetURI.appendSegment(sourceURI.lastSegment()), null);
+          output = uriConverter.createOutputStream(targetResourceURI, null);
           IOUtil.copy(input, output);
         }
         finally
@@ -310,6 +307,8 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
     }
     else if (uriConverter.exists(sourceURI, null))
     {
+      context.log("Copying resource " + uriConverter.normalize(sourceURI) + " to " + uriConverter.normalize(targetURI));
+
       InputStream input = null;
       OutputStream output = null;
 
@@ -325,6 +324,10 @@ public class ResourceCopyTaskImpl extends SetupTaskImpl implements ResourceCopyT
         IOUtil.closeSilent(output);
       }
     }
+    else
+    {
+      context.log("Cannot copy non-existing " + uriConverter.normalize(sourceURI) + " to "
+          + uriConverter.normalize(targetURI));
+    }
   }
-
 } // ResourceCopyTaskImpl

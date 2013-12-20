@@ -259,6 +259,8 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    System.setProperty("org.eclipse.buckminster.core.bundle.pool", context.getP2PoolTPDir().toString());
+
     IProgressMonitor monitor = new ProgressLogMonitor(context);
     monitor.beginTask("Starting Buckminster import", 160);
 

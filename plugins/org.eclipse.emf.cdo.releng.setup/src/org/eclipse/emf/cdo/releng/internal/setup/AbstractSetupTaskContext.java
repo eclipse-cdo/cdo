@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 {
   private static boolean NEEDS_PATH_SEPARATOR_CONVERSION = File.separatorChar == '\\';
 
-  private static final Pattern STRING_EXPANSION_PATTERN = Pattern.compile("\\$\\{([^${}|]+)(\\|([^}]+))?}");
+  private static final Pattern STRING_EXPANSION_PATTERN = Pattern.compile("\\$(\\{([^${}|]+)(\\|([^}]+))?}|\\$)");
 
   private static final Map<String, StringFilter> STRING_FILTER_REGISTRY = new HashMap<String, StringFilter>();
 
@@ -228,11 +229,14 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)
     {
       String key = matcher.group(1);
-
-      int prefixIndex = key.indexOf('/');
-      if (prefixIndex != -1)
+      if (!"$".equals(key))
       {
-        key = key.substring(0, prefixIndex);
+        key = matcher.group(2);
+        int prefixIndex = key.indexOf('/');
+        if (prefixIndex != -1)
+        {
+          key = key.substring(0, prefixIndex);
+        }
       }
 
       result.add(key);
@@ -255,47 +259,55 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     {
       result.append(string.substring(previous, matcher.start()));
       String key = matcher.group(1);
-      String suffix = "";
-
-      int prefixIndex = key.indexOf('/');
-      if (prefixIndex != -1)
+      if ("$".equals(key))
       {
-        suffix = key.substring(prefixIndex);
-        key = key.substring(0, prefixIndex);
-        if (NEEDS_PATH_SEPARATOR_CONVERSION)
-        {
-          suffix = suffix.replace('/', File.separatorChar);
-        }
-      }
-
-      String value = lookup(key);
-      if (value == null)
-      {
-        if (keys != null)
-        {
-          unresolved = true;
-          keys.add(key);
-        }
-        else
-        {
-          result.append(matcher.group());
-        }
+        result.append('$');
       }
       else
       {
-        String filters = matcher.group(3);
-        if (filters != null)
+        key = matcher.group(2);
+        String suffix = "";
+
+        int prefixIndex = key.indexOf('/');
+        if (prefixIndex != -1)
         {
-          for (String filterName : filters.split("\\|"))
+          suffix = key.substring(prefixIndex);
+          key = key.substring(0, prefixIndex);
+          if (NEEDS_PATH_SEPARATOR_CONVERSION)
           {
-            value = filter(value, filterName);
+            suffix = suffix.replace('/', File.separatorChar);
           }
         }
 
-        if (!unresolved)
+        String value = lookup(key);
+        if (value == null)
         {
-          result.append(value);
-          result.append(suffix);
+          if (keys != null)
+          {
+            unresolved = true;
+            keys.add(key);
+          }
+          else
+          {
+            result.append(matcher.group());
+          }
+        }
+        else
+        {
+          String filters = matcher.group(4);
+          if (filters != null)
+          {
+            for (String filterName : filters.split("\\|"))
+            {
+              value = filter(value, filterName);
+            }
+          }
+
+          if (!unresolved)
+          {
+            result.append(value);
+            result.append(suffix);
+          }
         }
       }
 
@@ -347,12 +359,24 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public File getP2PoolDir()
   {
-    return new File(preferences.getBundlePoolFolder());
+    String bundlePoolFolder = preferences.getBundlePoolFolder();
+    if (StringUtil.isEmpty(bundlePoolFolder))
+    {
+      return new File(getInstallDir(), ".p2pool-ide");
+    }
+
+    return new File(bundlePoolFolder);
   }
 
   public File getP2PoolTPDir()
   {
-    return new File(preferences.getBundlePoolFolderTP());
+    String bundlePoolFolderTP = preferences.getBundlePoolFolderTP();
+    if (StringUtil.isEmpty(bundlePoolFolderTP))
+    {
+      return new File(getInstallDir(), ".p2pool-tp");
+    }
+
+    return new File(bundlePoolFolderTP);
   }
 
   public File getInstallDir()
@@ -435,6 +459,35 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     return URIConverter.INSTANCE.exists(uri, null);
   }
 
+  public static String escape(String string)
+  {
+    if (string == null)
+    {
+      return null;
+    }
+
+    StringBuilder result = new StringBuilder();
+    int previous = 0;
+    for (Matcher matcher = STRING_EXPANSION_PATTERN.matcher(string); matcher.find();)
+    {
+      result.append(string.substring(previous, matcher.start()));
+      result.append('$');
+      String key = matcher.group();
+      if ("$$".equals(key))
+      {
+        result.append("$$$");
+      }
+      else
+      {
+        result.append(key);
+      }
+      previous = matcher.end();
+    }
+
+    result.append(string.substring(previous));
+    return result.toString();
+  }
+
   static
   {
     STRING_FILTER_REGISTRY.put("uri", new StringFilter()
@@ -484,5 +537,46 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   public interface StringFilter
   {
     public String filter(String value);
+  }
+
+  public static void main(String[] args)
+  {
+    for (String value : new String[] { "$${foo}", "${foo|uri}", "${bar}", "$$", "{$$}", "${$foo}}", "${${foo}}",
+        "${${poo}}", "$a$b" })
+    {
+      Set<String> keys = new HashSet<String>();
+      AbstractSetupTaskContext context = new AbstractSetupTaskContext(Trigger.BOOTSTRAP)
+      {
+        private static final long serialVersionUID = 1L;
+
+        {
+          put("foo", "d:/stuff/junk");
+          put("poo", "foo");
+        }
+
+        public void log(Throwable t)
+        {
+        }
+
+        public void log(IStatus status)
+        {
+        }
+
+        public void log(String line)
+        {
+        }
+
+        public boolean isCancelled()
+        {
+          return false;
+        }
+      };
+
+      String expandedString = context.expandString(value, keys);
+      System.err.println("'" + value + "' -> '" + expandedString + "' -> '" + context.expandString(value) + "' -> "
+          + context.getVariables(value) + " ->" + keys);
+
+      System.err.println("  '" + value + "' -> '" + escape(value) + "' -> '" + context.expandString(escape(value)));
+    }
   }
 }

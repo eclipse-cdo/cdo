@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
@@ -160,7 +161,7 @@ public class PreferenceRecorderAction extends Action
 
     EclipsePreferenceTask task = SetupFactory.eINSTANCE.createEclipsePreferenceTask();
     task.setKey(key);
-    task.setValue(value);
+    task.setValue(SetupUtil.escape(value));
 
     String pluginID = new Path(key).segment(1).toString();
     CompoundSetupTask compoundTask = getCompoundTask(pluginID);

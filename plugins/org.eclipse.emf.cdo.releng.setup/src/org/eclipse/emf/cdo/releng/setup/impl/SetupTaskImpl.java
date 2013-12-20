@@ -222,7 +222,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setExcludedTriggersGen(Set<Trigger> newExcludedTriggers)
@@ -253,7 +253,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setDocumentation(String newDocumentation)
@@ -287,7 +287,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public boolean isDisabled()
@@ -297,7 +297,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setDisabled(boolean newDisabled)
@@ -374,7 +374,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   public final Set<Trigger> getTriggers()
@@ -437,6 +437,16 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
    */
   public void dispose()
   {
+  }
+
+  public boolean needsBundlePool()
+  {
+    return false;
+  }
+
+  public boolean needsBundlePoolTP()
+  {
+    return false;
   }
 
   public EList<? extends SetupTask> generateAdditionalRequirements()
@@ -654,16 +664,16 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   }
 
   /**
-     * @author Eike Stepper
-     */
+   * @author Eike Stepper
+   */
   protected interface RunnableWithContext
   {
     public void run(SetupTaskContext context) throws Exception;
   }
 
   /**
-     * @author Eike Stepper
-     */
+   * @author Eike Stepper
+   */
   protected static final class TypedStringToken
   {
     private final Object type;

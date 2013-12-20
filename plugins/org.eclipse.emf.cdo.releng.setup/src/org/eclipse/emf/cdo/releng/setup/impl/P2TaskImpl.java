@@ -136,7 +136,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
    * The cached value of the '{@link #getP2Repositories() <em>P2 Repositories</em>}' containment reference list.
    * <!-- begin-user-doc -->
       EList<SetupTask> setupTasks = preferences.getSetupTasks();
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getP2Repositories()
    * @generated
    * @ordered
@@ -156,7 +156,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   /**
    * The cached value of the '{@link #isLicenseConfirmationDisabled() <em>License Confirmation Disabled</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #isLicenseConfirmationDisabled()
    * @generated
    * @ordered
@@ -477,6 +477,12 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     getInstallableUnits().addAll(overriddenP2Task.getInstallableUnits());
     getP2Repositories().addAll(overriddenP2Task.getP2Repositories());
+  }
+
+  @Override
+  public boolean needsBundlePool()
+  {
+    return true;
   }
 
   public boolean isNeeded(SetupTaskContext context) throws Exception

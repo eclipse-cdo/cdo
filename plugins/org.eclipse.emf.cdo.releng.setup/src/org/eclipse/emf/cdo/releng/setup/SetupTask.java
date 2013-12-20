@@ -109,7 +109,7 @@ public interface SetupTask extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getExcludedTriggers <em>Excluded Triggers</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Excluded Triggers</em>' attribute.
    * @see #getExcludedTriggers()
    * @generated
@@ -135,7 +135,7 @@ public interface SetupTask extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#getDocumentation <em>Documentation</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Documentation</em>' attribute.
    * @see #getDocumentation()
    * @generated
@@ -153,11 +153,11 @@ public interface SetupTask extends EObject
   /**
    * Returns the value of the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <p>
-       * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
-       * there really should be more of a description here...
-       * </p>
-       * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Disabled</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Disabled</em>' attribute.
    * @see #setDisabled(boolean)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getSetupTask_Disabled()
@@ -169,7 +169,7 @@ public interface SetupTask extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.SetupTask#isDisabled <em>Disabled</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Disabled</em>' attribute.
    * @see #isDisabled()
    * @generated
@@ -178,7 +178,7 @@ public interface SetupTask extends EObject
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @model
    * @generated
    */
@@ -194,7 +194,7 @@ public interface SetupTask extends EObject
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @model kind="operation" dataType="org.eclipse.emf.cdo.releng.setup.TriggerSet" required="true"
    * @generated
    */
@@ -205,6 +205,10 @@ public interface SetupTask extends EObject
   Object getOverrideToken();
 
   void overrideFor(SetupTask overriddenTask);
+
+  boolean needsBundlePool();
+
+  boolean needsBundlePoolTP();
 
   EList<? extends SetupTask> generateAdditionalRequirements();
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
@@ -180,9 +181,17 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private Text installFolderText;
 
+  private Label bundlePoolLabel;
+
   private Text bundlePoolText;
 
+  private Button bundlePoolButton;
+
+  private Label bundlePoolTPLabel;
+
   private Text bundlePoolTPText;
+
+  private Button bundlePoolTPButton;
 
   private ComboBoxViewerCellEditor cellEditor;
 
@@ -480,6 +489,8 @@ public class InstallerDialog extends AbstractSetupDialog
                     {
                       viewer.setChecked(branch, checked);
                     }
+
+                    updateEnablements();
                   }
                 });
               }
@@ -492,6 +503,7 @@ public class InstallerDialog extends AbstractSetupDialog
               viewer.setChecked(branch, checked);
             }
 
+            updateEnablements();
             viewer.expandToLevel(project, 1);
           }
         }
@@ -519,6 +531,7 @@ public class InstallerDialog extends AbstractSetupDialog
                   viewer.setChecked(branch.getProject(), true);
                 }
 
+                updateEnablements();
                 viewer.editElement(branch, ECLIPSE_VERSION_COLUMN_INDEX);
               }
             });
@@ -527,6 +540,7 @@ public class InstallerDialog extends AbstractSetupDialog
           {
             Branch branch = (Branch)element;
             viewer.setChecked(branch.getProject(), false);
+            updateEnablements();
           }
         }
 
@@ -645,11 +659,13 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     {
-      Label label = new Label(group, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-      label.setText("Bundle Pool:");
+      bundlePoolLabel = new Label(group, SWT.NONE);
+      bundlePoolLabel.setEnabled(false);
+      bundlePoolLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+      bundlePoolLabel.setText("Bundle Pool:");
 
       bundlePoolText = new Text(group, SWT.BORDER);
+      bundlePoolText.setEnabled(false);
       bundlePoolText
       .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
       bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -663,11 +679,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
       });
 
-      Button button = new Button(group, SWT.NONE);
-      button.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, false, false, 1, 1));
-      button.setBounds(0, 0, 75, 25);
-      button.setText("Browse...");
-      button.addSelectionListener(new SelectionAdapter()
+      bundlePoolButton = new Button(group, SWT.NONE);
+      bundlePoolButton.setEnabled(false);
+      bundlePoolButton.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, false, false, 1, 1));
+      bundlePoolButton.setBounds(0, 0, 75, 25);
+      bundlePoolButton.setText("Browse...");
+      bundlePoolButton.addSelectionListener(new SelectionAdapter()
       {
         @Override
         public void widgetSelected(SelectionEvent e)
@@ -685,11 +702,13 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     {
-      Label label = new Label(group, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-      label.setText("TP Bundle Pool:");
+      bundlePoolTPLabel = new Label(group, SWT.NONE);
+      bundlePoolTPLabel.setEnabled(false);
+      bundlePoolTPLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+      bundlePoolTPLabel.setText("TP Bundle Pool:");
 
       bundlePoolTPText = new Text(group, SWT.BORDER);
+      bundlePoolTPText.setEnabled(false);
       bundlePoolTPText
       .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
       bundlePoolTPText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -703,11 +722,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
       });
 
-      Button button = new Button(group, SWT.NONE);
-      button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-      button.setBounds(0, 0, 75, 25);
-      button.setText("Browse...");
-      button.addSelectionListener(new SelectionAdapter()
+      bundlePoolTPButton = new Button(group, SWT.NONE);
+      bundlePoolTPButton.setEnabled(false);
+      bundlePoolTPButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+      bundlePoolTPButton.setBounds(0, 0, 75, 25);
+      bundlePoolTPButton.setText("Browse...");
+      bundlePoolTPButton.addSelectionListener(new SelectionAdapter()
       {
         @Override
         public void widgetSelected(SelectionEvent e)
@@ -1536,6 +1556,54 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       handleException(ex);
     }
+  }
+
+  private void updateEnablements()
+  {
+    boolean[] neededBundlePools = getNeededBundlePools();
+
+    bundlePoolLabel.setEnabled(neededBundlePools[0]);
+    bundlePoolText.setEnabled(neededBundlePools[0]);
+    bundlePoolButton.setEnabled(neededBundlePools[0]);
+
+    bundlePoolTPLabel.setEnabled(neededBundlePools[1]);
+    bundlePoolTPText.setEnabled(neededBundlePools[1]);
+    bundlePoolTPButton.setEnabled(neededBundlePools[1]);
+  }
+
+  private boolean[] getNeededBundlePools()
+  {
+    boolean[] result = { false, false };
+
+    for (Object element : viewer.getCheckedElements())
+    {
+      if (element instanceof Branch)
+      {
+        Branch branch = (Branch)element;
+
+        Setup setup = getSetup(branch);
+        if (setup != null)
+        {
+          for (Trigger trigger : Trigger.values())
+          {
+            EList<SetupTask> tasks = setup.getSetupTasks(true, trigger);
+            for (SetupTask task : tasks)
+            {
+              result[0] |= task.needsBundlePool();
+              result[1] |= task.needsBundlePoolTP();
+
+              if (result[0] && result[1])
+              {
+                // Exit early if both pools are needed
+                return result;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   private BranchInfo getBranchInfo(Branch branch)

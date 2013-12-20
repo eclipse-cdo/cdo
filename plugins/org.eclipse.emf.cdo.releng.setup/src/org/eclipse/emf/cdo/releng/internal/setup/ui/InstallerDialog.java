@@ -242,7 +242,6 @@ public class InstallerDialog extends AbstractSetupDialog
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    final Map<Object, Object> parentMap = new HashMap<Object, Object>();
     final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
     {
       @Override
@@ -269,12 +268,6 @@ public class InstallerDialog extends AbstractSetupDialog
       @Override
       public Object getParent(Object object)
       {
-        Object parent = parentMap.get(object);
-        if (parent != null)
-        {
-          return parent;
-        }
-
         if (object instanceof Project)
         {
           return viewer.getInput();
@@ -667,7 +660,7 @@ public class InstallerDialog extends AbstractSetupDialog
       bundlePoolText = new Text(group, SWT.BORDER);
       bundlePoolText.setEnabled(false);
       bundlePoolText
-      .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
+          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
       bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
       bundlePoolText.addModifyListener(new ModifyListener()
       {
@@ -710,7 +703,7 @@ public class InstallerDialog extends AbstractSetupDialog
       bundlePoolTPText = new Text(group, SWT.BORDER);
       bundlePoolTPText.setEnabled(false);
       bundlePoolTPText
-      .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
       bundlePoolTPText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
       bundlePoolTPText.addModifyListener(new ModifyListener()
       {
@@ -1253,7 +1246,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private void addRepository(IProvisioningAgent agent, String location, boolean metadata, IProgressMonitor monitor)
       throws ProvisionException
-      {
+  {
     SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 500);
 
     try
@@ -1273,11 +1266,11 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       throw new IllegalArgumentException(ex);
     }
-      }
+  }
 
   private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
       throws ProvisionException
-      {
+  {
     IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
         .getService(IMetadataRepositoryManager.SERVICE_NAME);
     if (manager == null)
@@ -1286,11 +1279,11 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-      }
+  }
 
   private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
       throws ProvisionException
-      {
+  {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
         .getService(IArtifactRepositoryManager.SERVICE_NAME);
     if (manager == null)
@@ -1299,7 +1292,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-      }
+  }
 
   private SetupResource loadResourceSafely(URI uri) throws UpdatingException
   {
@@ -1881,7 +1874,7 @@ public class InstallerDialog extends AbstractSetupDialog
   }
 
   private void runInProgressDialog(IRunnableWithProgress runnable) throws InvocationTargetException,
-  InterruptedException
+      InterruptedException
   {
     ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell())
     {
@@ -2048,12 +2041,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-            {
+        {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-            });
+        });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<setup:Project setup:toolVersion="2" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" name="Platform" label="Eclipse Platform SDK">
+<setup:Project setup:toolVersion="3" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" name="Platform" label="Eclipse Platform SDK">
   <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.pde.api.tools">
     <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile" value="Ignore"/>
   </setupTasks>
@@ -10,18 +10,21 @@
     <setupTasks xsi:type="setup:P2Task" requirements="//@branches[name='master']/@setupTasks.1 //@branches[name='master']/@setupTasks.0">
       <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
       <installableUnits id="org.eclipse.egit.feature.group"/>
-      <installableUnits id="org.eclipse.buckminster.core.feature.feature.group"/>
-      <installableUnits id="org.eclipse.buckminster.git.feature.feature.group"/>
-      <installableUnits id="org.eclipse.buckminster.pde.feature.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.manifests.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.workingsets.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.core.headless.feature.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.pde.headless.feature.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.git.headless.feature.feature.group"/>
+      <installableUnits id="org.eclipse.buckminster.mspec"/>
+      <installableUnits id="org.eclipse.buckminster.rmap"/>
       <p2Repositories url="${train.url}"/>
       <p2Repositories url="${releng.url}"/>
-      <p2Repositories url="${buckminster.url}"/>
       <p2Repositories url="${egit.url}"/>
+      <p2Repositories url="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
+      <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     </setupTasks>
     <setupTasks xsi:type="setup:CompoundSetupTask" name="Equinox Git Clones">
       <setupTasks xsi:type="setup:ContextVariableTask" name="rt.equinox.binaries.git.location" value="${setup.branch.dir/git/rt.equinox.binaries.git}"/>
@@ -32,6 +35,19 @@
       <setupTasks xsi:type="setup:GitCloneTask" location="${rt.equinox.framework.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/equinox/rt.equinox.framework.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="rt.equinox.p2.git.location" value="${setup.branch.dir/git/rt.equinox.p2.git}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${rt.equinox.p2.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/equinox/rt.equinox.p2.git" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.jarprocessor/.project|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+      </setupTasks>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.jarprocessor/.externalToolBuilders/AntTaskBuilder.launch|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+        <modifications pattern="&lt;booleanAttribute key=&quot;org.eclipse.ant.ui.DEFAULT_VM_INSTALL&quot; value=&quot;false&quot;/>([\n\r]+)&lt;listAttribute key=&quot;org.eclipse.debug.core.MAPPED_RESOURCE_PATHS&quot;>">
+          <substitutions>\1&lt;stringAttribute key=&quot;org.eclipse.debug.core.ATTR_REFRESH_SCOPE&quot; value=&quot;$${working_set:&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;resources&amp;gt;&amp;#13;&amp;#10;&amp;lt;item path=&amp;quot;/org.eclipse.equinox.p2.jarprocessor/lib&amp;quot; type=&amp;quot;2&amp;quot;/&amp;gt;&amp;#13;&amp;#10;&amp;lt;/resources&amp;gt;}&quot;/>\1</substitutions>
+        </modifications>
+      </setupTasks>
     </setupTasks>
     <setupTasks xsi:type="setup:CompoundSetupTask" name="Platform Git Clones">
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.common.git.location" value="${setup.branch.dir/git/platform.common}"/>
@@ -63,6 +79,11 @@
     <setupTasks xsi:type="setup:CompoundSetupTask" name="PDE Git Clones">
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.build.git.location" value="${setup.branch.dir/git/pde.build}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.build.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.build.git" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.1" url="${pde.build.git.location/org.eclipse.pde.build/.project|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+      </setupTasks>
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.git.location" value="${setup.branch.dir/git/pde}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.ui.git.location" value="${setup.branch.dir/git/pde.ui}"/>
@@ -99,7 +120,7 @@
       <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.url" value="ssh://git.eclipse.org/gitroot/ecf/org.eclipse.ecf.git"/>
       <setupTasks xsi:type="setup:GitCloneTask" requirements="//@branches[name='master']/@setupTasks.10/@setupTasks.1" location="${ecf.git.location}" remoteURI="${ecf.git.url}" checkoutBranch="master"/>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.8/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.8/@setupTasks.2 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.3 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.5/@setupTasks.18 //@branches[name='master']/@setupTasks.9/@setupTasks.2 //@branches[name='master']/@setupTasks.10/@setupTasks.2">
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.8/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.8/@setupTasks.2 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.4 //@branches[name='master']/@setupTasks.6/@setupTasks.6 //@branches[name='master']/@setupTasks.5/@setupTasks.18 //@branches[name='master']/@setupTasks.9/@setupTasks.2 //@branches[name='master']/@setupTasks.10/@setupTasks.2">
       <rootComponents name="org.eclipse.sdk"/>
       <rootComponents name="org.eclipse.jdt"/>
       <rootComponents name="org.eclipse.pde"/>

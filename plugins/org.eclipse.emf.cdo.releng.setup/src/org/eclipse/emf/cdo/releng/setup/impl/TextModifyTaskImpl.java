@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -353,18 +355,31 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
     context.log("Modifying " + uriConverter.normalize(uri));
 
     String text = getText(context);
-    int index = 0;
     for (TextModification modification : getModifications())
     {
+      int index = 0;
       StringBuilder result = new StringBuilder();
       Pattern pattern = Pattern.compile(modification.getPattern());
       for (Matcher matcher = pattern.matcher(text); matcher.find();)
       {
         result.append(text, index, index = matcher.start());
+
+        Map<String, String> captures = new HashMap<String, String>();
+        for (int i = 1, count = matcher.groupCount(); i <= count; ++i)
+        {
+          captures.put("\\" + i, matcher.group(i));
+        }
+
         for (int i = 1, count = matcher.groupCount(); i <= count; ++i)
         {
           result.append(text, index, matcher.start(i));
-          result.append(modification.getSubstitutions().get(i - 1));
+          String substitution = modification.getSubstitutions().get(i - 1);
+          for (Map.Entry<String, String> entry : captures.entrySet())
+          {
+            substitution = substitution.replace(entry.getKey(), entry.getValue());
+          }
+
+          result.append(substitution);
           index = matcher.end(i);
         }
 

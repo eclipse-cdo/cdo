@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.releng.internal.setup.AbstractSetupTaskContext;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskMigrator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.FileField;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.ValueListener;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
@@ -46,12 +48,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
-import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -98,8 +98,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -110,16 +108,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
@@ -167,7 +162,9 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private static final IStatus UPDATE_FOUND_STATUS = new Status(IStatus.OK, Activator.PLUGIN_ID, "Updates found");
 
-  private StartType startType;
+  private final StartType startType;
+
+  private final boolean considerVisibleProjects;
 
   private Map<Branch, BranchInfo> branchInfos;
 
@@ -179,29 +176,19 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private CheckboxTreeViewer viewer;
 
-  private Text installFolderText;
-
-  private Label bundlePoolLabel;
-
-  private Text bundlePoolText;
-
-  private Button bundlePoolButton;
-
-  private Label bundlePoolTPLabel;
-
-  private Text bundlePoolTPText;
-
-  private Button bundlePoolTPButton;
-
   private ComboBoxViewerCellEditor cellEditor;
 
-  private Link versionLink;
+  private FileField installFolderField;
 
-  private boolean considerVisibleProjects;
+  private FileField bundlePoolField;
+
+  private FileField bundlePoolTPField;
 
   private ToolItem updateToolItem;
 
   private UpdateSearchState updateSearchState;
+
+  private Link versionLink;
 
   public InstallerDialog(Shell parentShell, StartType startType, boolean considerVisibleProjects)
   {
@@ -591,151 +578,71 @@ public class InstallerDialog extends AbstractSetupDialog
     group.setLayout(layout);
     group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
+    installFolderField = new PropertyField.FileField("Install Folder");
+    installFolderField.setToolTip("Points to the folder where the setup tool will create the project folders.");
+    installFolderField.setDialogText("Select Install Folder");
+    installFolderField.setDialogMessage("Select an install folder.");
+    installFolderField.fill(group);
+    installFolderField.addValueListener(new ValueListener()
     {
-      Label label = new Label(group, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-      label.setBounds(0, 0, 55, 15);
-      label.setText("Install Folder:");
-
-      installFolderText = new Text(group, SWT.BORDER);
-      installFolderText.setToolTipText("Points to the folder where the setup tool will create the project folders.");
-      installFolderText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-      installFolderText.addModifyListener(new ModifyListener()
+      public void valueChanged(String oldValue, String newValue) throws Exception
       {
-        private String previousText;
+        branchInfos = null;
 
-        public void modifyText(ModifyEvent e)
-        {
-          branchInfos = null;
+        preferences.setInstallFolder(newValue);
+        saveEObject(preferences);
+        validate();
+      }
+    });
 
-          String text = installFolderText.getText();
-          preferences.setInstallFolder(text);
-
-          String defaultBundlePoolSuffix = File.separator + ".p2pool-ide";
-          if (previousText == null || bundlePoolText.getText().equals(previousText + defaultBundlePoolSuffix))
-          {
-            bundlePoolText.setText(text + defaultBundlePoolSuffix);
-          }
-
-          String defaultBundlePoolTPSuffix = File.separator + ".p2pool-tp";
-          if (previousText == null || bundlePoolTPText.getText().equals(previousText + defaultBundlePoolTPSuffix))
-          {
-            bundlePoolTPText.setText(text + defaultBundlePoolTPSuffix);
-          }
-
-          previousText = text;
-
-          saveEObject(preferences);
-          validate();
-        }
-      });
-
-      Button button = new Button(group, SWT.NONE);
-      button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-      button.setBounds(0, 0, 75, 25);
-      button.setText("Browse...");
-      button.addSelectionListener(new SelectionAdapter()
-      {
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          DirectoryDialog dlg = new DirectoryDialog(getShell());
-          dlg.setText("Select Install Folder");
-          dlg.setMessage("Select a folder");
-          String dir = dlg.open();
-          if (dir != null)
-          {
-            installFolderText.setText(dir);
-          }
-        }
-      });
-    }
-
+    bundlePoolField = new PropertyField.FileField("Bundle Pool")
     {
-      bundlePoolLabel = new Label(group, SWT.NONE);
-      bundlePoolLabel.setEnabled(false);
-      bundlePoolLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-      bundlePoolLabel.setText("Bundle Pool:");
-
-      bundlePoolText = new Text(group, SWT.BORDER);
-      bundlePoolText.setEnabled(false);
-      bundlePoolText
-          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
-      bundlePoolText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-      bundlePoolText.addModifyListener(new ModifyListener()
+      @Override
+      protected String computeLinkedValue(String thisValue, String linkValue)
       {
-        public void modifyText(ModifyEvent e)
-        {
-          preferences.setBundlePoolFolder(bundlePoolText.getText());
-          saveEObject(preferences);
-          validate();
-        }
-      });
-
-      bundlePoolButton = new Button(group, SWT.NONE);
-      bundlePoolButton.setEnabled(false);
-      bundlePoolButton.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, false, false, 1, 1));
-      bundlePoolButton.setBounds(0, 0, 75, 25);
-      bundlePoolButton.setText("Browse...");
-      bundlePoolButton.addSelectionListener(new SelectionAdapter()
-      {
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          DirectoryDialog dlg = new DirectoryDialog(getShell());
-          dlg.setText("Bundle Pool Folder");
-          dlg.setMessage("Select a p2 bundle pool folder for IDEs.");
-          String dir = dlg.open();
-          if (dir != null)
-          {
-            bundlePoolText.setText(dir);
-          }
-        }
-      });
-    }
-
+        return new File(linkValue, ".p2pool-ide").getAbsolutePath();
+      }
+    };
+    bundlePoolField.setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
+    bundlePoolField.setDialogText("Select Bundle Pool Folder");
+    bundlePoolField.setDialogMessage("Select a p2 bundle pool folder for IDEs.");
+    bundlePoolField.setLinkField(installFolderField);
+    bundlePoolField.fill(group);
+    bundlePoolField.setEnabled(false);
+    bundlePoolField.addValueListener(new ValueListener()
     {
-      bundlePoolTPLabel = new Label(group, SWT.NONE);
-      bundlePoolTPLabel.setEnabled(false);
-      bundlePoolTPLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-      bundlePoolTPLabel.setText("TP Bundle Pool:");
-
-      bundlePoolTPText = new Text(group, SWT.BORDER);
-      bundlePoolTPText.setEnabled(false);
-      bundlePoolTPText
-          .setToolTipText("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
-      bundlePoolTPText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-      bundlePoolTPText.addModifyListener(new ModifyListener()
+      public void valueChanged(String oldValue, String newValue) throws Exception
       {
-        public void modifyText(ModifyEvent e)
-        {
-          preferences.setBundlePoolFolderTP(bundlePoolTPText.getText());
-          saveEObject(preferences);
-          validate();
-        }
-      });
+        preferences.setBundlePoolFolder(newValue);
+        saveEObject(preferences);
+        validate();
+      }
+    });
 
-      bundlePoolTPButton = new Button(group, SWT.NONE);
-      bundlePoolTPButton.setEnabled(false);
-      bundlePoolTPButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-      bundlePoolTPButton.setBounds(0, 0, 75, 25);
-      bundlePoolTPButton.setText("Browse...");
-      bundlePoolTPButton.addSelectionListener(new SelectionAdapter()
+    bundlePoolTPField = new PropertyField.FileField("TP Bundle Pool")
+    {
+      @Override
+      protected String computeLinkedValue(String thisValue, String linkValue)
       {
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          DirectoryDialog dlg = new DirectoryDialog(getShell());
-          dlg.setText("Bundle Pool Folder");
-          dlg.setMessage("Select a p2 bundle pool folder for target platforms.");
-          String dir = dlg.open();
-          if (dir != null)
-          {
-            bundlePoolTPText.setText(dir);
-          }
-        }
-      });
-    }
+        return new File(linkValue, ".p2pool-tp").getAbsolutePath();
+      }
+    };
+    bundlePoolTPField
+        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+    bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
+    bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
+    bundlePoolTPField.setLinkField(installFolderField);
+    bundlePoolTPField.fill(group);
+    bundlePoolTPField.setEnabled(false);
+    bundlePoolTPField.addValueListener(new ValueListener()
+    {
+      public void valueChanged(String oldValue, String newValue) throws Exception
+      {
+        preferences.setBundlePoolFolderTP(newValue);
+        saveEObject(preferences);
+        validate();
+      }
+    });
 
     parent.getDisplay().asyncExec(new Runnable()
     {
@@ -1054,13 +961,9 @@ public class InstallerDialog extends AbstractSetupDialog
             ServiceUtil.ungetService(agent);
           }
         }
-        catch (OperationCanceledException ex)
-        {
-          // Ignore
-        }
         catch (Exception ex)
         {
-          Activator.log(ex);
+          // Likely due to early exit. Ignore
         }
       }
     }.start();
@@ -1246,7 +1149,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private void addRepository(IProvisioningAgent agent, String location, boolean metadata, IProgressMonitor monitor)
       throws ProvisionException
-  {
+      {
     SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 500);
 
     try
@@ -1266,11 +1169,11 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       throw new IllegalArgumentException(ex);
     }
-  }
+      }
 
   private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
       throws ProvisionException
-  {
+      {
     IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
         .getService(IMetadataRepositoryManager.SERVICE_NAME);
     if (manager == null)
@@ -1279,11 +1182,11 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-  }
+      }
 
   private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
       throws ProvisionException
-  {
+      {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
         .getService(IArtifactRepositoryManager.SERVICE_NAME);
     if (manager == null)
@@ -1292,7 +1195,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
 
     manager.loadRepository(location, monitor);
-  }
+      }
 
   private SetupResource loadResourceSafely(URI uri) throws UpdatingException
   {
@@ -1476,63 +1379,6 @@ public class InstallerDialog extends AbstractSetupDialog
             monitor.done();
           }
         }
-
-        private void initUI(final ItemProvider input, final String installFolder, final String bundlePoolFolder,
-            final String bundlePoolTPFolder)
-        {
-          viewer.getControl().getDisplay().asyncExec(new Runnable()
-          {
-            public void run()
-            {
-              installFolderText.setText(installFolder);
-
-              if (bundlePoolFolder.length() != 0)
-              {
-                bundlePoolText.setText(bundlePoolFolder);
-              }
-
-              if (bundlePoolTPFolder.length() != 0)
-              {
-                bundlePoolTPText.setText(bundlePoolTPFolder);
-              }
-
-              viewer.setInput(input);
-              cellEditor.setInput(this);
-
-              final Tree tree = viewer.getTree();
-              final TreeColumn projectColumn = tree.getColumn(0);
-              final TreeColumn eclipseColumn = tree.getColumn(ECLIPSE_VERSION_COLUMN_INDEX);
-
-              final ControlAdapter columnResizer = new ControlAdapter()
-              {
-                @Override
-                public void controlResized(ControlEvent e)
-                {
-                  Point size = tree.getSize();
-                  ScrollBar bar = tree.getVerticalBar();
-                  if (bar != null && bar.isVisible())
-                  {
-                    size.x -= bar.getSize().x;
-                  }
-
-                  projectColumn.setWidth(size.x - eclipseColumn.getWidth());
-                }
-              };
-
-              eclipseColumn.pack();
-              eclipseColumn.setWidth(eclipseColumn.getWidth() + 10);
-
-              tree.addControlListener(columnResizer);
-              tree.getDisplay().asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  columnResizer.controlResized(null);
-                }
-              });
-            }
-          });
-        }
       };
 
       runInProgressDialog(runnable);
@@ -1551,17 +1397,73 @@ public class InstallerDialog extends AbstractSetupDialog
     }
   }
 
+  private void initUI(final ItemProvider input, final String installFolder, final String bundlePoolFolder,
+      final String bundlePoolTPFolder)
+  {
+    viewer.getControl().getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        installFolderField.setValue(installFolder);
+
+        if (bundlePoolFolder.length() != 0)
+        {
+          bundlePoolField.setValue(bundlePoolFolder);
+        }
+
+        bundlePoolField.setLinkedFromValue();
+
+        if (bundlePoolTPFolder.length() != 0)
+        {
+          bundlePoolTPField.setValue(bundlePoolTPFolder);
+        }
+
+        bundlePoolTPField.setLinkedFromValue();
+
+        viewer.setInput(input);
+        cellEditor.setInput(this);
+
+        final Tree tree = viewer.getTree();
+        final TreeColumn projectColumn = tree.getColumn(0);
+        final TreeColumn eclipseColumn = tree.getColumn(ECLIPSE_VERSION_COLUMN_INDEX);
+
+        final ControlAdapter columnResizer = new ControlAdapter()
+        {
+          @Override
+          public void controlResized(ControlEvent e)
+          {
+            Point size = tree.getSize();
+            ScrollBar bar = tree.getVerticalBar();
+            if (bar != null && bar.isVisible())
+            {
+              size.x -= bar.getSize().x;
+            }
+
+            projectColumn.setWidth(size.x - eclipseColumn.getWidth());
+          }
+        };
+
+        eclipseColumn.pack();
+        eclipseColumn.setWidth(eclipseColumn.getWidth() + 10);
+
+        tree.addControlListener(columnResizer);
+        tree.getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            columnResizer.controlResized(null);
+          }
+        });
+      }
+    });
+  }
+
   private void updateEnablements()
   {
     boolean[] neededBundlePools = getNeededBundlePools();
 
-    bundlePoolLabel.setEnabled(neededBundlePools[0]);
-    bundlePoolText.setEnabled(neededBundlePools[0]);
-    bundlePoolButton.setEnabled(neededBundlePools[0]);
-
-    bundlePoolTPLabel.setEnabled(neededBundlePools[1]);
-    bundlePoolTPText.setEnabled(neededBundlePools[1]);
-    bundlePoolTPButton.setEnabled(neededBundlePools[1]);
+    bundlePoolField.setEnabled(neededBundlePools[0]);
+    bundlePoolTPField.setEnabled(neededBundlePools[1]);
   }
 
   private boolean[] getNeededBundlePools()
@@ -1635,7 +1537,7 @@ public class InstallerDialog extends AbstractSetupDialog
         resource.getContents().add(setup);
       }
 
-      String installFolder = installFolderText.getText();
+      String installFolder = installFolderField.getValue();
 
       branchInfo = new BranchInfo(installFolder, setup);
       branchInfos.put(branch, branchInfo);
@@ -1689,19 +1591,19 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private void validate()
   {
-    String text = installFolderText.getText();
-
-    {
-      String defaultFolder = text + File.separator + ".p2pool-ide";
-      bundlePoolText.setFont(bundlePoolText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE.getFont(
-          installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
-    }
-
-    {
-      String defaultFolder = text + File.separator + ".p2pool-tp";
-      bundlePoolTPText.setFont(bundlePoolTPText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE
-          .getFont(installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
-    }
+    // String text = installFolderField.getValue();
+    //
+    // {
+    // String defaultFolder = text + File.separator + ".p2pool-ide";
+    // bundlePoolText.setFont(bundlePoolText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE.getFont(
+    // installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
+    // }
+    //
+    // {
+    // String defaultFolder = text + File.separator + ".p2pool-tp";
+    // bundlePoolTPText.setFont(bundlePoolTPText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE
+    // .getFont(installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
+    // }
 
     if (viewer != null)
     {
@@ -1721,7 +1623,7 @@ public class InstallerDialog extends AbstractSetupDialog
       return;
     }
 
-    if (installFolderText.getText().length() == 0)
+    if (installFolderField.getValue().length() == 0)
     {
       setMessage("Enter the install folder.", IMessageProvider.ERROR);
       installButton.setEnabled(false);
@@ -1756,7 +1658,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private URI getSetupURI(Branch branch)
   {
-    return getSetupURI(branch, installFolderText.getText());
+    return getSetupURI(branch, installFolderField.getValue());
   }
 
   private URI getSetupURI(Branch branch, String installFolder)
@@ -1785,7 +1687,7 @@ public class InstallerDialog extends AbstractSetupDialog
   private void install() throws Exception
   {
     final Object[] checkedElements = viewer.getCheckedElements();
-    final String installFolder = installFolderText.getText();
+    final String installFolder = installFolderField.getValue();
 
     File folder = new File(installFolder);
     folder.mkdirs();
@@ -1874,7 +1776,7 @@ public class InstallerDialog extends AbstractSetupDialog
   }
 
   private void runInProgressDialog(IRunnableWithProgress runnable) throws InvocationTargetException,
-      InterruptedException
+  InterruptedException
   {
     ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell())
     {
@@ -2041,12 +1943,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-        {
+            {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-        });
+            });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 

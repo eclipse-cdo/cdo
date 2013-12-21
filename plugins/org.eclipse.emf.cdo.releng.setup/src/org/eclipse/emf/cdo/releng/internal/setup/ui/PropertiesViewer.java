@@ -113,10 +113,13 @@ public class PropertiesViewer extends TableViewer
         {
           public void run()
           {
-            propertyColumn.pack();
-            propertyColumn.setWidth(propertyColumn.getWidth() + 20);
+            if (!propertyColumn.isDisposed())
+            {
+              propertyColumn.pack();
+              propertyColumn.setWidth(propertyColumn.getWidth() + 20);
 
-            columnResizer.controlResized(null);
+              columnResizer.controlResized(null);
+            }
           }
         });
       }

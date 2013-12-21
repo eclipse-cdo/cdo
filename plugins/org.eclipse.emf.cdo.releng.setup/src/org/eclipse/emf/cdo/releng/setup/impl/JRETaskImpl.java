@@ -284,7 +284,27 @@ public class JRETaskImpl extends SetupTaskImpl implements JRETask
           VMStandin vmStandin = new VMStandin(type, EcoreUtil.generateUUID());
           vmStandin.setInstallLocation(new File(location));
           vmStandin.setName("JRE for " + version);
-          vmStandin.convertToRealVM();
+          IVMInstall realVM = vmStandin.convertToRealVM();
+
+          if ("J2SE-1.4".equals(version))
+          {
+            IExecutionEnvironment[] executionEnvironments = JavaRuntime.getExecutionEnvironmentsManager()
+                .getExecutionEnvironments();
+
+            for (IExecutionEnvironment executionEnvironment : executionEnvironments)
+            {
+              String id = executionEnvironment.getId();
+              if (id.equals("CDC-1.1/Foundation-1.1"))
+              {
+                if (executionEnvironment.getDefaultVM() == null)
+                {
+                  executionEnvironment.setDefaultVM(realVM);
+                  break;
+                }
+              }
+            }
+          }
+
           return;
         }
       }

@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.TextField;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.ValueListener;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.VariableType;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -118,8 +118,10 @@ public class PromptDialog extends AbstractSetupDialog
 
   private PropertyField<?, ?> createField(final ContextVariableTask variable)
   {
-    TextField<Control> field = new PropertyField.TextField<Control>(
-        StringUtil.isEmpty(variable.getLabel()) ? variable.getName() : variable.getLabel());
+    PropertyField<?, ?> field = createField(variable.getType());
+
+    String label = variable.getLabel();
+    field.setLabelText(StringUtil.isEmpty(label) ? variable.getName() : label);
 
     String documentation = variable.getDocumentation();
     if (!StringUtil.isEmpty(documentation))
@@ -137,6 +139,20 @@ public class PromptDialog extends AbstractSetupDialog
     });
 
     return field;
+  }
+
+  private PropertyField<?, ?> createField(VariableType type)
+  {
+    switch (type)
+    {
+    case FOLDER:
+      PropertyField.FileField fileField = new PropertyField.FileField();
+      fileField.setDialogText("Folder Selection");
+      fileField.setDialogMessage("Select a folder.");
+      return fileField;
+    }
+
+    return new PropertyField.TextField<Control>();
   }
 
   private void validate()

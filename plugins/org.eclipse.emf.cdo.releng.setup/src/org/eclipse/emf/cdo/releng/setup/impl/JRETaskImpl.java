@@ -297,7 +297,8 @@ public class JRETaskImpl extends SetupTaskImpl implements JRETask
 
       for (IExecutionEnvironment executionEnvironment : executionEnvironments)
       {
-        if (executionEnvironment.getId().equals(version))
+        String id = executionEnvironment.getId();
+        if (id.equals(version))
         {
           IVMInstall[] compatibleVMs = executionEnvironment.getCompatibleVMs();
           for (IVMInstall vmInstall : compatibleVMs)

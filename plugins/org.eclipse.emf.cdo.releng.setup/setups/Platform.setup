@@ -48,6 +48,16 @@
           <substitutions>\1&lt;stringAttribute key=&quot;org.eclipse.debug.core.ATTR_REFRESH_SCOPE&quot; value=&quot;$${working_set:&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;resources&amp;gt;&amp;#13;&amp;#10;&amp;lt;item path=&amp;quot;/org.eclipse.equinox.p2.jarprocessor/lib&amp;quot; type=&amp;quot;2&amp;quot;/&amp;gt;&amp;#13;&amp;#10;&amp;lt;/resources&amp;gt;}&quot;/>\1</substitutions>
         </modifications>
       </setupTasks>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.repository.tools/.project|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+      </setupTasks>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.repository.tools/scripts/buildAntJARs.xml|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+      </setupTasks>
     </setupTasks>
     <setupTasks xsi:type="setup:CompoundSetupTask" name="Platform Git Clones">
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.common.git.location" value="${setup.branch.dir/git/platform.common}"/>
@@ -88,11 +98,30 @@
         <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
           <substitutions>auto,</substitutions>
         </modifications>
+        <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ant.ui.ATTR_ANT_AFTER_CLEAN_TARGETS&quot; value=&quot;workspaceBinaries,&quot;/>([\n\r]+)&lt;stringAttribute key=&quot;org.eclipse.ant.ui.ATTR_ANT_MANUAL_TARGETS&quot; value=&quot;workspaceBinaries,&quot;/>">
+          <substitutions>\1&lt;stringAttribute key=&quot;org.eclipse.ant.ui.ATTR_ANT_AUTO_TARGETS&quot; value=&quot;workspaceBinaries,&quot;/>\1</substitutions>
+        </modifications>
       </setupTasks>
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.git.location" value="${setup.branch.dir/git/pde}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.ui.git.location" value="${setup.branch.dir/git/pde.ui}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.ui.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.ui.git" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${pde.ui.git.location/ui/org.eclipse.pde.core/.project|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+      </setupTasks>
+      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${pde.ui.git.location/ui/org.eclipse.pde.core/.externalToolBuilders/org.eclipse.pde.core localbuild.xml [Builder].launch|uri}" encoding="UTF-8">
+        <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
+          <substitutions>auto,</substitutions>
+        </modifications>
+        <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ant.ui.ATTR_ANT_AFTER_CLEAN_TARGETS&quot; value=&quot;workspaceBinaries,&quot;/>([\n\r]+)&lt;stringAttribute key=&quot;org.eclipse.ant.ui.ATTR_ANT_MANUAL_TARGETS&quot; value=&quot;workspaceBinaries,&quot;/>">
+          <substitutions>\1&lt;stringAttribute key=&quot;org.eclipse.ant.ui.ATTR_ANT_AUTO_TARGETS&quot; value=&quot;workspaceBinaries,&quot;/>\1</substitutions>
+        </modifications>
+        <modifications pattern="&lt;booleanAttribute key=&quot;org.eclipse.ant.ui.DEFAULT_VM_INSTALL&quot; value=&quot;false&quot;/>([\n\r]+)&lt;booleanAttribute key=&quot;org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND&quot; value=&quot;false&quot;/>">
+          <substitutions>\1&lt;stringAttribute key=&quot;org.eclipse.debug.core.ATTR_REFRESH_SCOPE&quot; value=&quot;$${working_set:&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;resources&amp;gt;&amp;#13;&amp;#10;&amp;lt;item path=&amp;quot;/org.eclipse.pde.core/ant_tasks&amp;quot; type=&amp;quot;2&amp;quot;/&amp;gt;&amp;#13;&amp;#10;&amp;lt;/resources&amp;gt;}&quot;/>\1</substitutions>
+        </modifications>
+      </setupTasks>
     </setupTasks>
     <setupTasks xsi:type="setup:CompoundSetupTask" name="JDT Git Clones">
       <setupTasks xsi:type="setup:ContextVariableTask" name="jdt.core.binaries.git.location" value="${setup.branch.dir/git/jdt.core.binaries}"/>
@@ -125,7 +154,7 @@
       <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.url" value="ssh://git.eclipse.org/gitroot/ecf/org.eclipse.ecf.git"/>
       <setupTasks xsi:type="setup:GitCloneTask" requirements="//@branches[name='master']/@setupTasks.10/@setupTasks.1" location="${ecf.git.location}" remoteURI="${ecf.git.url}" checkoutBranch="master"/>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.8/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.8/@setupTasks.2 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.6/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.18 //@branches[name='master']/@setupTasks.9/@setupTasks.2 //@branches[name='master']/@setupTasks.10/@setupTasks.2">
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.8/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.8/@setupTasks.2 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.6/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.18 //@branches[name='master']/@setupTasks.9/@setupTasks.2 //@branches[name='master']/@setupTasks.10/@setupTasks.2 //@branches[name='master']/@setupTasks.6/@setupTasks.3 //@branches[name='master']/@setupTasks.6/@setupTasks.2 //@branches[name='master']/@setupTasks.4/@setupTasks.9 //@branches[name='master']/@setupTasks.4/@setupTasks.8 //@branches[name='master']/@setupTasks.4/@setupTasks.10 //@branches[name='master']/@setupTasks.4/@setupTasks.11 //@branches[name='master']/@setupTasks.6/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.8">
       <rootComponents name="org.eclipse.sdk"/>
       <rootComponents name="org.eclipse.jdt"/>
       <rootComponents name="org.eclipse.pde"/>

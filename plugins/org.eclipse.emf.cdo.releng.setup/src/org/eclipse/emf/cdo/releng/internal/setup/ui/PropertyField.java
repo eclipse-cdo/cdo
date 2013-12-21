@@ -588,6 +588,12 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
         dialog.setMessage(dialogMessage);
       }
 
+      String value = getValue();
+      if (value.length() != 0)
+      {
+        dialog.setFilterPath(value);
+      }
+
       String dir = dialog.open();
       if (dir != null)
       {

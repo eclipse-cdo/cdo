@@ -124,7 +124,7 @@ public class PerformSetupAction extends AbstractSetupAction
         }, Collections.singletonList(setupTaskPerformer));
       }
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       SetupEditorPlugin.INSTANCE.log(ex);
       ErrorDialog.open(ex);

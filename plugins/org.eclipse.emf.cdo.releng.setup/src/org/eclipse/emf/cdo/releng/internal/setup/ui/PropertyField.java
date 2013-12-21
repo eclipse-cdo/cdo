@@ -43,15 +43,17 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
 
   private final ValueListenerArray valueListeners = new ValueListenerArray();
 
+  private String value = EMPTY;
+
   private String labelText;
+
+  private String toolTip;
 
   private Label label;
 
   private CONTROL control;
 
   private HELPER helper;
-
-  private String value = EMPTY;
 
   public PropertyField()
   {
@@ -77,6 +79,16 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     }
 
     this.labelText = labelText.trim();
+  }
+
+  public final String getToolTip()
+  {
+    return toolTip;
+  }
+
+  public final void setToolTip(String toolTip)
+  {
+    this.toolTip = toolTip;
   }
 
   public final String getValue()
@@ -130,6 +142,11 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     if (labelText != null)
     {
       label.setText(labelText + ":");
+    }
+
+    if (toolTip != null)
+    {
+      label.setToolTipText(toolTip);
     }
 
     control = createControl(parent);
@@ -276,8 +293,6 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
    */
   public static class TextField<H extends Control> extends PropertyField<Text, H>
   {
-    private String toolTip;
-
     private PropertyField<?, ?> linkField;
 
     private Composite mainControl;
@@ -293,16 +308,6 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     public TextField(String labelText)
     {
       super(labelText);
-    }
-
-    public final String getToolTip()
-    {
-      return toolTip;
-    }
-
-    public final void setToolTip(String toolTip)
-    {
-      this.toolTip = toolTip;
     }
 
     public final PropertyField<?, ?> getLinkField()
@@ -448,6 +453,8 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     private Text createText(Composite parent)
     {
       final Text text = new Text(parent, SWT.BORDER);
+
+      String toolTip = getToolTip();
       if (toolTip != null)
       {
         text.setToolTipText(toolTip);

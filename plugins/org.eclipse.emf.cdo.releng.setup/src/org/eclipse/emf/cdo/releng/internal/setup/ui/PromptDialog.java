@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.TextField;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.ValueListener;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 
@@ -18,8 +20,6 @@ import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class PromptDialog extends AbstractSetupDialog
     headerFont = getFont(parent, 16, SWT.BOLD);
 
     GridLayout layout = (GridLayout)parent.getLayout();
-    layout.numColumns = 2;
+    layout.numColumns = 3;
     layout.horizontalSpacing = 10;
     layout.verticalSpacing = 10;
 
@@ -92,7 +91,8 @@ public class PromptDialog extends AbstractSetupDialog
 
         for (ContextVariableTask variable : variables)
         {
-          createField(parent, variable);
+          PropertyField<?, ?> field = createField(variable);
+          field.fill(parent);
         }
       }
     }
@@ -107,7 +107,7 @@ public class PromptDialog extends AbstractSetupDialog
 
   private void createHeader(Composite parent, SetupTaskPerformer setupTaskPerformer)
   {
-    GridData gd = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
+    GridData gd = new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1);
     gd.heightHint = 32;
 
     Label header = new Label(parent, SWT.NONE);
@@ -116,34 +116,27 @@ public class PromptDialog extends AbstractSetupDialog
     header.setFont(headerFont);
   }
 
-  private void createField(Composite parent, final ContextVariableTask variable)
+  private PropertyField<?, ?> createField(final ContextVariableTask variable)
   {
-    Label label = new Label(parent, SWT.NONE);
-    label.setText(StringUtil.isEmpty(variable.getLabel()) ? variable.getName() : variable.getLabel() + ":");
-    label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+    TextField<Control> field = new PropertyField.TextField<Control>(
+        StringUtil.isEmpty(variable.getLabel()) ? variable.getName() : variable.getLabel());
 
-    final Text text = new Text(parent, SWT.BORDER);
-    text.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-    text.addModifyListener(new ModifyListener()
+    String documentation = variable.getDocumentation();
+    if (!StringUtil.isEmpty(documentation))
     {
-      public void modifyText(ModifyEvent e)
+      field.setToolTip(documentation);
+    }
+
+    field.addValueListener(new ValueListener()
+    {
+      public void valueChanged(String oldValue, String newValue) throws Exception
       {
-        variable.setValue(text.getText());
+        variable.setValue(newValue);
         validate();
       }
     });
 
-    setToolTip(variable, label);
-    setToolTip(variable, text);
-  }
-
-  private void setToolTip(ContextVariableTask variable, Control control)
-  {
-    String documentation = variable.getDocumentation();
-    if (!StringUtil.isEmpty(documentation))
-    {
-      control.setToolTipText(documentation);
-    }
+    return field;
   }
 
   private void validate()

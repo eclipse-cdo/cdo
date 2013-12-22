@@ -52,6 +52,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
@@ -218,7 +219,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       return TARGET_PLATFORM_EDEFAULT == null ? targetPlatform != null : !TARGET_PLATFORM_EDEFAULT
-      .equals(targetPlatform);
+          .equals(targetPlatform);
     }
     return super.eIsSet(featureID);
   }
@@ -272,6 +273,11 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
   public void perform(SetupTaskContext context) throws Exception
   {
     System.setProperty("org.eclipse.buckminster.core.bundle.pool", context.getP2PoolTPDir().toString());
+
+    org.osgi.service.prefs.Preferences root = Platform.getPreferencesService().getRootNode();
+    org.osgi.service.prefs.Preferences node = root.node("/instance/org.eclipse.egit.core");
+    String oldautoShareProjects = node.get("core_autoShareProjects", null);
+    node.putBoolean("core_autoShareProjects", false);
 
     IProgressMonitor monitor = new ProgressLogMonitor(context);
     monitor.beginTask("Starting Buckminster import", 160);
@@ -338,6 +344,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     }
     finally
     {
+      node.put("core_autoShareProjects", oldautoShareProjects);
       monitor.done();
     }
   }
@@ -400,7 +407,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
-        {
+    {
       context.log("Clearing caches for remote files and URLs");
       CorePlugin plugin = CorePlugin.getDefault();
       plugin.clearRemoteFileCache();
@@ -584,7 +591,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       {
         throw new CoreException(status);
       }
-        }
+    }
   }
 
 } // BuckminsterImportTaskImpl

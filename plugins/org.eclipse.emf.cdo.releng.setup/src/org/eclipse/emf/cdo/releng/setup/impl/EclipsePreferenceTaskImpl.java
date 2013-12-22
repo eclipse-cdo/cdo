@@ -293,16 +293,18 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    context.log("Setting preference " + getKey() + " = " + getValue());
+    String key = getKey();
+    final String value = getValue();
+    context.log("Setting preference " + key + " = " + value);
 
     performUI(context, new RunnableWithContext()
     {
       public void run(SetupTaskContext context) throws Exception
       {
         org.osgi.service.prefs.Preferences node = (org.osgi.service.prefs.Preferences)cachedNode;
-        if (getValue() != null)
+        if (value != null)
         {
-          node.put(property, getValue());
+          node.put(property, value);
         }
         else
         {

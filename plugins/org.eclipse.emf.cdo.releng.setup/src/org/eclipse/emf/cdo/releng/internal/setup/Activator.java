@@ -16,8 +16,10 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.dynamichelpers.IExtensionTracker;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
@@ -50,19 +52,28 @@ public class Activator extends AbstractUIPlugin
 
     if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP)
     {
-      Display.getDefault().asyncExec(new Runnable()
+      final Display display = Display.getDefault();
+      display.asyncExec(new Runnable()
       {
         public void run()
         {
-          try
+          IExtensionTracker extensionTracker = PlatformUI.getWorkbench().getExtensionTracker();
+          if (extensionTracker == null)
           {
-            SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
-            setupTaskPerformer.perform();
+            display.asyncExec(this);
           }
-          catch (Throwable ex)
+          else
           {
-            log(ex);
-            ErrorDialog.open(ex);
+            try
+            {
+              SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
+              setupTaskPerformer.perform();
+            }
+            catch (Throwable ex)
+            {
+              log(ex);
+              ErrorDialog.open(ex);
+            }
           }
         }
       });

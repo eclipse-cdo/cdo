@@ -67,6 +67,7 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
     if (Markers.UNREFERENCED_ELEMENT_PROBLEM.equals(problemType))
     {
       resolutions.add(new PropertiesResolution.RootProjects(marker));
+      resolutions.add(new IgnoreRootProjectsResolution(marker));
     }
     else if (Markers.RELEASE_PATH_PROBLEM.equals(problemType))
     {

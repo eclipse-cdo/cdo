@@ -11,18 +11,31 @@
 package org.eclipse.emf.cdo.releng.version.ui.preferences;
 
 import org.eclipse.emf.cdo.releng.internal.version.Activator;
+import org.eclipse.emf.cdo.releng.internal.version.Activator.ReleaseCheckMode;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
+import org.eclipse.jface.viewers.ICellModifier;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.ScrollBar;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -34,10 +47,33 @@ import java.util.Collections;
  */
 public class VersionBuilderPreferencePage extends PreferencePage implements IWorkbenchPreferencePage
 {
+  /**
+   * @author Eike Stepper
+   */
+  private final class ReleaseCheckModeLabelProvider extends LabelProvider implements ITableLabelProvider
+  {
+    public Image getColumnImage(Object element, int columnIndex)
+    {
+      return null;
+    }
+
+    public String getColumnText(Object element, int columnIndex)
+    {
+      String releasePath = element.toString();
+      if (columnIndex == 0)
+      {
+        return releasePath;
+      }
+
+      ReleaseCheckMode releaseCheckMode = Activator.getReleaseCheckMode(releasePath);
+      return releaseCheckMode == null ? "bad" : releaseCheckMode.toString();
+    }
+  }
+
   public VersionBuilderPreferencePage()
   {
     super("<taken from plugin.xml>");
-    setDescription("Manage ignored releases:");
+    setDescription("Manage release check modes:");
   }
 
   public void init(IWorkbench workbench)
@@ -48,69 +84,110 @@ public class VersionBuilderPreferencePage extends PreferencePage implements IWor
   @Override
   protected Control createContents(Composite parent)
   {
-    GridLayout layout = new GridLayout();
-    layout.marginWidth = 0;
-    layout.marginHeight = 0;
-    layout.numColumns = 2;
+    java.util.List<String> releasePaths = new ArrayList<String>(Activator.getReleasePaths());
+    Collections.sort(releasePaths);
 
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(layout);
+    final TableViewer viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.NO_SCROLL | SWT.V_SCROLL);
 
-    final List list = new List(composite, SWT.BORDER | SWT.SINGLE);
-    list.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
+    final Table table = viewer.getTable();
+    table.setLinesVisible(true);
+    table.setHeaderVisible(true);
+    // table.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
 
-    java.util.List<String> ignoredReleases = new ArrayList<String>(Activator.getIgnoredReleases());
-    Collections.sort(ignoredReleases);
-    for (String releasePath : ignoredReleases)
-    {
-      list.add(releasePath);
-    }
+    TableViewerColumn releaseViewerColumn = new TableViewerColumn(viewer, SWT.NONE);
+    final TableColumn releaseColumn = releaseViewerColumn.getColumn();
+    releaseColumn.setText("Release");
+    releaseColumn.setResizable(false);
+    releaseColumn.setMoveable(false);
 
-    final Button button = new Button(composite, SWT.PUSH);
-    button.setText("Remove");
-    button.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-    button.addSelectionListener(new SelectionAdapter()
+    TableViewerColumn checkModeViewerColumn = new TableViewerColumn(viewer, SWT.NONE);
+    final TableColumn checkModeColumn = checkModeViewerColumn.getColumn();
+    checkModeColumn.setText("Check Mode");
+    checkModeColumn.setResizable(false);
+    checkModeColumn.setMoveable(false);
+
+    final ControlAdapter columnResizer = new ControlAdapter()
     {
       @Override
-      public void widgetSelected(SelectionEvent e)
+      public void controlResized(ControlEvent e)
       {
-        String releasePath = getSelectedReleasePath(list);
-        if (releasePath != null)
+        Point size = table.getSize();
+        ScrollBar bar = table.getVerticalBar();
+        if (bar != null && bar.isVisible())
         {
-          list.remove(releasePath);
-          Activator.getIgnoredReleases().remove(releasePath);
-          VersionUtil.cleanReleaseProjects(releasePath);
-          adjustEnablement(list, button);
+          size.x -= bar.getSize().x;
         }
-      }
-    });
 
-    adjustEnablement(list, button);
-    list.addSelectionListener(new SelectionAdapter()
+        releaseColumn.setWidth(size.x - checkModeColumn.getWidth());
+      }
+    };
+
+    checkModeColumn.pack();
+    checkModeColumn.setWidth(checkModeColumn.getWidth() + 10);
+
+    table.addControlListener(columnResizer);
+    table.getDisplay().asyncExec(new Runnable()
     {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      public void run()
       {
-        adjustEnablement(list, button);
+        columnResizer.controlResized(null);
       }
     });
 
-    return composite;
-  }
+    viewer.setColumnProperties(new String[] { "releasePath", "checkMode" });
 
-  private String getSelectedReleasePath(List list)
-  {
-    String[] selection = list.getSelection();
-    if (selection != null && selection.length != 0)
+    viewer.setContentProvider(new ArrayContentProvider());
+
+    viewer.setLabelProvider(new ReleaseCheckModeLabelProvider());
+
+    viewer.setCellModifier(new ICellModifier()
     {
-      return selection[0];
-    }
+      public boolean canModify(Object element, String property)
+      {
+        return "checkMode".equals(property);
+      }
 
-    return null;
-  }
+      public Object getValue(Object element, String property)
+      {
+        return Activator.getReleaseCheckMode((String)element);
+      }
 
-  private void adjustEnablement(final List list, final Button button)
-  {
-    button.setEnabled(getSelectedReleasePath(list) != null);
+      public void modify(Object element, String property, Object value)
+      {
+        if (element instanceof TableItem)
+        {
+          element = ((TableItem)element).getData();
+        }
+        String releasePath = (String)element;
+        Activator.setReleaseCheckMode(releasePath, (ReleaseCheckMode)value);
+        viewer.update(element, new String[] { property });
+        VersionUtil.cleanReleaseProjects(releasePath);
+      }
+    });
+
+    ComboBoxViewerCellEditor cellEditor = new ComboBoxViewerCellEditor(table);
+    cellEditor.setContentProvider(new IStructuredContentProvider()
+    {
+      public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+      {
+      }
+
+      public void dispose()
+      {
+      }
+
+      public Object[] getElements(Object inputElement)
+      {
+        return ReleaseCheckMode.values();
+      }
+    });
+
+    viewer.setCellEditors(new CellEditor[] { null, cellEditor });
+    cellEditor.setLabelProvider(new LabelProvider());
+
+    viewer.setInput(releasePaths);
+    cellEditor.setInput(releasePaths);
+
+    return table;
   }
 }

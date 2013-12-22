@@ -22,17 +22,17 @@ import org.eclipse.core.resources.IProject;
 /**
  * @author Eike Stepper
  */
-public class ReleasePathResolution extends AbstractResolution
+public class IgnoreRootProjectsResolution extends AbstractResolution
 {
-  public ReleasePathResolution(IMarker marker)
+  public IgnoreRootProjectsResolution(IMarker marker)
   {
-    super(marker, "Add to ignored releases", Activator.CORRECTION_CONFIGURE_GIF);
+    super(marker, "Ignore root components for release", Activator.CORRECTION_CONFIGURE_GIF);
   }
 
   @Override
   protected boolean isApplicable(IMarker marker)
   {
-    return Markers.RELEASE_PATH_PROBLEM.equals(Markers.getProblemType(marker));
+    return Markers.UNREFERENCED_ELEMENT_PROBLEM.equals(Markers.getProblemType(marker));
   }
 
   @Override
@@ -44,8 +44,7 @@ public class ReleasePathResolution extends AbstractResolution
 
     return "Configure '"
         + arguments.getReleasePath()
-        + "' to ignore all release checking associated with it. To re-enable this checking, use the Preferences dialog to manage the release check mode.";
-
+        + "' to stop checking that non-root elements are referenced by a root element. To re-enable this checking, use the Preferences dialog to manage the release check mode.";
   }
 
   @Override
@@ -55,7 +54,7 @@ public class ReleasePathResolution extends AbstractResolution
     VersionBuilderArguments arguments = new VersionBuilderArguments(project);
     String releasePath = arguments.getReleasePath();
 
-    org.eclipse.emf.cdo.releng.internal.version.Activator.setReleaseCheckMode(releasePath, ReleaseCheckMode.NONE);
+    org.eclipse.emf.cdo.releng.internal.version.Activator.setReleaseCheckMode(releasePath, ReleaseCheckMode.PARTIAL);
     VersionUtil.cleanReleaseProjects(releasePath);
   }
 }

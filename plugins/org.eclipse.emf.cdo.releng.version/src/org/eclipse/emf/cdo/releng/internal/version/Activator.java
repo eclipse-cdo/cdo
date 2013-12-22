@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -43,15 +47,11 @@ public class Activator extends Plugin
 {
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.version";
 
-  private static final String IGNORED_RELEASES = "ignoredReleases.bin";
-
   private static final String BUILD_STATES = "buildStates.bin";
 
   private static Activator plugin;
 
   private static IResourceChangeListener postBuildListener;
-
-  private static IgnoredReleases ignoredReleases;
 
   private static BuildStates buildStates;
 
@@ -64,22 +64,6 @@ public class Activator extends Plugin
   {
     super.start(context);
     plugin = this;
-
-    try
-    {
-      ignoredReleases = load(IGNORED_RELEASES);
-    }
-    catch (Throwable t)
-    {
-      //$FALL-THROUGH$
-    }
-    finally
-    {
-      if (ignoredReleases == null)
-      {
-        ignoredReleases = new IgnoredReleases();
-      }
-    }
 
     try
     {
@@ -135,7 +119,6 @@ public class Activator extends Plugin
       save(BUILD_STATES, buildStates);
     }
 
-    ignoredReleases = null;
     buildStates = null;
     plugin = null;
     super.stop(context);
@@ -146,9 +129,63 @@ public class Activator extends Plugin
     Activator.postBuildListener = postBuildListener;
   }
 
-  public static Set<String> getIgnoredReleases()
+  private static final String PREFERENCE_NODE = "/instance/" + PLUGIN_ID;
+
+  public static Set<String> getReleasePaths()
   {
-    return ignoredReleases;
+    Preferences root = Platform.getPreferencesService().getRootNode();
+    try
+    {
+      if (root.nodeExists(PREFERENCE_NODE))
+      {
+        Preferences node = root.node(PREFERENCE_NODE);
+        return new HashSet<String>(Arrays.asList(node.keys()));
+      }
+    }
+    catch (BackingStoreException ex)
+    {
+      Activator.log(ex);
+    }
+
+    return Collections.emptySet();
+  }
+
+  public static ReleaseCheckMode getReleaseCheckMode(String releasePath)
+  {
+    Preferences root = Platform.getPreferencesService().getRootNode();
+    try
+    {
+      if (root.nodeExists(PREFERENCE_NODE))
+      {
+        Preferences node = root.node(PREFERENCE_NODE);
+        String value = node.get(releasePath, null);
+        if (value != null)
+        {
+          return ReleaseCheckMode.valueOf(value);
+        }
+      }
+    }
+    catch (BackingStoreException ex)
+    {
+      Activator.log(ex);
+    }
+
+    return null;
+  }
+
+  public static void setReleaseCheckMode(String releasePath, ReleaseCheckMode releaseCheckMode)
+  {
+    Preferences root = Platform.getPreferencesService().getRootNode();
+    Preferences node = root.node(PREFERENCE_NODE);
+    node.put(releasePath, releaseCheckMode.toString());
+    try
+    {
+      node.flush();
+    }
+    catch (BackingStoreException ex)
+    {
+      log(ex);
+    }
   }
 
   public static BuildState getBuildState(IProject project)
@@ -252,42 +289,9 @@ public class Activator extends Plugin
   /**
    * @author Eike Stepper
    */
-  private static final class IgnoredReleases extends HashSet<String>
+  public enum ReleaseCheckMode
   {
-    private static final long serialVersionUID = 1L;
-
-    public IgnoredReleases()
-    {
-    }
-
-    @Override
-    public boolean add(String releasePath)
-    {
-      if (super.add(releasePath))
-      {
-        save();
-        return true;
-      }
-
-      return false;
-    }
-
-    @Override
-    public boolean remove(Object releasePath)
-    {
-      if (super.remove(releasePath))
-      {
-        save();
-        return true;
-      }
-
-      return false;
-    }
-
-    private void save()
-    {
-      Activator.save(IGNORED_RELEASES, ignoredReleases);
-    }
+    NONE, PARTIAL, FULL
   }
 
   /**

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.version;
 
+import org.eclipse.emf.cdo.releng.internal.version.Activator.ReleaseCheckMode;
 import org.eclipse.emf.cdo.releng.version.IElement;
 import org.eclipse.emf.cdo.releng.version.IElement.Type;
 import org.eclipse.emf.cdo.releng.version.IElementResolver;
@@ -173,7 +174,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     IProject project = getProject();
 
     monitor.beginTask("", 1);
-    monitor.subTask("Cleaning version validity problems of " + project.getName());
+    monitor.subTask("Cleaning versio validity problems of " + project.getName());
 
     try
     {
@@ -249,7 +250,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         return;
       }
 
-      if (Activator.getIgnoredReleases().contains(releasePathArg))
+      if (Activator.getReleaseCheckMode(releasePathArg) == ReleaseCheckMode.NONE)
       {
         return;
       }
@@ -346,7 +347,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       }
 
       Markers.deleteAllMarkers(componentModelFile, Markers.UNREFERENCED_ELEMENT_PROBLEM);
-      if (!rootProjects.contains(project.getName()))
+      if (Activator.getReleaseCheckMode(releasePathArg) == ReleaseCheckMode.FULL
+          && !rootProjects.contains(project.getName()))
       {
         Set<IElement> elementReference = resolveReferences(element);
         if (elementReference == null || elementReference.isEmpty())

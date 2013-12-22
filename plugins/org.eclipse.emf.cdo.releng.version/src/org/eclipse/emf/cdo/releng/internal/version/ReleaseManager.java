@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.version;
 
+import org.eclipse.emf.cdo.releng.internal.version.Activator.ReleaseCheckMode;
 import org.eclipse.emf.cdo.releng.version.IElement;
 import org.eclipse.emf.cdo.releng.version.IElement.Type;
 import org.eclipse.emf.cdo.releng.version.IRelease;
@@ -87,9 +88,16 @@ public class ReleaseManager implements IReleaseManager
         }
       }
 
+      String releasePath = file.getFullPath().toString();
+      ReleaseCheckMode releaseCheckMode = Activator.getReleaseCheckMode(releasePath);
+      if (releaseCheckMode == null)
+      {
+        Activator.setReleaseCheckMode(releasePath, ReleaseCheckMode.FULL);
+      }
+
       if (!file.exists())
       {
-        throw new FileNotFoundException(file.getFullPath().toString());
+        throw new FileNotFoundException(releasePath);
       }
 
       IRelease release = new Release(getParser(), file);

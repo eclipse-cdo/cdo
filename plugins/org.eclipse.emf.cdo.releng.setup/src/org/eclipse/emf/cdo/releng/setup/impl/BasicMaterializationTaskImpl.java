@@ -344,7 +344,14 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     }
     finally
     {
-      node.put("core_autoShareProjects", oldautoShareProjects);
+      if (oldautoShareProjects == null)
+      {
+        node.remove("core_autoShareProjects");
+      }
+      else
+      {
+        node.put("core_autoShareProjects", oldautoShareProjects);
+      }
       monitor.done();
     }
   }

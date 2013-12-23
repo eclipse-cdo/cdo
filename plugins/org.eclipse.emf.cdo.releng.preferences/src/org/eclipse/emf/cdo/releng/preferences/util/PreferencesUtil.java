@@ -255,6 +255,152 @@ public final class PreferencesUtil
     return null;
   }
 
+  public static class PreferenceProperty
+  {
+    private Preferences node;
+
+    private String property;
+
+    public PreferenceProperty(String preferencePropertyPath)
+    {
+      node = Platform.getPreferencesService().getRootNode();
+
+      String[] segments = preferencePropertyPath.split("/");
+      StringBuilder property = null;
+      boolean startProperty = false;
+      for (int i = 0; i < segments.length - 1; i++)
+      {
+        String segment = segments[i];
+        if (property != null)
+        {
+          if (startProperty)
+          {
+            property.append('/');
+          }
+          else
+          {
+            startProperty = true;
+          }
+
+          property.append(segment);
+        }
+        else if (i != 0 && segment.length() == 0)
+        {
+          property = new StringBuilder();
+        }
+        else
+        {
+          node = node.node(segment);
+        }
+      }
+
+      if (property == null)
+      {
+        this.property = segments[segments.length - 1];
+      }
+      else
+      {
+        this.property = property.append('/').append(segments[segments.length - 1]).toString();
+      }
+    }
+
+    public Preferences getNode()
+    {
+      return node;
+    }
+
+    public String getProperty()
+    {
+      return property;
+    }
+
+    public void set(String value)
+    {
+      if (value == null)
+      {
+        remove();
+      }
+      node.put(property, value);
+    }
+
+    public String get(String defaultValue)
+    {
+      return node.get(property, defaultValue);
+    }
+
+    public void remove()
+    {
+      node.remove(property);
+    }
+
+    public void setInt(int value)
+    {
+      node.putInt(property, value);
+    }
+
+    public int getInt(int defaultValue)
+    {
+      return node.getInt(property, defaultValue);
+    }
+
+    public void setLong(long value)
+    {
+      node.putLong(property, value);
+    }
+
+    public long getLong(long defaultValue)
+    {
+      return node.getLong(property, defaultValue);
+    }
+
+    public void setBoolean(boolean value)
+    {
+      node.putBoolean(property, value);
+    }
+
+    public boolean getBoolean(boolean defaultValue)
+    {
+      return node.getBoolean(property, defaultValue);
+    }
+
+    public void setFloat(float value)
+    {
+      node.putFloat(property, value);
+    }
+
+    public float getFloat(float defaultValue)
+    {
+      return node.getFloat(property, defaultValue);
+    }
+
+    public void setDouble(double value)
+    {
+      node.putDouble(property, value);
+    }
+
+    public double getDouble(double defaultValue)
+    {
+      return node.getDouble(property, defaultValue);
+    }
+
+    public void setByteArray(byte[] value)
+    {
+      if (value == null)
+      {
+        remove();
+      }
+      else
+      {
+        node.putByteArray(property, value);
+      }
+    }
+
+    public byte[] getByteArray(byte[] defaultValue)
+    {
+      return node.getByteArray(property, defaultValue);
+    }
+  }
+
   public static List<PreferenceNode> getPath(PreferenceNode preferenceNode)
   {
     List<PreferenceNode> path = new ArrayList<PreferenceNode>();

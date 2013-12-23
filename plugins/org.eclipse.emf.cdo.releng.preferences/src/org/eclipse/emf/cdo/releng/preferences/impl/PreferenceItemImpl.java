@@ -135,12 +135,13 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
   public String getAbsolutePath()
   {
     PreferenceNode parent = getParent();
+    String name = getName();
     if (parent == null)
     {
-      return getName();
+      return name;
     }
 
-    return parent.getAbsolutePath() + "/" + getName();
+    return parent.getAbsolutePath() + "/" + (name.contains("/") ? "/" : "") + name;
   }
 
   /**

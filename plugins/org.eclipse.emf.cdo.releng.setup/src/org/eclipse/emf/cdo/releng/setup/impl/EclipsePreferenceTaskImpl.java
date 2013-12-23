@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
@@ -22,7 +23,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 
 import java.util.Set;
 
@@ -82,9 +82,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
    */
   protected String value = VALUE_EDEFAULT;
 
-  private transient Object cachedNode;
-
-  private transient String property;
+  private transient PreferencesUtil.PreferenceProperty preferenceProperty;
 
   /**
    * <!-- begin-user-doc -->
@@ -270,24 +268,14 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    org.osgi.service.prefs.Preferences node = Platform.getPreferencesService().getRootNode();
+    preferenceProperty = new PreferencesUtil.PreferenceProperty(key);
 
-    String[] segments = key.split("/");
-    for (int i = 0; i < segments.length - 1; i++)
-    {
-      String segment = segments[i];
-      node = node.node(segment);
-    }
-
-    property = segments[segments.length - 1];
-
-    String oldValue = node.get(property, null);
+    String oldValue = preferenceProperty.get(null);
     if (ObjectUtil.equals(getValue(), oldValue))
     {
       return false;
     }
 
-    cachedNode = node;
     return true;
   }
 
@@ -301,17 +289,8 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     {
       public void run(SetupTaskContext context) throws Exception
       {
-        org.osgi.service.prefs.Preferences node = (org.osgi.service.prefs.Preferences)cachedNode;
-        if (value != null)
-        {
-          node.put(property, value);
-        }
-        else
-        {
-          node.remove(property);
-        }
-
-        node.flush();
+        preferenceProperty.set(value);
+        preferenceProperty.getNode().flush();
       }
     });
   }

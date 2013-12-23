@@ -31,13 +31,13 @@
    </extension>
    
    <extension point="org.eclipse.ui.newWizards">
-      <!-- @generated workingsets -->
+      <!-- @generated workingsets not -->
       <category
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <category
             id="org.eclipse.emf.cdo.releng"
-            name="%_UI_Wizard_category"/>
+            name="%_UI_RelengWizard_category"/>
       <wizard
             id="org.eclipse.emf.cdo.releng.workingsets.presentation.WorkingSetsModelWizardID"
             name="%_UI_WorkingSetsModelWizard_label"

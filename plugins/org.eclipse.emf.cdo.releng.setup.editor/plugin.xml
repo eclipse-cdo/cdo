@@ -20,7 +20,7 @@
             name="%_UI_Wizard_category"/>
       <category
             id="org.eclipse.emf.cdo.releng"
-            name="%_UI_Wizard_category"/>
+            name="%_UI_RelengWizard_category"/>
       <wizard
             id="org.eclipse.emf.cdo.releng.setup.presentation.SetupModelWizardID"
             name="%_UI_SetupModelWizard_label"

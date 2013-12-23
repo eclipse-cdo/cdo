@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project setup:toolVersion="3" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:predicates="http://www.eclipse.org/CDO/releng/predicates/1.0" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" xmlns:workingsets="http://www.eclipse.org/CDO/releng/workingsets/1.0" name="Xtext" label="Xtext with Xtend, Xbase and Xcore">
+  <setupTasks xsi:type="setup:P2Task">
+    <installableUnits id="org.eclipse.egit.feature.group"/>
+    <p2Repositories url="${train.url}"/>
+  </setupTasks>
+  <setupTasks xsi:type="setup:P2Task">
+    <installableUnits id="org.eclipse.buckminster.core.headless.feature.feature.group"/>
+    <installableUnits id="org.eclipse.buckminster.pde.headless.feature.feature.group"/>
+    <installableUnits id="org.eclipse.buckminster.git.headless.feature.feature.group"/>
+    <installableUnits id="org.eclipse.buckminster.mspec"/>
+    <installableUnits id="org.eclipse.buckminster.rmap"/>
+    <p2Repositories url="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
+    <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
+  </setupTasks>
+  <setupTasks xsi:type="setup:P2Task">
+    <installableUnits id="org.eclipse.emf.ecore.xcore.sdk.feature.group"/>
+    <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+    <installableUnits id="org.eclipse.xtext.sdk.feature.group"/>
+    <installableUnits id="org.eclipse.xtend.sdk.feature.group"/>
+    <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
+    <p2Repositories url="http://download.eclipse.org/modeling/emf/updates/"/>
+    <p2Repositories url="http://download.eclipse.org/modeling/emft/mwe/updates/"/>
+    <p2Repositories url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
+  </setupTasks>
+  <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.egit.core">
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.egit.core/core_autoIgnoreDerivedResources" value="false"/>
+  </setupTasks>
+  <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.pde.api.tools">
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile" value="Ignore"/>
+  </setupTasks>
+  <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.emf.cdo.releng.version">
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.emf.cdo.releng.version///org.eclipse.emf.common/release.xml" value="PARTIAL"/>
+  </setupTasks>
+  <branches name="master">
+    <setupTasks xsi:type="setup:ContextVariableTask" name="train.url" value="http://download.eclipse.org/releases/luna/201310040900"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="emf.git.location" value="${setup.branch.dir/git/emf}"/>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${emf.git.location}" remoteURI="ssh://git.eclipse.org:29418/emf/org.eclipse.emf" checkoutBranch="master"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="xtext.git.location" value="${setup.branch.dir/git/xtext}"/>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${xtext.git.location}" remoteURI="ssh://git.eclipse.org:29418/tmf/org.eclipse.xtext" checkoutBranch="master"/>
+    <setupTasks xsi:type="setup:MaterializationTask">
+      <rootComponents name="org.eclipse.emf.ecore.xcore.sdk"/>
+      <rootComponents name="org.eclipse.emf.test.ecore.xcore"/>
+      <rootComponents name="org.eclipse.xtext.build"/>
+      <rootComponents name="org.eclipse.xtext.sdk"/>
+      <rootComponents name="org.eclipse.xtext.tests"/>
+      <rootComponents name="org.eclipse.xtext.ui.codetemplates.tests" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.xtend.m2e"/>
+      <rootComponents name="org.eclipse.xtend.sdk"/>
+      <rootComponents name="org.eclipse.xtend.tests"/>
+      <rootComponents name="org.eclipse.xtend.performance.tests" type="osgi.bundle"/>
+      <rootComponents name="org.eclipse.sdk"/>
+      <rootComponents name="com.google.guava" type="osgi.bundle"/>
+      <rootComponents name="org.junit" type="osgi.bundle" versionRange="(3.0.0,4.0.0]"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${emf.git.location}"/>
+      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${xtext.git.location}" locateNestedProjects="true"/>
+      <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository/"/>
+      <p2Repositories url="${train.url}"/>
+      <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:WorkingSetTask">
+      <workingSets name="Xext">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtend.core"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.4"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.1"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.2"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.5"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xbase">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtend.core"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*xbase.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xtend">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtend.core"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*xtend.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.5"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xbase Tests">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtend.core"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*xbase.*tests.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xtext Tests">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtext"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*tests.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.5"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xtend Tests">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtend.core"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*xtend.*tests.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.6"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xtext Releng">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.xtext.sdk.feature"/>
+          <operands xsi:type="predicates:NaturePredicate" nature="org.eclipse.pde.FeatureNature"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="Xcore">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.ecore.xcore"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*xcore.*|.*xtext.*"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.9"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="EMF">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.7"/>
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.common"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.9"/>
+        </predicates>
+      </workingSets>
+      <workingSets name="EMF Releng">
+        <predicates xsi:type="predicates:AndPredicate">
+          <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.ecore.xcore"/>
+          <operands xsi:type="predicates:NaturePredicate" nature="org.eclipse.pde.FeatureNature"/>
+        </predicates>
+      </workingSets>
+    </setupTasks>
+  </branches>
+</setup:Project>

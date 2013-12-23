@@ -1003,7 +1003,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
         try
         {
-          getProfile();
+          initializeProfile();
         }
         finally
         {
@@ -1047,9 +1047,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         return (IProvisioningAgent)ReflectUtil.getValue(field, this);
       }
 
-      private IProfile getProfile()
+      private IProfile initializeProfile()
       {
-        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "getProfile");
+        Method method = ReflectUtil.getMethod(DIRECTOR_CLASS, "initializeProfile");
         return (IProfile)ReflectUtil.invokeMethod(method, this);
       }
 

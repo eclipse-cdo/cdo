@@ -20,12 +20,15 @@ import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.core.runtime.Plugin;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,6 +87,20 @@ public final class EMFUtil extends Plugin
     {
       Activator.log(ex);
       return (SetupResource)resourceSet.getResource(uri, false);
+    }
+  }
+
+  public static void saveEObject(EObject eObject)
+  {
+    try
+    {
+      XMLResource xmlResource = (XMLResource)eObject.eResource();
+      xmlResource.getEObjectToExtensionMap().clear();
+      xmlResource.save(null);
+    }
+    catch (IOException ex)
+    {
+      Activator.log(ex);
     }
   }
 

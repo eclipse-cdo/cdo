@@ -47,7 +47,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -590,7 +589,7 @@ public class InstallerDialog extends AbstractSetupDialog
         branchInfos = null;
 
         preferences.setInstallFolder(newValue);
-        saveEObject(preferences);
+        EMFUtil.saveEObject(preferences);
         validate();
       }
     });
@@ -614,7 +613,7 @@ public class InstallerDialog extends AbstractSetupDialog
       public void valueChanged(String oldValue, String newValue) throws Exception
       {
         preferences.setBundlePoolFolder(newValue);
-        saveEObject(preferences);
+        EMFUtil.saveEObject(preferences);
         validate();
       }
     });
@@ -628,7 +627,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);
@@ -639,7 +638,7 @@ public class InstallerDialog extends AbstractSetupDialog
       public void valueChanged(String oldValue, String newValue) throws Exception
       {
         preferences.setBundlePoolFolderTP(newValue);
-        saveEObject(preferences);
+        EMFUtil.saveEObject(preferences);
         validate();
       }
     });
@@ -1289,7 +1288,7 @@ public class InstallerDialog extends AbstractSetupDialog
                           Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
                           preferences = SetupFactory.eINSTANCE.createPreferences();
                           resource.getContents().add(preferences);
-                          saveEObject(preferences);
+                          EMFUtil.saveEObject(preferences);
                         }
 
                         close();
@@ -1329,7 +1328,7 @@ public class InstallerDialog extends AbstractSetupDialog
               Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
               preferences = SetupFactory.eINSTANCE.createPreferences();
               resource.getContents().add(preferences);
-              saveEObject(preferences);
+              EMFUtil.saveEObject(preferences);
 
               File rootFolder = new File(System.getProperty("user.home", "."));
 
@@ -1704,7 +1703,7 @@ public class InstallerDialog extends AbstractSetupDialog
           Setup setup = performer.getSetup();
           if (setup != null)
           {
-            saveEObject(setup);
+            EMFUtil.saveEObject(setup);
             setupTaskPerformers.add(performer);
           }
         }
@@ -1758,20 +1757,6 @@ public class InstallerDialog extends AbstractSetupDialog
     else
     {
       performer.log("Launching IDE is not possible for cross-platform installs. Skipping.");
-    }
-  }
-
-  private void saveEObject(EObject eObject)
-  {
-    try
-    {
-      XMLResource xmlResource = (XMLResource)eObject.eResource();
-      xmlResource.getEObjectToExtensionMap().clear();
-      xmlResource.save(null);
-    }
-    catch (IOException ex)
-    {
-      Activator.log(ex);
     }
   }
 

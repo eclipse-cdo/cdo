@@ -248,11 +248,16 @@ public class RedirectionTaskImpl extends SetupTaskImpl implements RedirectionTas
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    context.getURIConverter().getURIMap().put(URI.createURI(getSourceURL()), URI.createURI(getTargetURL()));
+    URI sourceURI = URI.createURI(getSourceURL());
+    URI targetURI = URI.createURI(getTargetURL());
+
+    context.getURIConverter().getURIMap().put(sourceURI, targetURI);
     return false;
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    // Do nothing
   }
+
 } // RedirectionTaskImpl

@@ -216,6 +216,8 @@ public interface SetupTask extends EObject
 
   void perform(SetupTaskContext context) throws Exception;
 
+  void mirror(SetupTaskContext context, EList<SetupTask> redirections, boolean includingLocals) throws Exception;
+
   void dispose();
 
 } // SetupTask

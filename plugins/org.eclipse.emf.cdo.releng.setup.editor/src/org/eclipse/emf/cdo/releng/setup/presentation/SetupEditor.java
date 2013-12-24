@@ -158,7 +158,6 @@ import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetSorter;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -2409,12 +2408,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
 
   public static void openBranch(IWorkbenchPage page)
   {
-    File branchDir = AbstractSetupTaskContext.getCurrentBranchDir();
-    URI setupURI = AbstractSetupTaskContext.getSetupURI(branchDir);
-
-    ResourceSet resourceSet = EMFUtil.createResourceSet();
-    SetupResource setupResource = EMFUtil.loadResourceSafely(resourceSet, setupURI);
-    Setup setup = (Setup)setupResource.getContents().get(0);
+    Setup setup = AbstractSetupTaskContext.getCurrentSetup();
 
     Branch branch = setup.getBranch();
     if (branch != null)

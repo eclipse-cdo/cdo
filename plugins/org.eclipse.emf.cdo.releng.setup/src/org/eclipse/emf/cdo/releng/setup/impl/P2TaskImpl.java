@@ -17,7 +17,9 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
+import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
@@ -121,6 +123,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   private static final Class<DirectorApplication> DIRECTOR_CLASS = DirectorApplication.class;
 
   private static final Object FIRST_CALL_DETECTION_KEY = new Object();
+
+  private static final Integer EXIT_ERROR = 13;
 
   /**
    * The cached value of the '{@link #getInstallableUnits() <em>Installable Units</em>}' containment reference list.
@@ -1228,8 +1232,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
   }
 
-  private static final Integer EXIT_ERROR = 13;
-
   private String makeList(SetupTaskContext context, EList<? extends EObject> objects, EAttribute attribute)
   {
     StringBuilder builder = new StringBuilder();
@@ -1250,6 +1252,99 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
 
     return builder.toString();
+  }
+
+  @Override
+  public void mirror(SetupTaskContext context, EList<SetupTask> redirections, boolean includingLocals) throws Exception
+  {
+    File mirrorsDir = new File(context.getInstallDir(), ".mirrors");
+    mirrorsDir.mkdirs();
+
+    for (P2Repository p2Repository : getP2Repositories())
+    {
+      try
+      {
+        String sourceURL = context.redirect(org.eclipse.emf.common.util.URI.createURI(p2Repository.getURL()))
+            .toString();
+
+        File destination = new File(mirrorsDir, sourceURL.replace(':', '_').replace('/', '_'));
+        String destinationURL = org.eclipse.emf.common.util.URI.createFileURI(destination.toString()).toString();
+
+        if (!destination.exists())
+        {
+          System.out.println("Mirroring repository " + sourceURL);
+          mirror(sourceURL, destinationURL);
+        }
+
+        RedirectionTask redirection = SetupFactory.eINSTANCE.createRedirectionTask();
+        redirection.setSourceURL(sourceURL);
+        redirection.setTargetURL(destinationURL);
+        redirections.add(redirection);
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  @SuppressWarnings("restriction")
+  private String mirror(String sourceURL, String destinationURL) throws Exception
+  {
+    IProgressMonitor monitor = new IProgressMonitor()
+    {
+      public void worked(int work)
+      {
+      }
+
+      public void subTask(String name)
+      {
+        System.out.println(name);
+      }
+
+      public void setTaskName(String name)
+      {
+        System.out.println(name);
+      }
+
+      public void setCanceled(boolean value)
+      {
+      }
+
+      public boolean isCanceled()
+      {
+        return false;
+      }
+
+      public void internalWorked(double work)
+      {
+      }
+
+      public void done()
+      {
+      }
+
+      public void beginTask(String name, int totalWork)
+      {
+        System.out.println(name);
+      }
+    };
+    // monitor = new NullProgressMonitor();
+
+    org.eclipse.equinox.p2.internal.repository.tools.MirrorApplication app = new org.eclipse.equinox.p2.internal.repository.tools.MirrorApplication();
+    app.initializeFromArguments(new String[] { "-source", sourceURL, "-destination", destinationURL });
+
+    try
+    {
+      System.setProperty("eclipse.p2.mirrors", "false");
+      app.run(monitor);
+    }
+    finally
+    {
+      System.setProperty("eclipse.p2.mirrors", "true");
+    }
+
+    return destinationURL;
   }
 
 } // InstallTaskImpl

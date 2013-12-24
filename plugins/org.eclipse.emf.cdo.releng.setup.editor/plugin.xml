@@ -58,6 +58,17 @@
                   name="setupGroup">
             </separator>
          </menu>
+         <!--
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.MirrorBranchAction"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.MirrorBranchAction"
+               icon="icons/mirror.gif"
+               label="Mirror &amp;Branch"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Creates mirrors for the current setup branch">
+         </action>
+         -->
          <action
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
                id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
@@ -65,7 +76,7 @@
                label="Setup &amp;Branch"
                style="push"
                toolbarPath="setupGroup"
-               tooltip="Opens an editor on the setup branch">
+               tooltip="Opens an editor on the current setup branch">
          </action>
          <action
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"

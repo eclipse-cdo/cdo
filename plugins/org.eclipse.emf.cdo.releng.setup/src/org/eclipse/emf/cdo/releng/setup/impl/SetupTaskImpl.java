@@ -663,6 +663,11 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     }
   }
 
+  public void mirror(SetupTaskContext context, EList<SetupTask> redirections, boolean includingLocals) throws Exception
+  {
+    // Do nothing
+  }
+
   /**
    * @author Eike Stepper
    */

@@ -35,6 +35,12 @@
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse.gef" componentType="eclipse.feature"/>
 
+		<cs:dependency name="javax.activation" componentType="osgi.bundle"/>
+		<cs:dependency name="javax.xml.bind" componentType="osgi.bundle"/>
+		<cs:dependency name="javax.xml.stream" componentType="osgi.bundle"/>
+		<cs:dependency name="org.apache.ws.commons.util" componentType="osgi.bundle"/>
+		<cs:dependency name="org.apache.commons.io" componentType="osgi.bundle"/>
+
 		<cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
 		<cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>
 		<cs:dependency name="org.postgresql" componentType="eclipse.feature"/>

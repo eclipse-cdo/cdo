@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -443,6 +444,16 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   public static File getCurrentBranchDir()
   {
     return new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1).toOSString());
+  }
+
+  public static Setup getCurrentSetup()
+  {
+    File branchDir = getCurrentBranchDir();
+    URI setupURI = getSetupURI(branchDir);
+  
+    ResourceSet resourceSet = EMFUtil.createResourceSet();
+    SetupResource setupResource = EMFUtil.loadResourceSafely(resourceSet, setupURI);
+    return (Setup)setupResource.getContents().get(0);
   }
 
   public static URI getSetupURI(File branchFolder)

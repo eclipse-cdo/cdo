@@ -126,7 +126,7 @@
       <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
       <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
-      <p2Repositories url="http://download.eclipse.org/releases/luna/201310040900"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
     </setupTasks>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.3" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.baseline.version" value="4.2" stringSubstitution="true"/>

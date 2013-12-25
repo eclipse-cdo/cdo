@@ -55,10 +55,12 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 
 import java.io.File;
@@ -681,6 +683,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
     finally
     {
+      if (getTrigger() != Trigger.BOOTSTRAP)
+      {
+        ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+      }
+
       if (autoBuilding != null)
       {
         restoreAutoBuilding(autoBuilding);

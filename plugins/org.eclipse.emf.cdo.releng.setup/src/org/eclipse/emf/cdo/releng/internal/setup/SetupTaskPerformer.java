@@ -189,6 +189,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         expandStrings(setupTasks);
         expandRequirements(setupTasks);
+        propagateRestrictionsAndRequirements(setupTasks);
         reorderSetupTasks(setupTasks);
 
         for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
@@ -415,6 +416,26 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         {
           undeclaredVariables.add(key);
         }
+      }
+    }
+  }
+
+  private void propagateRestrictionsAndRequirements(EList<SetupTask> setupTasks)
+  {
+    for (SetupTask setupTask : setupTasks)
+    {
+      EList<ConfigurableItem> restrictions = setupTask.getRestrictions();
+      for (EObject eContainer = setupTask.eContainer(); eContainer instanceof SetupTask; eContainer = eContainer
+          .eContainer())
+      {
+        restrictions.addAll(((SetupTask)eContainer).getRestrictions());
+      }
+
+      EList<SetupTask> requirements = setupTask.getRequirements();
+      for (EObject eContainer = setupTask.eContainer(); eContainer instanceof SetupTask; eContainer = eContainer
+          .eContainer())
+      {
+        requirements.addAll(((SetupTask)eContainer).getRequirements());
       }
     }
   }

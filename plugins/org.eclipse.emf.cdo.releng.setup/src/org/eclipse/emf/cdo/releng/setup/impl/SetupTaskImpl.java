@@ -143,8 +143,6 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
    */
   protected String documentation = DOCUMENTATION_EDEFAULT;
 
-  private final int priority;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -152,12 +150,6 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
    */
   protected SetupTaskImpl()
   {
-    this(DEFAULT_PRIORITY);
-  }
-
-  protected SetupTaskImpl(int priority)
-  {
-    this.priority = priority;
   }
 
   /**
@@ -367,9 +359,9 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     return Trigger.ALL_TRIGGERS;
   }
 
-  public final int getPriority()
+  public int getPriority()
   {
-    return priority;
+    return DEFAULT_PRIORITY;
   }
 
   /**

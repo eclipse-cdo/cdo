@@ -7,7 +7,7 @@
     <setupTasks xsi:type="setup:ContextVariableTask" name="buckminster.url" value="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="egit.url" value="http://download.eclipse.org/egit/updates-nightly"/>
     <setupTasks xsi:type="setup:ResourceCreationTask" excludedTriggers="STARTUP MANUAL" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;section name=&quot;Workbench&quot;>&#xD;&#xA;&#x9;&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>&#xD;&#xA;&#x9;&lt;/section>&#xD;&#xA;&lt;/section>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" encoding="UTF-8"/>
-    <setupTasks xsi:type="setup:P2Task" requirements="//@branches[name='master']/@setupTasks.1 //@branches[name='master']/@setupTasks.0">
+    <setupTasks xsi:type="setup:P2Task">
       <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
       <installableUnits id="org.eclipse.egit.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.launches.feature.group"/>
@@ -35,12 +35,12 @@
       <setupTasks xsi:type="setup:GitCloneTask" location="${rt.equinox.framework.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/equinox/rt.equinox.framework.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="rt.equinox.p2.git.location" value="${setup.branch.dir/git/rt.equinox.p2.git}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${rt.equinox.p2.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/equinox/rt.equinox.p2.git" checkoutBranch="master"/>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.jarprocessor/.project|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.jarprocessor/.project|uri}" encoding="UTF-8">
         <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
           <substitutions>auto,</substitutions>
         </modifications>
       </setupTasks>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.jarprocessor/.externalToolBuilders/AntTaskBuilder.launch|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.jarprocessor/.externalToolBuilders/AntTaskBuilder.launch|uri}" encoding="UTF-8">
         <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
           <substitutions>auto,</substitutions>
         </modifications>
@@ -48,12 +48,12 @@
           <substitutions>\1&lt;stringAttribute key=&quot;org.eclipse.debug.core.ATTR_REFRESH_SCOPE&quot; value=&quot;$${working_set:&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;resources&amp;gt;&amp;#13;&amp;#10;&amp;lt;item path=&amp;quot;/org.eclipse.equinox.p2.jarprocessor/lib&amp;quot; type=&amp;quot;2&amp;quot;/&amp;gt;&amp;#13;&amp;#10;&amp;lt;/resources&amp;gt;}&quot;/>\1</substitutions>
         </modifications>
       </setupTasks>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.repository.tools/.project|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.repository.tools/.project|uri}" encoding="UTF-8">
         <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
           <substitutions>auto,</substitutions>
         </modifications>
       </setupTasks>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.4/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.repository.tools/scripts/buildAntJARs.xml|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${rt.equinox.p2.git.location/bundles/org.eclipse.equinox.p2.repository.tools/scripts/buildAntJARs.xml|uri}" encoding="UTF-8">
         <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
           <substitutions>auto,</substitutions>
         </modifications>
@@ -74,7 +74,7 @@
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.swt.binaries.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.swt.binaries" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.swt.git.location" value="${setup.branch.dir/git/platform.swt}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.swt.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.swt" checkoutBranch="master"/>
-      <setupTasks xsi:type="setup:ResourceCopyTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.13" excludedTriggers="BOOTSTRAP" sourceURL="${setup.branch.dir|uri}/git/platform.swt/bundles/org.eclipse.swt/.classpath_${ws}" targetURL="${setup.branch.dir|uri}/git/platform.swt/bundles/org.eclipse.swt/.classpath"/>
+      <setupTasks xsi:type="setup:ResourceCopyTask" excludedTriggers="BOOTSTRAP" sourceURL="${setup.branch.dir|uri}/git/platform.swt/bundles/org.eclipse.swt/.classpath_${ws}" targetURL="${setup.branch.dir|uri}/git/platform.swt/bundles/org.eclipse.swt/.classpath"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.team.git.location" value="${setup.branch.dir/git/platform.team}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.team.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.team" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.text.git.location" value="${setup.branch.dir/git/platform.text}"/>
@@ -89,12 +89,12 @@
     <setupTasks xsi:type="setup:CompoundSetupTask" name="PDE Git Clones">
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.build.git.location" value="${setup.branch.dir/git/pde.build}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.build.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.build.git" checkoutBranch="master"/>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.1" excludedTriggers="BOOTSTRAP" url="${pde.build.git.location/org.eclipse.pde.build/.project|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${pde.build.git.location/org.eclipse.pde.build/.project|uri}" encoding="UTF-8">
         <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
           <substitutions>auto,</substitutions>
         </modifications>
       </setupTasks>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.1" excludedTriggers="BOOTSTRAP" url="${pde.build.git.location/org.eclipse.pde.build/.externalToolBuilders/org.eclipse.pde.build localbuild.xml [Builder].launch|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${pde.build.git.location/org.eclipse.pde.build/.externalToolBuilders/org.eclipse.pde.build localbuild.xml [Builder].launch|uri}" encoding="UTF-8">
         <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
           <substitutions>auto,</substitutions>
         </modifications>
@@ -106,12 +106,12 @@
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="pde.ui.git.location" value="${setup.branch.dir/git/pde.ui}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${pde.ui.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/pde/eclipse.pde.ui.git" checkoutBranch="master"/>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${pde.ui.git.location/ui/org.eclipse.pde.core/.project|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${pde.ui.git.location/ui/org.eclipse.pde.core/.project|uri}" encoding="UTF-8">
         <modifications pattern="&lt;triggers>()full,incremental,&lt;/triggers>">
           <substitutions>auto,</substitutions>
         </modifications>
       </setupTasks>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.6/@setupTasks.7" excludedTriggers="BOOTSTRAP" url="${pde.ui.git.location/ui/org.eclipse.pde.core/.externalToolBuilders/org.eclipse.pde.core localbuild.xml [Builder].launch|uri}" encoding="UTF-8">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${pde.ui.git.location/ui/org.eclipse.pde.core/.externalToolBuilders/org.eclipse.pde.core localbuild.xml [Builder].launch|uri}" encoding="UTF-8">
         <modifications pattern="&lt;stringAttribute key=&quot;org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS&quot; value=&quot;full,incremental,()&quot;/>">
           <substitutions>auto,</substitutions>
         </modifications>
@@ -138,7 +138,7 @@
     <setupTasks xsi:type="setup:CompoundSetupTask" name="Eclipse License Clone">
       <setupTasks xsi:type="setup:ContextVariableTask" name="eclipse.license.git.location" value="${setup.branch.dir/git/eclipse.license}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${eclipse.license.git.location}" remoteURI="http://git.eclipse.org/gitroot/cbi/org.eclipse.license.git" checkoutBranch="master"/>
-      <setupTasks xsi:type="setup:TextModifyTask" requirements="//@branches[name='master']/@setupTasks.8/@setupTasks.1" excludedTriggers="BOOTSTRAP" url="${eclipse.license.git.location/org.eclipse.license/feature.xml|uri}">
+      <setupTasks xsi:type="setup:TextModifyTask" excludedTriggers="BOOTSTRAP" url="${eclipse.license.git.location/org.eclipse.license/feature.xml|uri}">
         <modifications pattern="version=&quot;[0-9]+\.[0-9]+\.[0-9]+\.(v[^&quot;]+)&quot;">
           <substitutions>qualifier</substitutions>
         </modifications>
@@ -147,14 +147,14 @@
     <setupTasks xsi:type="setup:CompoundSetupTask" name="EMF Git Clone">
       <setupTasks xsi:type="setup:ContextVariableTask" name="emf.git.location" value="${setup.branch.dir/git/emf}"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="emf.git.url" value="ssh://git.eclipse.org:29418/emf/org.eclipse.emf"/>
-      <setupTasks xsi:type="setup:GitCloneTask" requirements="//@branches[name='master']/@setupTasks.9/@setupTasks.1" location="${emf.git.location}" remoteURI="${emf.git.url}" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:GitCloneTask" location="${emf.git.location}" remoteURI="${emf.git.url}" checkoutBranch="master"/>
     </setupTasks>
     <setupTasks xsi:type="setup:CompoundSetupTask" name="ECF Git Clone">
       <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.location" value="${setup.branch.dir/git/ecf}"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.url" value="ssh://git.eclipse.org/gitroot/ecf/org.eclipse.ecf.git"/>
-      <setupTasks xsi:type="setup:GitCloneTask" requirements="//@branches[name='master']/@setupTasks.10/@setupTasks.1" location="${ecf.git.location}" remoteURI="${ecf.git.url}" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:GitCloneTask" location="${ecf.git.location}" remoteURI="${ecf.git.url}" checkoutBranch="master"/>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.5/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.13 //@branches[name='master']/@setupTasks.5/@setupTasks.5 //@branches[name='master']/@setupTasks.8/@setupTasks.1 //@branches[name='master']/@setupTasks.5/@setupTasks.3 //@branches[name='master']/@setupTasks.5/@setupTasks.24 //@branches[name='master']/@setupTasks.5/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.9 //@branches[name='master']/@setupTasks.5/@setupTasks.11 //@branches[name='master']/@setupTasks.5/@setupTasks.16 //@branches[name='master']/@setupTasks.5/@setupTasks.20 //@branches[name='master']/@setupTasks.5/@setupTasks.22 //@branches[name='master']/@setupTasks.4/@setupTasks.1 //@branches[name='master']/@setupTasks.4/@setupTasks.3 //@branches[name='master']/@setupTasks.4/@setupTasks.5 //@branches[name='master']/@setupTasks.4/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.1 //@branches[name='master']/@setupTasks.7/@setupTasks.3 //@branches[name='master']/@setupTasks.7/@setupTasks.5 //@branches[name='master']/@setupTasks.7/@setupTasks.7 //@branches[name='master']/@setupTasks.7/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.1 //@branches[name='master']/@setupTasks.8/@setupTasks.2 //@branches[name='master']/@setupTasks.5/@setupTasks.14 //@branches[name='master']/@setupTasks.6/@setupTasks.5 //@branches[name='master']/@setupTasks.6/@setupTasks.7 //@branches[name='master']/@setupTasks.5/@setupTasks.18 //@branches[name='master']/@setupTasks.9/@setupTasks.2 //@branches[name='master']/@setupTasks.10/@setupTasks.2 //@branches[name='master']/@setupTasks.6/@setupTasks.3 //@branches[name='master']/@setupTasks.6/@setupTasks.2 //@branches[name='master']/@setupTasks.4/@setupTasks.9 //@branches[name='master']/@setupTasks.4/@setupTasks.8 //@branches[name='master']/@setupTasks.4/@setupTasks.10 //@branches[name='master']/@setupTasks.4/@setupTasks.11 //@branches[name='master']/@setupTasks.6/@setupTasks.9 //@branches[name='master']/@setupTasks.6/@setupTasks.8">
+    <setupTasks xsi:type="setup:MaterializationTask">
       <rootComponents name="org.eclipse.sdk"/>
       <rootComponents name="org.eclipse.jdt"/>
       <rootComponents name="org.eclipse.pde"/>
@@ -197,7 +197,7 @@
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.4" location="${jre.1.4.location}"/>
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.5" location="${jre.1.5.location}"/>
     <setupTasks xsi:type="setup:JRETask" version="JavaSE-1.6" location="${jre.1.6.location}"/>
-    <setupTasks xsi:type="setup:EclipsePreferenceTask" requirements="//@branches[name='master']/@setupTasks.11" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
+    <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ant.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="SWT">
         <predicates xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.swt.*"/>

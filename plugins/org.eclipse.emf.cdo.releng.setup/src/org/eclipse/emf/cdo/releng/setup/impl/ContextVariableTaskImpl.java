@@ -173,7 +173,6 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
    */
   protected ContextVariableTaskImpl()
   {
-    super(PRIORITY);
   }
 
   /**
@@ -488,6 +487,12 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
     result.append(label);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public int getPriority()
+  {
+    return PRIORITY;
   }
 
   @Override

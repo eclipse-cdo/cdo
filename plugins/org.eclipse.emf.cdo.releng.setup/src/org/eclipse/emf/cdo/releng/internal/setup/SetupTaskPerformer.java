@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
@@ -36,6 +37,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -67,6 +69,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -182,8 +185,9 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           }
         }
 
-        reorderSetupTasks(setupTasks);
         expandStrings(setupTasks);
+        expandRequirements(setupTasks);
+        reorderSetupTasks(setupTasks);
 
         for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
         {
@@ -374,10 +378,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return undeclaredVariables;
   }
 
-  private void expandStrings(EList<SetupTask> orderedSetupTasks)
+  private void expandStrings(EList<SetupTask> setupTasks)
   {
     Set<String> keys = new HashSet<String>();
-    for (SetupTask setupTask : orderedSetupTasks)
+    for (SetupTask setupTask : setupTasks)
     {
       expand(keys, unresolvedSettings, setupTask);
       for (Iterator<EObject> it = setupTask.eAllContents(); it.hasNext();)
@@ -391,7 +395,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       for (String key : keys)
       {
         boolean found = false;
-        for (SetupTask setupTask : orderedSetupTasks)
+        for (SetupTask setupTask : setupTasks)
         {
           if (setupTask instanceof ContextVariableTask)
           {
@@ -408,6 +412,26 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         if (!found)
         {
           undeclaredVariables.add(key);
+        }
+      }
+    }
+  }
+
+  private void expandRequirements(EList<SetupTask> setupTasks)
+  {
+    for (SetupTask setupTask : setupTasks)
+    {
+      for (ListIterator<SetupTask> it = setupTask.getRequirements().listIterator(); it.hasNext();)
+      {
+        SetupTask requiredSetupTask = it.next();
+        if (requiredSetupTask instanceof SetupTaskContainer)
+        {
+          it.remove();
+          for (SetupTask expandedRequiredSetupTask : ((SetupTaskContainer)requiredSetupTask).getSetupTasks())
+          {
+            it.add(expandedRequiredSetupTask);
+            it.previous();
+          }
         }
       }
     }
@@ -837,7 +861,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
 
     reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
-        {
+    {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
       {
         Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
@@ -854,20 +878,28 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         return result;
       }
-        });
+    });
 
     return list;
   }
 
   private void reorderSetupTasks(EList<SetupTask> setupTasks)
   {
+    ECollections.sort(setupTasks, new Comparator<SetupTask>()
+    {
+      public int compare(SetupTask setupTask1, SetupTask setupTask2)
+      {
+        return setupTask1.getPriority() - setupTask2.getPriority();
+      }
+    });
+
     reorder(setupTasks, new DependencyProvider<SetupTask>()
-        {
+    {
       public Collection<SetupTask> getDependencies(SetupTask setupTask)
       {
         return setupTask.getRequirements();
       }
-        });
+    });
   }
 
   private static String getLabel(SetupTask setupTask)

@@ -91,7 +91,6 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
    */
   protected EclipsePreferenceTaskImpl()
   {
-    super(PRIORITY);
   }
 
   /**
@@ -252,6 +251,12 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     result.append(value);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public int getPriority()
+  {
+    return getKey().startsWith("/project") ? DEFAULT_PRIORITY : PRIORITY;
   }
 
   @Override

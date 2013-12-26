@@ -5,12 +5,21 @@
     <p2Repositories url="${train.url}"/>
   </setupTasks>
   <setupTasks xsi:type="setup:P2Task">
-    <installableUnits id="org.eclipse.buckminster.core.headless.feature.feature.group"/>
-    <installableUnits id="org.eclipse.buckminster.pde.headless.feature.feature.group"/>
-    <installableUnits id="org.eclipse.buckminster.git.headless.feature.feature.group"/>
+    <installableUnits id="org.eclipse.buckminster.ant"/>
+    <installableUnits id="org.eclipse.buckminster.core"/>
+    <installableUnits id="org.eclipse.buckminster.sax"/>
+    <installableUnits id="org.eclipse.buckminster.download"/>
+    <installableUnits id="org.eclipse.buckminster.generic"/>
+    <installableUnits id="org.eclipse.buckminster.executor"/>
+    <installableUnits id="org.eclipse.buckminster.fetcher"/>
+    <installableUnits id="org.eclipse.buckminster.osgi.filter"/>
+    <installableUnits id="org.eclipse.buckminster.jarprocessor"/>
+    <installableUnits id="org.eclipse.buckminster.jdt"/>
+    <installableUnits id="org.eclipse.buckminster.junit"/>
+    <installableUnits id="org.eclipse.buckminster.pde"/>
+    <installableUnits id="org.eclipse.buckminster.git"/>
     <installableUnits id="org.eclipse.buckminster.mspec"/>
     <installableUnits id="org.eclipse.buckminster.rmap"/>
-    <p2Repositories url="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
     <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
   </setupTasks>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Xmx" value="1g" vm="true"/>

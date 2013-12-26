@@ -64,6 +64,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private Setup setup;
 
+  private Setup originalSetup;
+
   private Preferences preferences;
 
   private boolean performing;
@@ -113,7 +115,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   private void initialize(Setup setup, boolean considerNetworkPreferences)
   {
     this.setup = setup;
-    preferences = setup.getPreferences();
+    originalSetup = setup;
+    preferences = originalSetup.getPreferences();
 
     // Apply network preferences early
     if (considerNetworkPreferences && getTrigger() != Trigger.BOOTSTRAP)
@@ -404,6 +407,11 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     return new File(branchDir, "ws");
   }
 
+  public Setup getOriginalSetup()
+  {
+    return originalSetup;
+  }
+
   public Setup getSetup()
   {
     return setup;
@@ -450,7 +458,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   {
     File branchDir = getCurrentBranchDir();
     URI setupURI = getSetupURI(branchDir);
-  
+
     ResourceSet resourceSet = EMFUtil.createResourceSet();
     SetupResource setupResource = EMFUtil.loadResourceSafely(resourceSet, setupURI);
     return (Setup)setupResource.getContents().get(0);

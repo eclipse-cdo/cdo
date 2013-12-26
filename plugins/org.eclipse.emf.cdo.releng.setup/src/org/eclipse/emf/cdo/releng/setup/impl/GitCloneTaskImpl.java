@@ -17,11 +17,14 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
@@ -91,7 +94,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * The default value of the '{@link #getRemoteName() <em>Remote Name</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getRemoteName()
    * @generated
    * @ordered
@@ -141,7 +144,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * The cached value of the '{@link #getUserID() <em>User ID</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getUserID()
    * @generated
    * @ordered
@@ -151,7 +154,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * The default value of the '{@link #getCheckoutBranch() <em>Checkout Branch</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getCheckoutBranch()
    * @generated
    * @ordered
@@ -161,7 +164,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * The cached value of the '{@link #getCheckoutBranch() <em>Checkout Branch</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getCheckoutBranch()
    * @generated
    * @ordered
@@ -203,7 +206,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setLocation(String newLocation)
@@ -219,7 +222,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getRemoteName()
@@ -307,7 +310,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setUserID(String newUserID)
@@ -322,7 +325,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -422,7 +425,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return CHECKOUT_BRANCH_EDEFAULT == null ? checkoutBranch != null : !CHECKOUT_BRANCH_EDEFAULT
-          .equals(checkoutBranch);
+      .equals(checkoutBranch);
     }
     return super.eIsSet(featureID);
   }
@@ -483,8 +486,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   {
     if (gitDelegate != null)
     {
-      gitDelegate.perform(context, getCheckoutBranch(), getRemoteName(), context
-          .redirect(URI.createURI(getRemoteURI())).toString(), getUserID());
+      String remoteURI = context.redirect(URI.createURI(getRemoteURI())).toString();
+      gitDelegate.perform(context, getCheckoutBranch(), getRemoteName(), remoteURI, getUserID());
     }
   }
 
@@ -496,6 +499,32 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       gitDelegate.dispose();
       gitDelegate = null;
     }
+  }
+
+  @Override
+  public MirrorRunnable mirror(final MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception
+  {
+    String sourceURL = context.redirect(URI.createURI(getRemoteURI())).toString();
+
+    final File local = new File(mirrorsDir, sourceURL.replace(':', '_').replace('/', '_'));
+    String localURL = URI.createFileURI(local.getAbsolutePath()).toString();
+    context.addRedirection(sourceURL, localURL);
+
+    if (local.exists())
+    {
+      return null;
+    }
+
+    return new MirrorRunnable()
+    {
+      public void run(IProgressMonitor monitor) throws Exception
+      {
+        File repo = new File(getLocation(), ".git");
+        File localRepo = new File(local, ".git");
+
+        IOUtil.copyTree(repo, localRepo);
+      }
+    };
   }
 
   /**
@@ -534,7 +563,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
     public boolean isNeeded(SetupTaskContext context, String location, String checkoutBranch, String remoteName)
         throws Exception
-    {
+        {
       workDir = new File(location);
       if (!workDir.isDirectory())
       {
@@ -581,11 +610,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
         throw new Exception(ex);
       }
-    }
+        }
 
     public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
         String userID) throws Exception
-    {
+        {
       try
       {
         if (cachedGit == null)
@@ -614,7 +643,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
         throw new Exception(ex);
       }
-    }
+        }
 
     public void dispose()
     {
@@ -640,7 +669,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
     private static Git cloneRepository(SetupTaskContext context, File workDir, String checkoutBranch,
         String remoteName, String remoteURI, String userID) throws Exception
-    {
+        {
       String remote;
 
       URI baseURI = URI.createURI(remoteURI);
@@ -686,11 +715,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       command.setTimeout(10);
       command.setProgressMonitor(new ProgressLogWrapper(context));
       return command.call();
-    }
+        }
 
     private static void configureRepository(SetupTaskContext context, Repository repository, String checkoutBranch,
         String remoteName) throws Exception, IOException
-    {
+        {
       StoredConfig config = repository.getConfig();
 
       boolean changed = false;
@@ -700,11 +729,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       {
         config.save();
       }
-    }
+        }
 
     private static boolean configureLineEndingConversion(SetupTaskContext context, StoredConfig config)
         throws Exception
-    {
+        {
       if (context.getOS().isLineEndingConversionNeeded())
       {
         if (context.isPerforming())
@@ -717,11 +746,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
 
       return false;
-    }
+        }
 
     private static boolean addPushRefSpec(SetupTaskContext context, StoredConfig config, String checkoutBranch,
         String remoteName) throws Exception
-    {
+        {
       String gerritQueue = "refs/for/" + checkoutBranch;
       for (RemoteConfig remoteConfig : RemoteConfig.getAllRemoteConfigs(config))
       {
@@ -747,7 +776,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
 
       return false;
-    }
+        }
 
     private static boolean hasGerritPushRefSpec(List<RefSpec> pushRefSpecs, String gerritQueue)
     {
@@ -764,7 +793,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
     private static void createBranch(SetupTaskContext context, Git git, String checkoutBranch, String remoteName)
         throws Exception
-    {
+        {
       context.log("Creating local branch " + checkoutBranch);
 
       CreateBranchCommand command = git.branchCreate();
@@ -776,7 +805,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       StoredConfig config = git.getRepository().getConfig();
       config.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION, checkoutBranch, ConfigConstants.CONFIG_KEY_REBASE, true);
       config.save();
-    }
+        }
 
     private static void checkout(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
     {

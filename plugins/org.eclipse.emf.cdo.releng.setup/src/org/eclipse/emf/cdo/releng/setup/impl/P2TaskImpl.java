@@ -17,9 +17,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
-import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
-import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
@@ -35,6 +33,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -48,6 +47,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
@@ -60,6 +60,9 @@ import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProfileRegistry;
 import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
+import org.eclipse.equinox.p2.internal.repository.tools.MirrorApplication;
+import org.eclipse.equinox.p2.internal.repository.tools.RepositoryDescriptor;
+import org.eclipse.equinox.p2.internal.repository.tools.SlicingOptions;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.ILicense;
 import org.eclipse.equinox.p2.metadata.MetadataFactory;
@@ -87,7 +90,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -121,6 +124,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   private static final boolean SKIP = "true".equals(System.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
 
   private static final Class<DirectorApplication> DIRECTOR_CLASS = DirectorApplication.class;
+
+  private static final Class<MirrorApplication> MIRROR_CLASS = MirrorApplication.class;
 
   private static final Object FIRST_CALL_DETECTION_KEY = new Object();
 
@@ -453,7 +458,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     Set<String> result = new HashSet<String>();
     ProvisioningUI provisioningUI = ProvisioningUI.getDefaultUI();
     ProvisioningSession session = provisioningUI.getSession();
-    for (URI knowRepository : provisioningUI.getRepositoryTracker().getKnownRepositories(session))
+    for (java.net.URI knowRepository : provisioningUI.getRepositoryTracker().getKnownRepositories(session))
     {
       result.add(knowRepository.toString());
     }
@@ -528,7 +533,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     Set<String> knownRepositories = getKnownRepositories();
     for (P2Repository p2Repository : getP2Repositories())
     {
-      String url = context.redirect(org.eclipse.emf.common.util.URI.createURI(p2Repository.getURL())).toString();
+      String url = context.redirect(URI.createURI(p2Repository.getURL())).toString();
       if (!knownRepositories.contains(url))
       {
         return true;
@@ -565,11 +570,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       Set<String> knownRepositories = getKnownRepositories();
       Set<IMetadataRepository> repositories = new HashSet<IMetadataRepository>();
-      List<URI> repos = new ArrayList<URI>();
+      List<java.net.URI> repos = new ArrayList<java.net.URI>();
       for (P2Repository p2Repository : getP2Repositories())
       {
-        String url = context.redirect(org.eclipse.emf.common.util.URI.createURI(p2Repository.getURL())).toString();
-        URI uri = new URI(url);
+        String url = context.redirect(URI.createURI(p2Repository.getURL())).toString();
+        java.net.URI uri = new java.net.URI(url);
         context.log("Using repository " + uri);
         if (neededInstallableUnits == null)
         {
@@ -673,7 +678,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void processLicenses(final SetupTaskContext context, IProvisioningPlan provisioningPlan,
       IProgressMonitor monitor) throws Exception
-  {
+      {
     if (isLicenseConfirmationDisabled())
     {
       return;
@@ -758,11 +763,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         throw exception[0];
       }
     }
-  }
+      }
 
-  private ProvisioningContext makeProvisioningContext(ProvisioningSession session, Collection<URI> repositories)
+  private ProvisioningContext makeProvisioningContext(ProvisioningSession session, Collection<java.net.URI> repositories)
   {
-    URI[] repos = repositories.toArray(new URI[repositories.size()]);
+    java.net.URI[] repos = repositories.toArray(new java.net.URI[repositories.size()]);
     ProvisioningContext context = new ProvisioningContext(session.getProvisioningAgent());
     context.setMetadataRepositories(repos);
     context.setArtifactRepositories(repos);
@@ -903,9 +908,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
               IProgressMonitor monitor)
-          {
+              {
             return delegate.updatesFor(iu, context, monitor);
-          }
+              }
         };
 
         targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
@@ -1031,7 +1036,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
               Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
-              + versionRange);
+                  + versionRange);
           rootsToInstall.add(query);
         }
       }
@@ -1180,11 +1185,10 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       FileOutputStream out = null;
       try
       {
-        String contents = DownloadUtil.load(context.getURIConverter(),
-            org.eclipse.emf.common.util.URI.createFileURI(iniFile.toString()), null);
+        String contents = DownloadUtil.load(context.getURIConverter(), URI.createFileURI(iniFile.toString()), null);
         Pattern section = Pattern.compile(
             "^(-vmargs)([\n\r]+.*)\\z|^(-[^\\n\\r]*[\\n\\r]*)((?:^[^-][^\\n\\r]*)*[\\n\\r]*)", Pattern.MULTILINE
-                | Pattern.DOTALL);
+            | Pattern.DOTALL);
         Map<String, String> map = new LinkedHashMap<String, String>();
         for (Matcher matcher = section.matcher(contents); matcher.find();)
         {
@@ -1245,7 +1249,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
       String value = (String)object.eGet(attribute);
       if (attribute == SetupPackage.Literals.P2_REPOSITORY__URL)
       {
-        value = context.redirect(org.eclipse.emf.common.util.URI.createURI(value)).toString();
+        value = context.redirect(URI.createURI(value)).toString();
       }
 
       builder.append(value);
@@ -1255,96 +1259,127 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   }
 
   @Override
-  public void mirror(SetupTaskContext context, EList<SetupTask> redirections, boolean includingLocals) throws Exception
+  public MirrorRunnable mirror(final MirrorContext context, final File mirrorsDir, boolean includingLocals)
+      throws Exception
   {
-    File mirrorsDir = new File(context.getInstallDir(), ".mirrors");
-    mirrorsDir.mkdirs();
-
-    for (P2Repository p2Repository : getP2Repositories())
+    return new MirrorRunnable()
     {
-      try
+      public void run(IProgressMonitor monitor) throws Exception
       {
-        String sourceURL = context.redirect(org.eclipse.emf.common.util.URI.createURI(p2Repository.getURL()))
-            .toString();
+        String targetURL = URI.createFileURI(context.getP2PoolTPDir().toString()).toString();
 
-        File destination = new File(mirrorsDir, sourceURL.replace(':', '_').replace('/', '_'));
-        String destinationURL = org.eclipse.emf.common.util.URI.createFileURI(destination.toString()).toString();
+        SlicingOptions slicingOptions = new SlicingOptions();
+        slicingOptions.latestVersionOnly(true);
+        slicingOptions.everythingGreedy(false);
 
-        if (!destination.exists())
+        MirrorApplication app = new MirrorApplication()
         {
-          System.out.println("Mirroring repository " + sourceURL);
-          mirror(sourceURL, destinationURL);
+          @Override
+          public IStatus run(IProgressMonitor monitor) throws ProvisionException
+          {
+            IStatus mirrorStatus = Status.OK_STATUS;
+            monitor.beginTask("", 1 + 100 + 1000 + 100);
+
+            try
+            {
+              initializeRepos(new SubProgressMonitor(monitor, 1));
+              initializeIUs();
+
+              IQueryable<IInstallableUnit> slice = slice(new SubProgressMonitor(monitor, 100));
+
+              mirrorStatus = mirrorArtifacts(slice, new SubProgressMonitor(monitor, 1000));
+              mirrorMetadata(slice, new SubProgressMonitor(monitor, 100));
+            }
+            finally
+            {
+              finalizeRepositories();
+            }
+
+            if (mirrorStatus.isOK())
+            {
+              return Status.OK_STATUS;
+            }
+
+            return mirrorStatus;
+          }
+
+          private void initializeIUs()
+          {
+            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "initializeIUs");
+            ReflectUtil.invokeMethod(method, this);
+          }
+
+          @SuppressWarnings("unchecked")
+          private IQueryable<IInstallableUnit> slice(IProgressMonitor monitor)
+          {
+            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "slice", IProgressMonitor.class);
+            return (IQueryable<IInstallableUnit>)ReflectUtil.invokeMethod(method, this, monitor);
+          }
+
+          private IStatus mirrorArtifacts(IQueryable<IInstallableUnit> slice, IProgressMonitor monitor)
+          {
+            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "mirrorArtifacts", IQueryable.class,
+                IProgressMonitor.class);
+            return (IStatus)ReflectUtil.invokeMethod(method, this, slice, monitor);
+          }
+
+          private void mirrorMetadata(IQueryable<IInstallableUnit> slice, IProgressMonitor monitor)
+          {
+            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "mirrorMetadata", IQueryable.class,
+                IProgressMonitor.class);
+            ReflectUtil.invokeMethod(method, this, slice, monitor);
+          }
+        };
+
+        app.setIncludePacked(false);
+        app.setVerbose(true);
+        app.setSlicingOptions(slicingOptions);
+
+        RepositoryDescriptor destination = new RepositoryDescriptor();
+        destination.setLocation(new java.net.URI(targetURL));
+        destination.setAppend(true);
+        app.addDestination(destination);
+
+        initSourceRepos(app, context, targetURL);
+        initRootIUs(app);
+
+        app.run(monitor);
+      }
+
+      private void initSourceRepos(MirrorApplication app, final MirrorContext context, String targetURL)
+          throws URISyntaxException
+      {
+        for (P2Repository p2Repository : getP2Repositories())
+        {
+          String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
+
+          RepositoryDescriptor descriptor = new RepositoryDescriptor();
+          descriptor.setLocation(new java.net.URI(sourceURL));
+          app.addSource(descriptor);
+
+          context.addRedirection(sourceURL, targetURL);
+        }
+      }
+
+      private void initRootIUs(MirrorApplication app)
+      {
+        EList<InstallableUnit> installableUnits = getInstallableUnits();
+        String[] rootIUs = new String[installableUnits.size()];
+        for (int i = 0; i < rootIUs.length; i++)
+        {
+          InstallableUnit installableUnit = installableUnits.get(i);
+          rootIUs[i] = installableUnit.getID();
+
+          VersionRange range = installableUnit.getVersionRange();
+          if (!VersionRange.emptyRange.equals(range))
+          {
+            rootIUs[i] += "/" + range;
+          }
         }
 
-        RedirectionTask redirection = SetupFactory.eINSTANCE.createRedirectionTask();
-        redirection.setSourceURL(sourceURL);
-        redirection.setTargetURL(destinationURL);
-        redirections.add(redirection);
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      }
-    }
-  }
-
-  @SuppressWarnings("restriction")
-  private String mirror(String sourceURL, String destinationURL) throws Exception
-  {
-    IProgressMonitor monitor = new IProgressMonitor()
-    {
-      public void worked(int work)
-      {
-      }
-
-      public void subTask(String name)
-      {
-        System.out.println(name);
-      }
-
-      public void setTaskName(String name)
-      {
-        System.out.println(name);
-      }
-
-      public void setCanceled(boolean value)
-      {
-      }
-
-      public boolean isCanceled()
-      {
-        return false;
-      }
-
-      public void internalWorked(double work)
-      {
-      }
-
-      public void done()
-      {
-      }
-
-      public void beginTask(String name, int totalWork)
-      {
-        System.out.println(name);
+        Field field = ReflectUtil.getField(MIRROR_CLASS, "rootIUs");
+        ReflectUtil.setValue(field, app, rootIUs);
       }
     };
-    // monitor = new NullProgressMonitor();
-
-    org.eclipse.equinox.p2.internal.repository.tools.MirrorApplication app = new org.eclipse.equinox.p2.internal.repository.tools.MirrorApplication();
-    app.initializeFromArguments(new String[] { "-source", sourceURL, "-destination", destinationURL });
-
-    try
-    {
-      System.setProperty("eclipse.p2.mirrors", "false");
-      app.run(monitor);
-    }
-    finally
-    {
-      System.setProperty("eclipse.p2.mirrors", "true");
-    }
-
-    return destinationURL;
   }
-
 } // InstallTaskImpl

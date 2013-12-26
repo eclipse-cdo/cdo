@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -655,9 +656,9 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     }
   }
 
-  public void mirror(SetupTaskContext context, EList<SetupTask> redirections, boolean includingLocals) throws Exception
+  public MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception
   {
-    // Do nothing
+    return null;
   }
 
   /**

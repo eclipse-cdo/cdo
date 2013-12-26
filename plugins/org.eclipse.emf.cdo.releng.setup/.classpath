@@ -10,6 +10,7 @@
 			<accessrule kind="accessible" pattern="org/eclipse/egit/core/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/jgit/**"/>
 			<accessrule kind="accessible" pattern="org/eclipse/ui/internal/progress/**"/>
+			<accessrule kind="accessible" pattern="org/eclipse/equinox/p2/internal/**"/>
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>

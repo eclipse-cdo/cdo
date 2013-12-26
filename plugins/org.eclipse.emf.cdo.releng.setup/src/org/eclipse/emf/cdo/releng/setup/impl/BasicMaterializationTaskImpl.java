@@ -57,6 +57,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
 import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherApplication;
+import org.eclipse.equinox.p2.publisher.eclipse.ProductPublisherApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -219,7 +220,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       return TARGET_PLATFORM_EDEFAULT == null ? targetPlatform != null : !TARGET_PLATFORM_EDEFAULT
-          .equals(targetPlatform);
+      .equals(targetPlatform);
     }
     return super.eIsSet(featureID);
   }
@@ -388,6 +389,9 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
     publisher.run(args);
+
+    publisher = new ProductPublisherApplication();
+    publisher.run(args);
   }
 
   private static class BuckminsterHelper
@@ -414,7 +418,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
-    {
+        {
       context.log("Clearing caches for remote files and URLs");
       CorePlugin plugin = CorePlugin.getDefault();
       plugin.clearRemoteFileCache();
@@ -598,7 +602,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       {
         throw new CoreException(status);
       }
-    }
+        }
   }
 
 } // BuckminsterImportTaskImpl

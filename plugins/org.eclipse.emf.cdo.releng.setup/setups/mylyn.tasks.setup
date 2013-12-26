@@ -52,7 +52,7 @@
       <rootComponents name="org.eclipse.mylyn.trac.ui.tests" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.sdk.ide" type="osgi.bundle"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/mylyn.tasks}"/>
-      <p2Repositories url="http://download.eclipse.org/releases/luna/201310040900"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository"/>
       <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/3.9"/>
       <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/nightly/commons"/>

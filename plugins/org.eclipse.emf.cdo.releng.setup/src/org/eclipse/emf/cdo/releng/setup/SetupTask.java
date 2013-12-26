@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.releng.setup;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
+import java.io.File;
 import java.util.Set;
 
 /**
@@ -216,8 +219,24 @@ public interface SetupTask extends EObject
 
   void perform(SetupTaskContext context) throws Exception;
 
-  void mirror(SetupTaskContext context, EList<SetupTask> redirections, boolean includingLocals) throws Exception;
-
   void dispose();
+
+  MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception;
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface MirrorContext extends SetupTaskContext
+  {
+    public void addRedirection(String sourceURL, String targetURL);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface MirrorRunnable
+  {
+    public void run(IProgressMonitor monitor) throws Exception;
+  }
 
 } // SetupTask

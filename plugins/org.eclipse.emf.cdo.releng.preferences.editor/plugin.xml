@@ -81,4 +81,44 @@
       </objectContribution>
    </extension>
    
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.cdo.releng.preferences.presentation.handlers.NavigateHandler"
+            commandId="org.eclipse.emf.cdo.releng.preferences.editor.commands.Navigate">
+      </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.eclipse.emf.cdo.releng.preferences.editor.commands.category"
+            name="Project Preference Management">
+      </category>
+      <command
+            categoryId="org.eclipse.emf.cdo.releng.preferences.editor.commands.category"
+            id="org.eclipse.emf.cdo.releng.preferences.editor.commands.Navigate"
+            name="Navigate">
+      </command>
+   </extension>
+   
+   <extension point="org.eclipse.ui.contexts">
+      <context
+         description="Editing Project Configuration Preferences"
+         id="org.eclipse.emf.cdo.releng.preferences.editor.context"
+         name="Editing Project Configuration Preferences"
+         parentId="org.eclipse.ui.contexts.window">
+      </context>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.emf.cdo.releng.preferences.editor.commands.Navigate"
+            contextId="org.eclipse.emf.cdo.releng.preferences.editor.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F3">
+      </key>
+   </extension>
+   
 </plugin>

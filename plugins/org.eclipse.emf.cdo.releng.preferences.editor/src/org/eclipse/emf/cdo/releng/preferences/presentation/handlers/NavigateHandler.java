@@ -1,3 +1,5 @@
+package org.eclipse.emf.cdo.releng.preferences.presentation.handlers;
+
 /*
  * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
@@ -8,15 +10,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.projectconfig.presentation.handlers;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
-import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
-import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
-import org.eclipse.emf.cdo.releng.projectconfig.Project;
-import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
@@ -85,31 +82,22 @@ public class NavigateHandler extends AbstractHandler
     List<Object> targets = new ArrayList<Object>();
     for (Object object : selection.toArray())
     {
-      if (object instanceof WorkspaceConfiguration)
+      if (object instanceof PreferenceNode)
       {
-        WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)object;
-        for (Project project : workspaceConfiguration.getProjects())
+        PreferenceNode preferenceNode = (PreferenceNode)object;
+        PreferenceNode ancestor = PreferencesUtil.getAncestor(preferenceNode);
+        if (ancestor != null)
         {
-          targets.addAll(project.getPreferenceProfiles());
+          targets.add(ancestor);
         }
       }
-      else if (object instanceof Project)
+      else if (object instanceof Property)
       {
-        Project project = (Project)object;
-        targets.add(project.getPreferenceNode());
-      }
-      else if (object instanceof PreferenceProfile)
-      {
-        PreferenceProfile preferenceProfile = (PreferenceProfile)object;
-        targets.addAll(preferenceProfile.getReferentProjects());
-      }
-      else if (object instanceof PreferenceFilter)
-      {
-        PreferenceFilter preferenceFilter = (PreferenceFilter)object;
-        PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
-        if (preferenceNode != null)
+        Property property = (Property)object;
+        Property ancestor = PreferencesUtil.getAncestor(property);
+        if (ancestor != null)
         {
-          targets.add(preferenceNode);
+          targets.add(ancestor);
         }
       }
       else if (object instanceof IWrapperItemProvider)
@@ -128,25 +116,8 @@ public class NavigateHandler extends AbstractHandler
           }
         }
       }
-      else if (object instanceof PreferenceNode)
-      {
-        PreferenceNode preferenceNode = (PreferenceNode)object;
-        PreferenceNode ancestor = PreferencesUtil.getAncestor(preferenceNode);
-        if (ancestor != null)
-        {
-          targets.add(ancestor);
-        }
-      }
-      else if (object instanceof Property)
-      {
-        Property property = (Property)object;
-        Property ancestor = PreferencesUtil.getAncestor(property);
-        if (ancestor != null)
-        {
-          targets.add(ancestor);
-        }
-      }
     }
+
     targetSelection = new StructuredSelection(targets);
     return !targetSelection.isEmpty();
   }

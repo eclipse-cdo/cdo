@@ -100,6 +100,7 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.FileEditorInput;
@@ -1568,8 +1569,7 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void init(IEditorSite site, IEditorInput editorInput)
+  public void initGen(IEditorSite site, IEditorInput editorInput)
   {
     setSite(site);
     setInputWithNotify(editorInput);
@@ -1577,6 +1577,14 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
     site.setSelectionProvider(this);
     site.getPage().addPartListener(partListener);
     ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
+  }
+
+  @Override
+  public void init(IEditorSite site, IEditorInput editorInput)
+  {
+    initGen(site, editorInput);
+    IContextService contextService = (IContextService)site.getService(IContextService.class);
+    contextService.activateContext("org.eclipse.emf.cdo.releng.preferences.editor.context");
   }
 
   /**

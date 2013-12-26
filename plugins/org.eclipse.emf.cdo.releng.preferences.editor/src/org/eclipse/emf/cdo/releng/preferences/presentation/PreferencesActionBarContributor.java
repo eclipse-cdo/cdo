@@ -39,6 +39,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -427,8 +429,7 @@ public class PreferencesActionBarContributor extends EditingDomainActionBarContr
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void menuAboutToShow(IMenuManager menuManager)
+  public void menuAboutToShowGen(IMenuManager menuManager)
   {
     super.menuAboutToShow(menuManager);
     MenuManager submenuManager = null;
@@ -440,6 +441,16 @@ public class PreferencesActionBarContributor extends EditingDomainActionBarContr
     submenuManager = new MenuManager(PreferencesEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
     populateManager(submenuManager, createSiblingActions, null);
     menuManager.insertBefore("edit", submenuManager);
+  }
+
+  @Override
+  public void menuAboutToShow(IMenuManager menuManager)
+  {
+    menuAboutToShowGen(menuManager);
+
+    menuManager.insertAfter("ui-actions", new CommandContributionItem(new CommandContributionItemParameter(
+        activeEditorPart.getEditorSite(), "org.eclipse.emf.cdo.releng.preferences.editor.commands.Navigate",
+        "org.eclipse.emf.cdo.releng.preferences.editor.commands.Navigate", 0)));
   }
 
   /**

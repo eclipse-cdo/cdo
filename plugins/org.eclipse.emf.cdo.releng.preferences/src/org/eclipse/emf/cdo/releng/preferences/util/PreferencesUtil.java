@@ -170,6 +170,17 @@ public final class PreferencesUtil
     Resource resource = resourceSet.createResource(ROOT_PREFERENCE_NODE_URI.appendSegment("*.preferences"));
     PreferenceNode root = PreferencesFactory.eINSTANCE.createPreferenceNode();
     traverse(root, ROOT, isSynchronized);
+
+    int index = 0;
+    for (String name : new String[] { "bundle_defaults", "default", "configuration", "instance", "project" })
+    {
+      PreferenceNode node = root.getNode(name);
+      if (node != null)
+      {
+        root.getChildren().move(index++, node);
+      }
+    }
+
     resource.getContents().add(root);
 
     return root;
@@ -415,73 +426,108 @@ public final class PreferencesUtil
 
   public static PreferenceNode getAncestor(PreferenceNode preferenceNode)
   {
-    List<PreferenceNode> path = getPath(preferenceNode);
-    int size = path.size();
-    if (size > 1)
+    if (preferenceNode != null)
     {
-      PreferenceNode root = path.get(0);
-      if ("".equals(root.getName()))
+      List<PreferenceNode> path = getPath(preferenceNode);
+      int size = path.size();
+      if (size > 1)
       {
-        PreferenceNode base = path.get(1);
-        String name = base.getName();
-        int start = 2;
-        if ("project".equals(name))
+        PreferenceNode root = path.get(0);
+        if ("".equals(root.getName()))
         {
-          name = "instance";
-          PreferenceNode result = root.getNode(name);
-          for (int i = ++start; result != null && i < size; ++i)
+          PreferenceNode base = path.get(1);
+          String name = base.getName();
+          int start = 2;
+          if ("project".equals(name))
           {
-            result = result.getNode(path.get(i).getName());
-          }
-          if (result != null)
-          {
-            return result;
-          }
-        }
+            name = "instance";
+            PreferenceNode result = root.getNode(name);
+            if (++start < size)
+            {
+              for (int i = start; result != null && i < size; ++i)
+              {
+                result = result.getNode(path.get(i).getName());
+              }
 
-        if ("instance".equals(name))
-        {
-          name = "default";
-          PreferenceNode result = root.getNode(name);
-          for (int i = start; result != null && i < size; ++i)
-          {
-            result = result.getNode(path.get(i).getName());
+              if (result != null)
+              {
+                return result;
+              }
+            }
           }
-          if (result != null)
-          {
-            return result;
-          }
-        }
 
-        if ("default".equals(name))
-        {
-          name = "configuration";
-          PreferenceNode result = root.getNode(name);
-          for (int i = start; result != null && i < size; ++i)
+          if ("instance".equals(name))
           {
-            result = result.getNode(path.get(i).getName());
-          }
-          if (result != null)
-          {
-            return result;
-          }
-        }
+            name = "default";
+            PreferenceNode result = root.getNode(name);
+            if (start < size)
+            {
+              for (int i = start; result != null && i < size; ++i)
+              {
+                result = result.getNode(path.get(i).getName());
+              }
 
-        if ("configuration".equals(name))
-        {
-          name = "bundle_defaults";
-          PreferenceNode result = root.getNode(name);
-          for (int i = start; result != null && i < size; ++i)
-          {
-            result = result.getNode(path.get(i).getName());
+              if (result != null)
+              {
+                return result;
+              }
+            }
           }
-          if (result != null)
+
+          if ("configuration".equals(name))
           {
-            return result;
+            name = "default";
+            PreferenceNode result = root.getNode(name);
+            if (start < size)
+            {
+              for (int i = start; result != null && i < size; ++i)
+              {
+                result = result.getNode(path.get(i).getName());
+              }
+
+              if (result != null)
+              {
+                return result;
+              }
+            }
+          }
+
+          if ("default".equals(name))
+          {
+            name = "bundle_defaults";
+            PreferenceNode result = root.getNode(name);
+            if (start < size)
+            {
+              for (int i = start; result != null && i < size; ++i)
+              {
+                result = result.getNode(path.get(i).getName());
+              }
+
+              if (result != null)
+              {
+                return result;
+              }
+            }
           }
         }
       }
     }
+
+    return null;
+  }
+
+  public static Property getAncestor(Property property)
+  {
+    String name = property.getName();
+    for (PreferenceNode preferenceNode = getAncestor(property.getParent()); preferenceNode != null; preferenceNode = getAncestor(preferenceNode))
+    {
+      Property result = preferenceNode.getProperty(name);
+      if (result != null)
+      {
+        return result;
+      }
+    }
+
     return null;
   }
 }

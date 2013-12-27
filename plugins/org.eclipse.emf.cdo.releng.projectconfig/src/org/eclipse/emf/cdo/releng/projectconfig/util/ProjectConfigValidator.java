@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -20,14 +21,18 @@ import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -180,56 +185,108 @@ public class ProjectConfigValidator extends EObjectValidator
     return result;
   }
 
-  static Map<String, PreferenceNode> collectUnmanagedPreferences(Project project)
+  static Map<PreferenceNode, Set<Property>> collectUnmanagedPreferences(Project project)
   {
-    Map<String, PreferenceNode> result = new LinkedHashMap<String, PreferenceNode>();
-    PreferenceNode preferenceNode = project.getPreferenceNode();
-    if (preferenceNode != null)
+    Map<PreferenceNode, Set<Property>> result = new LinkedHashMap<PreferenceNode, Set<Property>>();
+    PreferenceNode projectPreferenceNode = project.getPreferenceNode();
+    if (projectPreferenceNode != null)
     {
-      collectPreferenceNodes(null, result, preferenceNode.getChildren());
+      collectPreferenceNodes(result, projectPreferenceNode.getChildren());
 
-      result.remove(ProjectConfigUtil.PROJECT_CONF_NODE_NAME);
+      result.remove(projectPreferenceNode.getNode(ProjectConfigUtil.PROJECT_CONF_NODE_NAME));
 
       for (PreferenceProfile preferenceProfile : project.getPreferenceProfiles())
       {
         for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
         {
-          PreferenceNode otherPreferenceNode = preferenceFilter.getPreferenceNode();
-          if (otherPreferenceNode != null)
+          PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
+          if (preferenceNode != null)
           {
-            result.remove(otherPreferenceNode.getName());
+            Set<Property> properties = result.get(preferenceNode);
+            if (properties != null)
+            {
+              for (Iterator<Property> it = properties.iterator(); it.hasNext();)
+              {
+                if (preferenceFilter.matches(it.next().getName()))
+                {
+                  it.remove();
+                }
+              }
+
+              if (properties.isEmpty())
+              {
+                result.remove(preferenceNode);
+              }
+            }
           }
         }
       }
 
       for (PreferenceProfile preferenceProfile : project.getPreferenceProfileReferences())
       {
+        PreferenceNode otherProjectPreferenceNode = preferenceProfile.getProject().getPreferenceNode();
         for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
         {
-          PreferenceNode otherPreferenceNode = preferenceFilter.getPreferenceNode();
-          if (otherPreferenceNode != null)
+          PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
+          if (preferenceNode != null)
           {
-            result.remove(otherPreferenceNode.getName());
+            Set<Property> properties = null;
+
+            LOOP: for (Map.Entry<PreferenceNode, Set<Property>> entry : result.entrySet())
+            {
+              for (PreferenceNode targetPreferenceNode = entry.getKey(), otherPreferenceNode = preferenceNode; targetPreferenceNode
+                  .getName().equals(otherPreferenceNode.getName())
+                  && targetPreferenceNode != projectPreferenceNode
+                  && otherPreferenceNode != otherProjectPreferenceNode;)
+              {
+                targetPreferenceNode = targetPreferenceNode.getParent();
+                otherPreferenceNode = otherPreferenceNode.getParent();
+
+                if (targetPreferenceNode == projectPreferenceNode && otherPreferenceNode == otherProjectPreferenceNode)
+                {
+                  preferenceNode = entry.getKey();
+                  properties = entry.getValue();
+                  break LOOP;
+                }
+              }
+            }
+
+            if (properties != null)
+            {
+              for (Iterator<Property> it = properties.iterator(); it.hasNext();)
+              {
+                if (preferenceFilter.matches(it.next().getName()))
+                {
+                  it.remove();
+                }
+              }
+
+              if (properties.isEmpty())
+              {
+                result.remove(preferenceNode);
+              }
+            }
           }
         }
       }
     }
+
     return result;
   }
 
-  private static void collectPreferenceNodes(String qualifiedName, Map<String, PreferenceNode> result,
+  private static void collectPreferenceNodes(Map<PreferenceNode, Set<Property>> result,
       List<PreferenceNode> preferenceNodes)
   {
     for (PreferenceNode child : preferenceNodes)
     {
-      String name = child.getName();
-      String nodeName = qualifiedName == null ? name : qualifiedName + "/" + name;
-      if (!child.getProperties().isEmpty())
+      EList<Property> properties = child.getProperties();
+      if (!properties.isEmpty())
       {
-        result.put(name, child);
+        Set<Property> propertySet = new LinkedHashSet<Property>(properties);
+        result.put(child, propertySet);
       }
 
-      collectPreferenceNodes(nodeName, result, child.getChildren());
+      collectPreferenceNodes(result, child.getChildren());
     }
   }
 
@@ -242,28 +299,50 @@ public class ProjectConfigValidator extends EObjectValidator
   public boolean validateProject_AllPreferencesManaged(Project project, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    Map<String, PreferenceNode> unmanagedPreferences = collectUnmanagedPreferences(project);
+    Map<PreferenceNode, Set<Property>> unmanagedPreferences = collectUnmanagedPreferences(project);
 
     if (!unmanagedPreferences.isEmpty())
     {
       if (diagnostics != null)
       {
-        String substitution = unmanagedPreferences.keySet().toString();
-        substitution = substitution.substring(1, substitution.length() - 1);
-        int lastComma = substitution.lastIndexOf(',');
-        if (lastComma != -1)
+        PreferenceNode projectPreferenceNode = project.getPreferenceNode();
+        StringBuilder substitution = new StringBuilder();
+        List<PreferenceNode> preferenceNodes = new ArrayList<PreferenceNode>(unmanagedPreferences.keySet());
+        for (int i = 0, size = preferenceNodes.size(); i < size; ++i)
         {
-          substitution = substitution.substring(0, lastComma) + " and " + substitution.substring(lastComma + 1);
+          if (i == size - 1)
+          {
+            substitution.append(" and ");
+          }
+          else if (i != 0)
+          {
+            substitution.append(", ");
+          }
+
+          int index = substitution.length();
+          int count = 0;
+          for (PreferenceNode preferenceNode = preferenceNodes.get(i); preferenceNode != projectPreferenceNode; preferenceNode = preferenceNode
+              .getParent())
+          {
+            if (count++ > 0)
+            {
+              substitution.insert(index, "/");
+            }
+
+            substitution.insert(index, preferenceNode.getName());
+          }
         }
+
         List<Object> data = new ArrayList<Object>();
         data.add(project);
         data.add(ProjectConfigPackage.Literals.PROJECT__PREFERENCE_PROFILE_REFERENCES);
-        data.addAll(unmanagedPreferences.values());
+        data.addAll(preferenceNodes);
         diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
             "_UI_AllPreferencesManaged_diagnostic", new Object[] { substitution }, data.toArray(), context));
       }
       return false;
     }
+
     return true;
   }
 

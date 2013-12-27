@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
@@ -108,7 +109,7 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
     GET_IMAGE_DESCRIPTOR_METHOD = method;
   }
 
-  private static final Pattern PROJECT_ENCODING_PROPERTY_PATTERN = Pattern.compile("<project>");
+  // private static final Pattern PROJECT_ENCODING_PROPERTY_PATTERN = Pattern.compile("<project>");
 
   /**
    * This constructs an instance from a factory and a notifier.
@@ -613,10 +614,14 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     Project project = (Project)object;
-    Collection<PreferenceNode> unmanagedPreferenceNodes = ProjectConfigUtil.getUnmanagedPreferenceNodes(project);
+    Map<PreferenceNode, Set<Property>> unmanagedPreferenceNodes = ProjectConfigUtil
+        .getUnmanagedPreferenceNodes(project);
 
-    for (PreferenceNode preferenceNode : unmanagedPreferenceNodes)
+    for (Map.Entry<PreferenceNode, Set<Property>> entry : unmanagedPreferenceNodes.entrySet())
     {
+      PreferenceNode preferenceNode = entry.getKey();
+      Set<Property> properties = entry.getValue();
+
       String[] rootNameComponents = null;
       StringBuilder qualifiedPreferenceNodeName = new StringBuilder();
       List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
@@ -676,10 +681,27 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
       preferenceFilter.setPreferenceNode(preferenceNode);
       preferenceProfile.getPreferenceFilters().add(preferenceFilter);
 
-      if (pathSize == 5 && "encoding".equals(path.get(4).getName())
-          && "org.eclipse.core.resources".equals(path.get(3).getName()))
+      // if (pathSize == 5 && "encoding".equals(path.get(4).getName())
+      // && "org.eclipse.core.resources".equals(path.get(3).getName()))
+      // {
+      // preferenceFilter.setInclusions(PROJECT_ENCODING_PROPERTY_PATTERN);
+      // }
+      // else
+      if (preferenceNode.getProperties().size() != properties.size())
       {
-        preferenceFilter.setInclusions(PROJECT_ENCODING_PROPERTY_PATTERN);
+        StringBuilder pattern = new StringBuilder();
+        for (Property property : properties)
+        {
+          String name = property.getName();
+          name = name.replace(".", "\\.");
+          if (pattern.length() != 0)
+          {
+            pattern.append('|');
+          }
+          pattern.append(name);
+        }
+
+        preferenceFilter.setInclusions(Pattern.compile(pattern.toString()));
       }
 
       AndPredicate andPredicate = PredicatesFactory.eINSTANCE.createAndPredicate();

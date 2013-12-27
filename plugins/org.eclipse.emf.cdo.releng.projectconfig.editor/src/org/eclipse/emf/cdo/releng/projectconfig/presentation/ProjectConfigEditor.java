@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -822,7 +823,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * This sets up the editing domain for the model editor.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void initializeEditingDomain()
   {
@@ -838,7 +839,46 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
 
     // Create the command stack that will notify this editor as commands are executed.
     //
-    BasicCommandStack commandStack = new BasicCommandStack();
+    BasicCommandStack commandStack = new BasicCommandStack()
+    {
+      @Override
+      public void execute(Command command)
+      {
+        EList<Resource> resources = editingDomain.getResourceSet().getResources();
+        if (!resources.isEmpty())
+        {
+          final WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)resources.get(0).getContents()
+              .get(0);
+
+          CompoundCommand compoundCommand = new CompoundCommand(0);
+          compoundCommand.append(command);
+          compoundCommand.append(new ChangeCommand(workspaceConfiguration)
+          {
+            @Override
+            public String getDescription()
+            {
+              return "Updates preference profile references based on the preference profile predicates";
+            }
+
+            @Override
+            public String getLabel()
+            {
+              return "Update References";
+            }
+
+            @Override
+            protected void doExecute()
+            {
+              workspaceConfiguration.updatePreferenceProfileReferences();
+            }
+          });
+
+          command = compoundCommand;
+        }
+
+        super.execute(command);
+      }
+    };
 
     // Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
     //

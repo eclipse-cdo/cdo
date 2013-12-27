@@ -18,11 +18,16 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.EMFEditPlugin;
+import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.DelegatingWrapperItemProvider;
@@ -44,6 +49,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter} object.
@@ -339,6 +345,103 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
       wrapper.setIndex(i);
     }
     return wrapper;
+  }
+
+  @Override
+  protected Command factorRemoveCommand(EditingDomain domain, CommandParameter commandParameter)
+  {
+    if (commandParameter.getFeature() == null)
+    {
+      Collection<?> collection = commandParameter.getCollection();
+      List<Property> properties = new ArrayList<Property>();
+      for (Object value : collection)
+      {
+        if (value instanceof Property)
+        {
+          properties.add((Property)value);
+        }
+      }
+
+      if (properties.size() == collection.size())
+      {
+        PreferenceFilter preferenceFilter = (PreferenceFilter)commandParameter.getOwner();
+        Pattern exclusions = preferenceFilter.getExclusions();
+        StringBuilder newExclusions = new StringBuilder();
+        if (exclusions != null)
+        {
+          newExclusions.append(exclusions);
+        }
+
+        Pattern inclusions = preferenceFilter.getInclusions();
+        StringBuilder newInclusions = new StringBuilder();
+        if (inclusions != null)
+        {
+          newInclusions.append(inclusions);
+        }
+
+        for (Property property : properties)
+        {
+          String name = property.getName();
+          name = name.replace(".", "\\.");
+
+          int index = newInclusions.indexOf(name);
+          if (index != -1)
+          {
+            boolean matched = true;
+            int start = index;
+            int end = start + name.length();
+            if (start != 0)
+            {
+              if (newInclusions.charAt(start - 1) == '|')
+              {
+                --start;
+              }
+              else
+              {
+                matched = false;
+              }
+            }
+
+            if (matched)
+            {
+              if (end != newInclusions.length())
+              {
+                if (newInclusions.charAt(end) == '|')
+                {
+                  ++end;
+                }
+                else
+                {
+                  matched = false;
+                }
+              }
+            }
+
+            if (matched)
+            {
+              newInclusions.delete(start, end);
+              continue;
+            }
+          }
+
+          if (newExclusions.length() != 0)
+          {
+            newExclusions.append("|");
+          }
+
+          newExclusions.append(name);
+        }
+
+        CompoundCommand command = new CompoundCommand("Update filter patterns");
+        command.append(SetCommand.create(domain, preferenceFilter,
+            ProjectConfigPackage.Literals.PREFERENCE_FILTER__INCLUSIONS, Pattern.compile(newInclusions.toString())));
+        command.append(SetCommand.create(domain, preferenceFilter,
+            ProjectConfigPackage.Literals.PREFERENCE_FILTER__EXCLUSIONS, Pattern.compile(newExclusions.toString())));
+        return command;
+      }
+    }
+
+    return super.factorRemoveCommand(domain, commandParameter);
   }
 
   @Override

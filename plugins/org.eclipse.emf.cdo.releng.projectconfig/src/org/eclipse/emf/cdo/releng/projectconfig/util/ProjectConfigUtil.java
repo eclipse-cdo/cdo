@@ -45,10 +45,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -342,8 +342,8 @@ public final class ProjectConfigUtil
     return null;
   }
 
-  public static Collection<PreferenceNode> getUnmanagedPreferenceNodes(Project project)
+  public static Map<PreferenceNode, Set<Property>> getUnmanagedPreferenceNodes(Project project)
   {
-    return ProjectConfigValidator.collectUnmanagedPreferences(project).values();
+    return ProjectConfigValidator.collectUnmanagedPreferences(project);
   }
 }

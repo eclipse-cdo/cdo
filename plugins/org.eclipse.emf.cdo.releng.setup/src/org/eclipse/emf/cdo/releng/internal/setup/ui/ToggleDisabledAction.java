@@ -10,7 +10,13 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -78,11 +84,17 @@ public class ToggleDisabledAction implements IObjectActionDelegate
 
   public void run(IAction action)
   {
-    // TODO Use command
+    SetupTask firstTask = tasks.iterator().next();
+    boolean value = !firstTask.isDisabled();
+
+    EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(firstTask);
+    CompoundCommand compoundCommand = new CompoundCommand(value ? "Set Disabled" : "Set Enabled");
+
     for (SetupTask task : tasks)
     {
-      boolean disabled = task.isDisabled();
-      task.setDisabled(!disabled);
+      compoundCommand.append(SetCommand.create(editingDomain, task, SetupPackage.Literals.SETUP_TASK__DISABLED, value));
     }
+
+    editingDomain.getCommandStack().execute(compoundCommand);
   }
 }

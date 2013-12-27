@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.preferences.presentation;
 
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.impl.PreferencesURIHandlerImpl;
+import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesEditPlugin;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 
@@ -27,6 +31,8 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.UniqueEList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
@@ -36,6 +42,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
@@ -153,9 +160,9 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
    * This is the content outline page.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  protected IContentOutlinePage contentOutlinePage;
+  protected OutlinePage contentOutlinePage;
 
   /**
    * This is a kludge...
@@ -235,7 +242,7 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
    * This listens for when the outline becomes active
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected IPartListener partListener = new IPartListener()
   {
@@ -261,6 +268,7 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
       else if (p == PreferencesEditor.this)
       {
         handleActivate();
+        setCurrentViewer(selectionViewer);
       }
     }
 
@@ -1001,6 +1009,11 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
                     {
                       List<Object> newSelection = selection;
                       selection = null;
+                      if (contentOutlinePage != null)
+                      {
+                        contentOutlinePage.update();
+                      }
+
                       setSelectionToViewer(newSelection);
                     }
                   }
@@ -1254,44 +1267,294 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
     }
   }
 
+  public static abstract class OutlinePage extends ContentOutlinePage
+  {
+    private static final Object PREFERENCE_NODE_IMAGE = PreferencesEditPlugin.INSTANCE
+        .getImage("full/obj16/PreferenceNode");
+
+    private static final Object PROPERTY_IMAGE = PreferencesEditPlugin.INSTANCE.getImage("full/obj16/Property");
+
+    private TreeViewer contentOutlineViewer;
+
+    private AdapterFactoryEditingDomain editingDomain;
+
+    private TreeViewer selectionViewer;
+
+    private Map<Object, Object> selectionMap = new HashMap<Object, Object>();
+
+    public OutlinePage(AdapterFactoryEditingDomain editingDomain, TreeViewer selectionViewer)
+    {
+      this.editingDomain = editingDomain;
+      this.selectionViewer = selectionViewer;
+    }
+
+    protected abstract void handleContentOutlineSelection(ISelection selection);
+
+    protected abstract void createContextMenuFor(StructuredViewer viewer);
+
+    protected abstract void setSelection(IStructuredSelection selection);
+
+    @Override
+    public void createControl(Composite parent)
+    {
+      super.createControl(parent);
+      contentOutlineViewer = getTreeViewer();
+      contentOutlineViewer.addSelectionChangedListener(this);
+
+      // Set up the tree viewer.
+      //
+      contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()));
+      contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(editingDomain.getAdapterFactory()));
+
+      // Make sure our popups work.
+      //
+      createContextMenuFor(contentOutlineViewer);
+
+      update();
+
+      selectionViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+          if (selectionViewer != null && !selection.isEmpty())
+          {
+            ArrayList<Object> selectionList = new ArrayList<Object>();
+            for (Object object : selection.toArray())
+            {
+              collectSelection(selectionList, object);
+            }
+
+            if (!selectionList.isEmpty())
+            {
+              setSelection(new StructuredSelection(selectionList));
+            }
+          }
+        }
+
+        private void collectSelection(List<Object> selection, Object object)
+        {
+          Object value = selectionMap.get(object);
+          if (value != null)
+          {
+            selection.add(value);
+          }
+        }
+      });
+
+      // Listen to selection so that we can handle it is a special way.
+      //
+      addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        // This ensures that we handle selections correctly.
+        //
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          TreeViewer oldSelectionViewer = selectionViewer;
+          selectionViewer = null;
+          handleContentOutlineSelection(event.getSelection());
+          selectionViewer = oldSelectionViewer;
+        }
+      });
+    }
+
+    public void update()
+    {
+      selectionMap.clear();
+      preferencesNodes.clear();
+
+      if (!editingDomain.getResourceSet().getResources().isEmpty())
+      {
+        // Select the root object in the view.
+        //
+        Resource resource = editingDomain.getResourceSet().getResources().get(0);
+        if (!resource.getContents().isEmpty())
+        {
+          PreferenceNode rootPreferfenceNode = (PreferenceNode)EcoreUtil.getObjectByType(resource.getContents(),
+              PreferencesPackage.Literals.PREFERENCE_NODE);
+          contentOutlineViewer.setInput(new ItemProvider(traverse(rootPreferfenceNode)));
+        }
+      }
+    }
+
+    public interface Wrapper
+    {
+      List<? extends EObject> getWrappedObjects();
+    }
+
+    public class PreferenceNodePresentation extends ItemProvider implements Wrapper
+    {
+      private List<PreferenceNode> preferencesNodes = new ArrayList<PreferenceNode>();
+
+      public PreferenceNodePresentation(PreferenceNode preferenceNode)
+      {
+        super(preferenceNode.getName(), PREFERENCE_NODE_IMAGE);
+        preferencesNodes.add(preferenceNode);
+        selectionMap.put(preferenceNode, this);
+      }
+
+      public void addProperty(PreferenceNode rootPreferenceNode, Property property)
+      {
+        String name = property.getName();
+        PropertyPresentation propertyPresentation = null;
+        for (Object child : getChildren())
+        {
+          if (child instanceof PropertyPresentation)
+          {
+            propertyPresentation = (PropertyPresentation)child;
+            if (name.equals(propertyPresentation.getText()))
+            {
+              break;
+            }
+
+            propertyPresentation = null;
+          }
+        }
+
+        if (propertyPresentation == null)
+        {
+          propertyPresentation = new PropertyPresentation(property);
+          getChildren().add(propertyPresentation);
+        }
+        else
+        {
+          propertyPresentation.getWrappedObjects().add(property);
+        }
+
+        propertyPresentation.getChildren().add(
+            new PropertyPresentation(rootPreferenceNode.getAbsolutePath() + "=" + property.getValue(), property));
+      }
+
+      public List<PreferenceNode> getWrappedObjects()
+      {
+        return preferencesNodes;
+      }
+    }
+
+    public class PropertyPresentation extends ItemProvider implements Wrapper
+    {
+      private List<Property> properties = new ArrayList<Property>();
+
+      public PropertyPresentation(Property property)
+      {
+        super(property.getName(), PROPERTY_IMAGE);
+        properties.add(property);
+      }
+
+      public PropertyPresentation(String label, Property property)
+      {
+        super(label, PROPERTY_IMAGE);
+        properties.add(property);
+        selectionMap.put(property, this);
+      }
+
+      public List<Property> getWrappedObjects()
+      {
+        return properties;
+      }
+    }
+
+    private Map<URI, PreferenceNodePresentation> preferencesNodes = new HashMap<URI, PreferenceNodePresentation>();
+
+    private List<PreferenceNodePresentation> traverse(PreferenceNode preferenceNode)
+    {
+      List<PreferenceNodePresentation> result = new UniqueEList<PreferenceNodePresentation>();
+      for (PreferenceNode node : preferenceNode.getChildren())
+      {
+        String name = node.getName();
+        if ("project".equals(name))
+        {
+          for (PreferenceNode projectNode : node.getChildren())
+          {
+            for (PreferenceNode child : projectNode.getChildren())
+            {
+              URI path = URI.createURI(child.getName());
+              result.add(traverse(projectNode, path, child));
+            }
+          }
+        }
+        else if ("bundle_defaults".equals(name) || "default".equals(name) || "configuration".equals(name)
+            || "instance".equals(name))
+        {
+          for (PreferenceNode child : node.getChildren())
+          {
+            URI path = URI.createURI(child.getName());
+            result.add(traverse(node, path, child));
+          }
+        }
+        else
+        {
+          result.add(traverse(preferenceNode, URI.createURI(node.getName()), node));
+        }
+      }
+
+      return result;
+    }
+
+    private PreferenceNodePresentation traverse(PreferenceNode rootPreferenceNode, URI path,
+        PreferenceNode preferenceNode)
+    {
+      PreferenceNodePresentation preferenceNodePresentation = preferencesNodes.get(path);
+      if (preferenceNodePresentation == null)
+      {
+        preferenceNodePresentation = new PreferenceNodePresentation(preferenceNode);
+        preferencesNodes.put(path, preferenceNodePresentation);
+        if (path.segmentCount() > 1)
+        {
+          PreferenceNodePresentation parentPreferenceNodePresentation = preferencesNodes.get(path.trimSegments(1));
+          if (parentPreferenceNodePresentation != null)
+          {
+            EList<Object> children = parentPreferenceNodePresentation.getChildren();
+            int index = children.size();
+            for (int i = 0, size = index; i < size; ++i)
+            {
+              if (children.get(i) instanceof PropertyPresentation)
+              {
+                break;
+              }
+            }
+
+            children.add(index, preferenceNodePresentation);
+          }
+        }
+      }
+      else
+      {
+        preferenceNodePresentation.getWrappedObjects().add(preferenceNode);
+        selectionMap.put(preferenceNode, preferenceNodePresentation);
+      }
+
+      for (PreferenceNode node : preferenceNode.getChildren())
+      {
+        String name = node.getName();
+        traverse(rootPreferenceNode, path.appendSegment(name), node);
+      }
+
+      for (Property property : preferenceNode.getProperties())
+      {
+        preferenceNodePresentation.addProperty(rootPreferenceNode, property);
+      }
+
+      return preferenceNodePresentation;
+    }
+  }
+
   /**
    * This accesses a cached version of the content outliner.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public IContentOutlinePage getContentOutlinePage()
   {
     if (contentOutlinePage == null)
     {
-      // The content outline is just a tree.
-      //
-      class MyContentOutlinePage extends ContentOutlinePage
+      contentOutlinePage = new OutlinePage(editingDomain, selectionViewer)
       {
         @Override
-        public void createControl(Composite parent)
+        protected void createContextMenuFor(StructuredViewer viewer)
         {
-          super.createControl(parent);
-          contentOutlineViewer = getTreeViewer();
-          contentOutlineViewer.addSelectionChangedListener(this);
-
-          // Set up the tree viewer.
-          //
-          contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-          contentOutlineViewer.setInput(editingDomain.getResourceSet());
-
-          // Make sure our popups work.
-          //
-          createContextMenuFor(contentOutlineViewer);
-
-          if (!editingDomain.getResourceSet().getResources().isEmpty())
-          {
-            // Select the root object in the view.
-            //
-            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources()
-                .get(0)), true);
-          }
+          PreferencesEditor.this.createContextMenuFor(viewer);
         }
 
         @Override
@@ -1308,21 +1571,22 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
           super.setActionBars(actionBars);
           getActionBarContributor().shareGlobalActions(this, actionBars);
         }
-      }
 
-      contentOutlinePage = new MyContentOutlinePage();
-
-      // Listen to selection so that we can handle it is a special way.
-      //
-      contentOutlinePage.addSelectionChangedListener(new ISelectionChangedListener()
-      {
-        // This ensures that we handle selections correctly.
-        //
-        public void selectionChanged(SelectionChangedEvent event)
+        @Override
+        protected void handleContentOutlineSelection(ISelection selection)
         {
-          handleContentOutlineSelection(event.getSelection());
+          PreferencesEditor.this.handleContentOutlineSelection(selection);
         }
-      });
+
+        @Override
+        protected void setSelection(IStructuredSelection selection)
+        {
+          TreeViewer oldSelectionViewer = selectionViewer;
+          selectionViewer = null;
+          getTreeViewer().setSelection(selection);
+          selectionViewer = oldSelectionViewer;
+        }
+      };
     }
 
     return contentOutlinePage;
@@ -1362,7 +1626,7 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
    * This deals with how we want selection in the outliner to affect the other views.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void handleContentOutlineSelection(ISelection selection)
   {
@@ -1376,17 +1640,25 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
         Object selectedElement = selectedElements.next();
 
         ArrayList<Object> selectionList = new ArrayList<Object>();
-        selectionList.add(selectedElement);
+        selectionList.addAll(unwrap(selectedElement));
         while (selectedElements.hasNext())
         {
-          selectionList.add(selectedElements.next());
+          selectionList.add(unwrap(selectedElements.next()));
         }
 
-        // Set the selection to the widget.
-        //
         selectionViewer.setSelection(new StructuredSelection(selectionList));
       }
     }
+  }
+
+  private List<? extends Object> unwrap(Object object)
+  {
+    if (object instanceof OutlinePage.Wrapper)
+    {
+      return ((OutlinePage.Wrapper)object).getWrappedObjects();
+    }
+
+    return Collections.singletonList(object);
   }
 
   /**
@@ -1802,10 +2074,10 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
    * Returns whether the outline view should be presented to the user.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+  G   * @generated NOT
    */
   protected boolean showOutlineView()
   {
-    return false;
+    return true;
   }
 }

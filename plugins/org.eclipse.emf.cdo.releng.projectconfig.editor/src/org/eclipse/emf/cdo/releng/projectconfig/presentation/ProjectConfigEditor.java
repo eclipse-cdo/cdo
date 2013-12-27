@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditor;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
@@ -106,7 +107,6 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
@@ -124,7 +124,6 @@ import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
-import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
@@ -176,7 +175,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
-  protected IContentOutlinePage contentOutlinePage;
+  protected PreferencesEditor.OutlinePage contentOutlinePage;
 
   /**
    * This is a kludge...
@@ -256,7 +255,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * This listens for when the outline becomes active
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected IPartListener partListener = new IPartListener()
   {
@@ -282,6 +281,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
       else if (p == ProjectConfigEditor.this)
       {
         handleActivate();
+        setCurrentViewer(selectionViewer);
       }
     }
 
@@ -1143,6 +1143,11 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
 
     selectionViewer.setInput(resource);
     selectionViewer.expandToLevel(resource.getContents().get(0), 1);
+
+    if (contentOutlinePage != null)
+    {
+      contentOutlinePage.update();
+    }
   }
 
   public void createModel()
@@ -1452,45 +1457,18 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * This accesses a cached version of the content outliner.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public IContentOutlinePage getContentOutlinePage()
   {
     if (contentOutlinePage == null)
     {
-      // The content outline is just a tree.
-      //
-      class MyContentOutlinePage extends ContentOutlinePage
+      contentOutlinePage = new PreferencesEditor.OutlinePage(editingDomain, selectionViewer)
       {
         @Override
-        public void createControl(Composite parent)
+        protected void createContextMenuFor(StructuredViewer viewer)
         {
-          super.createControl(parent);
-          contentOutlineViewer = getTreeViewer();
-          contentOutlineViewer.addSelectionChangedListener(this);
-
-          // Set up the tree viewer.
-          //
-          contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(
-              adapterFactory), new DiagnosticDecorator(editingDomain, contentOutlineViewer, ProjectConfigEditorPlugin
-              .getPlugin().getDialogSettings())));
-          contentOutlineViewer.setInput(editingDomain.getResourceSet());
-
-          new ColumnViewerInformationControlToolTipSupport(contentOutlineViewer,
-              new DiagnosticDecorator.EditingDomainLocationListener(editingDomain, contentOutlineViewer));
-
-          // Make sure our popups work.
-          //
-          createContextMenuFor(contentOutlineViewer);
-
-          if (!editingDomain.getResourceSet().getResources().isEmpty())
-          {
-            // Select the root object in the view.
-            //
-            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources()
-                .get(0)), true);
-          }
+          ProjectConfigEditor.this.createContextMenuFor(viewer);
         }
 
         @Override
@@ -1507,21 +1485,22 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
           super.setActionBars(actionBars);
           getActionBarContributor().shareGlobalActions(this, actionBars);
         }
-      }
 
-      contentOutlinePage = new MyContentOutlinePage();
-
-      // Listen to selection so that we can handle it is a special way.
-      //
-      contentOutlinePage.addSelectionChangedListener(new ISelectionChangedListener()
-      {
-        // This ensures that we handle selections correctly.
-        //
-        public void selectionChanged(SelectionChangedEvent event)
+        @Override
+        protected void handleContentOutlineSelection(ISelection selection)
         {
-          handleContentOutlineSelection(event.getSelection());
+          ProjectConfigEditor.this.handleContentOutlineSelection(selection);
         }
-      });
+
+        @Override
+        protected void setSelection(IStructuredSelection selection)
+        {
+          TreeViewer oldSelectionViewer = selectionViewer;
+          selectionViewer = null;
+          getTreeViewer().setSelection(selection);
+          selectionViewer = oldSelectionViewer;
+        }
+      };
     }
 
     return contentOutlinePage;
@@ -1562,7 +1541,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * This deals with how we want selection in the outliner to affect the other views.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void handleContentOutlineSelection(ISelection selection)
   {
@@ -1576,17 +1555,25 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
         Object selectedElement = selectedElements.next();
 
         ArrayList<Object> selectionList = new ArrayList<Object>();
-        selectionList.add(selectedElement);
+        selectionList.addAll(unwrap(selectedElement));
         while (selectedElements.hasNext())
         {
-          selectionList.add(selectedElements.next());
+          selectionList.add(unwrap(selectedElements.next()));
         }
 
-        // Set the selection to the widget.
-        //
         selectionViewer.setSelection(new StructuredSelection(selectionList));
       }
     }
+  }
+
+  private List<? extends Object> unwrap(Object object)
+  {
+    if (object instanceof PreferencesEditor.OutlinePage.Wrapper)
+    {
+      return ((PreferencesEditor.OutlinePage.Wrapper)object).getWrappedObjects();
+    }
+
+    return Collections.singletonList(object);
   }
 
   /**
@@ -1992,10 +1979,10 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * Returns whether the outline view should be presented to the user.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected boolean showOutlineView()
   {
-    return false;
+    return true;
   }
 }

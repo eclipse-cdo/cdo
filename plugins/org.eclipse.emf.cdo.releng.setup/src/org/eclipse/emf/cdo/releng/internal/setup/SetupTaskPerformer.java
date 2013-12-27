@@ -55,12 +55,10 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 
 import java.io.File;
@@ -704,10 +702,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
     finally
     {
-      if (getTrigger() != Trigger.BOOTSTRAP)
-      {
-        ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
-      }
+      // if (getTrigger() != Trigger.BOOTSTRAP)
+      // {
+      // ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+      // }
 
       if (autoBuilding != null)
       {
@@ -889,7 +887,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
 
     reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
-    {
+        {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
       {
         Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
@@ -906,7 +904,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         return result;
       }
-    });
+        });
 
     return list;
   }
@@ -914,20 +912,20 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void reorderSetupTasks(EList<SetupTask> setupTasks)
   {
     ECollections.sort(setupTasks, new Comparator<SetupTask>()
-    {
+        {
       public int compare(SetupTask setupTask1, SetupTask setupTask2)
       {
         return setupTask1.getPriority() - setupTask2.getPriority();
       }
-    });
+        });
 
     reorder(setupTasks, new DependencyProvider<SetupTask>()
-    {
+        {
       public Collection<SetupTask> getDependencies(SetupTask setupTask)
       {
         return setupTask.getRequirements();
       }
-    });
+        });
   }
 
   private static String getLabel(SetupTask setupTask)

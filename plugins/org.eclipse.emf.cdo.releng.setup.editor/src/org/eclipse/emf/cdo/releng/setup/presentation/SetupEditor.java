@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
-import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -76,7 +75,6 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
@@ -180,7 +178,7 @@ import java.util.Set;
  * @generated
  */
 public class SetupEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-    IMenuListener, IViewerProvider, IGotoMarker
+IMenuListener, IViewerProvider, IGotoMarker
 {
   private static final Object VARIABLE_GROUP_IMAGE = SetupEditorPlugin.INSTANCE.getImage("full/obj16/VariableGroup");
 
@@ -847,24 +845,21 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       }
     });
 
-    EMFUtil.configureResourceSet(editingDomain.getResourceSet());
-
     // Create the editing domain with a special command stack.
     //
     editingDomain = new AdapterFactoryEditingDomain(adapterFactory, editingDomain.getCommandStack(),
         new HashMap<Resource, Boolean>()
         {
-          private static final long serialVersionUID = 1L;
+      private static final long serialVersionUID = 1L;
 
-          @Override
-          public Boolean get(Object key)
-          {
-            return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
-          }
+      @Override
+      public Boolean get(Object key)
+      {
+        return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
+      }
         });
 
-    editingDomain.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put("xmi", new SetupResourceFactoryImpl());
+    EMFUtil.configureResourceSet(editingDomain.getResourceSet());
 
     // Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
     //
@@ -1120,7 +1115,8 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   {
     createModelGen();
 
-    EObject rootObject = editingDomain.getResourceSet().getResources().get(0).getContents().get(0);
+    Resource resource = editingDomain.getResourceSet().getResources().get(0);
+    EObject rootObject = resource.getContents().get(0);
     if (!(rootObject instanceof Configuration))
     {
       SetupResource configurationResource = EMFUtil.loadResourceSafely(editingDomain.getResourceSet(),
@@ -1171,9 +1167,10 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This is the method used by the framework to install your own controls.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  public void createPagesGen()
+  @Override
+  public void createPages()
   {
     // Creates the model from the editor input
     //
@@ -1190,11 +1187,52 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(
-          new AdapterFactoryLabelProvider(adapterFactory), new DiagnosticDecorator(editingDomain, selectionViewer,
-              SetupEditorPlugin.getPlugin().getDialogSettings())));
-      selectionViewer.setInput(editingDomain.getResourceSet());
-      selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+      selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
+          selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
+          .getDialogSettings())));
+
+      Resource resource = editingDomain.getResourceSet().getResources().get(0);
+      selectionViewer.setInput(resource);
+
+      EObject rootObject = resource.getContents().get(0);
+      if (rootObject instanceof Project)
+      {
+        for (Branch branch : ((Project)rootObject).getBranches())
+        {
+          selectionViewer.expandToLevel(branch, 1);
+        }
+      }
+      else
+      {
+        selectionViewer.expandToLevel(2);
+      }
+
+      selectionViewer.setSelection(new StructuredSelection(rootObject), true);
+
+      getViewer().getControl().addMouseListener(new MouseListener()
+      {
+        public void mouseDoubleClick(MouseEvent e)
+        {
+          try
+          {
+            getSite().getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
+          }
+          catch (PartInitException ex)
+          {
+            SetupEditorPlugin.INSTANCE.log(ex);
+          }
+        }
+
+        public void mouseDown(MouseEvent e)
+        {
+          // Do nothing
+        }
+
+        public void mouseUp(MouseEvent e)
+        {
+          // Do nothing
+        }
+      });
 
       new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
       new ColumnViewerInformationControlToolTipSupport(selectionViewer,
@@ -1237,58 +1275,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       public void run()
       {
         updateProblemIndication();
-      }
-    });
-  }
-
-  @Override
-  public void createPages()
-  {
-    createPagesGen();
-
-    selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
-        selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
-        .getDialogSettings())));
-
-    Resource resource = editingDomain.getResourceSet().getResources().get(0);
-    selectionViewer.setInput(resource);
-    EObject rootObject = resource.getContents().get(0);
-    if (rootObject instanceof Project)
-    {
-      for (Branch branch : ((Project)rootObject).getBranches())
-      {
-        selectionViewer.expandToLevel(branch, 1);
-      }
-    }
-    else
-    {
-      selectionViewer.expandToLevel(2);
-    }
-
-    selectionViewer.setSelection(new StructuredSelection(rootObject), true);
-
-    getViewer().getControl().addMouseListener(new MouseListener()
-    {
-      public void mouseDoubleClick(MouseEvent e)
-      {
-        try
-        {
-          getSite().getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
-        }
-        catch (PartInitException ex)
-        {
-          SetupEditorPlugin.INSTANCE.log(ex);
-        }
-      }
-
-      public void mouseDown(MouseEvent e)
-      {
-        // Do nothing
-      }
-
-      public void mouseUp(MouseEvent e)
-      {
-        // Do nothing
       }
     });
   }
@@ -2134,7 +2120,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
         .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-    doSave(progressMonitor);
+        doSave(progressMonitor);
   }
 
   /**

@@ -44,7 +44,6 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
@@ -917,9 +916,10 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
    * This is the method used by the framework to install your own controls.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
-  public void createPagesGen()
+  @Override
+  public void createPages()
   {
     // Creates the model from the editor input
     //
@@ -936,11 +936,38 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(
-          new AdapterFactoryLabelProvider(adapterFactory), new DiagnosticDecorator(editingDomain, selectionViewer,
-              SetupEditorPlugin.getPlugin().getDialogSettings())));
-      selectionViewer.setInput(editingDomain.getResourceSet());
-      selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+      selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
+          selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
+              .getDialogSettings())));
+
+      Resource resource = editingDomain.getResourceSet().getResources().get(0);
+      selectionViewer.setInput(resource);
+      selectionViewer.setSelection(new StructuredSelection(resource.getContents().get(0)), true);
+
+      getViewer().getControl().addMouseListener(new MouseListener()
+      {
+        public void mouseDoubleClick(MouseEvent e)
+        {
+          try
+          {
+            getSite().getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
+          }
+          catch (PartInitException ex)
+          {
+            SetupEditorPlugin.INSTANCE.log(ex);
+          }
+        }
+
+        public void mouseDown(MouseEvent e)
+        {
+          // Do nothing
+        }
+
+        public void mouseUp(MouseEvent e)
+        {
+          // Do nothing
+        }
+      });
 
       new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
       new ColumnViewerInformationControlToolTipSupport(selectionViewer,
@@ -983,45 +1010,6 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       public void run()
       {
         updateProblemIndication();
-      }
-    });
-  }
-
-  @Override
-  public void createPages()
-  {
-    createPagesGen();
-
-    selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
-        selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
-        .getDialogSettings())));
-
-    Resource resource = editingDomain.getResourceSet().getResources().get(0);
-    selectionViewer.setInput(resource);
-    selectionViewer.setSelection(new StructuredSelection(resource.getContents().get(0)), true);
-
-    getViewer().getControl().addMouseListener(new MouseListener()
-    {
-      public void mouseDoubleClick(MouseEvent e)
-      {
-        try
-        {
-          getSite().getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
-        }
-        catch (PartInitException ex)
-        {
-          SetupEditorPlugin.INSTANCE.log(ex);
-        }
-      }
-
-      public void mouseDown(MouseEvent e)
-      {
-        // Do nothing
-      }
-
-      public void mouseUp(MouseEvent e)
-      {
-        // Do nothing
       }
     });
   }

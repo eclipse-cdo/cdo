@@ -66,8 +66,8 @@ public class Activator extends AbstractUIPlugin
           {
             try
             {
-              SetupTaskPerformer setupTaskPerformer = new SetupTaskPerformer(false);
-              setupTaskPerformer.perform();
+              SetupTaskPerformer performer = new SetupTaskPerformer(false);
+              performer.perform();
             }
             catch (Throwable ex)
             {

@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -30,6 +31,7 @@ import org.eclipse.core.runtime.Plugin;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -62,8 +64,11 @@ public final class EMFUtil extends Plugin
 
   public static void configureResourceSet(ResourceSet resourceSet)
   {
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new SetupResourceFactoryImpl());
-    resourceSet.getURIConverter().getURIHandlers().add(4, new ECFURIHandlerImpl());
+    Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+    extensionToFactoryMap.put("xmi", new SetupResourceFactoryImpl());
+
+    EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+    uriHandlers.add(4, new ECFURIHandlerImpl());
 
     if (!CONFIGURATION_URI.equals(REDIRECTED_CONFIGURATION_URI))
     {

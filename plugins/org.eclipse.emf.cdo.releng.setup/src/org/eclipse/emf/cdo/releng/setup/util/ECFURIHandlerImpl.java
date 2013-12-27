@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.util;
+
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
@@ -28,6 +30,8 @@ import org.eclipse.ecf.provider.filetransfer.util.ProxySetupHelper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketTimeoutException;
@@ -44,6 +48,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ECFURIHandlerImpl extends URIHandlerImpl
 {
+  private static final File CACHE_DIR = new File(System.getProperty("user.home"),
+      ".eclipse/org.eclipse.emf.cdo.releng.setup/cache");
+
   @Override
   public boolean exists(URI uri, Map<?, ?> options)
   {
@@ -73,8 +80,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
       }
     }
 
-    final CountDownLatch latch = new CountDownLatch(1);
-
+    final CountDownLatch receiveDoneLatch = new CountDownLatch(1);
     final AtomicReference<Exception> exception = new AtomicReference<Exception>();
 
     class FileTransferListener implements IFileTransferListener
@@ -86,6 +92,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
         if (event instanceof IIncomingFileTransferReceiveStartEvent)
         {
           out = new ByteArrayOutputStream();
+
           try
           {
             ((IIncomingFileTransferReceiveStartEvent)event).receive(out);
@@ -103,20 +110,24 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
           {
             exception.set(ex);
           }
-          latch.countDown();
+
+          receiveDoneLatch.countDown();
         }
       }
     }
 
+    File cacheFile = new File(CACHE_DIR, FileUtil.encodeFileName(uri.toString()));
+
     for (int i = 0;; ++i)
     {
       FileTransferListener transferListener = new FileTransferListener();
+
       try
       {
         FileTransferID fileTransferID = new FileTransferID(new FileTransferNamespace(), new java.net.URI(uriString));
         Map<Object, Object> requestOptions = new HashMap<Object, Object>();
-        requestOptions.put(IRetrieveFileTransferOptions.CONNECT_TIMEOUT, 5000);
-        requestOptions.put(IRetrieveFileTransferOptions.READ_TIMEOUT, 5000);
+        requestOptions.put(IRetrieveFileTransferOptions.CONNECT_TIMEOUT, 10000);
+        requestOptions.put(IRetrieveFileTransferOptions.READ_TIMEOUT, 10000);
         fileTransfer.sendRetrieveRequest(fileTransferID, transferListener, Collections.emptyMap());
       }
       catch (URISyntaxException ex)
@@ -130,7 +141,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
       try
       {
-        latch.await(60, TimeUnit.SECONDS);
+        receiveDoneLatch.await(60, TimeUnit.SECONDS);
       }
       catch (InterruptedException ex)
       {
@@ -141,13 +152,23 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
       {
         if (!(exception.get().getCause() instanceof SocketTimeoutException) || i > 2)
         {
+          if (cacheFile.isFile())
+          {
+            return new FileInputStream(cacheFile);
+          }
+
           throw new IOException(exception.get());
         }
 
         continue;
       }
 
-      return new ByteArrayInputStream(transferListener.out.toByteArray());
+      byte[] bytes = transferListener.out.toByteArray();
+
+      CACHE_DIR.mkdirs();
+      IOUtil.writeFile(cacheFile, bytes);
+
+      return new ByteArrayInputStream(bytes);
     }
   }
 }

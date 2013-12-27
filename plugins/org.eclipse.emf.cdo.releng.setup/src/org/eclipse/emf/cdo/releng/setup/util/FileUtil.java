@@ -141,4 +141,9 @@ public final class FileUtil
       }
     }
   }
+
+  public static String encodeFileName(String name)
+  {
+    return name.replace(':', '_').replace('/', '_');
+  }
 }

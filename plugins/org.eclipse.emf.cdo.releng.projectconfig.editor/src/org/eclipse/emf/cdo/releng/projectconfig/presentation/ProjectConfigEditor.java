@@ -12,9 +12,12 @@ package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditor;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.projectconfig.provider.ProjectConfigItemProviderAdapterFactory;
@@ -50,6 +53,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
@@ -174,7 +178,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * This is the content outline page.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected PreferencesEditor.OutlinePage contentOutlinePage;
 
@@ -677,6 +681,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
               {
                 public void run()
                 {
+                  // TODO causes deadlock.
                   synchronized (editingDomain.getResourceSet())
                   {
                     for (Object object : expandedElements)
@@ -1530,6 +1535,38 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
         protected void handleContentOutlineSelection(ISelection selection)
         {
           ProjectConfigEditor.this.handleContentOutlineSelection(selection);
+        }
+
+        @Override
+        protected void collectSelection(List<Object> selection, Object object)
+        {
+          if (object instanceof IWrapperItemProvider)
+          {
+            object = ((IWrapperItemProvider)object).getValue();
+          }
+          else if (object instanceof PreferenceFilter)
+          {
+            object = ((PreferenceFilter)object).getPreferenceNode();
+          }
+          else if (object instanceof PropertyFilter)
+          {
+            PropertyFilter propertyFilter = (PropertyFilter)object;
+            PreferenceNode preferenceNode = (PreferenceNode)propertyFilter.eResource().getContents().get(1);
+            for (Iterator<EObject> it = preferenceNode.getNode("project").eAllContents(); it.hasNext();)
+            {
+              EObject eObject = it.next();
+              if (eObject instanceof Property)
+              {
+                Property property = (Property)eObject;
+                if (propertyFilter.matches(property.getAbsolutePath()))
+                {
+                  super.collectSelection(selection, property);
+                }
+              }
+            }
+          }
+
+          super.collectSelection(selection, object);
         }
 
         @Override

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.ecore.EClass;
@@ -87,6 +88,8 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
       return createPreferenceProfile();
     case ProjectConfigPackage.PREFERENCE_FILTER:
       return createPreferenceFilter();
+    case ProjectConfigPackage.PROPERTY_FILTER:
+      return createPropertyFilter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -168,6 +171,17 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
   {
     PreferenceFilterImpl preferenceFilter = new PreferenceFilterImpl();
     return preferenceFilter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PropertyFilter createPropertyFilter()
+  {
+    PropertyFilterImpl propertyFilter = new PropertyFilterImpl();
+    return propertyFilter;
   }
 
   /**

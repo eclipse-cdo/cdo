@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
@@ -120,6 +121,8 @@ public class ProjectConfigValidator extends EObjectValidator
       return validatePreferenceProfile((PreferenceProfile)value, diagnostics, context);
     case ProjectConfigPackage.PREFERENCE_FILTER:
       return validatePreferenceFilter((PreferenceFilter)value, diagnostics, context);
+    case ProjectConfigPackage.PROPERTY_FILTER:
+      return validatePropertyFilter((PropertyFilter)value, diagnostics, context);
     case ProjectConfigPackage.PATTERN:
       return validatePattern((Pattern)value, diagnostics, context);
     default:
@@ -191,7 +194,7 @@ public class ProjectConfigValidator extends EObjectValidator
     PreferenceNode projectPreferenceNode = project.getPreferenceNode();
     if (projectPreferenceNode != null)
     {
-      collectPreferenceNodes(result, projectPreferenceNode.getChildren());
+      collectPreferenceNodes(project.getConfiguration(), result, projectPreferenceNode.getChildren());
 
       result.remove(projectPreferenceNode.getNode(ProjectConfigUtil.PROJECT_CONF_NODE_NAME));
 
@@ -227,14 +230,15 @@ public class ProjectConfigValidator extends EObjectValidator
         PreferenceNode otherProjectPreferenceNode = preferenceProfile.getProject().getPreferenceNode();
         for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
         {
-          PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
-          if (preferenceNode != null)
+          final PreferenceNode referencedPreferenceNode = preferenceFilter.getPreferenceNode();
+          if (referencedPreferenceNode != null)
           {
             Set<Property> properties = null;
+            PreferenceNode preferenceNode = null;
 
             LOOP: for (Map.Entry<PreferenceNode, Set<Property>> entry : result.entrySet())
             {
-              for (PreferenceNode targetPreferenceNode = entry.getKey(), otherPreferenceNode = preferenceNode; targetPreferenceNode
+              for (PreferenceNode targetPreferenceNode = entry.getKey(), otherPreferenceNode = referencedPreferenceNode; targetPreferenceNode
                   .getName().equals(otherPreferenceNode.getName())
                   && targetPreferenceNode != projectPreferenceNode
                   && otherPreferenceNode != otherProjectPreferenceNode;)
@@ -255,7 +259,8 @@ public class ProjectConfigValidator extends EObjectValidator
             {
               for (Iterator<Property> it = properties.iterator(); it.hasNext();)
               {
-                if (preferenceFilter.matches(it.next().getName()))
+                String name = it.next().getName();
+                if (preferenceFilter.matches(name) && referencedPreferenceNode.getProperty(name) != null)
                 {
                   it.remove();
                 }
@@ -274,8 +279,8 @@ public class ProjectConfigValidator extends EObjectValidator
     return result;
   }
 
-  private static void collectPreferenceNodes(Map<PreferenceNode, Set<Property>> result,
-      List<PreferenceNode> preferenceNodes)
+  private static void collectPreferenceNodes(WorkspaceConfiguration workspaceConfiguration,
+      Map<PreferenceNode, Set<Property>> result, List<PreferenceNode> preferenceNodes)
   {
     for (PreferenceNode child : preferenceNodes)
     {
@@ -283,10 +288,23 @@ public class ProjectConfigValidator extends EObjectValidator
       if (!properties.isEmpty())
       {
         Set<Property> propertySet = new LinkedHashSet<Property>(properties);
-        result.put(child, propertySet);
+        for (Property property : properties)
+        {
+          for (PropertyFilter propertyFilter : workspaceConfiguration.getPropertyFilters())
+          {
+            if (propertyFilter.matches(property.getAbsolutePath()))
+            {
+              propertySet.remove(property);
+            }
+          }
+        }
+        if (!propertySet.isEmpty())
+        {
+          result.put(child, propertySet);
+        }
       }
 
-      collectPreferenceNodes(result, child.getChildren());
+      collectPreferenceNodes(workspaceConfiguration, result, child.getChildren());
     }
   }
 
@@ -310,7 +328,7 @@ public class ProjectConfigValidator extends EObjectValidator
         List<PreferenceNode> preferenceNodes = new ArrayList<PreferenceNode>(unmanagedPreferences.keySet());
         for (int i = 0, size = preferenceNodes.size(); i < size; ++i)
         {
-          if (i == size - 1)
+          if (i == size - 1 && size > 1)
           {
             substitution.append(" and ");
           }
@@ -366,6 +384,17 @@ public class ProjectConfigValidator extends EObjectValidator
       Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(preferenceFilter, diagnostics, context);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean validatePropertyFilter(PropertyFilter propertyFilter, DiagnosticChain diagnostics,
+      Map<Object, Object> context)
+  {
+    return validate_EveryDefaultConstraint(propertyFilter, diagnostics, context);
   }
 
   /**

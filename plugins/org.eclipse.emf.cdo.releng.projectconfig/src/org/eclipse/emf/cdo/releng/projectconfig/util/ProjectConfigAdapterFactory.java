@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -108,6 +109,12 @@ public class ProjectConfigAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter casePropertyFilter(PropertyFilter object)
+    {
+      return createPropertyFilterAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -184,6 +191,21 @@ public class ProjectConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPreferenceFilterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter <em>Property Filter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter
+   * @generated
+   */
+  public Adapter createPropertyFilterAdapter()
   {
     return null;
   }

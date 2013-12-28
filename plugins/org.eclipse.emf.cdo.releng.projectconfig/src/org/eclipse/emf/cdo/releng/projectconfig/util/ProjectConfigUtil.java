@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
+import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.Property;
@@ -18,6 +21,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
@@ -45,10 +49,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -70,7 +77,28 @@ public final class ProjectConfigUtil
     return getWorkspaceConfiguration(null);
   }
 
-  public static final WorkspaceConfiguration getWorkspaceConfiguration(PreferenceNode cachedProjectsPreferenceNode)
+  private static List<PropertyFilter> getDefaultPropertyFilters()
+  {
+    List<PropertyFilter> result = new ArrayList<PropertyFilter>();
+
+    PropertyFilter encodingPropertyFilter = ProjectConfigFactory.eINSTANCE.createPropertyFilter();
+    encodingPropertyFilter.setOmissions(Pattern.compile("org\\.eclipse\\.core\\.resources/encoding/.*(?<!<project>)"));
+    result.add(encodingPropertyFilter);
+
+    PropertyFilter jdtCompilerCompliancePropertyFilter = ProjectConfigFactory.eINSTANCE.createPropertyFilter();
+    jdtCompilerCompliancePropertyFilter.setOmissions(Pattern.compile("org\\.eclipse\\.jdt\\.core/("
+        + "org\\.eclipse\\.jdt\\.core\\.compiler\\.codegen\\.targetPlatform" + "|"
+        + "org.eclipse\\.jdt\\.core\\.compiler\\.compliance" + "|" + "org\\.eclipse\\.jdt\\.core\\.compiler\\.source"
+        + ")"));
+    NaturePredicate naturePredicate = PredicatesFactory.eINSTANCE.createNaturePredicate();
+    naturePredicate.setNature("org.eclipse.pde.PluginNature");
+    jdtCompilerCompliancePropertyFilter.getPredicates().add(naturePredicate);
+    result.add(jdtCompilerCompliancePropertyFilter);
+
+    return result;
+  }
+
+  public static WorkspaceConfiguration getWorkspaceConfiguration(PreferenceNode cachedProjectsPreferenceNode)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
     Resource resource = resourceSet.createResource(URI.createURI("*.projectconfig"));
@@ -79,8 +107,52 @@ public final class ProjectConfigUtil
     PreferenceNode rootPreferenceNode = PreferencesUtil.getRootPreferenceNode();
 
     WorkspaceConfiguration workspaceConfiguration = ProjectConfigFactory.eINSTANCE.createWorkspaceConfiguration();
-    workspaceConfiguration.setInstancePreferenceNode(rootPreferenceNode.getNode("instance"));
+    PreferenceNode instancePreferenceNode = rootPreferenceNode.getNode("instance");
+    workspaceConfiguration.setInstancePreferenceNode(instancePreferenceNode);
     workspaceConfiguration.setDefaultPreferenceNode(rootPreferenceNode.getNode("default"));
+
+    EList<PropertyFilter> propertyFilters = workspaceConfiguration.getPropertyFilters();
+    PreferenceNode instanceProjectConfNode = instancePreferenceNode.getNode(PROJECT_CONF_NODE_NAME);
+    if (instanceProjectConfNode != null)
+    {
+      for (Property property : instanceProjectConfNode.getProperties())
+      {
+        String name = property.getName();
+        String value = property.getValue();
+        if (!"".equals(name) || !"".equals(value))
+        {
+          PropertyFilter propertyFilter = ProjectConfigFactory.eINSTANCE.createPropertyFilter();
+          propertyFilter.setOmissions(Pattern.compile(name));
+          if (value != null)
+          {
+            XMLResourceImpl projectResource = new XMLResourceImpl(PROJECT_CONFIG_URI);
+            InputStream in = new URIConverter.ReadableInputStream(value);
+            try
+            {
+              projectResource.load(in, null);
+            }
+            catch (IOException ex)
+            {
+              // Ignore.
+            }
+
+            EList<EObject> contents = projectResource.getContents();
+            if (!contents.isEmpty())
+            {
+              @SuppressWarnings("unchecked")
+              Collection<? extends Predicate> predicates = (Collection<? extends Predicate>)contents;
+              propertyFilter.getPredicates().addAll(predicates);
+            }
+          }
+
+          propertyFilters.add(propertyFilter);
+        }
+      }
+    }
+    else
+    {
+      propertyFilters.addAll(getDefaultPropertyFilters());
+    }
 
     PreferenceNode projectsPreferenceNode = rootPreferenceNode.getNode("project");
     EList<Project> projects = workspaceConfiguration.getProjects();
@@ -186,10 +258,94 @@ public final class ProjectConfigUtil
   {
     PreferenceNode projectsPreferenceNode = null;
 
+    Map<Pattern, String> propertyFilters = new LinkedHashMap<Pattern, String>();
+    for (PropertyFilter propertyFilter : workspaceConfiguration.getPropertyFilters())
+    {
+      Pattern pattern = propertyFilter.getOmissions();
+      Collection<Predicate> predicates = EcoreUtil.copyAll(propertyFilter.getPredicates());
+
+      String predicatesValue = "";
+      if (!predicates.isEmpty())
+      {
+        Resource resource = new XMLResourceImpl(workspaceConfiguration.eResource().getURI());
+        resource.getContents().addAll(predicates);
+
+        Map<Object, Object> options = new HashMap<Object, Object>();
+        options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+        options.put(XMLResource.OPTION_LINE_WIDTH, 10);
+        options.put(XMLResource.OPTION_ENCODING, "UTF-8");
+        try
+        {
+          StringWriter writer = new StringWriter();
+          OutputStream out = new URIConverter.WriteableOutputStream(writer, "UTF-8");
+          resource.save(out, options);
+          predicatesValue = writer.toString();
+        }
+        catch (IOException ex)
+        {
+          ProjectConfigPlugin.INSTANCE.log(ex);
+        }
+      }
+
+      propertyFilters.put(pattern, predicatesValue);
+    }
+
+    PreferenceNode instancePreferenceNode = workspaceConfiguration.getInstancePreferenceNode();
+    if (cache)
+    {
+      PreferenceNode projectConfPreferenceNode = instancePreferenceNode.getNode(PROJECT_CONF_NODE_NAME);
+      if (projectConfPreferenceNode == null)
+      {
+        projectConfPreferenceNode = PreferencesFactory.eINSTANCE.createPreferenceNode();
+        projectConfPreferenceNode.setName(PROJECT_CONF_NODE_NAME);
+        instancePreferenceNode.getChildren().add(projectConfPreferenceNode);
+      }
+
+      EList<Property> properties = projectConfPreferenceNode.getProperties();
+      properties.clear();
+
+      if (propertyFilters.isEmpty())
+      {
+        Property property = PreferencesFactory.eINSTANCE.createProperty();
+        property.setName("");
+        property.setValue("");
+        properties.add(property);
+      }
+      else
+      {
+        for (Map.Entry<Pattern, String> entry : propertyFilters.entrySet())
+        {
+          Property property = PreferencesFactory.eINSTANCE.createProperty();
+          property.setName(entry.getKey().toString());
+          property.setValue(entry.getValue());
+          properties.add(property);
+        }
+      }
+    }
+    else
+    {
+      Preferences projectConfPreferences = PreferencesUtil.getPreferences(instancePreferenceNode, true).node(
+          PROJECT_CONF_NODE_NAME);
+      projectConfPreferences.clear();
+
+      if (propertyFilters.isEmpty())
+      {
+        projectConfPreferences.put("", "");
+      }
+      else
+      {
+        for (Map.Entry<Pattern, String> entry : propertyFilters.entrySet())
+        {
+          projectConfPreferences.put(entry.getKey().toString(), entry.getValue());
+        }
+      }
+
+      projectConfPreferences.flush();
+    }
+
     for (Project project : workspaceConfiguration.getProjects())
     {
       PreferenceNode projectPreferenceNode = project.getPreferenceNode();
-      String projectName = projectPreferenceNode.getName();
 
       Preferences projectPreferences = cache ? null : PreferencesUtil.getPreferences(projectPreferenceNode, true);
 
@@ -291,8 +447,6 @@ public final class ProjectConfigUtil
       }
       else
       {
-        System.err.println(projectName + " -> project = " + projectPropertyValue);
-
         if (cache)
         {
           projectsPreferenceNode = projectPreferenceNode.getParent();

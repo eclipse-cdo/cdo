@@ -630,7 +630,7 @@ public class ProjectConfigActionBarContributor extends EditingDomainActionBarCon
    * This populates the pop-up menu before it appears.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void menuAboutToShow(IMenuManager menuManager)

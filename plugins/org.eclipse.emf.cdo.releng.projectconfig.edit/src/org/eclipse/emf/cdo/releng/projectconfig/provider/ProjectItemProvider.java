@@ -85,7 +85,6 @@ import java.util.regex.Pattern;
 public class ProjectItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
-
   private static final Class<?> IWORKBENCH_ADAPTER_CLASS;
 
   private static final Method GET_IMAGE_DESCRIPTOR_METHOD;
@@ -681,27 +680,46 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
       preferenceFilter.setPreferenceNode(preferenceNode);
       preferenceProfile.getPreferenceFilters().add(preferenceFilter);
 
-      // if (pathSize == 5 && "encoding".equals(path.get(4).getName())
-      // && "org.eclipse.core.resources".equals(path.get(3).getName()))
-      // {
-      // preferenceFilter.setInclusions(PROJECT_ENCODING_PROPERTY_PATTERN);
-      // }
-      // else
-      if (preferenceNode.getProperties().size() != properties.size())
+      EList<Property> realProperties = preferenceNode.getProperties();
+      int realSize = realProperties.size();
+      int targetSize = properties.size();
+      if (realSize != targetSize)
       {
-        StringBuilder pattern = new StringBuilder();
-        for (Property property : properties)
+        if (realSize - targetSize > realSize / 2)
         {
-          String name = property.getName();
-          name = name.replace(".", "\\.");
-          if (pattern.length() != 0)
+          StringBuilder pattern = new StringBuilder();
+          for (Property property : properties)
           {
-            pattern.append('|');
+            String name = property.getName();
+            name = name.replace(".", "\\.");
+            if (pattern.length() != 0)
+            {
+              pattern.append('|');
+            }
+            pattern.append(name);
           }
-          pattern.append(name);
-        }
 
-        preferenceFilter.setInclusions(Pattern.compile(pattern.toString()));
+          preferenceFilter.setInclusions(Pattern.compile(pattern.toString()));
+        }
+        else
+        {
+          StringBuilder pattern = new StringBuilder();
+          for (Property property : realProperties)
+          {
+            if (!properties.contains(property))
+            {
+              String name = property.getName();
+              name = name.replace(".", "\\.");
+              if (pattern.length() != 0)
+              {
+                pattern.append('|');
+              }
+              pattern.append(name);
+            }
+          }
+
+          preferenceFilter.setExclusions(Pattern.compile(pattern.toString()));
+        }
       }
 
       AndPredicate andPredicate = PredicatesFactory.eINSTANCE.createAndPredicate();

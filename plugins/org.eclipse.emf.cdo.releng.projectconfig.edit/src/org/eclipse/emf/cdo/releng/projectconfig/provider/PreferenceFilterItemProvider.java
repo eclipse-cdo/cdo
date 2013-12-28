@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -453,11 +455,22 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
     PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
     if (preferenceNode != null)
     {
-      for (Property property : preferenceNode.getProperties())
+      LOOP: for (Property property : preferenceNode.getProperties())
       {
         String name = property.getName();
         if (name != null)
         {
+          WorkspaceConfiguration configuration = preferenceFilter.getPreferenceProfile().getProject()
+              .getConfiguration();
+          String path = property.getAbsolutePath();
+          for (PropertyFilter propertyFilter : configuration.getPropertyFilters())
+          {
+            if (propertyFilter.matches(path))
+            {
+              continue LOOP;
+            }
+          }
+
           if (preferenceFilter.matches(name))
           {
             result.add(wrap(preferenceFilter, -1, property));

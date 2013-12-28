@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -58,6 +60,7 @@ import java.util.Set;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.WorkspaceConfigurationImpl#getPropertyFilters <em>Property Filters</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.WorkspaceConfigurationImpl#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.WorkspaceConfigurationImpl#getDefaultPreferenceNode <em>Default Preference Node</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.WorkspaceConfigurationImpl#getInstancePreferenceNode <em>Instance Preference Node</em>}</li>
@@ -68,6 +71,16 @@ import java.util.Set;
  */
 public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container implements WorkspaceConfiguration
 {
+  /**
+   * The cached value of the '{@link #getPropertyFilters() <em>Property Filters</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPropertyFilters()
+   * @generated
+   * @ordered
+   */
+  protected EList<PropertyFilter> propertyFilters;
+
   private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
 
   /**
@@ -119,6 +132,21 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   protected EClass eStaticClass()
   {
     return ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<PropertyFilter> getPropertyFilters()
+  {
+    if (propertyFilters == null)
+    {
+      propertyFilters = new EObjectContainmentEList<PropertyFilter>(PropertyFilter.class, this,
+          ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS);
+    }
+    return propertyFilters;
   }
 
   /**
@@ -426,6 +454,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
+      return ((InternalEList<?>)getPropertyFilters()).basicRemove(otherEnd, msgs);
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       return ((InternalEList<?>)getProjects()).basicRemove(otherEnd, msgs);
     }
@@ -442,6 +472,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
+      return getPropertyFilters();
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       return getProjects();
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:
@@ -471,6 +503,10 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
+      getPropertyFilters().clear();
+      getPropertyFilters().addAll((Collection<? extends PropertyFilter>)newValue);
+      return;
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       getProjects().clear();
       getProjects().addAll((Collection<? extends Project>)newValue);
@@ -495,6 +531,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
+      getPropertyFilters().clear();
+      return;
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       getProjects().clear();
       return;
@@ -518,6 +557,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
+      return propertyFilters != null && !propertyFilters.isEmpty();
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       return projects != null && !projects.isEmpty();
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE:

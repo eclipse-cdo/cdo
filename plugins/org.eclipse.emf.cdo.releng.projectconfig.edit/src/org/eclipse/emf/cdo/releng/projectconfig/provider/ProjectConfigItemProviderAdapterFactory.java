@@ -152,6 +152,31 @@ public class ProjectConfigItemProviderAdapterFactory extends ProjectConfigAdapte
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected PropertyFilterItemProvider propertyFilterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createPropertyFilterAdapter()
+  {
+    if (propertyFilterItemProvider == null)
+    {
+      propertyFilterItemProvider = new PropertyFilterItemProvider(this);
+    }
+
+    return propertyFilterItemProvider;
+  }
+
+  /**
    * This returns the root adapter factory that contains this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

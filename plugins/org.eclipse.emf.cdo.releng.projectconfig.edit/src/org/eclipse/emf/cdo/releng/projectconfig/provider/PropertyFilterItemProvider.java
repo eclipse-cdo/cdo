@@ -1,18 +1,10 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
-import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -25,19 +17,21 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class PropertyFilterItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -46,7 +40,7 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
    * <!-- end-user-doc -->
    * @generated
    */
-  public WorkspaceConfigurationItemProvider(AdapterFactory adapterFactory)
+  public PropertyFilterItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -64,46 +58,26 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
     {
       super.getPropertyDescriptors(object);
 
-      addDefaultPreferenceNodePropertyDescriptor(object);
-      addInstancePreferenceNodePropertyDescriptor(object);
+      addOmissionsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Default Preference Node feature.
+   * This adds a property descriptor for the Omissions feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addDefaultPreferenceNodePropertyDescriptor(Object object)
+  protected void addOmissionsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_WorkspaceConfiguration_defaultPreferenceNode_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_WorkspaceConfiguration_defaultPreferenceNode_feature",
-            "_UI_WorkspaceConfiguration_type"),
-        ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE, true, false, true, null, null,
-        null));
-  }
-
-  /**
-   * This adds a property descriptor for the Instance Preference Node feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addInstancePreferenceNodePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_WorkspaceConfiguration_instancePreferenceNode_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_WorkspaceConfiguration_instancePreferenceNode_feature",
-            "_UI_WorkspaceConfiguration_type"),
-        ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE, true, false, true, null, null,
-        null));
+        getString("_UI_PropertyFilter_omissions_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PropertyFilter_omissions_feature",
+            "_UI_PropertyFilter_type"), ProjectConfigPackage.Literals.PROPERTY_FILTER__OMISSIONS, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -120,8 +94,7 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS);
-      childrenFeatures.add(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROJECTS);
+      childrenFeatures.add(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES);
     }
     return childrenFeatures;
   }
@@ -141,7 +114,7 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
   }
 
   /**
-   * This returns WorkspaceConfiguration.gif.
+   * This returns PropertyFilter.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -149,7 +122,7 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/WorkspaceConfiguration"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyFilter"));
   }
 
   /**
@@ -167,12 +140,18 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_WorkspaceConfiguration_type");
+    Pattern omissions = ((PropertyFilter)object).getOmissions();
+    if (omissions != null)
+    {
+      return omissions.toString();
+    }
+
+    return getString("_UI_PropertyFilter_type");
   }
 
   /**
@@ -187,10 +166,12 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(WorkspaceConfiguration.class))
+    switch (notification.getFeatureID(PropertyFilter.class))
     {
-    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
-    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
+    case ProjectConfigPackage.PROPERTY_FILTER__OMISSIONS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case ProjectConfigPackage.PROPERTY_FILTER__PREDICATES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -209,12 +190,29 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(
-        ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS,
-        ProjectConfigFactory.eINSTANCE.createPropertyFilter()));
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNamePredicate()));
 
-    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROJECTS,
-        ProjectConfigFactory.eINSTANCE.createProject()));
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createRepositoryPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createAndPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createOrPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNotPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNaturePredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createBuilderPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        PredicatesFactory.eINSTANCE.createFilePredicate()));
   }
 
   /**

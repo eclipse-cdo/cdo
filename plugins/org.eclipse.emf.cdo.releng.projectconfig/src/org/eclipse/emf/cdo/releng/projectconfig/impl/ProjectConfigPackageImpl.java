@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigValidator;
 
@@ -66,6 +67,13 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * @generated
    */
   private EClass preferenceFilterEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass propertyFilterEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -169,7 +177,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWorkspaceConfiguration_Projects()
+  public EReference getWorkspaceConfiguration_PropertyFilters()
   {
     return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(0);
   }
@@ -179,7 +187,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWorkspaceConfiguration_DefaultPreferenceNode()
+  public EReference getWorkspaceConfiguration_Projects()
   {
     return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(1);
   }
@@ -189,9 +197,19 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWorkspaceConfiguration_InstancePreferenceNode()
+  public EReference getWorkspaceConfiguration_DefaultPreferenceNode()
   {
     return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getWorkspaceConfiguration_InstancePreferenceNode()
+  {
+    return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -409,6 +427,46 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getPropertyFilter()
+  {
+    return propertyFilterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPropertyFilter_Omissions()
+  {
+    return (EAttribute)propertyFilterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPropertyFilter_Predicates()
+  {
+    return (EReference)propertyFilterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getPropertyFilter__Matches__String()
+  {
+    return propertyFilterEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EDataType getPattern()
   {
     return patternEDataType;
@@ -448,6 +506,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
 
     // Create classes and their features
     workspaceConfigurationEClass = createEClass(WORKSPACE_CONFIGURATION);
+    createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__PROPERTY_FILTERS);
     createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__PROJECTS);
     createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE);
     createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE);
@@ -475,6 +534,11 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     createEAttribute(preferenceFilterEClass, PREFERENCE_FILTER__INCLUSIONS);
     createEAttribute(preferenceFilterEClass, PREFERENCE_FILTER__EXCLUSIONS);
     createEOperation(preferenceFilterEClass, PREFERENCE_FILTER___MATCHES__STRING);
+
+    propertyFilterEClass = createEClass(PROPERTY_FILTER);
+    createEAttribute(propertyFilterEClass, PROPERTY_FILTER__OMISSIONS);
+    createEReference(propertyFilterEClass, PROPERTY_FILTER__PREDICATES);
+    createEOperation(propertyFilterEClass, PROPERTY_FILTER___MATCHES__STRING);
 
     // Create data types
     patternEDataType = createEDataType(PATTERN);
@@ -522,6 +586,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     // Initialize classes, features, and operations; add parameters
     initEClass(workspaceConfigurationEClass, WorkspaceConfiguration.class, "WorkspaceConfiguration", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getWorkspaceConfiguration_PropertyFilters(), getPropertyFilter(), null, "propertyFilters", null, 0,
+        -1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWorkspaceConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 0,
         -1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -593,6 +660,18 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     op = initEOperation(getPreferenceFilter__Matches__String(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE,
+        IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(propertyFilterEClass, PropertyFilter.class, "PropertyFilter", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertyFilter_Omissions(), getPattern(), "omissions", null, 1, 1, PropertyFilter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertyFilter_Predicates(), thePredicatesPackage.getPredicate(), null, "predicates", null, 0,
+        -1, PropertyFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    op = initEOperation(getPropertyFilter__Matches__String(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE,
         IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
 

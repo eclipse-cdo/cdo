@@ -1331,15 +1331,6 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
             }
           }
         }
-
-        private void collectSelection(List<Object> selection, Object object)
-        {
-          Object value = selectionMap.get(object);
-          if (value != null)
-          {
-            selection.add(value);
-          }
-        }
       });
 
       // Listen to selection so that we can handle it is a special way.
@@ -1356,6 +1347,15 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
           selectionViewer = oldSelectionViewer;
         }
       });
+    }
+
+    protected void collectSelection(List<Object> selection, Object object)
+    {
+      Object value = selectionMap.get(object);
+      if (value != null)
+      {
+        selection.add(value);
+      }
     }
 
     public void update()

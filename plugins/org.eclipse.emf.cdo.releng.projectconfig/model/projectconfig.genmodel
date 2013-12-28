@@ -3,16 +3,19 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.releng.projectconfig/src"
     creationIcons="false" modelPluginID="org.eclipse.emf.cdo.releng.projectconfig"
     modelName="Project Config" modelPluginClass="org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin"
-    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.genmodel#//preferences"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" testsDirectory=""
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    usedGenPackages="../../org.eclipse.emf.cdo.releng.predicates/model/predicates.genmodel#//predicates ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.genmodel#//preferences"
     operationReflection="true" importOrganizing="true" decoration="Live">
   <foreignModel>projectconfig.ecore</foreignModel>
   <genPackages prefix="ProjectConfig" basePackage="org.eclipse.emf.cdo.releng" disposableProviderFactory="true"
       multipleEditorPages="false" generateModelWizard="false" ecorePackage="projectconfig.ecore#/">
+    <genDataTypes ecoreDataType="projectconfig.ecore#//Pattern"/>
     <genClasses ecoreClass="projectconfig.ecore#//WorkspaceConfiguration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/propertyFilters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/projects"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/defaultPreferenceNode"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/instancePrefenceNode"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/instancePreferenceNode"/>
       <genOperations ecoreOperation="projectconfig.ecore#//WorkspaceConfiguration/applyPreferenceProfiles"/>
       <genOperations ecoreOperation="projectconfig.ecore#//WorkspaceConfiguration/updatePreferenceProfileReferences"/>
     </genClasses>
@@ -28,11 +31,26 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PreferenceProfile/name"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceProfile/project"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceProfile/predicates"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceProfile/prerequisites"/>
+      <genOperations ecoreOperation="projectconfig.ecore#//PreferenceProfile/requires">
+        <genParameters ecoreParameter="projectconfig.ecore#//PreferenceProfile/requires/preferenceProfile"/>
+      </genOperations>
     </genClasses>
     <genClasses provider="Stateful" ecoreClass="projectconfig.ecore#//PreferenceFilter">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceFilter/preferenceNode"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceFilter/preferenceProfile"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PreferenceFilter/pattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PreferenceFilter/inclusions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PreferenceFilter/exclusions"/>
+      <genOperations ecoreOperation="projectconfig.ecore#//PreferenceFilter/matches">
+        <genParameters ecoreParameter="projectconfig.ecore#//PreferenceFilter/matches/value"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="projectconfig.ecore#//PropertyFilter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PropertyFilter/omissions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PropertyFilter/predicates"/>
+      <genOperations ecoreOperation="projectconfig.ecore#//PropertyFilter/matches">
+        <genParameters ecoreParameter="projectconfig.ecore#//PropertyFilter/matches/value"/>
+      </genOperations>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

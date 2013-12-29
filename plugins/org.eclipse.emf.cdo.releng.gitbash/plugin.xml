@@ -19,6 +19,17 @@
             adaptable="true"
             id="org.eclipse.emf.cdo.releng.gitbash.contribution1"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+            <!--
+         <action
+               class="org.eclipse.emf.cdo.releng.gitbash.repository.ListFilesAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.releng.gitbash.ListFilesAction"
+               label="List Files"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="List all files ever committed"/>
+               -->
          <action
                class="org.eclipse.emf.cdo.releng.gitbash.repository.CheckCopyrightsAction"
                enablesFor="1"

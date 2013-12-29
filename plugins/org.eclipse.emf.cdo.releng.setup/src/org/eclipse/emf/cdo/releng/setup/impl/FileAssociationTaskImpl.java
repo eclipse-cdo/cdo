@@ -340,10 +340,11 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       return true;
     }
 
+    EditorRegistry registry = (EditorRegistry)PlatformUI.getWorkbench().getEditorRegistry();
+
     String defaultEditorID = getDefaultEditorID();
     if (!StringUtil.isEmpty(defaultEditorID))
     {
-      EditorRegistry registry = (EditorRegistry)PlatformUI.getWorkbench().getEditorRegistry();
       IEditorDescriptor defaultEditor = registry.findEditor(defaultEditorID);
       if (defaultEditor != null)
       {
@@ -359,7 +360,8 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
     Set<String> editorIDs = getEditorIDs(mapping);
     for (FileEditor fileEditor : getEditors())
     {
-      if (!editorIDs.contains(fileEditor.getID()))
+      String editorID = fileEditor.getID();
+      if (registry.findEditor(editorID) != null && !editorIDs.contains(editorID))
       {
         return true;
       }
@@ -455,7 +457,8 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
     for (int i = 0; i < editors.length; i++)
     {
       IEditorDescriptor editor = editors[i];
-      ids.add(editor.getId());
+      String editorID = editor.getId();
+      ids.add(editorID);
     }
 
     return ids;

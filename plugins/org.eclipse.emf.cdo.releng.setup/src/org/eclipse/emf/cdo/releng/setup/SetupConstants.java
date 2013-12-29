@@ -62,4 +62,8 @@ public interface SetupConstants
   public static final boolean SETUP_IDE = "true".equalsIgnoreCase(System.getProperty(PROP_SETUP_IDE, "false"));
 
   public static final boolean SETUP_SKIP = "true".equalsIgnoreCase(System.getProperty(PROP_SETUP_SKIP, "false"));
+
+  public static final String PREF_SKIP_STARTUP_TASKS = "skip.startup.tasks";
+
+  public static final String PREF_LOG_UNNEEDED_TASKS = "log.unneeded.tasks";
 }

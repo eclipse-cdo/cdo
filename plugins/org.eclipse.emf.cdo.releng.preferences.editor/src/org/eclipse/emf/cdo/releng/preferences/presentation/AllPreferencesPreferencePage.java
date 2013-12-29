@@ -88,7 +88,7 @@ public class AllPreferencesPreferencePage extends PreferencePage implements IWor
     super.contributeButtons(parent);
 
     GridLayout gridLayout = (GridLayout)parent.getLayout();
-    gridLayout.numColumns = 1;
+    gridLayout.numColumns += 1;
 
     Button editButton = new Button(parent, SWT.PUSH);
     editButton.setText("Edit...");

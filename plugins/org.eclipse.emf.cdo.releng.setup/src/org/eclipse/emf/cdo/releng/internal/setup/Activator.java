@@ -43,6 +43,26 @@ public class Activator extends AbstractUIPlugin
   {
   }
 
+  public boolean isSkipStartupTasks()
+  {
+    return getPreferenceStore().getBoolean(SetupConstants.PREF_SKIP_STARTUP_TASKS);
+  }
+
+  public void setSkipStartupTasks(boolean value)
+  {
+    getPreferenceStore().setValue(SetupConstants.PREF_SKIP_STARTUP_TASKS, value);
+  }
+
+  public boolean isLogUnneededTasks()
+  {
+    return getPreferenceStore().getBoolean(SetupConstants.PREF_LOG_UNNEEDED_TASKS);
+  }
+
+  public void setLogUnneededTasks(boolean value)
+  {
+    getPreferenceStore().setValue(SetupConstants.PREF_LOG_UNNEEDED_TASKS, value);
+  }
+
   @Override
   public void start(BundleContext context) throws Exception
   {
@@ -50,7 +70,7 @@ public class Activator extends AbstractUIPlugin
     bundleContext = context;
     plugin = this;
 
-    if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP)
+    if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP && !isSkipStartupTasks())
     {
       final Display display = Display.getDefault();
       display.asyncExec(new Runnable()

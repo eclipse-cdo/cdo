@@ -47,6 +47,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.LocationEvent;
@@ -74,6 +76,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -104,6 +107,8 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   private ProgressLogFilter logFilter = new ProgressLogFilter();
 
   private List<SetupTaskPerformer> setupTaskPerformers;
+
+  private Set<SetupTask> neededTasks = new HashSet<SetupTask>();
 
   private SetupTask currentTask;
 
@@ -178,6 +183,11 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   {
     super(parentShell, getTitle(setupTaskPerformers), 1000, 600);
     this.setupTaskPerformers = setupTaskPerformers;
+
+    for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+    {
+      neededTasks.addAll(setupTaskPerformer.getNeededTasks());
+    }
   }
 
   @Override
@@ -280,23 +290,9 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
       @Override
       public Color getForeground(Object element)
       {
-        if (currentPerformer != null)
+        if (!isNeeded(element))
         {
-          if (element instanceof EObject)
-          {
-            for (EObject eObject = (EObject)element; eObject != null; eObject = eObject.eContainer())
-            {
-              if (eObject instanceof SetupTask)
-              {
-                if (!currentPerformer.getNeededTasks().contains(eObject))
-                {
-                  return treeViewer.getControl().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
-                }
-
-                break;
-              }
-            }
-          }
+          return treeViewer.getControl().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
         }
 
         return super.getForeground(element);
@@ -307,6 +303,22 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
+    boolean logUnneededTasks = Activator.getDefault().isLogUnneededTasks();
+    updateFilter(logUnneededTasks);
+
+    final Button checkbox = createCheckbox(parent, "Show unneeded tasks");
+    checkbox.setSelection(logUnneededTasks);
+    checkbox.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        boolean logUnneededTasks = checkbox.getSelection();
+        Activator.getDefault().setLogUnneededTasks(logUnneededTasks);
+        updateFilter(logUnneededTasks);
+      }
+    });
+
     okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
     okButton.setEnabled(false);
 
@@ -320,6 +332,45 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
         setFinished();
       }
     });
+  }
+
+  private void updateFilter(boolean logUnneededTasks)
+  {
+    if (logUnneededTasks)
+    {
+      treeViewer.resetFilters();
+    }
+    else
+    {
+      treeViewer.setFilters(new ViewerFilter[] { new ViewerFilter()
+      {
+        @Override
+        public boolean select(Viewer viewer, Object parentElement, Object element)
+        {
+          return isNeeded(element);
+        }
+      } });
+    }
+  }
+
+  private boolean isNeeded(Object element)
+  {
+    if (element instanceof SetupTask)
+    {
+      return neededTasks.contains(element);
+    }
+
+    if (element instanceof EObject)
+    {
+      EObject eObject = (EObject)element;
+      EObject eContainer = eObject.eContainer();
+      if (eContainer != null)
+      {
+        return isNeeded(eContainer);
+      }
+    }
+
+    return true;
   }
 
   @Override

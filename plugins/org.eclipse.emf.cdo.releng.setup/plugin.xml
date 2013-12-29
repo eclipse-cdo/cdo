@@ -34,7 +34,7 @@
             class="org.eclipse.emf.cdo.releng.internal.setup.Activator$EarlyStartup">
       </startup>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -51,5 +51,15 @@
          </action>
       </objectContribution>
    </extension>
-   
+
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.emf.cdo.releng.ui.preferences.RelengPreferencePage"
+            id="org.eclipse.emf.cdo.releng.setup.SetupPreferencePage"
+            class="org.eclipse.emf.cdo.releng.internal.setup.ui.SetupPreferencePage"
+            name="Setup Tool Configuration">
+      </page>
+   </extension>
+
 </plugin>

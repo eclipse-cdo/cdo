@@ -90,7 +90,7 @@ public class ProjectConfigPreferencePage extends PreferencePage implements IWork
     super.contributeButtons(parent);
 
     GridLayout gridLayout = (GridLayout)parent.getLayout();
-    gridLayout.numColumns = 2;
+    gridLayout.numColumns += 2;
 
     {
       Button applyButton = new Button(parent, SWT.PUSH);

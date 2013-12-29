@@ -89,7 +89,7 @@ public class WorkingSetsPreferencePage extends PreferencePage implements IWorkbe
     super.contributeButtons(parent);
 
     GridLayout gridLayout = (GridLayout)parent.getLayout();
-    gridLayout.numColumns = 1;
+    gridLayout.numColumns += 1;
 
     Button editButton = new Button(parent, SWT.PUSH);
     editButton.setText("Edit...");

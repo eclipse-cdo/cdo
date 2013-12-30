@@ -64,8 +64,8 @@ public final class UpdateUtil extends Plugin
   {
   }
 
-  public static boolean update(final Shell shell, final boolean needsEarlyConfirmation, final Runnable postInstall,
-      final Runnable restartHandler)
+  public static boolean update(final Shell shell, final boolean needsEarlyConfirmation, final boolean async,
+      final Runnable postInstall, final Runnable restartHandler)
   {
     final Display display = shell.getDisplay();
 
@@ -110,7 +110,7 @@ public final class UpdateUtil extends Plugin
 
             if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
             {
-              display.asyncExec(new Runnable()
+              UIUtil.exec(display, async, new Runnable()
               {
                 public void run()
                 {
@@ -120,7 +120,7 @@ public final class UpdateUtil extends Plugin
             }
             else if (updateStatus.getSeverity() != IStatus.ERROR)
             {
-              display.asyncExec(new Runnable()
+              UIUtil.exec(display, async, new Runnable()
               {
                 public void run()
                 {
@@ -149,7 +149,7 @@ public final class UpdateUtil extends Plugin
         }
       };
 
-      display.asyncExec(new Runnable()
+      UIUtil.exec(display, async, new Runnable()
       {
         public void run()
         {

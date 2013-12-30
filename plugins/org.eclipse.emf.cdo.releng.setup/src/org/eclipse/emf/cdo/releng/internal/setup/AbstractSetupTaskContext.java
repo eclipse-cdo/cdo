@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.widgets.Shell;
 
 import java.io.File;
 import java.util.HashMap;
@@ -102,27 +104,23 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     URI uri = getSetupURI(branchDir);
     SetupResource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
-    if (resource.getToolVersion() > SetupTaskMigrator.TOOL_VERSION)
+    EcoreUtil.resolveAll(resource);
+
+    for (Resource res : resourceSet.getResources())
     {
-      Runnable postInstall = new Runnable()
+      if (res instanceof SetupResource)
       {
-        public void run()
+        SetupResource setupResource = (SetupResource)res;
+        if (setupResource.getToolVersion() > SetupTaskMigrator.TOOL_VERSION)
         {
+          Shell shell = UIUtil.getShell();
+          if (UpdateUtil.update(shell, true, false, null, null))
+          {
+            throw new UpdatingException();
+          }
 
+          break;
         }
-      };
-
-      Runnable restartHandler = new Runnable()
-      {
-        public void run()
-        {
-
-        }
-      };
-
-      if (UpdateUtil.update(UIUtil.getShell(), true, postInstall, restartHandler))
-      {
-        throw new UpdatingException();
       }
     }
 

@@ -132,11 +132,11 @@ public final class UIUtil
         {
           calculatedSize.x = 800;
         }
-  
+
         return calculatedSize;
       }
     };
-  
+
     dialog.run(true, true, runnable);
   }
 
@@ -144,5 +144,24 @@ public final class UIUtil
   {
     Activator.log(ex);
     ErrorDialog.open(ex);
+  }
+
+  public static void exec(Display display, boolean async, Runnable runnable)
+  {
+    if (async)
+    {
+      display.asyncExec(runnable);
+    }
+    else
+    {
+      if (Display.getCurrent() == display)
+      {
+        runnable.run();
+      }
+      else
+      {
+        display.syncExec(runnable);
+      }
+    }
   }
 }

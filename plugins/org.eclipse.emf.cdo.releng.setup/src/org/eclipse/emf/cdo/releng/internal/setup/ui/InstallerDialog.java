@@ -607,7 +607,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);
@@ -719,7 +719,8 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
 
-    return UpdateUtil.update(InstallerDialog.this.getShell(), needsEarlyConfirmation, postInstall, restartHandler);
+    return UpdateUtil
+        .update(InstallerDialog.this.getShell(), needsEarlyConfirmation, true, postInstall, restartHandler);
   }
 
   private void initUpdateSearch()
@@ -1616,12 +1617,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-        {
+            {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-        });
+            });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 

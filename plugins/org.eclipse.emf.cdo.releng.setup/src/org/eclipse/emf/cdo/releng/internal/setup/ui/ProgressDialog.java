@@ -12,17 +12,17 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogFilter;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogProvider;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogProvider;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.net4j.util.ObjectUtil;
 

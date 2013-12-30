@@ -12,6 +12,10 @@ package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
+import org.eclipse.emf.common.util.URI;
+
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
@@ -66,4 +70,20 @@ public interface SetupConstants
   public static final String PREF_SKIP_STARTUP_TASKS = "skip.startup.tasks";
 
   public static final String PREF_LOG_UNNEEDED_TASKS = "log.unneeded.tasks";
+
+  public static final String USER_HOME = System.getProperty("user.home", ".");
+
+  public static final String PREFERENCES_NAME = "setup-eclipse.xmi";
+
+  public static final File PREFERENCES_FOLDER = new File(USER_HOME, ".eclipse/org.eclipse.emf.cdo.releng.setup");
+
+  public static final File PREFERENCES_FILE = new File(PREFERENCES_FOLDER, PREFERENCES_NAME);
+
+  public static final URI PREFERENCES_URI = URI.createFileURI(PREFERENCES_FILE.getAbsolutePath());
+
+  public static final String CACHE_NAME = "cache";
+
+  public static final File CACHE_FOLDER = new File(PREFERENCES_FOLDER, CACHE_NAME);
+
+  public static final File GIT_IGNORE_FILE = new File(PREFERENCES_FOLDER, ".gitignore");
 }

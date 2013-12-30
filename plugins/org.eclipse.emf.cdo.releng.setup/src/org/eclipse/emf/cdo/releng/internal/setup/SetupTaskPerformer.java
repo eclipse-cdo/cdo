@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -27,11 +28,10 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogFilter;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogFilter;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.IOUtil;

@@ -11,9 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-
-import java.io.File;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,11 +33,6 @@ import java.io.File;
  */
 public interface Preferences extends ScopeRoot
 {
-  public static final String PREFERENCES_NAME = "setup-eclipse.xmi";
-
-  public static final URI PREFERENCES_URI = URI.createFileURI(new File(System.getProperty("user.home", "."),
-      PREFERENCES_NAME).getAbsolutePath());
-
   /**
    * Returns the value of the '<em><b>Install Folder</b></em>' attribute.
    * <!-- begin-user-doc -->

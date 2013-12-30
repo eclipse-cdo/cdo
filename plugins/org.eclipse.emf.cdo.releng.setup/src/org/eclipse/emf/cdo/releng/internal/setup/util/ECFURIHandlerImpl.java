@@ -8,7 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.util;
+package org.eclipse.emf.cdo.releng.internal.setup.util;
+
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -48,9 +51,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ECFURIHandlerImpl extends URIHandlerImpl
 {
-  private static final File CACHE_DIR = new File(System.getProperty("user.home"),
-      ".eclipse/org.eclipse.emf.cdo.releng.setup/cache");
-
   @Override
   public boolean exists(URI uri, Map<?, ?> options)
   {
@@ -116,7 +116,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
       }
     }
 
-    File cacheFile = new File(CACHE_DIR, FileUtil.encodeFileName(uri.toString()));
+    File cacheFile = new File(SetupConstants.CACHE_FOLDER, FileUtil.encodeFileName(uri.toString()));
 
     for (int i = 0;; ++i)
     {
@@ -165,7 +165,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
       byte[] bytes = transferListener.out.toByteArray();
 
-      CACHE_DIR.mkdirs();
+      SetupConstants.CACHE_FOLDER.mkdirs();
       IOUtil.writeFile(cacheFile, bytes);
 
       return new ByteArrayInputStream(bytes);

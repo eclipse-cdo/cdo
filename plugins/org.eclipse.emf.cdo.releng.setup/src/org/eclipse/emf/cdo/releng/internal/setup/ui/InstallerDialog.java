@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskMigrator;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.FileField;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.ValueListener;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
@@ -27,12 +29,12 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.collection.Pair;
 
@@ -54,29 +56,16 @@ import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.core.ProvisionException;
-import org.eclipse.equinox.p2.engine.IProfile;
-import org.eclipse.equinox.p2.engine.IProfileRegistry;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
-import org.eclipse.equinox.p2.operations.ProvisioningJob;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
-import org.eclipse.equinox.p2.operations.UpdateOperation;
-import org.eclipse.equinox.p2.query.IQueryResult;
-import org.eclipse.equinox.p2.query.QueryUtil;
-import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
-import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -123,10 +112,8 @@ import org.eclipse.swt.widgets.TreeItem;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -134,7 +121,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
@@ -153,13 +139,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private static final String ECLIPSE_VERSION_COLUMN_NAME = "eclipse";
 
-  private static final String[] PRODUCT_PREFIXES = { "org.eclipse.emf.cdo.releng", "org.eclipse.net4j" };
-
-  private static final String PRODUCT_ID = "org.eclipse.emf.cdo.releng.setup.installer.product";
-
   private static final Object[] NO_ELEMENTS = new Object[0];
-
-  private static final IStatus UPDATE_FOUND_STATUS = new Status(IStatus.OK, Activator.PLUGIN_ID, "Updates found");
 
   private final StartType startType;
 
@@ -312,7 +292,7 @@ public class InstallerDialog extends AbstractSetupDialog
                       });
                     }
                   }
-                  catch (UpdatingException ex)
+                  catch (UpdateUtil.UpdatingException ex)
                   {
                     // Ignore
                   }
@@ -627,7 +607,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);
@@ -714,7 +694,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
     catch (Throwable ex)
     {
-      handleException(ex);
+      UIUtil.handleException(ex);
     }
 
     super.okPressed();
@@ -722,179 +702,24 @@ public class InstallerDialog extends AbstractSetupDialog
 
   protected boolean update(final boolean needsEarlyConfirmation)
   {
-    if (needsEarlyConfirmation)
+    Runnable postInstall = new Runnable()
     {
-      final AtomicBoolean result = new AtomicBoolean();
-      InstallerDialog.this.getShell().getDisplay().syncExec(new Runnable()
-      {
-        public void run()
-        {
-          boolean confirmation = MessageDialog
-              .openQuestion(
-                  null,
-                  "Update",
-                  "Updates are needed to process the configuration, and then a restart is required. "
-                      + "It might be possible for the tool to process the configuration with an older version of the tool, but that's not recommended.\n\n"
-                      + "Do you wish to update?");
-          result.set(confirmation);
-        }
-      });
-
-      if (!result.get())
-      {
-        return false;
-      }
-    }
-
-    try
-    {
-      final IRunnableWithProgress runnable = new IRunnableWithProgress()
-      {
-        public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
-        {
-          IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
-
-          try
-          {
-            SubMonitor sub = SubMonitor.convert(monitor, needsEarlyConfirmation ? "Updating..."
-                : "Checking for updates...", 1000);
-
-            IStatus updateStatus = checkForUpdates(agent, false, sub);
-            if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
-            {
-              InstallerDialog.this.getShell().getDisplay().asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  MessageDialog.openInformation(null, "Update", "No updates were found.");
-                }
-              });
-            }
-            else if (updateStatus.getSeverity() != IStatus.ERROR)
-            {
-              InstallerDialog.this.getShell().getDisplay().asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  if (!needsEarlyConfirmation)
-                  {
-                    MessageDialog.openInformation(null, "Update", "Updates were installed. Press OK to restart.");
-                  }
-
-                  close();
-                  setReturnCode(RETURN_RESTART);
-                }
-              });
-            }
-            else
-            {
-              throw new InvocationTargetException(new CoreException(updateStatus));
-            }
-          }
-          finally
-          {
-            ServiceUtil.ungetService(agent);
-            monitor.done();
-          }
-        }
-      };
-
-      viewer.getControl().getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            runInProgressDialog(runnable);
-          }
-          catch (InvocationTargetException ex)
-          {
-            handleException(ex.getCause());
-          }
-          catch (InterruptedException ex)
-          {
-            // Do nothing
-          }
-        }
-      });
-    }
-    catch (Throwable ex)
-    {
-      handleException(ex);
-    }
-
-    return true;
-  }
-
-  private IStatus checkForUpdates(IProvisioningAgent agent, boolean resolveOnly, SubMonitor sub)
-  {
-    try
-    {
-      try
-      {
-        addRepositories(agent, true, sub);
-      }
-      catch (ProvisionException ex)
-      {
-        return ex.getStatus();
-      }
-
-      ProvisioningSession session = new ProvisioningSession(agent);
-      List<IInstallableUnit> ius = getInstalledUnits(session, PRODUCT_PREFIXES).getElement2();
-
-      UpdateOperation operation = new UpdateOperation(session, ius);
-      IStatus status = operation.resolveModal(sub.newChild(300));
-      if (status.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
-      {
-        return status;
-      }
-
-      if (status.getSeverity() == IStatus.CANCEL)
-      {
-        throw new OperationCanceledException();
-      }
-
-      if (status.getSeverity() != IStatus.ERROR)
-      {
-        ProvisioningJob job = operation.getProvisioningJob(null);
-        if (job == null)
-        {
-          String resolutionDetails = operation.getResolutionDetails();
-          throw new IllegalStateException(resolutionDetails);
-        }
-
-        if (resolveOnly)
-        {
-          return UPDATE_FOUND_STATUS;
-        }
-
-        sub.setTaskName("Installing updates...");
-
-        try
-        {
-          addRepositories(agent, false, sub);
-        }
-        catch (ProvisionException ex)
-        {
-          return ex.getStatus();
-        }
-
-        status = job.runModal(sub.newChild(300));
-        if (status.getSeverity() == IStatus.CANCEL)
-        {
-          throw new OperationCanceledException();
-        }
-      }
-
-      return status;
-    }
-    finally
-    {
-      if (!resolveOnly)
+      public void run()
       {
         setUpdateIcon(0);
       }
-    }
+    };
+
+    Runnable restartHandler = new Runnable()
+    {
+      public void run()
+      {
+        close();
+        setReturnCode(RETURN_RESTART);
+      }
+    };
+
+    return UpdateUtil.update(InstallerDialog.this.getShell(), needsEarlyConfirmation, postInstall, restartHandler);
   }
 
   private void initUpdateSearch()
@@ -945,8 +770,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
           try
           {
-            IStatus status = checkForUpdates(agent, true, SubMonitor.convert(null));
-            if (status == UPDATE_FOUND_STATUS)
+            IStatus status = UpdateUtil.checkForUpdates(agent, true, null, SubMonitor.convert(null));
+            if (status == UpdateUtil.UPDATE_FOUND_STATUS)
             {
               updateSearchState = UpdateSearchState.FOUND;
             }
@@ -1010,54 +835,6 @@ public class InstallerDialog extends AbstractSetupDialog
     });
   }
 
-  private Pair<String, List<IInstallableUnit>> getInstalledUnits(ProvisioningSession session, String... iuPrefixes)
-  {
-    IProvisioningAgent agent = session.getProvisioningAgent();
-    IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
-    IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
-    if (profile == null)
-    {
-      List<IInstallableUnit> none = Collections.emptyList();
-      return Pair.create("SelfHostingProfile", none);
-    }
-
-    IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
-
-    List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
-    for (IInstallableUnit installableUnit : queryResult)
-    {
-      String id = installableUnit.getId();
-
-      if (iuPrefixes.length == 0)
-      {
-        ius.add(installableUnit);
-      }
-      else
-      {
-        if (hasPrefix(id, iuPrefixes))
-        {
-          ius.add(installableUnit);
-        }
-      }
-    }
-
-    return Pair.create(profile.getProfileId(), ius);
-  }
-
-  private boolean hasPrefix(String id, String[] iuPrefixes)
-  {
-    for (int i = 0; i < iuPrefixes.length; i++)
-    {
-      String iuPrefix = iuPrefixes[i];
-      if (id.startsWith(iuPrefix))
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   private String getProductVersion()
   {
     IProvisioningAgent agent = ServiceUtil.getService(IProvisioningAgent.class);
@@ -1065,7 +842,7 @@ public class InstallerDialog extends AbstractSetupDialog
     try
     {
       ProvisioningSession session = new ProvisioningSession(agent);
-      Pair<String, List<IInstallableUnit>> profileAndIUs = getInstalledUnits(session, PRODUCT_ID);
+      Pair<String, List<IInstallableUnit>> profileAndIUs = UpdateUtil.getInstalledUnits(session, UpdateUtil.PRODUCT_ID);
       if ("SelfHostingProfile".equals(profileAndIUs.getElement1()))
       {
         return "Self Hosting";
@@ -1140,70 +917,14 @@ public class InstallerDialog extends AbstractSetupDialog
     }.start();
   }
 
-  private void addRepositories(IProvisioningAgent agent, boolean metadata, SubMonitor sub) throws ProvisionException
-  {
-    addRepository(agent, TRAIN_URL, metadata, sub.newChild(200));
-    addRepository(agent, SetupConstants.RELENG_URL, metadata, sub.newChild(200));
-  }
-
-  private void addRepository(IProvisioningAgent agent, String location, boolean metadata, IProgressMonitor monitor)
-      throws ProvisionException
-      {
-    SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 500);
-
-    try
-    {
-      java.net.URI uri = new java.net.URI(location);
-
-      if (metadata)
-      {
-        addMetadataRepository(agent, uri, sub);
-      }
-      else
-      {
-        addArtifactRepository(agent, uri, sub);
-      }
-    }
-    catch (URISyntaxException ex)
-    {
-      throw new IllegalArgumentException(ex);
-    }
-      }
-
-  private void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
-      throws ProvisionException
-      {
-    IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
-        .getService(IMetadataRepositoryManager.SERVICE_NAME);
-    if (manager == null)
-    {
-      throw new IllegalStateException("No metadata repository manager found");
-    }
-
-    manager.loadRepository(location, monitor);
-      }
-
-  private void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
-      throws ProvisionException
-      {
-    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
-        .getService(IArtifactRepositoryManager.SERVICE_NAME);
-    if (manager == null)
-    {
-      throw new IllegalStateException("No artifact repository manager found");
-    }
-
-    manager.loadRepository(location, monitor);
-      }
-
-  private SetupResource loadResourceSafely(URI uri) throws UpdatingException
+  private SetupResource loadResourceSafely(URI uri) throws UpdateUtil.UpdatingException
   {
     SetupResource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
     if (resource.getToolVersion() > SetupTaskMigrator.TOOL_VERSION)
     {
       if (update(true))
       {
-        throw new UpdatingException();
+        throw new UpdateUtil.UpdatingException();
       }
     }
 
@@ -1218,7 +939,7 @@ public class InstallerDialog extends AbstractSetupDialog
     Set<File> directories = new LinkedHashSet<File>();
     directories.add(new File("").getAbsoluteFile());
     directories.add(new File(System.getProperty("user.dir")).getAbsoluteFile());
-    directories.add(new File(System.getProperty("user.home")).getAbsoluteFile());
+    directories.add(new File(SetupConstants.USER_HOME).getAbsoluteFile());
 
     List<Project> projects = new ArrayList<Project>();
     for (File directory : directories)
@@ -1253,6 +974,9 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     try
     {
+      final Shell shell = viewer.getControl().getShell();
+      final Display display = shell.getDisplay();
+
       IRunnableWithProgress runnable = new IRunnableWithProgress()
       {
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
@@ -1268,7 +992,6 @@ public class InstallerDialog extends AbstractSetupDialog
             EList<EObject> contents = configurationResource.getContents();
             if (contents.isEmpty())
             {
-              final Display display = viewer.getControl().getDisplay();
               display.syncExec(new Runnable()
               {
                 public void run()
@@ -1283,9 +1006,9 @@ public class InstallerDialog extends AbstractSetupDialog
                     {
                       public void run()
                       {
-                        if (!resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
+                        if (!resourceSet.getURIConverter().exists(SetupConstants.PREFERENCES_URI, null))
                         {
-                          Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
+                          Resource resource = resourceSet.createResource(SetupConstants.PREFERENCES_URI);
                           preferences = SetupFactory.eINSTANCE.createPreferences();
                           resource.getContents().add(preferences);
                           EMFUtil.saveEObject(preferences);
@@ -1314,9 +1037,9 @@ public class InstallerDialog extends AbstractSetupDialog
             String bundlePoolFolder;
             String bundlePoolTPFolder;
 
-            if (resourceSet.getURIConverter().exists(Preferences.PREFERENCES_URI, null))
+            if (resourceSet.getURIConverter().exists(SetupConstants.PREFERENCES_URI, null))
             {
-              Resource resource = loadResourceSafely(Preferences.PREFERENCES_URI);
+              Resource resource = loadResourceSafely(SetupConstants.PREFERENCES_URI);
               preferences = (Preferences)resource.getContents().get(0);
 
               installFolder = safe(preferences.getInstallFolder());
@@ -1325,12 +1048,12 @@ public class InstallerDialog extends AbstractSetupDialog
             }
             else
             {
-              Resource resource = resourceSet.createResource(Preferences.PREFERENCES_URI);
+              Resource resource = resourceSet.createResource(SetupConstants.PREFERENCES_URI);
               preferences = SetupFactory.eINSTANCE.createPreferences();
               resource.getContents().add(preferences);
               EMFUtil.saveEObject(preferences);
 
-              File rootFolder = new File(System.getProperty("user.home", "."));
+              File rootFolder = new File(SetupConstants.USER_HOME);
 
               installFolder = safe(getAbsolutePath(rootFolder));
               bundlePoolFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-ide")));
@@ -1369,7 +1092,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
             initUI(input, installFolder, bundlePoolFolder, bundlePoolTPFolder);
           }
-          catch (UpdatingException ex)
+          catch (UpdateUtil.UpdatingException ex)
           {
             // Ignore
           }
@@ -1380,7 +1103,7 @@ public class InstallerDialog extends AbstractSetupDialog
         }
       };
 
-      runInProgressDialog(runnable);
+      UIUtil.runInProgressDialog(shell, runnable);
     }
     catch (InterruptedException ex)
     {
@@ -1388,11 +1111,11 @@ public class InstallerDialog extends AbstractSetupDialog
     }
     catch (InvocationTargetException ex)
     {
-      handleException(ex.getCause());
+      UIUtil.handleException(ex.getCause());
     }
     catch (Throwable ex)
     {
-      handleException(ex);
+      UIUtil.handleException(ex);
     }
   }
 
@@ -1520,7 +1243,7 @@ public class InstallerDialog extends AbstractSetupDialog
           Resource resource = loadResourceSafely(uri);
           setup = (Setup)resource.getContents().get(0);
         }
-        catch (UpdatingException ex)
+        catch (UpdateUtil.UpdatingException ex)
         {
           return null;
         }
@@ -1760,33 +1483,6 @@ public class InstallerDialog extends AbstractSetupDialog
     }
   }
 
-  private void runInProgressDialog(IRunnableWithProgress runnable) throws InvocationTargetException,
-  InterruptedException
-  {
-    ProgressMonitorDialog dialog = new ProgressMonitorDialog(viewer.getControl().getShell())
-    {
-      @Override
-      protected Point getInitialSize()
-      {
-        Point calculatedSize = super.getInitialSize();
-        if (calculatedSize.x < 800)
-        {
-          calculatedSize.x = 800;
-        }
-
-        return calculatedSize;
-      }
-    };
-
-    dialog.run(true, true, runnable);
-  }
-
-  private void handleException(Throwable ex)
-  {
-    Activator.log(ex);
-    ErrorDialog.open(ex);
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -1827,14 +1523,6 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       return performer;
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class UpdatingException extends Exception
-  {
-    private static final long serialVersionUID = 1L;
   }
 
   /**
@@ -1918,7 +1606,7 @@ public class InstallerDialog extends AbstractSetupDialog
       try
       {
         ProvisioningSession session = new ProvisioningSession(agent);
-        List<IInstallableUnit> installedUnits = getInstalledUnits(session).getElement2();
+        List<IInstallableUnit> installedUnits = UpdateUtil.getInstalledUnits(session).getElement2();
 
         String[][] rows = new String[installedUnits.size()][];
         for (int i = 0; i < rows.length; i++)
@@ -1928,12 +1616,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-            {
+        {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-            });
+        });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 
@@ -1947,7 +1635,7 @@ public class InstallerDialog extends AbstractSetupDialog
           String version = rows[i][ECLIPSE_VERSION_COLUMN_INDEX];
           item.setText(ECLIPSE_VERSION_COLUMN_INDEX, version);
 
-          if (hasPrefix(id, PRODUCT_PREFIXES))
+          if (UpdateUtil.hasPrefix(id))
           {
             item.setForeground(blue);
           }

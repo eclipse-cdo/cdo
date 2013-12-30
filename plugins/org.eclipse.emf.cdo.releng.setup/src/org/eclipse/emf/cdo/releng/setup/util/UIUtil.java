@@ -10,12 +10,20 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
@@ -109,5 +117,32 @@ public final class UIUtil
     data.grabExcessVerticalSpace = true;
     data.verticalAlignment = GridData.FILL;
     return data;
+  }
+
+  public static void runInProgressDialog(Shell shell, IRunnableWithProgress runnable) throws InvocationTargetException,
+      InterruptedException
+  {
+    ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell)
+    {
+      @Override
+      protected Point getInitialSize()
+      {
+        Point calculatedSize = super.getInitialSize();
+        if (calculatedSize.x < 800)
+        {
+          calculatedSize.x = 800;
+        }
+  
+        return calculatedSize;
+      }
+    };
+  
+    dialog.run(true, true, runnable);
+  }
+
+  public static void handleException(Throwable ex)
+  {
+    Activator.log(ex);
+    ErrorDialog.open(ex);
   }
 }

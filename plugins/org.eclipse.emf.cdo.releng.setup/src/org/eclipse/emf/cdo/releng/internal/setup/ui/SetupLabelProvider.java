@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.presentation;
 import org.eclipse.emf.cdo.releng.internal.setup.AbstractSetupTaskContext;
 import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
@@ -28,7 +29,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
@@ -2370,7 +2370,7 @@ IMenuListener, IViewerProvider, IGotoMarker
 
   public static void openPreferences(IWorkbenchPage page)
   {
-    URI uri = Preferences.PREFERENCES_URI;
+    URI uri = SetupConstants.PREFERENCES_URI;
 
     ResourceSet resourceSet = EMFUtil.createResourceSet();
     if (!resourceSet.getURIConverter().exists(uri, null))

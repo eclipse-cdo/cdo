@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.util;
+package org.eclipse.emf.cdo.releng.internal.setup.util;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
@@ -16,12 +16,15 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -67,18 +70,22 @@ public final class EMFUtil extends Plugin
     Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
     extensionToFactoryMap.put("xmi", new SetupResourceFactoryImpl());
 
-    EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+    URIConverter uriConverter = resourceSet.getURIConverter();
+    Map<URI, URI> uriMap = uriConverter.getURIMap();
+    uriMap.put(URI.createFileURI(Activator.OLD_PREFERENCES.getAbsolutePath()), SetupConstants.PREFERENCES_URI);
+
+    EList<URIHandler> uriHandlers = uriConverter.getURIHandlers();
     uriHandlers.add(4, new ECFURIHandlerImpl());
 
     if (!CONFIGURATION_URI.equals(REDIRECTED_CONFIGURATION_URI))
     {
-      resourceSet.getURIConverter().getURIMap().put(CONFIGURATION_URI, REDIRECTED_CONFIGURATION_URI);
+      uriMap.put(CONFIGURATION_URI, REDIRECTED_CONFIGURATION_URI);
     }
 
     if (EXAMPLE_URI != null)
     {
       URI exampleURI = URI.createURI(EXAMPLE_URI);
-      resourceSet.getURIConverter().getURIMap().put(EXAMPLE_PROXY_URI, exampleURI);
+      uriMap.put(EXAMPLE_PROXY_URI, exampleURI);
     }
   }
 

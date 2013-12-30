@@ -16,9 +16,9 @@ import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.emf.cdo.releng.setup.util.TargetPlatformUtil;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.FileLock;

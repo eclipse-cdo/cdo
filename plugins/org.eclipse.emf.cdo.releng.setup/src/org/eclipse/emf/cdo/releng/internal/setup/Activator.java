@@ -11,7 +11,10 @@
 package org.eclipse.emf.cdo.releng.internal.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil.UpdatingException;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -19,10 +22,14 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionTracker;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
+
+import java.io.File;
+import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
@@ -34,6 +41,8 @@ public class Activator extends AbstractUIPlugin
   // public static final String CDO_URL = "http://download.eclipse.org/modeling/emf/cdo/updates/integration";
 
   public static final String CDO_URL = "http://hudson.eclipse.org/cdo/job/emf-cdo-integration/lastSuccessfulBuild/artifact";
+
+  public static final File OLD_PREFERENCES = new File(SetupConstants.USER_HOME, SetupConstants.PREFERENCES_NAME);
 
   private static Activator plugin;
 
@@ -70,6 +79,28 @@ public class Activator extends AbstractUIPlugin
     bundleContext = context;
     plugin = this;
 
+    if (OLD_PREFERENCES.isFile() && !SetupConstants.PREFERENCES_FILE.exists())
+    {
+      SetupConstants.PREFERENCES_FOLDER.mkdirs();
+      OLD_PREFERENCES.renameTo(SetupConstants.PREFERENCES_FILE);
+    }
+
+    if (!SetupConstants.GIT_IGNORE_FILE.exists())
+    {
+      SetupConstants.PREFERENCES_FOLDER.mkdirs();
+      PrintStream stream = null;
+
+      try
+      {
+        stream = new PrintStream(SetupConstants.GIT_IGNORE_FILE);
+        stream.println(SetupConstants.CACHE_NAME + "/");
+      }
+      finally
+      {
+        IOUtil.closeSilent(stream);
+      }
+    }
+
     if (SetupConstants.SETUP_IDE && !SetupConstants.SETUP_SKIP && !isSkipStartupTasks())
     {
       final Display display = Display.getDefault();
@@ -77,7 +108,9 @@ public class Activator extends AbstractUIPlugin
       {
         public void run()
         {
-          IExtensionTracker extensionTracker = PlatformUI.getWorkbench().getExtensionTracker();
+          IWorkbench workbench = PlatformUI.getWorkbench();
+
+          IExtensionTracker extensionTracker = workbench.getExtensionTracker();
           if (extensionTracker == null)
           {
             display.asyncExec(this);
@@ -88,6 +121,10 @@ public class Activator extends AbstractUIPlugin
             {
               SetupTaskPerformer performer = new SetupTaskPerformer(false);
               performer.perform();
+            }
+            catch (UpdatingException ex)
+            {
+              workbench.restart();
             }
             catch (Throwable ex)
             {

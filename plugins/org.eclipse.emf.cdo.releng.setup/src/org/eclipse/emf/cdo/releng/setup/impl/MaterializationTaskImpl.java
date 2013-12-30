@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;

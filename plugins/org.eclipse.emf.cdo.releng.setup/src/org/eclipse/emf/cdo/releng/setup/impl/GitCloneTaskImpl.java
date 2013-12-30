@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
 
 import org.eclipse.net4j.util.io.IOUtil;
 

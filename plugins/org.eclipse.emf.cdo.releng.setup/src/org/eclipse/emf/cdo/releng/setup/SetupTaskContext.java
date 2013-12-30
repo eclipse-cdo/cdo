@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.StringExpander;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;

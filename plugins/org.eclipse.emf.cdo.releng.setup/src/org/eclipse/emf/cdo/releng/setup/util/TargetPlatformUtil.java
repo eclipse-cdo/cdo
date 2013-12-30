@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogMonitor;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.util.log;
+package org.eclipse.emf.cdo.releng.setup.log;
 
 import org.eclipse.core.runtime.IStatus;
 

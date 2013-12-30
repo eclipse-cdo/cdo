@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.releng.setup.installer.editor;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.workingsets.provider.WorkingSetsItemProviderAdapterFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;

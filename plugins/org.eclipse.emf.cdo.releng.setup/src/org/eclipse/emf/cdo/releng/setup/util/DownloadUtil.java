@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
 
 import org.eclipse.net4j.util.io.IOUtil;
 

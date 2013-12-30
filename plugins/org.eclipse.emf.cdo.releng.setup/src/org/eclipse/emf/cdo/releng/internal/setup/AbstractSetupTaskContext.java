@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup;
 
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil.UpdatingException;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
@@ -17,16 +20,15 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -93,13 +95,37 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     initialize(setup, false);
   }
 
-  protected AbstractSetupTaskContext(Trigger trigger, File branchDir)
+  protected AbstractSetupTaskContext(Trigger trigger, File branchDir) throws UpdatingException
   {
     this(trigger);
     this.branchDir = branchDir;
 
     URI uri = getSetupURI(branchDir);
-    Resource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
+    SetupResource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
+    if (resource.getToolVersion() > SetupTaskMigrator.TOOL_VERSION)
+    {
+      Runnable postInstall = new Runnable()
+      {
+        public void run()
+        {
+
+        }
+      };
+
+      Runnable restartHandler = new Runnable()
+      {
+        public void run()
+        {
+
+        }
+      };
+
+      if (UpdateUtil.update(UIUtil.getShell(), true, postInstall, restartHandler))
+      {
+        throw new UpdatingException();
+      }
+    }
+
     EList<EObject> contents = resource.getContents();
     if (!contents.isEmpty())
     {

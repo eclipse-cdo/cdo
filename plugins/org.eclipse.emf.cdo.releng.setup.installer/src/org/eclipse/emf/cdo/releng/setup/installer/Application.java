@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog.StartType;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PreferenceRecorderAction;
-import org.eclipse.emf.cdo.releng.setup.Preferences;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.installer.editor.SetupEditorAdvisor;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
@@ -101,7 +101,7 @@ public class Application implements IApplication
             }
             else
             {
-              URI uri = Preferences.PREFERENCES_URI;
+              URI uri = SetupConstants.PREFERENCES_URI;
               IEditorInput editorInput = new URIEditorInput(uri, uri.lastSegment());
 
               try

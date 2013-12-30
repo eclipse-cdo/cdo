@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.StringUtil;

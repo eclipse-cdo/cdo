@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.presentation;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertiesViewer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.SetupLabelProvider;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
@@ -19,7 +20,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate.Factory;
 import org.eclipse.emf.cdo.releng.setup.provider.SetupEditPlugin;
-import org.eclipse.emf.cdo.releng.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.container.IPluginContainer;

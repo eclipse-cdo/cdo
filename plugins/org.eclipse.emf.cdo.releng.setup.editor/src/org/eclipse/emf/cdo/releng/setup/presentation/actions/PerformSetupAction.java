@@ -15,16 +15,17 @@ import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ConfirmationDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil.UpdatingException;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLog;
-import org.eclipse.emf.cdo.releng.setup.util.log.ProgressLogRunnable;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -36,6 +37,7 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.Collections;
 import java.util.Set;
@@ -123,6 +125,10 @@ public class PerformSetupAction extends AbstractSetupAction
           }
         }, Collections.singletonList(setupTaskPerformer));
       }
+    }
+    catch (UpdatingException ex)
+    {
+      PlatformUI.getWorkbench().restart();
     }
     catch (Throwable ex)
     {

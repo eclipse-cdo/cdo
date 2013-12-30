@@ -4,13 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+iimport org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -37,14 +37,17 @@ public final class FileUtil
 
   public static void rename(File from, File to) throws IOException, InterruptedException
   {
-    for (int i = 0; i < 1000; i++)
+    if (from.exists())
     {
-      if (from.renameTo(to))
+      for (int i = 0; i < 1000; i++)
       {
-        return;
-      }
+        if (from.renameTo(to))
+        {
+          return;
+        }
 
-      Thread.sleep(5);
+        Thread.sleep(5);
+      }
     }
 
     throw new IOException("Could not rename '" + from.getAbsolutePath() + "' to '" + to.getAbsolutePath() + "'");

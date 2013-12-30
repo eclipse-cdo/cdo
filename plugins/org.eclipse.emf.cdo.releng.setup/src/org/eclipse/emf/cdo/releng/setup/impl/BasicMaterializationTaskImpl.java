@@ -320,14 +320,29 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       }
       catch (Exception ex)
       {
-        File tpBroken = new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis());
-        FileUtil.rename(tp, tpBroken);
-        if (tpOld != null)
+        try
         {
-          FileUtil.rename(tpOld, tp);
+          File tpBroken = new File(tp.getParentFile(), tp.getName() + "." + System.currentTimeMillis());
+          if (tp.exists())
+          {
+            FileUtil.rename(tp, tpBroken);
+          }
+
+          if (tpOld != null)
+          {
+            FileUtil.rename(tpOld, tp);
+          }
+
+          if (tpBroken.exists())
+          {
+            FileUtil.deleteAsync(tpBroken);
+          }
+        }
+        catch (Throwable t)
+        {
+          Activator.log(t);
         }
 
-        FileUtil.deleteAsync(tpBroken);
         throw ex;
       }
       finally
@@ -353,6 +368,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       {
         node.put("core_autoShareProjects", oldautoShareProjects);
       }
+
       monitor.done();
     }
   }

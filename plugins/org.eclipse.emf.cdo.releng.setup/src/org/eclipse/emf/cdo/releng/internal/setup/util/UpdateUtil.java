@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.util;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractSetupDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.InstallerDialog;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
@@ -79,10 +80,10 @@ public final class UpdateUtil extends Plugin
           boolean confirmation = MessageDialog
               .openQuestion(
                   null,
-                  "Update",
-                  "Updates are needed to process the configuration, and then a restart is required. "
-                      + "It might be possible for the tool to process the configuration with an older version of the tool, but that's not recommended.\n\n"
-                      + "Do you wish to update?");
+                  AbstractSetupDialog.SHELL_TEXT,
+                  "Updates are needed to process the setup configuration, and then a restart is required. "
+                      + "It might be possible for this older version of the tool to process the configuration, but that's not recommended.\n\n"
+                      + "Do you wish to update and restart?");
           result.set(confirmation);
         }
       });
@@ -114,7 +115,7 @@ public final class UpdateUtil extends Plugin
               {
                 public void run()
                 {
-                  MessageDialog.openInformation(null, "Update", "No updates were found.");
+                  MessageDialog.openInformation(null, AbstractSetupDialog.SHELL_TEXT, "No updates were found.");
                 }
               });
             }
@@ -126,7 +127,8 @@ public final class UpdateUtil extends Plugin
                 {
                   if (!needsEarlyConfirmation)
                   {
-                    MessageDialog.openInformation(null, "Update", "Updates were installed. Press OK to restart.");
+                    MessageDialog.openInformation(null, AbstractSetupDialog.SHELL_TEXT,
+                        "Updates were installed. Press OK to restart.");
                   }
 
                   if (restartHandler != null)

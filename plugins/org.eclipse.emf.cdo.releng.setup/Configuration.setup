@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<setup:Configuration setup:toolVersion="5" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" toolVersion="1">
+<setup:Configuration setup:toolVersion="4" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" toolVersion="1">
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Global Variables">
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.4 JDK/JRE." type="FOLDER" name="jre.1.4.location"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a strictly compatible 1.5 JDK/JRE." type="FOLDER" name="jre.1.5.location"/>

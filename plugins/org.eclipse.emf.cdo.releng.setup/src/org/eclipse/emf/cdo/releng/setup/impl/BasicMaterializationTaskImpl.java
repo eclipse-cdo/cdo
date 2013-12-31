@@ -57,7 +57,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.publisher.AbstractPublisherApplication;
 import org.eclipse.equinox.p2.publisher.eclipse.FeaturesAndBundlesPublisherApplication;
-import org.eclipse.equinox.p2.publisher.eclipse.ProductPublisherApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -405,11 +404,11 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     AbstractPublisherApplication publisher = new FeaturesAndBundlesPublisherApplication();
     publisher.run(args);
-
-    publisher = new ProductPublisherApplication();
-    publisher.run(args);
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static class BuckminsterHelper
   {
     private static MaterializationSpec getMSpec(URL mspecURL, IProgressMonitor monitor) throws Exception

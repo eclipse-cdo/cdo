@@ -110,12 +110,12 @@ import java.util.regex.Pattern;
 public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implements MaterializationTask
 {
   private static final String[] REQUIRED_IUS = { "org.eclipse.buckminster.core.headless.feature.feature.group",
-    "org.eclipse.buckminster.pde.headless.feature.feature.group",
-    "org.eclipse.buckminster.git.headless.feature.feature.group", "org.eclipse.buckminster.mspec",
-  "org.eclipse.buckminster.rmap" };
+      "org.eclipse.buckminster.pde.headless.feature.feature.group",
+      "org.eclipse.buckminster.git.headless.feature.feature.group", "org.eclipse.buckminster.mspec",
+      "org.eclipse.buckminster.rmap" };
 
   private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/tools/buckminster/headless-4.3",
-  "http://download.eclipse.org/tools/buckminster/updates-4.3" };
+      "http://download.eclipse.org/tools/buckminster/updates-4.3" };
 
   /**
    * The cached value of the '{@link #getRootComponents() <em>Root Components</em>}' containment reference list.
@@ -393,7 +393,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
   public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, boolean locateNestedProjects,
       List<String> locations, IProgressMonitor monitor) throws ParserConfigurationException
-      {
+  {
     Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
     Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
 
@@ -426,18 +426,18 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     }
 
     return roots;
-      }
+  }
 
   public static Map<String, List<ComponentLocation>> analyzeFolder(File folder, boolean locateNestedProjects,
       IProgressMonitor monitor) throws ParserConfigurationException
-      {
+  {
     Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
 
     DocumentBuilder documentBuilder = createDocumentBuilder();
     analyze(componentMap, documentBuilder, folder, locateNestedProjects, monitor);
 
     return componentMap;
-      }
+  }
 
   private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
       File folder, boolean locateNestedProjects, IProgressMonitor monitor)
@@ -686,11 +686,14 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static class BuckminsterHelper
   {
     public static String getMspec(SetupTaskContext context, EList<Component> rootComponents,
         EList<SourceLocator> sourceLocators, EList<P2Repository> p2Repositories) throws Exception
-        {
+    {
       File workspaceDir = context.getWorkspaceDir();
       File buckminsterFolder = new File(workspaceDir, ".buckminster");
       URI mspecURI = URI.createFileURI(new File(buckminsterFolder, "buckminster.mspec").toString());
@@ -963,7 +966,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       rmapResource.save(null);
 
       return mspecURI.toString();
-        }
+    }
 
     private static Pattern exactPattern(String componentName)
     {

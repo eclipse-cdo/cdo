@@ -134,12 +134,9 @@ public class PreferenceProfileItemProvider extends ItemProviderAdapter implement
           Project project = (Project)value;
           String projectName = project.getPreferenceNode().getName();
           IProject iProject = WORKSPACE_ROOT.getProject(projectName);
-          for (Predicate predicate : predicates)
+          if (preferenceProfile.matches(iProject))
           {
-            if (predicate.matches(iProject))
-            {
-              result.add(project);
-            }
+            result.add(project);
           }
         }
 
@@ -530,6 +527,12 @@ public class PreferenceProfileItemProvider extends ItemProviderAdapter implement
 
     newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREFERENCE_FILTERS,
         ProjectConfigFactory.eINSTANCE.createPreferenceFilter()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,
+        ProjectConfigFactory.eINSTANCE.createInclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,
+        ProjectConfigFactory.eINSTANCE.createExclusionPredicate()));
 
     newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,
         PredicatesFactory.eINSTANCE.createNamePredicate()));

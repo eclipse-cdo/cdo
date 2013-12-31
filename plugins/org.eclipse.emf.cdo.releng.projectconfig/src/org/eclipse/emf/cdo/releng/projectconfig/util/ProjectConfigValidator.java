@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.releng.projectconfig.util;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
+import org.eclipse.emf.cdo.releng.projectconfig.ExclusionPredicate;
+import org.eclipse.emf.cdo.releng.projectconfig.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -20,19 +22,25 @@ import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -123,6 +131,10 @@ public class ProjectConfigValidator extends EObjectValidator
       return validatePreferenceFilter((PreferenceFilter)value, diagnostics, context);
     case ProjectConfigPackage.PROPERTY_FILTER:
       return validatePropertyFilter((PropertyFilter)value, diagnostics, context);
+    case ProjectConfigPackage.INCLUSION_PREDICATE:
+      return validateInclusionPredicate((InclusionPredicate)value, diagnostics, context);
+    case ProjectConfigPackage.EXCLUSION_PREDICATE:
+      return validateExclusionPredicate((ExclusionPredicate)value, diagnostics, context);
     case ProjectConfigPackage.PATTERN:
       return validatePattern((Pattern)value, diagnostics, context);
     default:
@@ -184,6 +196,10 @@ public class ProjectConfigValidator extends EObjectValidator
     if (result || diagnostics != null)
     {
       result &= validateProject_AllPreferencesManaged(project, diagnostics, context);
+    }
+    if (result || diagnostics != null)
+    {
+      result &= validateProject_PreferenceProfileReferencesSpecifyUniqueProperties(project, diagnostics, context);
     }
     return result;
   }
@@ -308,6 +324,25 @@ public class ProjectConfigValidator extends EObjectValidator
     }
   }
 
+  private static String getObjectLabel(Collection<? extends EObject> eObjects, Map<Object, Object> context)
+  {
+    StringBuilder result = new StringBuilder();
+    List<EObject> values = new ArrayList<EObject>(eObjects);
+    for (int i = 0, size = values.size(); i < size; ++i)
+    {
+      if (i == size - 1 && size > 1)
+      {
+        result.append(" and ");
+      }
+      else if (i != 0)
+      {
+        result.append(", ");
+      }
+      result.append(getObjectLabel(values.get(i), context));
+    }
+    return result.toString();
+  }
+
   /**
    * Validates the AllPreferencesManaged constraint of '<em>Project</em>'.
    * <!-- begin-user-doc -->
@@ -347,7 +382,7 @@ public class ProjectConfigValidator extends EObjectValidator
               substitution.insert(index, "/");
             }
 
-            substitution.insert(index, preferenceNode.getName());
+            substitution.insert(index, getObjectLabel(preferenceNode, context));
           }
         }
 
@@ -357,11 +392,212 @@ public class ProjectConfigValidator extends EObjectValidator
         data.addAll(preferenceNodes);
         diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
             "_UI_AllPreferencesManaged_diagnostic", new Object[] { substitution }, data.toArray(), context));
+
+        for (Map.Entry<PreferenceNode, Set<Property>> entry : unmanagedPreferences.entrySet())
+        {
+          for (Property property : entry.getValue())
+          {
+            diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
+                "_UI_UnmanagedProperty_diagnostic", new Object[] { getObjectLabel(property, context) }, new Object[] {
+                    property, project }, context));
+
+          }
+        }
       }
       return false;
     }
 
     return true;
+  }
+
+  private static final Object OVERLAPPING_PROFILES_KEY = new Object();
+
+  // private static Map<PreferenceProfile, Map<PreferenceProfile, Set<Property>>> addOverlap(Map<Object, Object>
+  // context, PreferenceProfile preferenceProfile, PreferenceProfile overlappingPreferencProfile, Property property)
+  // {
+  //
+  // }
+  //
+  private static final Map<PreferenceProfile, Map<PreferenceProfile, Set<Property>>> getOverlaps(
+      Map<Object, Object> context, boolean demandCreate)
+  {
+    @SuppressWarnings("unchecked")
+    Map<PreferenceProfile, Map<PreferenceProfile, Set<Property>>> overlappingProfiles = (Map<PreferenceProfile, Map<PreferenceProfile, Set<Property>>>)context
+        .get(OVERLAPPING_PROFILES_KEY);
+    if (overlappingProfiles == null)
+    {
+      overlappingProfiles = new HashMap<PreferenceProfile, Map<PreferenceProfile, Set<Property>>>();
+      context.put(OVERLAPPING_PROFILES_KEY, overlappingProfiles);
+    }
+    return overlappingProfiles;
+
+  }
+
+  /**
+   * Validates the PreferenceProfileReferencesSpecifyUniqueProperties constraint of '<em>Project</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean validateProject_PreferenceProfileReferencesSpecifyUniqueProperties(Project project,
+      DiagnosticChain diagnostics, Map<Object, Object> context)
+  {
+    try
+    {
+      Map<String, Set<Property>> keyToPropertiesMap = new HashMap<String, Set<Property>>();
+      Map<Property, Set<PreferenceProfile>> propertyToPreferenceProfileMap = new HashMap<Property, Set<PreferenceProfile>>();
+      Map<PreferenceProfile, Set<Property>> preferenceProfileToPropertyMap = new LinkedHashMap<PreferenceProfile, Set<Property>>();
+      Set<PreferenceProfile> preferenceProfileReferences = new LinkedHashSet<PreferenceProfile>(
+          project.getPreferenceProfileReferences());
+      preferenceProfileReferences.addAll(project.getPreferenceProfiles());
+      for (PreferenceProfile preferenceProfile : preferenceProfileReferences)
+      {
+        Set<Property> preferenceProfileProperties = preferenceProfileToPropertyMap.get(preferenceProfile);
+        if (preferenceProfileProperties == null)
+        {
+          preferenceProfileProperties = new LinkedHashSet<Property>();
+          preferenceProfileToPropertyMap.put(preferenceProfile, preferenceProfileProperties);
+        }
+
+        for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
+        {
+          for (Property property : preferenceFilter.getProperties())
+          {
+            preferenceProfileProperties.add(property);
+
+            Set<PreferenceProfile> preferenceProfiles = propertyToPreferenceProfileMap.get(property);
+            if (preferenceProfiles == null)
+            {
+              preferenceProfiles = new LinkedHashSet<PreferenceProfile>();
+              propertyToPreferenceProfileMap.put(property, preferenceProfiles);
+            }
+
+            preferenceProfiles.add(preferenceProfile);
+
+            String relativePath = property.getRelativePath();
+            Set<Property> properties = keyToPropertiesMap.get(relativePath);
+            if (properties == null)
+            {
+              properties = new HashSet<Property>();
+              keyToPropertiesMap.put(relativePath, properties);
+            }
+
+            properties.add(property);
+          }
+        }
+      }
+
+      for (Iterator<Map.Entry<String, Set<Property>>> it = keyToPropertiesMap.entrySet().iterator(); it.hasNext();)
+      {
+        Set<Property> properties = it.next().getValue();
+        if (properties.size() <= 1)
+        {
+          it.remove();
+        }
+        else
+        {
+          Set<PreferenceProfile> preferencesProfiles = new LinkedHashSet<PreferenceProfile>();
+          for (Property property : properties)
+          {
+            preferencesProfiles.addAll(propertyToPreferenceProfileMap.get(property));
+          }
+
+          Map<PreferenceProfile, Map<PreferenceProfile, Set<Property>>> overlaps = getOverlaps(context, true);
+          for (PreferenceProfile preferenceProfile : preferencesProfiles)
+          {
+            Map<PreferenceProfile, Set<Property>> profileProperties = overlaps.get(preferenceProfile);
+            if (profileProperties == null)
+            {
+              profileProperties = new LinkedHashMap<PreferenceProfile, Set<Property>>();
+              overlaps.put(preferenceProfile, profileProperties);
+            }
+
+            for (PreferenceProfile otherPreferenceProfile : preferencesProfiles)
+            {
+              if (otherPreferenceProfile != preferenceProfile)
+              {
+                Set<Property> otherProperties = profileProperties.get(otherPreferenceProfile);
+                if (otherProperties == null)
+                {
+                  otherProperties = new LinkedHashSet<Property>();
+                  profileProperties.put(otherPreferenceProfile, otherProperties);
+                }
+
+                otherProperties.addAll(properties);
+                otherProperties.retainAll(preferenceProfileToPropertyMap.get(otherPreferenceProfile));
+              }
+            }
+          }
+
+          for (Property property : properties)
+          {
+            LinkedHashSet<Property> otherProperties = new LinkedHashSet<Property>(properties);
+            otherProperties.remove(property);
+            List<Object> data = new ArrayList<Object>(otherProperties);
+
+            data.add(0, property);
+            data.add(1, project);
+            data.addAll(2, preferencesProfiles);
+
+            diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
+                "_UI_NonUniquePropertyApplication_diagnostic",
+                new Object[] { getObjectLabel(property, context), getObjectLabel(preferencesProfiles, context),
+                    getObjectLabel(project, context), getObjectLabel(otherProperties, context) }, data.toArray(),
+                context));
+          }
+        }
+      }
+
+      return keyToPropertiesMap.isEmpty();
+    }
+    finally
+    {
+      EList<Project> projects = project.getConfiguration().getProjects();
+      if (projects.indexOf(project) == projects.size() - 1)
+      {
+        Map<PreferenceProfile, Map<PreferenceProfile, Set<Property>>> overlaps = getOverlaps(context, false);
+        if (overlaps != null)
+        {
+          for (Entry<PreferenceProfile, Map<PreferenceProfile, Set<Property>>> entry : overlaps.entrySet())
+          {
+            PreferenceProfile key = entry.getKey();
+            Map<PreferenceProfile, Set<Property>> value = entry.getValue();
+            Set<Object> data = new LinkedHashSet<Object>();
+            data.add(key);
+            data.addAll(value.keySet());
+            BasicDiagnostic diagnostic = createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
+                "_UI_OverlappingPreferenceProfile_diagnostic", new Object[] { getObjectLabel(key, context),
+                    getObjectLabel(value.keySet(), context) }, data.toArray(), context);
+
+            List<Project> referentProjects = new ArrayList<Project>(key.getReferentProjects());
+            referentProjects.add(key.getProject());
+            for (Map.Entry<PreferenceProfile, Set<Property>> propertyEntry : value.entrySet())
+            {
+              Set<Object> data2 = new LinkedHashSet<Object>();
+              data2.add(key);
+              PreferenceProfile otherPreferenceProfile = propertyEntry.getKey();
+              Set<Project> otherReferentProjects = new LinkedHashSet<Project>(
+                  otherPreferenceProfile.getReferentProjects());
+              otherReferentProjects.add(otherPreferenceProfile.getProject());
+              otherReferentProjects.retainAll(referentProjects);
+              data2.add(otherPreferenceProfile);
+              data2.addAll(otherReferentProjects);
+              data2.addAll(propertyEntry.getValue());
+              BasicDiagnostic diagnostic2 = createDiagnostic(
+                  Diagnostic.ERROR,
+                  DIAGNOSTIC_SOURCE,
+                  0,
+                  "_UI_OverlappingPreferenceProfileProperty_diagnostic",
+                  new Object[] { getObjectLabel(otherPreferenceProfile, context),
+                      getObjectLabel(otherReferentProjects, context) }, data2.toArray(), context);
+              diagnostic.add(diagnostic2);
+            }
+
+            diagnostics.add(diagnostic);
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -395,6 +631,28 @@ public class ProjectConfigValidator extends EObjectValidator
       Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(propertyFilter, diagnostics, context);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean validateInclusionPredicate(InclusionPredicate inclusionPredicate, DiagnosticChain diagnostics,
+      Map<Object, Object> context)
+  {
+    return validate_EveryDefaultConstraint(inclusionPredicate, diagnostics, context);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean validateExclusionPredicate(ExclusionPredicate exclusionPredicate, DiagnosticChain diagnostics,
+      Map<Object, Object> context)
+  {
+    return validate_EveryDefaultConstraint(exclusionPredicate, diagnostics, context);
   }
 
   /**

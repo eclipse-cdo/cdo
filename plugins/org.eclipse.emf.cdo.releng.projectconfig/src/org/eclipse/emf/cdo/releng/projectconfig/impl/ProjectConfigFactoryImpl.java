@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
+import org.eclipse.emf.cdo.releng.projectconfig.ExclusionPredicate;
+import org.eclipse.emf.cdo.releng.projectconfig.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -90,6 +92,10 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
       return createPreferenceFilter();
     case ProjectConfigPackage.PROPERTY_FILTER:
       return createPropertyFilter();
+    case ProjectConfigPackage.INCLUSION_PREDICATE:
+      return createInclusionPredicate();
+    case ProjectConfigPackage.EXCLUSION_PREDICATE:
+      return createExclusionPredicate();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -182,6 +188,28 @@ public class ProjectConfigFactoryImpl extends EFactoryImpl implements ProjectCon
   {
     PropertyFilterImpl propertyFilter = new PropertyFilterImpl();
     return propertyFilter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InclusionPredicate createInclusionPredicate()
+  {
+    InclusionPredicateImpl inclusionPredicate = new InclusionPredicateImpl();
+    return inclusionPredicate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExclusionPredicate createExclusionPredicate()
+  {
+    ExclusionPredicateImpl exclusionPredicate = new ExclusionPredicateImpl();
+    return exclusionPredicate;
   }
 
   /**

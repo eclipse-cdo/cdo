@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
-import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -89,6 +87,7 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
       addPreferenceNodePropertyDescriptor(object);
       addInclusionsPropertyDescriptor(object);
       addExclusionsPropertyDescriptor(object);
+      addPropertiesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -207,6 +206,23 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
         getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_exclusions_feature",
             "_UI_PreferenceFilter_type"), ProjectConfigPackage.Literals.PREFERENCE_FILTER__EXCLUSIONS, true, false,
         false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Properties feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addPropertiesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_PreferenceFilter_properties_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_properties_feature",
+            "_UI_PreferenceFilter_type"), ProjectConfigPackage.Literals.PREFERENCE_FILTER__PROPERTIES, false, false,
+        false, null, null, null));
   }
 
   /**
@@ -450,33 +466,10 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
   public Collection<?> getChildren(Object object)
   {
     Collection<Object> result = new ArrayList<Object>();
-
     PreferenceFilter preferenceFilter = (PreferenceFilter)object;
-    PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
-    if (preferenceNode != null)
+    for (Property property : preferenceFilter.getProperties())
     {
-      LOOP: for (Property property : preferenceNode.getProperties())
-      {
-        String name = property.getName();
-        if (name != null)
-        {
-          WorkspaceConfiguration configuration = preferenceFilter.getPreferenceProfile().getProject()
-              .getConfiguration();
-          String path = property.getAbsolutePath();
-          for (PropertyFilter propertyFilter : configuration.getPropertyFilters())
-          {
-            if (propertyFilter.matches(path))
-            {
-              continue LOOP;
-            }
-          }
-
-          if (preferenceFilter.matches(name))
-          {
-            result.add(wrap(preferenceFilter, -1, property));
-          }
-        }
-      }
+      result.add(wrap(preferenceFilter, -1, property));
     }
 
     return result;

@@ -1,18 +1,10 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
-package org.eclipse.emf.cdo.releng.workingsets.impl;
+package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
-import org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.ExclusionPredicate;
+import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
+import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +23,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.workingsets.impl.ExclusionPredicateImpl#getExcludedWorkingSets <em>Excluded Working Sets</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.ExclusionPredicateImpl#getExcludedPreferenceProfiles <em>Excluded Preference Profiles</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,14 +32,14 @@ import java.util.Collection;
 public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container implements ExclusionPredicate
 {
   /**
-   * The cached value of the '{@link #getExcludedWorkingSets() <em>Excluded Working Sets</em>}' reference list.
+   * The cached value of the '{@link #getExcludedPreferenceProfiles() <em>Excluded Preference Profiles</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExcludedWorkingSets()
+   * @see #getExcludedPreferenceProfiles()
    * @generated
    * @ordered
    */
-  protected EList<WorkingSet> excludedWorkingSets;
+  protected EList<PreferenceProfile> excludedPreferenceProfiles;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,7 +59,7 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   @Override
   protected EClass eStaticClass()
   {
-    return WorkingSetsPackage.Literals.EXCLUSION_PREDICATE;
+    return ProjectConfigPackage.Literals.EXCLUSION_PREDICATE;
   }
 
   /**
@@ -75,26 +67,26 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<WorkingSet> getExcludedWorkingSets()
+  public EList<PreferenceProfile> getExcludedPreferenceProfiles()
   {
-    if (excludedWorkingSets == null)
+    if (excludedPreferenceProfiles == null)
     {
-      excludedWorkingSets = new EObjectResolvingEList<WorkingSet>(WorkingSet.class, this,
-          WorkingSetsPackage.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS);
+      excludedPreferenceProfiles = new EObjectResolvingEList<PreferenceProfile>(PreferenceProfile.class, this,
+          ProjectConfigPackage.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES);
     }
-    return excludedWorkingSets;
+    return excludedPreferenceProfiles;
   }
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   public boolean matches(IProject project)
   {
-    for (WorkingSet workingSet : getExcludedWorkingSets())
+    for (PreferenceProfile preferenceProfile : getExcludedPreferenceProfiles())
     {
-      if (workingSet.matches(project))
+      if (preferenceProfile.matches(project))
       {
         return false;
       }
@@ -105,7 +97,7 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -113,8 +105,8 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-    case WorkingSetsPackage.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS:
-      return getExcludedWorkingSets();
+    case ProjectConfigPackage.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES:
+      return getExcludedPreferenceProfiles();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -130,9 +122,9 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-    case WorkingSetsPackage.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS:
-      getExcludedWorkingSets().clear();
-      getExcludedWorkingSets().addAll((Collection<? extends WorkingSet>)newValue);
+    case ProjectConfigPackage.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES:
+      getExcludedPreferenceProfiles().clear();
+      getExcludedPreferenceProfiles().addAll((Collection<? extends PreferenceProfile>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -148,8 +140,8 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-    case WorkingSetsPackage.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS:
-      getExcludedWorkingSets().clear();
+    case ProjectConfigPackage.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES:
+      getExcludedPreferenceProfiles().clear();
       return;
     }
     super.eUnset(featureID);
@@ -165,15 +157,15 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-    case WorkingSetsPackage.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS:
-      return excludedWorkingSets != null && !excludedWorkingSets.isEmpty();
+    case ProjectConfigPackage.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES:
+      return excludedPreferenceProfiles != null && !excludedPreferenceProfiles.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -181,7 +173,7 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (operationID)
     {
-    case WorkingSetsPackage.EXCLUSION_PREDICATE___MATCHES__IPROJECT:
+    case ProjectConfigPackage.EXCLUSION_PREDICATE___MATCHES__IPROJECT:
       return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);

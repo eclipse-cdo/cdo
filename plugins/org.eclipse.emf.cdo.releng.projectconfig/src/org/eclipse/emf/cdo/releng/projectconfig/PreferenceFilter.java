@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.releng.projectconfig;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.regex.Pattern;
@@ -28,6 +30,7 @@ import java.util.regex.Pattern;
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter#getPreferenceProfile <em>Preference Profile</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter#getInclusions <em>Inclusions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter#getExclusions <em>Exclusions</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,6 +147,22 @@ public interface PreferenceFilter extends EObject
    * @generated
    */
   void setExclusions(Pattern value);
+
+  /**
+   * Returns the value of the '<em><b>Properties</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.preferences.Property}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Properties</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Properties</em>' reference list.
+   * @see org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage#getPreferenceFilter_Properties()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Property> getProperties();
 
   /**
    * <!-- begin-user-doc -->

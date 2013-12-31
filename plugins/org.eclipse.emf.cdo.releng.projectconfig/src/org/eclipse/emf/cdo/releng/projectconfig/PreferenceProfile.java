@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.core.resources.IProject;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Preference Profile</b></em>'.
@@ -167,5 +169,13 @@ public interface PreferenceProfile extends EObject
    * @generated
    */
   boolean requires(PreferenceProfile preferenceProfile);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model projectDataType="org.eclipse.emf.cdo.releng.predicates.Project"
+   * @generated
+   */
+  boolean matches(IProject project);
 
 } // PreferenceProfile

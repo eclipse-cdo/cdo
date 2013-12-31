@@ -38,6 +38,7 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getAbsolutePath <em>Absolute Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getScopeRelativePath <em>Scope Relative Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getRelativePath <em>Relative Path</em>}</li>
  * </ul>
  * </p>
  *
@@ -84,6 +85,16 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getRelativePath() <em>Relative Path</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRelativePath()
+   * @generated
+   * @ordered
+   */
+  protected static final String RELATIVE_PATH_EDEFAULT = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -178,6 +189,27 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
     {
       eNotify(new ENotificationImpl(this, Notification.SET, PreferencesPackage.PREFERENCE_ITEM__NAME, oldName, name));
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String getRelativePath()
+  {
+    Path absolutePath = new Path(getAbsolutePath());
+    IPath path;
+    if (absolutePath.segmentCount() <= 1)
+    {
+      path = absolutePath.makeRelative();
+    }
+    else
+    {
+      path = absolutePath.removeFirstSegments("project".equals(absolutePath.segment(0)) ? 2 : 1).makeRelative();
+    }
+
+    return path.toString();
   }
 
   /**
@@ -282,7 +314,7 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
     return null;
   }
 
-  private static final String[] SCOPE_NAMES = { "project", "instance", "default", "configuration", "bundle_defaults" };
+  private static final String[] SCOPE_NAMES = { "project", "instance", "configuration", "default", "bundle_defaults" };
 
   /**
    * <!-- begin-user-doc -->
@@ -350,6 +382,8 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
       return getScopeRelativePath();
     case PreferencesPackage.PREFERENCE_ITEM__NAME:
       return getName();
+    case PreferencesPackage.PREFERENCE_ITEM__RELATIVE_PATH:
+      return getRelativePath();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -410,6 +444,9 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
           .equals(getScopeRelativePath());
     case PreferencesPackage.PREFERENCE_ITEM__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case PreferencesPackage.PREFERENCE_ITEM__RELATIVE_PATH:
+      return RELATIVE_PATH_EDEFAULT == null ? getRelativePath() != null : !RELATIVE_PATH_EDEFAULT
+          .equals(getRelativePath());
     }
     return super.eIsSet(featureID);
   }

@@ -30,6 +30,8 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.core.resources.IProject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -297,6 +299,24 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     return requires(new HashSet<PreferenceProfile>(), getPrerequisites(), preferenceProfile);
   }
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean matches(IProject project)
+  {
+    for (Predicate predicate : getPredicates())
+    {
+      if (predicate.matches(project))
+      {
+        return true;
+      }
+    }
+
+    return getReferentProjects().contains(project);
+  }
+
   private boolean requires(Set<PreferenceProfile> visited, List<PreferenceProfile> preferenceProfiles,
       PreferenceProfile preferenceProfile)
   {
@@ -311,6 +331,7 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
         requires(visited, requiredPreferenceProfile.getPrerequisites(), requiredPreferenceProfile);
       }
     }
+
     return false;
   }
 
@@ -511,6 +532,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     {
     case ProjectConfigPackage.PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE:
       return requires((PreferenceProfile)arguments.get(0));
+    case ProjectConfigPackage.PREFERENCE_PROFILE___MATCHES__IPROJECT:
+      return matches((IProject)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }

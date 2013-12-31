@@ -76,6 +76,24 @@ public interface ProjectConfigFactory extends EFactory
   PropertyFilter createPropertyFilter();
 
   /**
+   * Returns a new object of class '<em>Inclusion Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Inclusion Predicate</em>'.
+   * @generated
+   */
+  InclusionPredicate createInclusionPredicate();
+
+  /**
+   * Returns a new object of class '<em>Exclusion Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Exclusion Predicate</em>'.
+   * @generated
+   */
+  ExclusionPredicate createExclusionPredicate();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

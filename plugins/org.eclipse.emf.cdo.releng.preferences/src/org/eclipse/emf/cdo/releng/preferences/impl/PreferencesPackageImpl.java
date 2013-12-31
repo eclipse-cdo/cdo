@@ -181,6 +181,16 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getPreferenceItem_RelativePath()
+  {
+    return (EAttribute)preferenceItemEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getPreferenceItem_Scope()
   {
     return (EReference)preferenceItemEClass.getEStructuralFeatures().get(1);
@@ -415,6 +425,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__ABSOLUTE_PATH);
     createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__SCOPE_RELATIVE_PATH);
     createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__NAME);
+    createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__RELATIVE_PATH);
     createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_PARENT);
     createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_ITEM__STRING);
     createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_IN_SCOPE__STRING);
@@ -492,6 +503,9 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
         IS_ORDERED);
     initEAttribute(getPreferenceItem_Name(), ecorePackage.getEString(), "name", null, 1, 1, PreferenceItem.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPreferenceItem_RelativePath(), ecorePackage.getEString(), "relativePath", null, 1, 1,
+        PreferenceItem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
+        IS_ORDERED);
 
     initEOperation(getPreferenceItem__GetParent(), getPreferenceNode(), "getParent", 0, 1, IS_UNIQUE, IS_ORDERED);
 

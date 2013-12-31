@@ -25,9 +25,13 @@ import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -51,6 +55,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,12 +78,76 @@ public final class ProjectConfigUtil
 
   public static final URI PROJECT_CONFIG_URI = URI.createURI(PROJECT_CONFIG_SCHEME + ":/");
 
-  public static final WorkspaceConfiguration getWorkspaceConfiguration()
+  public static WorkspaceConfiguration getWorkspaceConfiguration()
   {
     return getWorkspaceConfiguration(null);
   }
 
-  private static List<PropertyFilter> getDefaultPropertyFilters()
+  public static abstract class CompletenessChecker
+  {
+    public CompletenessChecker()
+    {
+      this(getWorkspaceConfiguration());
+    }
+
+    public CompletenessChecker(WorkspaceConfiguration workspaceConfiguration)
+    {
+      final Set<String> projectNames = new HashSet<String>();
+      for (IProject iProject : WORKSPACE_ROOT.getProjects())
+      {
+        if (iProject.isAccessible())
+        {
+          projectNames.add(iProject.getName());
+        }
+      }
+
+      if (getProjectNames(workspaceConfiguration.getInstancePreferenceNode().getParent().getNode("project"))
+          .containsAll(projectNames))
+      {
+        complete(workspaceConfiguration);
+      }
+      else
+      {
+        final PreferenceNode projectPreferenceNode = PreferencesUtil.getRootPreferenceNode(true).getNode("project");
+        Adapter projectNodeListener = new AdapterImpl()
+        {
+          @Override
+          public synchronized void notifyChanged(Notification msg)
+          {
+            Set<String> projectPreferenceNodeNames = getProjectNames(projectPreferenceNode);
+            if (projectPreferenceNodeNames.containsAll(projectNames) && projectPreferenceNode.eAdapters().remove(this))
+            {
+              projectPreferenceNode.eResource().unload();
+              complete();
+            }
+          }
+        };
+
+        projectPreferenceNode.eAdapters().add(projectNodeListener);
+      }
+    }
+
+    private Set<String> getProjectNames(final PreferenceNode projectPreferenceNode)
+    {
+      Set<String> projectPreferenceNodeNames = new HashSet<String>();
+      for (PreferenceNode preferenceNode : projectPreferenceNode.getChildren())
+      {
+        projectPreferenceNodeNames.add(preferenceNode.getName());
+      }
+      return projectPreferenceNodeNames;
+    }
+
+    protected void complete()
+    {
+      complete(getWorkspaceConfiguration());
+    }
+
+    protected void complete(WorkspaceConfiguration workspaceConfiguration)
+    {
+    }
+  }
+
+  public static List<PropertyFilter> getDefaultPropertyFilters()
   {
     List<PropertyFilter> result = new ArrayList<PropertyFilter>();
 
@@ -112,7 +182,9 @@ public final class ProjectConfigUtil
     workspaceConfiguration.setDefaultPreferenceNode(rootPreferenceNode.getNode("default"));
 
     EList<PropertyFilter> propertyFilters = workspaceConfiguration.getPropertyFilters();
-    PreferenceNode instanceProjectConfNode = instancePreferenceNode.getNode(PROJECT_CONF_NODE_NAME);
+    PreferenceNode instanceProjectConfNode = cachedProjectsPreferenceNode == null ? instancePreferenceNode
+        .getNode(PROJECT_CONF_NODE_NAME) : cachedProjectsPreferenceNode.getParent().getNode("instance")
+        .getNode(PROJECT_CONF_NODE_NAME);
     if (instanceProjectConfNode != null)
     {
       for (Property property : instanceProjectConfNode.getProperties())
@@ -159,48 +231,51 @@ public final class ProjectConfigUtil
 
     for (IProject iProject : WORKSPACE_ROOT.getProjects())
     {
-      String name = iProject.getName();
-      PreferenceNode projectPreferenceNode = projectsPreferenceNode.getNode(name);
-      PreferenceNode cachedProjectPreferenceNode = cachedProjectsPreferenceNode == null ? null
-          : cachedProjectsPreferenceNode.getNode(name);
-      if (projectPreferenceNode != null
-          && (cachedProjectsPreferenceNode == null || cachedProjectPreferenceNode != null))
+      if (iProject.isAccessible())
       {
-        Project project = ProjectConfigFactory.eINSTANCE.createProject();
-
-        PreferenceNode projectConfNode = (cachedProjectPreferenceNode == null ? projectPreferenceNode
-            : cachedProjectPreferenceNode).getNode(PROJECT_CONF_NODE_NAME);
-        if (projectConfNode != null)
+        String name = iProject.getName();
+        PreferenceNode projectPreferenceNode = projectsPreferenceNode.getNode(name);
+        PreferenceNode cachedProjectPreferenceNode = cachedProjectsPreferenceNode == null ? null
+            : cachedProjectsPreferenceNode.getNode(name);
+        if (projectPreferenceNode != null
+            && (cachedProjectsPreferenceNode == null || cachedProjectPreferenceNode != null))
         {
-          Property projectProperty = projectConfNode.getProperty(PROJECT_CONF_PROJECT_KEY);
-          if (projectProperty != null)
-          {
-            String value = projectProperty.getValue();
-            if (value != null)
-            {
-              XMLResourceImpl projectResource = new XMLResourceImpl(PROJECT_CONFIG_URI);
-              InputStream in = new URIConverter.ReadableInputStream(value);
-              try
-              {
-                projectResource.load(in, null);
-              }
-              catch (IOException ex)
-              {
-                // Ignore.
-              }
+          Project project = ProjectConfigFactory.eINSTANCE.createProject();
 
-              EList<EObject> contents = projectResource.getContents();
-              if (!contents.isEmpty())
+          PreferenceNode projectConfNode = (cachedProjectPreferenceNode == null ? projectPreferenceNode
+              : cachedProjectPreferenceNode).getNode(PROJECT_CONF_NODE_NAME);
+          if (projectConfNode != null)
+          {
+            Property projectProperty = projectConfNode.getProperty(PROJECT_CONF_PROJECT_KEY);
+            if (projectProperty != null)
+            {
+              String value = projectProperty.getValue();
+              if (value != null)
               {
-                project = (Project)contents.get(0);
+                XMLResourceImpl projectResource = new XMLResourceImpl(PROJECT_CONFIG_URI);
+                InputStream in = new URIConverter.ReadableInputStream(value);
+                try
+                {
+                  projectResource.load(in, null);
+                }
+                catch (IOException ex)
+                {
+                  // Ignore.
+                }
+
+                EList<EObject> contents = projectResource.getContents();
+                if (!contents.isEmpty())
+                {
+                  project = (Project)contents.get(0);
+                }
               }
             }
           }
+
+          project.setPreferenceNode(projectPreferenceNode);
+
+          projects.add(project);
         }
-
-        project.setPreferenceNode(projectPreferenceNode);
-
-        projects.add(project);
       }
     }
 
@@ -223,6 +298,7 @@ public final class ProjectConfigUtil
           requiredPreferenceProfile.eClass();
         }
       }
+
       EList<PreferenceProfile> profileReferences = project.getPreferenceProfileReferences();
       ArrayList<PreferenceProfile> copy = new ArrayList<PreferenceProfile>(profileReferences);
       profileReferences.clear();
@@ -371,39 +447,73 @@ public final class ProjectConfigUtil
           }
         }
 
-        for (PreferenceProfile preferenceProfile : copy.getPreferenceProfiles())
-        {
-          for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
-          {
-            PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
-            if (preferenceNode != null)
-            {
-              PreferenceNode proxy = PreferencesFactory.eINSTANCE.createPreferenceNode();
-              ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
-                  + preferenceNode.eResource().getURIFragment(preferenceNode)));
-              preferenceFilter.setPreferenceNode(proxy);
-            }
-          }
+        // for (PreferenceProfile preferenceProfile : copy.getPreferenceProfiles())
+        // {
+        // for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
+        // {
+        // PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
+        // if (preferenceNode != null)
+        // {
+        // PreferenceNode proxy = PreferencesFactory.eINSTANCE.createPreferenceNode();
+        // ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
+        // + preferenceNode.eResource().getURIFragment(preferenceNode)));
+        // preferenceFilter.setPreferenceNode(proxy);
+        // }
+        // }
+        //
+        // {
+        // EList<PreferenceProfile> requires = preferenceProfile.getPrerequisites();
+        // List<PreferenceProfile> requiresCopy = new ArrayList<PreferenceProfile>(requires);
+        // requires.clear();
+        // for (PreferenceProfile requiredPreferenceProfile : requiresCopy)
+        // {
+        // Resource eResource = requiredPreferenceProfile.eResource();
+        // if (eResource == null)
+        // {
+        // requires.add(requiredPreferenceProfile);
+        // }
+        // else
+        // {
+        // PreferenceProfile proxy = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
+        // ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
+        // + eResource.getURIFragment(requiredPreferenceProfile)));
+        // requires.add(proxy);
+        // }
+        // }
+        // }
 
-          EList<PreferenceProfile> requires = preferenceProfile.getPrerequisites();
-          List<PreferenceProfile> requiresCopy = new ArrayList<PreferenceProfile>(requires);
-          requires.clear();
-          for (PreferenceProfile requiredPreferenceProfile : requiresCopy)
-          {
-            Resource eResource = requiredPreferenceProfile.eResource();
-            if (eResource == null)
-            {
-              requires.add(requiredPreferenceProfile);
-            }
-            else
-            {
-              PreferenceProfile proxy = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
-              ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
-                  + eResource.getURIFragment(requiredPreferenceProfile)));
-              requires.add(proxy);
-            }
-          }
+        for (Iterator<EObject> it = EcoreUtil.getAllContents(copy.getPreferenceProfiles()); it.hasNext();)
+        {
+          EObject eObject = it.next();
+          proxifyCrossReferences(eObject);
+          // if (object instanceof InclusionPredicate)
+          // {
+          // InclusionPredicate inclusionPredicate = (InclusionPredicate)object;
+          // EList<PreferenceProfile> inclusions = inclusionPredicate.getIncludedPreferenceProfiles();
+          // List<PreferenceProfile> inclusionsCopy = new ArrayList<PreferenceProfile>(inclusions);
+          // for (PreferenceProfile includedPreferenceProfile : inclusionsCopy)
+          // {
+          // Resource eResource = includedPreferenceProfile.eResource();
+          // if (eResource == null)
+          // {
+          // inclusions.add(includedPreferenceProfile);
+          // }
+          // else
+          // {
+          // PreferenceProfile proxy = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
+          // ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
+          // + eResource.getURIFragment(includedPreferenceProfile)));
+          // inclusions.add(proxy);
+          // }
+          // }
+          //
+          // }
+          // else if (object instanceof ExclusionPredicate)
+          // {
+          //
+          // }
         }
+        // }
 
         if (!copy.getPreferenceProfiles().isEmpty() || !copy.getPreferenceProfileReferences().isEmpty())
         {
@@ -420,6 +530,8 @@ public final class ProjectConfigUtil
             OutputStream out = new URIConverter.WriteableOutputStream(writer, "UTF-8");
             resource.save(out, options);
             projectPropertyValue = writer.toString();
+
+            System.err.println("###" + writer.toString());
           }
           catch (IOException ex)
           {
@@ -479,6 +591,48 @@ public final class ProjectConfigUtil
     }
 
     return projectsPreferenceNode;
+  }
+
+  private static void proxifyCrossReferences(EObject eObject)
+  {
+    for (EReference eReference : eObject.eClass().getEAllReferences())
+    {
+      if (!eReference.isTransient() && !eReference.isContainer() && !eReference.isContainment())
+      {
+        if (eReference.isMany())
+        {
+          @SuppressWarnings("unchecked")
+          EList<EObject> eObjects = (EList<EObject>)eObject.eGet(eReference);
+          List<EObject> eObjectsCopy = new ArrayList<EObject>(eObjects);
+          eObjects.clear();
+          for (EObject referencedEObject : eObjectsCopy)
+          {
+            Resource eResource = referencedEObject.eResource();
+            if (eResource == null)
+            {
+              eObjects.add(referencedEObject);
+            }
+            else
+            {
+              EObject proxy = EcoreUtil.create(referencedEObject.eClass());
+              ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#" + eResource.getURIFragment(referencedEObject)));
+              eObjects.add(proxy);
+            }
+          }
+        }
+        else
+        {
+          EObject referencedEObject = (EObject)eObject.eGet(eReference);
+          Resource eResource = referencedEObject.eResource();
+          if (eResource != null)
+          {
+            EObject proxy = EcoreUtil.create(referencedEObject.eClass());
+            ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#" + eResource.getURIFragment(referencedEObject)));
+            eObject.eSet(eReference, proxy);
+          }
+        }
+      }
+    }
   }
 
   public static IProject getProject(Project project)

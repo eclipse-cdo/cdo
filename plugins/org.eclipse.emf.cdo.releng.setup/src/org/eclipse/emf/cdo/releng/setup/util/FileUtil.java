@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.util;
 
-iimport org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

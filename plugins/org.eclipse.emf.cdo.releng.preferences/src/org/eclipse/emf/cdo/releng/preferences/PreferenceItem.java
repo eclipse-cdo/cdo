@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getAbsolutePath <em>Absolute Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScopeRelativePath <em>Scope Relative Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getRelativePath <em>Relative Path</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,6 +105,21 @@ public interface PreferenceItem extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Relative Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Relative Path</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Relative Path</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferencesPackage#getPreferenceItem_RelativePath()
+   * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  String getRelativePath();
 
   /**
    * Returns the value of the '<em><b>Scope</b></em>' reference.

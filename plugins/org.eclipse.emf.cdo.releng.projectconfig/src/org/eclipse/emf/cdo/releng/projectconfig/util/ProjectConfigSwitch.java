@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.projectconfig.ExclusionPredicate;
+import org.eclipse.emf.cdo.releng.projectconfig.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -134,6 +137,34 @@ public class ProjectConfigSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case ProjectConfigPackage.INCLUSION_PREDICATE:
+    {
+      InclusionPredicate inclusionPredicate = (InclusionPredicate)theEObject;
+      T result = caseInclusionPredicate(inclusionPredicate);
+      if (result == null)
+      {
+        result = casePredicate(inclusionPredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case ProjectConfigPackage.EXCLUSION_PREDICATE:
+    {
+      ExclusionPredicate exclusionPredicate = (ExclusionPredicate)theEObject;
+      T result = caseExclusionPredicate(exclusionPredicate);
+      if (result == null)
+      {
+        result = casePredicate(exclusionPredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -215,6 +246,54 @@ public class ProjectConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePropertyFilter(PropertyFilter object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Inclusion Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Inclusion Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInclusionPredicate(InclusionPredicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Exclusion Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Exclusion Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExclusionPredicate(ExclusionPredicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePredicate(Predicate object)
   {
     return null;
   }

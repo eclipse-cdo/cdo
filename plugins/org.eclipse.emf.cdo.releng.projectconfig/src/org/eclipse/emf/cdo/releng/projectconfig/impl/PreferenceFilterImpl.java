@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -23,9 +25,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -39,6 +44,7 @@ import java.util.regex.Pattern;
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl#getPreferenceProfile <em>Preference Profile</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl#getInclusions <em>Inclusions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl#getExclusions <em>Exclusions</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -289,6 +295,28 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  public EList<Property> getProperties()
+  {
+    WorkspaceConfiguration workspaceConfiguration = getPreferenceProfile().getProject().getConfiguration();
+    List<Property> properties = new ArrayList<Property>();
+    for (Property property : getPreferenceNode().getProperties())
+    {
+      if (matches(property.getName()) && !workspaceConfiguration.isOmitted(property))
+      {
+        properties.add(property);
+      }
+    }
+
+    int size = properties.size();
+    return new EcoreEList.UnmodifiableEList<Property>(this,
+        ProjectConfigPackage.Literals.PREFERENCE_FILTER__PROPERTIES, size, properties.toArray(new Property[size]));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   public boolean matches(String value)
   {
     return getInclusions().matcher(value).matches() && !getExclusions().matcher(value).matches();
@@ -369,6 +397,8 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
       return getInclusions();
     case ProjectConfigPackage.PREFERENCE_FILTER__EXCLUSIONS:
       return getExclusions();
+    case ProjectConfigPackage.PREFERENCE_FILTER__PROPERTIES:
+      return getProperties();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -443,6 +473,8 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
       return INCLUSIONS_EDEFAULT == null ? inclusions != null : !INCLUSIONS_EDEFAULT.equals(inclusions);
     case ProjectConfigPackage.PREFERENCE_FILTER__EXCLUSIONS:
       return EXCLUSIONS_EDEFAULT == null ? exclusions != null : !EXCLUSIONS_EDEFAULT.equals(exclusions);
+    case ProjectConfigPackage.PREFERENCE_FILTER__PROPERTIES:
+      return !getProperties().isEmpty();
     }
     return super.eIsSet(featureID);
   }

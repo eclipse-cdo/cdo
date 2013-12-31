@@ -3,8 +3,12 @@
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
+import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -14,6 +18,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.resources.IProject;
@@ -22,7 +28,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -34,6 +42,8 @@ import java.util.regex.Pattern;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl#getOmissions <em>Omissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl#getPredicates <em>Predicates</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl#getProperties <em>Properties</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl#getConfiguration <em>Configuration</em>}</li>
  * </ul>
  * </p>
  *
@@ -138,10 +148,130 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Property> getProperties()
+  {
+    List<Property> properties = new ArrayList<Property>();
+    WorkspaceConfiguration workspaceConfiguration = getConfiguration();
+    if (workspaceConfiguration != null)
+    {
+      for (Project project : workspaceConfiguration.getProjects())
+      {
+        PreferenceNode projectPreferenceNode = project.getPreferenceNode();
+        if (projectPreferenceNode != null)
+        {
+          for (PreferenceNode preferenceNode : projectPreferenceNode.getChildren())
+          {
+            collectProperties(properties, workspaceConfiguration, preferenceNode);
+          }
+        }
+      }
+    }
+
+    int size = properties.size();
+    return new EcoreEList.UnmodifiableEList<Property>(this, ProjectConfigPackage.Literals.PROPERTY_FILTER__PROPERTIES,
+        size, properties.toArray(new Property[size]));
+  }
+
+  private void collectProperties(List<Property> properties, WorkspaceConfiguration workspaceConfiguration,
+      PreferenceNode preferenceNode)
+  {
+    for (Property property : preferenceNode.getProperties())
+    {
+      if (workspaceConfiguration.isOmitted(property))
+      {
+        properties.add(property);
+      }
+    }
+
+    for (PreferenceNode childPreferenceNode : preferenceNode.getChildren())
+    {
+      collectProperties(properties, workspaceConfiguration, childPreferenceNode);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
+   */
+  public WorkspaceConfiguration getConfiguration()
+  {
+    if (eContainerFeatureID() != ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION)
+    {
+      return null;
+    }
+    return (WorkspaceConfiguration)eInternalContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetConfiguration(WorkspaceConfiguration newConfiguration, NotificationChain msgs)
+  {
+    msgs = eBasicSetContainer((InternalEObject)newConfiguration, ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION,
+        msgs);
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setConfiguration(WorkspaceConfiguration newConfiguration)
+  {
+    if (newConfiguration != eInternalContainer()
+        || eContainerFeatureID() != ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION && newConfiguration != null)
+    {
+      if (EcoreUtil.isAncestor(this, newConfiguration))
+      {
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null)
+      {
+        msgs = eBasicRemoveFromContainer(msgs);
+      }
+      if (newConfiguration != null)
+      {
+        msgs = ((InternalEObject)newConfiguration).eInverseAdd(this,
+            ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS, WorkspaceConfiguration.class, msgs);
+      }
+      msgs = basicSetConfiguration(newConfiguration, msgs);
+      if (msgs != null)
+      {
+        msgs.dispatch();
+      }
+    }
+    else if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION,
+          newConfiguration, newConfiguration));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
    */
   public boolean matches(String value)
   {
+    if (value == null)
+    {
+      return false;
+    }
+
+    Pattern omissions = getOmissions();
+    if (omissions == null)
+    {
+      return false;
+    }
+
     Path path = new Path(value);
     int segmentCount = path.segmentCount();
     if (segmentCount < 4)
@@ -181,7 +311,27 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
 
     String relativePath = path.removeFirstSegments(2).toString();
 
-    return getOmissions().matcher(relativePath).matches();
+    return omissions.matcher(relativePath).matches();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      if (eInternalContainer() != null)
+      {
+        msgs = eBasicRemoveFromContainer(msgs);
+      }
+      return basicSetConfiguration((WorkspaceConfiguration)otherEnd, msgs);
+    }
+    return super.eInverseAdd(otherEnd, featureID, msgs);
   }
 
   /**
@@ -196,8 +346,27 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
     {
     case ProjectConfigPackage.PROPERTY_FILTER__PREDICATES:
       return ((InternalEList<?>)getPredicates()).basicRemove(otherEnd, msgs);
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      return basicSetConfiguration(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
+  {
+    switch (eContainerFeatureID())
+    {
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      return eInternalContainer().eInverseRemove(this, ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS,
+          WorkspaceConfiguration.class, msgs);
+    }
+    return super.eBasicRemoveFromContainerFeature(msgs);
   }
 
   /**
@@ -214,6 +383,10 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
       return getOmissions();
     case ProjectConfigPackage.PROPERTY_FILTER__PREDICATES:
       return getPredicates();
+    case ProjectConfigPackage.PROPERTY_FILTER__PROPERTIES:
+      return getProperties();
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      return getConfiguration();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -236,6 +409,9 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
       getPredicates().clear();
       getPredicates().addAll((Collection<? extends Predicate>)newValue);
       return;
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      setConfiguration((WorkspaceConfiguration)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -256,6 +432,9 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
     case ProjectConfigPackage.PROPERTY_FILTER__PREDICATES:
       getPredicates().clear();
       return;
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      setConfiguration((WorkspaceConfiguration)null);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -274,6 +453,10 @@ public class PropertyFilterImpl extends MinimalEObjectImpl.Container implements 
       return OMISSIONS_EDEFAULT == null ? omissions != null : !OMISSIONS_EDEFAULT.equals(omissions);
     case ProjectConfigPackage.PROPERTY_FILTER__PREDICATES:
       return predicates != null && !predicates.isEmpty();
+    case ProjectConfigPackage.PROPERTY_FILTER__PROPERTIES:
+      return !getProperties().isEmpty();
+    case ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION:
+      return getConfiguration() != null;
     }
     return super.eIsSet(featureID);
   }

@@ -68,6 +68,7 @@ public class PreferenceItemItemProvider extends ItemProviderAdapter implements I
       addAbsolutePathPropertyDescriptor(object);
       addScopeRelativePathPropertyDescriptor(object);
       addNamePropertyDescriptor(object);
+      addRelativePathPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -138,6 +139,23 @@ public class PreferenceItemItemProvider extends ItemProviderAdapter implements I
   }
 
   /**
+   * This adds a property descriptor for the Relative Path feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addRelativePathPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_PreferenceItem_relativePath_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceItem_relativePath_feature",
+            "_UI_PreferenceItem_type"), PreferencesPackage.Literals.PREFERENCE_ITEM__RELATIVE_PATH, false, false,
+        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
    * This adds a property descriptor for the Scope feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -194,6 +212,7 @@ public class PreferenceItemItemProvider extends ItemProviderAdapter implements I
     case PreferencesPackage.PREFERENCE_ITEM__ABSOLUTE_PATH:
     case PreferencesPackage.PREFERENCE_ITEM__SCOPE_RELATIVE_PATH:
     case PreferencesPackage.PREFERENCE_ITEM__NAME:
+    case PreferencesPackage.PREFERENCE_ITEM__RELATIVE_PATH:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

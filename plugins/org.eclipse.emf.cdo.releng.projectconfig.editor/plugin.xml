@@ -99,5 +99,12 @@
             sequence="F3">
       </key>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigEditorPlugin$Implementation$EarlyStartup">
+      </startup>
+   </extension>
 
 </plugin>

@@ -10,13 +10,14 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditor;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesItemProviderAdapterFactory;
-import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
+import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigURIHandlerImpl;
@@ -28,10 +29,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.ui.viewer.ColumnViewerInformationControlToolTipSupport;
@@ -41,12 +40,14 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -78,6 +79,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -158,6 +160,8 @@ import java.util.Set;
 public class ProjectConfigEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
     IMenuListener, IViewerProvider, IGotoMarker
 {
+  private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
+
   /**
    * This keeps track of the editing domain that is used to track all changes to the model.
    * <!-- begin-user-doc -->
@@ -583,6 +587,12 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     }
   }
 
+  public void restoreDefaultPropertyFilters()
+  {
+    changedResources.addAll(editingDomain.getResourceSet().getResources());
+    handleChangedResources(true);
+  }
+
   /**
    * Handles what to do with changed resources on activation.
    * <!-- begin-user-doc -->
@@ -590,6 +600,11 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * @generated NOT
    */
   protected void handleChangedResources()
+  {
+    handleChangedResources(false);
+  }
+
+  protected void handleChangedResources(boolean restoreDefaultPropertyFilters)
   {
     if (!changedResources.isEmpty())
     {
@@ -610,9 +625,9 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
         if (resource.isLoaded())
         {
           WorkspaceConfiguration cachedWorkspaceConfiguration = null;
+          EList<EObject> contents = resource.getContents();
           if (!discard)
           {
-            EList<EObject> contents = resource.getContents();
             if (!contents.isEmpty())
             {
               EObject object = contents.get(0);
@@ -622,6 +637,17 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
                 PreferenceNode cache = ProjectConfigUtil.cacheWorkspaceConfiguration(workspaceConfiguration);
                 if (cache != null)
                 {
+                  if (restoreDefaultPropertyFilters)
+                  {
+                    PreferenceNode instancePreferenceNode = cache.getParent().getNode("instance");
+                    PreferenceNode projectConfPreferenceNode = instancePreferenceNode
+                        .getNode(ProjectConfigUtil.PROJECT_CONF_NODE_NAME);
+                    if (projectConfPreferenceNode != null)
+                    {
+                      instancePreferenceNode.getChildren().remove(projectConfPreferenceNode);
+                    }
+                  }
+
                   cachedWorkspaceConfiguration = ProjectConfigUtil.getWorkspaceConfiguration(cache);
                 }
               }
@@ -647,6 +673,29 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
                           workspaceConfiguration.eResource().getContents())));
                 }
               };
+
+              editingDomain.getCommandStack().execute(command);
+            }
+            else if (restoreDefaultPropertyFilters)
+            {
+              final WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)resource.getContents().get(
+                  0);
+              CompoundCommand command = new CompoundCommand("Restore Default Property Filters",
+                  "Restore the default property filters")
+              {
+                @Override
+                protected boolean prepare()
+                {
+                  List<PropertyFilter> contents = new ArrayList<PropertyFilter>(
+                      workspaceConfiguration.getPropertyFilters());
+                  return appendIfCanExecute(new RemoveCommand(editingDomain, workspaceConfiguration,
+                      ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS, contents))
+                      && appendIfCanExecute(new AddCommand(editingDomain, workspaceConfiguration,
+                          ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS,
+                          ProjectConfigUtil.getDefaultPropertyFilters()));
+                }
+              };
+
               editingDomain.getCommandStack().execute(command);
             }
           }
@@ -656,6 +705,11 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
             {
               resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
             }
+          }
+
+          if (contentOutlinePage != null)
+          {
+            contentOutlinePage.update();
           }
         }
       }
@@ -681,27 +735,11 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
               {
                 public void run()
                 {
-                  // TODO causes deadlock.
-                  synchronized (editingDomain.getResourceSet())
+                  synchronized (editingDomain.getResourceSet().getResources().get(0))
                   {
-                    for (Object object : expandedElements)
+                    synchronized (editingDomain.getResourceSet())
                     {
-                      if (object instanceof EObject)
-                      {
-                        EObject eObject = (EObject)object;
-                        if (eObject.eIsProxy())
-                        {
-                          eObject.eAdapters().clear();
-                        }
-                      }
-                    }
-
-                    selectionViewer.setExpandedElements(editingDomain.resolve(expandedElements).toArray());
-
-                    if (selection != null)
-                    {
-                      List<?> selectedObjects = ((IStructuredSelection)selection).toList();
-                      for (Object object : selectedObjects)
+                      for (Object object : expandedElements)
                       {
                         if (object instanceof EObject)
                         {
@@ -713,7 +751,25 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
                         }
                       }
 
-                      setSelectionToViewer(editingDomain.resolve(selectedObjects));
+                      selectionViewer.setExpandedElements(editingDomain.resolve(expandedElements).toArray());
+
+                      if (selection != null)
+                      {
+                        List<?> selectedObjects = ((IStructuredSelection)selection).toList();
+                        for (Object object : selectedObjects)
+                        {
+                          if (object instanceof EObject)
+                          {
+                            EObject eObject = (EObject)object;
+                            if (eObject.eIsProxy())
+                            {
+                              eObject.eAdapters().clear();
+                            }
+                          }
+                        }
+
+                        setSelectionToViewer(editingDomain.resolve(selectedObjects));
+                      }
                     }
                   }
                 }
@@ -923,7 +979,35 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
 
     // Create the editing domain with a special command stack.
     //
-    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>())
+    {
+      @Override
+      public Collection<?> getNewChildDescriptors(Object object, Object sibling)
+      {
+        Collection<?> newChildDescriptors = new ArrayList<Object>(super.getNewChildDescriptors(object, sibling));
+        for (Iterator<?> it = newChildDescriptors.iterator(); it.hasNext();)
+        {
+          Object value = it.next();
+          if (value instanceof CommandParameter)
+          {
+            CommandParameter commandParameter = (CommandParameter)value;
+            Object child = commandParameter.getValue();
+            if (child instanceof EObject)
+            {
+              EObject eObject = (EObject)child;
+
+              // Filter out children that don't come from the predicates model or the project config model.
+              EPackage ePackage = eObject.eClass().getEPackage();
+              if (ePackage != PredicatesPackage.eINSTANCE && ePackage != ProjectConfigPackage.eINSTANCE)
+              {
+                it.remove();
+              }
+            }
+          }
+        }
+        return newChildDescriptors;
+      }
+    };
   }
 
   /**
@@ -1215,31 +1299,20 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
           if (object instanceof WorkspaceConfiguration)
           {
             WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)object;
-            final int projectCount = ResourcesPlugin.getWorkspace().getRoot().getProjects().length;
-            if (workspaceConfiguration.getProjects().isEmpty() && projectCount != 0)
+            new ProjectConfigUtil.CompletenessChecker(workspaceConfiguration)
             {
-              final PreferenceNode projectPreferenceNode = PreferencesUtil.getRootPreferenceNode(true).getNode(
-                  "project");
-              Adapter projectNodeListener = new AdapterImpl()
+              @Override
+              protected void complete()
               {
-                @Override
-                public synchronized void notifyChanged(Notification msg)
+                getSite().getShell().getDisplay().asyncExec(new Runnable()
                 {
-                  if (projectPreferenceNode.getChildren().size() == projectCount
-                      && projectPreferenceNode.eAdapters().remove(this))
+                  public void run()
                   {
-                    getSite().getShell().getDisplay().asyncExec(new Runnable()
-                    {
-                      public void run()
-                      {
-                        reload();
-                      }
-                    });
+                    reload();
                   }
-                }
-              };
-              projectPreferenceNode.eAdapters().add(projectNodeListener);
-            }
+                });
+              }
+            };
           }
         }
       }
@@ -1551,18 +1624,9 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
           else if (object instanceof PropertyFilter)
           {
             PropertyFilter propertyFilter = (PropertyFilter)object;
-            PreferenceNode preferenceNode = (PreferenceNode)propertyFilter.eResource().getContents().get(1);
-            for (Iterator<EObject> it = preferenceNode.getNode("project").eAllContents(); it.hasNext();)
+            for (Property property : propertyFilter.getProperties())
             {
-              EObject eObject = it.next();
-              if (eObject instanceof Property)
-              {
-                Property property = (Property)eObject;
-                if (propertyFilter.matches(property.getAbsolutePath()))
-                {
-                  super.collectSelection(selection, property);
-                }
-              }
+              super.collectSelection(selection, property);
             }
           }
 
@@ -1790,7 +1854,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     IPath path = saveAsDialog.getResult();
     if (path != null)
     {
-      IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+      IFile file = WORKSPACE_ROOT.getFile(path);
       if (file != null)
       {
         doSaveAs(URI.createPlatformResourceURI(file.getFullPath().toString(), true), new FileEditorInput(file));

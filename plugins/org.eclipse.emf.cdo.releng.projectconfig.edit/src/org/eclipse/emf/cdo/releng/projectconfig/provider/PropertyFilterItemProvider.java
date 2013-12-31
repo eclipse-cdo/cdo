@@ -3,6 +3,7 @@
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
 import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
+import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 
@@ -59,6 +60,7 @@ public class PropertyFilterItemProvider extends ItemProviderAdapter implements I
       super.getPropertyDescriptors(object);
 
       addOmissionsPropertyDescriptor(object);
+      addPropertiesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -78,6 +80,23 @@ public class PropertyFilterItemProvider extends ItemProviderAdapter implements I
         getString("_UI_PropertyDescriptor_description", "_UI_PropertyFilter_omissions_feature",
             "_UI_PropertyFilter_type"), ProjectConfigPackage.Literals.PROPERTY_FILTER__OMISSIONS, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Properties feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addPropertiesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_PropertyFilter_properties_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PropertyFilter_properties_feature",
+            "_UI_PropertyFilter_type"), ProjectConfigPackage.Literals.PROPERTY_FILTER__PROPERTIES, false, false, false,
+        null, null, null));
   }
 
   /**
@@ -189,6 +208,12 @@ public class PropertyFilterItemProvider extends ItemProviderAdapter implements I
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        ProjectConfigFactory.eINSTANCE.createInclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
+        ProjectConfigFactory.eINSTANCE.createExclusionPredicate()));
 
     newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROPERTY_FILTER__PREDICATES,
         PredicatesFactory.eINSTANCE.createNamePredicate()));

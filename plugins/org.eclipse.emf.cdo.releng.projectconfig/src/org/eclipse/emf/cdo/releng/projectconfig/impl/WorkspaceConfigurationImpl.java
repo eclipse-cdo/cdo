@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -49,9 +49,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <!-- begin-user-doc -->
@@ -143,8 +141,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     if (propertyFilters == null)
     {
-      propertyFilters = new EObjectContainmentEList<PropertyFilter>(PropertyFilter.class, this,
-          ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS);
+      propertyFilters = new EObjectContainmentWithInverseEList<PropertyFilter>(PropertyFilter.class, this,
+          ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS,
+          ProjectConfigPackage.PROPERTY_FILTER__CONFIGURATION);
     }
     return propertyFilters;
   }
@@ -287,7 +286,6 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
               Preferences projectPreferences = PreferencesUtil.getPreferences(project.getPreferenceNode(), true);
               projectsPreferences = projectPreferences.parent();
 
-              Set<Preferences> clearedPreferences = new HashSet<Preferences>();
               for (PreferenceProfile preferenceProfile : project.getPreferenceProfileReferences())
               {
                 if (preferenceProfile.getProject() != project)
@@ -308,11 +306,6 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
                       targetPreferences = targetPreferences.node(path.get(i).getName());
                     }
 
-                    if (clearedPreferences.add(targetPreferences))
-                    {
-                      targetPreferences.clear();
-                    }
-
                     for (String key : sourcePreferences.keys())
                     {
                       if (preferenceFilter.matches(key))
@@ -320,17 +313,6 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
                         targetPreferences.put(key, sourcePreferences.get(key, null));
                       }
                     }
-                  }
-                }
-              }
-
-              if (!clearedPreferences.isEmpty())
-              {
-                for (Preferences preferences : clearedPreferences)
-                {
-                  if (preferences.keys().length == 0)
-                  {
-                    preferences.removeNode();
                   }
                 }
               }
@@ -382,20 +364,21 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
         if (!predicates.isEmpty())
         {
           List<Project> referents = new ArrayList<Project>();
-          for (Predicate predicate : predicates)
+          for (Project referencedProject : getProjects())
           {
-            for (Project referencedProject : getProjects())
+            if (referencedProject != project)
             {
               IProject iProject = WORKSPACE_ROOT.getProject(referencedProject.getPreferenceNode().getName());
               if (iProject.isAccessible())
               {
-                if (predicate.matches(iProject))
+                if (preferenceProfile.matches(iProject))
                 {
                   referents.add(referencedProject);
                 }
               }
             }
           }
+
           ECollections.setEList(preferenceProfile.getReferentProjects(), referents);
         }
       }
@@ -430,6 +413,43 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Project getProject(String name)
+  {
+    for (Project project : getProjects())
+    {
+      if (name.equals(project.getPreferenceNode().getName()))
+      {
+        return project;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean isOmitted(Property property)
+  {
+    String path = property.getAbsolutePath();
+    for (PropertyFilter propertyFilter : getPropertyFilters())
+    {
+      if (propertyFilter.matches(path))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -438,6 +458,8 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
   {
     switch (featureID)
     {
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getPropertyFilters()).basicAdd(otherEnd, msgs);
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getProjects()).basicAdd(otherEnd, msgs);
     }
@@ -585,6 +607,10 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION___UPDATE_PREFERENCE_PROFILE_REFERENCES:
       updatePreferenceProfileReferences();
       return null;
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION___GET_PROJECT__STRING:
+      return getProject((String)arguments.get(0));
+    case ProjectConfigPackage.WORKSPACE_CONFIGURATION___IS_OMITTED__PROPERTY:
+      return isOmitted((Property)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }

@@ -123,13 +123,22 @@ public interface PreferencesPackage extends EPackage
   int PREFERENCE_ITEM__NAME = 4;
 
   /**
+   * The feature id for the '<em><b>Relative Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_ITEM__RELATIVE_PATH = 5;
+
+  /**
    * The number of structural features of the '<em>Preference Item</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_ITEM_FEATURE_COUNT = 5;
+  int PREFERENCE_ITEM_FEATURE_COUNT = 6;
 
   /**
    * The operation id for the '<em>Get Parent</em>' operation.
@@ -230,6 +239,15 @@ public interface PreferencesPackage extends EPackage
    * @ordered
    */
   int PREFERENCE_NODE__NAME = PREFERENCE_ITEM__NAME;
+
+  /**
+   * The feature id for the '<em><b>Relative Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_NODE__RELATIVE_PATH = PREFERENCE_ITEM__RELATIVE_PATH;
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -395,6 +413,15 @@ public interface PreferencesPackage extends EPackage
   int PROPERTY__NAME = PREFERENCE_ITEM__NAME;
 
   /**
+   * The feature id for the '<em><b>Relative Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY__RELATIVE_PATH = PREFERENCE_ITEM__RELATIVE_PATH;
+
+  /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -529,6 +556,17 @@ public interface PreferencesPackage extends EPackage
    * @generated
    */
   EAttribute getPreferenceItem_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getRelativePath <em>Relative Path</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Relative Path</em>'.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getRelativePath()
+   * @see #getPreferenceItem()
+   * @generated
+   */
+  EAttribute getPreferenceItem_RelativePath();
 
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScope <em>Scope</em>}'.
@@ -803,6 +841,14 @@ public interface PreferencesPackage extends EPackage
      * @generated
      */
     EAttribute PREFERENCE_ITEM__NAME = eINSTANCE.getPreferenceItem_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Relative Path</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PREFERENCE_ITEM__RELATIVE_PATH = eINSTANCE.getPreferenceItem_RelativePath();
 
     /**
      * The meta object literal for the '<em><b>Scope</b></em>' reference feature.

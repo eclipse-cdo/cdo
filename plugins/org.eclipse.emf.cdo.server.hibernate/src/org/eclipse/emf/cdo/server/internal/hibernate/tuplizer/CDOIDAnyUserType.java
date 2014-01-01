@@ -12,8 +12,17 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.eclipse.net4j.util.WrappedException;
+
+import org.eclipse.emf.ecore.EClass;
 
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
@@ -32,9 +41,11 @@ import java.util.HashMap;
  */
 public class CDOIDAnyUserType implements UserType
 {
-  private static final int[] SQL_TYPES = { Types.VARCHAR };
+  private static final int[] SQL_TYPES = { Types.VARCHAR, Types.VARCHAR };
 
   private static final String SEPARATOR = "__;__"; //$NON-NLS-1$
+
+  private static final String EXTERNAL = "EXTERNAL"; //$NON-NLS-1$
 
   /** Constructor by id */
   private final HashMap<String, Constructor<?>> constructors = new HashMap<String, Constructor<?>>();
@@ -81,32 +92,83 @@ public class CDOIDAnyUserType implements UserType
   public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
       throws SQLException
   {
-    final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0], sessionImplementor);
+    final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[1], sessionImplementor);
     if (rs.wasNull())
     {
       return null;
     }
-
-    final int end1 = value.indexOf(SEPARATOR);
-    final int start2 = end1 + SEPARATOR.length();
-
-    final String idStr = value.substring(0, end1);
-    final String idClassName = value.substring(start2);
-    final Serializable id = getId(idStr, idClassName);
-    return id;
+    final String entityName = StandardBasicTypes.STRING.nullSafeGet(rs, names[0], sessionImplementor);
+    return deserializeId(entityName, value);
   }
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
       throws SQLException
   {
-    if (value == null || value instanceof CDOID && ((CDOID)value).isNull())
+    final String entityName;
+    final CDOID localValue;
+    if (value instanceof CDORevision)
     {
-      statement.setNull(index, Types.VARCHAR);
+      final CDORevision cdoRevision = (CDORevision)value;
+      localValue = cdoRevision.getID();
+      // cast to object to use correct method from hibernate util
+      entityName = HibernateUtil.getInstance().getEntityName((Object)cdoRevision);
+    }
+    else if (value instanceof CDOID)
+    {
+      localValue = (CDOID)value;
+      entityName = HibernateUtil.getInstance().getEntityName(localValue);
     }
     else
     {
-      statement.setString(index, value.toString() + SEPARATOR + value.getClass().getName());
+      throw new IllegalArgumentException("Type " + value + " not supported here");
     }
+
+    // the first column is there for backward compatibility, fill it with nulls..
+    final String strValue = serializeId(localValue);
+    if (strValue == null)
+    {
+      statement.setNull(index, Types.VARCHAR);
+      statement.setNull(index + 1, Types.VARCHAR);
+    }
+    else
+    {
+      statement.setString(index, entityName);
+      statement.setString(index + 1, strValue);
+    }
+  }
+
+  protected String serializeId(CDOID id)
+  {
+    final CDOID cdoID = HibernateUtil.getInstance().resolvePossibleTempId(id);
+    if (cdoID == null || cdoID.isNull())
+    {
+      return null;
+    }
+    if (cdoID.getType() == CDOID.Type.EXTERNAL_OBJECT)
+    {
+      return EXTERNAL + SEPARATOR + ((CDOIDExternal)cdoID).getURI();
+    }
+    final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
+    return idValue + SEPARATOR + idValue.getClass().getName();
+  }
+
+  protected CDOID deserializeId(String entityName, String value)
+  {
+    final int end1 = value.indexOf(SEPARATOR);
+    final int start2 = end1 + SEPARATOR.length();
+
+    final String idStr = value.substring(0, end1);
+    final String idClassName = value.substring(start2);
+
+    if (EXTERNAL.equals(entityName))
+    {
+      return CDOIDUtil.createExternal(idStr);
+    }
+
+    final Serializable idValue = getId(idStr, idClassName);
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
+    final EClass eClass = accessor.getStore().getEClass(entityName);
+    return HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(eClass), idValue);
   }
 
   public Serializable disassemble(Object value)

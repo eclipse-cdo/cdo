@@ -53,7 +53,7 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
     try
     {
       HibernateTestFactory theHibernateTestFactory = (HibernateTestFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://org.eclipse.emf.cdo.tests.hibernate");
+          .getEFactory(HibernateTestPackage.eNS_URI);
       if (theHibernateTestFactory != null)
       {
         return theHibernateTestFactory;

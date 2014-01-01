@@ -38,6 +38,7 @@ public class HibernateBugzilla_392653_Test extends AbstractCDOTest
     getRepository("repo2", true);
   }
 
+  @CleanRepositoriesBefore(reason = "needed for passing testcase")
   public void testBugzilla() throws Exception
   {
     InternalRepository repo2 = getRepository("repo2");
@@ -61,7 +62,7 @@ public class HibernateBugzilla_392653_Test extends AbstractCDOTest
     CDOTransaction transaction2 = session2.openTransaction();
 
     // Read all repo contents
-    TreeIterator<EObject> iter = transaction2.getResource(getResourcePath("/")).getAllContents();
+    TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
     while (iter.hasNext())
     {
       iter.next();

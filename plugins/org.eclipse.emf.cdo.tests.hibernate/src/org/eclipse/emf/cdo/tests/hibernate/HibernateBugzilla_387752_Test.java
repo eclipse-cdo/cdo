@@ -53,13 +53,14 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
     super.doTearDown();
   }
 
+  @CleanRepositoriesBefore(reason = "Start with a fresh repo")
   public void testBugzilla() throws Exception
   {
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       Bz387752_Main main = HibernateTestFactory.eINSTANCE.createBz387752_Main();
       main.setEnumSettable(null);

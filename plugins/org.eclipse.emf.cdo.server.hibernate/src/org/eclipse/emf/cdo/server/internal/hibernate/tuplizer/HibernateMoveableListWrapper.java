@@ -19,6 +19,9 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -35,6 +38,10 @@ import java.util.ListIterator;
 public class HibernateMoveableListWrapper implements MoveableList<Object>
 {
   private List<Object> delegate;
+
+  private EStructuralFeature eFeature;
+
+  private boolean resolveCDOID;
 
   public HibernateMoveableListWrapper()
   {
@@ -120,14 +127,12 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     {
       return o;
     }
-
-    // is already resolved
-    if (!(o instanceof CDOID))
+    else if (resolveCDOID && o instanceof CDOID)
     {
-      return o;
+      return HibernateUtil.getInstance().getCDORevision((CDOID)o);
     }
 
-    return HibernateUtil.getInstance().getCDORevision((CDOID)o);
+    return o;
   }
 
   protected List<Object> getObjects(List<?> ids)
@@ -220,7 +225,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public Iterator<Object> iterator()
   {
-    return new CDOHibernateIterator(getDelegate().iterator());
+    return new CDOHibernateIterator(getDelegate().iterator(), resolveCDOID);
   }
 
   public int lastIndexOf(Object o)
@@ -230,12 +235,12 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public ListIterator<Object> listIterator()
   {
-    return new CDOHibernateListIterator(getDelegate().listIterator());
+    return new CDOHibernateListIterator(getDelegate().listIterator(), resolveCDOID);
   }
 
   public ListIterator<Object> listIterator(int index)
   {
-    return new CDOHibernateListIterator(getDelegate().listIterator(index));
+    return new CDOHibernateListIterator(getDelegate().listIterator(index), resolveCDOID);
   }
 
   public Object remove(int index)
@@ -297,13 +302,27 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     return a;
   }
 
+  EStructuralFeature getEFeature()
+  {
+    return eFeature;
+  }
+
+  void setEFeature(EStructuralFeature eFeature)
+  {
+    this.eFeature = eFeature;
+    resolveCDOID = !HibernateUtil.getInstance().isCDOResourceContents(eFeature) && eFeature instanceof EReference;
+  }
+
   private static final class CDOHibernateIterator implements Iterator<Object>
   {
     private final Iterator<?> delegate;
 
-    public CDOHibernateIterator(Iterator<?> delegate)
+    private final boolean resolveCDOID;
+
+    public CDOHibernateIterator(Iterator<?> delegate, boolean resolveCDOID)
     {
       this.delegate = delegate;
+      this.resolveCDOID = resolveCDOID;
     }
 
     public boolean hasNext()
@@ -318,7 +337,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
       {
         return o;
       }
-      else if (o instanceof CDOID)
+      else if (resolveCDOID && o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)o);
       }
@@ -336,9 +355,12 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
   {
     private final ListIterator<Object> delegate;
 
-    public CDOHibernateListIterator(ListIterator<Object> delegate)
+    private final boolean resolveCDOID;
+
+    public CDOHibernateListIterator(ListIterator<Object> delegate, boolean resolveCDOID)
     {
       this.delegate = delegate;
+      this.resolveCDOID = resolveCDOID;
     }
 
     public void add(Object o)
@@ -359,7 +381,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     public Object next()
     {
       Object o = delegate.next();
-      if (o instanceof CDOID)
+      if (resolveCDOID && o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
       }
@@ -398,4 +420,5 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
       delegate.set(HibernateUtil.getInstance().getCDOID(o));
     }
   }
+
 }

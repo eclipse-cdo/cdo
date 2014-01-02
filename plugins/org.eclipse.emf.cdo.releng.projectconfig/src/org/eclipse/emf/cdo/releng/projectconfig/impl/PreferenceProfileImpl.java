@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -19,6 +21,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -302,7 +305,7 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public boolean matches(IProject project)
   {
@@ -315,6 +318,29 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     }
 
     return getReferentProjects().contains(project);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Property getProperty(URI path)
+  {
+    PreferenceNode preferenceNode = getProject().getPreferenceNode().getNode(path.trimSegments(1));
+    for (PreferenceFilter preferenceFilter : getPreferenceFilters())
+    {
+      if (preferenceFilter.getPreferenceNode() == preferenceNode)
+      {
+        Property property = preferenceFilter.getProperty(URI.decode(path.lastSegment()));
+        if (property != null)
+        {
+          return property;
+        }
+      }
+    }
+
+    return null;
   }
 
   private boolean requires(Set<PreferenceProfile> visited, List<PreferenceProfile> preferenceProfiles,
@@ -534,6 +560,8 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
       return requires((PreferenceProfile)arguments.get(0));
     case ProjectConfigPackage.PREFERENCE_PROFILE___MATCHES__IPROJECT:
       return matches((IProject)arguments.get(0));
+    case ProjectConfigPackage.PREFERENCE_PROFILE___GET_PROPERTY__URI:
+      return getProperty((URI)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }

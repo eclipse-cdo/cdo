@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
@@ -26,13 +27,13 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -142,15 +143,16 @@ public class PreferenceRecorderAction extends Action
     }
   }
 
-  protected void updatePreference(String key, String value)
+  protected void updatePreference(URI key, String value)
   {
+    String path = PreferencesFactory.eINSTANCE.convertURI(key);
     for (TreeIterator<EObject> it = container.eResource().getAllContents(); it.hasNext();)
     {
       EObject object = it.next();
       if (object instanceof EclipsePreferenceTask)
       {
         EclipsePreferenceTask preferenceTask = (EclipsePreferenceTask)object;
-        if (key.equals(preferenceTask.getKey()))
+        if (path.equals(preferenceTask.getKey()))
         {
           preferenceTask.setValue(value);
           expandItem(preferenceTask.eContainer());
@@ -160,10 +162,10 @@ public class PreferenceRecorderAction extends Action
     }
 
     EclipsePreferenceTask task = SetupFactory.eINSTANCE.createEclipsePreferenceTask();
-    task.setKey(key);
+    task.setKey(path);
     task.setValue(SetupUtil.escape(value));
 
-    String pluginID = new Path(key).segment(1).toString();
+    String pluginID = key.segment(1).toString();
     CompoundSetupTask compoundTask = getCompoundTask(pluginID);
     compoundTask.getSetupTasks().add(task);
     expandItem(compoundTask);
@@ -224,7 +226,7 @@ public class PreferenceRecorderAction extends Action
   {
     return new EContentAdapter()
     {
-      private Map<Property, String> paths = new HashMap<Property, String>();
+      private Map<Property, URI> paths = new HashMap<Property, URI>();
 
       @Override
       protected void setTarget(EObject target)
@@ -233,8 +235,8 @@ public class PreferenceRecorderAction extends Action
         if (target instanceof Property)
         {
           Property property = (Property)target;
-          String absolutePath = property.getAbsolutePath();
-          if (absolutePath.startsWith("/instance/") || absolutePath.startsWith("/configuration/"))
+          URI absolutePath = property.getAbsolutePath();
+          if ("instance".equals(absolutePath.authority()) || "configuration".equals(absolutePath.authority()))
           {
             paths.put(property, absolutePath);
           }
@@ -279,7 +281,7 @@ public class PreferenceRecorderAction extends Action
 
       private void notifyChanged(Property property, String value)
       {
-        String absolutePath = paths.get(property);
+        URI absolutePath = paths.get(property);
         if (absolutePath != null)
         {
           updatePreference(absolutePath, value);

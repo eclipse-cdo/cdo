@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.releng.projectconfig;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -125,5 +127,13 @@ public interface Project extends EObject
    * @generated
    */
   EList<PreferenceProfile> getPreferenceProfileReferences();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model pathDataType="org.eclipse.emf.cdo.releng.preferences.URI"
+   * @generated
+   */
+  Property getProperty(URI path);
 
 } // Project

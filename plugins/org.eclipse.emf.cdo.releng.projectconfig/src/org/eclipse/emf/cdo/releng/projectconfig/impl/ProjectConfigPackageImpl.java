@@ -323,6 +323,16 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
+  public EOperation getProject__GetProperty__URI()
+  {
+    return projectEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPreferenceProfile()
   {
     return preferenceProfileEClass;
@@ -413,6 +423,16 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
+  public EOperation getPreferenceProfile__GetProperty__URI()
+  {
+    return preferenceProfileEClass.getEOperations().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPreferenceFilter()
   {
     return preferenceFilterEClass;
@@ -476,6 +496,16 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
   public EOperation getPreferenceFilter__Matches__String()
   {
     return preferenceFilterEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getPreferenceFilter__GetProperty__String()
+  {
+    return preferenceFilterEClass.getEOperations().get(1);
   }
 
   /**
@@ -636,6 +666,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     createEReference(projectEClass, PROJECT__PREFERENCE_PROFILES);
     createEReference(projectEClass, PROJECT__PREFERENCE_NODE);
     createEReference(projectEClass, PROJECT__PREFERENCE_PROFILE_REFERENCES);
+    createEOperation(projectEClass, PROJECT___GET_PROPERTY__URI);
 
     preferenceProfileEClass = createEClass(PREFERENCE_PROFILE);
     createEReference(preferenceProfileEClass, PREFERENCE_PROFILE__PREFERENCE_FILTERS);
@@ -646,6 +677,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     createEReference(preferenceProfileEClass, PREFERENCE_PROFILE__PREREQUISITES);
     createEOperation(preferenceProfileEClass, PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE);
     createEOperation(preferenceProfileEClass, PREFERENCE_PROFILE___MATCHES__IPROJECT);
+    createEOperation(preferenceProfileEClass, PREFERENCE_PROFILE___GET_PROPERTY__URI);
 
     preferenceFilterEClass = createEClass(PREFERENCE_FILTER);
     createEReference(preferenceFilterEClass, PREFERENCE_FILTER__PREFERENCE_NODE);
@@ -654,6 +686,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     createEAttribute(preferenceFilterEClass, PREFERENCE_FILTER__EXCLUSIONS);
     createEReference(preferenceFilterEClass, PREFERENCE_FILTER__PROPERTIES);
     createEOperation(preferenceFilterEClass, PREFERENCE_FILTER___MATCHES__STRING);
+    createEOperation(preferenceFilterEClass, PREFERENCE_FILTER___GET_PROPERTY__STRING);
 
     propertyFilterEClass = createEClass(PROPERTY_FILTER);
     createEAttribute(propertyFilterEClass, PROPERTY_FILTER__OMISSIONS);
@@ -758,6 +791,10 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    op = initEOperation(getProject__GetProperty__URI(), thePreferencesPackage.getProperty(), "getProperty", 0, 1,
+        IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, thePreferencesPackage.getURI(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     initEClass(preferenceProfileEClass, PreferenceProfile.class, "PreferenceProfile", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPreferenceProfile_PreferenceFilters(), getPreferenceFilter(),
@@ -787,6 +824,10 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
         IS_UNIQUE, IS_ORDERED);
     addEParameter(op, thePredicatesPackage.getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+    op = initEOperation(getPreferenceProfile__GetProperty__URI(), thePreferencesPackage.getProperty(), "getProperty",
+        0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, thePreferencesPackage.getURI(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     initEClass(preferenceFilterEClass, PreferenceFilter.class, "PreferenceFilter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPreferenceFilter_PreferenceNode(), thePreferencesPackage.getPreferenceNode(), null,
@@ -807,6 +848,10 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     op = initEOperation(getPreferenceFilter__Matches__String(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE,
         IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getPreferenceFilter__GetProperty__String(), thePreferencesPackage.getProperty(), "getProperty",
+        0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(propertyFilterEClass, PropertyFilter.class, "PropertyFilter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

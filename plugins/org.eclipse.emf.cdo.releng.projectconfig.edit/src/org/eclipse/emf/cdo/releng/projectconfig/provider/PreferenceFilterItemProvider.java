@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
-import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
+import org.eclipse.emf.cdo.releng.preferences.provider.PreferenceItemItemProvider;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -100,43 +100,12 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
    */
   protected void addPreferenceNodePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_PreferenceFilter_preferenceNode_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceFilter_preferenceNode_feature",
-            "_UI_PreferenceFilter_type"), ProjectConfigPackage.Literals.PREFERENCE_FILTER__PREFERENCE_NODE, true,
-        false, true, null, null, null)
+    itemPropertyDescriptors.add(new PreferenceItemItemProvider.PreferenceItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_PreferenceFilter_preferenceNode_feature"), getString("_UI_PropertyDescriptor_description",
+            "_UI_PreferenceFilter_preferenceNode_feature", "_UI_PreferenceFilter_type"),
+        ProjectConfigPackage.Literals.PREFERENCE_FILTER__PREFERENCE_NODE, true, false, true, null, null, null)
     {
-      private IItemLabelProvider itemLabelProvider = new IItemLabelProvider()
-      {
-        public String getText(Object object)
-        {
-          if (object == null)
-          {
-            return "";
-          }
-
-          PreferenceNode preferenceNode = (PreferenceNode)object;
-          List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
-          StringBuilder result = new StringBuilder();
-          for (int i = 3, size = path.size(); i < size; ++i)
-          {
-            if (result.length() != 0)
-            {
-              result.append('/');
-            }
-
-            result.append(path.get(i).getName());
-          }
-
-          return result.toString();
-        }
-
-        public Object getImage(Object object)
-        {
-          return null;
-        }
-      };
-
       @Override
       public Collection<?> getChoiceOfValues(Object object)
       {
@@ -164,12 +133,6 @@ public class PreferenceFilterItemProvider extends ItemProviderAdapter implements
         }
 
         return result;
-      }
-
-      @Override
-      public IItemLabelProvider getLabelProvider(Object object)
-      {
-        return itemLabelProvider;
       }
     });
   }

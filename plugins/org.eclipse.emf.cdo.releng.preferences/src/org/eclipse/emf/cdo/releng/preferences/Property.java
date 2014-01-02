@@ -86,17 +86,9 @@ public interface Property extends PreferenceItem
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @model
-   * @generated
-   */
-  Property getInScope(String scopeName);
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * @model kind="operation"
    * @generated
    */
-  Property getInScope();
+  Property getAncestor();
 
 } // Property

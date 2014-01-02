@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -174,20 +175,31 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
    * @generated NOT
    */
   @Override
-  public Property getInScope(String scopeName)
+  public Property getAncestor()
   {
-    return (Property)super.getInScope(scopeName);
-  }
+    String name = getName();
+    if (name == null)
+    {
+      return null;
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  @Override
-  public Property getInScope()
-  {
-    return (Property)super.getInScope();
+    PreferenceNode parent = getParent();
+    if (parent == null)
+    {
+      return null;
+    }
+
+    for (PreferenceNode preferenceNode = parent.getAncestor(); preferenceNode != null; preferenceNode = preferenceNode
+        .getAncestor())
+    {
+      Property property = preferenceNode.getProperty(name);
+      if (property != null)
+      {
+        return property;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -329,10 +341,8 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
   {
     switch (operationID)
     {
-    case PreferencesPackage.PROPERTY___GET_IN_SCOPE__STRING:
-      return getInScope((String)arguments.get(0));
-    case PreferencesPackage.PROPERTY___GET_IN_SCOPE:
-      return getInScope();
+    case PreferencesPackage.PROPERTY___GET_ANCESTOR:
+      return getAncestor();
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -355,6 +365,60 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
     result.append(value);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public URI getAbsolutePath()
+  {
+    String name = getName();
+    if (name == null)
+    {
+      return null;
+    }
+
+    PreferenceNode parent = getParent();
+    if (parent == null)
+    {
+      return URI.createHierarchicalURI(null, null, null, new String[] { URI.encodeSegment(name, false) }, null, null);
+    }
+
+    URI parentAbsolutePath = parent.getAbsolutePath();
+    if (parentAbsolutePath == null)
+    {
+      return null;
+    }
+
+    return parentAbsolutePath.appendSegment(URI.encodeSegment(name, false));
+  }
+
+  @Override
+  public URI getRelativePath()
+  {
+    PreferenceNode parent = getParent();
+    if (parent == null)
+    {
+      return null;
+    }
+
+    URI parentRelativePath = parent.getRelativePath();
+    if (parentRelativePath == null)
+    {
+      return null;
+    }
+
+    return parentRelativePath.appendSegment(URI.encodeSegment(name, false));
+  }
+
+  @Override
+  public PreferenceNode getScope()
+  {
+    PreferenceNode parent = getParent();
+    if (parent != null)
+    {
+      return parent.getScope();
+    }
+
+    return null;
   }
 
 } // PropertyImpl

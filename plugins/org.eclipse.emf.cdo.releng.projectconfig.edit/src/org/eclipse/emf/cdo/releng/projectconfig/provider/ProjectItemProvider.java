@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
-import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -33,6 +32,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.EMFEditPlugin;
@@ -623,12 +623,9 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
 
       String[] rootNameComponents = null;
       StringBuilder qualifiedPreferenceNodeName = new StringBuilder();
-      List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
-      int pathSize = path.size();
-      for (int i = 3; i < pathSize; ++i)
+      for (String preferenceNodeName : preferenceNode.getRelativePath().segments())
       {
-        String preferenceNodeName = path.get(i).getName();
-        String[] nameComponents = preferenceNodeName.split("\\.");
+        String[] nameComponents = URI.decode(preferenceNodeName).split("\\.");
 
         int start = 0;
         if (rootNameComponents == null)
@@ -803,20 +800,7 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
         PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
         if (preferenceNode != null)
         {
-          List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
-          StringBuilder qualifiedName = new StringBuilder();
-          for (int i = 3, size = path.size(); i < size; ++i)
-          {
-            if (qualifiedName.length() != 0)
-            {
-              qualifiedName.append('/');
-            }
-            qualifiedName.append(path.get(i).getName());
-          }
-          if (qualifiedName.length() != 0)
-          {
-            text += " for " + qualifiedName;
-          }
+          text += " for " + preferenceNode.getRelativePath();
         }
       }
     }

@@ -13,16 +13,13 @@ package org.eclipse.emf.cdo.releng.preferences.impl;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceItem;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
-import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -36,9 +33,9 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getRoot <em>Root</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getAbsolutePath <em>Absolute Path</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getScopeRelativePath <em>Scope Relative Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getRelativePath <em>Relative Path</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceItemImpl#getAncestor <em>Ancestor</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,17 +51,7 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
    * @generated
    * @ordered
    */
-  protected static final String ABSOLUTE_PATH_EDEFAULT = null;
-
-  /**
-   * The default value of the '{@link #getScopeRelativePath() <em>Scope Relative Path</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getScopeRelativePath()
-   * @generated
-   * @ordered
-   */
-  protected static final String SCOPE_RELATIVE_PATH_EDEFAULT = null;
+  protected static final URI ABSOLUTE_PATH_EDEFAULT = null;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -94,7 +81,7 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
    * @generated
    * @ordered
    */
-  protected static final String RELATIVE_PATH_EDEFAULT = null;
+  protected static final URI RELATIVE_PATH_EDEFAULT = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,28 +130,7 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public String getAbsolutePath()
-  {
-    PreferenceNode parent = getParent();
-    String name = getName();
-    if (parent == null)
-    {
-      return name;
-    }
-
-    return parent.getAbsolutePath() + "/" + (name.contains("/") ? "/" : "") + name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public String getScopeRelativePath()
-  {
-    IPath path = new Path(getAbsolutePath()).removeFirstSegments(1).makeRelative();
-    return path.toString();
-  }
+  public abstract URI getAbsolutePath();
 
   /**
    * <!-- begin-user-doc -->
@@ -196,43 +162,21 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public String getRelativePath()
-  {
-    Path absolutePath = new Path(getAbsolutePath());
-    IPath path;
-    if (absolutePath.segmentCount() <= 1)
-    {
-      path = absolutePath.makeRelative();
-    }
-    else
-    {
-      path = absolutePath.removeFirstSegments("project".equals(absolutePath.segment(0)) ? 2 : 1).makeRelative();
-    }
-
-    return path.toString();
-  }
+  public abstract URI getRelativePath();
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public PreferenceNode getScope()
-  {
-    PreferenceNode parent = getParent();
-    if (parent != null)
-    {
-      PreferenceNode parent2 = parent.getParent();
-      if (parent2 == null)
-      {
-        return parent;
-      }
+  public abstract PreferenceItem getAncestor();
 
-      return parent.getScope();
-    }
-
-    return null;
-  }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public abstract PreferenceNode getScope();
 
   /**
    * <!-- begin-user-doc -->
@@ -240,127 +184,6 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
    * @generated NOT
    */
   public abstract PreferenceNode getParent();
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public PreferenceItem getItem(String path)
-  {
-    String name;
-    int pos = path.indexOf('/');
-    if (pos == -1)
-    {
-      name = path;
-      path = null;
-    }
-    else
-    {
-      name = path.substring(0, pos);
-      path = path.substring(pos + 1);
-    }
-
-    if (this instanceof PreferenceNode)
-    {
-      PreferenceNode preferenceNode = (PreferenceNode)this;
-
-      // TODO Check whether for the same name a node AND a property exists
-      for (PreferenceNode node : preferenceNode.getChildren())
-      {
-        if (name.equals(node.getName()))
-        {
-          if (path == null)
-          {
-            return node;
-          }
-
-          return node.getNode(path);
-        }
-      }
-
-      for (Property property : preferenceNode.getProperties())
-      {
-        if (name.equals(property.getName()))
-        {
-          if (path == null)
-          {
-            return property;
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public PreferenceItem getInScope(String scopeName)
-  {
-    PreferenceNode root = getRoot();
-    if (root != null)
-    {
-      PreferenceNode scope = root.getNode(scopeName);
-      if (scope != null)
-      {
-        return scope.getItem(getScopeRelativePath());
-      }
-    }
-
-    return null;
-  }
-
-  private static final String[] SCOPE_NAMES = { "project", "instance", "configuration", "default", "bundle_defaults" };
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public PreferenceItem getInScope()
-  {
-    PreferenceNode scope = getScope();
-    if (scope != null)
-    {
-      PreferenceNode root = scope.getRoot();
-      String ownScopeName = scope.getName();
-      String scopeRelativePath = getScopeRelativePath();
-      if (SCOPE_NAMES[0].equals(ownScopeName))
-      {
-        scopeRelativePath = new Path(scopeRelativePath).removeFirstSegments(1).toString();
-      }
-
-      for (int i = 0; i < SCOPE_NAMES.length; i++)
-      {
-        String scopeName = SCOPE_NAMES[i];
-        if (ownScopeName != null)
-        {
-          if (scopeName.equals(ownScopeName))
-          {
-            ownScopeName = null;
-          }
-        }
-        else
-        {
-          PreferenceNode defaultScope = root.getNode(scopeName);
-          if (defaultScope != null)
-          {
-            PreferenceItem item = defaultScope.getItem(scopeRelativePath);
-            if (item != null)
-            {
-              return item;
-            }
-          }
-        }
-      }
-    }
-
-    return null;
-  }
 
   /**
    * <!-- begin-user-doc -->
@@ -378,12 +201,12 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
       return getScope();
     case PreferencesPackage.PREFERENCE_ITEM__ABSOLUTE_PATH:
       return getAbsolutePath();
-    case PreferencesPackage.PREFERENCE_ITEM__SCOPE_RELATIVE_PATH:
-      return getScopeRelativePath();
     case PreferencesPackage.PREFERENCE_ITEM__NAME:
       return getName();
     case PreferencesPackage.PREFERENCE_ITEM__RELATIVE_PATH:
       return getRelativePath();
+    case PreferencesPackage.PREFERENCE_ITEM__ANCESTOR:
+      return getAncestor();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -439,14 +262,13 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
     case PreferencesPackage.PREFERENCE_ITEM__ABSOLUTE_PATH:
       return ABSOLUTE_PATH_EDEFAULT == null ? getAbsolutePath() != null : !ABSOLUTE_PATH_EDEFAULT
           .equals(getAbsolutePath());
-    case PreferencesPackage.PREFERENCE_ITEM__SCOPE_RELATIVE_PATH:
-      return SCOPE_RELATIVE_PATH_EDEFAULT == null ? getScopeRelativePath() != null : !SCOPE_RELATIVE_PATH_EDEFAULT
-          .equals(getScopeRelativePath());
     case PreferencesPackage.PREFERENCE_ITEM__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case PreferencesPackage.PREFERENCE_ITEM__RELATIVE_PATH:
       return RELATIVE_PATH_EDEFAULT == null ? getRelativePath() != null : !RELATIVE_PATH_EDEFAULT
           .equals(getRelativePath());
+    case PreferencesPackage.PREFERENCE_ITEM__ANCESTOR:
+      return getAncestor() != null;
     }
     return super.eIsSet(featureID);
   }
@@ -463,12 +285,6 @@ public abstract class PreferenceItemImpl extends MinimalEObjectImpl.Container im
     {
     case PreferencesPackage.PREFERENCE_ITEM___GET_PARENT:
       return getParent();
-    case PreferencesPackage.PREFERENCE_ITEM___GET_ITEM__STRING:
-      return getItem((String)arguments.get(0));
-    case PreferencesPackage.PREFERENCE_ITEM___GET_IN_SCOPE__STRING:
-      return getInScope((String)arguments.get(0));
-    case PreferencesPackage.PREFERENCE_ITEM___GET_IN_SCOPE:
-      return getInScope();
     }
     return super.eInvoke(operationID, arguments);
   }

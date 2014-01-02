@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.preferences;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -23,9 +24,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getRoot <em>Root</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScope <em>Scope</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getAbsolutePath <em>Absolute Path</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScopeRelativePath <em>Scope Relative Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getRelativePath <em>Relative Path</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getAncestor <em>Ancestor</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,25 +61,10 @@ public interface PreferenceItem extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Absolute Path</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.preferences.PreferencesPackage#getPreferenceItem_AbsolutePath()
-   * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+   * @model dataType="org.eclipse.emf.cdo.releng.preferences.URI" required="true" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  String getAbsolutePath();
-
-  /**
-   * Returns the value of the '<em><b>Scope Relative Path</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Scope Relative Path</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Scope Relative Path</em>' attribute.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferencesPackage#getPreferenceItem_ScopeRelativePath()
-   * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
-   * @generated
-   */
-  String getScopeRelativePath();
+  URI getAbsolutePath();
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -116,10 +102,25 @@ public interface PreferenceItem extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Relative Path</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.preferences.PreferencesPackage#getPreferenceItem_RelativePath()
-   * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+   * @model dataType="org.eclipse.emf.cdo.releng.preferences.URI" required="true" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  String getRelativePath();
+  URI getRelativePath();
+
+  /**
+   * Returns the value of the '<em><b>Ancestor</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Ancestor</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Ancestor</em>' reference.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferencesPackage#getPreferenceItem_Ancestor()
+   * @model resolveProxies="false" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  PreferenceItem getAncestor();
 
   /**
    * Returns the value of the '<em><b>Scope</b></em>' reference.
@@ -143,29 +144,5 @@ public interface PreferenceItem extends EObject
    * @generated
    */
   PreferenceNode getParent();
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @model
-   * @generated
-   */
-  PreferenceItem getItem(String path);
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @model
-   * @generated
-   */
-  PreferenceItem getInScope(String scopeName);
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @model kind="operation"
-   * @generated
-   */
-  PreferenceItem getInScope();
 
 } // PreferenceItem

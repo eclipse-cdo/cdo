@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -247,6 +249,34 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Property getProperty(URI path)
+  {
+    for (PreferenceProfile preferenceProfile : getPreferenceProfiles())
+    {
+      Property property = preferenceProfile.getProperty(path);
+      if (property != null)
+      {
+        return property;
+      }
+    }
+
+    for (PreferenceProfile preferenceProfile : getPreferenceProfileReferences())
+    {
+      Property property = preferenceProfile.getProperty(path);
+      if (property != null)
+      {
+        return property;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -408,6 +438,22 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       return preferenceProfileReferences != null && !preferenceProfileReferences.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case ProjectConfigPackage.PROJECT___GET_PROPERTY__URI:
+      return getProperty((URI)arguments.get(0));
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
   @Override

@@ -172,4 +172,12 @@ public interface PreferenceFilter extends EObject
    */
   boolean matches(String value);
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  Property getProperty(String name);
+
 } // PreferenceFilter

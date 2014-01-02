@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.releng.projectconfig.presentation.handlers;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
-import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
@@ -131,7 +130,7 @@ public class NavigateHandler extends AbstractHandler
       else if (object instanceof PreferenceNode)
       {
         PreferenceNode preferenceNode = (PreferenceNode)object;
-        PreferenceNode ancestor = PreferencesUtil.getAncestor(preferenceNode);
+        PreferenceNode ancestor = preferenceNode.getAncestor();
         if (ancestor != null)
         {
           targets.add(ancestor);
@@ -140,7 +139,7 @@ public class NavigateHandler extends AbstractHandler
       else if (object instanceof Property)
       {
         Property property = (Property)object;
-        Property ancestor = PreferencesUtil.getAncestor(property);
+        Property ancestor = property.getAncestor();
         if (ancestor != null)
         {
           targets.add(ancestor);

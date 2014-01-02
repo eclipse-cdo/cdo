@@ -15,22 +15,23 @@ import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesEditPlugin;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
-import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
-import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
+import org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigPreferencePage.PropertyModificationHandling;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigUtil;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -52,9 +53,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * This is the central singleton for the Project Config editor plugin.
@@ -128,22 +127,11 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
 
     public static final class EarlyStartup implements IStartup
     {
-      private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
+      private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
+
+      private static final IWorkspaceRoot WORKSPACE_ROOT = WORKSPACE.getRoot();
 
       private WorkspaceConfiguration workspaceConfiguration;
-
-      public EarlyStartup()
-      {
-        earlyStartup = this;
-        new ProjectConfigUtil.CompletenessChecker()
-        {
-          @Override
-          protected void complete(WorkspaceConfiguration workspaceConfiguration)
-          {
-            EarlyStartup.this.workspaceConfiguration = workspaceConfiguration;
-          }
-        };
-      }
 
       protected IResourceChangeListener resourceChangeListener = new IResourceChangeListener()
       {
@@ -208,85 +196,54 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                   {
                     final WorkspaceConfiguration newWorkspaceConfiguration = ProjectConfigUtil
                         .getWorkspaceConfiguration();
+                    newWorkspaceConfiguration.updatePreferenceProfileReferences();
                     Map<Project, Map<Property, Property>> result = new LinkedHashMap<Project, Map<Property, Property>>();
                     for (IPath preferenceNodePath : changedPaths)
                     {
                       String projectName = preferenceNodePath.segment(0);
                       Project oldProject = workspaceConfiguration.getProject(projectName);
                       Project newProject = newWorkspaceConfiguration.getProject(projectName);
-                      if (oldProject == null)
-                      {
-                        Map<PreferenceNode, Set<Property>> newUnmanagedPreferenceNodes = ProjectConfigUtil
-                            .getUnmanagedPreferenceNodes(newProject);
-                        if (newUnmanagedPreferenceNodes.isEmpty())
-                        {
-                          Map<Property, Property> propertyMap = new LinkedHashMap<Property, Property>();
-                          result.put(newProject, propertyMap);
-                          for (Set<Property> properties : newUnmanagedPreferenceNodes.values())
-                          {
-                            for (Property property : properties)
-                            {
-                              propertyMap.put(property, null);
-                            }
-                          }
-                        }
-                      }
-                      else if (newProject != null)
+                      if (newProject != null)
                       {
                         String preferenceNodeName = preferenceNodePath.removeFileExtension().lastSegment();
-                        PreferenceNode oldPreferenceNode = oldProject.getPreferenceNode().getNode(preferenceNodeName);
+                        PreferenceNode oldPreferenceNode = oldProject == null ? null : oldProject.getPreferenceNode()
+                            .getNode(preferenceNodeName);
                         PreferenceNode newPreferenceNode = newProject.getPreferenceNode().getNode(preferenceNodeName);
                         Map<Property, String> modifiedProperties = collectModifiedProperties(workspaceConfiguration,
                             oldPreferenceNode, newPreferenceNode);
                         if (!modifiedProperties.isEmpty())
                         {
                           Map<Property, Property> propertyMap = null;
-                          LOOP: for (Property property : modifiedProperties.keySet())
+                          for (Property property : modifiedProperties.keySet())
                           {
-                            String relativePath = property.getParent().getRelativePath();
-                            String name = property.getName();
                             String value = property.getValue();
-                            Set<PreferenceProfile> preferenceProfiles = new LinkedHashSet<PreferenceProfile>(newProject
-                                .getPreferenceProfileReferences());
-                            preferenceProfiles.addAll(newProject.getPreferenceProfiles());
-                            for (PreferenceProfile preferenceProfileReference : preferenceProfiles)
+
+                            Property preferenceProfileProperty = newProject.getProperty(property.getRelativePath());
+                            if (preferenceProfileProperty != null)
                             {
-                              for (PreferenceFilter preferenceFilter : preferenceProfileReference
-                                  .getPreferenceFilters())
+                              String preferenceProfilePropertyValue = preferenceProfileProperty.getValue();
+                              if (value == null ? preferenceProfilePropertyValue != null : !value
+                                  .equals(preferenceProfilePropertyValue))
                               {
-                                if (preferenceFilter.getPreferenceNode().getRelativePath().equals(relativePath))
+                                if (propertyMap == null)
                                 {
-                                  for (Property preferenceProfileProperty : preferenceFilter.getProperties())
-                                  {
-                                    if (name.equals(preferenceProfileProperty.getName()))
-                                    {
-                                      String preferenceProfilePropertyValue = preferenceProfileProperty.getValue();
-                                      if (value == null ? preferenceProfilePropertyValue != null : !value
-                                          .equals(preferenceProfilePropertyValue))
-                                      {
-                                        if (propertyMap == null)
-                                        {
-                                          propertyMap = new LinkedHashMap<Property, Property>();
-                                          result.put(newProject, propertyMap);
-                                        }
-
-                                        propertyMap.put(property, preferenceProfileProperty);
-                                      }
-
-                                      continue LOOP;
-                                    }
-                                  }
+                                  propertyMap = new LinkedHashMap<Property, Property>();
+                                  result.put(newProject, propertyMap);
                                 }
+
+                                propertyMap.put(property, preferenceProfileProperty);
                               }
                             }
-
-                            if (propertyMap == null)
+                            else
                             {
-                              propertyMap = new LinkedHashMap<Property, Property>();
-                              result.put(newProject, propertyMap);
-                            }
+                              if (propertyMap == null)
+                              {
+                                propertyMap = new LinkedHashMap<Property, Property>();
+                                result.put(newProject, propertyMap);
+                              }
 
-                            propertyMap.put(property, null);
+                              propertyMap.put(property, null);
+                            }
                           }
                         }
                       }
@@ -316,14 +273,9 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                                   + project.getPreferenceNode().getName() + " been modified\n");
                             }
 
-                            String relativePath = property.getRelativePath();
+                            URI relativePath = property.getRelativePath();
                             modifiedManagedProperty.append("    >  " + relativePath + "=" + property.getValue() + "\n");
-                            modifiedManagedProperty.append("    <  ");
-                            for (int i = 0, length = relativePath.length(); i < length; ++i)
-                            {
-                              modifiedManagedProperty.append(' ');
-                            }
-                            modifiedManagedProperty.append("=" + managingProperty.getValue() + "\n");
+                            modifiedManagedProperty.append("    <  =" + managingProperty.getValue() + "\n");
 
                             managedProperties.put(property, managingProperty);
                           }
@@ -336,7 +288,7 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                                   + project.getPreferenceNode().getName() + " been modified\n");
                             }
 
-                            String relativePath = property.getRelativePath();
+                            URI relativePath = property.getRelativePath();
                             modifiedUnmanagedProperty.append("     " + relativePath + "=" + property.getValue() + "\n");
                           }
                         }
@@ -345,12 +297,14 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                       Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
                       if (modifiedManagedProperty.length() != 0)
                       {
-                        if (MessageDialog.openConfirm(
-                            shell,
-                            "Managed Preference Modification",
-                            modifiedManagedProperty.toString()
-                                + "\n\nEach of these properties will be overwritten by its managing property's value."
-                                + "  Would you instead like to propogate each of these changes to its managing property?"))
+                        if (propertyModificationHandling == ProjectConfigPreferencePage.PropertyModificationHandling.PROMPT
+                            && MessageDialog.openConfirm(
+                                shell,
+                                "Managed Preference Modification",
+                                modifiedManagedProperty.toString()
+                                    + "\n\nEach of these properties will be overwritten by its managing property's value."
+                                    + "  Would you instead like to propogate each of these changes to its managing property?")
+                            || propertyModificationHandling == ProjectConfigPreferencePage.PropertyModificationHandling.PROPAGATE)
                         {
                           for (Map.Entry<Property, Property> entry : managedProperties.entrySet())
                           {
@@ -398,12 +352,13 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
 
                       if (modifiedUnmanagedProperty.length() != 0)
                       {
-                        if (MessageDialog
-                            .openConfirm(
-                                shell,
-                                "Project Configuration",
-                                modifiedUnmanagedProperty
-                                    + "\n\nWould you like to open the Project Configuration preferences to manage the properties?"))
+                        if (configurationValidationPrompt
+                            && MessageDialog
+                                .openConfirm(
+                                    shell,
+                                    "Project Configuration",
+                                    modifiedUnmanagedProperty
+                                        + "\n\nWould you like to open the Project Configuration preferences to manage the properties?"))
                         {
                           PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(
                               shell,
@@ -457,7 +412,8 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
 
                     for (Property newProperty : newPreferenceNode.getProperties())
                     {
-                      Property oldProperty = oldPreferenceNode.getProperty(newProperty.getName());
+                      Property oldProperty = oldPreferenceNode == null ? null : oldPreferenceNode
+                          .getProperty(newProperty.getName());
                       if (oldProperty == null)
                       {
                         result.put(newProperty, null);
@@ -484,14 +440,48 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
         }
       };
 
+      private boolean configurationValidationPrompt = ProjectConfigPreferencePage.isConfigurationValidationPrompt();
+
+      private PropertyModificationHandling propertyModificationHandling = ProjectConfigPreferencePage
+          .getPropertyModificationHandling();
+
+      public EarlyStartup()
+      {
+        earlyStartup = this;
+        new ProjectConfigUtil.CompletenessChecker()
+        {
+          @Override
+          protected void complete(WorkspaceConfiguration workspaceConfiguration)
+          {
+            EarlyStartup.this.workspaceConfiguration = workspaceConfiguration;
+            workspaceConfiguration.updatePreferenceProfileReferences();
+          }
+        };
+      }
+
       public void earlyStartup()
       {
-        ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
+        update();
       }
 
       public void stop()
       {
-        ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+        WORKSPACE.removeResourceChangeListener(resourceChangeListener);
+      }
+
+      public void update()
+      {
+        if (ProjectConfigPreferencePage.isConfigurationManagementAutomatic())
+        {
+          WORKSPACE.addResourceChangeListener(resourceChangeListener);
+        }
+        else
+        {
+          WORKSPACE.removeResourceChangeListener(resourceChangeListener);
+        }
+
+        configurationValidationPrompt = ProjectConfigPreferencePage.isConfigurationValidationPrompt();
+        propertyModificationHandling = ProjectConfigPreferencePage.getPropertyModificationHandling();
       }
     }
 
@@ -517,6 +507,10 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
 
       super.stop(context);
     }
-  }
 
+    public void update()
+    {
+      earlyStartup.update();
+    }
+  }
 }

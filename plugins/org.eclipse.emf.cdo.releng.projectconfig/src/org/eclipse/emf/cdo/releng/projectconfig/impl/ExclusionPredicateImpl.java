@@ -80,7 +80,7 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public boolean matches(IProject project)
   {

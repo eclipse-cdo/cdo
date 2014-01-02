@@ -325,6 +325,25 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Property getProperty(String name)
+  {
+    for (Property property : getProperties())
+    {
+      if (name.equals(property.getName()))
+      {
+        return property;
+      }
+
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -491,6 +510,8 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
     {
     case ProjectConfigPackage.PREFERENCE_FILTER___MATCHES__STRING:
       return matches((String)arguments.get(0));
+    case ProjectConfigPackage.PREFERENCE_FILTER___GET_PROPERTY__STRING:
+      return getProperty((String)arguments.get(0));
     }
     return super.eInvoke(operationID, arguments);
   }

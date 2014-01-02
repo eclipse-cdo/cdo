@@ -225,13 +225,22 @@ public interface ProjectConfigPackage extends EPackage
   int PROJECT_FEATURE_COUNT = 4;
 
   /**
+   * The operation id for the '<em>Get Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROJECT___GET_PROPERTY__URI = 0;
+
+  /**
    * The number of operations of the '<em>Project</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROJECT_OPERATION_COUNT = 0;
+  int PROJECT_OPERATION_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceProfileImpl <em>Preference Profile</em>}' class.
@@ -325,13 +334,22 @@ public interface ProjectConfigPackage extends EPackage
   int PREFERENCE_PROFILE___MATCHES__IPROJECT = 1;
 
   /**
+   * The operation id for the '<em>Get Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_PROFILE___GET_PROPERTY__URI = 2;
+
+  /**
    * The number of operations of the '<em>Preference Profile</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_PROFILE_OPERATION_COUNT = 2;
+  int PREFERENCE_PROFILE_OPERATION_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl <em>Preference Filter</em>}' class.
@@ -407,13 +425,22 @@ public interface ProjectConfigPackage extends EPackage
   int PREFERENCE_FILTER___MATCHES__STRING = 0;
 
   /**
+   * The operation id for the '<em>Get Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_FILTER___GET_PROPERTY__STRING = 1;
+
+  /**
    * The number of operations of the '<em>Preference Filter</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_FILTER_OPERATION_COUNT = 1;
+  int PREFERENCE_FILTER_OPERATION_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl <em>Property Filter</em>}' class.
@@ -739,6 +766,16 @@ public interface ProjectConfigPackage extends EPackage
   EReference getProject_PreferenceProfileReferences();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.Project#getProperty(org.eclipse.emf.common.util.URI) <em>Get Property</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Property</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.projectconfig.Project#getProperty(org.eclipse.emf.common.util.URI)
+   * @generated
+   */
+  EOperation getProject__GetProperty__URI();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile <em>Preference Profile</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -835,6 +872,16 @@ public interface ProjectConfigPackage extends EPackage
   EOperation getPreferenceProfile__Matches__IProject();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getProperty(org.eclipse.emf.common.util.URI) <em>Get Property</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Property</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getProperty(org.eclipse.emf.common.util.URI)
+   * @generated
+   */
+  EOperation getPreferenceProfile__GetProperty__URI();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter <em>Preference Filter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -908,6 +955,16 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    */
   EOperation getPreferenceFilter__Matches__String();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter#getProperty(java.lang.String) <em>Get Property</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Property</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter#getProperty(java.lang.String)
+   * @generated
+   */
+  EOperation getPreferenceFilter__GetProperty__String();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter <em>Property Filter</em>}'.
@@ -1173,6 +1230,14 @@ public interface ProjectConfigPackage extends EPackage
     EReference PROJECT__PREFERENCE_PROFILE_REFERENCES = eINSTANCE.getProject_PreferenceProfileReferences();
 
     /**
+     * The meta object literal for the '<em><b>Get Property</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PROJECT___GET_PROPERTY__URI = eINSTANCE.getProject__GetProperty__URI();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceProfileImpl <em>Preference Profile</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1248,6 +1313,14 @@ public interface ProjectConfigPackage extends EPackage
     EOperation PREFERENCE_PROFILE___MATCHES__IPROJECT = eINSTANCE.getPreferenceProfile__Matches__IProject();
 
     /**
+     * The meta object literal for the '<em><b>Get Property</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PREFERENCE_PROFILE___GET_PROPERTY__URI = eINSTANCE.getPreferenceProfile__GetProperty__URI();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl <em>Preference Filter</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1304,6 +1377,14 @@ public interface ProjectConfigPackage extends EPackage
      * @generated
      */
     EOperation PREFERENCE_FILTER___MATCHES__STRING = eINSTANCE.getPreferenceFilter__Matches__String();
+
+    /**
+     * The meta object literal for the '<em><b>Get Property</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PREFERENCE_FILTER___GET_PROPERTY__STRING = eINSTANCE.getPreferenceFilter__GetProperty__String();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl <em>Property Filter</em>}' class.

@@ -24,6 +24,9 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties"/>
     </eAnnotations>
+    <eOperations name="getProperty" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//Property">
+      <eParameters name="path" eType="ecore:EDataType ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//URI"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" lowerBound="1"
         eType="#//WorkspaceConfiguration" eOpposite="#//WorkspaceConfiguration/projects"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preferenceProfiles" upperBound="-1"
@@ -39,6 +42,9 @@
     </eOperations>
     <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="project" eType="ecore:EDataType ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Project"/>
+    </eOperations>
+    <eOperations name="getProperty" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//Property">
+      <eParameters name="path" eType="ecore:EDataType ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//URI"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preferenceFilters" upperBound="-1"
         eType="#//PreferenceFilter" containment="true" eOpposite="#//PreferenceFilter/preferenceProfile"/>
@@ -56,6 +62,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="PreferenceFilter">
     <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getProperty" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//Property">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preferenceNode" lowerBound="1"
         eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//PreferenceNode"/>

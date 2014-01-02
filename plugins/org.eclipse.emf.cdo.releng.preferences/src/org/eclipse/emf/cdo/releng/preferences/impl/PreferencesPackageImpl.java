@@ -61,6 +61,13 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
   private EDataType escapedStringEDataType = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType uriEDataType = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with
    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
    * package URI value.
@@ -161,7 +168,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferenceItem_ScopeRelativePath()
+  public EAttribute getPreferenceItem_Name()
   {
     return (EAttribute)preferenceItemEClass.getEStructuralFeatures().get(3);
   }
@@ -171,7 +178,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferenceItem_Name()
+  public EAttribute getPreferenceItem_RelativePath()
   {
     return (EAttribute)preferenceItemEClass.getEStructuralFeatures().get(4);
   }
@@ -181,9 +188,9 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferenceItem_RelativePath()
+  public EReference getPreferenceItem_Ancestor()
   {
-    return (EAttribute)preferenceItemEClass.getEStructuralFeatures().get(5);
+    return (EReference)preferenceItemEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -204,36 +211,6 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
   public EOperation getPreferenceItem__GetParent()
   {
     return preferenceItemEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPreferenceItem__GetItem__String()
-  {
-    return preferenceItemEClass.getEOperations().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPreferenceItem__GetInScope__String()
-  {
-    return preferenceItemEClass.getEOperations().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPreferenceItem__GetInScope()
-  {
-    return preferenceItemEClass.getEOperations().get(3);
   }
 
   /**
@@ -301,7 +278,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getPreferenceNode__GetProperty__String()
+  public EOperation getPreferenceNode__GetNode__URI()
   {
     return preferenceNodeEClass.getEOperations().get(1);
   }
@@ -311,7 +288,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getPreferenceNode__GetInScope__String()
+  public EOperation getPreferenceNode__GetProperty__String()
   {
     return preferenceNodeEClass.getEOperations().get(2);
   }
@@ -321,9 +298,19 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getPreferenceNode__GetInScope()
+  public EOperation getPreferenceNode__GetProperty__URI()
   {
     return preferenceNodeEClass.getEOperations().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getPreferenceNode__GetAncestor()
+  {
+    return preferenceNodeEClass.getEOperations().get(4);
   }
 
   /**
@@ -361,19 +348,9 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getProperty__GetInScope__String()
+  public EOperation getProperty__GetAncestor()
   {
     return propertyEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getProperty__GetInScope()
-  {
-    return propertyEClass.getEOperations().get(1);
   }
 
   /**
@@ -384,6 +361,16 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
   public EDataType getEscapedString()
   {
     return escapedStringEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EDataType getURI()
+  {
+    return uriEDataType;
   }
 
   /**
@@ -423,13 +410,10 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     createEReference(preferenceItemEClass, PREFERENCE_ITEM__ROOT);
     createEReference(preferenceItemEClass, PREFERENCE_ITEM__SCOPE);
     createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__ABSOLUTE_PATH);
-    createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__SCOPE_RELATIVE_PATH);
     createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__NAME);
     createEAttribute(preferenceItemEClass, PREFERENCE_ITEM__RELATIVE_PATH);
+    createEReference(preferenceItemEClass, PREFERENCE_ITEM__ANCESTOR);
     createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_PARENT);
-    createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_ITEM__STRING);
-    createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_IN_SCOPE__STRING);
-    createEOperation(preferenceItemEClass, PREFERENCE_ITEM___GET_IN_SCOPE);
 
     preferenceNodeEClass = createEClass(PREFERENCE_NODE);
     createEReference(preferenceNodeEClass, PREFERENCE_NODE__PARENT);
@@ -437,18 +421,19 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     createEReference(preferenceNodeEClass, PREFERENCE_NODE__PROPERTIES);
     createEAttribute(preferenceNodeEClass, PREFERENCE_NODE__LOCATION);
     createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_NODE__STRING);
+    createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_NODE__URI);
     createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_PROPERTY__STRING);
-    createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_IN_SCOPE__STRING);
-    createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_IN_SCOPE);
+    createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_PROPERTY__URI);
+    createEOperation(preferenceNodeEClass, PREFERENCE_NODE___GET_ANCESTOR);
 
     propertyEClass = createEClass(PROPERTY);
     createEReference(propertyEClass, PROPERTY__PARENT);
     createEAttribute(propertyEClass, PROPERTY__VALUE);
-    createEOperation(propertyEClass, PROPERTY___GET_IN_SCOPE__STRING);
-    createEOperation(propertyEClass, PROPERTY___GET_IN_SCOPE);
+    createEOperation(propertyEClass, PROPERTY___GET_ANCESTOR);
 
     // Create data types
     escapedStringEDataType = createEDataType(ESCAPED_STRING);
+    uriEDataType = createEDataType(URI);
   }
 
   /**
@@ -495,29 +480,17 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     initEReference(getPreferenceItem_Scope(), getPreferenceNode(), null, "scope", null, 0, 1, PreferenceItem.class,
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPreferenceItem_AbsolutePath(), ecorePackage.getEString(), "absolutePath", null, 1, 1,
-        PreferenceItem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getPreferenceItem_ScopeRelativePath(), ecorePackage.getEString(), "scopeRelativePath", null, 1, 1,
-        PreferenceItem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
-        IS_ORDERED);
+    initEAttribute(getPreferenceItem_AbsolutePath(), getURI(), "absolutePath", null, 1, 1, PreferenceItem.class,
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getPreferenceItem_Name(), ecorePackage.getEString(), "name", null, 1, 1, PreferenceItem.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPreferenceItem_RelativePath(), ecorePackage.getEString(), "relativePath", null, 1, 1,
-        PreferenceItem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
-        IS_ORDERED);
+    initEAttribute(getPreferenceItem_RelativePath(), getURI(), "relativePath", null, 1, 1, PreferenceItem.class,
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getPreferenceItem_Ancestor(), getPreferenceItem(), null, "ancestor", null, 0, 1,
+        PreferenceItem.class, !IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEOperation(getPreferenceItem__GetParent(), getPreferenceNode(), "getParent", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    EOperation op = initEOperation(getPreferenceItem__GetItem__String(), getPreferenceItem(), "getItem", 0, 1,
-        IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, ecorePackage.getEString(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    op = initEOperation(getPreferenceItem__GetInScope__String(), getPreferenceItem(), "getInScope", 0, 1, IS_UNIQUE,
-        IS_ORDERED);
-    addEParameter(op, ecorePackage.getEString(), "scopeName", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    initEOperation(getPreferenceItem__GetInScope(), getPreferenceItem(), "getInScope", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(preferenceNodeEClass, PreferenceNode.class, "PreferenceNode", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -535,19 +508,22 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
         PreferenceNode.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
 
-    op = initEOperation(getPreferenceNode__GetNode__String(), getPreferenceNode(), "getNode", 0, 1, IS_UNIQUE,
-        IS_ORDERED);
+    EOperation op = initEOperation(getPreferenceNode__GetNode__String(), getPreferenceNode(), "getNode", 0, 1,
+        IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getPreferenceNode__GetNode__URI(), getPreferenceNode(), "getNode", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getURI(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     op = initEOperation(getPreferenceNode__GetProperty__String(), getProperty(), "getProperty", 0, 1, IS_UNIQUE,
         IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    op = initEOperation(getPreferenceNode__GetInScope__String(), getPreferenceNode(), "getInScope", 0, 1, IS_UNIQUE,
+    op = initEOperation(getPreferenceNode__GetProperty__URI(), getProperty(), "getProperty", 0, 1, IS_UNIQUE,
         IS_ORDERED);
-    addEParameter(op, ecorePackage.getEString(), "scopeName", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getURI(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEOperation(getPreferenceNode__GetInScope(), getPreferenceNode(), "getInScope", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getPreferenceNode__GetAncestor(), getPreferenceNode(), "getAncestor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(propertyEClass, Property.class, "Property", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProperty_Parent(), getPreferenceNode(), getPreferenceNode_Properties(), "parent", null, 0, 1,
@@ -556,13 +532,12 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     initEAttribute(getProperty_Value(), getEscapedString(), "value", null, 0, 1, Property.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    op = initEOperation(getProperty__GetInScope__String(), getProperty(), "getInScope", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, ecorePackage.getEString(), "scopeName", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    initEOperation(getProperty__GetInScope(), getProperty(), "getInScope", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getProperty__GetAncestor(), getProperty(), "getAncestor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     // Initialize data types
     initEDataType(escapedStringEDataType, String.class, "EscapedString", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,
+        !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

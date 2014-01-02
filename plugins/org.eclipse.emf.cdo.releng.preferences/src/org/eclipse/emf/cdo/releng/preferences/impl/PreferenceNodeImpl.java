@@ -241,6 +241,42 @@ public class PreferenceNodeImpl extends PreferenceItemImpl implements Preference
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  public PreferenceNode getNode(URI path)
+  {
+    PreferenceNode preferenceNode = this;
+
+    String authority = path.authority();
+    if (authority != null)
+    {
+      preferenceNode = getRoot();
+      if (!"".equals(authority))
+      {
+        preferenceNode = preferenceNode.getNode(URI.decode(authority));
+      }
+    }
+
+    if (preferenceNode == null)
+    {
+      return null;
+    }
+
+    for (String segment : path.segments())
+    {
+      preferenceNode = preferenceNode.getNode(URI.decode(segment));
+      if (preferenceNode == null)
+      {
+        return null;
+      }
+    }
+
+    return preferenceNode;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   public Property getProperty(String name)
   {
     for (Property property : getProperties())
@@ -259,10 +295,20 @@ public class PreferenceNodeImpl extends PreferenceItemImpl implements Preference
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  @Override
-  public PreferenceNode getInScope(String scopeName)
+  public Property getProperty(URI path)
   {
-    return (PreferenceNode)super.getInScope(scopeName);
+    if (path.segmentCount() == 0)
+    {
+      return null;
+    }
+
+    PreferenceNode preferenceNode = getNode(path.trimSegments(1));
+    if (preferenceNode == null)
+    {
+      return null;
+    }
+
+    return preferenceNode.getProperty(URI.decode(path.lastSegment()));
   }
 
   /**
@@ -271,9 +317,91 @@ public class PreferenceNodeImpl extends PreferenceItemImpl implements Preference
    * @generated NOT
    */
   @Override
-  public PreferenceNode getInScope()
+  public PreferenceNode getAncestor()
   {
-    return (PreferenceNode)super.getInScope();
+    String name = getName();
+    if (name == null)
+    {
+      return null;
+    }
+
+    URI absolutePath = getAbsolutePath();
+    if (absolutePath == null)
+    {
+      return null;
+    }
+
+    URI relativePath = getRelativePath();
+    if (relativePath == null)
+    {
+      return null;
+    }
+
+    PreferenceNode root = getRoot();
+    if (root == null)
+    {
+      return null;
+    }
+
+    boolean matched = false;
+    String authority = absolutePath.authority();
+    if ("project".equals(authority))
+    {
+      matched = true;
+
+      PreferenceNode instancePreferenceNode = root.getNode("instance");
+      if (instancePreferenceNode != null)
+      {
+        PreferenceNode preferenceNode = instancePreferenceNode.getNode(relativePath);
+        if (preferenceNode != null)
+        {
+          return preferenceNode;
+        }
+      }
+    }
+
+    if (matched || "instance".equals(authority))
+    {
+      matched = true;
+
+      PreferenceNode instancePreferenceNode = root.getNode("configuration");
+      if (instancePreferenceNode != null)
+      {
+        PreferenceNode preferenceNode = instancePreferenceNode.getNode(relativePath);
+        if (preferenceNode != null)
+        {
+          return preferenceNode;
+        }
+      }
+    }
+
+    if (matched || "configuration".equals(authority))
+    {
+      PreferenceNode instancePreferenceNode = root.getNode("default");
+      if (instancePreferenceNode != null)
+      {
+        PreferenceNode preferenceNode = instancePreferenceNode.getNode(relativePath);
+        if (preferenceNode != null)
+        {
+          return preferenceNode;
+        }
+      }
+    }
+
+    if (matched || "default".equals(authority))
+    {
+      PreferenceNode instancePreferenceNode = root.getNode("bundle_default");
+      if (instancePreferenceNode != null)
+      {
+        PreferenceNode preferenceNode = instancePreferenceNode.getNode(relativePath);
+        if (preferenceNode != null)
+        {
+          return preferenceNode;
+        }
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -443,12 +571,14 @@ public class PreferenceNodeImpl extends PreferenceItemImpl implements Preference
     {
     case PreferencesPackage.PREFERENCE_NODE___GET_NODE__STRING:
       return getNode((String)arguments.get(0));
+    case PreferencesPackage.PREFERENCE_NODE___GET_NODE__URI:
+      return getNode((URI)arguments.get(0));
     case PreferencesPackage.PREFERENCE_NODE___GET_PROPERTY__STRING:
       return getProperty((String)arguments.get(0));
-    case PreferencesPackage.PREFERENCE_NODE___GET_IN_SCOPE__STRING:
-      return getInScope((String)arguments.get(0));
-    case PreferencesPackage.PREFERENCE_NODE___GET_IN_SCOPE:
-      return getInScope();
+    case PreferencesPackage.PREFERENCE_NODE___GET_PROPERTY__URI:
+      return getProperty((URI)arguments.get(0));
+    case PreferencesPackage.PREFERENCE_NODE___GET_ANCESTOR:
+      return getAncestor();
     }
     return super.eInvoke(operationID, arguments);
   }
@@ -492,12 +622,96 @@ public class PreferenceNodeImpl extends PreferenceItemImpl implements Preference
       String preferenceNodeName = URI.decode(uriFragmentSegment.substring(1));
       return getProperty(preferenceNodeName);
     }
+
     if (!uriFragmentSegment.startsWith("@"))
     {
       String preferenceNodeName = URI.decode(uriFragmentSegment);
       return getNode(preferenceNodeName);
     }
+
     return super.eObjectForURIFragmentSegment(uriFragmentSegment);
+  }
+
+  @Override
+  public URI getAbsolutePath()
+  {
+    String name = getName();
+    if (name == null)
+    {
+      return null;
+    }
+
+    PreferenceNode parent = getParent();
+    if (parent == null)
+    {
+      return URI.createHierarchicalURI(null, URI.encodeAuthority(name, false), null, null, null);
+    }
+
+    URI parentAbsolutePath = parent.getAbsolutePath();
+    if (parentAbsolutePath == null)
+    {
+      return null;
+    }
+
+    if ("".equals(parentAbsolutePath.authority()))
+    {
+      return URI.createHierarchicalURI(null, URI.encodeAuthority(name, false), null, null, null);
+    }
+
+    return parentAbsolutePath.appendSegment(URI.encodeSegment(name, false));
+  }
+
+  @Override
+  public URI getRelativePath()
+  {
+    String name = getName();
+    if (name == null)
+    {
+      return null;
+    }
+
+    PreferenceNode scope = getScope();
+    if (this == scope)
+    {
+      return URI.createURI("");
+    }
+
+    URI parentRelativePath = getParent().getRelativePath();
+    if (parentRelativePath == null)
+    {
+      return null;
+    }
+
+    return parentRelativePath.appendSegment(URI.encodeSegment(name, false));
+  }
+
+  @Override
+  public PreferenceNode getScope()
+  {
+    PreferenceNode result = this;
+
+    for (PreferenceNode parent = getParent(); parent != null;)
+    {
+      PreferenceNode grandParent = parent.getParent();
+      if (grandParent == null)
+      {
+        break;
+      }
+
+      PreferenceNode greatGrandParent = grandParent.getParent();
+      if (greatGrandParent == null)
+      {
+        if ("project".equals(parent.getName()))
+        {
+          break;
+        }
+      }
+
+      result = parent;
+      parent = grandParent;
+    }
+
+    return result;
   }
 
 } // PreferenceNodeImpl

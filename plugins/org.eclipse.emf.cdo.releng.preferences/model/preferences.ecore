@@ -4,39 +4,32 @@
     nsPrefix="preferences">
   <eClassifiers xsi:type="ecore:EClass" name="PreferenceItem" abstract="true">
     <eOperations name="getParent" eType="#//PreferenceNode"/>
-    <eOperations name="getItem" eType="#//PreferenceItem">
-      <eParameters name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eOperations>
-    <eOperations name="getInScope" eType="#//PreferenceItem">
-      <eParameters name="scopeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eOperations>
-    <eOperations name="getInScope" eType="#//PreferenceItem"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="root" eType="#//PreferenceNode"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//PreferenceNode"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="absolutePath" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
-        volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scopeRelativePath" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
-        volatile="true" transient="true" derived="true"/>
+        eType="#//URI" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativePath" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
-        volatile="true" transient="true" derived="true"/>
+        eType="#//URI" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ancestor" eType="#//PreferenceItem"
+        changeable="false" volatile="true" derived="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PreferenceNode" eSuperTypes="#//PreferenceItem">
     <eOperations name="getNode" eType="#//PreferenceNode">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
+    <eOperations name="getNode" eType="#//PreferenceNode">
+      <eParameters name="path" eType="#//URI"/>
+    </eOperations>
     <eOperations name="getProperty" eType="#//Property">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
-    <eOperations name="getInScope" eType="#//PreferenceNode">
-      <eParameters name="scopeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getProperty" eType="#//Property">
+      <eParameters name="path" eType="#//URI"/>
     </eOperations>
-    <eOperations name="getInScope" eType="#//PreferenceNode"/>
+    <eOperations name="getAncestor" eType="#//PreferenceNode"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PreferenceNode"
         eOpposite="#//PreferenceNode/children"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
@@ -47,13 +40,11 @@
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//PreferenceItem">
-    <eOperations name="getInScope" eType="#//Property">
-      <eParameters name="scopeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eOperations>
-    <eOperations name="getInScope" eType="#//Property"/>
+    <eOperations name="getAncestor" eType="#//Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PreferenceNode"
         eOpposite="#//PreferenceNode/properties"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//EscapedString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="EscapedString" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
 </ecore:EPackage>

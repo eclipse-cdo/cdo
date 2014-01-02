@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.releng.projectconfig;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.resources.IProject;
@@ -177,5 +179,13 @@ public interface PreferenceProfile extends EObject
    * @generated
    */
   boolean matches(IProject project);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model pathDataType="org.eclipse.emf.cdo.releng.preferences.URI"
+   * @generated
+   */
+  Property getProperty(URI path);
 
 } // PreferenceProfile

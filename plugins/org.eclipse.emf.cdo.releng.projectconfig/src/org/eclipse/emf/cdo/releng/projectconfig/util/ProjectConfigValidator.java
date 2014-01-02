@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.projectconfig.util;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.projectconfig.ExclusionPredicate;
 import org.eclipse.emf.cdo.releng.projectconfig.InclusionPredicate;
@@ -27,6 +28,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
@@ -308,12 +310,13 @@ public class ProjectConfigValidator extends EObjectValidator
         {
           for (PropertyFilter propertyFilter : workspaceConfiguration.getPropertyFilters())
           {
-            if (propertyFilter.matches(property.getAbsolutePath()))
+            if (propertyFilter.matches(PreferencesFactory.eINSTANCE.convertURI(property.getAbsolutePath())))
             {
               propertySet.remove(property);
             }
           }
         }
+
         if (!propertySet.isEmpty())
         {
           result.put(child, propertySet);
@@ -444,7 +447,7 @@ public class ProjectConfigValidator extends EObjectValidator
   {
     try
     {
-      Map<String, Set<Property>> keyToPropertiesMap = new HashMap<String, Set<Property>>();
+      Map<URI, Set<Property>> keyToPropertiesMap = new HashMap<URI, Set<Property>>();
       Map<Property, Set<PreferenceProfile>> propertyToPreferenceProfileMap = new HashMap<Property, Set<PreferenceProfile>>();
       Map<PreferenceProfile, Set<Property>> preferenceProfileToPropertyMap = new LinkedHashMap<PreferenceProfile, Set<Property>>();
       Set<PreferenceProfile> preferenceProfileReferences = new LinkedHashSet<PreferenceProfile>(
@@ -474,7 +477,7 @@ public class ProjectConfigValidator extends EObjectValidator
 
             preferenceProfiles.add(preferenceProfile);
 
-            String relativePath = property.getRelativePath();
+            URI relativePath = property.getRelativePath();
             Set<Property> properties = keyToPropertiesMap.get(relativePath);
             if (properties == null)
             {
@@ -487,7 +490,7 @@ public class ProjectConfigValidator extends EObjectValidator
         }
       }
 
-      for (Iterator<Map.Entry<String, Set<Property>>> it = keyToPropertiesMap.entrySet().iterator(); it.hasNext();)
+      for (Iterator<Map.Entry<URI, Set<Property>>> it = keyToPropertiesMap.entrySet().iterator(); it.hasNext();)
       {
         Set<Property> properties = it.next().getValue();
         if (properties.size() <= 1)

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
@@ -79,7 +80,6 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -160,8 +160,6 @@ import java.util.Set;
 public class ProjectConfigEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
     IMenuListener, IViewerProvider, IGotoMarker
 {
-  private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
-
   /**
    * This keeps track of the editing domain that is used to track all changes to the model.
    * <!-- begin-user-doc -->
@@ -992,7 +990,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
           {
             CommandParameter commandParameter = (CommandParameter)value;
             Object child = commandParameter.getValue();
-            if (child instanceof EObject)
+            if (child instanceof Predicate)
             {
               EObject eObject = (EObject)child;
 
@@ -1854,7 +1852,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     IPath path = saveAsDialog.getResult();
     if (path != null)
     {
-      IFile file = WORKSPACE_ROOT.getFile(path);
+      IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
       if (file != null)
       {
         doSaveAs(URI.createPlatformResourceURI(file.getFullPath().toString(), true), new FileEditorInput(file));

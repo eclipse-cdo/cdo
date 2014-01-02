@@ -178,7 +178,7 @@ import java.util.Set;
  * @generated
  */
 public class SetupEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-IMenuListener, IViewerProvider, IGotoMarker
+    IMenuListener, IViewerProvider, IGotoMarker
 {
   private static final Object VARIABLE_GROUP_IMAGE = SetupEditorPlugin.INSTANCE.getImage("full/obj16/VariableGroup");
 
@@ -850,13 +850,13 @@ IMenuListener, IViewerProvider, IGotoMarker
     editingDomain = new AdapterFactoryEditingDomain(adapterFactory, editingDomain.getCommandStack(),
         new HashMap<Resource, Boolean>()
         {
-      private static final long serialVersionUID = 1L;
+          private static final long serialVersionUID = 1L;
 
-      @Override
-      public Boolean get(Object key)
-      {
-        return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
-      }
+          @Override
+          public Boolean get(Object key)
+          {
+            return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
+          }
         });
 
     EMFUtil.configureResourceSet(editingDomain.getResourceSet());
@@ -2120,7 +2120,7 @@ IMenuListener, IViewerProvider, IGotoMarker
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
         .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-        doSave(progressMonitor);
+    doSave(progressMonitor);
   }
 
   /**

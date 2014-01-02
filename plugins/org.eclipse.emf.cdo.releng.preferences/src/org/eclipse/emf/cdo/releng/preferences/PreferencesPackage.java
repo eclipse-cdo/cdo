@@ -105,22 +105,13 @@ public interface PreferencesPackage extends EPackage
   int PREFERENCE_ITEM__ABSOLUTE_PATH = 2;
 
   /**
-   * The feature id for the '<em><b>Scope Relative Path</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_ITEM__SCOPE_RELATIVE_PATH = 3;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_ITEM__NAME = 4;
+  int PREFERENCE_ITEM__NAME = 3;
 
   /**
    * The feature id for the '<em><b>Relative Path</b></em>' attribute.
@@ -129,7 +120,16 @@ public interface PreferencesPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCE_ITEM__RELATIVE_PATH = 5;
+  int PREFERENCE_ITEM__RELATIVE_PATH = 4;
+
+  /**
+   * The feature id for the '<em><b>Ancestor</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_ITEM__ANCESTOR = 5;
 
   /**
    * The number of structural features of the '<em>Preference Item</em>' class.
@@ -150,40 +150,13 @@ public interface PreferencesPackage extends EPackage
   int PREFERENCE_ITEM___GET_PARENT = 0;
 
   /**
-   * The operation id for the '<em>Get Item</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_ITEM___GET_ITEM__STRING = 1;
-
-  /**
-   * The operation id for the '<em>Get In Scope</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_ITEM___GET_IN_SCOPE__STRING = 2;
-
-  /**
-   * The operation id for the '<em>Get In Scope</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_ITEM___GET_IN_SCOPE = 3;
-
-  /**
    * The number of operations of the '<em>Preference Item</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_ITEM_OPERATION_COUNT = 4;
+  int PREFERENCE_ITEM_OPERATION_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl <em>Preference Node</em>}' class.
@@ -223,15 +196,6 @@ public interface PreferencesPackage extends EPackage
   int PREFERENCE_NODE__ABSOLUTE_PATH = PREFERENCE_ITEM__ABSOLUTE_PATH;
 
   /**
-   * The feature id for the '<em><b>Scope Relative Path</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_NODE__SCOPE_RELATIVE_PATH = PREFERENCE_ITEM__SCOPE_RELATIVE_PATH;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -248,6 +212,15 @@ public interface PreferencesPackage extends EPackage
    * @ordered
    */
   int PREFERENCE_NODE__RELATIVE_PATH = PREFERENCE_ITEM__RELATIVE_PATH;
+
+  /**
+   * The feature id for the '<em><b>Ancestor</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_NODE__ANCESTOR = PREFERENCE_ITEM__ANCESTOR;
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -304,15 +277,6 @@ public interface PreferencesPackage extends EPackage
   int PREFERENCE_NODE___GET_PARENT = PREFERENCE_ITEM___GET_PARENT;
 
   /**
-   * The operation id for the '<em>Get Item</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_NODE___GET_ITEM__STRING = PREFERENCE_ITEM___GET_ITEM__STRING;
-
-  /**
    * The operation id for the '<em>Get Node</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -322,31 +286,40 @@ public interface PreferencesPackage extends EPackage
   int PREFERENCE_NODE___GET_NODE__STRING = PREFERENCE_ITEM_OPERATION_COUNT + 0;
 
   /**
+   * The operation id for the '<em>Get Node</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREFERENCE_NODE___GET_NODE__URI = PREFERENCE_ITEM_OPERATION_COUNT + 1;
+
+  /**
    * The operation id for the '<em>Get Property</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_NODE___GET_PROPERTY__STRING = PREFERENCE_ITEM_OPERATION_COUNT + 1;
+  int PREFERENCE_NODE___GET_PROPERTY__STRING = PREFERENCE_ITEM_OPERATION_COUNT + 2;
 
   /**
-   * The operation id for the '<em>Get In Scope</em>' operation.
+   * The operation id for the '<em>Get Property</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_NODE___GET_IN_SCOPE__STRING = PREFERENCE_ITEM_OPERATION_COUNT + 2;
+  int PREFERENCE_NODE___GET_PROPERTY__URI = PREFERENCE_ITEM_OPERATION_COUNT + 3;
 
   /**
-   * The operation id for the '<em>Get In Scope</em>' operation.
+   * The operation id for the '<em>Get Ancestor</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_NODE___GET_IN_SCOPE = PREFERENCE_ITEM_OPERATION_COUNT + 3;
+  int PREFERENCE_NODE___GET_ANCESTOR = PREFERENCE_ITEM_OPERATION_COUNT + 4;
 
   /**
    * The number of operations of the '<em>Preference Node</em>' class.
@@ -355,7 +328,7 @@ public interface PreferencesPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCE_NODE_OPERATION_COUNT = PREFERENCE_ITEM_OPERATION_COUNT + 4;
+  int PREFERENCE_NODE_OPERATION_COUNT = PREFERENCE_ITEM_OPERATION_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl <em>Property</em>}' class.
@@ -395,15 +368,6 @@ public interface PreferencesPackage extends EPackage
   int PROPERTY__ABSOLUTE_PATH = PREFERENCE_ITEM__ABSOLUTE_PATH;
 
   /**
-   * The feature id for the '<em><b>Scope Relative Path</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY__SCOPE_RELATIVE_PATH = PREFERENCE_ITEM__SCOPE_RELATIVE_PATH;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -420,6 +384,15 @@ public interface PreferencesPackage extends EPackage
    * @ordered
    */
   int PROPERTY__RELATIVE_PATH = PREFERENCE_ITEM__RELATIVE_PATH;
+
+  /**
+   * The feature id for the '<em><b>Ancestor</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY__ANCESTOR = PREFERENCE_ITEM__ANCESTOR;
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -458,31 +431,13 @@ public interface PreferencesPackage extends EPackage
   int PROPERTY___GET_PARENT = PREFERENCE_ITEM___GET_PARENT;
 
   /**
-   * The operation id for the '<em>Get Item</em>' operation.
+   * The operation id for the '<em>Get Ancestor</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROPERTY___GET_ITEM__STRING = PREFERENCE_ITEM___GET_ITEM__STRING;
-
-  /**
-   * The operation id for the '<em>Get In Scope</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY___GET_IN_SCOPE__STRING = PREFERENCE_ITEM_OPERATION_COUNT + 0;
-
-  /**
-   * The operation id for the '<em>Get In Scope</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY___GET_IN_SCOPE = PREFERENCE_ITEM_OPERATION_COUNT + 1;
+  int PROPERTY___GET_ANCESTOR = PREFERENCE_ITEM_OPERATION_COUNT + 0;
 
   /**
    * The number of operations of the '<em>Property</em>' class.
@@ -491,7 +446,7 @@ public interface PreferencesPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROPERTY_OPERATION_COUNT = PREFERENCE_ITEM_OPERATION_COUNT + 2;
+  int PROPERTY_OPERATION_COUNT = PREFERENCE_ITEM_OPERATION_COUNT + 1;
 
   /**
    * The meta object id for the '<em>Escaped String</em>' data type.
@@ -502,6 +457,16 @@ public interface PreferencesPackage extends EPackage
    * @generated
    */
   int ESCAPED_STRING = 3;
+
+  /**
+   * The meta object id for the '<em>URI</em>' data type.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.common.util.URI
+   * @see org.eclipse.emf.cdo.releng.preferences.impl.PreferencesPackageImpl#getURI()
+   * @generated
+   */
+  int URI = 4;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem <em>Preference Item</em>}'.
@@ -536,17 +501,6 @@ public interface PreferencesPackage extends EPackage
   EAttribute getPreferenceItem_AbsolutePath();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScopeRelativePath <em>Scope Relative Path</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Scope Relative Path</em>'.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScopeRelativePath()
-   * @see #getPreferenceItem()
-   * @generated
-   */
-  EAttribute getPreferenceItem_ScopeRelativePath();
-
-  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -569,6 +523,17 @@ public interface PreferencesPackage extends EPackage
   EAttribute getPreferenceItem_RelativePath();
 
   /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getAncestor <em>Ancestor</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Ancestor</em>'.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getAncestor()
+   * @see #getPreferenceItem()
+   * @generated
+   */
+  EReference getPreferenceItem_Ancestor();
+
+  /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getScope <em>Scope</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -588,36 +553,6 @@ public interface PreferencesPackage extends EPackage
    * @generated
    */
   EOperation getPreferenceItem__GetParent();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getItem(java.lang.String) <em>Get Item</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get Item</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getItem(java.lang.String)
-   * @generated
-   */
-  EOperation getPreferenceItem__GetItem__String();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getInScope(java.lang.String) <em>Get In Scope</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get In Scope</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getInScope(java.lang.String)
-   * @generated
-   */
-  EOperation getPreferenceItem__GetInScope__String();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getInScope() <em>Get In Scope</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get In Scope</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceItem#getInScope()
-   * @generated
-   */
-  EOperation getPreferenceItem__GetInScope();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode <em>Preference Node</em>}'.
@@ -684,6 +619,16 @@ public interface PreferencesPackage extends EPackage
   EOperation getPreferenceNode__GetNode__String();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getNode(org.eclipse.emf.common.util.URI) <em>Get Node</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Node</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getNode(org.eclipse.emf.common.util.URI)
+   * @generated
+   */
+  EOperation getPreferenceNode__GetNode__URI();
+
+  /**
    * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getProperty(java.lang.String) <em>Get Property</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -694,24 +639,24 @@ public interface PreferencesPackage extends EPackage
   EOperation getPreferenceNode__GetProperty__String();
 
   /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getInScope(java.lang.String) <em>Get In Scope</em>}' operation.
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getProperty(org.eclipse.emf.common.util.URI) <em>Get Property</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get In Scope</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getInScope(java.lang.String)
+   * @return the meta object for the '<em>Get Property</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getProperty(org.eclipse.emf.common.util.URI)
    * @generated
    */
-  EOperation getPreferenceNode__GetInScope__String();
+  EOperation getPreferenceNode__GetProperty__URI();
 
   /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getInScope() <em>Get In Scope</em>}' operation.
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getAncestor() <em>Get Ancestor</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get In Scope</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getInScope()
+   * @return the meta object for the '<em>Get Ancestor</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferenceNode#getAncestor()
    * @generated
    */
-  EOperation getPreferenceNode__GetInScope();
+  EOperation getPreferenceNode__GetAncestor();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.preferences.Property <em>Property</em>}'.
@@ -746,24 +691,14 @@ public interface PreferencesPackage extends EPackage
   EAttribute getProperty_Value();
 
   /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.Property#getInScope(java.lang.String) <em>Get In Scope</em>}' operation.
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.Property#getAncestor() <em>Get Ancestor</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get In Scope</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.Property#getInScope(java.lang.String)
+   * @return the meta object for the '<em>Get Ancestor</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.preferences.Property#getAncestor()
    * @generated
    */
-  EOperation getProperty__GetInScope__String();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.Property#getInScope() <em>Get In Scope</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get In Scope</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.preferences.Property#getInScope()
-   * @generated
-   */
-  EOperation getProperty__GetInScope();
+  EOperation getProperty__GetAncestor();
 
   /**
    * Returns the meta object for data type '{@link java.lang.String <em>Escaped String</em>}'.
@@ -775,6 +710,17 @@ public interface PreferencesPackage extends EPackage
    * @generated
    */
   EDataType getEscapedString();
+
+  /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>URI</em>'.
+   * @see org.eclipse.emf.common.util.URI
+   * @model instanceClass="org.eclipse.emf.common.util.URI"
+   * @generated
+   */
+  EDataType getURI();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -827,14 +773,6 @@ public interface PreferencesPackage extends EPackage
     EAttribute PREFERENCE_ITEM__ABSOLUTE_PATH = eINSTANCE.getPreferenceItem_AbsolutePath();
 
     /**
-     * The meta object literal for the '<em><b>Scope Relative Path</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PREFERENCE_ITEM__SCOPE_RELATIVE_PATH = eINSTANCE.getPreferenceItem_ScopeRelativePath();
-
-    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -851,6 +789,14 @@ public interface PreferencesPackage extends EPackage
     EAttribute PREFERENCE_ITEM__RELATIVE_PATH = eINSTANCE.getPreferenceItem_RelativePath();
 
     /**
+     * The meta object literal for the '<em><b>Ancestor</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PREFERENCE_ITEM__ANCESTOR = eINSTANCE.getPreferenceItem_Ancestor();
+
+    /**
      * The meta object literal for the '<em><b>Scope</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -865,30 +811,6 @@ public interface PreferencesPackage extends EPackage
      * @generated
      */
     EOperation PREFERENCE_ITEM___GET_PARENT = eINSTANCE.getPreferenceItem__GetParent();
-
-    /**
-     * The meta object literal for the '<em><b>Get Item</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation PREFERENCE_ITEM___GET_ITEM__STRING = eINSTANCE.getPreferenceItem__GetItem__String();
-
-    /**
-     * The meta object literal for the '<em><b>Get In Scope</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation PREFERENCE_ITEM___GET_IN_SCOPE__STRING = eINSTANCE.getPreferenceItem__GetInScope__String();
-
-    /**
-     * The meta object literal for the '<em><b>Get In Scope</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation PREFERENCE_ITEM___GET_IN_SCOPE = eINSTANCE.getPreferenceItem__GetInScope();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.preferences.impl.PreferenceNodeImpl <em>Preference Node</em>}' class.
@@ -941,6 +863,14 @@ public interface PreferencesPackage extends EPackage
     EOperation PREFERENCE_NODE___GET_NODE__STRING = eINSTANCE.getPreferenceNode__GetNode__String();
 
     /**
+     * The meta object literal for the '<em><b>Get Node</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PREFERENCE_NODE___GET_NODE__URI = eINSTANCE.getPreferenceNode__GetNode__URI();
+
+    /**
      * The meta object literal for the '<em><b>Get Property</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -949,20 +879,20 @@ public interface PreferencesPackage extends EPackage
     EOperation PREFERENCE_NODE___GET_PROPERTY__STRING = eINSTANCE.getPreferenceNode__GetProperty__String();
 
     /**
-     * The meta object literal for the '<em><b>Get In Scope</b></em>' operation.
+     * The meta object literal for the '<em><b>Get Property</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation PREFERENCE_NODE___GET_IN_SCOPE__STRING = eINSTANCE.getPreferenceNode__GetInScope__String();
+    EOperation PREFERENCE_NODE___GET_PROPERTY__URI = eINSTANCE.getPreferenceNode__GetProperty__URI();
 
     /**
-     * The meta object literal for the '<em><b>Get In Scope</b></em>' operation.
+     * The meta object literal for the '<em><b>Get Ancestor</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation PREFERENCE_NODE___GET_IN_SCOPE = eINSTANCE.getPreferenceNode__GetInScope();
+    EOperation PREFERENCE_NODE___GET_ANCESTOR = eINSTANCE.getPreferenceNode__GetAncestor();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl <em>Property</em>}' class.
@@ -991,20 +921,12 @@ public interface PreferencesPackage extends EPackage
     EAttribute PROPERTY__VALUE = eINSTANCE.getProperty_Value();
 
     /**
-     * The meta object literal for the '<em><b>Get In Scope</b></em>' operation.
+     * The meta object literal for the '<em><b>Get Ancestor</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation PROPERTY___GET_IN_SCOPE__STRING = eINSTANCE.getProperty__GetInScope__String();
-
-    /**
-     * The meta object literal for the '<em><b>Get In Scope</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation PROPERTY___GET_IN_SCOPE = eINSTANCE.getProperty__GetInScope();
+    EOperation PROPERTY___GET_ANCESTOR = eINSTANCE.getProperty__GetAncestor();
 
     /**
      * The meta object literal for the '<em>Escaped String</em>' data type.
@@ -1015,6 +937,16 @@ public interface PreferencesPackage extends EPackage
      * @generated
      */
     EDataType ESCAPED_STRING = eINSTANCE.getEscapedString();
+
+    /**
+     * The meta object literal for the '<em>URI</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.common.util.URI
+     * @see org.eclipse.emf.cdo.releng.preferences.impl.PreferencesPackageImpl#getURI()
+     * @generated
+     */
+    EDataType URI = eINSTANCE.getURI();
 
   }
 

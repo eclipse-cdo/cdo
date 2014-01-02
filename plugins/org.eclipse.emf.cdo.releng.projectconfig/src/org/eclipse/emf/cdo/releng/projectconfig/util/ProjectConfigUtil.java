@@ -530,8 +530,6 @@ public final class ProjectConfigUtil
             OutputStream out = new URIConverter.WriteableOutputStream(writer, "UTF-8");
             resource.save(out, options);
             projectPropertyValue = writer.toString();
-
-            System.err.println("###" + writer.toString());
           }
           catch (IOException ex)
           {

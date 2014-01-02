@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.projectconfig.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
@@ -300,10 +301,9 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
                     }
 
                     Preferences targetPreferences = projectPreferences;
-                    List<PreferenceNode> path = PreferencesUtil.getPath(preferenceNode);
-                    for (int i = 3, size = path.size(); i < size; ++i)
+                    for (String segment : preferenceNode.getRelativePath().segments())
                     {
-                      targetPreferences = targetPreferences.node(path.get(i).getName());
+                      targetPreferences = targetPreferences.node(URI.decode(segment));
                     }
 
                     for (String key : sourcePreferences.keys())
@@ -435,7 +435,7 @@ public class WorkspaceConfigurationImpl extends MinimalEObjectImpl.Container imp
    */
   public boolean isOmitted(Property property)
   {
-    String path = property.getAbsolutePath();
+    String path = PreferencesFactory.eINSTANCE.convertURI(property.getAbsolutePath());
     for (PropertyFilter propertyFilter : getPropertyFilters())
     {
       if (propertyFilter.matches(path))

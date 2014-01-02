@@ -32,10 +32,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -410,124 +407,5 @@ public final class PreferencesUtil
     {
       return node.getByteArray(property, defaultValue);
     }
-  }
-
-  public static List<PreferenceNode> getPath(PreferenceNode preferenceNode)
-  {
-    List<PreferenceNode> path = new ArrayList<PreferenceNode>();
-    while (preferenceNode != null)
-    {
-      path.add(preferenceNode);
-      preferenceNode = preferenceNode.getParent();
-    }
-    Collections.reverse(path);
-    return path;
-  }
-
-  public static PreferenceNode getAncestor(PreferenceNode preferenceNode)
-  {
-    if (preferenceNode != null)
-    {
-      List<PreferenceNode> path = getPath(preferenceNode);
-      int size = path.size();
-      if (size > 1)
-      {
-        PreferenceNode root = path.get(0);
-        if ("".equals(root.getName()))
-        {
-          PreferenceNode base = path.get(1);
-          String name = base.getName();
-          int start = 2;
-          if ("project".equals(name))
-          {
-            name = "instance";
-            PreferenceNode result = root.getNode(name);
-            if (++start < size)
-            {
-              for (int i = start; result != null && i < size; ++i)
-              {
-                result = result.getNode(path.get(i).getName());
-              }
-
-              if (result != null)
-              {
-                return result;
-              }
-            }
-          }
-
-          if ("instance".equals(name))
-          {
-            name = "default";
-            PreferenceNode result = root.getNode(name);
-            if (start < size)
-            {
-              for (int i = start; result != null && i < size; ++i)
-              {
-                result = result.getNode(path.get(i).getName());
-              }
-
-              if (result != null)
-              {
-                return result;
-              }
-            }
-          }
-
-          if ("configuration".equals(name))
-          {
-            name = "default";
-            PreferenceNode result = root.getNode(name);
-            if (start < size)
-            {
-              for (int i = start; result != null && i < size; ++i)
-              {
-                result = result.getNode(path.get(i).getName());
-              }
-
-              if (result != null)
-              {
-                return result;
-              }
-            }
-          }
-
-          if ("default".equals(name))
-          {
-            name = "bundle_defaults";
-            PreferenceNode result = root.getNode(name);
-            if (start < size)
-            {
-              for (int i = start; result != null && i < size; ++i)
-              {
-                result = result.getNode(path.get(i).getName());
-              }
-
-              if (result != null)
-              {
-                return result;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
-  public static Property getAncestor(Property property)
-  {
-    String name = property.getName();
-    for (PreferenceNode preferenceNode = getAncestor(property.getParent()); preferenceNode != null; preferenceNode = getAncestor(preferenceNode))
-    {
-      Property result = preferenceNode.getProperty(name);
-      if (result != null)
-      {
-        return result;
-      }
-    }
-
-    return null;
   }
 }

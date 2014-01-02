@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.preferences;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 
 /**
  * <!-- begin-user-doc -->
@@ -123,6 +124,14 @@ public interface PreferenceNode extends PreferenceItem
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @model pathDataType="org.eclipse.emf.cdo.releng.preferences.URI"
+   * @generated
+   */
+  PreferenceNode getNode(URI path);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @model
    * @generated
    */
@@ -131,10 +140,10 @@ public interface PreferenceNode extends PreferenceItem
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @model
+   * @model pathDataType="org.eclipse.emf.cdo.releng.preferences.URI"
    * @generated
    */
-  PreferenceNode getInScope(String scopeName);
+  Property getProperty(URI path);
 
   /**
    * <!-- begin-user-doc -->
@@ -142,6 +151,6 @@ public interface PreferenceNode extends PreferenceItem
    * @model kind="operation"
    * @generated
    */
-  PreferenceNode getInScope();
+  PreferenceNode getAncestor();
 
 } // PreferenceNode

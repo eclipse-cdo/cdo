@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.preferences.presentation;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
+import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.impl.PreferencesURIHandlerImpl;
@@ -1422,7 +1423,8 @@ public class PreferencesEditor extends MultiPageEditorPart implements IEditingDo
         }
 
         propertyPresentation.getChildren().add(
-            new PropertyPresentation(rootPreferenceNode.getAbsolutePath() + "=" + property.getValue(), property));
+            new PropertyPresentation(PreferencesFactory.eINSTANCE.convertURI(rootPreferenceNode.getAbsolutePath())
+                + "=" + property.getValue(), property));
       }
 
       public List<PreferenceNode> getWrappedObjects()

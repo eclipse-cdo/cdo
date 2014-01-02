@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesPackage;
 import org.eclipse.emf.cdo.releng.preferences.Property;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -96,6 +97,8 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
     {
     case PreferencesPackage.ESCAPED_STRING:
       return createEscapedStringFromString(eDataType, initialValue);
+    case PreferencesPackage.URI:
+      return createURIFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -113,6 +116,8 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
     {
     case PreferencesPackage.ESCAPED_STRING:
       return convertEscapedStringToString(eDataType, instanceValue);
+    case PreferencesPackage.URI:
+      return convertURIToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -140,6 +145,26 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
     return property;
   }
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String createEscapedString(String literal)
+  {
+    return (String)super.createFromString(PreferencesPackage.Literals.ESCAPED_STRING, literal);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String createEscapedStringFromString(EDataType eDataType, String initialValue)
+  {
+    return createEscapedString(initialValue);
+  }
+
   private static final String[] ESCAPES = { "\\000", "\\001", "\\002", "\\003", "\\004", "\\005", "\\006", "\\007",
       "\\010", "\\t", "\\n", "\\013", "\\014", "\\r", "\\016", "\\017", "\\020", "\\021", "\\022", "\\023", "\\024",
       "\\025", "\\026", "\\027", "\\030", "\\031", "\\032", "\\033", "\\034", "\\035", "\\036", "\\037" };
@@ -149,22 +174,22 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public String createEscapedStringFromString(EDataType eDataType, String initialValue)
+  public String createEscapedStringFromString(String literal)
   {
-    if (initialValue == null)
+    if (literal == null)
     {
       return null;
     }
 
     StringBuilder result = new StringBuilder();
-    for (int i = 0, length = initialValue.length(); i < length; ++i)
+    for (int i = 0, length = literal.length(); i < length; ++i)
     {
-      char c = initialValue.charAt(i);
+      char c = literal.charAt(i);
       if (c == '\\')
       {
         if (++i < length)
         {
-          c = initialValue.charAt(i);
+          c = literal.charAt(i);
           if (c == 't')
           {
             result.append('\t');
@@ -185,11 +210,10 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
             result.append('\\');
             continue;
           }
-          else if (i + 2 < length && c >= '0' && c <= '7' && initialValue.charAt(i + 1) >= '0'
-              && initialValue.charAt(i + 1) <= '7' && initialValue.charAt(i + 2) >= '0'
-              && initialValue.charAt(i + 2) <= '7')
+          else if (i + 2 < length && c >= '0' && c <= '7' && literal.charAt(i + 1) >= '0'
+              && literal.charAt(i + 1) <= '7' && literal.charAt(i + 2) >= '0' && literal.charAt(i + 2) <= '7')
           {
-            result.append((char)Integer.parseInt(initialValue.substring(i, i + 3), 8));
+            result.append((char)Integer.parseInt(literal.substring(i, i + 3), 8));
             i += 2;
             continue;
           }
@@ -205,18 +229,17 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public String convertEscapedStringToString(EDataType eDataType, Object instanceValue)
+  public String convertEscapedString(String instanceValue)
   {
     if (instanceValue == null)
     {
       return null;
     }
 
-    String initialValue = instanceValue.toString();
     StringBuilder result = new StringBuilder();
-    for (int i = 0, length = initialValue.length(); i < length; ++i)
+    for (int i = 0, length = instanceValue.length(); i < length; ++i)
     {
-      char c = initialValue.charAt(i);
+      char c = instanceValue.charAt(i);
       if (c < ESCAPES.length)
       {
         result.append(ESCAPES[c]);
@@ -225,12 +248,158 @@ public class PreferencesFactoryImpl extends EFactoryImpl implements PreferencesF
       {
         result.append("\\\\");
       }
+      else if (c == '\177')
+      {
+        result.append("\\177");
+      }
       else
       {
         result.append(c);
       }
     }
     return result.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertEscapedStringToString(EDataType eDataType, Object instanceValue)
+  {
+    return convertEscapedString((String)instanceValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public URI createURI(String literal)
+  {
+    if (literal == null)
+    {
+      return null;
+    }
+
+    String[] segments = literal.split("/");
+    int length = segments.length;
+    if (length == 0)
+    {
+      return URI.createHierarchicalURI(null, "", null, null, null);
+    }
+
+    URI result = URI.createURI("");
+    StringBuilder property = null;
+    boolean startProperty = false;
+    int start = -1;
+    for (int i = 0; i < length; ++i)
+    {
+      String segment = segments[i];
+      if (property != null)
+      {
+        if (startProperty)
+        {
+          property.append('/');
+        }
+        else
+        {
+          startProperty = true;
+        }
+
+        property.append(segment);
+      }
+      else if (segment.length() == 0)
+      {
+        if (i == 0)
+        {
+          if (i != length - 1)
+          {
+            result = URI.createHierarchicalURI(null, "", null, null, null);
+          }
+
+          start = 1;
+        }
+        else
+        {
+          property = new StringBuilder();
+        }
+      }
+      else if (i == start)
+      {
+        result = URI.createHierarchicalURI(null, URI.encodeAuthority(segment, false), null, null, null);
+      }
+      else
+      {
+        result = result.appendSegment(URI.encodeSegment(segment, false));
+      }
+    }
+
+    if (property != null)
+    {
+      result = result.appendSegment(URI.encodeSegment(property.toString(), false));
+    }
+
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public URI createURIFromString(EDataType eDataType, String initialValue)
+  {
+    return createURI(initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertURI(URI instanceValue)
+  {
+    if (instanceValue == null)
+    {
+      return null;
+    }
+
+    StringBuilder result = new StringBuilder();
+    String authority = instanceValue.authority();
+    if (authority != null)
+    {
+      result.append('/');
+      result.append(URI.decode(authority));
+    }
+
+    for (String segment : instanceValue.segments())
+    {
+      if (result.length() != 0)
+      {
+        result.append('/');
+      }
+
+      String decodedSegment = URI.decode(segment);
+      if (decodedSegment.contains("/"))
+      {
+        result.append('/');
+      }
+
+      result.append(decodedSegment);
+    }
+
+    return result.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertURIToString(EDataType eDataType, Object instanceValue)
+  {
+    return convertURI((URI)instanceValue);
   }
 
   /**

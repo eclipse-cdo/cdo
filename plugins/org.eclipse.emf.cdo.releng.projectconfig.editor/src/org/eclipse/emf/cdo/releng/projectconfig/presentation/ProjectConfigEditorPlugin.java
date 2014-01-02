@@ -19,12 +19,18 @@ import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 import org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigPreferencePage.PropertyModificationHandling;
+import org.eclipse.emf.cdo.releng.projectconfig.provider.ProjectConfigEditPlugin;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigUtil;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ItemProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -39,9 +45,25 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
 
@@ -125,6 +147,429 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
   {
     private static EarlyStartup earlyStartup;
 
+    private static final String EDIT_KEY = "edit";
+
+    private static final String PROPAGATE_KEY = "propagate";
+
+    private static final String PREFERENCES_NODE_NAME = ProjectConfigEditorPlugin.INSTANCE.getSymbolicName();
+
+    private static final Preferences PREFERENCES = InstanceScope.INSTANCE.getNode(PREFERENCES_NODE_NAME);
+
+    public static class ProjectConfigDialog extends TitleAreaDialog
+    {
+      private WorkspaceConfiguration workspaceConfiguration;
+
+      private InputItem managedPropertiesInput;
+
+      private TreeViewer managedPropertiesViewer;
+
+      private InputItem unmanagedPropertiesInput;
+
+      private TreeViewer unmanagedPropertiesViewer;
+
+      private Composite container;
+
+      private boolean propagate = PREFERENCES.getBoolean(PROPAGATE_KEY, false);
+
+      private boolean edit = PREFERENCES.getBoolean(EDIT_KEY, true);
+
+      public ProjectConfigDialog(Shell parentShell)
+      {
+        super(parentShell);
+
+        setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);
+      }
+
+      public boolean hasUnmanagedProperties()
+      {
+        return unmanagedPropertiesInput != null;
+      }
+
+      @Override
+      public int open()
+      {
+        if (managedPropertiesInput != null || unmanagedPropertiesInput != null)
+        {
+          return super.open();
+        }
+
+        return Dialog.OK;
+      }
+
+      @Override
+      protected Point getInitialSize()
+      {
+        return new Point(800, 500);
+      }
+
+      @Override
+      protected void createButtonsForButtonBar(Composite parent)
+      {
+        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+      }
+
+      public void setWorkspaceConfiguration(WorkspaceConfiguration workspaceConfiguration)
+      {
+        this.workspaceConfiguration = workspaceConfiguration;
+
+        if (managedPropertiesInput != null)
+        {
+          managedPropertiesInput.setWorkspaceConfiguration(workspaceConfiguration);
+        }
+
+        if (unmanagedPropertiesInput != null)
+        {
+          unmanagedPropertiesInput.setWorkspaceConfiguration(workspaceConfiguration);
+        }
+      }
+
+      public void unmanagedProperty(Property property)
+      {
+        if (unmanagedPropertiesInput == null)
+        {
+          unmanagedPropertiesInput = new InputItem(workspaceConfiguration);
+        }
+
+        unmanagedPropertiesInput.getProperty(property);
+
+        if (unmanagedPropertiesViewer != null)
+        {
+          unmanagedPropertiesViewer.setInput(unmanagedPropertiesInput);
+        }
+        else if (container != null)
+        {
+          for (Control child : container.getChildren())
+          {
+            child.dispose();
+          }
+
+          createUI(container);
+          container.layout();
+        }
+      }
+
+      public void managedProperty(Property managedProperty, Property managingProperty)
+      {
+        if (managedPropertiesInput == null)
+        {
+          managedPropertiesInput = new InputItem(workspaceConfiguration);
+        }
+
+        managedPropertiesInput.getProperty(managedProperty);
+
+        if (managedPropertiesViewer != null)
+        {
+          managedPropertiesViewer.setInput(managedPropertiesInput);
+        }
+        else if (container != null)
+        {
+          for (Control child : container.getChildren())
+          {
+            child.dispose();
+          }
+
+          createUI(container);
+          container.layout();
+        }
+      }
+
+      @Override
+      protected Control createDialogArea(Composite parent)
+      {
+        Shell shell = getShell();
+        shell.setText("Preference Modification Problem");
+        shell.setImage(ExtendedImageRegistry.INSTANCE.getImage(ProjectConfigEditorPlugin.INSTANCE
+            .getImage("full/obj16/ProjectConfigModelFile")));
+
+        setTitle("bar");
+
+        Composite area = (Composite)super.createDialogArea(parent);
+
+        GridLayout layout = new GridLayout(1, false);
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        layout.verticalSpacing = 0;
+
+        container = new Composite(area, SWT.NONE);
+        container.setLayout(layout);
+        container.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+        setTitle("Project-specific Preference Modification");
+        setErrorMessage("Project-specific properties that are not directly managed by a preference profile of that project have been modified\n");
+
+        createUI(container);
+
+        shell.setActive();
+
+        return area;
+      }
+
+      protected void createUI(Composite container)
+      {
+        if (managedPropertiesInput != null)
+        {
+          Group group = new Group(container, SWT.NONE);
+          group.setText("Modified Managed Properties");
+          group.setLayout(new GridLayout(1, false));
+          group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+          {
+            Composite composite = new Composite(group, SWT.NONE);
+            composite.setLayout(new GridLayout(2, false));
+            composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+            Button overWriteButton = new Button(composite, SWT.RADIO);
+            overWriteButton.setText("Overwrite with managing property");
+            if (!propagate)
+            {
+              overWriteButton.setSelection(true);
+            }
+            overWriteButton.addSelectionListener(new SelectionAdapter()
+            {
+              @Override
+              public void widgetSelected(SelectionEvent e)
+              {
+                propagate = false;
+                PREFERENCES.putBoolean(PROPAGATE_KEY, false);
+                try
+                {
+                  PREFERENCES.flush();
+                }
+                catch (BackingStoreException ex)
+                {
+                  ProjectConfigEditorPlugin.INSTANCE.log(ex);
+                }
+              }
+            });
+
+            Button propogateButton = new Button(composite, SWT.RADIO);
+            propogateButton.setText("Propagate to managing property");
+            if (propagate)
+            {
+              propogateButton.setSelection(true);
+            }
+            propogateButton.addSelectionListener(new SelectionAdapter()
+            {
+              @Override
+              public void widgetSelected(SelectionEvent e)
+              {
+                propagate = true;
+                PREFERENCES.putBoolean(PROPAGATE_KEY, true);
+                try
+                {
+                  PREFERENCES.flush();
+                }
+                catch (BackingStoreException ex)
+                {
+                  ProjectConfigEditorPlugin.INSTANCE.log(ex);
+                }
+              }
+            });
+          }
+
+          managedPropertiesViewer = new TreeViewer(group, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
+
+          ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+              ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+          managedPropertiesViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+          managedPropertiesViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+          managedPropertiesViewer.setInput(managedPropertiesInput);
+          managedPropertiesViewer.expandToLevel(2);
+
+          final Tree tree = managedPropertiesViewer.getTree();
+          tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        }
+
+        if (unmanagedPropertiesInput != null)
+        {
+          Group group = new Group(container, SWT.NONE);
+          group.setText("Unmanaged Properties");
+          group.setLayout(new GridLayout(1, false));
+          group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+          Button editButton = new Button(group, SWT.CHECK);
+          editButton.setText("Edit");
+          editButton.setSelection(edit);
+          editButton.addSelectionListener(new SelectionAdapter()
+          {
+            @Override
+            public void widgetSelected(SelectionEvent e)
+            {
+              edit = !edit;
+              PREFERENCES.putBoolean(EDIT_KEY, edit);
+              PREFERENCES.putBoolean(PROPAGATE_KEY, false);
+              try
+              {
+                PREFERENCES.flush();
+              }
+              catch (BackingStoreException ex)
+              {
+                ProjectConfigEditorPlugin.INSTANCE.log(ex);
+              }
+            }
+          });
+
+          unmanagedPropertiesViewer = new TreeViewer(group, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
+
+          ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+              ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+          unmanagedPropertiesViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+          unmanagedPropertiesViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+          unmanagedPropertiesViewer.setInput(unmanagedPropertiesInput);
+          unmanagedPropertiesViewer.expandToLevel(2);
+
+          final Tree tree = unmanagedPropertiesViewer.getTree();
+          tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        }
+      }
+
+      public static class InputItem extends ItemProvider
+      {
+        private WorkspaceConfiguration workspaceConfiguration;
+
+        public void setWorkspaceConfiguration(WorkspaceConfiguration workspaceConfiguration)
+        {
+          this.workspaceConfiguration = workspaceConfiguration;
+        }
+
+        public InputItem(WorkspaceConfiguration workspaceConfiguration)
+        {
+          this.workspaceConfiguration = workspaceConfiguration;
+        }
+
+        public ProjectItem getProject(Project project)
+        {
+          String name = project.getPreferenceNode().getName();
+          EList<Object> children = getChildren();
+          for (Object child : children)
+          {
+            ProjectItem projectItem = (ProjectItem)child;
+            if (name.equals(projectItem.getText()))
+            {
+              return projectItem;
+            }
+          }
+
+          ProjectItem projectItem = new ProjectItem(project);
+          getChildren().add(projectItem);
+          return projectItem;
+        }
+
+        public PreferenceNodeItem getPreferenceNode(PreferenceNode preferenceNode)
+        {
+          PreferenceNode projectPreferenceNode = preferenceNode.getScope();
+          PreferenceNode parentPreferenceNode = preferenceNode.getParent();
+
+          ItemProvider parentItem;
+          if (projectPreferenceNode == parentPreferenceNode)
+          {
+            parentItem = getProject(workspaceConfiguration.getProject(projectPreferenceNode.getName()));
+          }
+          else
+          {
+            parentItem = getPreferenceNode(parentPreferenceNode);
+          }
+
+          String name = preferenceNode.getName();
+          EList<Object> children = parentItem.getChildren();
+          for (Object child : children)
+          {
+            if (child instanceof PreferenceNodeItem)
+            {
+              PreferenceNodeItem preferenceNodeItem = (PreferenceNodeItem)child;
+              if (name.equals(preferenceNodeItem.getText()))
+              {
+                return preferenceNodeItem;
+              }
+            }
+          }
+
+          PreferenceNodeItem preferenceNodeItem = new PreferenceNodeItem(preferenceNode);
+          children.add(preferenceNodeItem);
+          return preferenceNodeItem;
+        }
+
+        public PropertyItem getProperty(Property property)
+        {
+          PreferenceNodeItem preferenceNodeItem = getPreferenceNode(property.getParent());
+
+          String name = property.getName();
+          EList<Object> children = preferenceNodeItem.getChildren();
+          for (Object child : children)
+          {
+            if (child instanceof PropertyItem)
+            {
+              PropertyItem propertyItem = (PropertyItem)child;
+              if (name.equals(propertyItem.getText()))
+              {
+                return propertyItem;
+              }
+            }
+          }
+
+          PropertyItem propertyItem = new PropertyItem(property);
+          children.add(propertyItem);
+          return propertyItem;
+        }
+      }
+
+      public static class ProjectItem extends ItemProvider
+      {
+        private static final Object IMAGE = ProjectConfigEditPlugin.INSTANCE.getImage("full/obj16/Project");
+
+        private Project project;
+
+        public ProjectItem(Project project)
+        {
+          super(project.getPreferenceNode().getName(), IMAGE);
+
+          this.project = project;
+        }
+
+        public Project getProject()
+        {
+          return project;
+        }
+      }
+
+      public static class PreferenceNodeItem extends ItemProvider
+      {
+        private static final Object IMAGE = PreferencesEditPlugin.INSTANCE.getImage("full/obj16/PreferenceNode");
+
+        private PreferenceNode preferenceNode;
+
+        public PreferenceNodeItem(PreferenceNode preferenceNode)
+        {
+          super(preferenceNode.getName(), IMAGE);
+
+          this.preferenceNode = preferenceNode;
+        }
+
+        public PreferenceNode getPreferenceNode()
+        {
+          return preferenceNode;
+        }
+      }
+
+      public static class PropertyItem extends ItemProvider
+      {
+        private static final Object IMAGE = PreferencesEditPlugin.INSTANCE.getImage("full/obj16/Property");
+
+        private Property property;
+
+        public PropertyItem(Property property)
+        {
+          super(property.getName(), IMAGE);
+
+          this.property = property;
+        }
+
+        public Property getProperty()
+        {
+          return property;
+        }
+      }
+    }
+
     public static final class EarlyStartup implements IStartup
     {
       private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
@@ -132,6 +577,8 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
       private static final IWorkspaceRoot WORKSPACE_ROOT = WORKSPACE.getRoot();
 
       private WorkspaceConfiguration workspaceConfiguration;
+
+      private ProjectConfigDialog projectConfigDialog;
 
       protected IResourceChangeListener resourceChangeListener = new IResourceChangeListener()
       {
@@ -156,7 +603,7 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                   int type = delta.getResource().getType();
                   if (type == IResource.FOLDER)
                   {
-                    // Visit the folder's children only if it's the .settings folder.
+                    // Visit the folder's children only if its the .settings folder.
                     IPath fullPath = delta.getFullPath();
                     if (!".settings".equals(fullPath.lastSegment()))
                     {
@@ -166,7 +613,6 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                   else if (type == IResource.FILE)
                   {
                     // Include only the *.prefs resources in the .settings folder.
-                    //
                     IPath fullPath = delta.getFullPath();
                     if (fullPath.segmentCount() > 2
                         && "prefs".equals(fullPath.getFileExtension())
@@ -196,115 +642,116 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                   {
                     final WorkspaceConfiguration newWorkspaceConfiguration = ProjectConfigUtil
                         .getWorkspaceConfiguration();
-                    newWorkspaceConfiguration.updatePreferenceProfileReferences();
-                    Map<Project, Map<Property, Property>> result = new LinkedHashMap<Project, Map<Property, Property>>();
-                    for (IPath preferenceNodePath : changedPaths)
+                    try
                     {
-                      String projectName = preferenceNodePath.segment(0);
-                      Project oldProject = workspaceConfiguration.getProject(projectName);
-                      Project newProject = newWorkspaceConfiguration.getProject(projectName);
-                      if (newProject != null)
+                      newWorkspaceConfiguration.updatePreferenceProfileReferences();
+                      Map<Property, Property> propertyMap = new LinkedHashMap<Property, Property>();
+                      for (IPath preferenceNodePath : changedPaths)
                       {
-                        String preferenceNodeName = preferenceNodePath.removeFileExtension().lastSegment();
-                        PreferenceNode oldPreferenceNode = oldProject == null ? null : oldProject.getPreferenceNode()
-                            .getNode(preferenceNodeName);
-                        PreferenceNode newPreferenceNode = newProject.getPreferenceNode().getNode(preferenceNodeName);
-                        Map<Property, String> modifiedProperties = collectModifiedProperties(workspaceConfiguration,
-                            oldPreferenceNode, newPreferenceNode);
-                        if (!modifiedProperties.isEmpty())
+                        String projectName = preferenceNodePath.segment(0);
+                        Project oldProject = workspaceConfiguration.getProject(projectName);
+                        Project newProject = newWorkspaceConfiguration.getProject(projectName);
+                        if (newProject != null)
                         {
-                          Map<Property, Property> propertyMap = null;
-                          for (Property property : modifiedProperties.keySet())
+                          String preferenceNodeName = preferenceNodePath.removeFileExtension().lastSegment();
+                          PreferenceNode oldPreferenceNode = oldProject == null ? null : oldProject.getPreferenceNode()
+                              .getNode(preferenceNodeName);
+                          PreferenceNode newPreferenceNode = newProject.getPreferenceNode().getNode(preferenceNodeName);
+                          Map<Property, String> modifiedProperties = collectModifiedProperties(workspaceConfiguration,
+                              oldPreferenceNode, newPreferenceNode);
+                          if (!modifiedProperties.isEmpty())
                           {
-                            String value = property.getValue();
-
-                            Property preferenceProfileProperty = newProject.getProperty(property.getRelativePath());
-                            if (preferenceProfileProperty != null)
+                            for (Property property : modifiedProperties.keySet())
                             {
-                              String preferenceProfilePropertyValue = preferenceProfileProperty.getValue();
-                              if (value == null ? preferenceProfilePropertyValue != null : !value
-                                  .equals(preferenceProfilePropertyValue))
+                              String value = property.getValue();
+
+                              Property preferenceProfileProperty = newProject.getProperty(property.getRelativePath());
+                              if (preferenceProfileProperty != null)
                               {
-                                if (propertyMap == null)
+                                String preferenceProfilePropertyValue = preferenceProfileProperty.getValue();
+                                if (value == null ? preferenceProfilePropertyValue != null : !value
+                                    .equals(preferenceProfilePropertyValue))
                                 {
-                                  propertyMap = new LinkedHashMap<Property, Property>();
-                                  result.put(newProject, propertyMap);
+                                  propertyMap.put(property, preferenceProfileProperty);
                                 }
-
-                                propertyMap.put(property, preferenceProfileProperty);
                               }
-                            }
-                            else
-                            {
-                              if (propertyMap == null)
+                              else
                               {
-                                propertyMap = new LinkedHashMap<Property, Property>();
-                                result.put(newProject, propertyMap);
+                                propertyMap.put(property, null);
                               }
-
-                              propertyMap.put(property, null);
                             }
                           }
                         }
                       }
-                    }
 
-                    if (!result.isEmpty())
-                    {
-
-                      StringBuilder modifiedUnmanagedProperty = new StringBuilder();
-                      StringBuilder modifiedManagedProperty = new StringBuilder();
-                      Map<Property, Property> managedProperties = new HashMap<Property, Property>();
-                      for (Map.Entry<Project, Map<Property, Property>> entry : result.entrySet())
+                      if (!propertyMap.isEmpty())
                       {
-                        Project project = entry.getKey();
-                        boolean isUnmanaged = false;
-                        boolean isManaged = false;
-                        for (Map.Entry<Property, Property> propertyEntry : entry.getValue().entrySet())
+                        boolean dialogCreator = false;
+                        Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+                        if (projectConfigDialog == null
+                            && (configurationValidationPrompt || propertyModificationHandling == PropertyModificationHandling.PROMPT))
+                        {
+                          projectConfigDialog = new ProjectConfigDialog(shell);
+                          projectConfigDialog.setWorkspaceConfiguration(newWorkspaceConfiguration);
+                          dialogCreator = true;
+                        }
+
+                        Map<Property, Property> managedProperties = new HashMap<Property, Property>();
+                        for (Map.Entry<Property, Property> propertyEntry : propertyMap.entrySet())
                         {
                           Property property = propertyEntry.getKey();
                           Property managingProperty = propertyEntry.getValue();
                           if (managingProperty != null)
                           {
-                            if (!isManaged)
+                            if (propertyModificationHandling == PropertyModificationHandling.PROMPT)
                             {
-                              isManaged = true;
-                              modifiedManagedProperty.append("\nThe following managed properties of "
-                                  + project.getPreferenceNode().getName() + " been modified\n");
+                              projectConfigDialog.managedProperty(property, managingProperty);
                             }
-
-                            URI relativePath = property.getRelativePath();
-                            modifiedManagedProperty.append("    >  " + relativePath + "=" + property.getValue() + "\n");
-                            modifiedManagedProperty.append("    <  =" + managingProperty.getValue() + "\n");
 
                             managedProperties.put(property, managingProperty);
                           }
                           else
                           {
-                            if (!isUnmanaged)
+                            if (configurationValidationPrompt)
                             {
-                              isUnmanaged = true;
-                              modifiedUnmanagedProperty.append("\nThe following unmanaged properties of "
-                                  + project.getPreferenceNode().getName() + " been modified\n");
+                              projectConfigDialog.unmanagedProperty(property);
                             }
-
-                            URI relativePath = property.getRelativePath();
-                            modifiedUnmanagedProperty.append("     " + relativePath + "=" + property.getValue() + "\n");
                           }
                         }
-                      }
 
-                      Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-                      if (modifiedManagedProperty.length() != 0)
-                      {
-                        if (propertyModificationHandling == ProjectConfigPreferencePage.PropertyModificationHandling.PROMPT
-                            && MessageDialog.openConfirm(
-                                shell,
-                                "Managed Preference Modification",
-                                modifiedManagedProperty.toString()
-                                    + "\n\nEach of these properties will be overwritten by its managing property's value."
-                                    + "  Would you instead like to propogate each of these changes to its managing property?")
-                            || propertyModificationHandling == ProjectConfigPreferencePage.PropertyModificationHandling.PROPAGATE)
+                        if (projectConfigDialog != null)
+                        {
+                          if (dialogCreator)
+                          {
+                            ProjectConfigDialog dialog = projectConfigDialog;
+                            projectConfigDialog.open();
+                            if (dialog.hasUnmanagedProperties() && PREFERENCES.getBoolean(EDIT_KEY, false))
+                            {
+                              PreferenceDialog preferenceDialog = org.eclipse.ui.dialogs.PreferencesUtil
+                                  .createPreferenceDialogOn(
+                                      shell,
+                                      "org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigPreferencePage",
+                                      null, null);
+                              preferenceDialog.open();
+                            }
+                          }
+                          else
+                          {
+                            Shell dialogShell = projectConfigDialog.getShell();
+                            Display display = dialogShell.getDisplay();
+                            while (!dialogShell.isDisposed())
+                            {
+                              if (!display.readAndDispatch())
+                              {
+                                display.sleep();
+                              }
+                            }
+                          }
+                        }
+
+                        if (!managedProperties.isEmpty()
+                            && (propertyModificationHandling == PropertyModificationHandling.PROPAGATE || propertyModificationHandling == PropertyModificationHandling.PROMPT
+                                && PREFERENCES.getBoolean(PROPAGATE_KEY, false)))
                         {
                           for (Map.Entry<Property, Property> entry : managedProperties.entrySet())
                           {
@@ -346,36 +793,19 @@ public final class ProjectConfigEditorPlugin extends EMFPlugin
                             ProjectConfigPlugin.INSTANCE.log(ex);
                           }
 
+                          // We expect this to cause another delta which will apply the preference profiles anyway, so
+                          // don't bother doing it now.
                           return;
                         }
                       }
 
-                      if (modifiedUnmanagedProperty.length() != 0)
-                      {
-                        if (configurationValidationPrompt
-                            && MessageDialog
-                                .openConfirm(
-                                    shell,
-                                    "Project Configuration",
-                                    modifiedUnmanagedProperty
-                                        + "\n\nWould you like to open the Project Configuration preferences to manage the properties?"))
-                        {
-                          PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(
-                              shell,
-                              "org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigPreferencePage",
-                              null, null);
-                          dialog.open();
-                        }
-                      }
-
-                      // ErrorDialog.openError(shell, "Unmanaged Preference Modification", "The preferences for "
-                      // + unmanagedPreferenceNodePaths + " have been modified but those preferences are unmanaged",
-                      // new Status(IStatus.ERROR, INSTANCE.getSymbolicName(), "Foo"));
+                      newWorkspaceConfiguration.applyPreferenceProfiles();
                     }
-
-                    newWorkspaceConfiguration.applyPreferenceProfiles();
-
-                    workspaceConfiguration = newWorkspaceConfiguration;
+                    finally
+                    {
+                      projectConfigDialog = null;
+                      workspaceConfiguration = newWorkspaceConfiguration;
+                    }
                   }
 
                   private Map<Property, String> collectModifiedProperties(

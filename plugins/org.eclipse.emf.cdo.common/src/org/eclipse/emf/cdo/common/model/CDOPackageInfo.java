@@ -85,7 +85,7 @@ public interface CDOPackageInfo extends Adapter, EPackage.Descriptor, Comparable
    * Returns <code>true</code> is this package info describes one of the models <i>Ecore</i>, <i>Eresource</i> or
    * <i>Etypes</i>, <code>false</code> otherwise.
    * <p>
-   * Note that the models <i>Ecore</i>, <i>Eresource</i> and <i>Etypes</i> are expected to present as generated
+   * Note that the models <i>Eresource</i> and <i>Etypes</i> are expected to present as generated
    * {@link CDOPackageUnit.Type#NATIVE NATIVE} models in all deployments.
    */
   public boolean isSystemPackage();

@@ -454,15 +454,13 @@ public class ProjectConfigSynchronizerDialog extends TitleAreaDialog
 
       managedPropertiesViewer.setInput(managedPropertiesInput);
       managedPropertiesViewer.expandAll();
+
+      Label separator = new Label(container, SWT.HORIZONTAL | SWT.SEPARATOR);
+      separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
     }
 
     if (unmanagedPropertiesInput != null)
     {
-      if (managedPropertiesInput != null)
-      {
-        Label separator = new Label(container, SWT.HORIZONTAL | SWT.SEPARATOR);
-        separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-      }
 
       Label label = new Label(container, SWT.NONE);
       label.setText("Unmanaged Properties:");
@@ -540,7 +538,11 @@ public class ProjectConfigSynchronizerDialog extends TitleAreaDialog
           if (element instanceof PropertyItem)
           {
             PropertyItem propertyItem = (PropertyItem)element;
-            return PreferencesFactory.eINSTANCE.convertEscapedString(propertyItem.getOtherProperty().getValue());
+            Property otherProperty = propertyItem.getOtherProperty();
+            if (otherProperty != null)
+            {
+              return PreferencesFactory.eINSTANCE.convertEscapedString(otherProperty.getValue());
+            }
           }
 
           return "";
@@ -585,6 +587,9 @@ public class ProjectConfigSynchronizerDialog extends TitleAreaDialog
 
       unmanagedPropertiesViewer.setInput(unmanagedPropertiesInput);
       unmanagedPropertiesViewer.expandAll();
+
+      Label separator = new Label(container, SWT.HORIZONTAL | SWT.SEPARATOR);
+      separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
     }
   }
 

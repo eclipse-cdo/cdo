@@ -609,6 +609,55 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
     ACRYONYMS.put("gmf", "GMF");
   }
 
+  private String[] getRootComponents(PreferenceNode preferenceNode, StringBuilder qualifiedPreferenceNodeName)
+  {
+    String[] rootNameComponents = null;
+    for (String preferenceNodeName : preferenceNode.getRelativePath().segments())
+    {
+      String[] nameComponents = URI.decode(preferenceNodeName).split("\\.");
+
+      int start = 0;
+      if (rootNameComponents == null)
+      {
+        rootNameComponents = nameComponents;
+
+        while (start < nameComponents.length)
+        {
+          if (!IGNORE_NAME_COMPONENTS.contains(nameComponents[start]))
+          {
+            break;
+          }
+          ++start;
+        }
+      }
+
+      for (int j = start; j < nameComponents.length; ++j)
+      {
+        if (qualifiedPreferenceNodeName.length() > 0)
+        {
+          qualifiedPreferenceNodeName.append(' ');
+        }
+
+        String nameComponent = nameComponents[j];
+        String acronym = ACRYONYMS.get(nameComponent);
+        if (acronym != null)
+        {
+          qualifiedPreferenceNodeName.append(acronym);
+        }
+        else
+        {
+          int length = nameComponent.length();
+          if (length >= 1)
+          {
+            qualifiedPreferenceNodeName.append(Character.toUpperCase(nameComponent.charAt(0)));
+            qualifiedPreferenceNodeName.append(nameComponent, 1, length);
+          }
+        }
+      }
+    }
+    return rootNameComponents;
+  }
+
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
@@ -621,51 +670,8 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
       PreferenceNode preferenceNode = entry.getKey();
       Set<Property> properties = entry.getValue();
 
-      String[] rootNameComponents = null;
       StringBuilder qualifiedPreferenceNodeName = new StringBuilder();
-      for (String preferenceNodeName : preferenceNode.getRelativePath().segments())
-      {
-        String[] nameComponents = URI.decode(preferenceNodeName).split("\\.");
-
-        int start = 0;
-        if (rootNameComponents == null)
-        {
-          rootNameComponents = nameComponents;
-
-          while (start < nameComponents.length)
-          {
-            if (!IGNORE_NAME_COMPONENTS.contains(nameComponents[start]))
-            {
-              break;
-            }
-            ++start;
-          }
-        }
-
-        for (int j = start; j < nameComponents.length; ++j)
-        {
-          if (qualifiedPreferenceNodeName.length() > 0)
-          {
-            qualifiedPreferenceNodeName.append(' ');
-          }
-
-          String nameComponent = nameComponents[j];
-          String acronym = ACRYONYMS.get(nameComponent);
-          if (acronym != null)
-          {
-            qualifiedPreferenceNodeName.append(acronym);
-          }
-          else
-          {
-            int length = nameComponent.length();
-            if (length >= 1)
-            {
-              qualifiedPreferenceNodeName.append(Character.toUpperCase(nameComponent.charAt(0)));
-              qualifiedPreferenceNodeName.append(nameComponent, 1, length);
-            }
-          }
-        }
-      }
+      String[] rootNameComponents = getRootComponents(preferenceNode, qualifiedPreferenceNodeName);
 
       PreferenceProfile preferenceProfile = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
       if (qualifiedPreferenceNodeName.length() > 0)
@@ -684,38 +690,13 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
       {
         if (realSize - targetSize > realSize / 2)
         {
-          StringBuilder pattern = new StringBuilder();
-          for (Property property : properties)
-          {
-            String name = property.getName();
-            name = name.replace(".", "\\.");
-            if (pattern.length() != 0)
-            {
-              pattern.append('|');
-            }
-            pattern.append(name);
-          }
-
-          preferenceFilter.setInclusions(Pattern.compile(pattern.toString()));
+          preferenceFilter.setInclusions(Pattern.compile(getPattern(properties)));
         }
         else
         {
-          StringBuilder pattern = new StringBuilder();
-          for (Property property : realProperties)
-          {
-            if (!properties.contains(property))
-            {
-              String name = property.getName();
-              name = name.replace(".", "\\.");
-              if (pattern.length() != 0)
-              {
-                pattern.append('|');
-              }
-              pattern.append(name);
-            }
-          }
-
-          preferenceFilter.setExclusions(Pattern.compile(pattern.toString()));
+          Set<Property> inverse = new HashSet<Property>(realProperties);
+          inverse.removeAll(properties);
+          preferenceFilter.setExclusions(Pattern.compile(getPattern(inverse)));
         }
       }
 
@@ -768,7 +749,50 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
           preferenceProfile));
     }
 
+    Map<PreferenceNode, Map<Property, Property>> inconsistentPreferenceNodes = ProjectConfigUtil
+        .getInconsistentPreferenceNodes(project);
+
+    for (Map.Entry<PreferenceNode, Map<Property, Property>> entry : inconsistentPreferenceNodes.entrySet())
+    {
+      PreferenceNode preferenceNode = entry.getKey();
+
+      StringBuilder qualifiedPreferenceNodeName = new StringBuilder();
+      @SuppressWarnings("unused")
+      String[] rootNameComponents = getRootComponents(preferenceNode, qualifiedPreferenceNodeName);
+
+      PreferenceProfile preferenceProfile = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
+      if (qualifiedPreferenceNodeName.length() > 0)
+      {
+        preferenceProfile.setName(qualifiedPreferenceNodeName.toString());
+      }
+
+      PreferenceFilter preferenceFilter = ProjectConfigFactory.eINSTANCE.createPreferenceFilter();
+      preferenceFilter.setPreferenceNode(preferenceNode);
+      preferenceProfile.getPreferenceFilters().add(preferenceFilter);
+      preferenceFilter.setInclusions(Pattern.compile(getPattern(entry.getValue().keySet())));
+
+      newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PROJECT__PREFERENCE_PROFILES,
+          preferenceProfile));
+    }
+
     collectNewChildDescriptorsGen(newChildDescriptors, object);
+  }
+
+  private String getPattern(Collection<Property> properties)
+  {
+    StringBuilder pattern = new StringBuilder();
+    for (Property property : properties)
+    {
+      String name = property.getName();
+      name = name.replace(".", "\\.");
+      if (pattern.length() != 0)
+      {
+        pattern.append('|');
+      }
+      pattern.append(name);
+    }
+
+    return pattern.toString();
   }
 
   /**

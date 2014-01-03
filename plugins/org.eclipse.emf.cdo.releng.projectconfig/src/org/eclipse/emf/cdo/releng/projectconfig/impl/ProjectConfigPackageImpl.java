@@ -905,7 +905,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
   {
     String source = "http://www.eclipse.org/emf/2002/Ecore";
     addAnnotation(projectEClass, source, new String[] { "constraints",
-        "AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties" });
+        "AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties AllPropertiesHaveManagedValue" });
   }
 
 } // ProjectConfigPackageImpl

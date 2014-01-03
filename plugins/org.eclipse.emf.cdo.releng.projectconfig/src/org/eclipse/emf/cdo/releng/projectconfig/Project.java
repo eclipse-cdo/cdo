@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage#getProject()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties AllPropertiesHaveManagedValue'"
  * @generated
  */
 public interface Project extends EObject

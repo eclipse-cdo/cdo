@@ -22,7 +22,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Project">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties"/>
+      <details key="constraints" value="AllPreferencesManaged PreferenceProfileReferencesSpecifyUniqueProperties AllPropertiesHaveManagedValue"/>
     </eAnnotations>
     <eOperations name="getProperty" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//Property">
       <eParameters name="path" eType="ecore:EDataType ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//URI"/>

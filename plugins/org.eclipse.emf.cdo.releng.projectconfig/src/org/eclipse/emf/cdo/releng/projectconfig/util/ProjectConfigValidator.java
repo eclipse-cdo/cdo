@@ -203,6 +203,10 @@ public class ProjectConfigValidator extends EObjectValidator
     {
       result &= validateProject_PreferenceProfileReferencesSpecifyUniqueProperties(project, diagnostics, context);
     }
+    if (result || diagnostics != null)
+    {
+      result &= validateProject_AllPropertiesHaveManagedValue(project, diagnostics, context);
+    }
     return result;
   }
 
@@ -601,6 +605,95 @@ public class ProjectConfigValidator extends EObjectValidator
         }
       }
     }
+  }
+
+  static Map<PreferenceNode, Map<Property, Property>> collectInconsistentPreferences(Project project)
+  {
+    Map<PreferenceNode, Map<Property, Property>> result = new LinkedHashMap<PreferenceNode, Map<Property, Property>>();
+    collectInconsistentPreferences(result, project.getConfiguration(), project, project.getPreferenceNode());
+    return result;
+  }
+
+  static void collectInconsistentPreferences(Map<PreferenceNode, Map<Property, Property>> result,
+      WorkspaceConfiguration workspaceConfiguration, Project project, PreferenceNode preferenceNode)
+  {
+    Map<Property, Property> propertyMap = null;
+    for (Property property : preferenceNode.getProperties())
+    {
+      if (!workspaceConfiguration.isOmitted(property))
+      {
+        String value = property.getValue();
+        Property managingProperty = project.getProperty(property.getRelativePath());
+        if (managingProperty != null && managingProperty != property)
+        {
+          String managingValue = managingProperty.getValue();
+          if (value == null ? managingValue != null : !value.equals(managingValue))
+          {
+            if (propertyMap == null)
+            {
+              propertyMap = new LinkedHashMap<Property, Property>();
+              result.put(preferenceNode, propertyMap);
+            }
+
+            propertyMap.put(property, managingProperty);
+          }
+        }
+      }
+    }
+
+    for (PreferenceNode childPreferenceNode : preferenceNode.getChildren())
+    {
+      collectInconsistentPreferences(result, workspaceConfiguration, project, childPreferenceNode);
+    }
+  }
+
+  /**
+   * Validates the AllPropertiesHaveManagedValue constraint of '<em>Project</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean validateProject_AllPropertiesHaveManagedValue(Project project, DiagnosticChain diagnostics,
+      Map<Object, Object> context)
+  {
+    Map<PreferenceNode, Map<Property, Property>> inconsistentPreferences = collectInconsistentPreferences(project);
+    if (!inconsistentPreferences.isEmpty())
+    {
+      for (Map.Entry<PreferenceNode, Map<Property, Property>> entry : inconsistentPreferences.entrySet())
+      {
+        for (Map.Entry<Property, Property> propertyEntry : entry.getValue().entrySet())
+        {
+          Property managedProperty = propertyEntry.getKey();
+          Property managingProperty = propertyEntry.getValue();
+
+          diagnostics.add(createDiagnostic(
+              Diagnostic.WARNING,
+              DIAGNOSTIC_SOURCE,
+              0,
+              "_UI_InconsistentPropertyValue_diagnostic",
+              new Object[] { getObjectLabel(managedProperty, context),
+                  PreferencesFactory.eINSTANCE.createEscapedString(managedProperty.getValue()),
+                  getObjectLabel(managingProperty, context),
+                  PreferencesFactory.eINSTANCE.createEscapedString(managingProperty.getValue()) }, new Object[] {
+                  managedProperty, managingProperty }, context));
+
+          diagnostics.add(createDiagnostic(
+              Diagnostic.WARNING,
+              DIAGNOSTIC_SOURCE,
+              0,
+              "_UI_InconsistentPropertyValue_diagnostic",
+              new Object[] { getObjectLabel(managedProperty, context),
+                  PreferencesFactory.eINSTANCE.createEscapedString(managedProperty.getValue()),
+                  getObjectLabel(managingProperty, context),
+                  PreferencesFactory.eINSTANCE.createEscapedString(managingProperty.getValue()) }, new Object[] {
+                  project, managedProperty, managingProperty }, context));
+        }
+      }
+
+      return false;
+    }
+
+    return true;
   }
 
   /**

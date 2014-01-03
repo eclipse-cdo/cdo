@@ -447,73 +447,11 @@ public final class ProjectConfigUtil
           }
         }
 
-        // for (PreferenceProfile preferenceProfile : copy.getPreferenceProfiles())
-        // {
-        // for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
-        // {
-        // PreferenceNode preferenceNode = preferenceFilter.getPreferenceNode();
-        // if (preferenceNode != null)
-        // {
-        // PreferenceNode proxy = PreferencesFactory.eINSTANCE.createPreferenceNode();
-        // ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
-        // + preferenceNode.eResource().getURIFragment(preferenceNode)));
-        // preferenceFilter.setPreferenceNode(proxy);
-        // }
-        // }
-        //
-        // {
-        // EList<PreferenceProfile> requires = preferenceProfile.getPrerequisites();
-        // List<PreferenceProfile> requiresCopy = new ArrayList<PreferenceProfile>(requires);
-        // requires.clear();
-        // for (PreferenceProfile requiredPreferenceProfile : requiresCopy)
-        // {
-        // Resource eResource = requiredPreferenceProfile.eResource();
-        // if (eResource == null)
-        // {
-        // requires.add(requiredPreferenceProfile);
-        // }
-        // else
-        // {
-        // PreferenceProfile proxy = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
-        // ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
-        // + eResource.getURIFragment(requiredPreferenceProfile)));
-        // requires.add(proxy);
-        // }
-        // }
-        // }
-
         for (Iterator<EObject> it = EcoreUtil.getAllContents(copy.getPreferenceProfiles()); it.hasNext();)
         {
           EObject eObject = it.next();
           proxifyCrossReferences(eObject);
-          // if (object instanceof InclusionPredicate)
-          // {
-          // InclusionPredicate inclusionPredicate = (InclusionPredicate)object;
-          // EList<PreferenceProfile> inclusions = inclusionPredicate.getIncludedPreferenceProfiles();
-          // List<PreferenceProfile> inclusionsCopy = new ArrayList<PreferenceProfile>(inclusions);
-          // for (PreferenceProfile includedPreferenceProfile : inclusionsCopy)
-          // {
-          // Resource eResource = includedPreferenceProfile.eResource();
-          // if (eResource == null)
-          // {
-          // inclusions.add(includedPreferenceProfile);
-          // }
-          // else
-          // {
-          // PreferenceProfile proxy = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
-          // ((InternalEObject)proxy).eSetProxyURI(URI.createURI(".#"
-          // + eResource.getURIFragment(includedPreferenceProfile)));
-          // inclusions.add(proxy);
-          // }
-          // }
-          //
-          // }
-          // else if (object instanceof ExclusionPredicate)
-          // {
-          //
-          // }
         }
-        // }
 
         if (!copy.getPreferenceProfiles().isEmpty() || !copy.getPreferenceProfileReferences().isEmpty())
         {
@@ -551,7 +489,10 @@ public final class ProjectConfigUtil
         }
         else if (projectPreferences.nodeExists(PROJECT_CONF_NODE_NAME))
         {
-          projectPreferences.node(PROJECT_CONF_NODE_NAME).removeNode();
+          Preferences projectConfPreferenceNode = projectPreferences.node(PROJECT_CONF_NODE_NAME);
+          projectConfPreferenceNode.remove(PROJECT_CONF_PROJECT_KEY);
+          projectConfPreferenceNode.flush();
+          projectConfPreferenceNode.removeNode();
           projectPreferences.flush();
         }
       }
@@ -651,5 +592,10 @@ public final class ProjectConfigUtil
   public static Map<PreferenceNode, Set<Property>> getUnmanagedPreferenceNodes(Project project)
   {
     return ProjectConfigValidator.collectUnmanagedPreferences(project);
+  }
+
+  public static Map<PreferenceNode, Map<Property, Property>> getInconsistentPreferenceNodes(Project project)
+  {
+    return ProjectConfigValidator.collectInconsistentPreferences(project);
   }
 }

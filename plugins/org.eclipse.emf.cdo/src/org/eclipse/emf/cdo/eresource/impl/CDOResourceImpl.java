@@ -661,31 +661,40 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    */
   public EObject getEObject(String uriFragment)
   {
-    if (uriFragment == null)
-    {
-      return null;
-    }
-
     try
     {
-      EObject eObjectByFragment = getEObjectByFragment(uriFragment);
-
-      if (eObjectByFragment != null)
+      if (uriFragment != null)
       {
-        return eObjectByFragment;
-      }
+        int length = uriFragment.length();
+        if (length > 0)
+        {
+          if (uriFragment.charAt(0) == '/')
+          {
+            List<String> uriFragmentPath = getURIFragmentPath(uriFragment, length);
 
-      CDOID id = CDOIDUtil.read(uriFragment);
-      InternalCDOView view = cdoView();
-      if (CDOIDUtil.isNull(id) || view.isObjectNew(id) && !view.isObjectRegistered(id))
-      {
-        return null;
-      }
+            EObject eObjectByFragment = getEObject(uriFragmentPath);
+            if (eObjectByFragment != null)
+            {
+              return eObjectByFragment;
+            }
+          }
+          else if (uriFragment.charAt(length - 1) == '?')
+          {
+            int index = uriFragment.lastIndexOf('?', length - 2);
+            if (index > 0)
+            {
+              uriFragment = uriFragment.substring(0, index);
+            }
+          }
 
-      if (id.isObject())
-      {
-        CDOObject object = view.getObject(id, true);
-        return CDOUtil.getEObject(object);
+          EObject eObjectFromView = getEObjectFromView(uriFragment);
+          if (eObjectFromView != null)
+          {
+            return eObjectFromView;
+          }
+
+          return getEObjectByID(uriFragment);
+        }
       }
     }
     catch (Exception ex)
@@ -698,39 +707,43 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     return null;
   }
 
-  private EObject getEObjectByFragment(String uriFragment)
+  private EObject getEObjectFromView(String uriFragment)
   {
-    int length = uriFragment.length();
-    if (length > 0)
+    try
     {
-      if (uriFragment.charAt(0) == '/')
+      CDOID id = CDOIDUtil.read(uriFragment);
+      InternalCDOView view = cdoView();
+      if (CDOIDUtil.isNull(id) || view.isObjectNew(id) && !view.isObjectRegistered(id) || !id.isObject())
       {
-        ArrayList<String> uriFragmentPath = new ArrayList<String>(4);
-        int start = 1;
-        for (int i = 1; i < length; ++i)
-        {
-          if (uriFragment.charAt(i) == '/')
-          {
-            uriFragmentPath.add(start == i ? "" : uriFragment.substring(start, i));
-            start = i + 1;
-          }
-        }
-
-        uriFragmentPath.add(uriFragment.substring(start));
-        return getEObject(uriFragmentPath);
+        return null;
       }
-      else if (uriFragment.charAt(length - 1) == '?')
+
+      CDOObject object = view.getObject(id, true);
+      return CDOUtil.getEObject(object);
+    }
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
+  private List<String> getURIFragmentPath(String uriFragment, int length)
+  {
+    List<String> uriFragmentPath = new ArrayList<String>(4);
+    int start = 1;
+    for (int i = 1; i < length; ++i)
+    {
+      if (uriFragment.charAt(i) == '/')
       {
-        int index = uriFragment.lastIndexOf('?', length - 2);
-        if (index > 0)
-        {
-          uriFragment = uriFragment.substring(0, index);
-        }
+        uriFragmentPath.add(start == i ? "" : uriFragment.substring(start, i));
+        start = i + 1;
       }
     }
 
-    return getEObjectByID(uriFragment);
+    uriFragmentPath.add(uriFragment.substring(start));
+    return uriFragmentPath;
   }
+
 
   private EObject getEObject(List<String> uriFragmentPath)
   {

@@ -103,7 +103,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="org.eclipse.emf.cdo.releng.projectconfig.presentation.ProjectConfigEditorPlugin$Implementation$EarlyStartup">
+            class="org.eclipse.emf.cdo.releng.projectconfig.presentation.sync.ProjectConfigSynchronizer">
       </startup>
    </extension>
 

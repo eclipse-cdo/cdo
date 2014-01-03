@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
+import org.eclipse.emf.cdo.releng.projectconfig.presentation.sync.ProjectConfigSynchronizerPreferences;
+import org.eclipse.emf.cdo.releng.projectconfig.presentation.sync.ProjectConfigSynchronizerPreferences.PropertyModificationHandling;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -19,9 +21,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.IScopeContext;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.IPreferencePageContainer;
@@ -46,9 +45,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
-
 import java.lang.reflect.Method;
 
 /**
@@ -56,70 +52,16 @@ import java.lang.reflect.Method;
  */
 public class ProjectConfigPreferencePage extends PreferencePage implements IWorkbenchPreferencePage
 {
-  private static final String PREFERENCES_NODE_NAME = ProjectConfigEditorPlugin.INSTANCE.getSymbolicName();
-
-  private static final Preferences PREFERENCES = InstanceScope.INSTANCE.getNode(PREFERENCES_NODE_NAME);
-
-  private static final String CONFIGURATION_MANAGEMENT = "configurationManagement";
-
-  public static boolean isConfigurationManagementAutomatic()
-  {
-    return "automatic".equals(getPreference(CONFIGURATION_MANAGEMENT, "manual"));
-  }
-
-  private static void setConfigurationManagementAutomatic(boolean automatic)
-  {
-    setPreference(CONFIGURATION_MANAGEMENT, automatic ? "automatic" : "manual");
-  }
-
-  private static final String CONFIGURATION_VALIDATION = "configurationValidation";
-
-  public static boolean isConfigurationValidationPrompt()
-  {
-    return "prompt".equals(getPreference(CONFIGURATION_VALIDATION, "prompt"));
-  }
-
-  private static void setConfigurationValidationPrompt(boolean prompt)
-  {
-    setPreference(CONFIGURATION_VALIDATION, prompt ? "prompt" : "ignore");
-  }
-
-  private static final String PROPERTY_MODIFICATION_HANDLING = "propertyModificationHandling";
-
-  public enum PropertyModificationHandling
-  {
-    OVERWRITE, PROPAGATE, PROMPT
-  }
-
-  public static PropertyModificationHandling getPropertyModificationHandling()
-  {
-    return PropertyModificationHandling.valueOf(getPreference(PROPERTY_MODIFICATION_HANDLING,
-        PropertyModificationHandling.PROMPT.toString()));
-  }
-
-  private static void setPropertyModificationHandling(PropertyModificationHandling propertyModificationHandling)
-  {
-    setPreference(PROPERTY_MODIFICATION_HANDLING, propertyModificationHandling.toString());
-  }
-
-  private static String getPreference(String key, String defaultValue)
-  {
-    return Platform.getPreferencesService().getString(PREFERENCES_NODE_NAME, key, defaultValue,
-        new IScopeContext[] { InstanceScope.INSTANCE });
-  }
-
-  private static void setPreference(String key, String value)
-  {
-    PREFERENCES.put(key, value);
-  }
-
   private IWorkbench workbench;
 
-  private boolean configurationManagementAutomatic = isConfigurationManagementAutomatic();
+  private boolean configurationManagementAutomatic = ProjectConfigSynchronizerPreferences
+      .isConfigurationManagementAutomatic();
 
-  private boolean configurationValidationPrompt = isConfigurationValidationPrompt();
+  private boolean configurationValidationPrompt = ProjectConfigSynchronizerPreferences
+      .isConfigurationValidationPrompt();
 
-  private PropertyModificationHandling propertyModificationHandling = getPropertyModificationHandling();
+  private PropertyModificationHandling propertyModificationHandling = ProjectConfigSynchronizerPreferences
+      .getPropertyModificationHandling();
 
   private Button automaticPreferenceManagementButton;
 
@@ -401,21 +343,12 @@ public class ProjectConfigPreferencePage extends PreferencePage implements IWork
   @Override
   public boolean performOk()
   {
-    setConfigurationManagementAutomatic(configurationManagementAutomatic);
-    setConfigurationValidationPrompt(configurationValidationPrompt);
-    setPropertyModificationHandling(propertyModificationHandling);
-
-    try
-    {
-      PREFERENCES.flush();
-    }
-    catch (BackingStoreException ex)
-    {
-      ProjectConfigEditorPlugin.INSTANCE.log(ex);
-    }
+    ProjectConfigSynchronizerPreferences.setConfigurationManagementAutomatic(configurationManagementAutomatic);
+    ProjectConfigSynchronizerPreferences.setConfigurationValidationPrompt(configurationValidationPrompt);
+    ProjectConfigSynchronizerPreferences.setPropertyModificationHandling(propertyModificationHandling);
+    ProjectConfigSynchronizerPreferences.flush();
 
     ProjectConfigEditorPlugin.getPlugin().update();
-
     return true;
   }
 }

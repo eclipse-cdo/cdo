@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -62,7 +63,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2, BranchLoader2
 {
   private final IQueryHandler testQueryHandler = new IQueryHandler()
   {
@@ -224,6 +225,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     return getStore().loadBranches(startID, endID, branchHandler);
+  }
+
+  @Deprecated
+  public void deleteBranch(int branchID)
+  {
+    throw new UnsupportedOperationException();
   }
 
   public void renameBranch(int branchID, String newName)
@@ -394,15 +401,15 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
-  {
+      {
     getStore().rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
-  }
+      }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
-  {
+      {
     getStore().rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
-  }
+      }
 
   public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {

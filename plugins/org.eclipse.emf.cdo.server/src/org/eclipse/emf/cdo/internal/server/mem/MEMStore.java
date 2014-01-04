@@ -271,9 +271,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader2, D
   public void renameBranch(int branchID, String newName)
   {
     BranchInfo oldBranchInfo = branchInfos.remove(branchID);
-    BranchInfo newBranchInfo = new BranchInfo(newName, oldBranchInfo.getBaseBranchID(),
-        oldBranchInfo.getBaseTimeStamp());
-    branchInfos.put(branchID, newBranchInfo);
+    if (oldBranchInfo != null)
+    {
+      int baseBranchID = oldBranchInfo.getBaseBranchID();
+      long baseTimeStamp = oldBranchInfo.getBaseTimeStamp();
+
+      BranchInfo newBranchInfo = new BranchInfo(newName, baseBranchID, baseTimeStamp);
+      branchInfos.put(branchID, newBranchInfo);
+    }
   }
 
   public synchronized void loadCommitInfos(final CDOBranch branch, long startTime, final long endTime,
@@ -353,13 +358,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader2, D
     if (branch != null)
     {
       iterator = new AbstractFilteredIterator<CommitInfo>(iterator)
-      {
+          {
         @Override
         protected boolean isValid(CommitInfo element)
         {
           return element.getBranch() == branch;
         }
-      };
+          };
     }
 
     while (iterator.hasNext())

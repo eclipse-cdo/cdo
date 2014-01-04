@@ -186,7 +186,8 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
     for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
     {
-      neededTasks.addAll(setupTaskPerformer.getNeededTasks());
+      EList<SetupTask> performerTasks = setupTaskPerformer.getNeededTasks();
+      neededTasks.addAll(performerTasks);
     }
   }
 

@@ -1473,7 +1473,7 @@ public class CDOViewImpl extends AbstractCDOView
       {
         for (InternalCDOObject object : getObjectsList())
         {
-          int count = getNumberOfValidAdapter(object);
+          int count = getNumberOfValidAdapters(object);
           if (count > 0)
           {
             ids.add(object.cdoID());
@@ -1505,7 +1505,7 @@ public class CDOViewImpl extends AbstractCDOView
         InternalCDOObject cdoDetachedObject = (InternalCDOObject)object;
         if (cdoDetachedObject != null)
         {
-          int count = getNumberOfValidAdapter(cdoDetachedObject);
+          int count = getNumberOfValidAdapters(cdoDetachedObject);
           if (count > 0)
           {
             subscribe(cdoDetachedObject.cdoID(), cdoDetachedObject, count);
@@ -1531,18 +1531,19 @@ public class CDOViewImpl extends AbstractCDOView
       sessionProtocol.changeSubscription(getViewID(), ids, subscribeMode, clear);
     }
 
-    private int getNumberOfValidAdapter(InternalCDOObject object)
+    private int getNumberOfValidAdapters(InternalCDOObject object)
     {
       int count = 0;
       if (!FSMUtil.isTransient(object) && !FSMUtil.isNew(object))
       {
         if (object.eNotificationRequired())
         {
-          for (Adapter adapter : object.eAdapters())
+          EObject instance = CDOUtil.getEObject(object);
+          for (Adapter adapter : instance.eAdapters())
           {
             if (shouldSubscribe(object, adapter))
             {
-              count++;
+              ++count;
             }
           }
         }

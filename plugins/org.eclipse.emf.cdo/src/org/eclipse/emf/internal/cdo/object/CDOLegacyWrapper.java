@@ -992,7 +992,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   @Override
   public synchronized EList<Adapter> eAdapters()
   {
-    EList<Adapter> adapters = instance.eAdapters();
+    EList<Adapter> adapters = super.eAdapters();
     if (!FSMUtil.isTransient(this))
     {
       InternalCDOView view = cdoView();

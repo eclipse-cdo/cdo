@@ -69,6 +69,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public Map<CDOID, InternalCDOObject> getObjects();
 
   /**
+   * @since 4.3
+   */
+  public List<InternalCDOObject> getObjectsList();
+
+  /**
    * @since 4.0
    */
   public CDOStore getStore();

@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * A scalable {@link EContentAdapter content adapter} that uses CDO mechansims to attach itself to {@link CDOObject
  * objects} when they are lazily loaded.
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 4.0
  */
@@ -120,7 +120,7 @@ public class CDOLazyContentAdapter extends EContentAdapter
       view.addObjectHandler(handler);
 
       // Adapt already loaded objects
-      for (CDOObject cdoObject : view.getObjects().values())
+      for (CDOObject cdoObject : view.getObjectsList())
       {
         if (isContained(cdoObject))
         {

@@ -90,8 +90,8 @@ public final class CDOModelUtil implements CDOModelConstants
     registerCoreType(types, EcorePackage.eINSTANCE.getEFloat(), CDOType.FLOAT);
     registerCoreType(types, EcorePackage.eINSTANCE.getEIntegerObject(), CDOType.INTEGER_OBJECT);
     registerCoreType(types, EcorePackage.eINSTANCE.getEInt(), CDOType.INT);
-    registerCoreType(types, EcorePackage.eINSTANCE.getEJavaClass(), null);
-    registerCoreType(types, EcorePackage.eINSTANCE.getEJavaObject(), null);
+    registerCoreType(types, EcorePackage.eINSTANCE.getEJavaClass(), CDOType.JAVA_CLASS);
+    registerCoreType(types, EcorePackage.eINSTANCE.getEJavaObject(), CDOType.JAVA_OBJECT);
     registerCoreType(types, EcorePackage.eINSTANCE.getELongObject(), CDOType.LONG_OBJECT);
     registerCoreType(types, EcorePackage.eINSTANCE.getELong(), CDOType.LONG);
     registerCoreType(types, EcorePackage.eINSTANCE.getEShortObject(), CDOType.SHORT_OBJECT);

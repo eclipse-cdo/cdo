@@ -40,7 +40,11 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.MessageFormat;
@@ -501,12 +505,22 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public Object convertToEMF(EClassifier eType, Object value)
     {
+      if (value == CDORevisionData.NIL)
+      {
+        return DynamicValueHolder.NIL;
+      }
+
       return EcoreUtil.createFromString((EDataType)eType, (String)value);
     }
 
     @Override
     public Object convertToCDO(EClassifier eType, Object value)
     {
+      if (value == DynamicValueHolder.NIL)
+      {
+        return CDORevisionData.NIL;
+      }
+
       return EcoreUtil.convertToString((EDataType)eType, value);
     }
   };
@@ -516,6 +530,15 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected Object doCopyValue(Object value)
     {
+      if (value instanceof byte[])
+      {
+        byte[] array = (byte[])value;
+        int length = array.length;
+
+        value = new byte[length];
+        System.arraycopy(array, 0, value, 0, length);
+      }
+
       return value;
     }
 
@@ -534,13 +557,48 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public Object convertToEMF(EClassifier eType, Object value)
     {
-      return EcoreUtil.createFromString((EDataType)eType, (String)value);
+      if (value == CDORevisionData.NIL)
+      {
+        return DynamicValueHolder.NIL;
+      }
+
+      try
+      {
+        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream((byte[])value));
+        return in.readObject();
+      }
+      catch (IOException ex)
+      {
+        throw new RuntimeException(ex);
+      }
+      catch (ClassNotFoundException ex)
+      {
+        throw new RuntimeException(ex);
+      }
     }
 
     @Override
     public Object convertToCDO(EClassifier eType, Object value)
     {
-      return EcoreUtil.convertToString((EDataType)eType, value);
+      if (value == DynamicValueHolder.NIL)
+      {
+        return CDORevisionData.NIL;
+      }
+
+      try
+      {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        ObjectOutputStream out = new ObjectOutputStream(bytes);
+        out.writeObject(value);
+        out.close();
+
+        return bytes.toByteArray();
+      }
+      catch (IOException ex)
+      {
+        throw new RuntimeException(ex);
+      }
     }
   };
 
@@ -567,14 +625,23 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public Object convertToEMF(EClassifier eType, Object value)
     {
-      return value == CDORevisionData.NIL ? DynamicValueHolder.NIL : EcoreUtil.createFromString((EDataType)eType,
-          (String)value);
+      if (value == CDORevisionData.NIL)
+      {
+        return DynamicValueHolder.NIL;
+      }
+
+      return EcoreUtil.createFromString((EDataType)eType, (String)value);
     }
 
     @Override
     public Object convertToCDO(EClassifier eType, Object value)
     {
-      return value == DynamicValueHolder.NIL ? CDORevisionData.NIL : EcoreUtil.convertToString((EDataType)eType, value);
+      if (value == DynamicValueHolder.NIL)
+      {
+        return CDORevisionData.NIL;
+      }
+
+      return EcoreUtil.convertToString((EDataType)eType, value);
     }
   };
 

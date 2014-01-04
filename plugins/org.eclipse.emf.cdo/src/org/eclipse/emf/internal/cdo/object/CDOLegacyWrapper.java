@@ -80,23 +80,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * This ThreadLocal map stores all pre-registered objects. This avoids a never-ending loop when setting the container
    * of an object.
    */
-  private static ThreadLocal<Map<CDOID, CDOLegacyWrapper>> wrapperRegistry = new InheritableThreadLocal<Map<CDOID, CDOLegacyWrapper>>()
-  {
-    @Override
-    protected Map<CDOID, CDOLegacyWrapper> initialValue()
-    {
-      return CDOIDUtil.createMap();
-    }
-  };
+  private static ThreadLocal<Map<CDOID, CDOLegacyWrapper>> wrapperRegistry = new InheritableThreadLocal<Map<CDOID, CDOLegacyWrapper>>();
 
-  private static ThreadLocal<Counter> recursionCounter = new InheritableThreadLocal<Counter>()
-  {
-    @Override
-    protected Counter initialValue()
-    {
-      return new Counter();
-    }
-  };
+  private static ThreadLocal<Counter> recursionCounter = new InheritableThreadLocal<Counter>();
 
   protected ViewAndState viewAndState;
 
@@ -445,78 +431,96 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void revisionToInstance()
   {
-    if (underConstruction)
+    synchronized (recursionCounter)
     {
-      // Return if revisionToInstance was called before to avoid doubled calls
-      return;
-    }
-
-    underConstruction = true;
-    InternalCDORevision revision = cdoRevision();
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
-    }
-
-    boolean deliver = instance.eDeliver();
-    if (deliver)
-    {
-      instance.eSetDeliver(false);
-    }
-
-    Counter counter = recursionCounter.get();
-    InternalCDOResource resource = null;
-    boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
-
-    try
-    {
-      registerWrapper(this);
-      counter.increment();
-      viewAndState.view.registerObject(this);
-
-      revisionToInstanceResource();
-      revisionToInstanceContainer();
-
-      Resource eResource = instance.eResource();
-      if (eResource instanceof InternalCDOResource)
+      if (underConstruction)
       {
-        resource = (InternalCDOResource)eResource;
-        resource.cdoInternalLoading(instance);
+        // Return if revisionToInstance was called before to avoid doubled calls
+        return;
       }
 
-      for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
-      {
-        revisionToInstanceFeature(feature);
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.error(ex);
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      throw new CDOException(ex);
-    }
-    finally
-    {
-      revision.bypassPermissionChecks(bypassPermissionChecks);
+      underConstruction = true;
+      InternalCDORevision revision = cdoRevision();
 
-      if (resource != null)
+      if (TRACER.isEnabled())
       {
-        resource.cdoInternalLoadingDone(instance);
+        TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
       }
 
+      boolean deliver = instance.eDeliver();
       if (deliver)
       {
-        instance.eSetDeliver(true);
+        instance.eSetDeliver(false);
       }
 
-      counter.decrement();
-      unregisterWrapper(this);
-      underConstruction = false;
+      Counter counter = recursionCounter.get();
+      if (counter == null)
+      {
+        counter = new Counter();
+        recursionCounter.set(counter);
+      }
+
+      InternalCDOResource resource = null;
+      boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
+
+      try
+      {
+        registerWrapper(this);
+        counter.increment();
+        viewAndState.view.registerObject(this);
+
+        revisionToInstanceResource();
+        revisionToInstanceContainer();
+
+        Resource eResource = instance.eResource();
+        if (eResource instanceof InternalCDOResource)
+        {
+          resource = (InternalCDOResource)eResource;
+          resource.cdoInternalLoading(instance);
+        }
+
+        for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+        {
+          revisionToInstanceFeature(feature);
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        OM.LOG.error(ex);
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        throw new CDOException(ex);
+      }
+      finally
+      {
+        try
+        {
+          revision.bypassPermissionChecks(bypassPermissionChecks);
+
+          if (resource != null)
+          {
+            resource.cdoInternalLoadingDone(instance);
+          }
+
+          if (deliver)
+          {
+            instance.eSetDeliver(true);
+          }
+        }
+        finally
+        {
+          if (counter.decrement() == 0)
+          {
+            recursionCounter.remove();
+          }
+
+          unregisterWrapper(this);
+          underConstruction = false;
+        }
+      }
     }
   }
 
@@ -1030,9 +1034,15 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * @since 3.0
    */
-  protected static CDOLegacyWrapper getRegisteredWrapper(CDOID id)
+  private static CDOLegacyWrapper getRegisteredWrapper(CDOID id)
   {
-    return wrapperRegistry.get().get(id);
+    Map<CDOID, CDOLegacyWrapper> map = wrapperRegistry.get();
+    if (map == null)
+    {
+      return null;
+    }
+
+    return map.get(id);
   }
 
   /**
@@ -1041,48 +1051,39 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    *
    * @since 3.0
    */
-  protected static void registerWrapper(CDOLegacyWrapper wrapper)
+  private static void registerWrapper(CDOLegacyWrapper wrapper)
   {
-    wrapperRegistry.get().put(wrapper.cdoID(), wrapper);
+    Map<CDOID, CDOLegacyWrapper> map = wrapperRegistry.get();
+    if (map == null)
+    {
+      map = CDOIDUtil.createMap();
+      wrapperRegistry.set(map);
+    }
+
+    map.put(wrapper.cdoID(), wrapper);
   }
 
   /**
    * @since 3.0
    */
-  protected static void unregisterWrapper(CDOLegacyWrapper wrapper)
+  private static void unregisterWrapper(CDOLegacyWrapper wrapper)
   {
-    wrapperRegistry.get().remove(wrapper.cdoID());
-  }
+    Map<CDOID, CDOLegacyWrapper> map = wrapperRegistry.get();
+    if (map == null)
+    {
+      return;
+    }
 
-  /**
-   * @since 3.0
-   */
-  protected static boolean isRegisteredWrapper(CDOLegacyWrapper wrapper)
-  {
-    return wrapperRegistry.get().containsKey(wrapper.cdoID());
-  }
+    CDOID id = wrapper.cdoID();
+    if (map.remove(id) != null)
+    {
+      if (map.isEmpty())
+      {
+        wrapperRegistry.remove();
+      }
+    }
 
-  // TODO: Remove this method if it is ensured that ist is not needed anymore
-  // private void adjustOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject, EReference
-  // oppositeReference)
-  // {
-  // if (oppositeObject != null)
-  // {
-  // InternalCDOObject oppositeCDOObject = (InternalCDOObject)CDOUtil.getCDOObject(oppositeObject);
-  //
-  // if (!FSMUtil.isTransient(oppositeCDOObject) && !EMFUtil.isPersistent(oppositeReference))
-  // {
-  // adjustPersistentOppositeReference(cdoObject, oppositeObject, oppositeReference);
-  // }
-  // else
-  // {
-  // if (oppositeReference.isResolveProxies())
-  // {
-  // adjustTransientOppositeReference(instance, (InternalEObject)oppositeObject, oppositeReference);
-  // }
-  // }
-  // }
-  // }
+  }
 
   private void adjustPersistentOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject,
       EReference oppositeReference)

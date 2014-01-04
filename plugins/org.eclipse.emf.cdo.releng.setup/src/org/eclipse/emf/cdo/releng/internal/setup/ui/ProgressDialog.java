@@ -183,12 +183,6 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   {
     super(parentShell, getTitle(setupTaskPerformers), 1000, 600);
     this.setupTaskPerformers = setupTaskPerformers;
-
-    for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
-    {
-      EList<SetupTask> performerTasks = setupTaskPerformer.getNeededTasks();
-      neededTasks.addAll(performerTasks);
-    }
   }
 
   @Override
@@ -467,6 +461,9 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
           {
             if (performer.getTriggeredSetupTasks().contains(setupTask))
             {
+              EList<SetupTask> performerTasks = performer.getNeededTasks();
+              neededTasks.addAll(performerTasks);
+
               currentPerformer = performer;
               treeViewer.refresh(true);
               break;

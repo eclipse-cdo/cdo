@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +96,6 @@ public class PreferenceProfileItemProvider extends ItemProviderAdapter implement
 
       addReferentProjectsPropertyDescriptor(object);
       addNamePropertyDescriptor(object);
-      addPrerequisitesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -160,39 +158,6 @@ public class PreferenceProfileItemProvider extends ItemProviderAdapter implement
         getString("_UI_PropertyDescriptor_description", "_UI_PreferenceProfile_name_feature",
             "_UI_PreferenceProfile_type"), ProjectConfigPackage.Literals.PREFERENCE_PROFILE__NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Prerequisites feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  protected void addPrerequisitesPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_PreferenceProfile_prerequisites_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_PreferenceProfile_prerequisites_feature",
-            "_UI_PreferenceProfile_type"), ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREREQUISITES, true,
-        false, true, null, null, null)
-    {
-      @Override
-      public Collection<?> getChoiceOfValues(Object object)
-      {
-        PreferenceProfile preferenceProfile = (PreferenceProfile)object;
-        Collection<?> result = new ArrayList<Object>(super.getChoiceOfValues(object));
-        for (Iterator<?> i = result.iterator(); i.hasNext();)
-        {
-          PreferenceProfile prerequistePreferenceProfile = (PreferenceProfile)i.next();
-          if (prerequistePreferenceProfile == preferenceProfile
-              || prerequistePreferenceProfile.requires(preferenceProfile))
-          {
-            i.remove();
-          }
-        }
-        return result;
-      }
-    });
   }
 
   /**

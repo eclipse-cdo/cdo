@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -297,11 +296,10 @@ public class PreferenceFilterImpl extends MinimalEObjectImpl.Container implement
    */
   public EList<Property> getProperties()
   {
-    WorkspaceConfiguration workspaceConfiguration = getPreferenceProfile().getProject().getConfiguration();
     List<Property> properties = new ArrayList<Property>();
     for (Property property : getPreferenceNode().getProperties())
     {
-      if (matches(property.getName()) && !workspaceConfiguration.isOmitted(property))
+      if (matches(property.getName()))
       {
         properties.add(property);
       }

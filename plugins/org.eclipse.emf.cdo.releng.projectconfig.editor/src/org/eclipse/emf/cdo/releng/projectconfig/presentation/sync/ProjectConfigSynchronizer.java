@@ -310,10 +310,7 @@ public final class ProjectConfigSynchronizer implements IStartup
                   {
                     for (Property newProperty : newChild.getProperties())
                     {
-                      if (!workspaceConfiguration.isOmitted(newProperty))
-                      {
-                        result.put(newProperty, null);
-                      }
+                      result.put(newProperty, null);
                     }
                   }
                   else

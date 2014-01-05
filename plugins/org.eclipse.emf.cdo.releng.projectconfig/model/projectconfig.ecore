@@ -8,11 +8,6 @@
     <eOperations name="getProject" eType="#//Project">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
-    <eOperations name="isOmitted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="property" eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//Property"/>
-    </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="propertyFilters" upperBound="-1"
-        eType="#//PropertyFilter" containment="true" eOpposite="#//PropertyFilter/configuration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" upperBound="-1"
         eType="#//Project" containment="true" eOpposite="#//Project/configuration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="defaultPreferenceNode"
@@ -37,9 +32,6 @@
         upperBound="-1" eType="#//PreferenceProfile" eOpposite="#//PreferenceProfile/referentProjects"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PreferenceProfile">
-    <eOperations name="requires" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="preferenceProfile" eType="#//PreferenceProfile"/>
-    </eOperations>
     <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="project" eType="ecore:EDataType ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Project"/>
     </eOperations>
@@ -56,8 +48,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="predicates" upperBound="-1"
         eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Predicate"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="prerequisites" upperBound="-1"
-        eType="#//PreferenceProfile"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PreferenceFilter">
     <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -79,21 +69,6 @@
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Pattern" instanceClassName="java.util.regex.Pattern"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertyFilter">
-    <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="omissions" lowerBound="1"
-        eType="#//Pattern"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="predicates" upperBound="-1"
-        eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Predicate"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
-        eType="ecore:EClass ../../org.eclipse.emf.cdo.releng.preferences/model/preferences.ecore#//Property"
-        changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" lowerBound="1"
-        eType="#//WorkspaceConfiguration" eOpposite="#//WorkspaceConfiguration/propertyFilters"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InclusionPredicate" eSuperTypes="../../org.eclipse.emf.cdo.releng.predicates/model/predicates.ecore#//Predicate">
     <eStructuralFeatures xsi:type="ecore:EReference" name="includedPreferenceProfiles"
         upperBound="-1" eType="#//PreferenceProfile"/>

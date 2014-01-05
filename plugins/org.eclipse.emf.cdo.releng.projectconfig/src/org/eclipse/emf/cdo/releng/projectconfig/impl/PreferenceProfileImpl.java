@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -37,9 +36,6 @@ import org.eclipse.core.resources.IProject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * <!-- begin-user-doc -->
@@ -53,7 +49,6 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceProfileImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceProfileImpl#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceProfileImpl#getPredicates <em>Predicates</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceProfileImpl#getPrerequisites <em>Prerequisites</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,16 +105,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
    * @ordered
    */
   protected EList<Predicate> predicates;
-
-  /**
-   * The cached value of the '{@link #getPrerequisites() <em>Prerequisites</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPrerequisites()
-   * @generated
-   * @ordered
-   */
-  protected EList<PreferenceProfile> prerequisites;
 
   /**
    * <!-- begin-user-doc -->
@@ -280,35 +265,20 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<PreferenceProfile> getPrerequisites()
-  {
-    if (prerequisites == null)
-    {
-      prerequisites = new EObjectResolvingEList<PreferenceProfile>(PreferenceProfile.class, this,
-          ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES);
-    }
-    return prerequisites;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public boolean requires(PreferenceProfile preferenceProfile)
-  {
-    return requires(new HashSet<PreferenceProfile>(), getPrerequisites(), preferenceProfile);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * @generated NOT
    */
   public boolean matches(IProject project)
   {
+    if (project == null || eInternalContainer() == null)
+    {
+      return false;
+    }
+
+    if (project.getName().equals(getProject().getPreferenceNode().getName()))
+    {
+      return true;
+    }
+
     for (Predicate predicate : getPredicates())
     {
       if (predicate.matches(project))
@@ -341,24 +311,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     }
 
     return null;
-  }
-
-  private boolean requires(Set<PreferenceProfile> visited, List<PreferenceProfile> preferenceProfiles,
-      PreferenceProfile preferenceProfile)
-  {
-    for (PreferenceProfile requiredPreferenceProfile : preferenceProfiles)
-    {
-      if (requiredPreferenceProfile == preferenceProfile)
-      {
-        return true;
-      }
-      if (visited.add(requiredPreferenceProfile))
-      {
-        requires(visited, requiredPreferenceProfile.getPrerequisites(), requiredPreferenceProfile);
-      }
-    }
-
-    return false;
   }
 
   /**
@@ -445,8 +397,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
       return getProject();
     case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
       return getPredicates();
-    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-      return getPrerequisites();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -480,10 +430,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
       getPredicates().clear();
       getPredicates().addAll((Collection<? extends Predicate>)newValue);
       return;
-    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-      getPrerequisites().clear();
-      getPrerequisites().addAll((Collection<? extends PreferenceProfile>)newValue);
-      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -513,9 +459,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
     case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
       getPredicates().clear();
       return;
-    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-      getPrerequisites().clear();
-      return;
     }
     super.eUnset(featureID);
   }
@@ -540,8 +483,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
       return getProject() != null;
     case ProjectConfigPackage.PREFERENCE_PROFILE__PREDICATES:
       return predicates != null && !predicates.isEmpty();
-    case ProjectConfigPackage.PREFERENCE_PROFILE__PREREQUISITES:
-      return prerequisites != null && !prerequisites.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -556,8 +497,6 @@ public class PreferenceProfileImpl extends MinimalEObjectImpl.Container implemen
   {
     switch (operationID)
     {
-    case ProjectConfigPackage.PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE:
-      return requires((PreferenceProfile)arguments.get(0));
     case ProjectConfigPackage.PREFERENCE_PROFILE___MATCHES__IPROJECT:
       return matches((IProject)arguments.get(0));
     case ProjectConfigPackage.PREFERENCE_PROFILE___GET_PROPERTY__URI:

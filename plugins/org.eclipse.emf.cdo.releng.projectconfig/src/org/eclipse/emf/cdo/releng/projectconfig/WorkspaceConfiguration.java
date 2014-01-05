@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.projectconfig;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
-import org.eclipse.emf.cdo.releng.preferences.Property;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getPropertyFilters <em>Property Filters</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getDefaultPreferenceNode <em>Default Preference Node</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getInstancePreferenceNode <em>Instance Preference Node</em>}</li>
@@ -37,24 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface WorkspaceConfiguration extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Property Filters</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getConfiguration <em>Configuration</em>}'.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Property Filters</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Property Filters</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage#getWorkspaceConfiguration_PropertyFilters()
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getConfiguration
-   * @model opposite="configuration" containment="true"
-   * @generated
-   */
-  EList<PropertyFilter> getPropertyFilters();
-
   /**
    * Returns the value of the '<em><b>Projects</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.projectconfig.Project}.
@@ -148,13 +128,5 @@ public interface WorkspaceConfiguration extends EObject
    * @generated
    */
   Project getProject(String name);
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @model
-   * @generated
-   */
-  boolean isOmitted(Property property);
 
 } // WorkspaceConfiguration

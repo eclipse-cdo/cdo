@@ -120,7 +120,6 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS);
       childrenFeatures.add(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROJECTS);
     }
     return childrenFeatures;
@@ -189,7 +188,6 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
 
     switch (notification.getFeatureID(WorkspaceConfiguration.class))
     {
-    case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS:
     case ProjectConfigPackage.WORKSPACE_CONFIGURATION__PROJECTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
@@ -208,10 +206,6 @@ public class WorkspaceConfigurationItemProvider extends ItemProviderAdapter impl
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-
-    newChildDescriptors.add(createChildParameter(
-        ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS,
-        ProjectConfigFactory.eINSTANCE.createPropertyFilter()));
 
     newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROJECTS,
         ProjectConfigFactory.eINSTANCE.createProject()));

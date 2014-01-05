@@ -80,22 +80,13 @@ public interface ProjectConfigPackage extends EPackage
   int WORKSPACE_CONFIGURATION = 0;
 
   /**
-   * The feature id for the '<em><b>Property Filters</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKSPACE_CONFIGURATION__PROPERTY_FILTERS = 0;
-
-  /**
    * The feature id for the '<em><b>Projects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WORKSPACE_CONFIGURATION__PROJECTS = 1;
+  int WORKSPACE_CONFIGURATION__PROJECTS = 0;
 
   /**
    * The feature id for the '<em><b>Default Preference Node</b></em>' reference.
@@ -104,7 +95,7 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE = 2;
+  int WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE = 1;
 
   /**
    * The feature id for the '<em><b>Instance Preference Node</b></em>' reference.
@@ -113,7 +104,7 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE = 3;
+  int WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE = 2;
 
   /**
    * The number of structural features of the '<em>Workspace Configuration</em>' class.
@@ -122,7 +113,7 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WORKSPACE_CONFIGURATION_FEATURE_COUNT = 4;
+  int WORKSPACE_CONFIGURATION_FEATURE_COUNT = 3;
 
   /**
    * The operation id for the '<em>Apply Preference Profiles</em>' operation.
@@ -152,22 +143,13 @@ public interface ProjectConfigPackage extends EPackage
   int WORKSPACE_CONFIGURATION___GET_PROJECT__STRING = 2;
 
   /**
-   * The operation id for the '<em>Is Omitted</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WORKSPACE_CONFIGURATION___IS_OMITTED__PROPERTY = 3;
-
-  /**
    * The number of operations of the '<em>Workspace Configuration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WORKSPACE_CONFIGURATION_OPERATION_COUNT = 4;
+  int WORKSPACE_CONFIGURATION_OPERATION_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectImpl <em>Project</em>}' class.
@@ -298,31 +280,13 @@ public interface ProjectConfigPackage extends EPackage
   int PREFERENCE_PROFILE__PREDICATES = 4;
 
   /**
-   * The feature id for the '<em><b>Prerequisites</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_PROFILE__PREREQUISITES = 5;
-
-  /**
    * The number of structural features of the '<em>Preference Profile</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCE_PROFILE_FEATURE_COUNT = 6;
-
-  /**
-   * The operation id for the '<em>Requires</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE = 0;
+  int PREFERENCE_PROFILE_FEATURE_COUNT = 5;
 
   /**
    * The operation id for the '<em>Matches</em>' operation.
@@ -331,7 +295,7 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCE_PROFILE___MATCHES__IPROJECT = 1;
+  int PREFERENCE_PROFILE___MATCHES__IPROJECT = 0;
 
   /**
    * The operation id for the '<em>Get Property</em>' operation.
@@ -340,7 +304,7 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCE_PROFILE___GET_PROPERTY__URI = 2;
+  int PREFERENCE_PROFILE___GET_PROPERTY__URI = 1;
 
   /**
    * The number of operations of the '<em>Preference Profile</em>' class.
@@ -349,7 +313,7 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCE_PROFILE_OPERATION_COUNT = 3;
+  int PREFERENCE_PROFILE_OPERATION_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PreferenceFilterImpl <em>Preference Filter</em>}' class.
@@ -443,79 +407,6 @@ public interface ProjectConfigPackage extends EPackage
   int PREFERENCE_FILTER_OPERATION_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl <em>Property Filter</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl
-   * @see org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPackageImpl#getPropertyFilter()
-   * @generated
-   */
-  int PROPERTY_FILTER = 4;
-
-  /**
-   * The feature id for the '<em><b>Omissions</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER__OMISSIONS = 0;
-
-  /**
-   * The feature id for the '<em><b>Predicates</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER__PREDICATES = 1;
-
-  /**
-   * The feature id for the '<em><b>Properties</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER__PROPERTIES = 2;
-
-  /**
-   * The feature id for the '<em><b>Configuration</b></em>' container reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER__CONFIGURATION = 3;
-
-  /**
-   * The number of structural features of the '<em>Property Filter</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER_FEATURE_COUNT = 4;
-
-  /**
-   * The operation id for the '<em>Matches</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER___MATCHES__STRING = 0;
-
-  /**
-   * The number of operations of the '<em>Property Filter</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_FILTER_OPERATION_COUNT = 1;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.InclusionPredicateImpl <em>Inclusion Predicate</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -523,7 +414,7 @@ public interface ProjectConfigPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPackageImpl#getInclusionPredicate()
    * @generated
    */
-  int INCLUSION_PREDICATE = 5;
+  int INCLUSION_PREDICATE = 4;
 
   /**
    * The feature id for the '<em><b>Included Preference Profiles</b></em>' reference list.
@@ -569,7 +460,7 @@ public interface ProjectConfigPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPackageImpl#getExclusionPredicate()
    * @generated
    */
-  int EXCLUSION_PREDICATE = 6;
+  int EXCLUSION_PREDICATE = 5;
 
   /**
    * The feature id for the '<em><b>Excluded Preference Profiles</b></em>' reference list.
@@ -615,7 +506,7 @@ public interface ProjectConfigPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPackageImpl#getPattern()
    * @generated
    */
-  int PATTERN = 7;
+  int PATTERN = 6;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration <em>Workspace Configuration</em>}'.
@@ -626,17 +517,6 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    */
   EClass getWorkspaceConfiguration();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getPropertyFilters <em>Property Filters</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Property Filters</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getPropertyFilters()
-   * @see #getWorkspaceConfiguration()
-   * @generated
-   */
-  EReference getWorkspaceConfiguration_PropertyFilters();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#getProjects <em>Projects</em>}'.
@@ -700,16 +580,6 @@ public interface ProjectConfigPackage extends EPackage
    * @generated
    */
   EOperation getWorkspaceConfiguration__GetProject__String();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#isOmitted(org.eclipse.emf.cdo.releng.preferences.Property) <em>Is Omitted</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Is Omitted</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration#isOmitted(org.eclipse.emf.cdo.releng.preferences.Property)
-   * @generated
-   */
-  EOperation getWorkspaceConfiguration__IsOmitted__Property();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.Project <em>Project</em>}'.
@@ -841,27 +711,6 @@ public interface ProjectConfigPackage extends EPackage
   EReference getPreferenceProfile_Predicates();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getPrerequisites <em>Prerequisites</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Prerequisites</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getPrerequisites()
-   * @see #getPreferenceProfile()
-   * @generated
-   */
-  EReference getPreferenceProfile_Prerequisites();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#requires(org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile) <em>Requires</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Requires</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#requires(org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile)
-   * @generated
-   */
-  EOperation getPreferenceProfile__Requires__PreferenceProfile();
-
-  /**
    * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#matches(org.eclipse.core.resources.IProject) <em>Matches</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -967,70 +816,6 @@ public interface ProjectConfigPackage extends EPackage
   EOperation getPreferenceFilter__GetProperty__String();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter <em>Property Filter</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Property Filter</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter
-   * @generated
-   */
-  EClass getPropertyFilter();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getOmissions <em>Omissions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Omissions</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getOmissions()
-   * @see #getPropertyFilter()
-   * @generated
-   */
-  EAttribute getPropertyFilter_Omissions();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getPredicates <em>Predicates</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Predicates</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getPredicates()
-   * @see #getPropertyFilter()
-   * @generated
-   */
-  EReference getPropertyFilter_Predicates();
-
-  /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getProperties <em>Properties</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Properties</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getProperties()
-   * @see #getPropertyFilter()
-   * @generated
-   */
-  EReference getPropertyFilter_Properties();
-
-  /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getConfiguration <em>Configuration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the container reference '<em>Configuration</em>'.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#getConfiguration()
-   * @see #getPropertyFilter()
-   * @generated
-   */
-  EReference getPropertyFilter_Configuration();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#matches(java.lang.String) <em>Matches</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Matches</em>' operation.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter#matches(java.lang.String)
-   * @generated
-   */
-  EOperation getPropertyFilter__Matches__String();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.projectconfig.InclusionPredicate <em>Inclusion Predicate</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1118,14 +903,6 @@ public interface ProjectConfigPackage extends EPackage
     EClass WORKSPACE_CONFIGURATION = eINSTANCE.getWorkspaceConfiguration();
 
     /**
-     * The meta object literal for the '<em><b>Property Filters</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference WORKSPACE_CONFIGURATION__PROPERTY_FILTERS = eINSTANCE.getWorkspaceConfiguration_PropertyFilters();
-
-    /**
      * The meta object literal for the '<em><b>Projects</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1177,15 +954,6 @@ public interface ProjectConfigPackage extends EPackage
      */
     EOperation WORKSPACE_CONFIGURATION___GET_PROJECT__STRING = eINSTANCE
         .getWorkspaceConfiguration__GetProject__String();
-
-    /**
-     * The meta object literal for the '<em><b>Is Omitted</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation WORKSPACE_CONFIGURATION___IS_OMITTED__PROPERTY = eINSTANCE
-        .getWorkspaceConfiguration__IsOmitted__Property();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectImpl <em>Project</em>}' class.
@@ -1288,23 +1056,6 @@ public interface ProjectConfigPackage extends EPackage
     EReference PREFERENCE_PROFILE__PREDICATES = eINSTANCE.getPreferenceProfile_Predicates();
 
     /**
-     * The meta object literal for the '<em><b>Prerequisites</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PREFERENCE_PROFILE__PREREQUISITES = eINSTANCE.getPreferenceProfile_Prerequisites();
-
-    /**
-     * The meta object literal for the '<em><b>Requires</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE = eINSTANCE
-        .getPreferenceProfile__Requires__PreferenceProfile();
-
-    /**
      * The meta object literal for the '<em><b>Matches</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1385,56 +1136,6 @@ public interface ProjectConfigPackage extends EPackage
      * @generated
      */
     EOperation PREFERENCE_FILTER___GET_PROPERTY__STRING = eINSTANCE.getPreferenceFilter__GetProperty__String();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl <em>Property Filter</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.projectconfig.impl.PropertyFilterImpl
-     * @see org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPackageImpl#getPropertyFilter()
-     * @generated
-     */
-    EClass PROPERTY_FILTER = eINSTANCE.getPropertyFilter();
-
-    /**
-     * The meta object literal for the '<em><b>Omissions</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PROPERTY_FILTER__OMISSIONS = eINSTANCE.getPropertyFilter_Omissions();
-
-    /**
-     * The meta object literal for the '<em><b>Predicates</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTY_FILTER__PREDICATES = eINSTANCE.getPropertyFilter_Predicates();
-
-    /**
-     * The meta object literal for the '<em><b>Properties</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTY_FILTER__PROPERTIES = eINSTANCE.getPropertyFilter_Properties();
-
-    /**
-     * The meta object literal for the '<em><b>Configuration</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTY_FILTER__CONFIGURATION = eINSTANCE.getPropertyFilter_Configuration();
-
-    /**
-     * The meta object literal for the '<em><b>Matches</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation PROPERTY_FILTER___MATCHES__STRING = eINSTANCE.getPropertyFilter__Matches__String();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.projectconfig.impl.InclusionPredicateImpl <em>Inclusion Predicate</em>}' class.

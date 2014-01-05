@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 
 import org.eclipse.emf.ecore.EObject;
@@ -127,16 +126,6 @@ public class ProjectConfigSwitch<T> extends Switch<T>
       }
       return result;
     }
-    case ProjectConfigPackage.PROPERTY_FILTER:
-    {
-      PropertyFilter propertyFilter = (PropertyFilter)theEObject;
-      T result = casePropertyFilter(propertyFilter);
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
     case ProjectConfigPackage.INCLUSION_PREDICATE:
     {
       InclusionPredicate inclusionPredicate = (InclusionPredicate)theEObject;
@@ -230,22 +219,6 @@ public class ProjectConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePreferenceFilter(PreferenceFilter object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Property Filter</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Property Filter</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePropertyFilter(PropertyFilter object)
   {
     return null;
   }

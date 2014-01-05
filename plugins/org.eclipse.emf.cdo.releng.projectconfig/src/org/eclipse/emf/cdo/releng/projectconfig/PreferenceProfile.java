@@ -32,7 +32,6 @@ import org.eclipse.core.resources.IProject;
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getPredicates <em>Predicates</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile#getPrerequisites <em>Prerequisites</em>}</li>
  * </ul>
  * </p>
  *
@@ -147,30 +146,6 @@ public interface PreferenceProfile extends EObject
    * @generated
    */
   EList<Predicate> getPredicates();
-
-  /**
-   * Returns the value of the '<em><b>Prerequisites</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Requires</em>' reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Prerequisites</em>' reference list.
-   * @see org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage#getPreferenceProfile_Prerequisites()
-   * @model
-   * @generated
-   */
-  EList<PreferenceProfile> getPrerequisites();
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @model
-   * @generated
-   */
-  boolean requires(PreferenceProfile preferenceProfile);
 
   /**
    * <!-- begin-user-doc -->

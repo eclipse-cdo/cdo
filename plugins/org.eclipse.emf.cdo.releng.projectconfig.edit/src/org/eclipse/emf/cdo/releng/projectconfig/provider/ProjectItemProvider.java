@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
+import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigUtil;
 
 import org.eclipse.emf.common.CommonPlugin;
@@ -67,6 +68,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 
@@ -93,6 +95,8 @@ import java.util.regex.Pattern;
 public class ProjectItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
+  private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
+
   private static final Class<?> IWORKBENCH_ADAPTER_CLASS;
 
   private static final Method GET_IMAGE_DESCRIPTOR_METHOD;
@@ -266,7 +270,7 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
       String name = preferenceNode.getName();
       if (name != null)
       {
-        IProject iProject = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
+        IProject iProject = WORKSPACE_ROOT.getProject(name);
         try
         {
           Object adapter = iProject.getAdapter(IWORKBENCH_ADAPTER_CLASS);
@@ -816,6 +820,22 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
     return pattern.toString();
   }
 
+  private String getNamePattern(Collection<String> properties)
+  {
+    StringBuilder pattern = new StringBuilder();
+    for (String name : properties)
+    {
+      name = name.replace(".", "\\.");
+      if (pattern.length() != 0)
+      {
+        pattern.append('|');
+      }
+      pattern.append(name);
+    }
+
+    return pattern.toString();
+  }
+
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
    * that can be created under this object.
@@ -869,9 +889,11 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
         {
           PreferenceProfile preferenceProfile = (PreferenceProfile)child;
           Project project = preferenceProfile.getProject();
+          WorkspaceConfiguration workspaceConfiguration = project.getConfiguration();
           for (PreferenceFilter preferenceFilter : preferenceProfile.getPreferenceFilters())
           {
-            Map<PreferenceFilter, Set<Property>> collisions = new LinkedHashMap<PreferenceFilter, Set<Property>>();
+            Map<PreferenceFilter, Set<Property>> incomingCollisions = new LinkedHashMap<PreferenceFilter, Set<Property>>();
+            Map<PreferenceFilter, Set<Property>> outgoingCollisions = new LinkedHashMap<PreferenceFilter, Set<Property>>();
             URI preferenceFilterNodeRelativePath = preferenceFilter.getPreferenceNode().getRelativePath();
             for (Property property : preferenceFilter.getProperties())
             {
@@ -886,11 +908,53 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
                     if (preferenceFilterReference.getPreferenceNode().getRelativePath()
                         .equals(preferenceFilterNodeRelativePath))
                     {
-                      Set<Property> properties = collisions.get(preferenceFilterReference);
+                      Set<Property> properties = incomingCollisions.get(preferenceFilterReference);
                       if (properties == null)
                       {
                         properties = new LinkedHashSet<Property>();
-                        collisions.put(preferenceFilterReference, properties);
+                        incomingCollisions.put(preferenceFilterReference, properties);
+                      }
+                      properties.add(property);
+                    }
+                  }
+                }
+              }
+
+              Set<Project> collidingProjects = new HashSet<Project>();
+              for (Project otherProject : workspaceConfiguration.getProjects())
+              {
+                if (otherProject != project)
+                {
+                  if (preferenceProfile.matches(WORKSPACE_ROOT.getProject(otherProject.getPreferenceNode().getName())))
+                  {
+                    Property managingProperty = otherProject.getProperty(relativePath);
+                    if (managingProperty != null)
+                    {
+                      Project managingProject = workspaceConfiguration
+                          .getProject(managingProperty.getScope().getName());
+                      if (managingProject != project)
+                      {
+                        collidingProjects.add(managingProject);
+                      }
+                    }
+                  }
+                }
+              }
+
+              for (Project collidingProject : collidingProjects)
+              {
+                for (PreferenceProfile collidingPreferenceProfile : collidingProject.getPreferenceProfiles())
+                {
+                  for (PreferenceFilter collidingPreferenceFilter : collidingPreferenceProfile.getPreferenceFilters())
+                  {
+                    if (collidingPreferenceFilter.getPreferenceNode().getRelativePath()
+                        .equals(preferenceFilterNodeRelativePath))
+                    {
+                      Set<Property> properties = outgoingCollisions.get(collidingPreferenceFilter);
+                      if (properties == null)
+                      {
+                        properties = new LinkedHashSet<Property>();
+                        outgoingCollisions.put(collidingPreferenceFilter, properties);
                       }
                       properties.add(property);
                     }
@@ -899,7 +963,7 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
               }
             }
 
-            for (Map.Entry<PreferenceFilter, Set<Property>> entry : collisions.entrySet())
+            for (Map.Entry<PreferenceFilter, Set<Property>> entry : incomingCollisions.entrySet())
             {
               if (command == null)
               {
@@ -949,7 +1013,118 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
               command.appendAndExecute(SetCommand.create(domain, collidingPreferenceFilter,
                   ProjectConfigPackage.Literals.PREFERENCE_FILTER__EXCLUSIONS, exclusions));
             }
+
+            Set<String> union = new LinkedHashSet<String>();
+            Set<PreferenceProfile> excludedPreferenceProfiles = new LinkedHashSet<PreferenceProfile>();
+            Map<Set<String>, Set<PreferenceFilter>> exclusionCombinations = new LinkedHashMap<Set<String>, Set<PreferenceFilter>>();
+            for (Map.Entry<PreferenceFilter, Set<Property>> entry : outgoingCollisions.entrySet())
+            {
+              Set<String> properties = new LinkedHashSet<String>();
+              for (Property property : entry.getValue())
+              {
+                String name = property.getName();
+                properties.add(name);
+                union.add(name);
+              }
+
+              Set<PreferenceFilter> filters = exclusionCombinations.get(properties);
+              if (filters == null)
+              {
+                filters = new LinkedHashSet<PreferenceFilter>();
+                exclusionCombinations.put(properties, filters);
+              }
+              PreferenceFilter collidingPreferenceFilter = entry.getKey();
+              filters.add(collidingPreferenceFilter);
+              excludedPreferenceProfiles.add(collidingPreferenceFilter.getPreferenceProfile());
+            }
+
+            if (!union.isEmpty())
+            {
+              String unionPattern = getNamePattern(union);
+              Pattern exclusions = preferenceFilter.getExclusions();
+              if (exclusions == null || exclusions.toString().length() == 0)
+              {
+                exclusions = Pattern.compile(unionPattern);
+              }
+              else
+              {
+                exclusions = Pattern.compile(exclusions.toString() + "|" + unionPattern);
+              }
+              preferenceFilter.setExclusions(exclusions);
+
+              if (command == null)
+              {
+                command = new CompoundCommand();
+              }
+
+              PreferenceProfile exceptionalPreferenceProfile = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
+              exceptionalPreferenceProfile.setName(preferenceProfile.getName() + " Exceptional");
+
+              PreferenceFilter exceptionalPreferenceFilter = ProjectConfigFactory.eINSTANCE.createPreferenceFilter();
+              exceptionalPreferenceFilter.setInclusions(Pattern.compile(unionPattern));
+              exceptionalPreferenceFilter.setPreferenceNode(preferenceFilter.getPreferenceNode());
+              exceptionalPreferenceProfile.getPreferenceFilters().add(exceptionalPreferenceFilter);
+
+              AndPredicate exceptionalAndPredicate = PredicatesFactory.eINSTANCE.createAndPredicate();
+
+              ExclusionPredicate exceptionalExclusionPredicate = ProjectConfigFactory.eINSTANCE
+                  .createExclusionPredicate();
+              exceptionalExclusionPredicate.getExcludedPreferenceProfiles().addAll(excludedPreferenceProfiles);
+              exceptionalAndPredicate.getOperands().add(exceptionalExclusionPredicate);
+
+              InclusionPredicate inclusionPredicate = ProjectConfigFactory.eINSTANCE.createInclusionPredicate();
+              inclusionPredicate.getIncludedPreferenceProfiles().add(preferenceProfile);
+              exceptionalAndPredicate.getOperands().add(inclusionPredicate);
+
+              exceptionalPreferenceProfile.getPredicates().add(exceptionalAndPredicate);
+
+              command.appendAndExecute(AddCommand.create(domain, project,
+                  ProjectConfigPackage.Literals.PROJECT__PREFERENCE_PROFILES,
+                  Collections.singletonList(exceptionalPreferenceProfile)));
+
+              int count = 0;
+              for (Map.Entry<Set<String>, Set<PreferenceFilter>> entry : exclusionCombinations.entrySet())
+              {
+                Set<String> properties = new LinkedHashSet<String>(union);
+                properties.removeAll(entry.getKey());
+                if (!properties.isEmpty())
+                {
+                  PreferenceProfile partialPreferenceProfile = ProjectConfigFactory.eINSTANCE.createPreferenceProfile();
+                  partialPreferenceProfile.setName(preferenceProfile.getName() + " Partial " + ++count);
+
+                  PreferenceFilter partialPreferenceFilter = ProjectConfigFactory.eINSTANCE.createPreferenceFilter();
+                  partialPreferenceFilter.setInclusions(Pattern.compile(getNamePattern(properties)));
+                  partialPreferenceFilter.setPreferenceNode(preferenceFilter.getPreferenceNode());
+                  partialPreferenceProfile.getPreferenceFilters().add(partialPreferenceFilter);
+
+                  Set<String> projectNames = new LinkedHashSet<String>();
+                  for (PreferenceFilter excludedPreferenceFilter : entry.getValue())
+                  {
+                    projectNames.add(excludedPreferenceFilter.getPreferenceProfile().getProject().getPreferenceNode()
+                        .getName());
+                  }
+
+                  for (String projectName : projectNames)
+                  {
+                    NamePredicate namePredicate = PredicatesFactory.eINSTANCE.createNamePredicate();
+                    namePredicate.setPattern(projectName.replace(".", "\\."));
+                    partialPreferenceProfile.getPredicates().add(namePredicate);
+                  }
+
+                  command.appendAndExecute(AddCommand.create(domain, project,
+                      ProjectConfigPackage.Literals.PROJECT__PREFERENCE_PROFILES,
+                      Collections.singletonList(partialPreferenceProfile)));
+                }
+              }
+            }
           }
+        }
+
+        if (command != null)
+        {
+          HashSet<Object> combinedAffectedObjects = new HashSet<Object>(affectedObjects);
+          combinedAffectedObjects.addAll(command.getAffectedObjects());
+          affectedObjects = combinedAffectedObjects;
         }
       }
 
@@ -962,6 +1137,10 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
         }
 
         super.undo();
+
+        HashSet<Object> combinedAffectedObjects = new HashSet<Object>(affectedObjects);
+        combinedAffectedObjects.addAll(command.getAffectedObjects());
+        affectedObjects = combinedAffectedObjects;
       }
 
       @Override
@@ -973,6 +1152,10 @@ public class ProjectItemProvider extends ItemProviderAdapter implements IEditing
         {
           command.redo();
         }
+
+        HashSet<Object> combinedAffectedObjects = new HashSet<Object>(affectedObjects);
+        combinedAffectedObjects.addAll(command.getAffectedObjects());
+        affectedObjects = combinedAffectedObjects;
       }
     };
   }

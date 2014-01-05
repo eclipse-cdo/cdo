@@ -14,12 +14,10 @@ import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.predicates.provider.PredicatesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
-import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditor;
 import org.eclipse.emf.cdo.releng.preferences.provider.PreferencesItemProviderAdapterFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigURIHandlerImpl;
 import org.eclipse.emf.cdo.releng.projectconfig.provider.ProjectConfigItemProviderAdapterFactory;
@@ -585,12 +583,6 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     }
   }
 
-  public void restoreDefaultPropertyFilters()
-  {
-    changedResources.addAll(editingDomain.getResourceSet().getResources());
-    handleChangedResources(true);
-  }
-
   /**
    * Handles what to do with changed resources on activation.
    * <!-- begin-user-doc -->
@@ -598,11 +590,6 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
    * @generated NOT
    */
   protected void handleChangedResources()
-  {
-    handleChangedResources(false);
-  }
-
-  protected void handleChangedResources(boolean restoreDefaultPropertyFilters)
   {
     if (!changedResources.isEmpty())
     {
@@ -635,17 +622,6 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
                 PreferenceNode cache = ProjectConfigUtil.cacheWorkspaceConfiguration(workspaceConfiguration);
                 if (cache != null)
                 {
-                  if (restoreDefaultPropertyFilters)
-                  {
-                    PreferenceNode instancePreferenceNode = cache.getParent().getNode("instance");
-                    PreferenceNode projectConfPreferenceNode = instancePreferenceNode
-                        .getNode(ProjectConfigUtil.PROJECT_CONF_NODE_NAME);
-                    if (projectConfPreferenceNode != null)
-                    {
-                      instancePreferenceNode.getChildren().remove(projectConfPreferenceNode);
-                    }
-                  }
-
                   cachedWorkspaceConfiguration = ProjectConfigUtil.getWorkspaceConfiguration(cache);
                 }
               }
@@ -669,28 +645,6 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
                   return appendIfCanExecute(new RemoveCommand(editingDomain, contents, contents))
                       && appendIfCanExecute(new AddCommand(editingDomain, contents, new ArrayList<EObject>(
                           workspaceConfiguration.eResource().getContents())));
-                }
-              };
-
-              editingDomain.getCommandStack().execute(command);
-            }
-            else if (restoreDefaultPropertyFilters)
-            {
-              final WorkspaceConfiguration workspaceConfiguration = (WorkspaceConfiguration)resource.getContents().get(
-                  0);
-              CompoundCommand command = new CompoundCommand("Restore Default Property Filters",
-                  "Restore the default property filters")
-              {
-                @Override
-                protected boolean prepare()
-                {
-                  List<PropertyFilter> contents = new ArrayList<PropertyFilter>(
-                      workspaceConfiguration.getPropertyFilters());
-                  return appendIfCanExecute(new RemoveCommand(editingDomain, workspaceConfiguration,
-                      ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS, contents))
-                      && appendIfCanExecute(new AddCommand(editingDomain, workspaceConfiguration,
-                          ProjectConfigPackage.Literals.WORKSPACE_CONFIGURATION__PROPERTY_FILTERS,
-                          ProjectConfigUtil.getDefaultPropertyFilters()));
                 }
               };
 
@@ -1618,14 +1572,6 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
           else if (object instanceof PreferenceFilter)
           {
             object = ((PreferenceFilter)object).getPreferenceNode();
-          }
-          else if (object instanceof PropertyFilter)
-          {
-            PropertyFilter propertyFilter = (PropertyFilter)object;
-            for (Property property : propertyFilter.getProperties())
-            {
-              super.collectSelection(selection, property);
-            }
           }
 
           super.collectSelection(selection, object);

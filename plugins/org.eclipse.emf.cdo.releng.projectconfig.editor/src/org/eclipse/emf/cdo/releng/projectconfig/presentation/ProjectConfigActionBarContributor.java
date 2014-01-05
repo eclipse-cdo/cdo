@@ -255,25 +255,6 @@ public class ProjectConfigActionBarContributor extends EditingDomainActionBarCon
     }
   };
 
-  protected IAction restoreDefaultPropertyFilters = new Action("Restore Default Property Filters")
-  {
-    @Override
-    public boolean isEnabled()
-    {
-      return activeEditorPart instanceof ProjectConfigEditor;
-    }
-
-    @Override
-    public void run()
-    {
-      if (activeEditorPart instanceof ProjectConfigEditor)
-      {
-        ProjectConfigEditor projectConfigEditor = (ProjectConfigEditor)activeEditorPart;
-        projectConfigEditor.restoreDefaultPropertyFilters();
-      }
-    }
-  };
-
   protected IAction reloadEditorAction = new Action("Reload Editor")
   {
     @Override
@@ -728,8 +709,6 @@ public class ProjectConfigActionBarContributor extends EditingDomainActionBarCon
     menuManager.insertAfter("ui-actions", applyPreferenceProfilesAction);
 
     menuManager.insertAfter("ui-actions", reloadEditorAction);
-
-    menuManager.insertAfter("ui-actions", restoreDefaultPropertyFilters);
   }
 
   /**

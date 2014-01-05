@@ -67,15 +67,6 @@ public interface ProjectConfigFactory extends EFactory
   PreferenceFilter createPreferenceFilter();
 
   /**
-   * Returns a new object of class '<em>Property Filter</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Property Filter</em>'.
-   * @generated
-   */
-  PropertyFilter createPropertyFilter();
-
-  /**
    * Returns a new object of class '<em>Inclusion Predicate</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

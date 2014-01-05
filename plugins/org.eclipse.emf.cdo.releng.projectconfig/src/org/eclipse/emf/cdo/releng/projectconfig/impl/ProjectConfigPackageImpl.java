@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigFactory;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.util.ProjectConfigValidator;
 
@@ -69,13 +68,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * @generated
    */
   private EClass preferenceFilterEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass propertyFilterEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -193,7 +185,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWorkspaceConfiguration_PropertyFilters()
+  public EReference getWorkspaceConfiguration_Projects()
   {
     return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(0);
   }
@@ -203,7 +195,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWorkspaceConfiguration_Projects()
+  public EReference getWorkspaceConfiguration_DefaultPreferenceNode()
   {
     return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(1);
   }
@@ -213,19 +205,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWorkspaceConfiguration_DefaultPreferenceNode()
-  {
-    return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getWorkspaceConfiguration_InstancePreferenceNode()
   {
-    return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(3);
+    return (EReference)workspaceConfigurationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -256,16 +238,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
   public EOperation getWorkspaceConfiguration__GetProject__String()
   {
     return workspaceConfigurationEClass.getEOperations().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getWorkspaceConfiguration__IsOmitted__Property()
-  {
-    return workspaceConfigurationEClass.getEOperations().get(3);
   }
 
   /**
@@ -393,17 +365,7 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPreferenceProfile_Prerequisites()
-  {
-    return (EReference)preferenceProfileEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPreferenceProfile__Requires__PreferenceProfile()
+  public EOperation getPreferenceProfile__Matches__IProject()
   {
     return preferenceProfileEClass.getEOperations().get(0);
   }
@@ -413,19 +375,9 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getPreferenceProfile__Matches__IProject()
-  {
-    return preferenceProfileEClass.getEOperations().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EOperation getPreferenceProfile__GetProperty__URI()
   {
-    return preferenceProfileEClass.getEOperations().get(2);
+    return preferenceProfileEClass.getEOperations().get(1);
   }
 
   /**
@@ -513,66 +465,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPropertyFilter()
-  {
-    return propertyFilterEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPropertyFilter_Omissions()
-  {
-    return (EAttribute)propertyFilterEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPropertyFilter_Predicates()
-  {
-    return (EReference)propertyFilterEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPropertyFilter_Properties()
-  {
-    return (EReference)propertyFilterEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPropertyFilter_Configuration()
-  {
-    return (EReference)propertyFilterEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPropertyFilter__Matches__String()
-  {
-    return propertyFilterEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getInclusionPredicate()
   {
     return inclusionPredicateEClass;
@@ -652,14 +544,12 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
 
     // Create classes and their features
     workspaceConfigurationEClass = createEClass(WORKSPACE_CONFIGURATION);
-    createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__PROPERTY_FILTERS);
     createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__PROJECTS);
     createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__DEFAULT_PREFERENCE_NODE);
     createEReference(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION__INSTANCE_PREFERENCE_NODE);
     createEOperation(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION___APPLY_PREFERENCE_PROFILES);
     createEOperation(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION___UPDATE_PREFERENCE_PROFILE_REFERENCES);
     createEOperation(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION___GET_PROJECT__STRING);
-    createEOperation(workspaceConfigurationEClass, WORKSPACE_CONFIGURATION___IS_OMITTED__PROPERTY);
 
     projectEClass = createEClass(PROJECT);
     createEReference(projectEClass, PROJECT__CONFIGURATION);
@@ -674,8 +564,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     createEAttribute(preferenceProfileEClass, PREFERENCE_PROFILE__NAME);
     createEReference(preferenceProfileEClass, PREFERENCE_PROFILE__PROJECT);
     createEReference(preferenceProfileEClass, PREFERENCE_PROFILE__PREDICATES);
-    createEReference(preferenceProfileEClass, PREFERENCE_PROFILE__PREREQUISITES);
-    createEOperation(preferenceProfileEClass, PREFERENCE_PROFILE___REQUIRES__PREFERENCEPROFILE);
     createEOperation(preferenceProfileEClass, PREFERENCE_PROFILE___MATCHES__IPROJECT);
     createEOperation(preferenceProfileEClass, PREFERENCE_PROFILE___GET_PROPERTY__URI);
 
@@ -687,13 +575,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     createEReference(preferenceFilterEClass, PREFERENCE_FILTER__PROPERTIES);
     createEOperation(preferenceFilterEClass, PREFERENCE_FILTER___MATCHES__STRING);
     createEOperation(preferenceFilterEClass, PREFERENCE_FILTER___GET_PROPERTY__STRING);
-
-    propertyFilterEClass = createEClass(PROPERTY_FILTER);
-    createEAttribute(propertyFilterEClass, PROPERTY_FILTER__OMISSIONS);
-    createEReference(propertyFilterEClass, PROPERTY_FILTER__PREDICATES);
-    createEReference(propertyFilterEClass, PROPERTY_FILTER__PROPERTIES);
-    createEReference(propertyFilterEClass, PROPERTY_FILTER__CONFIGURATION);
-    createEOperation(propertyFilterEClass, PROPERTY_FILTER___MATCHES__STRING);
 
     inclusionPredicateEClass = createEClass(INCLUSION_PREDICATE);
     createEReference(inclusionPredicateEClass, INCLUSION_PREDICATE__INCLUDED_PREFERENCE_PROFILES);
@@ -749,9 +630,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     // Initialize classes, features, and operations; add parameters
     initEClass(workspaceConfigurationEClass, WorkspaceConfiguration.class, "WorkspaceConfiguration", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWorkspaceConfiguration_PropertyFilters(), getPropertyFilter(), getPropertyFilter_Configuration(),
-        "propertyFilters", null, 0, -1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWorkspaceConfiguration_Projects(), getProject(), getProject_Configuration(), "projects", null, 0,
         -1, WorkspaceConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -771,10 +649,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     EOperation op = initEOperation(getWorkspaceConfiguration__GetProject__String(), getProject(), "getProject", 0, 1,
         IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    op = initEOperation(getWorkspaceConfiguration__IsOmitted__Property(), ecorePackage.getEBoolean(), "isOmitted", 0,
-        1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, thePreferencesPackage.getProperty(), "property", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProject_Configuration(), getWorkspaceConfiguration(), getWorkspaceConfiguration_Projects(),
@@ -812,13 +686,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     initEReference(getPreferenceProfile_Predicates(), thePredicatesPackage.getPredicate(), null, "predicates", null, 0,
         -1, PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPreferenceProfile_Prerequisites(), getPreferenceProfile(), null, "prerequisites", null, 0, -1,
-        PreferenceProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    op = initEOperation(getPreferenceProfile__Requires__PreferenceProfile(), ecorePackage.getEBoolean(), "requires", 0,
-        1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, getPreferenceProfile(), "preferenceProfile", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     op = initEOperation(getPreferenceProfile__Matches__IProject(), ecorePackage.getEBoolean(), "matches", 0, 1,
         IS_UNIQUE, IS_ORDERED);
@@ -852,25 +719,6 @@ public class ProjectConfigPackageImpl extends EPackageImpl implements ProjectCon
     op = initEOperation(getPreferenceFilter__GetProperty__String(), thePreferencesPackage.getProperty(), "getProperty",
         0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    initEClass(propertyFilterEClass, PropertyFilter.class, "PropertyFilter", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPropertyFilter_Omissions(), getPattern(), "omissions", null, 1, 1, PropertyFilter.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertyFilter_Predicates(), thePredicatesPackage.getPredicate(), null, "predicates", null, 0,
-        -1, PropertyFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertyFilter_Properties(), thePreferencesPackage.getProperty(), null, "properties", null, 0,
-        -1, PropertyFilter.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertyFilter_Configuration(), getWorkspaceConfiguration(),
-        getWorkspaceConfiguration_PropertyFilters(), "configuration", null, 1, 1, PropertyFilter.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-
-    op = initEOperation(getPropertyFilter__Matches__String(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE,
-        IS_ORDERED);
-    addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(inclusionPredicateEClass, InclusionPredicate.class, "InclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.releng.projectconfig.PreferenceFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
-import org.eclipse.emf.cdo.releng.projectconfig.PropertyFilter;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 import org.eclipse.emf.cdo.releng.projectconfig.impl.ProjectConfigPlugin;
 
@@ -131,8 +130,6 @@ public class ProjectConfigValidator extends EObjectValidator
       return validatePreferenceProfile((PreferenceProfile)value, diagnostics, context);
     case ProjectConfigPackage.PREFERENCE_FILTER:
       return validatePreferenceFilter((PreferenceFilter)value, diagnostics, context);
-    case ProjectConfigPackage.PROPERTY_FILTER:
-      return validatePropertyFilter((PropertyFilter)value, diagnostics, context);
     case ProjectConfigPackage.INCLUSION_PREDICATE:
       return validateInclusionPredicate((InclusionPredicate)value, diagnostics, context);
     case ProjectConfigPackage.EXCLUSION_PREDICATE:
@@ -310,21 +307,7 @@ public class ProjectConfigValidator extends EObjectValidator
       if (!properties.isEmpty())
       {
         Set<Property> propertySet = new LinkedHashSet<Property>(properties);
-        for (Property property : properties)
-        {
-          for (PropertyFilter propertyFilter : workspaceConfiguration.getPropertyFilters())
-          {
-            if (propertyFilter.matches(PreferencesFactory.eINSTANCE.convertURI(property.getAbsolutePath())))
-            {
-              propertySet.remove(property);
-            }
-          }
-        }
-
-        if (!propertySet.isEmpty())
-        {
-          result.put(child, propertySet);
-        }
+        result.put(child, propertySet);
       }
 
       collectPreferenceNodes(workspaceConfiguration, result, child.getChildren());
@@ -620,23 +603,20 @@ public class ProjectConfigValidator extends EObjectValidator
     Map<Property, Property> propertyMap = null;
     for (Property property : preferenceNode.getProperties())
     {
-      if (!workspaceConfiguration.isOmitted(property))
+      String value = property.getValue();
+      Property managingProperty = project.getProperty(property.getRelativePath());
+      if (managingProperty != null && managingProperty != property)
       {
-        String value = property.getValue();
-        Property managingProperty = project.getProperty(property.getRelativePath());
-        if (managingProperty != null && managingProperty != property)
+        String managingValue = managingProperty.getValue();
+        if (value == null ? managingValue != null : !value.equals(managingValue))
         {
-          String managingValue = managingProperty.getValue();
-          if (value == null ? managingValue != null : !value.equals(managingValue))
+          if (propertyMap == null)
           {
-            if (propertyMap == null)
-            {
-              propertyMap = new LinkedHashMap<Property, Property>();
-              result.put(preferenceNode, propertyMap);
-            }
-
-            propertyMap.put(property, managingProperty);
+            propertyMap = new LinkedHashMap<Property, Property>();
+            result.put(preferenceNode, propertyMap);
           }
+
+          propertyMap.put(property, managingProperty);
         }
       }
     }
@@ -651,7 +631,7 @@ public class ProjectConfigValidator extends EObjectValidator
    * Validates the AllPropertiesHaveManagedValue constraint of '<em>Project</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public boolean validateProject_AllPropertiesHaveManagedValue(Project project, DiagnosticChain diagnostics,
       Map<Object, Object> context)
@@ -716,17 +696,6 @@ public class ProjectConfigValidator extends EObjectValidator
       Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(preferenceFilter, diagnostics, context);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public boolean validatePropertyFilter(PropertyFilter propertyFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
-  {
-    return validate_EveryDefaultConstraint(propertyFilter, diagnostics, context);
   }
 
   /**

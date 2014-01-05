@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.cdo.dawn.sdk"
       label="%featureName"
-      version="2.1.100.qualifier"
+      version="2.1.200.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -59,12 +59,6 @@
          id="org.eclipse.emf.cdo.dawn.ecore.editor.dawn"
          version="0.0.0"/>
 
-  <!--
-   <includes
-         id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
-         version="0.0.0"/>
-  -->
-
    <plugin
          id="org.eclipse.emf.cdo.dawn.sdk"
          download-size="0"
@@ -77,6 +71,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/> <!-- Used to be true -->
+         unpack="false"/>
 
 </feature>

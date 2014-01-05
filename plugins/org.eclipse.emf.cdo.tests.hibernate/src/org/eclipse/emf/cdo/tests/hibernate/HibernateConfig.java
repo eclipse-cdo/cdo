@@ -60,8 +60,8 @@ public class HibernateConfig extends RepositoryConfig
     {
       final Properties teneoProperties = new Properties();
       Map<String, String> additionalProperties = getAdditionalProperties();
-      teneoProperties.putAll(additionalProperties);
       teneoProperties.load(getClass().getResourceAsStream("/app.properties"));
+      teneoProperties.putAll(additionalProperties);
       for (Object key : teneoProperties.keySet())
       {
         props.put((String)key, teneoProperties.getProperty((String)key));

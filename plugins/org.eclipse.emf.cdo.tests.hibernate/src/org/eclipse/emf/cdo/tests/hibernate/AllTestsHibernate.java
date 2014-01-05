@@ -86,7 +86,7 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(TransactionTest.class);
+    // testClasses.add(HibernateBugzilla_417797_Test.class);
     // if (true)
     // {
     // return;
@@ -104,6 +104,7 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(Hibernate_Failure_Test.class);
     testClasses.add(Hibernate_Export_Test.class);
     testClasses.add(HibernateBugzilla_381013_Test.class);
+    testClasses.add(HibernateBugzilla_417797_Test.class);
 
     testClasses.add(HibernateBugzilla_392653_Test.class);
     testClasses.add(HibernateBugzilla_387752_Test.class);

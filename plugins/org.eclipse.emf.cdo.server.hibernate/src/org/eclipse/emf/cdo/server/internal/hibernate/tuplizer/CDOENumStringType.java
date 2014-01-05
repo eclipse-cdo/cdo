@@ -63,6 +63,10 @@ public class CDOENumStringType implements UserType, ParameterizedType
    */
   public Object assemble(Serializable cached, Object owner) throws HibernateException
   {
+    if (cached instanceof String)
+    {
+      return getEEnum().getEEnumLiteralByLiteral((String)cached);
+    }
     return cached;
   }
 
@@ -81,6 +85,11 @@ public class CDOENumStringType implements UserType, ParameterizedType
    */
   public Serializable disassemble(Object value) throws HibernateException
   {
+    if (value instanceof EEnumLiteral)
+    {
+      return ((EEnumLiteral)value).getLiteral();
+    }
+
     return (Serializable)value;
   }
 

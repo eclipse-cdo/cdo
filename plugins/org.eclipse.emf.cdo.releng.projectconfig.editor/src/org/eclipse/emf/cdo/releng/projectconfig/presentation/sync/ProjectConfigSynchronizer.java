@@ -358,15 +358,6 @@ public final class ProjectConfigSynchronizer implements IStartup
   public ProjectConfigSynchronizer()
   {
     ProjectConfigEditorPlugin.Implementation.setProjectConfigSynchronizer(this);
-    new ProjectConfigUtil.CompletenessChecker()
-    {
-      @Override
-      protected void complete(WorkspaceConfiguration workspaceConfiguration)
-      {
-        ProjectConfigSynchronizer.this.workspaceConfiguration = workspaceConfiguration;
-        workspaceConfiguration.updatePreferenceProfileReferences();
-      }
-    };
   }
 
   public void earlyStartup()
@@ -383,6 +374,16 @@ public final class ProjectConfigSynchronizer implements IStartup
   {
     if (ProjectConfigSynchronizerPreferences.isConfigurationManagementAutomatic())
     {
+      new ProjectConfigUtil.CompletenessChecker()
+      {
+        @Override
+        protected void complete(WorkspaceConfiguration workspaceConfiguration)
+        {
+          ProjectConfigSynchronizer.this.workspaceConfiguration = workspaceConfiguration;
+          workspaceConfiguration.updatePreferenceProfileReferences();
+        }
+      };
+
       WORKSPACE.addResourceChangeListener(resourceChangeListener);
     }
     else

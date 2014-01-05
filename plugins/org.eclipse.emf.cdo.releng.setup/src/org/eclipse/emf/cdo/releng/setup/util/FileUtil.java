@@ -62,7 +62,7 @@ public final class FileUtil
       {
         try
         {
-          delete(file, monitor);
+          delete(file, monitor, false);
           return Status.OK_STATUS;
         }
         catch (Exception ex)
@@ -76,13 +76,22 @@ public final class FileUtil
 
   public static void delete(File file, IProgressMonitor monitor) throws IOException, InterruptedException
   {
+    delete(file, monitor, true);
+  }
+
+  private static void delete(File file, IProgressMonitor monitor, boolean verbose) throws IOException,
+  InterruptedException
+  {
     List<File> files = listAllFiles(file);
     if (files.isEmpty())
     {
       return;
     }
 
-    monitor.beginTask("Deleting files in " + file.getAbsolutePath(), files.size());
+    if (verbose)
+    {
+      monitor.beginTask("Deleting files in " + file.getAbsolutePath(), files.size());
+    }
 
     try
     {
@@ -90,7 +99,11 @@ public final class FileUtil
       for (File child : files)
       {
         String childPath = child.getAbsolutePath();
-        monitor.setTaskName("Deleting file " + childPath);
+
+        if (verbose)
+        {
+          monitor.setTaskName("Deleting file " + childPath);
+        }
 
         doDelete(child);
 

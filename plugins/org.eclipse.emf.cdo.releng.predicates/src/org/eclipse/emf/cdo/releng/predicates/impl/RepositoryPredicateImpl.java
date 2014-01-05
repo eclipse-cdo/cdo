@@ -27,6 +27,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.team.core.RepositoryProvider;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * <!-- begin-user-doc -->
@@ -110,19 +111,68 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
     }
   }
 
-  private IPath getGitDirAbsolutePath(IProject project)
+  private String getGitDirAbsolutePath(IProject project)
   {
     if (project != null)
     {
       RepositoryProvider provider = RepositoryProvider.getProvider(project);
-      if (provider instanceof GitProvider)
+      if (provider != null)
       {
-        GitProvider gitProvider = (GitProvider)provider;
-        GitProjectData data = gitProvider.getData();
-        RepositoryMapping repositoryMapping = data.getRepositoryMapping(project);
-        return repositoryMapping.getGitDirAbsolutePath();
+        try
+        {
+          if (provider instanceof GitProvider)
+          {
+            GitProvider gitProvider = (GitProvider)provider;
+            GitProjectData data = gitProvider.getData();
+            RepositoryMapping repositoryMapping = data.getRepositoryMapping(project);
+            IPath gitDirAbsolutePath = repositoryMapping.getGitDirAbsolutePath();
+            return gitDirAbsolutePath == null ? null : gitDirAbsolutePath.toString();
+          }
+        }
+        catch (Throwable throwable)
+        {
+          // Ignore
+        }
+
+        try
+        {
+          // http://fossies.org/linux/privat/subclipse-1.6.18.tar.gz:a/subclipse-1.6.18/org.tigris.subversion.subclipse.core/src/org/tigris/subversion/subclipse/core/SVNTeamProvider.java
+          Class<? extends RepositoryProvider> providerClass = provider.getClass();
+          Method getSVNWorkspaceRootMethod = providerClass.getMethod("getSVNWorkspaceRoot");
+          Object svnWorkspaceRoot = getSVNWorkspaceRootMethod.invoke(provider);
+          Class<? extends Object> workspaceRootClass = svnWorkspaceRoot.getClass();
+          Method getRepositoryMethod = workspaceRootClass.getMethod("getRepository");
+          Object repositoryLocation = getRepositoryMethod.invoke(svnWorkspaceRoot);
+          Class<? extends Object> repositoryLocationClass = repositoryLocation.getClass();
+          Method getLocationMethod = repositoryLocationClass.getMethod("getLocation");
+          Object location = getLocationMethod.invoke(repositoryLocation);
+          return location == null ? null : location.toString();
+        }
+        catch (Throwable throwable)
+        {
+          // Ignore
+        }
+
+        try
+        {
+          // http://dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.core/src/org/eclipse/team/svn/core/SVNTeamProvider.java
+          Class<? extends RepositoryProvider> providerClass = provider.getClass();
+          Method getRepositoryLocationMethod = providerClass.getMethod("getRepositoryLocation");
+          Object repositoryLocation = getRepositoryLocationMethod.invoke(provider);
+          Class<? extends Object> repositoryLocationClass = repositoryLocation.getClass();
+          Method getRepositoryRootUrlMethod = repositoryLocationClass.getMethod("getRepositoryRootUrl");
+          Object respositoryRootURL = getRepositoryRootUrlMethod.invoke(repositoryLocation);
+          return respositoryRootURL == null ? null : respositoryRootURL.toString();
+        }
+        catch (Throwable throwable)
+        {
+          // Ignore
+        }
+
+        return "Unknown repo";
       }
     }
+
     return null;
   }
 
@@ -133,8 +183,8 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
    */
   public boolean matches(IProject project)
   {
-    IPath prototypeGitDirAbsolutePath = getGitDirAbsolutePath(getProject());
-    IPath gitDirAbsolutePath = getGitDirAbsolutePath(project);
+    String prototypeGitDirAbsolutePath = getGitDirAbsolutePath(getProject());
+    String gitDirAbsolutePath = getGitDirAbsolutePath(project);
     return prototypeGitDirAbsolutePath == null ? gitDirAbsolutePath == null : prototypeGitDirAbsolutePath
         .equals(gitDirAbsolutePath);
   }

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -27,6 +28,7 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -53,14 +55,18 @@ public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
       if (result != null && result.length != 0)
       {
         ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
+        resourceSet.getURIConverter().getURIMap().putAll(computePlatformURIMap());
+
         List<EPackage> ePackages = new ArrayList<EPackage>(result.length);
         for (Object object : result)
         {
           if (object instanceof IFile)
           {
             IFile file = (IFile)object;
+
             URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             Resource resource = resourceSet.getResource(uri, true);
+
             EPackage ePackage = (EPackage)resource.getContents().get(0);
             ePackages.add(ePackage);
           }
@@ -71,5 +77,18 @@ public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
     }
 
     return null;
+  }
+
+  @SuppressWarnings("deprecation")
+  private static Map<URI, URI> computePlatformURIMap()
+  {
+    try
+    {
+      return EcorePlugin.computePlatformURIMap(true);
+    }
+    catch (Throwable ex)
+    {
+      return EcorePlugin.computePlatformURIMap();
+    }
   }
 }

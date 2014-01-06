@@ -18,6 +18,9 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * @author Szabolcs Bardy
  */
@@ -49,10 +52,12 @@ public class Bugzilla_347964_Test extends AbstractCDOTest
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 300));
 
     CDOTransaction newTransaction = session.openTransaction();
-    newTransaction.getResource(getResourcePath(RESOURCE_NAME)).getContents().remove(0);
+    CDOResource resource2 = newTransaction.getResource(getResourcePath(RESOURCE_NAME));
+    EList<EObject> contents = resource2.getContents();
+    contents.remove(0);
     newTransaction.commit();
 
-    int contentsSize = newTransaction.getResource(getResourcePath(RESOURCE_NAME)).getContents().size();
+    int contentsSize = contents.size();
     assertEquals(0, contentsSize);
   }
 }

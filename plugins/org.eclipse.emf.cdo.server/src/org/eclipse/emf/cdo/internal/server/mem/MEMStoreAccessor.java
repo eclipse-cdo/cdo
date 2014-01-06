@@ -355,7 +355,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
     InternalCDORevision newRevision = revision.copy();
     newRevision.adjustForCommit(branch, created);
 
-    revisionDelta.apply(newRevision);
+    revisionDelta.applyTo(newRevision);
     writeRevision(newRevision);
   }
 

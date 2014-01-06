@@ -182,9 +182,12 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       @Override
       protected void onDeactivated(ILifecycle session)
       {
-        synchronized (sessions)
+        if (sessions != null)
         {
-          sessions.remove(session);
+          synchronized (sessions)
+          {
+            sessions.remove(session);
+          }
         }
       }
     };

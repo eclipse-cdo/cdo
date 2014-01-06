@@ -225,11 +225,30 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public interface Options extends CDOView.Options
   {
     /**
+     * @since 4.3
+     */
+    public static final CDOUndoDetector DEFAULT_UNDO_DETECTOR = CDOUndoDetector.ALL_FEATURES;
+
+    /**
      * Returns the {@link CDOTransaction transaction} of this options object.
      *
      * @since 4.0
      */
     public CDOTransaction getContainer();
+
+    /**
+     * Returns the undo detector of this transaction.
+     *
+     * @since 4.3
+     */
+    public CDOUndoDetector getUndoDetector();
+
+    /**
+     * Sets the undo detector of this transaction.
+     *
+     * @since 4.3
+     */
+    public void setUndoDetector(CDOUndoDetector undoDetector);
 
     /**
      * Returns a copy of the conflict resolver list of this transaction.
@@ -268,6 +287,19 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      * Default value is true.
      */
     public void setAutoReleaseLocksEnabled(boolean on);
+
+    /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#setUndoDetector(CDOUndoDetector) undo detector} option has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.3
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface UndoDetectorEvent extends IOptionsEvent
+    {
+    }
 
     /**
      * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the

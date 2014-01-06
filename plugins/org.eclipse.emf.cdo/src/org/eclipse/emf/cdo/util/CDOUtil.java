@@ -54,6 +54,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAInternalAdapter;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.view.CDOStoreImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -427,8 +428,7 @@ public final class CDOUtil
 
       try
       {
-        EStore eStore = cdoObject.eStore();
-        eStore.remove(cdoObject, eFeature, index);
+        CDOStoreImpl.removeElement(cdoObject, eFeature, index);
       }
       catch (ObjectNotFoundException ex)
       {

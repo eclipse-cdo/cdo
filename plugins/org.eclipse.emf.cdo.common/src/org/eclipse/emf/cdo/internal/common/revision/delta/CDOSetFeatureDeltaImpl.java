@@ -59,9 +59,14 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     return new CDOSetFeatureDeltaImpl(getFeature(), getIndex(), getValue(), getOldValue());
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).set(getFeature(), getIndex(), getValue());
+    EStructuralFeature feature = getFeature();
+    int index = getIndex();
+    Object value = getValue();
+
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    return internalRevision.set(feature, index, value);
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

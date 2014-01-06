@@ -141,13 +141,12 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       CDOResource resource = transaction.getResource(getResourcePath("/test1"));
       List<Company> listOfCompanies = new ArrayList<Company>();
 
-      int loop = 10;
+      int loop = 5;
       while (exception.get() == null && --loop != 0)
       {
-        // System.out.println(loop);
         synchronized (transaction)
         {
-          for (int i = 0; i < 100; i++)
+          for (int i = 0; i < 20; i++)
           {
             Company company = createCompanyWithCategories(resource);
             listOfCompanies.add(company);
@@ -180,7 +179,7 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       Company company = getModel1Factory().createCompany();
       EList<Category> categories = company.getCategories();
 
-      for (int i = 0; i < 10; i++)
+      for (int i = 0; i < 5; i++)
       {
         Category category = getModel1Factory().createCategory();
         categories.add(category);

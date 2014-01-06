@@ -80,11 +80,14 @@ public class Bugzilla_350987_Test extends AbstractCDOTest
         .getCleanRevisions();
     InternalCDORevision originRevision = cleanRevisions.get(cdoOrderDetail);
 
-    CDORevisionDelta delta = revision.compare(originRevision);
+    if (originRevision != null)
+    {
+      CDORevisionDelta delta = revision.compare(originRevision);
 
-    // Comparing with clean revision should not give changes
-    assertEquals(0, delta.size());
-    assertEquals(true, delta.isEmpty());
+      // Comparing with clean revision should not give changes
+      assertEquals(0, delta.size());
+      assertEquals(true, delta.isEmpty());
+    }
 
     Product1 product = products.get(0);
     resource.getContents().remove(1);
@@ -98,9 +101,9 @@ public class Bugzilla_350987_Test extends AbstractCDOTest
     // Element shouldn't be added
     assertEquals(previousSize, product.getOrderDetails().size());
     originRevision = cleanRevisions.get(cdoProduct);
-    delta = revision.compare(originRevision);
+    CDORevisionDelta delta2 = revision.compare(originRevision);
 
     // Comparing with clean revision should not give changes
-    assertEquals(true, delta.isEmpty());
+    assertEquals(true, delta2.isEmpty());
   }
 }

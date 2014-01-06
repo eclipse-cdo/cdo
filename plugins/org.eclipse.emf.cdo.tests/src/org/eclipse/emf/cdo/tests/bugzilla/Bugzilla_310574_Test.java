@@ -35,7 +35,7 @@ import java.util.Random;
  * CDOAddFeatureDelta with null value.
  * <p>
  * See bug 310574
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_310574_Test extends AbstractCDOTest
@@ -144,17 +144,20 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
     // Inspect the transaction.
     CDORevisionDelta delta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(company).cdoID());
-    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    if (delta != null)
     {
-      if (featureDelta instanceof CDOListFeatureDelta)
+      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
       {
-        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
-        for (CDOFeatureDelta featureDelta2 : listFeatureDelta.getListChanges())
+        if (featureDelta instanceof CDOListFeatureDelta)
         {
-          if (featureDelta2 instanceof CDOAddFeatureDelta)
+          CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+          for (CDOFeatureDelta featureDelta2 : listFeatureDelta.getListChanges())
           {
-            CDOAddFeatureDelta addFeatureDelta = (CDOAddFeatureDelta)featureDelta2;
-            assertNotSame(CDOID.NULL, addFeatureDelta.getValue());
+            if (featureDelta2 instanceof CDOAddFeatureDelta)
+            {
+              CDOAddFeatureDelta addFeatureDelta = (CDOAddFeatureDelta)featureDelta2;
+              assertNotSame(CDOID.NULL, addFeatureDelta.getValue());
+            }
           }
         }
       }
@@ -194,12 +197,15 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
     // Inspect the transaction.
     CDORevisionDelta delta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(company).cdoID());
-    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    if (delta != null)
     {
-      if (featureDelta instanceof CDOListFeatureDelta)
+      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
       {
-        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
-        assertEquals(0, listFeatureDelta.getListChanges().size());
+        if (featureDelta instanceof CDOListFeatureDelta)
+        {
+          CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+          assertEquals(0, listFeatureDelta.getListChanges().size());
+        }
       }
     }
 
@@ -241,12 +247,15 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
     // Inspect the transaction.
     CDORevisionDelta delta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(company).cdoID());
-    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    if (delta != null)
     {
-      if (featureDelta instanceof CDOListFeatureDelta)
+      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
       {
-        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
-        assertEquals(0, listFeatureDelta.getListChanges().size());
+        if (featureDelta instanceof CDOListFeatureDelta)
+        {
+          CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+          assertEquals(0, listFeatureDelta.getListChanges().size());
+        }
       }
     }
 

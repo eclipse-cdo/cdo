@@ -608,13 +608,10 @@ public class TransactionTest extends AbstractCDOTest
       transaction.commit();
 
       resource.getContents().remove(company);
-      // transaction.setSavepoint();
-
       resource.getContents().add(company);
       transaction.setSavepoint();
 
       company.setName("ESC");
-
       transaction.commit();
     }
 
@@ -623,5 +620,25 @@ public class TransactionTest extends AbstractCDOTest
     CDOResource resource2 = transaction2.getOrCreateResource(getResourcePath("/test1"));
     Company company2 = (Company)resource2.getContents().get(0);
     assertEquals("ESC", company2.getName());
+  }
+
+  public void testCommitRedundantChanges() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Eclipse");
+
+    resource.getContents().add(company);
+    transaction.commit();
+
+    company.setName("XYZ");
+    company.setName("Eclipse");
+    transaction.commit();
+
+    company.setName("ABC");
+    transaction.commit();
   }
 }

@@ -87,8 +87,8 @@ public class Bugzilla_419962_Test extends AbstractCDOTest
     transactionB = sessionB.openTransaction();
     transactionB.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    transactionA.options().addConflictResolver(createCdoConflictResolver());
-    transactionB.options().addConflictResolver(createCdoConflictResolver());
+    transactionA.options().addConflictResolver(createConflictResolver());
+    transactionB.options().addConflictResolver(createConflictResolver());
 
     companyA = (Company)transactionA.getOrCreateResource(getResourcePath("/res1")).getContents().get(0);
     companyB = (Company)transactionB.getOrCreateResource(getResourcePath("/res1")).getContents().get(0);
@@ -177,7 +177,7 @@ public class Bugzilla_419962_Test extends AbstractCDOTest
     assertEquals("Wrong state", state, object.cdoState());
   }
 
-  private CDOConflictResolver createCdoConflictResolver()
+  private CDOConflictResolver createConflictResolver()
   {
     return new CDOMergingConflictResolver(new DefaultCDOMerger.PerFeature.ManyValued());
   }

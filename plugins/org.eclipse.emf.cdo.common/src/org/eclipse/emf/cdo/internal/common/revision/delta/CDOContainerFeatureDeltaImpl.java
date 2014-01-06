@@ -83,11 +83,13 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     return newContainerFeatureID;
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).setResourceID(newResourceID);
-    ((InternalCDORevision)revision).setContainerID(newContainerID);
-    ((InternalCDORevision)revision).setContainingFeatureID(newContainerFeatureID);
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    internalRevision.setResourceID(newResourceID);
+    internalRevision.setContainerID(newContainerID);
+    internalRevision.setContainingFeatureID(newContainerFeatureID);
+    return null;
   }
 
   @Override

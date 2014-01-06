@@ -1291,8 +1291,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       throw new DanglingReferenceException(eObject);
     }
 
-    throw new IllegalStateException(MessageFormat.format(
-        Messages.getString("CDOViewImpl.16"), idOrObject.getClass().getName())); //$NON-NLS-1$
+    throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.16"), idOrObject)); //$NON-NLS-1$
   }
 
   public synchronized Object convertObjectToID(Object potentialObject)

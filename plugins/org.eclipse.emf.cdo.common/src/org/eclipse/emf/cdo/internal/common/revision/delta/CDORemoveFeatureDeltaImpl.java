@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
@@ -29,7 +30,7 @@ import java.io.IOException;
  * @author Simon McDuff
  */
 public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDORemoveFeatureDelta,
-    ListIndexAffecting
+ListIndexAffecting
 {
   public CDORemoveFeatureDeltaImpl(EStructuralFeature feature, int index)
   {
@@ -65,9 +66,14 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     return delta;
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).getList(getFeature()).remove(getIndex());
+    EStructuralFeature feature = getFeature();
+    int index = getIndex();
+
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    CDOList list = internalRevision.getList(feature);
+    return list.remove(index);
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

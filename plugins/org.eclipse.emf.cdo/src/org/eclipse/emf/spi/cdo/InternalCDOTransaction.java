@@ -48,6 +48,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public InternalCDOCommitContext createCommitContext();
 
   /**
+   * @since 4.3
+   */
+  public boolean hasMultipleSavepoints();
+
+  /**
    * @since 3.0
    */
   public InternalCDOSavepoint setSavepoint();
@@ -101,7 +106,18 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
   public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta);
 
+  /**
+   * @since 4.3
+   */
+  public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);
+
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta);
+
+  /**
+   * @since 4.3
+   */
+  public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta,
+      InternalCDORevision cleanRevision);
 
   public void registerRevisionDelta(CDORevisionDelta revisionDelta);
 

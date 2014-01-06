@@ -1712,7 +1712,10 @@ public class CDOViewImpl extends AbstractCDOView
       }
       catch (Exception ex)
       {
-        OM.LOG.error(ex);
+        if (isActive())
+        {
+          OM.LOG.error(ex);
+        }
       }
       finally
       {

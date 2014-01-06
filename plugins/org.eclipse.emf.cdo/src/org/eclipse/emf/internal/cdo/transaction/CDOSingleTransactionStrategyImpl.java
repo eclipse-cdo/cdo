@@ -23,11 +23,8 @@ import org.eclipse.emf.cdo.util.OptimisticLockingException;
 import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
 import org.eclipse.emf.cdo.util.ValidationException;
 
-import org.eclipse.emf.internal.cdo.bundle.OM;
-
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -48,29 +45,21 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 {
   public static final CDOSingleTransactionStrategyImpl INSTANCE = new CDOSingleTransactionStrategyImpl();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION,
-      CDOSingleTransactionStrategyImpl.class);
-
   public CDOSingleTransactionStrategyImpl()
   {
   }
 
   public CDOCommitInfo commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
   {
-    String comment = transaction.getCommitComment();
     InternalCDOCommitContext commitContext = transaction.createCommitContext();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("CDOCommitContext.preCommit"); //$NON-NLS-1$
-    }
+    CDOCommitData commitData = commitContext.getCommitData();
 
     commitContext.preCommit();
 
-    CDOCommitData commitData = commitContext.getCommitData();
     InternalCDOSession session = transaction.getSession();
+    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
 
     OMMonitor monitor = new EclipseMonitor(progressMonitor);
-    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     CommitTransactionResult result = sessionProtocol.commitTransaction(commitContext, monitor);
 
     commitContext.postCommit(result);
@@ -104,6 +93,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       }
     }
 
+    String comment = transaction.getCommitComment();
     transaction.setCommitComment(null);
 
     long previousTimeStamp = result.getPreviousTimeStamp();

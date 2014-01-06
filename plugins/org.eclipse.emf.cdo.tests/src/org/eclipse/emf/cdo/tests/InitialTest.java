@@ -53,36 +53,28 @@ public class InitialTest extends AbstractCDOTest
   {
     final Date date = new Date();
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
     assertTransient(supplier);
 
-    msg("Setting name");
     supplier.setName("Stepper");
     assertTransient(supplier);
 
-    msg("Verifying name");
     assertEquals("Stepper", supplier.getName());
     assertTransient(supplier);
 
-    msg("Creating purchaseOrder");
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
     assertTransient(purchaseOrder);
 
-    msg("Setting date");
     purchaseOrder.setDate(date);
     assertTransient(purchaseOrder);
 
-    msg("Verifying date");
     assertEquals(date, purchaseOrder.getDate());
     assertTransient(purchaseOrder);
 
-    msg("Setting supplier");
     purchaseOrder.setSupplier(supplier);
     assertTransient(supplier);
     assertTransient(purchaseOrder);
 
-    msg("Verifying supplier");
     assertEquals(supplier, purchaseOrder.getSupplier());
     assertTransient(supplier);
     assertTransient(purchaseOrder);
@@ -92,27 +84,22 @@ public class InitialTest extends AbstractCDOTest
   {
     final URI uri = URI.createURI("cdo:/test1");
 
-    msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
     SessionUtil.prepareResourceSet(resourceSet);
 
-    msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
     assertTransient(resource);
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
     assertTransient(supplier);
     assertEquals(null, supplier.eContainer());
 
-    msg("Verifying contents");
     EList<EObject> contents = resource.getContents();
     assertNotNull(contents);
     assertEquals(true, contents.isEmpty());
     assertEquals(0, contents.size());
     assertTransient(resource);
 
-    msg("Adding supplier");
     contents.add(supplier);
     assertTransient(resource);
     assertTransient(supplier);
@@ -126,7 +113,6 @@ public class InitialTest extends AbstractCDOTest
 
   public void testOpenSession() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
     assertNotNull(session);
     assertEquals(false, session.isClosed());
@@ -136,23 +122,22 @@ public class InitialTest extends AbstractCDOTest
 
   public void testStartTransaction() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
     assertNotNull(transaction);
     assertEquals(session, transaction.getSession());
   }
 
-  public void testAttachResource() throws Exception
+  public void testCreateResource() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
+
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
-    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
-        resource.getURI());
+
+    URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1"));
+    assertEquals(uri, resource.getURI());
 
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
@@ -180,25 +165,17 @@ public class InitialTest extends AbstractCDOTest
 
   public void testCommitNew() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
-
-    msg("Adding supplier");
     resource.getContents().add(supplier);
 
-    msg("Committing");
+    assertEquals("Stepper",
+        CDOUtil.getCDOObject(supplier).cdoRevision().data().get(getModel1Package().getAddress_Name(), 0));
+
     CDOCommitInfo commit = transaction.commit();
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
@@ -209,28 +186,16 @@ public class InitialTest extends AbstractCDOTest
 
   public void testReadResourceClean() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
-
-    msg("Adding supplier");
     resource.getContents().add(supplier);
 
-    msg("Committing");
     long commitTime = transaction.commit().getTimeStamp();
 
-    msg("Getting supplier");
     EList<EObject> contents = resource.getContents();
     Supplier s = (Supplier)contents.get(0);
     assertEquals(1, CDOUtil.getCDOObject(s).cdoRevision().getVersion());
@@ -240,62 +205,34 @@ public class InitialTest extends AbstractCDOTest
 
   public void testReadObjectClean() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
-
-    msg("Adding supplier");
     resource.getContents().add(supplier);
 
-    msg("Committing");
     transaction.commit();
 
-    msg("Getting supplier");
     Supplier s = (Supplier)resource.getContents().get(0);
     assertEquals(1, CDOUtil.getCDOObject(s).cdoRevision().getVersion());
-
-    msg("Verifying name");
     assertEquals("Stepper", s.getName());
   }
 
   public void testWriteClean() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
-
-    msg("Adding supplier");
     resource.getContents().add(supplier);
 
-    msg("Committing");
     transaction.commit();
 
-    msg("Getting supplier");
     Supplier s = (Supplier)resource.getContents().get(0);
-
-    msg("Setting name");
     s.setName("Eike");
     assertEquals("Eike", s.getName());
     assertEquals(CDOState.DIRTY, CDOUtil.getCDOObject(supplier).cdoState());
@@ -328,36 +265,23 @@ public class InitialTest extends AbstractCDOTest
 
   public void testGetResource() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
 
     {
       disableConsole();
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
-
-      msg("Setting name");
       supplier.setName("Stepper");
-
-      msg("Adding supplier");
       resource.getContents().add(supplier);
 
-      msg("Committing");
       transaction.commit();
       enableConsole();
     }
 
     {
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Getting resource");
       CDOResource resource = transaction.getResource(getResourcePath("/test1"), true);
       assertNotNull(resource);
       assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
@@ -370,10 +294,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     {
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Getting resource");
       CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
           CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
       assertNotNull(resource);
@@ -389,38 +310,24 @@ public class InitialTest extends AbstractCDOTest
 
   public void testGetContents() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
 
     {
       disableConsole();
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
-
-      msg("Setting name");
       supplier.setName("Stepper");
-
-      msg("Adding supplier");
       resource.getContents().add(supplier);
 
-      msg("Committing");
       transaction.commit();
       enableConsole();
     }
 
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Getting resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
     assertNotNull(contents);
 
@@ -430,45 +337,27 @@ public class InitialTest extends AbstractCDOTest
 
   public void testReadObjectProxy() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
 
     {
       disableConsole();
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
-
-      msg("Setting name");
       supplier.setName("Stepper");
-
-      msg("Adding supplier");
       resource.getContents().add(supplier);
 
-      msg("Committing");
       transaction.commit();
       enableConsole();
     }
 
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Getting resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
-
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
 
-    msg("Getting supplier");
     Supplier s = (Supplier)contents.get(0);
     assertNotNull(s);
-
-    msg("Verifying name");
     assertEquals("Stepper", s.getName());
   }
 
@@ -510,38 +399,19 @@ public class InitialTest extends AbstractCDOTest
   public void testLoadResource() throws Exception
   {
     {
-      // disableConsole();
-      msg("Opening session");
       CDOSession session = openSession();
-
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
-
-      msg("Setting name");
       supplier.setName("Stepper");
-
-      msg("Adding supplier");
       resource.getContents().add(supplier);
 
-      msg("Committing");
       transaction.commit();
-      // XXX session.close();
-      // enableConsole();
     }
 
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Getting resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     assertNotNull(resource);
 
@@ -557,48 +427,24 @@ public class InitialTest extends AbstractCDOTest
   public void testLoadObject() throws Exception
   {
     {
-      // disableConsole();
-      msg("Opening session");
       CDOSession session = openSession();
-
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
-
-      msg("Setting name");
       supplier.setName("Stepper");
-
-      msg("Adding supplier");
       resource.getContents().add(supplier);
 
-      msg("Committing");
       transaction.commit();
-      // XXX session.close();
-      enableConsole();
     }
 
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Getting resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
-
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
 
-    msg("Getting supplier");
     Supplier s = (Supplier)contents.get(0);
     assertNotNull(s);
-
-    msg("Verifying name");
     assertEquals("Stepper", s.getName());
   }
 
@@ -635,19 +481,17 @@ public class InitialTest extends AbstractCDOTest
     session.close();
 
     session = openSession();
-
-    msg("Opening transaction");
     transaction = session.openTransaction();
+
     orderAddress = (OrderAddress)CDOUtil.getEObject(transaction.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(),
         true));
-
     assertEquals(2.8f, orderAddress.getPrice());
     assertEquals("ALLO", orderAddress.getCity());
 
     orderAddress.setPrice(2.8f);
     transaction.commit();
-    session.close();
 
+    session.close();
     session = openSession();
 
     transaction = session.openTransaction();
@@ -658,56 +502,31 @@ public class InitialTest extends AbstractCDOTest
     assertEquals("ALLO", orderAddress.getCity());
 
     orderAddress.setPrice(2.8f);
-
-    session.close();
   }
 
   public void testNullReference() throws Exception
   {
     {
-      msg("Opening session");
       CDOSession session = openSession();
-
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating orderDetail");
       OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-
-      msg("Setting price");
       orderDetail.setPrice(4.75f);
-
-      msg("Adding orderDetail");
       resource.getContents().add(orderDetail);
 
-      msg("Committing");
       transaction.commit();
       session.close();
     }
 
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Getting resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
-
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
 
-    msg("Getting supplier");
     OrderDetail orderDetail = (OrderDetail)contents.get(0);
     assertNotNull(orderDetail);
-
-    msg("Verifying price");
     assertEquals(4.75f, orderDetail.getPrice());
-
-    msg("Verifying product");
     assertEquals(null, orderDetail.getProduct());
   }
 

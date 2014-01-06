@@ -31,6 +31,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOUndoDetector;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -128,7 +130,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CLEAN, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.CLEAN, CDOEvent.REATTACH, FAIL);
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
-    init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
+    init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition(false));
     init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
     init(CDOState.CLEAN, CDOEvent.DETACH_REMOTE, DetachRemoteTransition.INSTANCE);
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
@@ -149,8 +151,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.ATTACH, FAIL);
     init(CDOState.PROXY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.PROXY, CDOEvent.REATTACH, FAIL);
-    init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
-    init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
+    init(CDOState.PROXY, CDOEvent.READ, new LoadTransition());
+    init(CDOState.PROXY, CDOEvent.WRITE, new WriteTransition(true));
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.PROXY, CDOEvent.DETACH_REMOTE, DetachRemoteTransition.INSTANCE);
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
@@ -191,10 +193,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
-   * The object is already attached in EMF world. It contains all the information needed to know where it will be
-   * connected.
-   *
-   * @since 2.0
+   * The object is already attached in EMF world. It contains all the information needed to know where it will be connected.
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
@@ -263,9 +262,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.REATTACH, transaction);
   }
 
-  /**
-   * @since 2.0
-   */
   public void detach(InternalCDOObject object)
   {
     synchronized (getMonitor(object))
@@ -302,9 +298,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public InternalCDORevision read(InternalCDOObject object)
   {
     synchronized (getMonitor(object))
@@ -315,14 +308,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       process(object, CDOEvent.READ, null);
-
       return object.cdoRevision();
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public InternalCDORevision readNoLoad(InternalCDOObject object)
   {
     synchronized (getMonitor(object))
@@ -343,38 +332,28 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  /**
-   * @since 2.0
-   */
-  public void write(InternalCDOObject object)
-  {
-    write(object, null);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void write(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  public Object write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     synchronized (getMonitor(object))
     {
-      writeWithoutViewLock(object, featureDelta);
+      return writeWithoutViewLock(object, featureDelta);
     }
   }
 
-  private void writeWithoutViewLock(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  private Object writeWithoutViewLock(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
     {
       trace(object, CDOEvent.WRITE);
     }
 
-    process(object, CDOEvent.WRITE, featureDelta);
+    // TODO: Make FeatureDeltaAndResult constant
+    FeatureDeltaAndResult featureDeltaAndResult = new FeatureDeltaAndResult(featureDelta);
+
+    process(object, CDOEvent.WRITE, featureDeltaAndResult);
+    return featureDeltaAndResult.getResult();
   }
 
-  /**
-   * @since 2.0
-   */
   public void reload(InternalCDOObject... objects)
   {
     if (objects == null || objects.length == 0)
@@ -397,9 +376,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  /**
-   * @since 3.0
-   */
   public void invalidate(InternalCDOObject object, CDORevisionKey key)
   {
     synchronized (getMonitor(object))
@@ -413,9 +389,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public void detachRemote(InternalCDOObject object)
   {
     synchronized (getMonitor(object))
@@ -429,9 +402,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
     synchronized (getMonitor(object))
@@ -445,9 +415,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public void rollback(InternalCDOObject object)
   {
     synchronized (getMonitor(object))
@@ -519,7 +486,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionDelta delta = savepoint.getRevisionDeltas2().get(id);
       if (delta != null)
       {
-        delta.apply(cleanRevision);
+        delta.applyTo(cleanRevision);
       }
 
       savepoint = savepoint.getNextSavepoint();
@@ -579,6 +546,60 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           TRACER.trace(ex);
         }
       }
+    }
+  }
+
+  private void internalLoad(InternalCDOObject object, boolean forWrite)
+  {
+    object.cdoInternalPreLoad();
+
+    InternalCDOView view = object.cdoView();
+    InternalCDORevision revision = view.getRevision(object.cdoID(), true);
+    if (revision == null)
+    {
+      INSTANCE.detachRemote(object);
+      CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
+      policy.handleInvalidObject(object);
+    }
+
+    if (forWrite && !revision.isWritable())
+    {
+      throw new NoPermissionException(revision);
+    }
+
+    object.cdoInternalSetRevision(revision);
+    changeState(object, CDOState.CLEAN);
+    object.cdoInternalPostLoad();
+    dispatchLoadNotification(object);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class FeatureDeltaAndResult
+  {
+    private final CDOFeatureDelta featureDelta;
+
+    private Object result;
+
+    public FeatureDeltaAndResult(CDOFeatureDelta featureDelta)
+    {
+      this.featureDelta = featureDelta;
+    }
+
+    public CDOFeatureDelta getFeatureDelta()
+    {
+      return featureDelta;
+    }
+
+    public Object getResult()
+    {
+      return result;
+    }
+
+    public void setResult(Object result)
+    {
+      this.result = result;
     }
   }
 
@@ -719,11 +740,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       internalReattach(object, transaction);
 
       // Bug 385268
-      InternalEObject reattachedObject = object.cdoInternalInstance();
+      CDOID reattachedObject = object.cdoID();
       processRevisionDeltas(reattachedObject, transaction);
     }
 
-    private void processRevisionDeltas(InternalEObject reattachedObject, InternalCDOTransaction transaction)
+    private void processRevisionDeltas(CDOID reattachedObject, InternalCDOTransaction transaction)
     {
       InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
       Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
@@ -741,7 +762,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
           CDOID id = revisionDelta.getID();
           InternalCDOObject cleanObject = (InternalCDOObject)lastSavepoint.getDirtyObjects().remove(id);
-          cleanObject.cdoInternalSetState(CDOState.CLEAN);
+          if (cleanObject != null)
+          {
+            cleanObject.cdoInternalSetState(CDOState.CLEAN);
+          }
         }
       }
 
@@ -751,7 +775,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
 
-    private void processFeatureDeltas(InternalEObject reattachedObject, Map<EStructuralFeature, CDOFeatureDelta> map)
+    private void processFeatureDeltas(CDOID reattachedObject, Map<EStructuralFeature, CDOFeatureDelta> map)
     {
       for (Iterator<Entry<EStructuralFeature, CDOFeatureDelta>> it = map.entrySet().iterator(); it.hasNext();)
       {
@@ -761,22 +785,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
 
-    private void processFeatureDelta(InternalEObject reattachedObject, Iterator<?> it, CDOFeatureDelta featureDelta)
+    private void processFeatureDelta(CDOID reattachedObject, Iterator<?> it, CDOFeatureDelta featureDelta)
     {
       switch (featureDelta.getType())
       {
       case SET:
         CDOSetFeatureDelta setFeatureDelta = (CDOSetFeatureDelta)featureDelta;
         Object oldValue = setFeatureDelta.getOldValue();
-        if (oldValue instanceof InternalCDOObject)
+        if (oldValue instanceof EObject)
         {
-          oldValue = ((InternalCDOObject)oldValue).cdoInternalInstance();
+          oldValue = CDOUtil.getCDOObject((EObject)oldValue).cdoID();
         }
 
         Object newValue = setFeatureDelta.getValue();
-        if (newValue instanceof InternalCDOObject)
+        if (newValue instanceof EObject)
         {
-          newValue = ((InternalCDOObject)newValue).cdoInternalInstance();
+          newValue = CDOUtil.getCDOObject((EObject)newValue).cdoID();
         }
 
         if (reattachedObject == oldValue && reattachedObject == newValue)
@@ -898,61 +922,157 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class WriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private static abstract class AbstractWriteTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, FeatureDeltaAndResult>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
+        FeatureDeltaAndResult featureDeltaAndResult)
     {
-      InternalCDORevision cleanRevision = object.cdoRevision();
-      if (!cleanRevision.isWritable())
+      InternalCDORevision revision = object.cdoRevision();
+      if (!revision.isWritable())
       {
-        throw new NoPermissionException(cleanRevision);
+        throw new NoPermissionException(revision);
       }
 
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
-      transaction.getCleanRevisions().put(object, cleanRevision);
+      CDOFeatureDelta featureDelta = featureDeltaAndResult.getFeatureDelta();
+      Object result = execute(object, transaction, featureDelta, revision);
+      featureDeltaAndResult.setResult(result);
+    }
 
-      // Copy revision
-      InternalCDORevision revision = object.cdoRevision().copy();
+    protected abstract Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
+        CDOFeatureDelta featureDelta, InternalCDORevision revision);
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private final class WriteNewTransition extends AbstractWriteTransition
+  {
+    @Override
+    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
+        CDOFeatureDelta featureDelta, InternalCDORevision revision)
+    {
+      Object result = null;
+      if (featureDelta != null)
+      {
+        result = featureDelta.applyTo(revision);
+      }
+
+      transaction.registerFeatureDelta(object, featureDelta);
+      return result;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class WriteTransition extends AbstractWriteTransition
+  {
+    private boolean load;
+
+    public WriteTransition(boolean load)
+    {
+      this.load = load;
+    }
+
+    @Override
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
+        FeatureDeltaAndResult featureDeltaAndResult)
+    {
+      if (load)
+      {
+        internalLoad(object, true);
+      }
+
+      super.execute(object, state, event, featureDeltaAndResult);
+    }
+
+    @Override
+    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
+        CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision)
+    {
+      InternalCDORevision revision = cleanRevision.copy();
+
+      Object result = null;
+      if (featureDelta != null)
+      {
+        result = featureDelta.applyTo(revision);
+
+        if (!transaction.hasMultipleSavepoints())
+        {
+          CDOUndoDetector undoDetector = transaction.options().getUndoDetector();
+          if (undoDetector.detectUndo(transaction, cleanRevision, revision, featureDelta))
+          {
+            return null;
+          }
+        }
+      }
+
+      transaction.getCleanRevisions().put(object, cleanRevision);
       object.cdoInternalSetRevision(revision);
 
-      transaction.registerDirty(object, (CDOFeatureDelta)featureDelta);
+      transaction.registerDirty(object, featureDelta, cleanRevision);
       changeState(object, CDOState.DIRTY);
+      return result;
     }
   }
 
   /**
    * @author Simon McDuff
    */
-  private static final class WriteNewTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class RewriteTransition extends AbstractWriteTransition
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
+    @Override
+    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
+        CDOFeatureDelta featureDelta, InternalCDORevision revision)
     {
-      InternalCDORevision revision = object.cdoRevision();
-      if (!revision.isWritable())
+      Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
+      InternalCDORevision cleanRevision = cleanRevisions.get(object);
+
+      Object result = null;
+      if (featureDelta != null)
       {
-        throw new NoPermissionException(revision);
+        result = featureDelta.applyTo(revision);
+
+        if (!transaction.hasMultipleSavepoints())
+        {
+          CDOUndoDetector undoDetector = transaction.options().getUndoDetector();
+          if (undoDetector.detectUndo(transaction, cleanRevision, revision, featureDelta))
+          {
+            CDOID id = revision.getID();
+
+            InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
+            Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
+            InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
+            if (revisionDelta != null)
+            {
+              Map<EStructuralFeature, CDOFeatureDelta> featureDeltas = revisionDelta.getFeatureDeltaMap();
+              featureDeltas.remove(featureDelta.getFeature());
+
+              if (featureDeltas.isEmpty())
+              {
+                cleanRevisions.remove(object);
+                revisionDeltas.remove(id);
+                lastSavepoint.getDirtyObjects().remove(id);
+
+                object.cdoInternalSetRevision(cleanRevision);
+                changeState(object, CDOState.CLEAN);
+              }
+            }
+
+            if (revisionDeltas.isEmpty())
+            {
+              transaction.setDirty(false);
+            }
+
+            return result;
+          }
+        }
       }
 
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
-      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
-    }
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  private static final class RewriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
-  {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
-    {
-      InternalCDORevision revision = object.cdoRevision();
-      if (!revision.isWritable())
-      {
-        throw new NoPermissionException(revision);
-      }
-
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
-      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
+      transaction.registerFeatureDelta(object, featureDelta, cleanRevision);
+      return result;
     }
   }
 
@@ -995,7 +1115,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         {
           newRevision = oldRevision.copy();
           view.getSession().resolveAllElementProxies(newRevision);
-          delta.apply(newRevision);
+          delta.applyTo(newRevision);
           newRevision.setBranchPoint(target);
           cache.addRevision(newRevision);
         }
@@ -1020,9 +1140,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           newRevision = (InternalCDORevision)cache.getRevisionByVersion(newKey.getID(), newKey);
         }
 
-        object.cdoInternalSetRevision(newRevision);
         if (newRevision != null)
         {
+          object.cdoInternalSetRevision(newRevision);
           changeState(object, CDOState.CLEAN);
           object.cdoInternalPostLoad();
         }
@@ -1056,7 +1176,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   /**
    * @author Eike Stepper
-   * @since 2.0
    */
   private class ConflictTransition extends InvalidateTransition
   {
@@ -1093,40 +1212,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class LoadTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    private boolean forWrite;
-
-    public LoadTransition(boolean forWrite)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object UNUSED)
     {
-      this.forWrite = forWrite;
-    }
-
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object delta)
-    {
-      object.cdoInternalPreLoad();
-
-      InternalCDOView view = object.cdoView();
-      InternalCDORevision revision = view.getRevision(object.cdoID(), true);
-      if (revision == null)
-      {
-        INSTANCE.detachRemote(object);
-        CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
-        policy.handleInvalidObject(object);
-      }
-
-      if (forWrite && !revision.isWritable())
-      {
-        throw new NoPermissionException(revision);
-      }
-
-      object.cdoInternalSetRevision(revision);
-      changeState(object, CDOState.CLEAN);
-      object.cdoInternalPostLoad();
-      dispatchLoadNotification(object);
-
-      if (forWrite)
-      {
-        INSTANCE.writeWithoutViewLock(object, (CDOFeatureDelta)delta);
-      }
+      internalLoad(object, false);
     }
   }
 

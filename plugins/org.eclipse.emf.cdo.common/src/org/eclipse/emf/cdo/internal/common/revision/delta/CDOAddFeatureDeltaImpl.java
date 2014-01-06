@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
@@ -45,9 +46,16 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     return Type.ADD;
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).getList(getFeature()).add(getIndex(), getValue());
+    EStructuralFeature feature = getFeature();
+    int index = getIndex();
+    Object value = getValue();
+
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    CDOList list = internalRevision.getList(feature);
+    list.add(index, value);
+    return null;
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

@@ -410,7 +410,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     if (cdoObject != null)
     {
-      CDOStateMachine.INSTANCE.write((InternalCDOObject)cdoObject);
+      CDOStateMachine.INSTANCE.write((InternalCDOObject)cdoObject, null);
     }
   }
 

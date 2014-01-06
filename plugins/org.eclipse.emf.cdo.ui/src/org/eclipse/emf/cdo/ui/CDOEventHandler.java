@@ -13,12 +13,14 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
+import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
@@ -43,7 +45,7 @@ import java.util.Set;
 /**
  * A class that handles {@link org.eclipse.net4j.util.event.IEvent events} on
  * {@link org.eclipse.jface.viewers.TreeViewer TreeViewer}-based editors or views.
- * 
+ *
  * @author Eike Stepper
  * @see org.eclipse.net4j.util.event.IEvent
  * @see org.eclipse.jface.viewers.TreeViewer
@@ -123,6 +125,14 @@ public class CDOEventHandler
     }
   };
 
+  private CDOObjectHandler objectHandler = new CDOObjectHandler()
+  {
+    public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
+    {
+      CDOEventHandler.this.objectStateChanged(object);
+    }
+  };
+
   private IListener preferenceListener = new IListener()
   {
     public void notifyEvent(IEvent event)
@@ -197,6 +207,7 @@ public class CDOEventHandler
     wirePreferences();
     view.getSession().addListener(sessionListener);
     view.addListener(viewListener);
+    view.addObjectHandler(objectHandler);
   }
 
   /**
@@ -206,6 +217,7 @@ public class CDOEventHandler
   {
     if (view != null)
     {
+      view.removeObjectHandler(objectHandler);
       view.removeListener(viewListener);
       CDOSession session = view.getSession();
       if (session != null)
@@ -267,6 +279,32 @@ public class CDOEventHandler
   }
 
   /**
+   * @since 4.3
+   */
+  public void updateElement(final Object element)
+  {
+    try
+    {
+      treeViewer.getControl().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            treeViewer.update(element, null);
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (Exception ignore)
+    {
+    }
+  }
+
+  /**
    * @since 2.0
    */
   public boolean isAutoReloadEnabled()
@@ -291,6 +329,21 @@ public class CDOEventHandler
   }
 
   /**
+   * @since 4.3
+   */
+  protected void objectStateChanged(CDOObject cdoObject)
+  {
+    updateElement(cdoObject);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void objectInvalidated(InternalCDOObject cdoObject)
+  {
+  }
+
+  /**
    * @since 2.0
    */
   protected void viewInvalidated(Set<? extends CDOObject> dirtyObjects)
@@ -307,13 +360,6 @@ public class CDOEventHandler
         }
       }
     }.processCDOObjects(treeViewer, dirtyObjects);
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void objectInvalidated(InternalCDOObject cdoObject)
-  {
   }
 
   protected void viewDirtyStateChanged()

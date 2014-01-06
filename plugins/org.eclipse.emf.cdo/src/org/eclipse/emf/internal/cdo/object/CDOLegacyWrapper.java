@@ -369,14 +369,22 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public void cdoInternalPostInvalidate()
   {
-    if (cdoState() != CDOState.CLEAN)
+    if (cdoState() != CDOState.PROXY)
     {
-      InternalCDORevision revision = cdoView().getRevision(cdoID(), true);
-      cdoInternalSetRevision(revision);
+      throw new IllegalStateException();
     }
 
-    revisionToInstance();
-    cdoInternalSetState(CDOState.CLEAN);
+    InternalCDORevision revision = cdoView().getRevision(cdoID(), true);
+    if (revision == null)
+    {
+      cdoInternalPostDetach(true);
+    }
+    else
+    {
+      cdoInternalSetRevision(revision);
+      revisionToInstance();
+      cdoInternalSetState(CDOState.CLEAN);
+    }
   }
 
   protected void instanceToRevision()

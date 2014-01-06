@@ -123,7 +123,10 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     container.setElement(null);
     transaction.commit();
     assertNull(container.getElement());
-    assertNotNull(referencer.getElements().get(0));
+
+    EObject proxy = referencer.getElements().get(0);
+    assertNotNull(proxy);
+    assertEquals(true, CDOUtil.isStaleObject(proxy));
 
     transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 

@@ -1164,7 +1164,7 @@ public class TransactionCommitContext implements InternalCommitContext
     InternalCDORevision newRevision = oldRevision.copy();
     newRevision.adjustForCommit(branch, timeStamp);
 
-    delta.apply(newRevision);
+    delta.applyTo(newRevision);
     return newRevision;
   }
 

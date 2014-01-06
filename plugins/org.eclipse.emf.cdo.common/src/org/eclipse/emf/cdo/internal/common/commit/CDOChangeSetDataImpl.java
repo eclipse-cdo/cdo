@@ -157,7 +157,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
       if (oldRevision instanceof CDORevision)
       {
         CDORevision newRevision = (CDORevision)oldRevision;
-        delta.apply(newRevision);
+        delta.applyTo(newRevision);
         return;
       }
 

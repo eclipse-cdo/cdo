@@ -725,7 +725,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     InternalCDORevision newRevision = revision.copy();
     newRevision.adjustForCommit(branch, created);
 
-    revisionDelta.apply(newRevision);
+    revisionDelta.applyTo(newRevision);
     writeRevision(newRevision, new Monitor());
   }
 

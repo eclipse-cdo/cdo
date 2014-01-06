@@ -184,7 +184,7 @@ import java.util.Set;
  * @generated
  */
 public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-    IMenuListener, IViewerProvider
+IMenuListener, IViewerProvider
 {
   /**
    * The filters for file extensions supported by the editor.
@@ -1104,7 +1104,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
           "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource
-          : exception });
+              : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
@@ -1243,6 +1243,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
 
           super.setSelection(selection, reveal);
+        }
+
+        @Override
+        public String toString()
+        {
+          return "SelectionViewer";
         }
       };
 
@@ -2308,8 +2314,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
     submenuManager.setRemoveAllWhenShown(true);
     submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
-        {
-        });
+    {
+    });
 
     submenuManager.addMenuListener(new IMenuListener()
     {
@@ -2353,12 +2359,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     if (!objects.isEmpty())
     {
       Collections.sort(objects, new Comparator<EObject>()
-      {
+          {
         public int compare(EObject o1, EObject o2)
         {
           return o1.eClass().getName().compareTo(o2.eClass().getName());
         }
-      });
+          });
 
       for (EObject object : objects)
       {

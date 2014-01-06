@@ -916,7 +916,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           final Serializable idValue = HibernateUtil.getInstance().getIdValue(delta.getID());
           final InternalCDORevision cdoRevision = (InternalCDORevision)session.get(entityName, idValue);
           cdoRevision.setListPreserving();
-          delta.apply(cdoRevision);
+          delta.applyTo(cdoRevision);
         }
       }
 

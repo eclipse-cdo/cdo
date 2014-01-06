@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
  * Bug 415415: Stale reference not removed between locally detached object and remotely changed ones
- * 
+ *
  * @author Esteban Dugueperoux
  */
 public class Bugzilla_415415_Test extends AbstractCDOTest
@@ -118,9 +118,9 @@ public class Bugzilla_415415_Test extends AbstractCDOTest
     assertEquals("As child1 is remotelly detached, the stale reference child2.otherNodes:child1 should be removed", 0,
         child2.getOtherNodes().size());
 
-    String assertMessage = "As the stale reference child2.otherNodes:child1 has been removed and child2 is already dirty child2 should be the only dirty object";
-    assertEquals(assertMessage, 1, transaction.getDirtyObjects().size());
-    assertEquals(assertMessage, child2CDO, transaction.getDirtyObjects().get(child2ID));
+    String assertMessage = "As the stale reference child2.otherNodes:child1 has been removed the transaction should be clean";
+    assertEquals(assertMessage, false, transaction.isDirty());
+    assertEquals(assertMessage, 0, transaction.getDirtyObjects().size());
 
     transaction.commit();
     remoteUser.assertNotStaleReference();
@@ -138,7 +138,7 @@ public class Bugzilla_415415_Test extends AbstractCDOTest
     assertEquals("As child1 is locally detached, the stale reference child2.otherNodes:child1 should be removed", 0,
         child2.getOtherNodes().size());
 
-    String assertMessage = "As the stale reference child2.otherNodes:child1 has been removed, child2 should become the only dirty object with the nodeARoot";
+    String assertMessage = "As the stale reference child2.otherNodes:child1 has been removed, child2 and nodeARoot should be the only dirty objects";
     assertEquals(assertMessage, 2, transaction.getDirtyObjects().size());
     assertEquals(assertMessage, child2CDO, transaction.getDirtyObjects().get(child2ID));
     assertEquals(assertMessage, rootCDO, transaction.getDirtyObjects().get(rootID));

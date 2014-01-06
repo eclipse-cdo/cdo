@@ -168,7 +168,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
   {
     InternalCDORevision newLocalRevision = cleanRevision.copy();
     newLocalRevision.setVersion(newVersion);
-    resultDelta.apply(newLocalRevision);
+    resultDelta.applyTo(newLocalRevision);
     return newLocalRevision;
   }
 
@@ -180,7 +180,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     {
       InternalCDORevision newCleanRevision = cleanRevision.copy();
       newCleanRevision.setVersion(newVersion);
-      remoteDelta.apply(newCleanRevision);
+      remoteDelta.applyTo(newCleanRevision);
       return newCleanRevision;
     }
 

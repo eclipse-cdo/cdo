@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
@@ -248,11 +249,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     return new ArrayList<CDOFeatureDelta>(featureDeltas.values());
   }
 
+  @Deprecated
   public void apply(CDORevision revision)
+  {
+    applyTo(revision);
+  }
+
+  public void applyTo(CDORevision revision)
   {
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
-      ((CDOFeatureDeltaImpl)featureDelta).apply(revision);
+      ((CDOFeatureDeltaImpl)featureDelta).applyTo(revision);
     }
   }
 
@@ -269,7 +276,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       CDOListFeatureDelta listDelta = (CDOListFeatureDelta)delta;
       for (CDOFeatureDelta listChange : listDelta.getListChanges())
       {
-        addFeatureDelta(listChange, listDelta);
+        addSingleFeatureDelta(listChange, listDelta);
       }
     }
     else
@@ -288,7 +295,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       {
         int originSize = originSizeProvider.getOriginSize();
         listDelta = new CDOListFeatureDeltaImpl(feature, originSize);
-        featureDeltas.put(listDelta.getFeature(), listDelta);
+        featureDeltas.put(feature, listDelta);
       }
 
       // Remove all previous changes
@@ -301,7 +308,13 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
     else
     {
-      featureDeltas.put(feature, delta);
+      CDOFeatureDelta oldDelta = featureDeltas.put(feature, delta);
+      if (oldDelta instanceof CDOSetFeatureDelta && delta instanceof CDOSetFeatureDelta)
+      {
+        Object oldValue = ((CDOSetFeatureDelta)oldDelta).getOldValue();
+        CDOSetFeatureDeltaImpl newDelta = (CDOSetFeatureDeltaImpl)delta;
+        newDelta.setOldValue(oldValue);
+      }
     }
   }
 

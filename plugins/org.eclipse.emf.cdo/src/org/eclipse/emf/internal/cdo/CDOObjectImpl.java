@@ -417,7 +417,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    */
   public final void cdoInternalPostInvalidate()
   {
-    // Do nothing
+    cdoInternalSetRevision(null);
   }
 
   public final void cdoInternalPostAttach()
@@ -1217,38 +1217,38 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
    * was not {@link CDOState#NEW}.
    */
-  private static void adjustOppositeReference(InternalCDOObject instance, InternalEObject object, EReference feature)
+  private static void adjustOppositeReference(InternalCDOObject instance, InternalEObject opposite,
+      EReference oppositeReference)
   {
-    if (object != null)
+    if (opposite != null)
     {
-      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(object);
+      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(opposite);
       if (cdoObject != null && !FSMUtil.isTransient(cdoObject))
       {
-        if (feature.isMany())
+        if (oppositeReference.isMany())
         {
           EStore eStore = cdoObject.eStore();
-          int index = eStore.indexOf(cdoObject, feature, instance.cdoID());
-
+          int index = eStore.indexOf(cdoObject, oppositeReference, instance.cdoID());
           if (index != -1)
           {
-            eStore.set(cdoObject, feature, index, instance);
+            eStore.set(cdoObject, oppositeReference, index, instance);
           }
         }
         else
         {
           EStore eStore = cdoObject.eStore();
-          eStore.set(cdoObject, feature, 0, instance);
+          eStore.set(cdoObject, oppositeReference, 0, instance);
         }
       }
       else
       {
-        if (feature.isResolveProxies())
+        if (oppositeReference.isResolveProxies())
         {
           // We should not trigger events. But we have no choice :-(.
-          if (feature.isMany())
+          if (oppositeReference.isMany())
           {
             @SuppressWarnings("unchecked")
-            List<Object> list = (List<Object>)object.eGet(feature);
+            List<Object> list = (List<Object>)opposite.eGet(oppositeReference);
             int index = list.indexOf(instance);
             if (index != -1)
             {
@@ -1257,7 +1257,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
           }
           else
           {
-            object.eSet(feature, instance);
+            opposite.eSet(oppositeReference, instance);
           }
         }
       }
@@ -1283,6 +1283,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       {
         TRACER.format("Filtering value of feature {0}", feature); //$NON-NLS-1$
       }
+
       setting = filter.getPersistableValue(object, setting);
     }
 
@@ -1298,15 +1299,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         EList<Object> list = (EList<Object>)setting;
         for (Object value : list)
         {
-          value = cdoStore.convertToCDO(object, feature, value);
-          revision.add(feature, index++, value);
+          Object cdoValue = cdoStore.convertToCDO(object, feature, value);
+          revision.add(feature, index++, cdoValue);
         }
       }
     }
     else
     {
-      setting = cdoStore.convertToCDO(object, feature, setting);
-      revision.set(feature, 0, setting);
+      Object cdoValue = cdoStore.convertToCDO(object, feature, setting);
+      revision.set(feature, 0, cdoValue);
     }
   }
 
@@ -1335,21 +1336,21 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       {
         // Do not trigger events
         // Do not trigger inverse updates
-        Object object = cdoStore.get(instance, eFeature, index);
-        eStore.add(instance, eFeature, index, object);
+        Object opposite = cdoStore.get(instance, eFeature, index);
+        eStore.add(instance, eFeature, index, opposite);
         if (oppositeReference != null)
         {
-          adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+          adjustOppositeReference(instance, (InternalEObject)opposite, oppositeReference);
         }
       }
     }
     else
     {
-      Object object = cdoStore.get(instance, eFeature, EStore.NO_INDEX);
-      eStore.set(instance, eFeature, EStore.NO_INDEX, object);
+      Object opposite = cdoStore.get(instance, eFeature, EStore.NO_INDEX);
+      eStore.set(instance, eFeature, EStore.NO_INDEX, opposite);
       if (oppositeReference != null)
       {
-        adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+        adjustOppositeReference(instance, (InternalEObject)opposite, oppositeReference);
       }
     }
   }

@@ -53,7 +53,16 @@ public interface CDOFeatureDelta
    */
   public EStructuralFeature getFeature();
 
+  /**
+   * @deprecated As of 4.3 use {@link #applyTo(CDORevision)}.
+   */
+  @Deprecated
   public void apply(CDORevision revision);
+
+  /**
+   * @since 4.3
+   */
+  public Object applyTo(CDORevision revision);
 
   public void accept(CDOFeatureDeltaVisitor visitor);
 

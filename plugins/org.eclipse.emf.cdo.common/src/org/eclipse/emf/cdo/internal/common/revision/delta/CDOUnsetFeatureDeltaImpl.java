@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Simon McDuff
@@ -49,9 +52,42 @@ public class CDOUnsetFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDO
     return new CDOUnsetFeatureDeltaImpl(getFeature());
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).unset(getFeature());
+    EStructuralFeature feature = getFeature();
+
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    if (feature.isUnsettable())
+    {
+      internalRevision.unset(feature);
+    }
+    else
+    {
+      if (feature.isMany())
+      {
+        Object value = internalRevision.getValue(feature);
+        if (value != null)
+        {
+          @SuppressWarnings("unchecked")
+          List<Object> list = (List<Object>)value;
+          list.clear();
+        }
+      }
+      else
+      {
+        Object defaultValue = feature.getDefaultValue();
+
+        CDOType type = CDOModelUtil.getType(feature.getEType());
+        if (type != null)
+        {
+          defaultValue = type.convertToCDO(feature.getEType(), defaultValue);
+        }
+
+        internalRevision.set(feature, NO_INDEX, defaultValue);
+      }
+    }
+
+    return null;
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

@@ -744,7 +744,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     return uriFragmentPath;
   }
 
-
   private EObject getEObject(List<String> uriFragmentPath)
   {
     int size = uriFragmentPath.size();

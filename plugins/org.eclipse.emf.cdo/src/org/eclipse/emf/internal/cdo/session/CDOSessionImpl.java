@@ -2022,7 +2022,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
             try
             {
-              revisionDelta.apply(newRevision);
+              revisionDelta.applyTo(newRevision);
             }
             finally
             {

@@ -83,13 +83,21 @@ public interface CDORevisionDelta extends CDORevisionKey
   public List<CDOFeatureDelta> getFeatureDeltas();
 
   /**
+   * @deprecated As of 4.3 use {@link #applyTo(CDORevision)}.
+   */
+  @Deprecated
+  public void apply(CDORevision revision);
+
+  /**
    * Applies the {@link #getFeatureDeltas() feature deltas} in this revision delta to the {@link CDORevisionData data}
    * of the given revision.
    * <p>
    * The system data of the given revision, e.g. {@link CDOBranchPoint branch point} or {@link CDOBranchVersion branch
    * version} of the given revision are <b>not</b> modified.
+   *
+   * @since 4.3
    */
-  public void apply(CDORevision revision);
+  public void applyTo(CDORevision revision);
 
   public void accept(CDOFeatureDeltaVisitor visitor);
 

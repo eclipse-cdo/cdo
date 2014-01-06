@@ -102,6 +102,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler3;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
+import org.eclipse.emf.cdo.transaction.CDOUndoDetector;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -248,7 +249,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
    */
-  private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new ResolvingRevisionMap();
+  private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new CleanRevisionsMap();
 
   public CDOTransactionImpl(CDOBranch branch)
   {
@@ -394,7 +395,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public void setDirty(boolean dirty)
   {
-    this.dirty = dirty;
+    if (this.dirty != dirty)
+    {
+      this.dirty = dirty;
+
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        IEvent event = dirty ? new StartedEvent() : new FinishedEvent(false);
+        fireEvent(event, listeners);
+      }
+    }
   }
 
   @Override
@@ -601,7 +612,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         registerObject(object);
         registerAttached(object, true);
         result.add(revision);
-        dirty = true;
+        setDirty(true);
       }
     }
   }
@@ -618,7 +629,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         result.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
         CDOStateMachine.INSTANCE.detach(object);
         detachedSet.add(object);
-        dirty = true;
+        setDirty(true);
       }
     }
 
@@ -663,7 +674,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       goalRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
-      ancestorGoalDelta.apply(goalRevision);
+      ancestorGoalDelta.applyTo(goalRevision);
 
       InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
       targetGoalDelta.setTarget(null);
@@ -689,7 +700,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         revisionChanged = true;
 
         dirtyObjects.put(id, object);
-        dirty = true;
+        setDirty(true);
       }
 
       if (revisionChanged)
@@ -1532,16 +1543,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       // here be removed from the collection of reattached objects
       lastSavepoint.getReattachedObjects().remove(id);
     }
-
-    if (!dirty)
-    {
-      dirty = true;
-      IListener[] listeners = getListeners();
-      if (listeners != null)
-      {
-        fireEvent(new StartedEvent(), listeners);
-      }
-    }
   }
 
   /**
@@ -1638,11 +1639,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      Map<CDOID, CDOID> idMappings = Collections.emptyMap();
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings), listeners);
+        fireEvent(new FinishedEvent(true), listeners);
       }
 
       CDOTransactionHandler2[] handlers = getTransactionHandlers2();
@@ -1692,6 +1692,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     checkActive();
     return (InternalCDOSavepoint)getTransactionStrategy().setSavepoint(this);
+  }
+
+  public boolean hasMultipleSavepoints()
+  {
+    return lastSavepoint != firstSavepoint;
   }
 
   private void addToBase(Map<CDOID, CDOObject> objects)
@@ -1744,18 +1749,53 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  private CDOOriginSizeProvider getOriginSizeProvider(InternalCDOObject object, CDOFeatureDelta featureDelta,
+      InternalCDORevision cleanRevision)
+  {
+    EStructuralFeature feature = featureDelta.getFeature();
+    if (feature.isMany())
+    {
+      if (cleanRevision == null)
+      {
+        cleanRevision = cleanRevisions.get(object);
+        if (cleanRevision == null)
+        {
+          cleanRevision = object.cdoRevision();
+        }
+      }
+
+      CDOList list = cleanRevision.getList(feature);
+      final int originSize = list.size();
+
+      return new CDOOriginSizeProvider()
+      {
+        public int getOriginSize()
+        {
+          return originSize;
+        }
+      };
+    }
+
+    return null;
+  }
+
   /**
    * Receives notification for new and dirty objects
    */
-  public synchronized void registerFeatureDelta(final InternalCDOObject object, final CDOFeatureDelta featureDelta)
+  public synchronized void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  {
+    registerFeatureDelta(object, featureDelta, null);
+  }
+
+  public synchronized void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta,
+      InternalCDORevision cleanRevision)
   {
     CDOID id = object.cdoID();
     boolean needToSaveFeatureDelta = true;
 
     if (object.cdoState() == CDOState.NEW)
     {
-      // Register Delta for new objects only if objectA doesn't belong to
-      // this savepoint
+      // Register Delta for new objects only if objectA doesn't belong to this savepoint
       if (getLastSavepoint().getPreviousSavepoint() == null || featureDelta == null)
       {
         needToSaveFeatureDelta = false;
@@ -1769,31 +1809,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (needToSaveFeatureDelta)
     {
-      final InternalCDORevision revision = object.cdoRevision();
-
-      CDORevisionDelta revisionDelta = lastSavepoint.getRevisionDeltas2().get(id);
+      Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
+      InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
       if (revisionDelta == null)
       {
-        revisionDelta = CDORevisionUtil.createDelta(revision);
-        lastSavepoint.getRevisionDeltas2().put(id, revisionDelta);
+        InternalCDORevision revision = object.cdoRevision();
+
+        revisionDelta = (InternalCDORevisionDelta)CDORevisionUtil.createDelta(revision);
+        revisionDeltas.put(id, revisionDelta);
       }
 
-      ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta, new CDOOriginSizeProvider()
-      {
-        public int getOriginSize()
-        {
-          EStructuralFeature feature = featureDelta.getFeature();
-          InternalCDORevision cleanRevision = cleanRevisions.get(object);
-          if (cleanRevision == null)
-          {
-            // Clean revision has *not yet* been registered, in this case the object revision *is still clean*
-            cleanRevision = revision;
-          }
-
-          CDOList list = cleanRevision.getList(feature);
-          return list.size();
-        }
-      });
+      CDOOriginSizeProvider originSizeProvider = getOriginSizeProvider(object, featureDelta, cleanRevision);
+      revisionDelta.addFeatureDelta(featureDelta, originSizeProvider);
     }
 
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
@@ -1814,7 +1841,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public synchronized void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  {
+    registerDirty(object, featureDelta, null);
+  }
+
+  public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision)
   {
     if (TRACER.isEnabled())
     {
@@ -1823,7 +1855,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (featureDelta != null)
     {
-      registerFeatureDelta(object, featureDelta);
+      registerFeatureDelta(object, featureDelta, cleanRevision);
     }
 
     registerNew(lastSavepoint.getDirtyObjects(), object);
@@ -1841,15 +1873,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOTransactionImpl.10"), object)); //$NON-NLS-1$
     }
 
-    if (!dirty)
-    {
-      dirty = true;
-      IListener[] listeners = getListeners();
-      if (listeners != null)
-      {
-        fireEvent(new StartedEvent(), listeners);
-      }
-    }
+    setDirty(true);
   }
 
   public synchronized List<CDOPackageUnit> analyzeNewPackages()
@@ -2726,24 +2750,60 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @author Eike Stepper
    */
-  private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>
+  private final class CleanRevisionsMap extends HashMap<InternalCDOObject, InternalCDORevision>
   {
     private static final long serialVersionUID = 1L;
 
-    public ResolvingRevisionMap()
+    public CleanRevisionsMap()
     {
     }
 
     @Override
-    public InternalCDORevision get(Object cdoObject)
+    public InternalCDORevision get(Object key)
     {
-      InternalCDORevision revision = super.get(cdoObject);
-      if (revision != null)
+      if (key instanceof EObject)
       {
-        getSession().resolveAllElementProxies(revision);
+        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)key);
+        InternalCDORevision revision = super.get(cdoObject);
+        if (revision != null)
+        {
+          getSession().resolveAllElementProxies(revision);
+        }
+
+        return revision;
       }
 
-      return revision;
+      return null;
+    }
+
+    @Override
+    public InternalCDORevision remove(Object key)
+    {
+      if (key instanceof EObject)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)key);
+        return super.remove(cdoObject);
+      }
+
+      return null;
+    }
+
+    @Override
+    public boolean containsKey(Object key)
+    {
+      if (key instanceof EObject)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)key);
+        return super.containsKey(cdoObject);
+      }
+
+      return false;
+    }
+
+    @Override
+    public Set<InternalCDOObject> keySet()
+    {
+      throw new UnsupportedOperationException();
     }
   }
 
@@ -3084,8 +3144,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (session.isSticky())
         {
           CDOBranchPoint commitBranchPoint = CDOBranchUtil.copyBranchPoint(result);
-          for (CDOObject object : getNewObjects().values()) // Note: keyset() does not work because ID mappings are
-                                                            // not applied there!
+
+          // Note: keyset() does not work because ID mappings are not applied there!
+          for (CDOObject object : getNewObjects().values())
           {
             session.setCommittedSinceLastRefresh(object.cdoID(), commitBranchPoint);
           }
@@ -3130,7 +3191,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           Map<CDOID, CDOID> idMappings = result.getIDMappings();
-          fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);
+          fireEvent(new FinishedEvent(idMappings), listeners);
         }
 
         CDOLockState[] newLockStates = result.getNewLockStates();
@@ -3226,19 +3287,42 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     private static final long serialVersionUID = 1L;
 
-    private Type type;
+    private final Cause cause;
 
-    private Map<CDOID, CDOID> idMappings;
+    private final Map<CDOID, CDOID> idMappings;
 
-    private FinishedEvent(Type type, Map<CDOID, CDOID> idMappings)
+    private FinishedEvent(Map<CDOID, CDOID> idMappings)
     {
-      this.type = type;
+      cause = Cause.COMMITTED;
       this.idMappings = idMappings;
     }
 
+    private FinishedEvent(boolean rolledBack)
+    {
+      cause = rolledBack ? Cause.ROLLED_BACK : Cause.UNDONE;
+      idMappings = Collections.emptyMap();
+    }
+
+    @Deprecated
     public Type getType()
     {
-      return type;
+      switch (cause)
+      {
+      case COMMITTED:
+        return Type.COMMITTED;
+
+      case ROLLED_BACK:
+      case UNDONE:
+        return Type.ROLLED_BACK;
+
+      default:
+        throw new IllegalStateException("Illegal cause: " + cause);
+      }
+    }
+
+    public Cause getCause()
+    {
+      return cause;
     }
 
     public Map<CDOID, CDOID> getIDMappings()
@@ -3249,8 +3333,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOTransactionFinishedEvent[source={0}, type={1}, idMappings={2}]", getSource(), //$NON-NLS-1$
-          getType(), idMappings == null ? 0 : idMappings.size());
+      return MessageFormat.format("CDOTransactionFinishedEvent[source={0}, cause={1}, idMappings={2}]", getSource(), //$NON-NLS-1$
+          getCause(), idMappings == null ? 0 : idMappings.size());
     }
   }
 
@@ -3295,12 +3379,41 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   protected final class OptionsImpl extends CDOViewImpl.OptionsImpl implements CDOTransaction.Options
   {
+    private CDOUndoDetector undoDetector = DEFAULT_UNDO_DETECTOR;
+
     private List<CDOConflictResolver> conflictResolvers = new ArrayList<CDOConflictResolver>();
 
     private boolean autoReleaseLocksEnabled = true;
 
     public OptionsImpl()
     {
+    }
+
+    public CDOUndoDetector getUndoDetector()
+    {
+      return undoDetector;
+    }
+
+    public void setUndoDetector(CDOUndoDetector undoDetector)
+    {
+      checkActive();
+
+      if (undoDetector == null)
+      {
+        undoDetector = DEFAULT_UNDO_DETECTOR;
+      }
+
+      IEvent event = null;
+      synchronized (CDOTransactionImpl.this)
+      {
+        if (this.undoDetector != undoDetector)
+        {
+          this.undoDetector = undoDetector;
+          event = new UndoDetectorEventImpl();
+        }
+      }
+
+      fireEvent(event);
     }
 
     @Override
@@ -3424,6 +3537,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       fireEvent(event);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class UndoDetectorEventImpl extends OptionsEvent implements UndoDetectorEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public UndoDetectorEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
     }
 
     /**

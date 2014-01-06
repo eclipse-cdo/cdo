@@ -49,9 +49,13 @@ public class CDOClearFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDO
     return new CDOClearFeatureDeltaImpl(getFeature());
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).clear(getFeature());
+    EStructuralFeature feature = getFeature();
+
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    internalRevision.clear(feature);
+    return null;
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

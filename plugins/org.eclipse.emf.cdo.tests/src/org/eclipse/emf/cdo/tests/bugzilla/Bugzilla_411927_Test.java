@@ -39,7 +39,7 @@ public class Bugzilla_411927_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_NAME = "res1";
 
-  private static final int CLIENTS = 20;
+  private static final int CLIENTS = 10;
 
   private static final int COMMITS_PER_CLIENT = 3;
 
@@ -112,7 +112,7 @@ public class Bugzilla_411927_Test extends AbstractCDOTest
   }
 
   private void executeTestWith(FailureTime failureTime) throws ConcurrentAccessException, CommitException,
-      InterruptedException
+  InterruptedException
   {
     disableConsole();
     initRepository(failureTime);

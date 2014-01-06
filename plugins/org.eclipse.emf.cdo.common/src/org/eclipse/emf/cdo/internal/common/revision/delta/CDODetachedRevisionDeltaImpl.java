@@ -89,7 +89,13 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void apply(CDORevision revision)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void applyTo(CDORevision revision)
   {
     throw new UnsupportedOperationException();
   }

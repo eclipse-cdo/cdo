@@ -20,14 +20,13 @@ import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * See bug 298561
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_298561_Test extends AbstractCDOTest
@@ -60,23 +59,12 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     // Refresh
     session.refresh();
 
-    //
-    try
+    EReference ref = getModel4Package().getRefSingleNonContainedNPL_Element();
+    boolean isSet = referencer.eIsSet(ref);
+    if (isSet)
     {
-      EReference ref = getModel4Package().getRefSingleNonContainedNPL_Element();
-      boolean isSet = referencer.eIsSet(ref);
-      if (isSet)
-      {
-        assertNull(referencer.getElement());
-      }
+      assertNull(referencer.getElement());
     }
-    catch (ObjectNotFoundException e)
-    {
-      fail("Should not have thrown ObjectNotFoundException");
-    }
-
-    tx.close();
-    session.close();
   }
 
   public void testDirty() throws CommitException
@@ -91,6 +79,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     // Create referencee and referencer (but no reference yet), and store them
     ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
     r1.getContents().add(referencee);
+
     RefSingleNonContainedNPL referencer = getModel4Factory().createRefSingleNonContainedNPL();
     r1.getContents().add(referencer);
     tx.commit();
@@ -105,21 +94,11 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     // Refresh
     session.refresh();
 
-    try
+    boolean isSet = referencer.eIsSet(getModel4Package().getRefSingleNonContainedNPL_Element());
+    if (isSet)
     {
-      boolean isSet = referencer.eIsSet(getModel4Package().getRefSingleNonContainedNPL_Element());
-      if (isSet)
-      {
-        assertNull(referencer.getElement());
-      }
+      assertNull(referencer.getElement());
     }
-    catch (ObjectNotFoundException e)
-    {
-      fail("Should not have thrown ObjectNotFoundException");
-    }
-
-    tx.close();
-    session.close();
   }
 
   public void testNewMulti() throws CommitException
@@ -148,22 +127,11 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     // Refresh
     session.refresh();
 
-    //
-    try
+    boolean isSet = referencer.eIsSet(getModel4Package().getRefMultiNonContainedNPL_Elements());
+    if (isSet && referencer.getElements().size() > 0)
     {
-      boolean isSet = referencer.eIsSet(getModel4Package().getRefMultiNonContainedNPL_Elements());
-      if (isSet && referencer.getElements().size() > 0)
-      {
-        assertNull(referencer.getElements().get(0));
-      }
+      assertNull(referencer.getElements().get(0));
     }
-    catch (ObjectNotFoundException e)
-    {
-      fail("Should not have thrown ObjectNotFoundException");
-    }
-
-    tx.close();
-    session.close();
   }
 
   public void testDirtyMulti() throws CommitException
@@ -192,22 +160,11 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     // Refresh
     session.refresh();
 
-    //
-    try
+    boolean isSet = referencer.eIsSet(getModel4Package().getRefMultiNonContainedNPL_Elements());
+    if (isSet && referencer.getElements().size() > 0)
     {
-      boolean isSet = referencer.eIsSet(getModel4Package().getRefMultiNonContainedNPL_Elements());
-      if (isSet && referencer.getElements().size() > 0)
-      {
-        assertNull(referencer.getElements().get(0));
-      }
+      assertNull(referencer.getElements().get(0));
     }
-    catch (ObjectNotFoundException e)
-    {
-      fail("Should not have thrown ObjectNotFoundException");
-    }
-
-    tx.close();
-    session.close();
   }
 
   private void doSecondSession() throws CommitException

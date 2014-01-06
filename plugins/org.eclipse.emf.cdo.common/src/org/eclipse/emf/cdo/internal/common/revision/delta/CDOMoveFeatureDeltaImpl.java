@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
@@ -32,7 +33,7 @@ import java.text.MessageFormat;
  * @author Simon McDuff
  */
 public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOMoveFeatureDelta, ListIndexAffecting,
-    WithIndex
+WithIndex
 {
   private int oldPosition;
 
@@ -106,9 +107,13 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return copy;
   }
 
-  public void apply(CDORevision revision)
+  public Object applyTo(CDORevision revision)
   {
-    ((InternalCDORevision)revision).getList(getFeature()).move(newPosition, oldPosition);
+    EStructuralFeature feature = getFeature();
+
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    CDOList list = internalRevision.getList(feature);
+    return list.move(newPosition, oldPosition);
   }
 
   public void affectIndices(ListTargetAdding[] source, int[] indices)

@@ -196,9 +196,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
             return CDOPushTransaction.this;
           }
 
+          @Deprecated
           public Type getType()
           {
             return Type.COMMITTED;
+          }
+
+          public Cause getCause()
+          {
+            return Cause.COMMITTED;
           }
 
           public Map<CDOID, CDOID> getIDMappings()
@@ -655,15 +661,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
       throws InterruptedException
-  {
+      {
     delegate.lockObjects(objects, lockType, timeout);
-  }
+      }
 
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
       throws InterruptedException
-  {
+      {
     delegate.lockObjects(objects, lockType, timeout, recursive);
-  }
+      }
 
   public Options options()
   {
@@ -677,9 +683,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
       boolean exactMatch)
-  {
+      {
     return delegate.queryResourcesAsync(folder, name, exactMatch);
-  }
+      }
 
   /**
    * @since 4.3
@@ -712,9 +718,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
       EReference... sourceReferences)
-  {
+      {
     return delegate.queryXRefsAsync(targetObjects, sourceReferences);
-  }
+      }
 
   @Deprecated
   public int reload(CDOObject... objects)

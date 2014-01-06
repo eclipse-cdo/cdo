@@ -1143,14 +1143,11 @@ public class InstallerDialog extends AbstractSetupDialog
 
         bundlePoolTPField.setLinkedFromValue();
 
-        viewer.setInput(input);
-        cellEditor.setInput(this);
-
         final Tree tree = viewer.getTree();
         final TreeColumn projectColumn = tree.getColumn(0);
         final TreeColumn eclipseColumn = tree.getColumn(ECLIPSE_VERSION_COLUMN_INDEX);
 
-        final ControlAdapter columnResizer = new ControlAdapter()
+        tree.addControlListener(new ControlAdapter()
         {
           @Override
           public void controlResized(ControlEvent e)
@@ -1162,21 +1159,15 @@ public class InstallerDialog extends AbstractSetupDialog
               size.x -= bar.getSize().x;
             }
 
+            eclipseColumn.pack();
+            eclipseColumn.setWidth(eclipseColumn.getWidth() + 10);
+
             projectColumn.setWidth(size.x - eclipseColumn.getWidth());
           }
-        };
-
-        eclipseColumn.pack();
-        eclipseColumn.setWidth(eclipseColumn.getWidth() + 10);
-
-        tree.addControlListener(columnResizer);
-        tree.getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            columnResizer.controlResized(null);
-          }
         });
+
+        viewer.setInput(input);
+        cellEditor.setInput(this);
       }
     });
   }

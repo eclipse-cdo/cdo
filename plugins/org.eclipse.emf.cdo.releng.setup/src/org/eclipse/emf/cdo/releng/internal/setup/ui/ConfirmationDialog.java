@@ -267,6 +267,7 @@ public class ConfirmationDialog extends AbstractSetupDialog
   private void fillChildrenPane(SashForm verticalSash)
   {
     childrenViewer = new TreeViewer(verticalSash, SWT.NO_SCROLL | SWT.V_SCROLL);
+    childrenViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
     childrenViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
     {
       @Override
@@ -284,8 +285,6 @@ public class ConfirmationDialog extends AbstractSetupDialog
         return result.toArray();
       }
     });
-    childrenViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
-    childrenViewer.setInput(new Object());
 
     final Tree tree = childrenViewer.getTree();
     tree.setHeaderVisible(true);
@@ -294,7 +293,7 @@ public class ConfirmationDialog extends AbstractSetupDialog
     column.setText("Nested Elements");
     column.setWidth(600);
 
-    final ControlAdapter columnResizer = new ControlAdapter()
+    tree.addControlListener(new ControlAdapter()
     {
       @Override
       public void controlResized(ControlEvent e)
@@ -308,17 +307,9 @@ public class ConfirmationDialog extends AbstractSetupDialog
 
         column.setWidth(size.x);
       }
-    };
-
-    tree.addControlListener(columnResizer);
-    tree.getDisplay().asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        columnResizer.controlResized(null);
-      }
     });
 
+    childrenViewer.setInput(new Object());
   }
 
   private void connectMasterDetail(final TreeViewer master, final Viewer detail)

@@ -219,7 +219,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       return TARGET_PLATFORM_EDEFAULT == null ? targetPlatform != null : !TARGET_PLATFORM_EDEFAULT
-      .equals(targetPlatform);
+          .equals(targetPlatform);
     }
     return super.eIsSet(featureID);
   }
@@ -265,7 +265,8 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
   public boolean isNeeded(SetupTaskContext context)
   {
     return context.getTrigger() == Trigger.MANUAL
-        || !TargetPlatformUtil.hasTargetPlatform(getTargetPlatform(), context);
+        || !TargetPlatformUtil.hasTargetPlatform(getTargetPlatform(), context)
+        && !TargetPlatformUtil.hasTargetPlatform(getTargetPlatform() + "2", context);
   }
 
   protected abstract String getMspec(SetupTaskContext context) throws Exception;
@@ -291,7 +292,29 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
         String oldName = tp.getName() + "." + System.currentTimeMillis();
         context.log("Renaming old target platform to " + oldName);
         tpOld = new File(tp.getParentFile(), oldName);
-        FileUtil.rename(tp, tpOld);
+        try
+        {
+          FileUtil.rename(tp, tpOld);
+        }
+        catch (Exception ex)
+        {
+          context.log("Couldn't rename old target platform to " + oldName);
+          // Clean up the one we would have used so that it's absent the next time it gets used.
+          tpOld = tp;
+          tp = new File(getTargetPlatform() + "2");
+          context.log("Using " + tp + " instead");
+          if (tp.exists())
+          {
+            try
+            {
+              FileUtil.delete(tp, monitor);
+            }
+            catch (Exception ex1)
+            {
+              context.log("Couldn't delete " + tp + " but it will be used anyway");
+            }
+          }
+        }
       }
 
       FileLock tpPoolLock = null;
@@ -433,7 +456,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
-        {
+    {
       context.log("Clearing caches for remote files and URLs");
       CorePlugin plugin = CorePlugin.getDefault();
       plugin.clearRemoteFileCache();
@@ -617,7 +640,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       {
         throw new CoreException(status);
       }
-        }
+    }
   }
 
 } // BuckminsterImportTaskImpl

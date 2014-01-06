@@ -129,7 +129,7 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
             return gitDirAbsolutePath == null ? null : gitDirAbsolutePath.toString();
           }
         }
-        catch (Throwable throwable)
+        catch (NoClassDefFoundError ex)
         {
           // Ignore
         }

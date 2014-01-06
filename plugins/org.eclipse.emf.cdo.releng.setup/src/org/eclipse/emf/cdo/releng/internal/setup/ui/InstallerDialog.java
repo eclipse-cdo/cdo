@@ -607,7 +607,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);
@@ -1147,7 +1147,7 @@ public class InstallerDialog extends AbstractSetupDialog
         final TreeColumn projectColumn = tree.getColumn(0);
         final TreeColumn eclipseColumn = tree.getColumn(ECLIPSE_VERSION_COLUMN_INDEX);
 
-        tree.addControlListener(new ControlAdapter()
+        final ControlAdapter columnResizer = new ControlAdapter()
         {
           @Override
           public void controlResized(ControlEvent e)
@@ -1163,6 +1163,15 @@ public class InstallerDialog extends AbstractSetupDialog
             eclipseColumn.setWidth(eclipseColumn.getWidth() + 10);
 
             projectColumn.setWidth(size.x - eclipseColumn.getWidth());
+          }
+        };
+
+        tree.addControlListener(columnResizer);
+        tree.getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            columnResizer.controlResized(null);
           }
         });
 
@@ -1608,12 +1617,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-        {
+            {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-        });
+            });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 

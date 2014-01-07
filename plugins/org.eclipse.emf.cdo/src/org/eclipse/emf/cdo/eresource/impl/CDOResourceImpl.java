@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2007-2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,8 +11,7 @@
  *    Christian W. Damus (CEA) - isLoading() support for CDOResource
  */
 package org.eclipse.emf.cdo.eresource.impl;
-
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -85,6 +84,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
@@ -347,7 +347,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     setPath(newPath);
   }
 
-
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -355,7 +354,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     {
     case EresourcePackage.CDO_RESOURCE__URI:
       return getURI();
-      
+
     default:
       return super.eGet(featureID, resolve, coreType);
     }
@@ -369,7 +368,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     case EresourcePackage.CDO_RESOURCE__URI:
       setURI((URI)newValue);
       break;
-      
+
     default:
       super.eSet(featureID, newValue);
     }
@@ -551,7 +550,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     if (errors == null)
     {
       errors = new NotifyingListImpl<Diagnostic>()
-      {
+          {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -571,7 +570,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         {
           return EresourcePackage.CDO_RESOURCE__ERRORS;
         }
-      };
+          };
     }
 
     return errors;
@@ -587,7 +586,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     if (warnings == null)
     {
       warnings = new NotifyingListImpl<Diagnostic>()
-      {
+          {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -607,7 +606,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         {
           return EresourcePackage.CDO_RESOURCE__WARNINGS;
         }
-      };
+          };
     }
 
     return warnings;
@@ -638,7 +637,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   public TreeIterator<EObject> getAllContents()
   {
     return new AbstractTreeIterator<EObject>(this, false)
-    {
+        {
       private static final long serialVersionUID = 1L;
 
       @Override
@@ -647,7 +646,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         return object == CDOResourceImpl.this ? CDOResourceImpl.this.getContents().iterator() : ((EObject)object)
             .eContents().iterator();
       }
-    };
+        };
   }
 
   /**
@@ -662,31 +661,40 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    */
   public EObject getEObject(String uriFragment)
   {
-    if (uriFragment == null)
-    {
-      return null;
-    }
-
     try
     {
-      EObject eObjectByFragment = getEObjectByFragment(uriFragment);
-
-      if (eObjectByFragment != null)
+      if (uriFragment != null)
       {
-        return eObjectByFragment;
-      }
+        int length = uriFragment.length();
+        if (length > 0)
+        {
+          if (uriFragment.charAt(0) == '/')
+          {
+            List<String> uriFragmentPath = getURIFragmentPath(uriFragment, length);
 
-      CDOID id = CDOIDUtil.read(uriFragment);
-      InternalCDOView view = cdoView();
-      if (CDOIDUtil.isNull(id) || view.isObjectNew(id) && !view.isObjectRegistered(id))
-      {
-        return null;
-      }
+            EObject eObjectByFragment = getEObject(uriFragmentPath);
+            if (eObjectByFragment != null)
+            {
+              return eObjectByFragment;
+            }
+          }
+          else if (uriFragment.charAt(length - 1) == '?')
+          {
+            int index = uriFragment.lastIndexOf('?', length - 2);
+            if (index > 0)
+            {
+              uriFragment = uriFragment.substring(0, index);
+            }
+          }
 
-      if (id.isObject())
-      {
-        CDOObject object = view.getObject(id, true);
-        return CDOUtil.getEObject(object);
+          EObject eObjectFromView = getEObjectFromView(uriFragment);
+          if (eObjectFromView != null)
+          {
+            return eObjectFromView;
+          }
+
+          return getEObjectByID(uriFragment);
+        }
       }
     }
     catch (Exception ex)
@@ -699,38 +707,41 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     return null;
   }
 
-  private EObject getEObjectByFragment(String uriFragment)
+  private EObject getEObjectFromView(String uriFragment)
   {
-    int length = uriFragment.length();
-    if (length > 0)
+    try
     {
-      if (uriFragment.charAt(0) == '/')
+      CDOID id = CDOIDUtil.read(uriFragment);
+      InternalCDOView view = cdoView();
+      if (CDOIDUtil.isNull(id) || view.isObjectNew(id) && !view.isObjectRegistered(id) || !id.isObject())
       {
-        ArrayList<String> uriFragmentPath = new ArrayList<String>(4);
-        int start = 1;
-        for (int i = 1; i < length; ++i)
-        {
-          if (uriFragment.charAt(i) == '/')
-          {
-            uriFragmentPath.add(start == i ? "" : uriFragment.substring(start, i));
-            start = i + 1;
-          }
-        }
-
-        uriFragmentPath.add(uriFragment.substring(start));
-        return getEObject(uriFragmentPath);
+        return null;
       }
-      else if (uriFragment.charAt(length - 1) == '?')
+
+      CDOObject object = view.getObject(id, true);
+      return CDOUtil.getEObject(object);
+    }
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
+  private List<String> getURIFragmentPath(String uriFragment, int length)
+  {
+    List<String> uriFragmentPath = new ArrayList<String>(4);
+    int start = 1;
+    for (int i = 1; i < length; ++i)
+    {
+      if (uriFragment.charAt(i) == '/')
       {
-        int index = uriFragment.lastIndexOf('?', length - 2);
-        if (index > 0)
-        {
-          uriFragment = uriFragment.substring(0, index);
-        }
+        uriFragmentPath.add(start == i ? "" : uriFragment.substring(start, i));
+        start = i + 1;
       }
     }
 
-    return getEObjectByID(uriFragment);
+    uriFragmentPath.add(uriFragment.substring(start));
+    return uriFragmentPath;
   }
 
   private EObject getEObject(List<String> uriFragmentPath)
@@ -851,7 +862,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   protected TreeIterator<EObject> getAllProperContents(List<EObject> contents)
   {
     return new ContentTreeIterator<EObject>(contents, false)
-    {
+        {
       private static final long serialVersionUID = 1L;
 
       @SuppressWarnings("unchecked")
@@ -861,7 +872,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         return object == this.object ? ((List<EObject>)object).iterator() : new ProperContentIterator<EObject>(
             (EObject)object);
       }
-    };
+        };
   }
 
   /**
@@ -1213,16 +1224,16 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     IProgressMonitor progressMonitor = options != null ? (IProgressMonitor)options
         .get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
 
-    try
-    {
-      transaction.commit(progressMonitor);
-    }
-    catch (CommitException ex)
-    {
-      throw new TransactionException(ex);
-    }
+        try
+        {
+          transaction.commit(progressMonitor);
+        }
+        catch (CommitException ex)
+        {
+          throw new TransactionException(ex);
+        }
 
-    setModified(false);
+        setModified(false);
   }
 
   /**
@@ -1233,20 +1244,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     CDOTransaction transaction = options != null ? (CDOTransaction)options
         .get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION) : null;
 
-    if (transaction == null)
-    {
-      CDOView view = cdoView();
-      if (view instanceof CDOTransaction)
-      {
-        transaction = (CDOTransaction)view;
-      }
-      else
-      {
-        throw new IllegalStateException("No transaction available");
-      }
-    }
+        if (transaction == null)
+        {
+          CDOView view = cdoView();
+          if (view instanceof CDOTransaction)
+          {
+            transaction = (CDOTransaction)view;
+          }
+          else
+          {
+            throw new IllegalStateException("No transaction available");
+          }
+        }
 
-    return transaction;
+        return transaction;
   }
 
   /**
@@ -1458,13 +1469,13 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     {
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
       viewSet.executeWithoutNotificationHandling(new Callable<Boolean>()
-      {
+          {
         public Boolean call() throws Exception
         {
           resourceSet.getResources().remove(CDOResourceImpl.this);
           return true;
         }
-      });
+          });
     }
   }
 
@@ -1529,12 +1540,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
 
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(oldResourceSet);
       notifications = viewSet.executeWithoutNotificationHandling(new Callable<NotificationChain>()
-      {
+          {
         public NotificationChain call() throws Exception
         {
           return ((InternalEList<Resource>)oldResourceSet.getResources()).basicRemove(this, finalNotifications);
         }
-      });
+          });
     }
 
     setResourceSet(resourceSet);

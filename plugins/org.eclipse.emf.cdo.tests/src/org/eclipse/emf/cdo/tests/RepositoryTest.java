@@ -131,8 +131,7 @@ public class RepositoryTest extends AbstractCDOTest
    * See bug 329254
    */
   @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
-  // hibernate will recreate the systeminfo table at repository
-  // restart (this is due to test settings)
+  // Hibernate will recreate the systeminfo table at repository restart (this is due to test settings)
   @Skips("Hibernate")
   public void testLastCommitTime() throws Exception
   {
@@ -159,7 +158,7 @@ public class RepositoryTest extends AbstractCDOTest
     {
       public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
           OMMonitor monitor) throws RuntimeException
-      {
+          {
         // Use the package registry of the commit context to catch new packages!
         EPackage model1Package = commitContext.getPackageRegistry().getEPackage(getModel1Package().getNsURI());
         EClass customerClass = (EClass)model1Package.getEClassifier("Customer");
@@ -176,7 +175,7 @@ public class RepositoryTest extends AbstractCDOTest
             }
           }
         }
-      }
+          }
 
       public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
           OMMonitor monitor)
@@ -218,7 +217,7 @@ public class RepositoryTest extends AbstractCDOTest
     {
       public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
           OMMonitor monitor) throws RuntimeException
-      {
+          {
         CDOView view = CDOServerUtil.openView(commitContext);
         for (CDORevision revision : commitContext.getNewObjects())
         {
@@ -236,7 +235,7 @@ public class RepositoryTest extends AbstractCDOTest
         }
 
         view.close();
-      }
+          }
 
       public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
           OMMonitor monitor)

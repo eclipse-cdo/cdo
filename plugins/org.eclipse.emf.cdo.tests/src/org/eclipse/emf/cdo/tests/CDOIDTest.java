@@ -142,7 +142,7 @@ public class CDOIDTest extends AbstractCDOTest
   }
 
   @CleanRepositoriesBefore()
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, IRepositoryConfig.CAPABILITY_RESTARTABLE })
   public void testSetIDWithReferences() throws Exception
   {
     CDOID idToForce1;

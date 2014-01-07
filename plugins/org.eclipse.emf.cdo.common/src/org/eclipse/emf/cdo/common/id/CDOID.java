@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,12 +83,20 @@ public interface CDOID extends Comparable<CDOID>, Serializable
     EXTERNAL_TEMP_OBJECT('e'), //
     TEMP_OBJECT('t');
 
+    private static final char FRAGMENT_PATH_PREFIX = '/';
+
     private static Enum<?>[] chars;
 
     private char id;
 
     private Type(char id)
     {
+      if (id == FRAGMENT_PATH_PREFIX)
+      {
+        // @see CDOResourceImpl.getEObject(String uriFragment)
+        throw new IllegalArgumentException("id=" + id);
+      }
+
       registerChar(id, this);
       this.id = id;
     }
@@ -119,7 +127,14 @@ public interface CDOID extends Comparable<CDOID>, Serializable
      */
     public static Enum<?> getLiteral(char id)
     {
-      return chars[id];
+      try
+      {
+        return chars[id];
+      }
+      catch (ArrayIndexOutOfBoundsException ex)
+      {
+        return null;
+      }
     }
 
     /**

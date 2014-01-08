@@ -32,6 +32,8 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface WorkingSetTask extends SetupTask
 {
+  int PRIORITY = DEFAULT_PRIORITY + 10;
+
   /**
    * Returns the value of the '<em><b>Working Sets</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet}.

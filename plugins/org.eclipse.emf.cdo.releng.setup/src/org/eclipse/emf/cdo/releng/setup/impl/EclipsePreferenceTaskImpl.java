@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -19,9 +20,12 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 
 import java.util.Set;
@@ -42,6 +46,8 @@ import java.util.Set;
  */
 public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipsePreferenceTask
 {
+  private static final IWorkspaceRoot WORKSPACE_ROOT = ResourcesPlugin.getWorkspace().getRoot();
+
   /**
    * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -287,6 +293,18 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
   public void perform(SetupTaskContext context) throws Exception
   {
     String key = getKey();
+
+    // Ignore project-specific preferences for projects that don't exist in the workspace.
+    URI uri = PreferencesFactory.eINSTANCE.createURI(key);
+    if ("project".equals(uri.authority()))
+    {
+      if (!WORKSPACE_ROOT.getProject(uri.segment(0)).isAccessible())
+      {
+        context.log("Ignoring preference " + key + " = " + value);
+        return;
+      }
+    }
+
     final String value = getValue();
     context.log("Setting preference " + key + " = " + value);
 

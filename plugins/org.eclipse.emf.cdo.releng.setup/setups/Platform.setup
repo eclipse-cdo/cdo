@@ -71,8 +71,10 @@
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.resources.git.location" value="${setup.branch.dir/git/platform.resources}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.resources.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.resources" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.core.resources/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.runtime.git.location" value="${setup.branch.dir/git/platform.runtime}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.runtime.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.runtime" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.core.expressions/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.swt.binaries.git.location" value="${setup.branch.dir/git/platform.swt.binaries}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.swt.binaries.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.swt.binaries" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.swt.git.location" value="${setup.branch.dir/git/platform.swt}"/>
@@ -80,8 +82,25 @@
       <setupTasks xsi:type="setup:ResourceCopyTask" excludedTriggers="BOOTSTRAP" sourceURL="${setup.branch.dir|uri}/git/platform.swt/bundles/org.eclipse.swt/.classpath_${ws}" targetURL="${setup.branch.dir|uri}/git/platform.swt/bundles/org.eclipse.swt/.classpath"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.team.git.location" value="${setup.branch.dir/git/platform.team}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.team.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.team" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.compare/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.compare.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.compare.win32/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.core.net/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.team.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.team.cvs.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.team.cvs.ssh/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.team.cvs.ssh2/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.team.cvs.ui/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.team.ui/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ui.net/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.text.git.location" value="${setup.branch.dir/git/platform.text}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.text.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/platform/eclipse.platform.text.git" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.core.filebuffers/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jface.text/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.search/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.text/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ui.editors/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ui.workbench.texteditor/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.ua.git.location" value="${setup.branch.dir/git/platform.ua}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${platform.ua.git.location}" remoteURI="ssh://git.eclipse.org:29418/platform/eclipse.platform.ua" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="platform.ui.git.location" value="${setup.branch.dir/git/platform.ui}"/>
@@ -131,12 +150,22 @@
       <setupTasks xsi:type="setup:GitCloneTask" location="${jdt.core.binaries.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/jdt/eclipse.jdt.core.binaries.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="jdt.core.git.location" value="${setup.branch.dir/git/jdt.core}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${jdt.core.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/jdt/eclipse.jdt.core.git" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.annotation/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.apt.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.apt.ui/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="jdt.debug.git.location" value="${setup.branch.dir/git/jdt.debug}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${jdt.debug.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/jdt/eclipse.jdt.debug.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="jdt.git.location" value="${setup.branch.dir/git/jdt}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${jdt.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/jdt/eclipse.jdt.git" checkoutBranch="master"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="jdt.ui.git.location" value="${setup.branch.dir/git/jdt.ui}"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${jdt.ui.git.location}" remoteURI="ssh://git.eclipse.org/gitroot/jdt/eclipse.jdt.ui.git" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.junit/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.junit.core/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.junit.runtime/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.junit4.runtime/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.jdt.ui/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ltk.core.refactoring/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ltk.ui.refactoring/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="warning"/>
     </setupTasks>
     <setupTasks xsi:type="setup:CompoundSetupTask" name="Eclipse License Clone">
       <setupTasks xsi:type="setup:ContextVariableTask" name="eclipse.license.git.location" value="${setup.branch.dir/git/eclipse.license}"/>
@@ -156,6 +185,10 @@
       <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.location" value="${setup.branch.dir/git/ecf}"/>
       <setupTasks xsi:type="setup:ContextVariableTask" name="ecf.git.url" value="ssh://git.eclipse.org/gitroot/ecf/org.eclipse.ecf.git"/>
       <setupTasks xsi:type="setup:GitCloneTask" location="${ecf.git.location}" remoteURI="${ecf.git.url}" checkoutBranch="master"/>
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/project/org.eclipse.ecf.provider.filetransfer/org.eclipse.pde.api.tools/INVALID_REFERENCE_IN_SYSTEM_LIBRARIES" value="warning"/>
+    </setupTasks>
+    <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.pde.api.tools">
+      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/MISSING_EE_DESCRIPTIONS" value="Warning"/>
     </setupTasks>
     <setupTasks xsi:type="setup:MaterializationTask">
       <rootComponents name="org.eclipse.sdk"/>
@@ -193,9 +226,6 @@
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository/"/>
       <p2Repositories url="http://download.eclipse.org/jetty/updates/jetty-bundles-8.x"/>
       <p2Repositories url="http://download.eclipse.org/cbi/updates/license"/>
-    </setupTasks>
-    <setupTasks xsi:type="setup:CompoundSetupTask" name="org.eclipse.pde.api.tools">
-      <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/MISSING_EE_DESCRIPTIONS" value="Warning"/>
     </setupTasks>
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.4" location="${jre.1.4.location}"/>
     <setupTasks xsi:type="setup:JRETask" version="J2SE-1.5" location="${jre.1.5.location}"/>

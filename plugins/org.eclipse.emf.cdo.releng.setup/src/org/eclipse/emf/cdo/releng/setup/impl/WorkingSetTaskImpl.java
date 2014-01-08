@@ -259,4 +259,10 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
     Resource resource = defaultWorkingSetGroup.eResource();
     resource.save(null);
   }
+
+  @Override
+  public int getPriority()
+  {
+    return PRIORITY;
+  }
 } // SetWorkingTaskImpl

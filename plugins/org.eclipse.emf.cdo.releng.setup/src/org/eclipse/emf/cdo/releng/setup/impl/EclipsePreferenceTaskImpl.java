@@ -262,7 +262,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
   @Override
   public int getPriority()
   {
-    return getKey().startsWith("/project") ? DEFAULT_PRIORITY : PRIORITY;
+    return getKey().startsWith("/project") ? PROJECT_PRIORITY : PRIORITY;
   }
 
   @Override
@@ -298,7 +298,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
     URI uri = PreferencesFactory.eINSTANCE.createURI(key);
     if ("project".equals(uri.authority()))
     {
-      if (!WORKSPACE_ROOT.getProject(uri.segment(0)).isAccessible())
+      if (!WORKSPACE_ROOT.getProject(URI.decode(uri.segment(0))).isAccessible())
       {
         context.log("Ignoring preference " + key + " = " + value);
         return;

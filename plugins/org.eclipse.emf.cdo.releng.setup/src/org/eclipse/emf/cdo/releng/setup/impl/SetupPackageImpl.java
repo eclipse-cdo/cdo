@@ -1397,10 +1397,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getTargetPlatformTask()
   {
     return targetPlatformTaskEClass;
@@ -2868,6 +2868,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Create annotations
     // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
     createExtendedMetaDataAnnotations();
+    // http://www.eclipse.org/CDO/releng/setup/enablement
+    createEnablementAnnotations();
   }
 
   /**
@@ -2885,6 +2887,32 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getKeyBindingContext_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getCommandParameter_ID(), source, new String[] { "kind", "attribute", "name", "id" });
+  }
+
+  /**
+   * Initializes the annotations for <b>http://www.eclipse.org/CDO/releng/setup/enablement</b>.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createEnablementAnnotations()
+  {
+    String source = "http://www.eclipse.org/CDO/releng/setup/enablement";
+    addAnnotation(
+        basicMaterializationTaskEClass,
+        source,
+        new String[] {
+            "variableName",
+            "setup.buckminster.p2",
+            "repository",
+            "http://download.eclipse.org/tools/buckminster/updates-4.3",
+            "installableUnits",
+            "org.eclipse.buckminster.ant org.eclipse.buckminster.core org.eclipse.buckminster.sax org.eclipse.buckminster.download org.eclipse.buckminster.generic org.eclipse.buckminster.executor org.eclipse.buckminster.fetcher org.eclipse.buckminster.osgi.filter org.eclipse.buckminster.jarprocessor org.eclipse.buckminster.jdt org.eclipse.buckminster.junit org.eclipse.buckminster.pde org.eclipse.buckminster.git org.eclipse.buckminster.mspec org.eclipse.buckminster.rmap" });
+    addAnnotation(gitCloneTaskEClass, source, new String[] { "variableName", "setup.egit.p2", "repository",
+        "http://download.eclipse.org/egit/updates", "installableUnits", "org.eclipse.egit.feature.group" });
+    addAnnotation(mylynQueryTaskEClass, source, new String[] { "variableName", "setup.mylyn.p2", "repository",
+        "http://download.eclipse.org/mylyn/releases/latest", "installableUnits",
+        "org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui" });
   }
 
 } // SetupPackageImpl

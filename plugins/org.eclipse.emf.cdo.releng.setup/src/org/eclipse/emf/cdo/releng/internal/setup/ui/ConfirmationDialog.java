@@ -184,12 +184,12 @@ public class ConfirmationDialog extends AbstractSetupDialog
         {
           List<ScopeRoot> list = new ArrayList<ScopeRoot>(map.keySet());
           Collections.sort(list, new Comparator<ScopeRoot>()
-              {
+          {
             public int compare(ScopeRoot o1, ScopeRoot o2)
             {
               return o1.getScope().compareTo(o2.getScope());
             }
-              });
+          });
 
           return list.toArray();
         }

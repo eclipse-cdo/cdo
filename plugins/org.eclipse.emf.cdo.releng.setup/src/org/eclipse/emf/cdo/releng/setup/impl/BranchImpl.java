@@ -125,10 +125,10 @@ public class BranchImpl extends ConfigurableItemImpl implements Branch
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public NotificationChain basicSetProject(Project newProject, NotificationChain msgs)
   {
     msgs = eBasicSetContainer((InternalEObject)newProject, SetupPackage.BRANCH__PROJECT, msgs);

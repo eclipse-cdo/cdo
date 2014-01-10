@@ -137,6 +137,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BasicMaterializationTask" abstract="true"
       eSuperTypes="#//SetupTask">
+    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
+      <details key="variableName" value="setup.buckminster.p2"/>
+      <details key="repository" value="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
+      <details key="installableUnits" value="org.eclipse.buckminster.ant org.eclipse.buckminster.core org.eclipse.buckminster.sax org.eclipse.buckminster.download org.eclipse.buckminster.generic org.eclipse.buckminster.executor org.eclipse.buckminster.fetcher org.eclipse.buckminster.osgi.filter org.eclipse.buckminster.jarprocessor org.eclipse.buckminster.jdt org.eclipse.buckminster.junit org.eclipse.buckminster.pde org.eclipse.buckminster.git org.eclipse.buckminster.mspec org.eclipse.buckminster.rmap"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetPlatform" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="${setup.branch.dir/tp}"/>
   </eClassifiers>
@@ -185,6 +190,11 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GitCloneTask" eSuperTypes="#//SetupTask">
+    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
+      <details key="variableName" value="setup.egit.p2"/>
+      <details key="repository" value="http://download.eclipse.org/egit/updates"/>
+      <details key="installableUnits" value="org.eclipse.egit.feature.group"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteName" lowerBound="1"
@@ -288,6 +298,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MylynQueryTask" eSuperTypes="#//SetupTask">
+    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
+      <details key="variableName" value="setup.mylyn.p2"/>
+      <details key="repository" value="http://download.eclipse.org/mylyn/releases/latest"/>
+      <details key="installableUnits" value="org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectorKind" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="bugzilla"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="summary" lowerBound="1"

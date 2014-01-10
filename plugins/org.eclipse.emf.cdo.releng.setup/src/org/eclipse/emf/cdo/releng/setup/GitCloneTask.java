@@ -27,7 +27,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * </p>
  *
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask()
- * @model
+ * @model annotation="http://www.eclipse.org/CDO/releng/setup/enablement variableName='setup.egit.p2' repository='http://download.eclipse.org/egit/updates' installableUnits='org.eclipse.egit.feature.group'"
  * @generated
  */
 public interface GitCloneTask extends SetupTask

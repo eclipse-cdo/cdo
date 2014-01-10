@@ -97,6 +97,7 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
    */
   protected EclipsePreferenceTaskImpl()
   {
+    super();
   }
 
   /**

@@ -209,11 +209,11 @@ public interface SetupTask extends EObject
 
   void overrideFor(SetupTask overriddenTask);
 
+  void consolidate();
+
   boolean needsBundlePool();
 
   boolean needsBundlePoolTP();
-
-  EList<? extends SetupTask> generateAdditionalRequirements();
 
   boolean isNeeded(SetupTaskContext context) throws Exception;
 

@@ -96,6 +96,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -486,6 +487,30 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     getInstallableUnits().addAll(overriddenP2Task.getInstallableUnits());
     getP2Repositories().addAll(overriddenP2Task.getP2Repositories());
+  }
+
+  @Override
+  public void consolidate()
+  {
+    Set<String> installableUnitKeys = new HashSet<String>();
+    for (Iterator<InstallableUnit> it = getInstallableUnits().iterator(); it.hasNext();)
+    {
+      InstallableUnit installableUnit = it.next();
+      if (!installableUnitKeys.add(installableUnit.getID() + "->" + installableUnit.getVersionRange().toString()))
+      {
+        it.remove();
+      }
+    }
+
+    Set<String> repositoryKeys = new HashSet<String>();
+    for (Iterator<P2Repository> it = getP2Repositories().iterator(); it.hasNext();)
+    {
+      P2Repository p2Repository = it.next();
+      if (!repositoryKeys.add(p2Repository.getURL()))
+      {
+        it.remove();
+      }
+    }
   }
 
   @Override
@@ -1259,7 +1284,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   @Override
   public MirrorRunnable mirror(final MirrorContext context, final File mirrorsDir, boolean includingLocals)
       throws Exception
-      {
+  {
     return new MirrorRunnable()
     {
       public void run(IProgressMonitor monitor) throws Exception
@@ -1346,7 +1371,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       private void initSourceRepos(MirrorApplication app, final MirrorContext context, String targetURL)
           throws URISyntaxException
-          {
+      {
         for (P2Repository p2Repository : getP2Repositories())
         {
           String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
@@ -1357,7 +1382,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           context.addRedirection(sourceURL, targetURL);
         }
-          }
+      }
 
       private void initRootIUs(MirrorApplication app)
       {
@@ -1379,5 +1404,5 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         ReflectUtil.setValue(field, app, rootIUs);
       }
     };
-      }
+  }
 } // InstallTaskImpl

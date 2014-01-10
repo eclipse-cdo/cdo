@@ -54,10 +54,10 @@ public class FileEditorImpl extends MinimalEObjectImpl.Container implements File
   protected String iD = ID_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected FileEditorImpl()
   {
     super();
@@ -85,10 +85,10 @@ public class FileEditorImpl extends MinimalEObjectImpl.Container implements File
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setID(String newID)
   {
     String oldID = iD;
@@ -100,10 +100,10 @@ public class FileEditorImpl extends MinimalEObjectImpl.Container implements File
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

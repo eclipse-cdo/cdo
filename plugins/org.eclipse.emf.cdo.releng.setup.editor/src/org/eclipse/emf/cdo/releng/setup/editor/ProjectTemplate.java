@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.setup.editor;
 
-import org.eclipse.emf.cdo.releng.internal.setup.AdditionalRequirementsGenerator;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertiesViewer;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Project;
@@ -46,7 +45,6 @@ public abstract class ProjectTemplate
     this.description = StringUtil.safe(description);
 
     project = SetupFactory.eINSTANCE.createProject();
-    project.eAdapters().add(new AdditionalRequirementsGenerator());
   }
 
   protected ProjectTemplate(String label)

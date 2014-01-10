@@ -80,7 +80,7 @@ public final class FileUtil
   }
 
   private static void delete(File file, IProgressMonitor monitor, boolean verbose) throws IOException,
-  InterruptedException
+      InterruptedException
   {
     List<File> files = listAllFiles(file);
     if (files.isEmpty())

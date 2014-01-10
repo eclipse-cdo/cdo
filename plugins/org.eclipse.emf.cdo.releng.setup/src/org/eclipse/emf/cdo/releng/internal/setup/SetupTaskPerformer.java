@@ -19,6 +19,9 @@ import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
+import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -34,12 +37,14 @@ import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -60,6 +65,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -80,12 +86,16 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
  */
 public class SetupTaskPerformer extends AbstractSetupTaskContext
 {
+  private static final Pattern INSTALLABLE_UNIT_WITH_RANGE_PATTERN = Pattern.compile("([^\\[\\(]*)(.*)");
+
   private static final long serialVersionUID = 1L;
 
   private static ProgressLog progress;
@@ -133,7 +143,58 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     {
       Trigger trigger = getTrigger();
 
-      EList<SetupTask> setupTasks = setup.getSetupTasks(true, trigger);
+      EList<SetupTask> allPossibleSetupTasks = setup.getSetupTasks(true, null);
+      Set<EClass> eClasses = new LinkedHashSet<EClass>();
+      for (SetupTask possibleSetupTask : allPossibleSetupTasks)
+      {
+        EClass eClass = possibleSetupTask.eClass();
+        if (eClasses.add(eClass))
+        {
+          eClasses.addAll(eClass.getEAllSuperTypes());
+        }
+      }
+
+      EList<SetupTask> setupTasks = new BasicEList<SetupTask>();
+      for (EClass eClass : eClasses)
+      {
+        for (EAnnotation eAnnotation : eClass.getEAnnotations())
+        {
+          String source = eAnnotation.getSource();
+          if (source != null && source.startsWith("http://www.eclipse.org/CDO/releng/setup/enablement"))
+          {
+            String variableName = eAnnotation.getDetails().get("variableName");
+            String p2RepositoryLocation = eAnnotation.getDetails().get("repository");
+            put(variableName, p2RepositoryLocation);
+
+            P2Task p2Task = SetupFactory.eINSTANCE.createP2Task();
+            EList<InstallableUnit> installableUnits = p2Task.getInstallableUnits();
+            for (String installableUnitSpecification : eAnnotation.getDetails().get("installableUnits").split("\\s"))
+            {
+              Matcher matcher = INSTALLABLE_UNIT_WITH_RANGE_PATTERN.matcher(installableUnitSpecification);
+              if (matcher.matches())
+              {
+                InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
+                installableUnit.setID(matcher.group(1));
+                String versionRange = matcher.group(2);
+                if (!StringUtil.isEmpty(versionRange))
+                {
+                  installableUnit.setVersionRange(new VersionRange(versionRange));
+                }
+
+                installableUnits.add(installableUnit);
+              }
+            }
+
+            P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
+            p2Repository.setURL("${" + variableName + "}");
+            p2Task.getP2Repositories().add(p2Repository);
+
+            setupTasks.add(p2Task);
+          }
+        }
+      }
+
+      setupTasks.addAll(setup.getSetupTasks(true, trigger));
       triggeredSetupTasks = setupTasks; // Debugging help
 
       if (!setupTasks.isEmpty())
@@ -193,6 +254,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
         {
           SetupTask setupTask = it.next();
+          setupTask.consolidate();
           if (setupTask instanceof ContextVariableTask)
           {
             ContextVariableTask contextVariableTask = (ContextVariableTask)setupTask;
@@ -841,9 +903,23 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     // Perform override merging.
     for (Map.Entry<SetupTask, SetupTask> entry : substitutions.entrySet())
     {
-      SetupTask overriddenSetupTask = (SetupTask)originalCopier.get(entry.getKey());
-      SetupTask setupTask = (SetupTask)originalCopier.get(entry.getValue());
-      setupTask.overrideFor(overriddenSetupTask);
+      SetupTask originalOverriddenSetupTask = entry.getKey();
+      SetupTask overriddenSetupTask = (SetupTask)originalCopier.get(originalOverriddenSetupTask);
+      // For synthesized tasks, there is no copy, only the original.
+      if (overriddenSetupTask == null)
+      {
+        overriddenSetupTask = originalOverriddenSetupTask;
+      }
+
+      SetupTask originalOverridingSetupTask = entry.getValue();
+      SetupTask overridingSetupTask = (SetupTask)originalCopier.get(originalOverridingSetupTask);
+      // For synthesized tasks, there is no copy, only the original.
+      if (overridingSetupTask == null)
+      {
+        overridingSetupTask = originalOverridingSetupTask;
+      }
+
+      overridingSetupTask.overrideFor(overriddenSetupTask);
     }
 
     // For each original resource, ensure that the copied resource contains the either the corresponding copies or
@@ -887,7 +963,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
 
     reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
-        {
+    {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
       {
         Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
@@ -904,7 +980,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         return result;
       }
-        });
+    });
 
     return list;
   }
@@ -912,20 +988,20 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void reorderSetupTasks(EList<SetupTask> setupTasks)
   {
     ECollections.sort(setupTasks, new Comparator<SetupTask>()
-        {
+    {
       public int compare(SetupTask setupTask1, SetupTask setupTask2)
       {
         return setupTask1.getPriority() - setupTask2.getPriority();
       }
-        });
+    });
 
     reorder(setupTasks, new DependencyProvider<SetupTask>()
-        {
+    {
       public Collection<SetupTask> getDependencies(SetupTask setupTask)
       {
         return setupTask.getRequirements();
       }
-        });
+    });
   }
 
   private static String getLabel(SetupTask setupTask)

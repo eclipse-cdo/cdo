@@ -26,7 +26,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * </p>
  *
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueryTask()
- * @model
+ * @model annotation="http://www.eclipse.org/CDO/releng/setup/enablement variableName='setup.mylyn.p2' repository='http://download.eclipse.org/mylyn/releases/latest' installableUnits='org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui'"
  * @generated
  */
 public interface MylynQueryTask extends SetupTask

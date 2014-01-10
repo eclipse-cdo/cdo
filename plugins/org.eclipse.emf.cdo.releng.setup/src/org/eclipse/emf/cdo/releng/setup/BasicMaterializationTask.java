@@ -24,6 +24,7 @@ package org.eclipse.emf.cdo.releng.setup;
  *
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getBasicMaterializationTask()
  * @model abstract="true"
+ *        annotation="http://www.eclipse.org/CDO/releng/setup/enablement variableName='setup.buckminster.p2' repository='http://download.eclipse.org/tools/buckminster/updates-4.3' installableUnits='org.eclipse.buckminster.ant org.eclipse.buckminster.core org.eclipse.buckminster.sax org.eclipse.buckminster.download org.eclipse.buckminster.generic org.eclipse.buckminster.executor org.eclipse.buckminster.fetcher org.eclipse.buckminster.osgi.filter org.eclipse.buckminster.jarprocessor org.eclipse.buckminster.jdt org.eclipse.buckminster.junit org.eclipse.buckminster.pde org.eclipse.buckminster.git org.eclipse.buckminster.mspec org.eclipse.buckminster.rmap'"
  * @generated
  */
 public interface BasicMaterializationTask extends SetupTask

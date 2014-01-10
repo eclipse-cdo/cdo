@@ -86,6 +86,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -109,14 +110,6 @@ import java.util.regex.Pattern;
  */
 public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implements MaterializationTask
 {
-  private static final String[] REQUIRED_IUS = { "org.eclipse.buckminster.core.headless.feature.feature.group",
-      "org.eclipse.buckminster.pde.headless.feature.feature.group",
-      "org.eclipse.buckminster.git.headless.feature.feature.group", "org.eclipse.buckminster.mspec",
-      "org.eclipse.buckminster.rmap" };
-
-  private static final String[] REQUIRED_REPOSITORIES = { "http://download.eclipse.org/tools/buckminster/headless-4.3",
-      "http://download.eclipse.org/tools/buckminster/updates-4.3" };
-
   /**
    * The cached value of the '{@link #getRootComponents() <em>Root Components</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -341,15 +334,30 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
   }
 
   @Override
-  protected String[] getRequiredInstallableUnits()
+  public void consolidate()
   {
-    return REQUIRED_IUS;
-  }
+    Set<String> componentKeys = new HashSet<String>();
+    for (Iterator<Component> it = getRootComponents().iterator(); it.hasNext();)
+    {
+      Component component = it.next();
+      if (!componentKeys.add(component.getName() + "->" + component.getType() + "->" + component.getVersionRange()))
+      {
+        it.remove();
+      }
 
-  @Override
-  protected String[] getRequiredP2Repositories()
-  {
-    return REQUIRED_REPOSITORIES;
+    }
+
+    Set<String> repositoryKeys = new HashSet<String>();
+    for (Iterator<P2Repository> it = getP2Repositories().iterator(); it.hasNext();)
+    {
+      P2Repository p2Repository = it.next();
+      if (!repositoryKeys.add(p2Repository.getURL()))
+      {
+        it.remove();
+      }
+    }
+
+    super.consolidate();
   }
 
   @Override

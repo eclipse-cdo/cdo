@@ -18,16 +18,17 @@ import org.eclipse.emf.cdo.releng.setup.VariableType;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
@@ -49,18 +50,6 @@ public class PromptDialog extends AbstractSetupDialog
   }
 
   @Override
-  public boolean close()
-  {
-    if (headerFont != null)
-    {
-      headerFont.dispose();
-      headerFont = null;
-    }
-
-    return super.close();
-  }
-
-  @Override
   protected String getDefaultMessage()
   {
     return "Enter values for the unspecified variables.";
@@ -75,10 +64,10 @@ public class PromptDialog extends AbstractSetupDialog
   @Override
   protected void createUI(Composite parent)
   {
-    headerFont = getFont(parent, 16, SWT.BOLD);
+    headerFont = ExtendedFontRegistry.INSTANCE.getFont(parent.getFont(), URI.createURI("font:///+2/bold"));
 
     GridLayout layout = (GridLayout)parent.getLayout();
-    layout.numColumns = 3;
+    layout.numColumns = 4;
     layout.horizontalSpacing = 10;
     layout.verticalSpacing = 10;
 
@@ -107,7 +96,7 @@ public class PromptDialog extends AbstractSetupDialog
 
   private void createHeader(Composite parent, SetupTaskPerformer setupTaskPerformer)
   {
-    GridData gd = new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1);
+    GridData gd = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
     gd.heightHint = 32;
 
     Label header = new Label(parent, SWT.NONE);
@@ -122,6 +111,7 @@ public class PromptDialog extends AbstractSetupDialog
 
     String label = variable.getLabel();
     field.setLabelText(StringUtil.isEmpty(label) ? variable.getName() : label);
+    field.setDescriptionText(variable.getDocumentation());
 
     String documentation = variable.getDocumentation();
     if (!StringUtil.isEmpty(documentation))
@@ -174,16 +164,5 @@ public class PromptDialog extends AbstractSetupDialog
 
       okButton.setEnabled(true);
     }
-  }
-
-  private static Font getFont(Control control, int height, int style)
-  {
-    FontData[] datas = control.getFont().getFontData().clone();
-    datas[0].setHeight(height);
-    datas[0].setStyle(style);
-
-    Display display = control.getShell().getDisplay();
-    Font font = new Font(display, datas);
-    return font;
   }
 }

@@ -13,8 +13,11 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -46,6 +49,8 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
   private String value = EMPTY;
 
   private String labelText;
+
+  private String descriptionText;
 
   private String toolTip;
 
@@ -79,6 +84,16 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     }
 
     this.labelText = labelText.trim();
+  }
+
+  public final String getDescriptionText()
+  {
+    return descriptionText;
+  }
+
+  public final void setDescriptionText(String descriptionText)
+  {
+    this.descriptionText = descriptionText;
   }
 
   public final String getToolTip()
@@ -165,6 +180,31 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
 
     mainHelper.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
+    if (StringUtil.isEmpty(descriptionText))
+    {
+      new Label(parent, SWT.NONE);
+    }
+    else
+    {
+      ToolBar toolBar = new ToolBar(parent, SWT.FLAT | SWT.NO_FOCUS);
+      ToolItem helpButton = new ToolItem(toolBar, SWT.CHECK);
+      helpButton.setImage(JFaceResources.getImage(Dialog.DLG_IMG_HELP));
+      helpButton.setToolTipText("Show variable description");
+      final Label description = new Label(parent, SWT.WRAP | SWT.BORDER);
+      GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1);
+      description.setLayoutData(gridData);
+      description.setText(descriptionText);
+      description.setVisible(false);
+      helpButton.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          description.setVisible(!description.getVisible());
+        }
+      });
+    }
+
     transferValueToControl(value, control);
   }
 
@@ -238,13 +278,13 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     if (layout instanceof GridLayout)
     {
       GridLayout gridLayout = (GridLayout)layout;
-      if (gridLayout.numColumns == 3)
+      if (gridLayout.numColumns == 4)
       {
         return;
       }
     }
 
-    throw new IllegalArgumentException("Parent must have a GridLayout with 3 columns");
+    throw new IllegalArgumentException("Parent must have a GridLayout with 4 columns");
   }
 
   private void notifyValueListeners(String oldValue, String newValue)

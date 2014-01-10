@@ -314,6 +314,12 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     return getOption() + (value == null ? "" : (isVm() ? "" : " ") + value);
   }
 
+  @Override
+  public Object getOverrideToken()
+  {
+    return createToken(getOption());
+  }
+
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     file = new File(context.getEclipseDir(), context.getOS().getEclipseIni());

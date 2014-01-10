@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
+import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
@@ -40,11 +41,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -112,8 +116,6 @@ public class PreferenceRecorderAction extends Action
   {
     if (isChecked())
     {
-      expandItem(container);
-
       preferenceAdapter = createPreferenceAdapter();
       rootPreferenceNode = PreferencesUtil.getRootPreferenceNode(true);
       rootPreferenceNode.eAdapters().add(preferenceAdapter);
@@ -155,7 +157,7 @@ public class PreferenceRecorderAction extends Action
         if (path.equals(preferenceTask.getKey()))
         {
           preferenceTask.setValue(value);
-          expandItem(preferenceTask.eContainer());
+          expandItem(preferenceTask);
           return;
         }
       }
@@ -168,7 +170,7 @@ public class PreferenceRecorderAction extends Action
     String pluginID = key.segment(1).toString();
     CompoundSetupTask compoundTask = getCompoundTask(pluginID);
     compoundTask.getSetupTasks().add(task);
-    expandItem(compoundTask);
+    expandItem(task);
   }
 
   private void expandItem(final EObject object)
@@ -179,11 +181,32 @@ public class PreferenceRecorderAction extends Action
       final Viewer viewer = viewerProvider.getViewer();
       if (viewer instanceof TreeViewer)
       {
-        viewer.getControl().getShell().getDisplay().asyncExec(new Runnable()
+        UIUtil.getDisplay().asyncExec(new Runnable()
         {
           public void run()
           {
-            ((TreeViewer)viewer).setExpandedState(object, true);
+            TreeViewer treeViewer = (TreeViewer)viewer;
+            expand(treeViewer, object);
+
+            IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+
+            @SuppressWarnings("unchecked")
+            List<Object> list = selection.toList();
+            list = new ArrayList<Object>(list);
+            list.add(object);
+
+            treeViewer.setSelection(new StructuredSelection(list));
+          }
+
+          private void expand(TreeViewer treeViewer, EObject object)
+          {
+            treeViewer.setExpandedState(object, true);
+
+            EObject eContainer = object.eContainer();
+            if (eContainer != null)
+            {
+              expand(treeViewer, eContainer);
+            }
           }
         });
       }

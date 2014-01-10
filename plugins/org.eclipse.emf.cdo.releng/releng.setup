@@ -7,7 +7,6 @@
       <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
       <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
-      <installableUnits id="org.eclipse.egit.feature.group"/>
       <installableUnits id="org.eclipse.buckminster.core.feature.feature.group"/>
       <installableUnits id="org.eclipse.buckminster.git.feature.feature.group"/>
       <installableUnits id="org.eclipse.buckminster.pde.feature.feature.group"/>
@@ -23,7 +22,7 @@
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo}" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the workspace for the self hosting setup IDE." name="launcher.setup.ide.ws" value="" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the shared target platform bundle pool used by Buckminster in the self hosting IDE." name="launcher.setup.ide.p2pool" value="${setup.install.dir/.p2pool-tp}" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ApiBaselineTask" version="4.2" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
+    <setupTasks xsi:type="setup:ApiBaselineTask" disabled="true" version="4.2" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
     <setupTasks xsi:type="setup:ResourceCreationTask" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;projectDescription>&#xD;&#xA;&#x9;&lt;name>.buckminster&lt;/name>&#xD;&#xA;&#x9;&lt;comment>&lt;/comment>&#xD;&#xA;&#x9;&lt;projects>&#xD;&#xA;&#x9;&lt;/projects>&#xD;&#xA;&#x9;&lt;buildSpec>&#xD;&#xA;&#x9;&lt;/buildSpec>&#xD;&#xA;&#x9;&lt;natures>&#xD;&#xA;&#x9;&lt;/natures>&#xD;&#xA;&lt;/projectDescription>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.buckminster/.project"/>
     <setupTasks xsi:type="setup:MaterializationTask">

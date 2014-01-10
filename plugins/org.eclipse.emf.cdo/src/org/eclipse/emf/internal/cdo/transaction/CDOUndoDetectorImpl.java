@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta.Type;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOUndoDetector;
@@ -37,32 +36,21 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
       CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = featureDelta.getFeature();
-    if (ignore(feature))
+    InternalCDORevision revision1 = (InternalCDORevision)cleanRevision;
+    InternalCDORevision revision2 = (InternalCDORevision)revision;
+
+    if (ignore(feature, revision1, revision2))
     {
       return false;
     }
 
-    if (ignore(cleanRevision))
+    if (feature == CDOContainerFeatureDelta.CONTAINER_FEATURE)
     {
-      return false;
+      return detectUndoContainer(revision1, revision2);
     }
 
-    if (ignore(revision))
-    {
-      return false;
-    }
-
-    InternalCDORevision rev1 = (InternalCDORevision)cleanRevision;
-    InternalCDORevision rev2 = (InternalCDORevision)revision;
-
-    if (featureDelta.getType() == Type.CONTAINER)
-    {
-      // return false;
-      return detectUndoContainer(transaction, rev1, rev2, (CDOContainerFeatureDelta)featureDelta);
-    }
-
-    Object value1 = rev1.getValue(feature);
-    Object value2 = rev2.getValue(feature);
+    Object value1 = revision1.getValue(feature);
+    Object value2 = revision2.getValue(feature);
 
     if (feature instanceof EReference)
     {
@@ -103,27 +91,26 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
     return ObjectUtil.equals(value1, value2);
   }
 
-  protected boolean detectUndoContainer(CDOTransaction transaction, InternalCDORevision cleanRevision,
-      InternalCDORevision revision, CDOContainerFeatureDelta featureDelta)
+  protected boolean detectUndoContainer(InternalCDORevision revision1, InternalCDORevision revision2)
   {
-    CDOID resourceID1 = cleanRevision.getResourceID();
-    CDOID resourceID2 = revision.getResourceID();
+    CDOID resourceID1 = revision1.getResourceID();
+    CDOID resourceID2 = revision2.getResourceID();
     if (resourceID1 != resourceID2)
     {
       return false;
     }
 
-    int containingFeatureID1 = cleanRevision.getContainingFeatureID();
-    int containingFeatureID2 = revision.getContainingFeatureID();
+    int containingFeatureID1 = revision1.getContainingFeatureID();
+    int containingFeatureID2 = revision2.getContainingFeatureID();
     if (containingFeatureID1 != containingFeatureID2)
     {
       return false;
     }
 
-    Object c1 = cleanRevision.getContainerID();
-    Object c2 = revision.getContainerID();
+    Object c1 = revision1.getContainerID();
+    Object c2 = revision2.getContainerID();
 
-    // Potentially most expensive check because of EObject/ID conversion
+    // Potentially most expensive check because of EObject/ID conversion in getID()
     Object containerID1 = getID(c1);
     Object containerID2 = getID(c2);
     if (containerID1 != containerID2)
@@ -134,14 +121,9 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
     return true;
   }
 
-  protected boolean ignore(EStructuralFeature feature)
+  protected boolean ignore(EStructuralFeature feature, InternalCDORevision revision1, InternalCDORevision revision2)
   {
-    return false;
-  }
-
-  protected boolean ignore(CDORevision revision)
-  {
-    return !((InternalCDORevision)revision).isUnchunked();
+    return feature.isMany() && !revision1.isUnchunked() && !revision2.isUnchunked();
   }
 
   private static Object getID(Object value)
@@ -169,12 +151,12 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
   /**
    * @author Eike Stepper
    */
-  public static final class NoFeatures extends CDOUndoDetectorImpl
+  public static final class NoFeatures implements CDOUndoDetector
   {
-    @Override
-    protected boolean ignore(EStructuralFeature feature)
+    public boolean detectUndo(CDOTransaction transaction, CDORevision revision1, CDORevision revision2,
+        CDOFeatureDelta featureDelta)
     {
-      return true;
+      return false;
     }
   }
 
@@ -184,9 +166,14 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
   public static final class SingleValuedFeatures extends CDOUndoDetectorImpl
   {
     @Override
-    protected boolean ignore(EStructuralFeature feature)
+    protected boolean ignore(EStructuralFeature feature, InternalCDORevision revision1, InternalCDORevision revision2)
     {
-      return feature.isMany();
+      if (feature.isMany())
+      {
+        return false;
+      }
+
+      return super.ignore(feature, revision1, revision2);
     }
   }
 }

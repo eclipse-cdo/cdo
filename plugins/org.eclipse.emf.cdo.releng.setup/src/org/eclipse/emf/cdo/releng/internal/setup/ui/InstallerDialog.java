@@ -549,7 +549,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
     createSeparator(parent);
 
-    GridLayout layout = new GridLayout(3, false);
+    GridLayout layout = new GridLayout(4, false);
     layout.marginWidth = 10;
     layout.marginHeight = 10;
 

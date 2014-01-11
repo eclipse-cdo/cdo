@@ -4,6 +4,7 @@
     <installableUnits id="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
     <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
+    <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group" versionRange="[1.0.0,2.0.0)"/>
     <installableUnits id="org.eclipse.net4j.util.ui.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.ide_feature.feature.group"/>
     <installableUnits id="org.eclipse.mylyn.java_feature.feature.group"/>

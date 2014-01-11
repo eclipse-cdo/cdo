@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMInstallType;
 import org.eclipse.jdt.launching.JavaRuntime;
@@ -285,6 +286,8 @@ public class JRETaskImpl extends SetupTaskImpl implements JRETask
           vmStandin.setInstallLocation(new File(location));
           vmStandin.setName("JRE for " + version);
           IVMInstall realVM = vmStandin.convertToRealVM();
+
+          JavaRuntime.setDefaultVMInstall(realVM, new NullProgressMonitor());
 
           if ("J2SE-1.4".equals(version))
           {

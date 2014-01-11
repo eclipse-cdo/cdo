@@ -27,6 +27,7 @@
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
     <setupTasks xsi:type="setup:ResourceCreationTask" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;projectDescription>&#xD;&#xA;&#x9;&lt;name>.buckminster&lt;/name>&#xD;&#xA;&#x9;&lt;comment>&lt;/comment>&#xD;&#xA;&#x9;&lt;projects>&#xD;&#xA;&#x9;&lt;/projects>&#xD;&#xA;&#x9;&lt;buildSpec>&#xD;&#xA;&#x9;&lt;/buildSpec>&#xD;&#xA;&#x9;&lt;natures>&#xD;&#xA;&#x9;&lt;/natures>&#xD;&#xA;&lt;/projectDescription>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.buckminster/.project"/>
     <setupTasks xsi:type="setup:MaterializationTask">
+      <rootComponents name="org.eclipse.sdk"/>
       <rootComponents name="org.eclipse.emf.cdo.releng.all"/>
       <rootComponents name="org.eclipse.emf.cdo.releng.release" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.emf.sdk"/>

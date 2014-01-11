@@ -353,6 +353,9 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
           if (tpOld != null)
           {
             FileUtil.rename(tpOld, tp);
+            TargetPlatformUtil.setTargetPlatform(tpOld.toString(), context.getSetup().getBranch().getProject()
+                .getName()
+                + " Target", true, context);
           }
 
           if (tpBroken.exists())

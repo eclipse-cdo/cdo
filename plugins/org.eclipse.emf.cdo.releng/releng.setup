@@ -35,6 +35,9 @@
       <rootComponents name="org.eclipse.egit"/>
       <rootComponents name="org.eclipse.buckminster.core.feature"/>
       <rootComponents name="org.eclipse.pde.api.tools.ee.feature"/>
+      <rootComponents name="org.apache.ws.commons.util" type="osgi.bundle"/>
+      <rootComponents name="org.apache.commons.io" type="osgi.bundle"/>
+      <rootComponents name="javax.xml.bind" type="osgi.bundle"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${git.clone}"/>
       <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
       <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>

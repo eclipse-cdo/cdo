@@ -145,7 +145,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private final boolean considerVisibleProjects;
 
-  private Map<Branch, BranchInfo> branchInfos;
+  private Map<Branch, Setup> setups;
 
   private ResourceSet resourceSet;
 
@@ -196,6 +196,28 @@ public class InstallerDialog extends AbstractSetupDialog
   protected String getDefaultMessage()
   {
     return null;
+  }
+
+  @Override
+  protected Control createDialogArea(Composite parent)
+  {
+    try
+    {
+      return super.createDialogArea(parent);
+    }
+    catch (final Throwable ex)
+    {
+      Activator.log(ex);
+      parent.getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          ErrorDialog.open(ex);
+        }
+      });
+
+      return null;
+    }
   }
 
   @Override
@@ -566,8 +588,6 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       public void valueChanged(String oldValue, String newValue) throws Exception
       {
-        branchInfos = null;
-
         preferences.setInstallFolder(newValue);
         EMFUtil.saveEObject(preferences);
         validate();
@@ -607,7 +627,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);
@@ -1202,19 +1222,16 @@ public class InstallerDialog extends AbstractSetupDialog
         Setup setup = getSetup(branch);
         if (setup != null)
         {
-          for (Trigger trigger : Trigger.values())
+          EList<SetupTask> tasks = setup.getSetupTasks(true, null);
+          for (SetupTask task : tasks)
           {
-            EList<SetupTask> tasks = setup.getSetupTasks(true, trigger);
-            for (SetupTask task : tasks)
-            {
-              result[0] |= task.needsBundlePool();
-              result[1] |= task.needsBundlePoolTP();
+            result[0] |= task.needsBundlePool();
+            result[1] |= task.needsBundlePoolTP();
 
-              if (result[0] && result[1])
-              {
-                // Exit early if both pools are needed
-                return result;
-              }
+            if (result[0] && result[1])
+            {
+              // Exit early if both pools are needed
+              return result;
             }
           }
         }
@@ -1224,18 +1241,16 @@ public class InstallerDialog extends AbstractSetupDialog
     return result;
   }
 
-  private BranchInfo getBranchInfo(Branch branch)
+  private Setup getSetup(Branch branch)
   {
-    if (branchInfos == null)
+    if (setups == null)
     {
-      branchInfos = new HashMap<Branch, BranchInfo>();
+      setups = new HashMap<Branch, Setup>();
     }
 
-    BranchInfo branchInfo = branchInfos.get(branch);
-    if (branchInfo == null)
+    Setup setup = setups.get(branch);
+    if (setup == null)
     {
-      Setup setup;
-
       URI uri = getSetupURI(branch);
       if (resourceSet.getURIConverter().exists(uri, null))
       {
@@ -1260,35 +1275,10 @@ public class InstallerDialog extends AbstractSetupDialog
         resource.getContents().add(setup);
       }
 
-      String installFolder = installFolderField.getValue();
-
-      branchInfo = new BranchInfo(installFolder, setup);
-      branchInfos.put(branch, branchInfo);
+      setups.put(branch, setup);
     }
 
-    return branchInfo;
-  }
-
-  private Setup getSetup(Branch branch)
-  {
-    BranchInfo branchInfo = getBranchInfo(branch);
-    if (branchInfo == null)
-    {
-      return null;
-    }
-
-    return branchInfo.getOriginalSetup();
-  }
-
-  private SetupTaskPerformer getPerformer(Branch branch)
-  {
-    BranchInfo branchInfo = getBranchInfo(branch);
-    if (branchInfo == null)
-    {
-      return null;
-    }
-
-    return branchInfo.getPerformer();
+    return setup;
   }
 
   private EList<Eclipse> getAllowedEclipseVersions(Branch branch)
@@ -1314,20 +1304,6 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private void validate()
   {
-    // String text = installFolderField.getValue();
-    //
-    // {
-    // String defaultFolder = text + File.separator + ".p2pool-ide";
-    // bundlePoolText.setFont(bundlePoolText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE.getFont(
-    // installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
-    // }
-    //
-    // {
-    // String defaultFolder = text + File.separator + ".p2pool-tp";
-    // bundlePoolTPText.setFont(bundlePoolTPText.getText().equals(defaultFolder) ? ExtendedFontRegistry.INSTANCE
-    // .getFont(installFolderText.getFont(), IItemFontProvider.ITALIC_FONT) : installFolderText.getFont());
-    // }
-
     if (viewer != null)
     {
       viewer.refresh(true);
@@ -1421,15 +1397,13 @@ public class InstallerDialog extends AbstractSetupDialog
       if (checkedElement instanceof Branch)
       {
         Branch branch = (Branch)checkedElement;
-        SetupTaskPerformer performer = getPerformer(branch);
-        if (performer != null)
+        Setup setup = getSetup(branch);
+        if (setup != null)
         {
-          Setup setup = performer.getSetup();
-          if (setup != null)
-          {
-            EMFUtil.saveEObject(setup);
-            setupTaskPerformers.add(performer);
-          }
+          EMFUtil.saveEObject(setup);
+
+          SetupTaskPerformer performer = new SetupTaskPerformer(Trigger.BOOTSTRAP, installFolder, setup);
+          setupTaskPerformers.add(performer);
         }
       }
     }
@@ -1498,32 +1472,6 @@ public class InstallerDialog extends AbstractSetupDialog
   private enum UpdateSearchState
   {
     SEARCHING, FOUND, DONE
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class BranchInfo
-  {
-    private final Setup originalSetup;
-
-    private final SetupTaskPerformer performer;
-
-    public BranchInfo(String installFolder, Setup originalSetup)
-    {
-      this.originalSetup = originalSetup;
-      performer = new SetupTaskPerformer(Trigger.BOOTSTRAP, installFolder, originalSetup);
-    }
-
-    public Setup getOriginalSetup()
-    {
-      return originalSetup;
-    }
-
-    public SetupTaskPerformer getPerformer()
-    {
-      return performer;
-    }
   }
 
   /**

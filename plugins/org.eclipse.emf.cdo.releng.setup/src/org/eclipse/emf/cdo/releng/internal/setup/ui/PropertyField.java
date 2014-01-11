@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -18,6 +19,12 @@ import org.eclipse.net4j.util.collection.ConcurrentArray;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -36,6 +43,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -640,6 +649,109 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
         Text control = getControl();
         control.setText(dir);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class ChoiceField<H extends Control> extends PropertyField<Control, H>
+  {
+    private Composite mainControl;
+
+    private ComboViewer comboViewer;
+
+    private List<VariableChoice> choices;
+
+    public ChoiceField(List<VariableChoice> choices)
+    {
+      this.choices = choices;
+    }
+
+    @Override
+    protected Control getMainControl()
+    {
+      if (mainControl != null)
+      {
+        return mainControl;
+      }
+
+      return super.getMainControl();
+    }
+
+    @Override
+    protected String getControlValue(Control control)
+    {
+      VariableChoice variableChoice = (VariableChoice)((IStructuredSelection)comboViewer.getSelection())
+          .getFirstElement();
+      if (variableChoice != null)
+      {
+        return variableChoice.getValue();
+      }
+
+      return "";
+    }
+
+    @Override
+    protected void transferValueToControl(String value, Control control)
+    {
+    }
+
+    @Override
+    protected Control createControl(Composite parent)
+    {
+      GridLayout mainLayout = new GridLayout(2, false);
+      mainLayout.marginWidth = 0;
+      mainLayout.marginHeight = 0;
+      mainLayout.horizontalSpacing = 0;
+
+      mainControl = new Composite(parent, SWT.NULL)
+      {
+        @Override
+        public void setEnabled(boolean enabled)
+        {
+          super.setEnabled(enabled);
+
+          Control[] children = getChildren();
+          for (int i = 0; i < children.length; i++)
+          {
+            Control child = children[i];
+            child.setEnabled(enabled);
+          }
+        }
+      };
+      mainControl.setLayout(mainLayout);
+
+      comboViewer = new ComboViewer(mainControl);
+      comboViewer.setLabelProvider(new LabelProvider()
+      {
+        @Override
+        public String getText(Object element)
+        {
+          return ((VariableChoice)element).getLabel();
+        }
+      });
+
+      comboViewer.setContentProvider(new ArrayContentProvider());
+      comboViewer.setInput(choices);
+
+      comboViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          VariableChoice variableChoice = (VariableChoice)((IStructuredSelection)event.getSelection())
+              .getFirstElement();
+          String value = variableChoice.getValue();
+          if (!value.equals(getValue()))
+          {
+            setValue(value);
+          }
+        }
+      });
+
+      Control control = comboViewer.getControl();
+      control.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+      return control;
     }
   }
 }

@@ -14,10 +14,12 @@ import org.eclipse.emf.cdo.releng.internal.setup.SetupTaskPerformer;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.PropertyField.ValueListener;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.VariableType;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 
@@ -107,7 +109,16 @@ public class PromptDialog extends AbstractSetupDialog
 
   private PropertyField<?, ?> createField(final ContextVariableTask variable)
   {
-    PropertyField<?, ?> field = createField(variable.getType());
+    PropertyField<?, ?> field;
+    EList<VariableChoice> choices = variable.getChoices();
+    if (!choices.isEmpty())
+    {
+      field = new PropertyField.ChoiceField<Control>(choices);
+    }
+    else
+    {
+      field = createField(variable.getType());
+    }
 
     String label = variable.getLabel();
     field.setLabelText(StringUtil.isEmpty(label) ? variable.getName() : label);

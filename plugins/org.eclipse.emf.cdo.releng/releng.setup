@@ -3,7 +3,6 @@
   <branches name="master">
     <setupTasks xsi:type="setup:P2Task">
       <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
-      <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
       <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group" versionRange="[1.0.0,2.0.0)"/>

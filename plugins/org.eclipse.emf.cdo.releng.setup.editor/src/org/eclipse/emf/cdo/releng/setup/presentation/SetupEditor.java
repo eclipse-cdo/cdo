@@ -178,7 +178,7 @@ import java.util.Set;
  * @generated
  */
 public class SetupEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-IMenuListener, IViewerProvider, IGotoMarker
+    IMenuListener, IViewerProvider, IGotoMarker
 {
   private static final Object VARIABLE_GROUP_IMAGE = SetupEditorPlugin.INSTANCE.getImage("full/obj16/VariableGroup");
 
@@ -850,13 +850,13 @@ IMenuListener, IViewerProvider, IGotoMarker
     editingDomain = new AdapterFactoryEditingDomain(adapterFactory, editingDomain.getCommandStack(),
         new HashMap<Resource, Boolean>()
         {
-      private static final long serialVersionUID = 1L;
+          private static final long serialVersionUID = 1L;
 
-      @Override
-      public Boolean get(Object key)
-      {
-        return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
-      }
+          @Override
+          public Boolean get(Object key)
+          {
+            return !editingDomain.getResourceSet().getResources().contains(key) ? Boolean.TRUE : super.get(key);
+          }
         });
 
     EMFUtil.configureResourceSet(editingDomain.getResourceSet());
@@ -1189,7 +1189,7 @@ IMenuListener, IViewerProvider, IGotoMarker
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
       selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
           selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
-              .getDialogSettings())));
+          .getDialogSettings())));
 
       Resource resource = editingDomain.getResourceSet().getResources().get(0);
       selectionViewer.setInput(resource);
@@ -2120,7 +2120,7 @@ IMenuListener, IViewerProvider, IGotoMarker
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
         .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-        doSave(progressMonitor);
+    doSave(progressMonitor);
   }
 
   /**
@@ -2418,6 +2418,16 @@ IMenuListener, IViewerProvider, IGotoMarker
         try
         {
           IEditorInput editorInput = new URIEditorInput(uri, uri.lastSegment());
+          if (uri.isFile())
+          {
+            IFile[] files = ResourcesPlugin.getWorkspace().getRoot()
+                .findFilesForLocationURI(new java.net.URI(uri.toString()));
+            if (files.length > 0)
+            {
+              editorInput = new FileEditorInput(files[0]);
+            }
+          }
+
           page.openEditor(editorInput, EDITOR_ID);
         }
         catch (Exception ex)

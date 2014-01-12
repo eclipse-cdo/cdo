@@ -18,6 +18,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,6 +30,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -38,7 +40,7 @@ import java.util.List;
  * @generated
  */
 public class SetupTaskContainerItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -163,8 +165,7 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+  protected void collectNewChildDescriptorsGen(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
@@ -233,6 +234,33 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createJRETask()));
+  }
+
+  @Override
+  protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+  {
+    collectNewChildDescriptorsGen(newChildDescriptors, object);
+
+    for (Iterator<Object> it = newChildDescriptors.iterator(); it.hasNext();)
+    {
+      Object newChildDescriptor = it.next();
+      Object value = ((CommandParameter)newChildDescriptor).getValue();
+      if (isDeprecated(value))
+      {
+        it.remove();
+      }
+    }
+  }
+
+  @SuppressWarnings("deprecation")
+  private boolean isDeprecated(Object value)
+  {
+    if (value instanceof org.eclipse.emf.cdo.releng.setup.MylynQueryTask)
+    {
+      return true;
+    }
+
+    return false;
   }
 
   /**

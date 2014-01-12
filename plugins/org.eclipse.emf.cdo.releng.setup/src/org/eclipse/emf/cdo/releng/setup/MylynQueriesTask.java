@@ -12,8 +12,8 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getRepositoryURL <em>Repository URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getQueries <em>Queries</em>}</li>
  * </ul>
  * </p>

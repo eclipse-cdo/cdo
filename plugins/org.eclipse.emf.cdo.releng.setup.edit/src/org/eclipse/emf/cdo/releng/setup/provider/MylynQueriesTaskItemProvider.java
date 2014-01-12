@@ -55,8 +55,8 @@ public class MylynQueriesTaskItemProvider extends SetupTaskItemProvider implemen
     {
       super.getPropertyDescriptors(object);
 
-      addConnectorKindPropertyDescriptor(object);
       addRepositoryURLPropertyDescriptor(object);
+      addConnectorKindPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -155,12 +155,14 @@ public class MylynQueriesTaskItemProvider extends SetupTaskItemProvider implemen
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_MylynQueriesTask_type");
+    String label = ((MylynQueriesTask)object).getRepositoryURL();
+    return label == null || label.length() == 0 ? getString("_UI_MylynQueriesTask_type")
+        : getString("_UI_MylynQueriesTask_type") + " " + label;
   }
 
   /**
@@ -177,8 +179,8 @@ public class MylynQueriesTaskItemProvider extends SetupTaskItemProvider implemen
 
     switch (notification.getFeatureID(MylynQueriesTask.class))
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
+    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:

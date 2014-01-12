@@ -3091,22 +3091,22 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERIES_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Connector Kind</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MYLYN_QUERIES_TASK__CONNECTOR_KIND = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Repository URL</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MYLYN_QUERIES_TASK__REPOSITORY_URL = SETUP_TASK_FEATURE_COUNT + 1;
+  int MYLYN_QUERIES_TASK__REPOSITORY_URL = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Connector Kind</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__CONNECTOR_KIND = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Queries</b></em>' containment reference list.

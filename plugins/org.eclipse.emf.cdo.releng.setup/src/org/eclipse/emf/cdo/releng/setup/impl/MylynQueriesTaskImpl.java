@@ -28,8 +28,8 @@ import java.util.Set;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getRepositoryURL <em>Repository URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getQueries <em>Queries</em>}</li>
  * </ul>
  * </p>
@@ -38,26 +38,6 @@ import java.util.Set;
  */
 public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesTask
 {
-  /**
-   * The default value of the '{@link #getConnectorKind() <em>Connector Kind</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getConnectorKind()
-   * @generated
-   * @ordered
-   */
-  protected static final String CONNECTOR_KIND_EDEFAULT = "bugzilla";
-
-  /**
-   * The cached value of the '{@link #getConnectorKind() <em>Connector Kind</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getConnectorKind()
-   * @generated
-   * @ordered
-   */
-  protected String connectorKind = CONNECTOR_KIND_EDEFAULT;
-
   /**
    * The default value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -77,6 +57,26 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
    * @ordered
    */
   protected String repositoryURL = REPOSITORY_URL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getConnectorKind() <em>Connector Kind</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConnectorKind()
+   * @generated
+   * @ordered
+   */
+  protected static final String CONNECTOR_KIND_EDEFAULT = "bugzilla";
+
+  /**
+   * The cached value of the '{@link #getConnectorKind() <em>Connector Kind</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConnectorKind()
+   * @generated
+   * @ordered
+   */
+  protected String connectorKind = CONNECTOR_KIND_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getQueries() <em>Queries</em>}' containment reference list.
@@ -221,10 +221,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
-      return getConnectorKind();
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       return getRepositoryURL();
+    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
+      return getConnectorKind();
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       return getQueries();
     }
@@ -242,11 +242,11 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
-      setConnectorKind((String)newValue);
-      return;
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       setRepositoryURL((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
+      setConnectorKind((String)newValue);
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
@@ -266,11 +266,11 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
-      setConnectorKind(CONNECTOR_KIND_EDEFAULT);
-      return;
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       setRepositoryURL(REPOSITORY_URL_EDEFAULT);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
+      setConnectorKind(CONNECTOR_KIND_EDEFAULT);
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
@@ -289,10 +289,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
-      return CONNECTOR_KIND_EDEFAULT == null ? connectorKind != null : !CONNECTOR_KIND_EDEFAULT.equals(connectorKind);
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       return REPOSITORY_URL_EDEFAULT == null ? repositoryURL != null : !REPOSITORY_URL_EDEFAULT.equals(repositoryURL);
+    case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
+      return CONNECTOR_KIND_EDEFAULT == null ? connectorKind != null : !CONNECTOR_KIND_EDEFAULT.equals(connectorKind);
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       return queries != null && !queries.isEmpty();
     }
@@ -313,10 +313,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (connectorKind: ");
-    result.append(connectorKind);
-    result.append(", repositoryURL: ");
+    result.append(" (repositoryURL: ");
     result.append(repositoryURL);
+    result.append(", connectorKind: ");
+    result.append(connectorKind);
     result.append(')');
     return result.toString();
   }

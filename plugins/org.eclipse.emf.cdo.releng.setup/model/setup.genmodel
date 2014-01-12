@@ -252,6 +252,25 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/repositoryURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueryTask/relativeURL"/>
     </genClasses>
+    <genClasses ecoreClass="setup.ecore#//MylynQueriesTask" labelFeature="#//setup/MylynQueriesTask/repositoryURL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/repositoryURL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/connectorKind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynQueriesTask/queries"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="setup.ecore#//MylynQuery">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//MylynQuery/task"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQuery/summary"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//URLQuery">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//URLQuery/relativeURL"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//AttributesQuery">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//AttributesQuery/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//QueryAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//QueryAttribute/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//QueryAttribute/value"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//JRETask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//JRETask/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//JRETask/location"/>

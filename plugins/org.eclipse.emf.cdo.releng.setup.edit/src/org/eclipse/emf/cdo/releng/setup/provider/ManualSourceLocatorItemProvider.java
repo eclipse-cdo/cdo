@@ -91,7 +91,7 @@ public class ManualSourceLocatorItemProvider extends SourceLocatorItemProvider i
   /**
    * This adds a property descriptor for the Component Name Pattern feature.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addComponentNamePatternPropertyDescriptor(Object object)
@@ -108,7 +108,7 @@ public class ManualSourceLocatorItemProvider extends SourceLocatorItemProvider i
   /**
    * This adds a property descriptor for the Component Types feature.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addComponentTypesPropertyDescriptor(Object object)
@@ -125,7 +125,7 @@ public class ManualSourceLocatorItemProvider extends SourceLocatorItemProvider i
   /**
    * This returns ManualSourceLocator.gif.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

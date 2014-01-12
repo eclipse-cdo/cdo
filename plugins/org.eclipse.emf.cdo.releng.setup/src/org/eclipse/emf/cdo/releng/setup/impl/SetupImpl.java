@@ -50,7 +50,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   /**
    * The cached value of the '{@link #getBranch() <em>Branch</em>}' reference.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getBranch()
    * @generated
    * @ordered
@@ -70,7 +70,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
   /**
    * The cached value of the '{@link #getPreferences() <em>Preferences</em>}' reference.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getPreferences()
    * @generated
    * @ordered
@@ -100,7 +100,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Branch getBranch()
@@ -196,7 +196,7 @@ public class SetupImpl extends MinimalEObjectImpl.Container implements Setup
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Preferences getPreferences()

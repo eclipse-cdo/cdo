@@ -52,11 +52,11 @@ public interface MaterializationTask extends BasicMaterializationTask
    * Returns the value of the '<em><b>Root Components</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Component}.
    * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Root Components</em>' attribute list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Root Components</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Root Components</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMaterializationTask_RootComponents()
    * @model containment="true" resolveProxies="true" required="true"

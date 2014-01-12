@@ -55,7 +55,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected P2RepositoryImpl()
@@ -86,7 +86,7 @@ public class P2RepositoryImpl extends MinimalEObjectImpl.Container implements P2
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setURL(String newURL)

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
+import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -51,6 +53,7 @@ import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
@@ -67,6 +70,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -75,6 +79,7 @@ import java.util.Set;
  * <!-- end-user-doc -->
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 {
   /**
@@ -193,6 +198,14 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createCommandParameter();
     case SetupPackage.MYLYN_QUERY_TASK:
       return createMylynQueryTask();
+    case SetupPackage.MYLYN_QUERIES_TASK:
+      return createMylynQueriesTask();
+    case SetupPackage.URL_QUERY:
+      return createURLQuery();
+    case SetupPackage.ATTRIBUTES_QUERY:
+      return createAttributesQuery();
+    case SetupPackage.QUERY_ATTRIBUTE:
+      return (EObject)createQueryAttribute();
     case SetupPackage.JRE_TASK:
       return createJRETask();
     default:
@@ -279,7 +292,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Configuration createConfiguration()
@@ -345,7 +358,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public P2Task createP2Task()
@@ -447,7 +460,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public TextModifyTask createTextModifyTask()
@@ -458,7 +471,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public TextModification createTextModification()
@@ -491,7 +504,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public CommandParameter createCommandParameter()
@@ -509,6 +522,50 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     MylynQueryTaskImpl mylynQueryTask = new MylynQueryTaskImpl();
     return mylynQueryTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MylynQueriesTask createMylynQueriesTask()
+  {
+    MylynQueriesTaskImpl mylynQueriesTask = new MylynQueriesTaskImpl();
+    return mylynQueriesTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public URLQuery createURLQuery()
+  {
+    URLQueryImpl urlQuery = new URLQueryImpl();
+    return urlQuery;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributesQuery createAttributesQuery()
+  {
+    AttributesQueryImpl attributesQuery = new AttributesQueryImpl();
+    return attributesQuery;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Map.Entry<String, String> createQueryAttribute()
+  {
+    QueryAttributeImpl queryAttribute = new QueryAttributeImpl();
+    return queryAttribute;
   }
 
   /**
@@ -535,7 +592,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public FileEditor createFileEditor()
@@ -546,7 +603,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public TargetPlatformTask createTargetPlatformTask()
@@ -557,7 +614,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public AutomaticSourceLocator createAutomaticSourceLocator()
@@ -579,7 +636,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public ManualSourceLocator createManualSourceLocator()
@@ -590,7 +647,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public ContextVariableTask createContextVariableTask()
@@ -612,7 +669,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public ResourceCreationTask createResourceCreationTask()
@@ -634,7 +691,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Component createComponent()
@@ -645,7 +702,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-                   * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EclipseIniTask createEclipseIniTask()
@@ -698,7 +755,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String convertTriggerToString(EDataType eDataType, Object instanceValue)
@@ -724,7 +781,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String convertComponentTypeToString(EDataType eDataType, Object instanceValue)
@@ -750,7 +807,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String convertVariableTypeToString(EDataType eDataType, Object instanceValue)
@@ -760,7 +817,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public CompoundSetupTask createCompoundSetupTask()
@@ -845,7 +902,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String convertLicenseInfoToString(EDataType eDataType, Object instanceValue)
@@ -864,10 +921,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-  	 * @generated NOT
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   public String convertVersionRangeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : ((VersionRange)instanceValue).toString();
@@ -875,7 +932,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Exception createExceptionFromString(EDataType eDataType, String initialValue)
@@ -916,7 +973,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   public String convertTriggerSetToString(EDataType eDataType, Object instanceValue)
@@ -933,7 +990,7 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public SetupPackage getSetupPackage()

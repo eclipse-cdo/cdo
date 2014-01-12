@@ -123,11 +123,11 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   }
 
   /**
-     * This adds a property descriptor for the Accepted Licenses feature.
-     * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This adds a property descriptor for the Accepted Licenses feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   protected void addAcceptedLicensesPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
@@ -165,7 +165,7 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
   /**
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   @Override

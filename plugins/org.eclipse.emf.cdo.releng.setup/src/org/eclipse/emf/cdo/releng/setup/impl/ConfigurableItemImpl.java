@@ -51,7 +51,7 @@ public abstract class ConfigurableItemImpl extends SetupTaskContainerImpl implem
 
   /**
    * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   public abstract SetupTaskScope getScope();

@@ -98,7 +98,7 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

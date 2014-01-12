@@ -126,7 +126,7 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
   /**
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -227,6 +227,9 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createMylynQueryTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createMylynQueriesTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createJRETask()));

@@ -82,7 +82,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ProjectSetImportTaskImpl()
@@ -113,7 +113,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setURL(String newURL)
@@ -128,7 +128,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

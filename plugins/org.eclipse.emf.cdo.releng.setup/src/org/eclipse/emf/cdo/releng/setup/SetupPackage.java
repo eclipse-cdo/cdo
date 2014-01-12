@@ -70,7 +70,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskContainerImpl <em>Task Container</em>}' class.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupTaskContainerImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskContainer()
    * @generated
@@ -218,7 +218,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -227,7 +227,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Scope Root</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -236,7 +236,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurableItemImpl <em>Configurable Item</em>}' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurableItemImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfigurableItem()
    * @generated
@@ -274,7 +274,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -283,7 +283,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Configuration</b></em>' container reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -292,7 +292,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Version</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -301,7 +301,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Eclipse</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -310,7 +310,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -319,7 +319,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Eclipse Versions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -328,7 +328,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Projects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -337,7 +337,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Configuration</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -355,7 +355,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Configuration</b></em>' container reference.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -490,7 +490,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -499,7 +499,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Preferences</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -591,7 +591,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -600,7 +600,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -609,7 +609,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -618,7 +618,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Task</em>' class.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -674,7 +674,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -683,7 +683,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -692,7 +692,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -701,7 +701,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -768,7 +768,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
@@ -778,7 +778,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
@@ -848,7 +848,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentImpl <em>Component</em>}' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.ComponentImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponent()
    * @generated
@@ -868,7 +868,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
    * @generated
@@ -878,7 +878,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
    * @generated
@@ -898,7 +898,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -907,7 +907,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -916,7 +916,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -925,7 +925,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -934,7 +934,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -943,7 +943,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -961,7 +961,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -970,7 +970,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -979,7 +979,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>String Substitution</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -997,7 +997,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Choices</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1006,7 +1006,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Context Variable Task</em>' class.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1025,7 +1025,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1034,7 +1034,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1043,7 +1043,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Variable Choice</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1052,7 +1052,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1061,7 +1061,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1070,7 +1070,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1079,7 +1079,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1088,7 +1088,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1097,7 +1097,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1106,7 +1106,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Option</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1115,7 +1115,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1124,7 +1124,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Vm</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1133,7 +1133,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Eclipse Ini Task</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1142,7 +1142,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1151,7 +1151,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1160,7 +1160,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1169,7 +1169,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1178,7 +1178,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1187,7 +1187,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1196,7 +1196,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Path</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1205,7 +1205,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1214,7 +1214,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Link Location Task</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1223,7 +1223,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1232,7 +1232,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1241,7 +1241,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1250,7 +1250,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1259,7 +1259,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1268,7 +1268,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1277,7 +1277,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Installable Units</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1286,7 +1286,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1295,7 +1295,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>License Confirmation Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1322,7 +1322,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1340,7 +1340,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Installable Unit</em>' class.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1349,7 +1349,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1358,7 +1358,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>P2 Repository</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1367,7 +1367,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1376,7 +1376,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1385,7 +1385,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1394,7 +1394,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1403,7 +1403,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1412,7 +1412,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1421,7 +1421,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Target Platform</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1430,7 +1430,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Basic Materialization Task</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1439,7 +1439,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1448,7 +1448,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1457,7 +1457,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1466,7 +1466,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1475,7 +1475,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1484,7 +1484,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1493,7 +1493,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Target Platform</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1502,7 +1502,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Mspec</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1511,7 +1511,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Buckminster Import Task</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1520,7 +1520,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1529,7 +1529,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1538,7 +1538,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1547,7 +1547,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1556,7 +1556,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1565,7 +1565,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1574,7 +1574,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Target Platform</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1583,7 +1583,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Root Components</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1592,7 +1592,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Source Locators</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1601,7 +1601,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1610,7 +1610,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Materialization Task</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1619,7 +1619,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1628,7 +1628,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1646,7 +1646,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Component</em>' class.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1655,7 +1655,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Source Locator</em>' class.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1664,7 +1664,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1673,7 +1673,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Component Name Pattern</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1682,7 +1682,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Component Types</b></em>' attribute list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1691,7 +1691,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Manual Source Locator</em>' class.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1700,7 +1700,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Root Folder</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1718,7 +1718,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Automatic Source Locator</em>' class.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1727,7 +1727,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1736,7 +1736,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1745,7 +1745,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1754,7 +1754,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1763,7 +1763,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1772,7 +1772,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1781,7 +1781,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Source URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1790,7 +1790,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Target URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1799,7 +1799,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Redirection Task</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1808,7 +1808,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1817,7 +1817,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1826,7 +1826,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1835,7 +1835,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1844,7 +1844,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1853,7 +1853,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1862,7 +1862,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Version</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1880,7 +1880,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Zip Location</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1889,7 +1889,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Api Baseline Task</em>' class.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1898,7 +1898,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1907,7 +1907,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1916,7 +1916,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1925,7 +1925,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1934,7 +1934,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1943,7 +1943,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1961,7 +1961,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Remote Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1970,7 +1970,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Remote URI</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1988,7 +1988,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -1997,7 +1997,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Git Clone Task</em>' class.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2016,7 +2016,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2025,7 +2025,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2034,7 +2034,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2043,7 +2043,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2052,7 +2052,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2061,7 +2061,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2070,7 +2070,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2079,7 +2079,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Project Set Import Task</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2098,7 +2098,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
    * @generated
@@ -2108,7 +2108,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2117,7 +2117,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2126,7 +2126,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2135,7 +2135,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2144,7 +2144,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2153,7 +2153,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2162,7 +2162,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2171,7 +2171,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Target Platform Task</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2180,7 +2180,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2189,7 +2189,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2198,7 +2198,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2207,7 +2207,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2216,7 +2216,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2225,7 +2225,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2234,7 +2234,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Key</b></em>' attribute.
    * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2243,7 +2243,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2252,7 +2252,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Eclipse Preference Task</em>' class.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2266,7 +2266,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
    * @generated
    */
-  int JRE_TASK = 42;
+  int JRE_TASK = 47;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
@@ -2281,7 +2281,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2290,7 +2290,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2299,7 +2299,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2308,7 +2308,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2317,7 +2317,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2326,7 +2326,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2335,7 +2335,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>File Pattern</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2344,7 +2344,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Default Editor ID</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2353,7 +2353,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Editors</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2362,7 +2362,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>File Association Task</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2371,7 +2371,7 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl <em>File Editor</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileEditor()
    * @generated
@@ -2381,7 +2381,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2390,7 +2390,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>File Editor</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2399,7 +2399,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2408,7 +2408,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2417,7 +2417,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2426,7 +2426,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2435,7 +2435,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2444,7 +2444,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2453,7 +2453,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Working Sets</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2462,7 +2462,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Working Set Task</em>' class.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2471,7 +2471,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2480,7 +2480,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2489,7 +2489,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2498,7 +2498,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2507,7 +2507,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2516,7 +2516,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2525,7 +2525,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Source URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-                	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2534,7 +2534,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Target URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2543,7 +2543,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Resource Copy Task</em>' class.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2552,7 +2552,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2561,7 +2561,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2570,7 +2570,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2579,7 +2579,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2588,7 +2588,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2597,7 +2597,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2606,7 +2606,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Content</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2615,7 +2615,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Target URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2624,7 +2624,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Encoding</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2633,7 +2633,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Resource Creation Task</em>' class.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2642,7 +2642,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2651,7 +2651,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2660,7 +2660,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2669,7 +2669,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2678,7 +2678,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2687,7 +2687,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2696,7 +2696,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-                	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2705,7 +2705,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Modifications</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2714,7 +2714,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Encoding</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2723,7 +2723,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Text Modify Task</em>' class.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2732,7 +2732,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Pattern</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2741,7 +2741,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Substitutions</b></em>' attribute list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2750,7 +2750,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Text Modification</em>' class.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2759,7 +2759,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2768,7 +2768,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2777,7 +2777,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2786,7 +2786,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2795,7 +2795,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-            	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2804,7 +2804,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-             * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2813,7 +2813,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scheme</b></em>' attribute.
    * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2822,7 +2822,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Contexts</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2831,7 +2831,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Platform</b></em>' attribute.
    * <!-- begin-user-doc -->
-              	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2840,7 +2840,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Locale</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2849,7 +2849,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Keys</b></em>' attribute.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2858,7 +2858,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Command</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2867,7 +2867,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Command Parameters</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2876,7 +2876,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Key Binding Task</em>' class.
    * <!-- begin-user-doc -->
-                	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2885,7 +2885,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2894,7 +2894,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Key Binding Context</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2903,7 +2903,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2912,7 +2912,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2921,7 +2921,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Command Parameter</em>' class.
    * <!-- begin-user-doc -->
-          	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2930,7 +2930,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2939,7 +2939,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2948,7 +2948,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2957,7 +2957,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2966,7 +2966,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2975,7 +2975,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2984,7 +2984,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Connector Kind</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -2993,7 +2993,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Summary</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3002,7 +3002,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Repository URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3011,7 +3011,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Relative URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3020,16 +3020,282 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>Mylyn Query Task</em>' class.
    * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int MYLYN_QUERY_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl <em>Mylyn Queries Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueriesTask()
+   * @generated
+   */
+  int MYLYN_QUERIES_TASK = 42;
+
+  /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Connector Kind</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__CONNECTOR_KIND = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Repository URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__REPOSITORY_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Queries</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__QUERIES = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Mylyn Queries Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl <em>Mylyn Query</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQuery()
+   * @generated
+   */
+  int MYLYN_QUERY = 43;
+
+  /**
+   * The feature id for the '<em><b>Task</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERY__TASK = 0;
+
+  /**
+   * The feature id for the '<em><b>Summary</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERY__SUMMARY = 1;
+
+  /**
+   * The number of structural features of the '<em>Mylyn Query</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERY_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.URLQueryImpl <em>URL Query</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.URLQueryImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURLQuery()
+   * @generated
+   */
+  int URL_QUERY = 44;
+
+  /**
+   * The feature id for the '<em><b>Task</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int URL_QUERY__TASK = MYLYN_QUERY__TASK;
+
+  /**
+   * The feature id for the '<em><b>Summary</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int URL_QUERY__SUMMARY = MYLYN_QUERY__SUMMARY;
+
+  /**
+   * The feature id for the '<em><b>Relative URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int URL_QUERY__RELATIVE_URL = MYLYN_QUERY_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>URL Query</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int URL_QUERY_FEATURE_COUNT = MYLYN_QUERY_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AttributesQueryImpl <em>Attributes Query</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.AttributesQueryImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAttributesQuery()
+   * @generated
+   */
+  int ATTRIBUTES_QUERY = 45;
+
+  /**
+   * The feature id for the '<em><b>Task</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTES_QUERY__TASK = MYLYN_QUERY__TASK;
+
+  /**
+   * The feature id for the '<em><b>Summary</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTES_QUERY__SUMMARY = MYLYN_QUERY__SUMMARY;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' map.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTES_QUERY__ATTRIBUTES = MYLYN_QUERY_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Attributes Query</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTES_QUERY_FEATURE_COUNT = MYLYN_QUERY_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQueryAttribute()
+   * @generated
+   */
+  int QUERY_ATTRIBUTE = 46;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QUERY_ATTRIBUTE__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QUERY_ATTRIBUTE__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Query Attribute</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int QUERY_ATTRIBUTE_FEATURE_COUNT = 2;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3038,7 +3304,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3047,7 +3313,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3056,7 +3322,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3065,7 +3331,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3074,7 +3340,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3083,7 +3349,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Version</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3092,7 +3358,7 @@ public interface SetupPackage extends EPackage
   /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3101,7 +3367,7 @@ public interface SetupPackage extends EPackage
   /**
    * The number of structural features of the '<em>JRE Task</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -3110,12 +3376,12 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.SetupTaskScope <em>Task Scope</em>}' enum.
    * <!-- begin-user-doc -->
-                           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.setup.SetupTaskScope
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 43;
+  int SETUP_TASK_SCOPE = 48;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -3125,7 +3391,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 44;
+  int TRIGGER = 49;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -3135,7 +3401,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 45;
+  int COMPONENT_TYPE = 50;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -3145,17 +3411,17 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 46;
+  int VARIABLE_TYPE = 51;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.common.util.URI
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 49;
+  int URI = 54;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -3165,7 +3431,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 50;
+  int LICENSE_INFO = 55;
 
   /**
    * The meta object id for the '<em>Version Range</em>' data type.
@@ -3175,12 +3441,12 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
-  int VERSION_RANGE = 51;
+  int VERSION_RANGE = 56;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Eclipse</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Eclipse
    * @generated
@@ -3190,7 +3456,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration <em>Configuration</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Configuration</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getConfiguration()
    * @see #getEclipse()
@@ -3201,7 +3467,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion <em>Version</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Version</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Eclipse#getVersion()
    * @see #getEclipse()
@@ -3212,12 +3478,12 @@ public interface SetupPackage extends EPackage
   /**
    * The meta object id for the '<em>Exception</em>' data type.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see java.lang.Exception
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 48;
+  int EXCEPTION = 53;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -3227,12 +3493,12 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 47;
+  int TRIGGER_SET = 52;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Configuration</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Configuration
    * @generated
@@ -3404,7 +3670,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation <em>Zip Location</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Zip Location</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ApiBaselineTask#getZipLocation()
    * @see #getApiBaselineTask()
@@ -3436,7 +3702,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Remote Name</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName()
    * @see #getGitCloneTask()
@@ -3480,7 +3746,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask <em>Project Set Import Task</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Project Set Import Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask
    * @generated
@@ -3501,7 +3767,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Task <em>P2 Task</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>P2 Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.P2Task
    * @generated
@@ -3587,7 +3853,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.P2Repository <em>P2 Repository</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>P2 Repository</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.P2Repository
    * @generated
@@ -3608,7 +3874,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Setup <em>Setup</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Setup</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Setup
    * @generated
@@ -3727,7 +3993,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.WorkingSetTask <em>Working Set Task</em>}'.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Working Set Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.WorkingSetTask
    * @generated
@@ -3748,7 +4014,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask <em>Resource Copy Task</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Resource Copy Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCopyTask
    * @generated
@@ -3758,7 +4024,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask#getSourceURL <em>Source URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Source URL</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCopyTask#getSourceURL()
    * @see #getResourceCopyTask()
@@ -3769,7 +4035,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask#getTargetURL <em>Target URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Target URL</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCopyTask#getTargetURL()
    * @see #getResourceCopyTask()
@@ -3780,7 +4046,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask <em>Text Modify Task</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Text Modify Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask
    * @generated
@@ -3801,7 +4067,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getModifications <em>Modifications</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Modifications</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask#getModifications()
    * @see #getTextModifyTask()
@@ -3823,7 +4089,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TextModification <em>Text Modification</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Text Modification</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModification
    * @generated
@@ -3833,7 +4099,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TextModification#getPattern <em>Pattern</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Pattern</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModification#getPattern()
    * @see #getTextModification()
@@ -3844,7 +4110,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.TextModification#getSubstitutions <em>Substitutions</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Substitutions</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TextModification#getSubstitutions()
    * @see #getTextModification()
@@ -3887,7 +4153,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getPlatform <em>Platform</em>}'.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Platform</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getPlatform()
    * @see #getKeyBindingTask()
@@ -3920,7 +4186,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommand <em>Command</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Command</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommand()
    * @see #getKeyBindingTask()
@@ -3931,7 +4197,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommandParameters <em>Command Parameters</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Command Parameters</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommandParameters()
    * @see #getKeyBindingTask()
@@ -3952,7 +4218,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingContext#getID <em>ID</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>ID</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.KeyBindingContext#getID()
    * @see #getKeyBindingContext()
@@ -3963,7 +4229,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter <em>Command Parameter</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Command Parameter</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.CommandParameter
    * @generated
@@ -3984,7 +4250,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.CommandParameter#getValue()
    * @see #getCommandParameter()
@@ -4005,7 +4271,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getConnectorKind <em>Connector Kind</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Connector Kind</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getConnectorKind()
    * @see #getMylynQueryTask()
@@ -4016,7 +4282,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getSummary <em>Summary</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Summary</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getSummary()
    * @see #getMylynQueryTask()
@@ -4038,13 +4304,164 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL <em>Relative URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Relative URL</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL()
    * @see #getMylynQueryTask()
    * @generated
    */
   EAttribute getMylynQueryTask_RelativeURL();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask <em>Mylyn Queries Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Mylyn Queries Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask
+   * @generated
+   */
+  EClass getMylynQueriesTask();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getConnectorKind <em>Connector Kind</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Connector Kind</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getConnectorKind()
+   * @see #getMylynQueriesTask()
+   * @generated
+   */
+  EAttribute getMylynQueriesTask_ConnectorKind();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getRepositoryURL <em>Repository URL</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Repository URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getRepositoryURL()
+   * @see #getMylynQueriesTask()
+   * @generated
+   */
+  EAttribute getMylynQueriesTask_RepositoryURL();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getQueries <em>Queries</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Queries</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getQueries()
+   * @see #getMylynQueriesTask()
+   * @generated
+   */
+  EReference getMylynQueriesTask_Queries();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery <em>Mylyn Query</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Mylyn Query</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery
+   * @generated
+   */
+  EClass getMylynQuery();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getSummary <em>Summary</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Summary</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getSummary()
+   * @see #getMylynQuery()
+   * @generated
+   */
+  EAttribute getMylynQuery_Summary();
+
+  /**
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask <em>Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the container reference '<em>Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask()
+   * @see #getMylynQuery()
+   * @generated
+   */
+  EReference getMylynQuery_Task();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.URLQuery <em>URL Query</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>URL Query</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.URLQuery
+   * @generated
+   */
+  EClass getURLQuery();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.URLQuery#getRelativeURL <em>Relative URL</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Relative URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.URLQuery#getRelativeURL()
+   * @see #getURLQuery()
+   * @generated
+   */
+  EAttribute getURLQuery_RelativeURL();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AttributesQuery <em>Attributes Query</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Attributes Query</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.AttributesQuery
+   * @generated
+   */
+  EClass getAttributesQuery();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.releng.setup.AttributesQuery#getAttributes <em>Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the map '<em>Attributes</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.AttributesQuery#getAttributes()
+   * @see #getAttributesQuery()
+   * @generated
+   */
+  EReference getAttributesQuery_Attributes();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>Query Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Query Attribute</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString"
+   *        valueDataType="org.eclipse.emf.ecore.EString"
+   * @generated
+   */
+  EClass getQueryAttribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getQueryAttribute()
+   * @generated
+   */
+  EAttribute getQueryAttribute_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getQueryAttribute()
+   * @generated
+   */
+  EAttribute getQueryAttribute_Value();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.JRETask <em>JRE Task</em>}'.
@@ -4059,7 +4476,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.JRETask#getVersion <em>Version</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Version</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.JRETask#getVersion()
    * @see #getJRETask()
@@ -4070,7 +4487,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.JRETask#getLocation <em>Location</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Location</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.JRETask#getLocation()
    * @see #getJRETask()
@@ -4091,7 +4508,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask#getFilePattern <em>File Pattern</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>File Pattern</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.FileAssociationTask#getFilePattern()
    * @see #getFileAssociationTask()
@@ -4102,7 +4519,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask#getDefaultEditorID <em>Default Editor ID</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Default Editor ID</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.FileAssociationTask#getDefaultEditorID()
    * @see #getFileAssociationTask()
@@ -4113,7 +4530,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask#getEditors <em>Editors</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Editors</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.FileAssociationTask#getEditors()
    * @see #getFileAssociationTask()
@@ -4124,7 +4541,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.FileEditor <em>File Editor</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>File Editor</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.FileEditor
    * @generated
@@ -4145,7 +4562,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Target Platform Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask
    * @generated
@@ -4155,7 +4572,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask#getName()
    * @see #getTargetPlatformTask()
@@ -4166,7 +4583,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Automatic Source Locator</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
    * @generated
@@ -4198,7 +4615,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask <em>Redirection Task</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Redirection Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask
    * @generated
@@ -4208,7 +4625,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL <em>Source URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Source URL</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getSourceURL()
    * @see #getRedirectionTask()
@@ -4219,7 +4636,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL <em>Target URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Target URL</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.RedirectionTask#getTargetURL()
    * @see #getRedirectionTask()
@@ -4230,7 +4647,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Manual Source Locator</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
    * @generated
@@ -4251,7 +4668,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator#getComponentNamePattern <em>Component Name Pattern</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Component Name Pattern</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator#getComponentNamePattern()
    * @see #getManualSourceLocator()
@@ -4262,7 +4679,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator#getComponentTypes <em>Component Types</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Component Types</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator#getComponentTypes()
    * @see #getManualSourceLocator()
@@ -4273,7 +4690,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask <em>Context Variable Task</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Context Variable Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask
    * @generated
@@ -4294,7 +4711,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getName()
    * @see #getContextVariableTask()
@@ -4305,7 +4722,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getValue()
    * @see #getContextVariableTask()
@@ -4338,7 +4755,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getChoices <em>Choices</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Choices</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getChoices()
    * @see #getContextVariableTask()
@@ -4349,7 +4766,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.VariableChoice <em>Variable Choice</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Variable Choice</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.VariableChoice
    * @generated
@@ -4359,7 +4776,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.VariableChoice#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.VariableChoice#getValue()
    * @see #getVariableChoice()
@@ -4370,7 +4787,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.VariableChoice#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Label</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.VariableChoice#getLabel()
    * @see #getVariableChoice()
@@ -4381,7 +4798,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Resource Creation Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask
    * @generated
@@ -4391,7 +4808,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getContent <em>Content</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Content</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getContent()
    * @see #getResourceCreationTask()
@@ -4402,7 +4819,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getTargetURL <em>Target URL</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Target URL</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getTargetURL()
    * @see #getResourceCreationTask()
@@ -4445,7 +4862,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.MaterializationTask#getRootComponents <em>Root Components</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Root Components</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.MaterializationTask#getRootComponents()
    * @see #getMaterializationTask()
@@ -4466,7 +4883,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.MaterializationTask#getP2Repositories <em>P2 Repositories</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>P2 Repositories</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.MaterializationTask#getP2Repositories()
    * @see #getMaterializationTask()
@@ -4487,7 +4904,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getTargetPlatform <em>Target Platform</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Target Platform</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getTargetPlatform()
    * @see #getBasicMaterializationTask()
@@ -4508,7 +4925,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Component#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Component#getName()
    * @see #getComponent()
@@ -4519,7 +4936,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Component#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Type</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Component#getType()
    * @see #getComponent()
@@ -4541,7 +4958,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
    * <!-- begin-user-doc -->
-                           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Eclipse Ini Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
    * @generated
@@ -4624,7 +5041,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.CompoundSetupTask <em>Compound Setup Task</em>}'.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Compound Setup Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.CompoundSetupTask
    * @generated
@@ -4719,7 +5136,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}'.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Accepted Licenses</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses()
    * @see #getPreferences()
@@ -4730,7 +5147,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.LinkLocationTask <em>Link Location Task</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Link Location Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.LinkLocationTask
    * @generated
@@ -4793,7 +5210,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask <em>Eclipse Preference Task</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Eclipse Preference Task</em>'.
    * @see org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask
    * @generated
@@ -4858,7 +5275,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for data type '<em>Exception</em>'.
    * @see java.lang.Exception
    * @model instanceClass="java.lang.Exception"
@@ -4880,7 +5297,7 @@ public interface SetupPackage extends EPackage
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -4914,7 +5331,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Configuration</b></em>' container reference feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference ECLIPSE__CONFIGURATION = eINSTANCE.getEclipse_Configuration();
@@ -4922,7 +5339,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute ECLIPSE__VERSION = eINSTANCE.getEclipse_Version();
@@ -4930,7 +5347,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl <em>Configuration</em>}' class.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ConfigurationImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getConfiguration()
      * @generated
@@ -5006,7 +5423,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BranchImpl <em>Branch</em>}' class.
      * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.BranchImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBranch()
      * @generated
@@ -5066,7 +5483,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Zip Location</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute API_BASELINE_TASK__ZIP_LOCATION = eINSTANCE.getApiBaselineTask_ZipLocation();
@@ -5092,7 +5509,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Remote Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute GIT_CLONE_TASK__REMOTE_NAME = eINSTANCE.getGitCloneTask_RemoteName();
@@ -5124,7 +5541,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectSetImportTask()
      * @generated
@@ -5134,7 +5551,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute PROJECT_SET_IMPORT_TASK__URL = eINSTANCE.getProjectSetImportTask_URL();
@@ -5142,7 +5559,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl <em>P2 Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.P2TaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Task()
      * @generated
@@ -5210,7 +5627,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
      * @generated
@@ -5320,7 +5737,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl <em>Working Set Task</em>}' class.
      * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.WorkingSetTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
      * @generated
@@ -5338,7 +5755,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl <em>Resource Copy Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
      * @generated
@@ -5348,7 +5765,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Source URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute RESOURCE_COPY_TASK__SOURCE_URL = eINSTANCE.getResourceCopyTask_SourceURL();
@@ -5356,7 +5773,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute RESOURCE_COPY_TASK__TARGET_URL = eINSTANCE.getResourceCopyTask_TargetURL();
@@ -5364,7 +5781,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
      * @generated
@@ -5374,7 +5791,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute TEXT_MODIFY_TASK__URL = eINSTANCE.getTextModifyTask_URL();
@@ -5382,7 +5799,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Modifications</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference TEXT_MODIFY_TASK__MODIFICATIONS = eINSTANCE.getTextModifyTask_Modifications();
@@ -5398,7 +5815,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
      * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
      * @generated
@@ -5408,7 +5825,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute TEXT_MODIFICATION__PATTERN = eINSTANCE.getTextModification_Pattern();
@@ -5416,7 +5833,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Substitutions</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute TEXT_MODIFICATION__SUBSTITUTIONS = eINSTANCE.getTextModification_Substitutions();
@@ -5450,7 +5867,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Platform</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute KEY_BINDING_TASK__PLATFORM = eINSTANCE.getKeyBindingTask_Platform();
@@ -5474,7 +5891,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Command</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute KEY_BINDING_TASK__COMMAND = eINSTANCE.getKeyBindingTask_Command();
@@ -5482,7 +5899,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Command Parameters</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference KEY_BINDING_TASK__COMMAND_PARAMETERS = eINSTANCE.getKeyBindingTask_CommandParameters();
@@ -5500,7 +5917,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute KEY_BINDING_CONTEXT__ID = eINSTANCE.getKeyBindingContext_ID();
@@ -5508,7 +5925,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
      * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
      * @generated
@@ -5518,7 +5935,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute COMMAND_PARAMETER__ID = eINSTANCE.getCommandParameter_ID();
@@ -5526,7 +5943,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute COMMAND_PARAMETER__VALUE = eINSTANCE.getCommandParameter_Value();
@@ -5544,7 +5961,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Connector Kind</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute MYLYN_QUERY_TASK__CONNECTOR_KIND = eINSTANCE.getMylynQueryTask_ConnectorKind();
@@ -5552,7 +5969,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Summary</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute MYLYN_QUERY_TASK__SUMMARY = eINSTANCE.getMylynQueryTask_Summary();
@@ -5568,10 +5985,132 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Relative URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute MYLYN_QUERY_TASK__RELATIVE_URL = eINSTANCE.getMylynQueryTask_RelativeURL();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl <em>Mylyn Queries Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueriesTask()
+     * @generated
+     */
+    EClass MYLYN_QUERIES_TASK = eINSTANCE.getMylynQueriesTask();
+
+    /**
+     * The meta object literal for the '<em><b>Connector Kind</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_QUERIES_TASK__CONNECTOR_KIND = eINSTANCE.getMylynQueriesTask_ConnectorKind();
+
+    /**
+     * The meta object literal for the '<em><b>Repository URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_QUERIES_TASK__REPOSITORY_URL = eINSTANCE.getMylynQueriesTask_RepositoryURL();
+
+    /**
+     * The meta object literal for the '<em><b>Queries</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MYLYN_QUERIES_TASK__QUERIES = eINSTANCE.getMylynQueriesTask_Queries();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl <em>Mylyn Query</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQuery()
+     * @generated
+     */
+    EClass MYLYN_QUERY = eINSTANCE.getMylynQuery();
+
+    /**
+     * The meta object literal for the '<em><b>Summary</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_QUERY__SUMMARY = eINSTANCE.getMylynQuery_Summary();
+
+    /**
+     * The meta object literal for the '<em><b>Task</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MYLYN_QUERY__TASK = eINSTANCE.getMylynQuery_Task();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.URLQueryImpl <em>URL Query</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.URLQueryImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURLQuery()
+     * @generated
+     */
+    EClass URL_QUERY = eINSTANCE.getURLQuery();
+
+    /**
+     * The meta object literal for the '<em><b>Relative URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute URL_QUERY__RELATIVE_URL = eINSTANCE.getURLQuery_RelativeURL();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AttributesQueryImpl <em>Attributes Query</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.AttributesQueryImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAttributesQuery()
+     * @generated
+     */
+    EClass ATTRIBUTES_QUERY = eINSTANCE.getAttributesQuery();
+
+    /**
+     * The meta object literal for the '<em><b>Attributes</b></em>' map feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATTRIBUTES_QUERY__ATTRIBUTES = eINSTANCE.getAttributesQuery_Attributes();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQueryAttribute()
+     * @generated
+     */
+    EClass QUERY_ATTRIBUTE = eINSTANCE.getQueryAttribute();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute QUERY_ATTRIBUTE__KEY = eINSTANCE.getQueryAttribute_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute QUERY_ATTRIBUTE__VALUE = eINSTANCE.getQueryAttribute_Value();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.
@@ -5586,7 +6125,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute JRE_TASK__VERSION = eINSTANCE.getJRETask_Version();
@@ -5594,7 +6133,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute JRE_TASK__LOCATION = eINSTANCE.getJRETask_Location();
@@ -5612,7 +6151,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>File Pattern</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute FILE_ASSOCIATION_TASK__FILE_PATTERN = eINSTANCE.getFileAssociationTask_FilePattern();
@@ -5620,7 +6159,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Default Editor ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID = eINSTANCE.getFileAssociationTask_DefaultEditorID();
@@ -5628,7 +6167,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Editors</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference FILE_ASSOCIATION_TASK__EDITORS = eINSTANCE.getFileAssociationTask_Editors();
@@ -5636,7 +6175,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl <em>File Editor</em>}' class.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileEditor()
      * @generated
@@ -5646,7 +6185,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute FILE_EDITOR__ID = eINSTANCE.getFileEditor_ID();
@@ -5654,7 +6193,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
      * @generated
@@ -5664,7 +6203,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute TARGET_PLATFORM_TASK__NAME = eINSTANCE.getTargetPlatformTask_Name();
@@ -5672,7 +6211,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
      * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
      * @generated
@@ -5699,7 +6238,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
      * @generated
@@ -5709,7 +6248,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Source URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute REDIRECTION_TASK__SOURCE_URL = eINSTANCE.getRedirectionTask_SourceURL();
@@ -5717,7 +6256,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute REDIRECTION_TASK__TARGET_URL = eINSTANCE.getRedirectionTask_TargetURL();
@@ -5725,7 +6264,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
      * <!-- begin-user-doc -->
-        	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
      * @generated
@@ -5743,7 +6282,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Component Name Pattern</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute MANUAL_SOURCE_LOCATOR__COMPONENT_NAME_PATTERN = eINSTANCE.getManualSourceLocator_ComponentNamePattern();
@@ -5751,7 +6290,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Component Types</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute MANUAL_SOURCE_LOCATOR__COMPONENT_TYPES = eINSTANCE.getManualSourceLocator_ComponentTypes();
@@ -5759,7 +6298,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getContextVariableTask()
      * @generated
@@ -5777,7 +6316,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute CONTEXT_VARIABLE_TASK__NAME = eINSTANCE.getContextVariableTask_Name();
@@ -5785,7 +6324,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute CONTEXT_VARIABLE_TASK__VALUE = eINSTANCE.getContextVariableTask_Value();
@@ -5809,7 +6348,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Choices</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference CONTEXT_VARIABLE_TASK__CHOICES = eINSTANCE.getContextVariableTask_Choices();
@@ -5817,7 +6356,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.VariableChoiceImpl <em>Variable Choice</em>}' class.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.VariableChoiceImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableChoice()
      * @generated
@@ -5827,7 +6366,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute VARIABLE_CHOICE__VALUE = eINSTANCE.getVariableChoice_Value();
@@ -5835,7 +6374,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute VARIABLE_CHOICE__LABEL = eINSTANCE.getVariableChoice_Label();
@@ -5843,7 +6382,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl <em>Resource Creation Task</em>}' class.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.ResourceCreationTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
      * @generated
@@ -5853,7 +6392,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Content</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute RESOURCE_CREATION_TASK__CONTENT = eINSTANCE.getResourceCreationTask_Content();
@@ -5861,7 +6400,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Target URL</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute RESOURCE_CREATION_TASK__TARGET_URL = eINSTANCE.getResourceCreationTask_TargetURL();
@@ -5895,7 +6434,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Root Components</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference MATERIALIZATION_TASK__ROOT_COMPONENTS = eINSTANCE.getMaterializationTask_RootComponents();
@@ -5913,7 +6452,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>P2 Repositories</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference MATERIALIZATION_TASK__P2_REPOSITORIES = eINSTANCE.getMaterializationTask_P2Repositories();
@@ -5931,7 +6470,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Target Platform</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM = eINSTANCE.getBasicMaterializationTask_TargetPlatform();
@@ -5949,7 +6488,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute COMPONENT__NAME = eINSTANCE.getComponent_Name();
@@ -5957,7 +6496,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute COMPONENT__TYPE = eINSTANCE.getComponent_Type();
@@ -5973,7 +6512,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
      * <!-- begin-user-doc -->
-                             * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
      * @generated
@@ -6047,7 +6586,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
      * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCompoundSetupTask()
      * @generated
@@ -6127,7 +6666,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Accepted Licenses</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute PREFERENCES__ACCEPTED_LICENSES = eINSTANCE.getPreferences_AcceptedLicenses();
@@ -6135,7 +6674,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl <em>Link Location Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.LinkLocationTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
      * @generated
@@ -6189,7 +6728,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl <em>Eclipse Preference Task</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
      * @generated
@@ -6245,7 +6784,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em>Exception</em>' data type.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see java.lang.Exception
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
      * @generated
@@ -6255,7 +6794,7 @@ public interface SetupPackage extends EPackage
     /**
      * The meta object literal for the '<em>Trigger Set</em>' data type.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see java.util.Set
      * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
      * @generated

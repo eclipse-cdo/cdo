@@ -125,7 +125,7 @@ public interface KeyBindingTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getLocale <em>Locale</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Locale</em>' attribute.
    * @see #getLocale()
    * @generated
@@ -151,7 +151,7 @@ public interface KeyBindingTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getKeys <em>Keys</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Keys</em>' attribute.
    * @see #getKeys()
    * @generated
@@ -161,11 +161,11 @@ public interface KeyBindingTask extends SetupTask
   /**
    * Returns the value of the '<em><b>Command</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Command</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Command</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Command</em>' attribute.
    * @see #setCommand(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_Command()
@@ -177,7 +177,7 @@ public interface KeyBindingTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask#getCommand <em>Command</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Command</em>' attribute.
    * @see #getCommand()
    * @generated
@@ -188,11 +188,11 @@ public interface KeyBindingTask extends SetupTask
    * Returns the value of the '<em><b>Command Parameters</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.CommandParameter}.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Command Parameters</em>' containment reference list isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Command Parameters</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Command Parameters</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getKeyBindingTask_CommandParameters()
    * @model containment="true" resolveProxies="true"

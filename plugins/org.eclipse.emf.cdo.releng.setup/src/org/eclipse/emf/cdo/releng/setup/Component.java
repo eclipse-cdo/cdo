@@ -93,11 +93,11 @@ public interface Component extends EObject
    * Returns the value of the '<em><b>Version Range</b></em>' attribute.
    * The default value is <code>"0.0.0"</code>.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Version Range</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Version Range</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Version Range</em>' attribute.
    * @see #setVersionRange(VersionRange)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getComponent_VersionRange()
@@ -109,7 +109,7 @@ public interface Component extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Component#getVersionRange <em>Version Range</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Version Range</em>' attribute.
    * @see #getVersionRange()
    * @generated

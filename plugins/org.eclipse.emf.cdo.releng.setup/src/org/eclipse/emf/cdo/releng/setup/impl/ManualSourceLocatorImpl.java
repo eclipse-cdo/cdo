@@ -91,7 +91,7 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ManualSourceLocatorImpl()
@@ -122,7 +122,7 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setLocation(String newLocation)
@@ -138,7 +138,7 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getComponentNamePattern()
@@ -148,7 +148,7 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setComponentNamePattern(String newComponentNamePattern)
@@ -164,7 +164,7 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EList<ComponentType> getComponentTypes()
@@ -179,7 +179,7 @@ public class ManualSourceLocatorImpl extends SourceLocatorImpl implements Manual
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

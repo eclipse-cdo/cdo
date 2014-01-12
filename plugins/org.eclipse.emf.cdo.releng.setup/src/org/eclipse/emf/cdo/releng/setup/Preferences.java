@@ -78,7 +78,7 @@ public interface Preferences extends ScopeRoot
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder <em>Bundle Pool Folder</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Bundle Pool Folder</em>' attribute.
    * @see #getBundlePoolFolder()
    * @generated
@@ -104,7 +104,7 @@ public interface Preferences extends ScopeRoot
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolderTP <em>Bundle Pool Folder TP</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Bundle Pool Folder TP</em>' attribute.
    * @see #getBundlePoolFolderTP()
    * @generated
@@ -115,11 +115,11 @@ public interface Preferences extends ScopeRoot
    * Returns the value of the '<em><b>Accepted Licenses</b></em>' attribute list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.LicenseInfo}.
    * <!-- begin-user-doc -->
-        	 * <p>
-        	 * If the meaning of the '<em>Accepted Licenses</em>' attribute list isn't clear,
-        	 * there really should be more of a description here...
-        	 * </p>
-        	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Accepted Licenses</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Accepted Licenses</em>' attribute list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getPreferences_AcceptedLicenses()
    * @model dataType="org.eclipse.emf.cdo.releng.setup.LicenseInfo"

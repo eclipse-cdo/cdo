@@ -36,6 +36,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
+@Deprecated
 public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
@@ -126,7 +127,7 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This adds a property descriptor for the Relative URL feature.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addRelativeURLPropertyDescriptor(Object object)
@@ -143,7 +144,7 @@ public class MylynQueryTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This returns MylynQueryTask.gif.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

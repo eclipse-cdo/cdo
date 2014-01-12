@@ -127,7 +127,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
   /**
    * The cached value of the '{@link #isStringSubstitution() <em>String Substitution</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #isStringSubstitution()
    * @generated
    * @ordered
@@ -168,7 +168,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ContextVariableTaskImpl()
@@ -274,7 +274,7 @@ public class ContextVariableTaskImpl extends SetupTaskImpl implements ContextVar
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setStringSubstitution(boolean newStringSubstitution)

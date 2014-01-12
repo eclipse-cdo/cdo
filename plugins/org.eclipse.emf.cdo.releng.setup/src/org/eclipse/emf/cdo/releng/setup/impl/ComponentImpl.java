@@ -93,7 +93,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   /**
    * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getVersionRange()
    * @generated
    * @ordered
@@ -102,7 +102,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ComponentImpl()
@@ -183,7 +183,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setVersionRange(VersionRange newVersionRange)
@@ -199,7 +199,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

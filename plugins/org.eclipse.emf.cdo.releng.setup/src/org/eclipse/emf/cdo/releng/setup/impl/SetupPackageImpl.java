@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
+import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -36,6 +37,8 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -57,6 +60,7 @@ import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
@@ -73,6 +77,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -81,6 +86,7 @@ import java.util.Set;
  * <!-- end-user-doc -->
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 {
   /**
@@ -92,7 +98,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass configurationEClass = null;
@@ -134,7 +140,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass p2TaskEClass = null;
@@ -183,14 +189,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass textModifyTaskEClass = null;
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass textModificationEClass = null;
@@ -211,7 +217,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass commandParameterEClass = null;
@@ -222,6 +228,41 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass mylynQueryTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mylynQueriesTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mylynQueryEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass urlQueryEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributesQueryEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass queryAttributeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -239,21 +280,21 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass fileEditorEClass = null;
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass targetPlatformTaskEClass = null;
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass automaticSourceLocatorEClass = null;
@@ -267,14 +308,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass manualSourceLocatorEClass = null;
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass contextVariableTaskEClass = null;
@@ -288,7 +329,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass resourceCreationTaskEClass = null;
@@ -309,7 +350,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass basicMaterializationTaskEClass = null;
@@ -323,7 +364,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-                     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass eclipseIniTaskEClass = null;
@@ -358,7 +399,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass compoundSetupTaskEClass = null;
@@ -407,7 +448,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass eclipsePreferenceTaskEClass = null;
@@ -435,7 +476,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EDataType exceptionEDataType = null;
@@ -456,7 +497,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * initialization of the package, or returns the registered package,
    * if one already exists.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#eNS_URI
    * @see #init()
@@ -476,7 +517,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link SetupPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -528,7 +569,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getEclipse_Configuration()
@@ -538,7 +579,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getEclipse_Version()
@@ -548,7 +589,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getConfiguration()
@@ -678,7 +719,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getApiBaselineTask()
@@ -708,7 +749,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getApiBaselineTask_ZipLocation()
@@ -738,7 +779,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getGitCloneTask_RemoteName()
@@ -778,7 +819,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getProjectSetImportTask()
@@ -798,7 +839,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getP2Task()
@@ -878,7 +919,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getP2Repository()
@@ -898,7 +939,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getSetup()
@@ -1008,7 +1049,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getWorkingSetTask()
@@ -1028,7 +1069,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getResourceCopyTask()
@@ -1038,7 +1079,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getResourceCopyTask_SourceURL()
@@ -1048,7 +1089,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getResourceCopyTask_TargetURL()
@@ -1058,7 +1099,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getTextModifyTask()
@@ -1078,7 +1119,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getTextModifyTask_Modifications()
@@ -1098,7 +1139,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getTextModification()
@@ -1108,7 +1149,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getTextModification_Pattern()
@@ -1118,7 +1159,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getTextModification_Substitutions()
@@ -1158,7 +1199,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getKeyBindingTask_Platform()
@@ -1188,7 +1229,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getKeyBindingTask_Command()
@@ -1198,7 +1239,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getKeyBindingTask_CommandParameters()
@@ -1218,7 +1259,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getKeyBindingContext_ID()
@@ -1228,7 +1269,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getCommandParameter()
@@ -1248,7 +1289,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getCommandParameter_Value()
@@ -1268,7 +1309,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getMylynQueryTask_ConnectorKind()
@@ -1278,7 +1319,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getMylynQueryTask_Summary()
@@ -1298,12 +1339,152 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getMylynQueryTask_RelativeURL()
   {
     return (EAttribute)mylynQueryTaskEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMylynQueriesTask()
+  {
+    return mylynQueriesTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynQueriesTask_ConnectorKind()
+  {
+    return (EAttribute)mylynQueriesTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynQueriesTask_RepositoryURL()
+  {
+    return (EAttribute)mylynQueriesTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMylynQueriesTask_Queries()
+  {
+    return (EReference)mylynQueriesTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMylynQuery()
+  {
+    return mylynQueryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynQuery_Summary()
+  {
+    return (EAttribute)mylynQueryEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMylynQuery_Task()
+  {
+    return (EReference)mylynQueryEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getURLQuery()
+  {
+    return urlQueryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getURLQuery_RelativeURL()
+  {
+    return (EAttribute)urlQueryEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributesQuery()
+  {
+    return attributesQueryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributesQuery_Attributes()
+  {
+    return (EReference)attributesQueryEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getQueryAttribute()
+  {
+    return queryAttributeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getQueryAttribute_Key()
+  {
+    return (EAttribute)queryAttributeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getQueryAttribute_Value()
+  {
+    return (EAttribute)queryAttributeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1318,7 +1499,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getJRETask_Version()
@@ -1328,7 +1509,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getJRETask_Location()
@@ -1348,7 +1529,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getFileAssociationTask_FilePattern()
@@ -1358,7 +1539,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getFileAssociationTask_DefaultEditorID()
@@ -1368,7 +1549,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getFileAssociationTask_Editors()
@@ -1378,7 +1559,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getFileEditor()
@@ -1398,7 +1579,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getTargetPlatformTask()
@@ -1408,7 +1589,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getTargetPlatformTask_Name()
@@ -1418,7 +1599,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getAutomaticSourceLocator()
@@ -1448,7 +1629,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getRedirectionTask()
@@ -1458,7 +1639,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getRedirectionTask_SourceURL()
@@ -1468,7 +1649,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getRedirectionTask_TargetURL()
@@ -1478,7 +1659,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getManualSourceLocator()
@@ -1498,7 +1679,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getManualSourceLocator_ComponentNamePattern()
@@ -1508,7 +1689,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getManualSourceLocator_ComponentTypes()
@@ -1518,7 +1699,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getContextVariableTask()
@@ -1538,7 +1719,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getContextVariableTask_Name()
@@ -1548,7 +1729,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getContextVariableTask_Value()
@@ -1578,7 +1759,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getContextVariableTask_Choices()
@@ -1588,7 +1769,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getVariableChoice()
@@ -1598,7 +1779,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getVariableChoice_Value()
@@ -1608,7 +1789,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getVariableChoice_Label()
@@ -1618,7 +1799,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getResourceCreationTask()
@@ -1628,7 +1809,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getResourceCreationTask_Content()
@@ -1638,7 +1819,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getResourceCreationTask_TargetURL()
@@ -1678,7 +1859,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getMaterializationTask_RootComponents()
@@ -1698,7 +1879,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getMaterializationTask_P2Repositories()
@@ -1718,7 +1899,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getBasicMaterializationTask_TargetPlatform()
@@ -1738,7 +1919,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getComponent_Name()
@@ -1748,7 +1929,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getComponent_Type()
@@ -1768,7 +1949,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-                           * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getEclipseIniTask()
@@ -1848,7 +2029,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getCompoundSetupTask()
@@ -1938,7 +2119,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getPreferences_AcceptedLicenses()
@@ -1948,7 +2129,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getLinkLocationTask()
@@ -2008,7 +2189,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getEclipsePreferenceTask()
@@ -2068,7 +2249,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EDataType getException()
@@ -2088,7 +2269,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public SetupFactory getSetupFactory()
@@ -2306,6 +2487,25 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__REPOSITORY_URL);
     createEAttribute(mylynQueryTaskEClass, MYLYN_QUERY_TASK__RELATIVE_URL);
 
+    mylynQueriesTaskEClass = createEClass(MYLYN_QUERIES_TASK);
+    createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__CONNECTOR_KIND);
+    createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__REPOSITORY_URL);
+    createEReference(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__QUERIES);
+
+    mylynQueryEClass = createEClass(MYLYN_QUERY);
+    createEReference(mylynQueryEClass, MYLYN_QUERY__TASK);
+    createEAttribute(mylynQueryEClass, MYLYN_QUERY__SUMMARY);
+
+    urlQueryEClass = createEClass(URL_QUERY);
+    createEAttribute(urlQueryEClass, URL_QUERY__RELATIVE_URL);
+
+    attributesQueryEClass = createEClass(ATTRIBUTES_QUERY);
+    createEReference(attributesQueryEClass, ATTRIBUTES_QUERY__ATTRIBUTES);
+
+    queryAttributeEClass = createEClass(QUERY_ATTRIBUTE);
+    createEAttribute(queryAttributeEClass, QUERY_ATTRIBUTE__KEY);
+    createEAttribute(queryAttributeEClass, QUERY_ATTRIBUTE__VALUE);
+
     jreTaskEClass = createEClass(JRE_TASK);
     createEAttribute(jreTaskEClass, JRE_TASK__VERSION);
     createEAttribute(jreTaskEClass, JRE_TASK__LOCATION);
@@ -2391,6 +2591,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     textModifyTaskEClass.getESuperTypes().add(getSetupTask());
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
     mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
+    mylynQueriesTaskEClass.getESuperTypes().add(getSetupTask());
+    urlQueryEClass.getESuperTypes().add(getMylynQuery());
+    attributesQueryEClass.getESuperTypes().add(getMylynQuery());
     jreTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
@@ -2809,6 +3012,43 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         MylynQueryTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
+    initEClass(mylynQueriesTaskEClass, MylynQueriesTask.class, "MylynQueriesTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMylynQueriesTask_ConnectorKind(), ecorePackage.getEString(), "connectorKind", "bugzilla", 1, 1,
+        MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueriesTask_RepositoryURL(), ecorePackage.getEString(), "repositoryURL", null, 1, 1,
+        MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getMylynQueriesTask_Queries(), getMylynQuery(), getMylynQuery_Task(), "queries", null, 0, -1,
+        MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mylynQueryEClass, MylynQuery.class, "MylynQuery", IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMylynQuery_Task(), getMylynQueriesTask(), getMylynQueriesTask_Queries(), "task", null, 0, 1,
+        MylynQuery.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQuery_Summary(), ecorePackage.getEString(), "summary", null, 1, 1, MylynQuery.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(urlQueryEClass, URLQuery.class, "URLQuery", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getURLQuery_RelativeURL(), ecorePackage.getEString(), "relativeURL", null, 1, 1, URLQuery.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributesQueryEClass, AttributesQuery.class, "AttributesQuery", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributesQuery_Attributes(), getQueryAttribute(), null, "attributes", null, 0, -1,
+        AttributesQuery.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(queryAttributeEClass, Map.Entry.class, "QueryAttribute", !IS_ABSTRACT, !IS_INTERFACE,
+        !IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getQueryAttribute_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getQueryAttribute_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(jreTaskEClass, JRETask.class, "JRETask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getJRETask_Version(), ecorePackage.getEString(), "version", null, 1, 1, JRETask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2875,7 +3115,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   /**
    * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void createExtendedMetaDataAnnotations()
@@ -2911,6 +3151,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addAnnotation(gitCloneTaskEClass, source, new String[] { "variableName", "setup.egit.p2", "repository",
         "http://download.eclipse.org/egit/updates", "installableUnits", "org.eclipse.egit.feature.group" });
     addAnnotation(mylynQueryTaskEClass, source, new String[] { "variableName", "setup.mylyn.p2", "repository",
+        "http://download.eclipse.org/mylyn/releases/latest", "installableUnits",
+        "org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui" });
+    addAnnotation(mylynQueriesTaskEClass, source, new String[] { "variableName", "setup.mylyn.p2", "repository",
         "http://download.eclipse.org/mylyn/releases/latest", "installableUnits",
         "org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui" });
   }

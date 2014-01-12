@@ -312,6 +312,37 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeURL" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MylynQueriesTask" eSuperTypes="#//SetupTask">
+    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
+      <details key="variableName" value="setup.mylyn.p2"/>
+      <details key="repository" value="http://download.eclipse.org/mylyn/releases/latest"/>
+      <details key="installableUnits" value="org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectorKind" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="bugzilla"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="repositoryURL" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="queries" upperBound="-1"
+        eType="#//MylynQuery" containment="true" eOpposite="#//MylynQuery/task"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MylynQuery" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//MylynQueriesTask"
+        eOpposite="#//MylynQueriesTask/queries"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="summary" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="URLQuery" eSuperTypes="#//MylynQuery">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeURL" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributesQuery" eSuperTypes="#//MylynQuery">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//QueryAttribute" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QueryAttribute" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JRETask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

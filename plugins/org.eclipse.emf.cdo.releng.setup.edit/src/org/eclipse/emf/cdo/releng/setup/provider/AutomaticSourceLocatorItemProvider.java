@@ -105,7 +105,7 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   /**
    * This returns AutomaticSourceLocator.gif.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

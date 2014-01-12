@@ -57,7 +57,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
   /**
    * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getValue()
    * @generated
    * @ordered
@@ -107,7 +107,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setID(String newID)
@@ -122,7 +122,7 @@ public class CommandParameterImpl extends MinimalEObjectImpl.Container implement
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getValue()

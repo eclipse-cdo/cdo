@@ -44,7 +44,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Configuration</em>'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Configuration</em>'.
    * @generated
    */
@@ -98,7 +98,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>P2 Task</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>P2 Task</em>'.
    * @generated
    */
@@ -156,7 +156,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Text Modify Task</em>'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Text Modify Task</em>'.
    * @generated
    */
@@ -165,7 +165,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Text Modification</em>'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Text Modification</em>'.
    * @generated
    */
@@ -205,7 +205,35 @@ public interface SetupFactory extends EFactory
    * @return a new object of class '<em>Mylyn Query Task</em>'.
    * @generated
    */
+  @SuppressWarnings("deprecation")
   MylynQueryTask createMylynQueryTask();
+
+  /**
+   * Returns a new object of class '<em>Mylyn Queries Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mylyn Queries Task</em>'.
+   * @generated
+   */
+  MylynQueriesTask createMylynQueriesTask();
+
+  /**
+   * Returns a new object of class '<em>URL Query</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>URL Query</em>'.
+   * @generated
+   */
+  URLQuery createURLQuery();
+
+  /**
+   * Returns a new object of class '<em>Attributes Query</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attributes Query</em>'.
+   * @generated
+   */
+  AttributesQuery createAttributesQuery();
 
   /**
    * Returns a new object of class '<em>JRE Task</em>'.
@@ -228,7 +256,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>File Editor</em>'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>File Editor</em>'.
    * @generated
    */
@@ -237,7 +265,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Target Platform Task</em>'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Target Platform Task</em>'.
    * @generated
    */
@@ -246,7 +274,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Automatic Source Locator</em>'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Automatic Source Locator</em>'.
    * @generated
    */
@@ -264,7 +292,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Manual Source Locator</em>'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Manual Source Locator</em>'.
    * @generated
    */
@@ -273,7 +301,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Context Variable Task</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Context Variable Task</em>'.
    * @generated
    */
@@ -291,7 +319,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Resource Creation Task</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Resource Creation Task</em>'.
    * @generated
    */
@@ -309,7 +337,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Component</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Component</em>'.
    * @generated
    */
@@ -318,7 +346,7 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>Eclipse Ini Task</em>'.
    * <!-- begin-user-doc -->
-                   * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Eclipse Ini Task</em>'.
    * @generated
    */

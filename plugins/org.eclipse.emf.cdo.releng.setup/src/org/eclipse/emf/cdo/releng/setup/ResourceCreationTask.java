@@ -85,11 +85,11 @@ public interface ResourceCreationTask extends SetupTask
   /**
    * Returns the value of the '<em><b>Encoding</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Encoding</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Encoding</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Encoding</em>' attribute.
    * @see #setEncoding(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getResourceCreationTask_Encoding()
@@ -101,7 +101,7 @@ public interface ResourceCreationTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask#getEncoding <em>Encoding</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Encoding</em>' attribute.
    * @see #getEncoding()
    * @generated

@@ -116,11 +116,11 @@ public enum SetupTaskScope implements Enumerator
   /**
    * The '<em><b>Project</b></em>' literal value.
    * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Project</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>Project</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @see #PROJECT
    * @model name="Project"
    * @generated
@@ -176,7 +176,7 @@ public enum SetupTaskScope implements Enumerator
   /**
    * An array of all the '<em><b>Task Scope</b></em>' enumerators.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private static final SetupTaskScope[] VALUES_ARRAY = new SetupTaskScope[] { NONE, ECLIPSE, PROJECT, BRANCH, USER,

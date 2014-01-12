@@ -89,7 +89,7 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
   /**
    * This adds a property descriptor for the Remote Name feature.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addRemoteNamePropertyDescriptor(Object object)
@@ -156,7 +156,7 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
   /**
    * This returns GitCloneTask.gif.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -177,11 +177,11 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public String getText(Object object)
   {

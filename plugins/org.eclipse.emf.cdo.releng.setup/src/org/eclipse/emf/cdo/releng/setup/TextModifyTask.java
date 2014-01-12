@@ -63,11 +63,11 @@ public interface TextModifyTask extends SetupTask
    * Returns the value of the '<em><b>Modifications</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.TextModification}.
    * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Modifications</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Modifications</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Modifications</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModifyTask_Modifications()
    * @model containment="true" resolveProxies="true"
@@ -78,11 +78,11 @@ public interface TextModifyTask extends SetupTask
   /**
    * Returns the value of the '<em><b>Encoding</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Encoding</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Encoding</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Encoding</em>' attribute.
    * @see #setEncoding(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTextModifyTask_Encoding()
@@ -94,7 +94,7 @@ public interface TextModifyTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask#getEncoding <em>Encoding</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Encoding</em>' attribute.
    * @see #getEncoding()
    * @generated

@@ -278,8 +278,8 @@ public class LicenseDialog extends AbstractSetupDialog
   }
 
   /**
-  * @author Eike Stepper
-  */
+   * @author Eike Stepper
+   */
   private final class LicenseContentProvider implements ITreeContentProvider
   {
     public Object[] getChildren(Object element)

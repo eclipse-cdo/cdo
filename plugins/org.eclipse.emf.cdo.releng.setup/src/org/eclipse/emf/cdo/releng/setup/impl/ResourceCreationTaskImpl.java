@@ -94,7 +94,7 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
   /**
    * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getEncoding()
    * @generated
    * @ordered
@@ -103,7 +103,7 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ResourceCreationTaskImpl()
@@ -186,7 +186,7 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setEncoding(String newEncoding)
@@ -202,7 +202,7 @@ public class ResourceCreationTaskImpl extends SetupTaskImpl implements ResourceC
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

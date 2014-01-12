@@ -107,7 +107,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Eclipse}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -124,7 +124,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Configuration} instances.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ConfigurationItemProvider configurationItemProvider;
@@ -257,7 +257,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -274,7 +274,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.P2Task} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected P2TaskItemProvider p2TaskItemProvider;
@@ -407,7 +407,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ResourceCopyTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -424,7 +424,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TextModifyTask} instances.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected TextModifyTaskItemProvider textModifyTaskItemProvider;
@@ -432,7 +432,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TextModifyTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -449,7 +449,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TextModification} instances.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected TextModificationItemProvider textModificationItemProvider;
@@ -457,7 +457,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TextModification}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -482,7 +482,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.KeyBindingTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -507,7 +507,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.KeyBindingContext}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -524,7 +524,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.CommandParameter} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected CommandParameterItemProvider commandParameterItemProvider;
@@ -532,7 +532,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.CommandParameter}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -552,14 +552,16 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("deprecation")
   protected MylynQueryTaskItemProvider mylynQueryTaskItemProvider;
 
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("deprecation")
   @Override
   public Adapter createMylynQueryTaskAdapter()
   {
@@ -569,6 +571,106 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     }
 
     return mylynQueryTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected MylynQueriesTaskItemProvider mylynQueriesTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createMylynQueriesTaskAdapter()
+  {
+    if (mylynQueriesTaskItemProvider == null)
+    {
+      mylynQueriesTaskItemProvider = new MylynQueriesTaskItemProvider(this);
+    }
+
+    return mylynQueriesTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.URLQuery} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected URLQueryItemProvider urlQueryItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.URLQuery}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createURLQueryAdapter()
+  {
+    if (urlQueryItemProvider == null)
+    {
+      urlQueryItemProvider = new URLQueryItemProvider(this);
+    }
+
+    return urlQueryItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AttributesQuery} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected AttributesQueryItemProvider attributesQueryItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.AttributesQuery}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createAttributesQueryAdapter()
+  {
+    if (attributesQueryItemProvider == null)
+    {
+      attributesQueryItemProvider = new AttributesQueryItemProvider(this);
+    }
+
+    return attributesQueryItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected QueryAttributeItemProvider queryAttributeItemProvider;
+
+  /**
+   * This creates an adapter for a {@link java.util.Map.Entry}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createQueryAttributeAdapter()
+  {
+    if (queryAttributeItemProvider == null)
+    {
+      queryAttributeItemProvider = new QueryAttributeItemProvider(this);
+    }
+
+    return queryAttributeItemProvider;
   }
 
   /**
@@ -582,7 +684,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.JRETask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -607,7 +709,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -624,7 +726,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileEditor} instances.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected FileEditorItemProvider fileEditorItemProvider;
@@ -632,7 +734,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileEditor}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -649,7 +751,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask} instances.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected TargetPlatformTaskItemProvider targetPlatformTaskItemProvider;
@@ -657,7 +759,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -674,7 +776,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator} instances.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected AutomaticSourceLocatorItemProvider automaticSourceLocatorItemProvider;
@@ -682,7 +784,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -707,7 +809,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -724,7 +826,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator} instances.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ManualSourceLocatorItemProvider manualSourceLocatorItemProvider;
@@ -732,7 +834,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -749,7 +851,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask} instances.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ContextVariableTaskItemProvider contextVariableTaskItemProvider;
@@ -757,7 +859,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -782,7 +884,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.VariableChoice}.
    * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -832,7 +934,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MaterializationTask}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -849,7 +951,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Component} instances.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ComponentItemProvider componentItemProvider;
@@ -857,7 +959,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Component}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -874,7 +976,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask} instances.
    * <!-- begin-user-doc -->
-               * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected EclipseIniTaskItemProvider eclipseIniTaskItemProvider;
@@ -1077,7 +1179,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -1155,7 +1257,7 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1163,79 +1265,169 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   public void dispose()
   {
     if (eclipseItemProvider != null)
+    {
       eclipseItemProvider.dispose();
+    }
     if (configurationItemProvider != null)
+    {
       configurationItemProvider.dispose();
+    }
     if (projectItemProvider != null)
+    {
       projectItemProvider.dispose();
+    }
     if (branchItemProvider != null)
+    {
       branchItemProvider.dispose();
+    }
     if (preferencesItemProvider != null)
+    {
       preferencesItemProvider.dispose();
+    }
     if (setupItemProvider != null)
+    {
       setupItemProvider.dispose();
+    }
     if (compoundSetupTaskItemProvider != null)
+    {
       compoundSetupTaskItemProvider.dispose();
+    }
     if (contextVariableTaskItemProvider != null)
+    {
       contextVariableTaskItemProvider.dispose();
+    }
     if (variableChoiceItemProvider != null)
+    {
       variableChoiceItemProvider.dispose();
+    }
     if (eclipseIniTaskItemProvider != null)
+    {
       eclipseIniTaskItemProvider.dispose();
+    }
     if (linkLocationTaskItemProvider != null)
+    {
       linkLocationTaskItemProvider.dispose();
+    }
     if (p2TaskItemProvider != null)
+    {
       p2TaskItemProvider.dispose();
+    }
     if (installableUnitItemProvider != null)
+    {
       installableUnitItemProvider.dispose();
+    }
     if (p2RepositoryItemProvider != null)
+    {
       p2RepositoryItemProvider.dispose();
+    }
     if (buckminsterImportTaskItemProvider != null)
+    {
       buckminsterImportTaskItemProvider.dispose();
+    }
     if (materializationTaskItemProvider != null)
+    {
       materializationTaskItemProvider.dispose();
+    }
     if (componentItemProvider != null)
+    {
       componentItemProvider.dispose();
+    }
     if (manualSourceLocatorItemProvider != null)
+    {
       manualSourceLocatorItemProvider.dispose();
+    }
     if (automaticSourceLocatorItemProvider != null)
+    {
       automaticSourceLocatorItemProvider.dispose();
+    }
     if (redirectionTaskItemProvider != null)
+    {
       redirectionTaskItemProvider.dispose();
+    }
     if (apiBaselineTaskItemProvider != null)
+    {
       apiBaselineTaskItemProvider.dispose();
+    }
     if (gitCloneTaskItemProvider != null)
+    {
       gitCloneTaskItemProvider.dispose();
+    }
     if (projectSetImportTaskItemProvider != null)
+    {
       projectSetImportTaskItemProvider.dispose();
+    }
     if (targetPlatformTaskItemProvider != null)
+    {
       targetPlatformTaskItemProvider.dispose();
+    }
     if (eclipsePreferenceTaskItemProvider != null)
+    {
       eclipsePreferenceTaskItemProvider.dispose();
+    }
     if (fileAssociationTaskItemProvider != null)
+    {
       fileAssociationTaskItemProvider.dispose();
+    }
     if (fileEditorItemProvider != null)
+    {
       fileEditorItemProvider.dispose();
+    }
     if (workingSetTaskItemProvider != null)
+    {
       workingSetTaskItemProvider.dispose();
+    }
     if (resourceCopyTaskItemProvider != null)
+    {
       resourceCopyTaskItemProvider.dispose();
+    }
     if (resourceCreationTaskItemProvider != null)
+    {
       resourceCreationTaskItemProvider.dispose();
+    }
     if (textModifyTaskItemProvider != null)
+    {
       textModifyTaskItemProvider.dispose();
+    }
     if (textModificationItemProvider != null)
+    {
       textModificationItemProvider.dispose();
+    }
     if (keyBindingTaskItemProvider != null)
+    {
       keyBindingTaskItemProvider.dispose();
+    }
     if (keyBindingContextItemProvider != null)
+    {
       keyBindingContextItemProvider.dispose();
+    }
     if (commandParameterItemProvider != null)
+    {
       commandParameterItemProvider.dispose();
+    }
     if (mylynQueryTaskItemProvider != null)
+    {
       mylynQueryTaskItemProvider.dispose();
+    }
+    if (mylynQueriesTaskItemProvider != null)
+    {
+      mylynQueriesTaskItemProvider.dispose();
+    }
+    if (urlQueryItemProvider != null)
+    {
+      urlQueryItemProvider.dispose();
+    }
+    if (attributesQueryItemProvider != null)
+    {
+      attributesQueryItemProvider.dispose();
+    }
+    if (queryAttributeItemProvider != null)
+    {
+      queryAttributeItemProvider.dispose();
+    }
     if (jreTaskItemProvider != null)
+    {
       jreTaskItemProvider.dispose();
+    }
   }
 
 }

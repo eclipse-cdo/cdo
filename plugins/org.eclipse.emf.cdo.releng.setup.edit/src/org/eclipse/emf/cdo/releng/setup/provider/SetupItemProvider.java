@@ -150,7 +150,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   /**
    * This returns Setup.gif.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -173,7 +173,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   /**
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -222,7 +222,7 @@ public class SetupItemProvider extends ItemProviderAdapter implements IEditingDo
   /**
    * Return the resource locator for this item provider's resources.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

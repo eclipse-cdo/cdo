@@ -627,7 +627,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);

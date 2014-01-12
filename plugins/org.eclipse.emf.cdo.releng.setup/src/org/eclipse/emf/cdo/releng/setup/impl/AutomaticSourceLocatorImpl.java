@@ -66,7 +66,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
   /**
    * The cached value of the '{@link #isLocateNestedProjects() <em>Locate Nested Projects</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #isLocateNestedProjects()
    * @generated
    * @ordered
@@ -75,7 +75,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected AutomaticSourceLocatorImpl()
@@ -106,7 +106,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setRootFolder(String newRootFolder)
@@ -132,7 +132,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setLocateNestedProjects(boolean newLocateNestedProjects)
@@ -148,7 +148,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

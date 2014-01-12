@@ -436,7 +436,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -459,7 +459,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
   /**
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

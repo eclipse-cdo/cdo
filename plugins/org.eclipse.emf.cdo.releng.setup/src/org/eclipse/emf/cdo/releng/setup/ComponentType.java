@@ -144,11 +144,11 @@ public enum ComponentType implements Enumerator
   /**
    * The '<em><b>BOM</b></em>' literal value.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of '<em><b>BOM</b></em>' literal object isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>BOM</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @see #BOM
    * @model literal="bom"
    * @generated

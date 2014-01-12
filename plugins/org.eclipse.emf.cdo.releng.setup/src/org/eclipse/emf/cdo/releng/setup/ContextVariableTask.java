@@ -70,11 +70,11 @@ public interface ContextVariableTask extends SetupTask
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_Name()
@@ -122,11 +122,11 @@ public interface ContextVariableTask extends SetupTask
   /**
    * Returns the value of the '<em><b>String Substitution</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>String Substitution</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>String Substitution</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>String Substitution</em>' attribute.
    * @see #setStringSubstitution(boolean)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_StringSubstitution()
@@ -138,7 +138,7 @@ public interface ContextVariableTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#isStringSubstitution <em>String Substitution</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>String Substitution</em>' attribute.
    * @see #isStringSubstitution()
    * @generated
@@ -148,11 +148,11 @@ public interface ContextVariableTask extends SetupTask
   /**
    * Returns the value of the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Label</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Label</em>' attribute.
    * @see #setLabel(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_Label()
@@ -164,7 +164,7 @@ public interface ContextVariableTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask#getLabel <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Label</em>' attribute.
    * @see #getLabel()
    * @generated
@@ -175,11 +175,11 @@ public interface ContextVariableTask extends SetupTask
    * Returns the value of the '<em><b>Choices</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.VariableChoice}.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Choices</em>' containment reference list isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Choices</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Choices</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getContextVariableTask_Choices()
    * @model containment="true" resolveProxies="true"

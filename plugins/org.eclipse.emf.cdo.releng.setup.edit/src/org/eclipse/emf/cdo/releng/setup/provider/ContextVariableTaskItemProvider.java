@@ -94,7 +94,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   /**
    * This adds a property descriptor for the Name feature.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addNamePropertyDescriptor(Object object)
@@ -164,7 +164,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -180,7 +180,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -195,7 +195,7 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   /**
    * This returns ContextVariableTask.gif.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -216,11 +216,11 @@ public class ContextVariableTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public String getText(Object object)
   {

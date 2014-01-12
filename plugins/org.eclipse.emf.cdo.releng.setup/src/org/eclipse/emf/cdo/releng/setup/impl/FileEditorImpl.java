@@ -55,7 +55,7 @@ public class FileEditorImpl extends MinimalEObjectImpl.Container implements File
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected FileEditorImpl()
@@ -86,7 +86,7 @@ public class FileEditorImpl extends MinimalEObjectImpl.Container implements File
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setID(String newID)
@@ -101,7 +101,7 @@ public class FileEditorImpl extends MinimalEObjectImpl.Container implements File
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

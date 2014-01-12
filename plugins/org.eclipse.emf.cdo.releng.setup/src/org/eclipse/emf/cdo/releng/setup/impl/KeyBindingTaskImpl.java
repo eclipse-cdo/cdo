@@ -103,7 +103,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The default value of the '{@link #getPlatform() <em>Platform</em>}' attribute.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getPlatform()
    * @generated
    * @ordered
@@ -113,7 +113,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The cached value of the '{@link #getPlatform() <em>Platform</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getPlatform()
    * @generated
    * @ordered
@@ -123,7 +123,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The default value of the '{@link #getLocale() <em>Locale</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getLocale()
    * @generated
    * @ordered
@@ -133,7 +133,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The cached value of the '{@link #getLocale() <em>Locale</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getLocale()
    * @generated
    * @ordered
@@ -153,7 +153,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The cached value of the '{@link #getKeys() <em>Keys</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getKeys()
    * @generated
    * @ordered
@@ -163,7 +163,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The default value of the '{@link #getCommand() <em>Command</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getCommand()
    * @generated
    * @ordered
@@ -173,7 +173,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The cached value of the '{@link #getCommand() <em>Command</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getCommand()
    * @generated
    * @ordered
@@ -183,7 +183,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
   /**
    * The cached value of the '{@link #getCommandParameters() <em>Command Parameters</em>}' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getCommandParameters()
    * @generated
    * @ordered
@@ -192,7 +192,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected KeyBindingTaskImpl()
@@ -223,7 +223,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setScheme(String newScheme)
@@ -253,7 +253,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getPlatform()
@@ -263,7 +263,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setPlatform(String newPlatform)
@@ -289,7 +289,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setLocale(String newLocale)
@@ -314,7 +314,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setKeys(String newKeys)
@@ -329,7 +329,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getCommand()
@@ -339,7 +339,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setCommand(String newCommand)
@@ -354,7 +354,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EList<CommandParameter> getCommandParameters()
@@ -369,7 +369,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -387,7 +387,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -415,7 +415,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -453,7 +453,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -488,7 +488,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -516,7 +516,7 @@ public class KeyBindingTaskImpl extends SetupTaskImpl implements KeyBindingTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

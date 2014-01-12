@@ -78,7 +78,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
   /**
    * The cached value of the '{@link #getModifications() <em>Modifications</em>}' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getModifications()
    * @generated
    * @ordered
@@ -98,7 +98,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
   /**
    * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getEncoding()
    * @generated
    * @ordered
@@ -107,7 +107,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected TextModifyTaskImpl()
@@ -138,7 +138,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setURL(String newURL)
@@ -153,7 +153,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EList<TextModification> getModifications()
@@ -178,7 +178,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setEncoding(String newEncoding)
@@ -194,7 +194,7 @@ public class TextModifyTaskImpl extends SetupTaskImpl implements TextModifyTask
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

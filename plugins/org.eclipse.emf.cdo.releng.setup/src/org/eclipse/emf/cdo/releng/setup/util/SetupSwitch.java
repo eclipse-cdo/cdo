@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
+import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -34,6 +35,8 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -52,12 +55,15 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,6 +78,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class SetupSwitch<T> extends Switch<T>
 {
   /**
@@ -113,7 +120,7 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -710,6 +717,69 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.MYLYN_QUERIES_TASK:
+    {
+      MylynQueriesTask mylynQueriesTask = (MylynQueriesTask)theEObject;
+      T result = caseMylynQueriesTask(mylynQueriesTask);
+      if (result == null)
+      {
+        result = caseSetupTask(mylynQueriesTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.MYLYN_QUERY:
+    {
+      MylynQuery mylynQuery = (MylynQuery)theEObject;
+      T result = caseMylynQuery(mylynQuery);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.URL_QUERY:
+    {
+      URLQuery urlQuery = (URLQuery)theEObject;
+      T result = caseURLQuery(urlQuery);
+      if (result == null)
+      {
+        result = caseMylynQuery(urlQuery);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.ATTRIBUTES_QUERY:
+    {
+      AttributesQuery attributesQuery = (AttributesQuery)theEObject;
+      T result = caseAttributesQuery(attributesQuery);
+      if (result == null)
+      {
+        result = caseMylynQuery(attributesQuery);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.QUERY_ATTRIBUTE:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, String> queryAttribute = (Map.Entry<String, String>)theEObject;
+      T result = caseQueryAttribute(queryAttribute);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.JRE_TASK:
     {
       JRETask jreTask = (JRETask)theEObject;
@@ -748,9 +818,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Preferences</em>'.
    * <!-- begin-user-doc -->
-         * This implementation returns null;
-         * returning a non-null result will terminate the switch.
-         * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Preferences</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -812,9 +882,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Eclipse Preference Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -972,9 +1042,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Setup</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Setup</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1036,9 +1106,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Text Modify Task</em>'.
    * <!-- begin-user-doc -->
-  	 * This implementation returns null;
-  	 * returning a non-null result will terminate the switch.
-  	 * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Text Modify Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1052,9 +1122,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Text Modification</em>'.
    * <!-- begin-user-doc -->
-  	 * This implementation returns null;
-  	 * returning a non-null result will terminate the switch.
-  	 * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Text Modification</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1100,9 +1170,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Command Parameter</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Command Parameter</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1125,6 +1195,86 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMylynQueryTask(MylynQueryTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mylyn Queries Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mylyn Queries Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMylynQueriesTask(MylynQueriesTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mylyn Query</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mylyn Query</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMylynQuery(MylynQuery object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>URL Query</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>URL Query</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseURLQuery(URLQuery object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attributes Query</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attributes Query</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributesQuery(AttributesQuery object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Query Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Query Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseQueryAttribute(Map.Entry<String, String> object)
   {
     return null;
   }
@@ -1164,9 +1314,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>File Editor</em>'.
    * <!-- begin-user-doc -->
-  	 * This implementation returns null;
-  	 * returning a non-null result will terminate the switch.
-  	 * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>File Editor</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1180,9 +1330,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Target Platform Task</em>'.
    * <!-- begin-user-doc -->
-       * This implementation returns null;
-       * returning a non-null result will terminate the switch.
-       * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Target Platform Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1196,9 +1346,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
    * <!-- begin-user-doc -->
-       * This implementation returns null;
-       * returning a non-null result will terminate the switch.
-       * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Automatic Source Locator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1228,9 +1378,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
    * <!-- begin-user-doc -->
-    	 * This implementation returns null;
-    	 * returning a non-null result will terminate the switch.
-    	 * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Manual Source Locator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1244,9 +1394,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Context Variable Task</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Context Variable Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1276,9 +1426,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Resource Creation Task</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Resource Creation Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1324,9 +1474,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Basic Materialization Task</em>'.
    * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Basic Materialization Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -1356,9 +1506,9 @@ public class SetupSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
    * <!-- begin-user-doc -->
-                     * This implementation returns null;
-                     * returning a non-null result will terminate the switch.
-                     * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Eclipse Ini Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)

@@ -143,11 +143,11 @@ public interface GitCloneTask extends SetupTask
    * Returns the value of the '<em><b>User ID</b></em>' attribute.
    * The default value is <code>"${git.user.id}"</code>.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>User ID</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>User ID</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>User ID</em>' attribute.
    * @see #setUserID(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_UserID()
@@ -159,7 +159,7 @@ public interface GitCloneTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getUserID <em>User ID</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>User ID</em>' attribute.
    * @see #getUserID()
    * @generated

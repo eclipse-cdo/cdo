@@ -39,6 +39,7 @@ import java.util.Set;
  *
  * @generated
  */
+@Deprecated
 public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 {
   /**
@@ -94,7 +95,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   /**
    * The cached value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getRepositoryURL()
    * @generated
    * @ordered
@@ -104,7 +105,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   /**
    * The default value of the '{@link #getRelativeURL() <em>Relative URL</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getRelativeURL()
    * @generated
    * @ordered
@@ -114,7 +115,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
   /**
    * The cached value of the '{@link #getRelativeURL() <em>Relative URL</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getRelativeURL()
    * @generated
    * @ordered
@@ -123,7 +124,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected MylynQueryTaskImpl()
@@ -205,7 +206,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setRepositoryURL(String newRepositoryURL)
@@ -221,7 +222,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getRelativeURL()
@@ -231,7 +232,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setRelativeURL(String newRelativeURL)
@@ -247,7 +248,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

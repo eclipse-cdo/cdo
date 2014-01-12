@@ -53,7 +53,7 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   /**
    * The cached value of the '{@link #getBranches() <em>Branches</em>}' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getBranches()
    * @generated
    * @ordered
@@ -93,7 +93,7 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
   /**
    * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getLabel()
    * @generated
    * @ordered
@@ -133,7 +133,7 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Configuration getConfiguration()
@@ -259,7 +259,7 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setLabel(String newLabel)
@@ -458,7 +458,7 @@ public class ProjectImpl extends ConfigurableItemImpl implements Project
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

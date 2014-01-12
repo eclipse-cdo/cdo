@@ -32,7 +32,7 @@ public interface ScopeRoot extends SetupTaskContainer
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @model kind="operation"
    * @generated
    */

@@ -85,7 +85,7 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   /**
    * The cached value of the '{@link #getContainerFolder() <em>Container Folder</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getContainerFolder()
    * @generated
    * @ordered
@@ -95,7 +95,7 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
   /**
    * The default value of the '{@link #getZipLocation() <em>Zip Location</em>}' attribute.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getZipLocation()
    * @generated
    * @ordered
@@ -173,7 +173,7 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setContainerFolder(String newContainerFolder)
@@ -189,7 +189,7 @@ public class ApiBaselineTaskImpl extends SetupTaskImpl implements ApiBaselineTas
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getZipLocation()

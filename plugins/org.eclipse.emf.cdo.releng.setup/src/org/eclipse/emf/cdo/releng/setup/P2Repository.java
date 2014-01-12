@@ -50,7 +50,7 @@ public interface P2Repository extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.P2Repository#getURL <em>URL</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>URL</em>' attribute.
    * @see #getURL()
    * @generated

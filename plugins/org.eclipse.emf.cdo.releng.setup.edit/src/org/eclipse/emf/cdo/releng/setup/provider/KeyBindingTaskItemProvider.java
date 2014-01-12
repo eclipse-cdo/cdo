@@ -93,7 +93,7 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This adds a property descriptor for the Platform feature.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addPlatformPropertyDescriptor(Object object)
@@ -144,7 +144,7 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This adds a property descriptor for the Command feature.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected void addCommandPropertyDescriptor(Object object)
@@ -164,7 +164,7 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -181,7 +181,7 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -196,7 +196,7 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
   /**
    * This returns KeyBindingTask.gif.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -217,11 +217,11 @@ public class KeyBindingTaskItemProvider extends SetupTaskItemProvider implements
   }
 
   /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated NOT
-     */
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public String getText(Object object)
   {

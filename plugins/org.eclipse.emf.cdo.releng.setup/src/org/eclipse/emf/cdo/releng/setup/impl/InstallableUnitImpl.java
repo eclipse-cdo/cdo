@@ -71,7 +71,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
   /**
    * The cached value of the '{@link #getVersionRange() <em>Version Range</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getVersionRange()
    * @generated
    * @ordered
@@ -80,7 +80,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected InstallableUnitImpl()
@@ -111,7 +111,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setID(String newID)
@@ -136,7 +136,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setVersionRange(VersionRange newVersionRange)
@@ -152,7 +152,7 @@ public class InstallableUnitImpl extends MinimalEObjectImpl.Container implements
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

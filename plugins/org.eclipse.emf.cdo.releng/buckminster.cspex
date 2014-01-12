@@ -27,6 +27,8 @@
 		<cs:dependency name="org.eclipse.jgit" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
 
+		<cs:dependency name="org.eclipse.mylyn.bugzilla_feature.feature.group" componentType="eclipse.feature"/>
+
 		<cs:dependency name="org.eclipse.buckminster.core.feature.feature.group" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.buckminster.git.feature.feature.group" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.buckminster.pde.feature.feature.group" componentType="eclipse.feature"/>

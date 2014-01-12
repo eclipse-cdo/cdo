@@ -86,10 +86,10 @@ public class FileEditorItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-  	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean hasChildren(Object object)
   {

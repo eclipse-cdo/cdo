@@ -75,7 +75,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   /**
    * The cached value of the '{@link #getBundlePoolFolder() <em>Bundle Pool Folder</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getBundlePoolFolder()
    * @generated
    * @ordered
@@ -95,7 +95,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   /**
    * The cached value of the '{@link #getBundlePoolFolderTP() <em>Bundle Pool Folder TP</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getBundlePoolFolderTP()
    * @generated
    * @ordered
@@ -105,7 +105,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
   /**
    * The cached value of the '{@link #getAcceptedLicenses() <em>Accepted Licenses</em>}' attribute list.
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getAcceptedLicenses()
    * @generated
    * @ordered
@@ -171,7 +171,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setBundlePoolFolder(String newBundlePoolFolder)
@@ -197,7 +197,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setBundlePoolFolderTP(String newBundlePoolFolderTP)
@@ -213,7 +213,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EList<LicenseInfo> getAcceptedLicenses()
@@ -248,7 +248,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
 
   /**
    * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -348,7 +348,7 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

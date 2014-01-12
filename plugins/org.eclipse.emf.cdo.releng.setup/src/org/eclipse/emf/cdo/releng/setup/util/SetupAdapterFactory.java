@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
+import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -34,6 +35,8 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -52,6 +55,7 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
+import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
@@ -59,6 +63,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -68,6 +74,7 @@ import org.eclipse.emf.ecore.EObject;
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class SetupAdapterFactory extends AdapterFactoryImpl
 {
   /**
@@ -375,6 +382,36 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseMylynQueriesTask(MylynQueriesTask object)
+    {
+      return createMylynQueriesTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseMylynQuery(MylynQuery object)
+    {
+      return createMylynQueryAdapter();
+    }
+
+    @Override
+    public Adapter caseURLQuery(URLQuery object)
+    {
+      return createURLQueryAdapter();
+    }
+
+    @Override
+    public Adapter caseAttributesQuery(AttributesQuery object)
+    {
+      return createAttributesQueryAdapter();
+    }
+
+    @Override
+    public Adapter caseQueryAttribute(Map.Entry<String, String> object)
+    {
+      return createQueryAttributeAdapter();
+    }
+
+    @Override
     public Adapter caseJRETask(JRETask object)
     {
       return createJRETaskAdapter();
@@ -419,9 +456,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
    * <!-- begin-user-doc -->
-       * This default implementation returns null so that we can easily ignore cases;
-       * it's useful to ignore a case when inheritance will catch all the cases anyway.
-       * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.Configuration
    * @generated
@@ -509,9 +546,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.P2Task <em>P2 Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.P2Task
    * @generated
@@ -614,9 +651,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TextModifyTask <em>Text Modify Task</em>}'.
    * <!-- begin-user-doc -->
-  	 * This default implementation returns null so that we can easily ignore cases;
-  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-  	 * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.TextModifyTask
    * @generated
@@ -629,9 +666,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TextModification <em>Text Modification</em>}'.
    * <!-- begin-user-doc -->
-  	 * This default implementation returns null so that we can easily ignore cases;
-  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-  	 * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.TextModification
    * @generated
@@ -674,9 +711,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.CommandParameter <em>Command Parameter</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.CommandParameter
    * @generated
@@ -697,6 +734,81 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMylynQueryTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask <em>Mylyn Queries Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask
+   * @generated
+   */
+  public Adapter createMylynQueriesTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery <em>Mylyn Query</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery
+   * @generated
+   */
+  public Adapter createMylynQueryAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.URLQuery <em>URL Query</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.URLQuery
+   * @generated
+   */
+  public Adapter createURLQueryAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AttributesQuery <em>Attributes Query</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.AttributesQuery
+   * @generated
+   */
+  public Adapter createAttributesQueryAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Query Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createQueryAttributeAdapter()
   {
     return null;
   }
@@ -734,9 +846,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.FileEditor <em>File Editor</em>}'.
    * <!-- begin-user-doc -->
-  	 * This default implementation returns null so that we can easily ignore cases;
-  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-  	 * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.FileEditor
    * @generated
@@ -749,9 +861,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TargetPlatformTask <em>Target Platform Task</em>}'.
    * <!-- begin-user-doc -->
-       * This default implementation returns null so that we can easily ignore cases;
-       * it's useful to ignore a case when inheritance will catch all the cases anyway.
-       * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.TargetPlatformTask
    * @generated
@@ -764,9 +876,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator <em>Automatic Source Locator</em>}'.
    * <!-- begin-user-doc -->
-       * This default implementation returns null so that we can easily ignore cases;
-       * it's useful to ignore a case when inheritance will catch all the cases anyway.
-       * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator
    * @generated
@@ -794,9 +906,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ManualSourceLocator <em>Manual Source Locator</em>}'.
    * <!-- begin-user-doc -->
-    	 * This default implementation returns null so that we can easily ignore cases;
-    	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    	 * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.ManualSourceLocator
    * @generated
@@ -809,9 +921,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ContextVariableTask <em>Context Variable Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.ContextVariableTask
    * @generated
@@ -839,9 +951,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ResourceCreationTask <em>Resource Creation Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.ResourceCreationTask
    * @generated
@@ -884,9 +996,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask <em>Basic Materialization Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask
    * @generated
@@ -914,9 +1026,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipseIniTask <em>Eclipse Ini Task</em>}'.
    * <!-- begin-user-doc -->
-                     * This default implementation returns null so that we can easily ignore cases;
-                     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-                     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.EclipseIniTask
    * @generated
@@ -1034,9 +1146,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask <em>Eclipse Preference Task</em>}'.
    * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask
    * @generated

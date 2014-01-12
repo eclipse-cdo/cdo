@@ -29,6 +29,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * @model annotation="http://www.eclipse.org/CDO/releng/setup/enablement variableName='setup.mylyn.p2' repository='http://download.eclipse.org/mylyn/releases/latest' installableUnits='org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui'"
  * @generated
  */
+@Deprecated
 public interface MylynQueryTask extends SetupTask
 {
   /**
@@ -103,7 +104,7 @@ public interface MylynQueryTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRepositoryURL <em>Repository URL</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Repository URL</em>' attribute.
    * @see #getRepositoryURL()
    * @generated
@@ -113,11 +114,11 @@ public interface MylynQueryTask extends SetupTask
   /**
    * Returns the value of the '<em><b>Relative URL</b></em>' attribute.
    * <!-- begin-user-doc -->
-  	 * <p>
-  	 * If the meaning of the '<em>Relative URL</em>' attribute isn't clear,
-  	 * there really should be more of a description here...
-  	 * </p>
-  	 * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Relative URL</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Relative URL</em>' attribute.
    * @see #setRelativeURL(String)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueryTask_RelativeURL()
@@ -129,7 +130,7 @@ public interface MylynQueryTask extends SetupTask
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueryTask#getRelativeURL <em>Relative URL</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Relative URL</em>' attribute.
    * @see #getRelativeURL()
    * @generated

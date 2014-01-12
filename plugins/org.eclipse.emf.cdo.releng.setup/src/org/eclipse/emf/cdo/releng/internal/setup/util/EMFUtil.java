@@ -91,7 +91,8 @@ public final class EMFUtil extends Plugin
       uriMap.put(CONFIGURATION_URI, REDIRECTED_CONFIGURATION_URI);
     }
 
-    if (BRANCH_URI != null && REDIRECTED_BRANCH_URI != null && !BRANCH_URI.equals(REDIRECTED_BRANCH_URI))
+    if (BRANCH_URI != null && REDIRECTED_BRANCH_URI != null && !BRANCH_URI.equals(REDIRECTED_BRANCH_URI)
+        && uriConverter.exists(REDIRECTED_BRANCH_URI, null))
     {
       uriMap.put(BRANCH_URI, REDIRECTED_BRANCH_URI);
     }

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.ContextVariableTask;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
+import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -34,6 +36,7 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
+import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -55,6 +58,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
 import org.eclipse.core.resources.IWorkspace;
@@ -70,6 +75,7 @@ import org.eclipse.equinox.p2.metadata.VersionRange;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -520,25 +526,105 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     }
   }
 
+  private CompoundSetupTask findOrCreate(AdapterFactoryItemDelegator itemDelegator, ConfigurableItem configurableItem,
+      EList<SetupTask> setupTasks)
+  {
+    EObject eContainer = configurableItem.eContainer();
+    if (eContainer instanceof ConfigurableItem)
+    {
+      CompoundSetupTask compoundSetupTask = findOrCreate(itemDelegator, (ConfigurableItem)eContainer, setupTasks);
+      setupTasks = compoundSetupTask.getSetupTasks();
+    }
+
+    CompoundSetupTask compoundSetupTask = find(configurableItem, setupTasks);
+    if (compoundSetupTask == null)
+    {
+      compoundSetupTask = SetupFactory.eINSTANCE.createCompoundSetupTask();
+      compoundSetupTask.setName(itemDelegator.getText(configurableItem));
+      compoundSetupTask.getRestrictions().add(configurableItem);
+
+      setupTasks.add(compoundSetupTask);
+    }
+
+    return compoundSetupTask;
+  }
+
+  private CompoundSetupTask find(ConfigurableItem configurableItem, EList<SetupTask> setupTasks)
+  {
+    LOOP: for (SetupTask setupTask : setupTasks)
+    {
+      if (setupTask instanceof CompoundSetupTask)
+      {
+        CompoundSetupTask compoundSetupTask = (CompoundSetupTask)setupTask;
+        List<ConfigurableItem> restrictions = ((InternalEList<ConfigurableItem>)compoundSetupTask.getRestrictions())
+            .basicList();
+        URI uri = EcoreUtil.getURI(configurableItem);
+        boolean found = false;
+        for (ConfigurableItem restriction : restrictions)
+        {
+          URI otherURI = EcoreUtil.getURI(restriction);
+          if (!otherURI.equals(uri))
+          {
+            continue LOOP;
+          }
+
+          found = true;
+        }
+
+        if (found)
+        {
+          return compoundSetupTask;
+        }
+
+        compoundSetupTask = find(configurableItem, compoundSetupTask.getSetupTasks());
+        if (compoundSetupTask != null)
+        {
+          return compoundSetupTask;
+        }
+      }
+    }
+
+    return null;
+  }
+
   public void resolveSettings()
   {
-    EList<SetupTask> setupTasks = getPreferences().getSetupTasks();
+    Preferences preferences = getPreferences();
+
+    // Load the current saved state of the preferences.
+    SetupResource resource = EMFUtil.loadResourceSafely(EMFUtil.createResourceSet(), preferences.eResource().getURI());
+    preferences = (Preferences)resource.getContents().get(0);
+
+    AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(EMFUtil.ADAPTER_FACTORY);
+    EList<SetupTask> setupTasks = preferences.getSetupTasks();
     for (ContextVariableTask contextVariableTask : unresolvedVariables)
     {
       put(contextVariableTask.getName(), contextVariableTask.getValue());
-      ContextVariableTask userPreference = SetupFactory.eINSTANCE.createContextVariableTask();
-      userPreference.setName(contextVariableTask.getName());
-      userPreference.setValue(contextVariableTask.getValue());
+
+      EList<SetupTask> targetSetupTasks = setupTasks;
       for (EObject container = contextVariableTask.eContainer(); container != null; container = container.eContainer())
       {
         if (container instanceof ConfigurableItem)
         {
-          userPreference.getRestrictions().add((ConfigurableItem)container);
+          targetSetupTasks = findOrCreate(itemDelegator, (ConfigurableItem)container, setupTasks).getSetupTasks();
           break;
         }
       }
 
-      setupTasks.add(userPreference);
+      ContextVariableTask userPreference = SetupFactory.eINSTANCE.createContextVariableTask();
+      userPreference.setName(contextVariableTask.getName());
+      userPreference.setValue(contextVariableTask.getValue());
+
+      targetSetupTasks.add(userPreference);
+    }
+
+    try
+    {
+      resource.save(null);
+    }
+    catch (IOException ex)
+    {
+      log(ex);
     }
 
     for (EStructuralFeature.Setting setting : unresolvedSettings)
@@ -754,12 +840,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         log("Performing setup task " + getLabel(neededTask));
         neededTask.perform(this);
         neededTask.dispose();
-      }
-
-      Resource preferencesResource = getPreferences().eResource();
-      if (preferencesResource.isModified())
-      {
-        preferencesResource.save(null);
       }
     }
     finally

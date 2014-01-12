@@ -10,11 +10,14 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.util;
 
+import org.eclipse.emf.cdo.releng.internal.setup.AbstractSetupTaskContext;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
+import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
@@ -27,11 +30,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.core.runtime.Plugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
@@ -53,6 +58,10 @@ public final class EMFUtil extends Plugin
       ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
   private static final URI REDIRECTED_CONFIGURATION_URI = getSetupURI();
+
+  private static final URI BRANCH_URI = getBranchURI();
+
+  private static final URI REDIRECTED_BRANCH_URI = getRedirectedBranchURI();
 
   private EMFUtil()
   {
@@ -80,6 +89,11 @@ public final class EMFUtil extends Plugin
     if (!CONFIGURATION_URI.equals(REDIRECTED_CONFIGURATION_URI))
     {
       uriMap.put(CONFIGURATION_URI, REDIRECTED_CONFIGURATION_URI);
+    }
+
+    if (BRANCH_URI != null && REDIRECTED_BRANCH_URI != null && !BRANCH_URI.equals(REDIRECTED_BRANCH_URI))
+    {
+      uriMap.put(BRANCH_URI, REDIRECTED_BRANCH_URI);
     }
 
     if (EXAMPLE_URI != null)
@@ -125,6 +139,43 @@ public final class EMFUtil extends Plugin
     }
 
     return URI.createURI(uri.replace('\\', '/'));
+  }
+
+  private static URI getBranchURI()
+  {
+    try
+    {
+      if (SetupConstants.SETUP_IDE)
+      {
+        ResourceSet resourceSet = new ResourceSetImpl();
+        Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+        extensionToFactoryMap.put("xmi", new SetupResourceFactoryImpl());
+
+        File branchDir = AbstractSetupTaskContext.getCurrentBranchDir().getCanonicalFile();
+        URI uri = AbstractSetupTaskContext.getSetupURI(branchDir);
+        SetupResource resource = EMFUtil.loadResourceSafely(resourceSet, uri);
+        Setup setup = (Setup)resource.getContents().get(0);
+        URI branchURI = EcoreUtil.getURI((EObject)setup.eGet(SetupPackage.Literals.SETUP__BRANCH)).trimFragment();
+        return branchURI;
+      }
+    }
+    catch (Throwable ex)
+    {
+      // Ignore
+    }
+
+    return null;
+  }
+
+  private static URI getRedirectedBranchURI()
+  {
+    String uri = System.getProperty(SetupConstants.PROP_SETUP_BRANCH_URI);
+    if (uri == null)
+    {
+      return null;
+    }
+
+    return URI.createURI(uri);
   }
 
   public static Set<String> getInstallableUnitIDs(ScopeRoot scope, boolean includeParentScopes)

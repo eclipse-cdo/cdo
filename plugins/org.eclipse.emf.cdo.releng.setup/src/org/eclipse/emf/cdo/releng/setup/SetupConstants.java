@@ -61,6 +61,8 @@ public interface SetupConstants
 
   public static final String PROP_RELENG_URL = "releng.url";
 
+  public static final String PROP_SETUP_BRANCH_URI = "setup.branch.uri";
+
   public static final String RELENG_URL = System.getProperty(PROP_RELENG_URL, Activator.CDO_URL).replace('\\', '/');
 
   public static final boolean SETUP_IDE = "true".equalsIgnoreCase(System.getProperty(PROP_SETUP_IDE, "false"));

@@ -35,13 +35,13 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
-import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
+import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
@@ -199,8 +199,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createMylynQueryTask();
     case SetupPackage.MYLYN_QUERIES_TASK:
       return createMylynQueriesTask();
-    case SetupPackage.MYLYN_QUERY:
-      return createMylynQuery();
+    case SetupPackage.QUERY:
+      return createQuery();
     case SetupPackage.QUERY_ATTRIBUTE:
       return (EObject)createQueryAttribute();
     case SetupPackage.JRE_TASK:
@@ -537,10 +537,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public MylynQuery createMylynQuery()
+  public Query createQuery()
   {
-    MylynQueryImpl mylynQuery = new MylynQueryImpl();
-    return mylynQuery;
+    QueryImpl query = new QueryImpl();
+    return query;
   }
 
   /**

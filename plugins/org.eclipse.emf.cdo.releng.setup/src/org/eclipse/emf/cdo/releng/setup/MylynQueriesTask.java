@@ -79,8 +79,8 @@ public interface MylynQueriesTask extends SetupTask
 
   /**
    * Returns the value of the '<em><b>Queries</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.MylynQuery}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask <em>Task</em>}'.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.setup.Query}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.Query#getTask <em>Task</em>}'.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Queries</em>' containment reference list isn't clear,
@@ -89,10 +89,10 @@ public interface MylynQueriesTask extends SetupTask
    * <!-- end-user-doc -->
    * @return the value of the '<em>Queries</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueriesTask_Queries()
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask
+   * @see org.eclipse.emf.cdo.releng.setup.Query#getTask
    * @model opposite="task" containment="true" resolveProxies="true"
    * @generated
    */
-  EList<MylynQuery> getQueries();
+  EList<Query> getQueries();
 
 } // MylynQueriesTask

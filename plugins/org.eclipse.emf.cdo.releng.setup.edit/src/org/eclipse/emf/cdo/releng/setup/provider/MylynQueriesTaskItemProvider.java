@@ -204,7 +204,7 @@ public class MylynQueriesTaskItemProvider extends SetupTaskItemProvider implemen
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MYLYN_QUERIES_TASK__QUERIES,
-        SetupFactory.eINSTANCE.createMylynQuery()));
+        SetupFactory.eINSTANCE.createQuery()));
   }
 
 }

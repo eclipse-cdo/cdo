@@ -323,9 +323,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="repositoryURL" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="queries" upperBound="-1"
-        eType="#//MylynQuery" containment="true" eOpposite="#//MylynQuery/task"/>
+        eType="#//Query" containment="true" eOpposite="#//Query/task"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MylynQuery">
+  <eClassifiers xsi:type="ecore:EClass" name="Query">
     <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//MylynQueriesTask"
         eOpposite="#//MylynQueriesTask/queries"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="summary" lowerBound="1"

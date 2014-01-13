@@ -3127,14 +3127,14 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERIES_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl <em>Mylyn Query</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQuery()
+   * @see org.eclipse.emf.cdo.releng.setup.impl.QueryImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQuery()
    * @generated
    */
-  int MYLYN_QUERY = 43;
+  int QUERY = 43;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' container reference.
@@ -3143,7 +3143,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY__TASK = 0;
+  int QUERY__TASK = 0;
 
   /**
    * The feature id for the '<em><b>Summary</b></em>' attribute.
@@ -3152,7 +3152,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY__SUMMARY = 1;
+  int QUERY__SUMMARY = 1;
 
   /**
    * The feature id for the '<em><b>URL</b></em>' attribute.
@@ -3161,7 +3161,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY__URL = 2;
+  int QUERY__URL = 2;
 
   /**
    * The feature id for the '<em><b>Attributes</b></em>' map.
@@ -3170,16 +3170,16 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY__ATTRIBUTES = 3;
+  int QUERY__ATTRIBUTES = 3;
 
   /**
-   * The number of structural features of the '<em>Mylyn Query</em>' class.
+   * The number of structural features of the '<em>Query</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MYLYN_QUERY_FEATURE_COUNT = 4;
+  int QUERY_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
@@ -4282,58 +4282,58 @@ public interface SetupPackage extends EPackage
   EReference getMylynQueriesTask_Queries();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery <em>Mylyn Query</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Query <em>Query</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Mylyn Query</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery
+   * @return the meta object for class '<em>Query</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Query
    * @generated
    */
-  EClass getMylynQuery();
+  EClass getQuery();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getSummary <em>Summary</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Summary</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getSummary()
-   * @see #getMylynQuery()
-   * @generated
-   */
-  EAttribute getMylynQuery_Summary();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getURL <em>URL</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>URL</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getURL()
-   * @see #getMylynQuery()
-   * @generated
-   */
-  EAttribute getMylynQuery_URL();
-
-  /**
-   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getAttributes <em>Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the map '<em>Attributes</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getAttributes()
-   * @see #getMylynQuery()
-   * @generated
-   */
-  EReference getMylynQuery_Attributes();
-
-  /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask <em>Task</em>}'.
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.releng.setup.Query#getTask <em>Task</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Task</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask()
-   * @see #getMylynQuery()
+   * @see org.eclipse.emf.cdo.releng.setup.Query#getTask()
+   * @see #getQuery()
    * @generated
    */
-  EReference getMylynQuery_Task();
+  EReference getQuery_Task();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Query#getSummary <em>Summary</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Summary</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Query#getSummary()
+   * @see #getQuery()
+   * @generated
+   */
+  EAttribute getQuery_Summary();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Query#getURL <em>URL</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Query#getURL()
+   * @see #getQuery()
+   * @generated
+   */
+  EAttribute getQuery_URL();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.releng.setup.Query#getAttributes <em>Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the map '<em>Attributes</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Query#getAttributes()
+   * @see #getQuery()
+   * @generated
+   */
+  EReference getQuery_Attributes();
 
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>Query Attribute</em>}'.
@@ -5931,38 +5931,14 @@ public interface SetupPackage extends EPackage
     EReference MYLYN_QUERIES_TASK__QUERIES = eINSTANCE.getMylynQueriesTask_Queries();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl <em>Mylyn Query</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl
-     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQuery()
+     * @see org.eclipse.emf.cdo.releng.setup.impl.QueryImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQuery()
      * @generated
      */
-    EClass MYLYN_QUERY = eINSTANCE.getMylynQuery();
-
-    /**
-     * The meta object literal for the '<em><b>Summary</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MYLYN_QUERY__SUMMARY = eINSTANCE.getMylynQuery_Summary();
-
-    /**
-     * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MYLYN_QUERY__URL = eINSTANCE.getMylynQuery_URL();
-
-    /**
-     * The meta object literal for the '<em><b>Attributes</b></em>' map feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MYLYN_QUERY__ATTRIBUTES = eINSTANCE.getMylynQuery_Attributes();
+    EClass QUERY = eINSTANCE.getQuery();
 
     /**
      * The meta object literal for the '<em><b>Task</b></em>' container reference feature.
@@ -5970,7 +5946,31 @@ public interface SetupPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MYLYN_QUERY__TASK = eINSTANCE.getMylynQuery_Task();
+    EReference QUERY__TASK = eINSTANCE.getQuery_Task();
+
+    /**
+     * The meta object literal for the '<em><b>Summary</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute QUERY__SUMMARY = eINSTANCE.getQuery_Summary();
+
+    /**
+     * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute QUERY__URL = eINSTANCE.getQuery_URL();
+
+    /**
+     * The meta object literal for the '<em><b>Attributes</b></em>' map feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference QUERY__ATTRIBUTES = eINSTANCE.getQuery_Attributes();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.

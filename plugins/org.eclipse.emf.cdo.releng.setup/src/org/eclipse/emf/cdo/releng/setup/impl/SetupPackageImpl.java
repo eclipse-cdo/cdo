@@ -37,13 +37,13 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
-import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
+import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
@@ -239,7 +239,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass mylynQueryEClass = null;
+  private EClass queryEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1376,9 +1376,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getMylynQuery()
+  public EClass getQuery()
   {
-    return mylynQueryEClass;
+    return queryEClass;
   }
 
   /**
@@ -1386,9 +1386,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getMylynQuery_Summary()
+  public EReference getQuery_Task()
   {
-    return (EAttribute)mylynQueryEClass.getEStructuralFeatures().get(1);
+    return (EReference)queryEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1396,9 +1396,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getMylynQuery_URL()
+  public EAttribute getQuery_Summary()
   {
-    return (EAttribute)mylynQueryEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)queryEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1406,9 +1406,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMylynQuery_Attributes()
+  public EAttribute getQuery_URL()
   {
-    return (EReference)mylynQueryEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)queryEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1416,9 +1416,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMylynQuery_Task()
+  public EReference getQuery_Attributes()
   {
-    return (EReference)mylynQueryEClass.getEStructuralFeatures().get(0);
+    return (EReference)queryEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -2456,11 +2456,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__REPOSITORY_URL);
     createEReference(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__QUERIES);
 
-    mylynQueryEClass = createEClass(MYLYN_QUERY);
-    createEReference(mylynQueryEClass, MYLYN_QUERY__TASK);
-    createEAttribute(mylynQueryEClass, MYLYN_QUERY__SUMMARY);
-    createEAttribute(mylynQueryEClass, MYLYN_QUERY__URL);
-    createEReference(mylynQueryEClass, MYLYN_QUERY__ATTRIBUTES);
+    queryEClass = createEClass(QUERY);
+    createEReference(queryEClass, QUERY__TASK);
+    createEAttribute(queryEClass, QUERY__SUMMARY);
+    createEAttribute(queryEClass, QUERY__URL);
+    createEReference(queryEClass, QUERY__ATTRIBUTES);
 
     queryAttributeEClass = createEClass(QUERY_ATTRIBUTE);
     createEAttribute(queryAttributeEClass, QUERY_ATTRIBUTE__KEY);
@@ -2978,20 +2978,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getMylynQueriesTask_RepositoryURL(), ecorePackage.getEString(), "repositoryURL", null, 1, 1,
         MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getMylynQueriesTask_Queries(), getMylynQuery(), getMylynQuery_Task(), "queries", null, 0, -1,
+    initEReference(getMylynQueriesTask_Queries(), getQuery(), getQuery_Task(), "queries", null, 0, -1,
         MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(mylynQueryEClass, MylynQuery.class, "MylynQuery", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMylynQuery_Task(), getMylynQueriesTask(), getMylynQueriesTask_Queries(), "task", null, 0, 1,
-        MylynQuery.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMylynQuery_Summary(), ecorePackage.getEString(), "summary", null, 1, 1, MylynQuery.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMylynQuery_URL(), ecorePackage.getEString(), "uRL", null, 0, 1, MylynQuery.class, !IS_TRANSIENT,
+    initEClass(queryEClass, Query.class, "Query", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getQuery_Task(), getMylynQueriesTask(), getMylynQueriesTask_Queries(), "task", null, 0, 1,
+        Query.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getQuery_Summary(), ecorePackage.getEString(), "summary", null, 1, 1, Query.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMylynQuery_Attributes(), getQueryAttribute(), null, "attributes", null, 0, -1, MylynQuery.class,
+    initEAttribute(getQuery_URL(), ecorePackage.getEString(), "uRL", null, 0, 1, Query.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQuery_Attributes(), getQueryAttribute(), null, "attributes", null, 0, -1, Query.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -3080,7 +3079,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getKeyBindingContext_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getCommandParameter_ID(), source, new String[] { "kind", "attribute", "name", "id" });
-    addAnnotation(getMylynQuery_URL(), source, new String[] { "kind", "attribute", "name", "url" });
+    addAnnotation(getQuery_URL(), source, new String[] { "kind", "attribute", "name", "url" });
   }
 
   /**

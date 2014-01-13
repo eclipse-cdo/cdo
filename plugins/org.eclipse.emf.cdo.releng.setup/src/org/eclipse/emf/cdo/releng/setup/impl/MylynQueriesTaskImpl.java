@@ -3,7 +3,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
-import org.eclipse.emf.cdo.releng.setup.MylynQuery;
+import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -100,7 +100,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
    * @generated
    * @ordered
    */
-  protected EList<MylynQuery> queries;
+  protected EList<Query> queries;
 
   private transient MylynHelper mylynHelper;
 
@@ -182,12 +182,12 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<MylynQuery> getQueries()
+  public EList<Query> getQueries()
   {
     if (queries == null)
     {
-      queries = new EObjectContainmentWithInverseEList.Resolving<MylynQuery>(MylynQuery.class, this,
-          SetupPackage.MYLYN_QUERIES_TASK__QUERIES, SetupPackage.MYLYN_QUERY__TASK);
+      queries = new EObjectContainmentWithInverseEList.Resolving<Query>(Query.class, this,
+          SetupPackage.MYLYN_QUERIES_TASK__QUERIES, SetupPackage.QUERY__TASK);
     }
     return queries;
   }
@@ -264,7 +264,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
-      getQueries().addAll((Collection<? extends MylynQuery>)newValue);
+      getQueries().addAll((Collection<? extends Query>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -369,7 +369,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     private TaskRepository repository;
 
-    private Map<MylynQuery, RepositoryQuery> repositoryQueries = new HashMap<MylynQuery, RepositoryQuery>();
+    private Map<Query, RepositoryQuery> repositoryQueries = new HashMap<Query, RepositoryQuery>();
 
     public boolean isNeeded(SetupTaskContext context, MylynQueriesTask task) throws Exception
     {
@@ -377,7 +377,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       String repositoryURL = task.getRepositoryURL();
       repository = TasksUi.getRepositoryManager().getRepository(connectorKind, repositoryURL);
 
-      for (MylynQuery query : task.getQueries())
+      for (Query query : task.getQueries())
       {
         context.checkCancelation();
 
@@ -413,12 +413,12 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
         TasksUi.getRepositoryManager().addRepository(repository);
       }
 
-      for (Map.Entry<MylynQuery, RepositoryQuery> entry : repositoryQueries.entrySet())
+      for (Map.Entry<Query, RepositoryQuery> entry : repositoryQueries.entrySet())
       {
-        MylynQuery mylynQuery = entry.getKey();
+        Query query = entry.getKey();
         RepositoryQuery repositoryQuery = entry.getValue();
 
-        String summary = mylynQuery.getSummary();
+        String summary = query.getSummary();
 
         if (repositoryQuery == null)
         {
@@ -429,7 +429,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
           entry.setValue(repositoryQuery);
 
           repositoryQuery.setRepositoryUrl(repositoryURL);
-          configureQuery(context, mylynQuery, repositoryQuery);
+          configureQuery(context, query, repositoryQuery);
 
           TasksUiPlugin.getTaskList().addQuery(repositoryQuery);
         }
@@ -438,7 +438,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
           context.log("Changing " + connectorKind + " query: " + summary);
 
           repositoryQuery.setRepositoryUrl(repositoryURL);
-          configureQuery(context, mylynQuery, repositoryQuery);
+          configureQuery(context, query, repositoryQuery);
         }
       }
 
@@ -449,11 +449,11 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       TasksUiInternal.synchronizeQueries(connector, repository, queries, null, true);
     }
 
-    private RepositoryQuery getRepositoryQuery(MylynQuery mylynQuery) throws Exception
+    private RepositoryQuery getRepositoryQuery(Query query) throws Exception
     {
       for (RepositoryQuery repositoryQuery : TasksUiPlugin.getTaskList().getQueries())
       {
-        if (ObjectUtil.equals(repositoryQuery.getSummary(), mylynQuery.getSummary()))
+        if (ObjectUtil.equals(repositoryQuery.getSummary(), query.getSummary()))
         {
           return repositoryQuery;
         }
@@ -462,15 +462,15 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       return null;
     }
 
-    private boolean isQueryDifferent(MylynQuery mylynQuery, RepositoryQuery repositoryQuery) throws Exception
+    private boolean isQueryDifferent(Query query, RepositoryQuery repositoryQuery) throws Exception
     {
-      String url = mylynQuery.getURL();
+      String url = query.getURL();
       if (!ObjectUtil.equals(repositoryQuery.getUrl(), url))
       {
         return true;
       }
 
-      Map<String, String> attributes = mylynQuery.getAttributes().map();
+      Map<String, String> attributes = query.getAttributes().map();
       if (!ObjectUtil.equals(repositoryQuery.getAttributes(), attributes))
       {
         return true;
@@ -479,9 +479,9 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       return false;
     }
 
-    private void configureQuery(SetupTaskContext context, MylynQuery mylynQuery, RepositoryQuery repositoryQuery)
+    private void configureQuery(SetupTaskContext context, Query query, RepositoryQuery repositoryQuery)
     {
-      String url = mylynQuery.getURL();
+      String url = query.getURL();
       if (!ObjectUtil.equals(url, repositoryQuery.getUrl()))
       {
         context.log("Setting query URL = " + url);
@@ -489,7 +489,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       }
 
       Map<String, String> repositoryAttributes = repositoryQuery.getAttributes();
-      Map<String, String> attributes = mylynQuery.getAttributes().map();
+      Map<String, String> attributes = query.getAttributes().map();
 
       for (Entry<String, String> entry : attributes.entrySet())
       {

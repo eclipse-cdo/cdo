@@ -587,7 +587,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       }
     }
 
-  return null;
+    return null;
   }
 
   public void resolveSettings()
@@ -1048,7 +1048,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
 
     reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
-        {
+    {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
       {
         Collection<Map.Entry<String, Set<String>>> result = new ArrayList<Map.Entry<String, Set<String>>>();
@@ -1065,7 +1065,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         return result;
       }
-        });
+    });
 
     return list;
   }
@@ -1073,20 +1073,20 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private void reorderSetupTasks(EList<SetupTask> setupTasks)
   {
     ECollections.sort(setupTasks, new Comparator<SetupTask>()
-        {
+    {
       public int compare(SetupTask setupTask1, SetupTask setupTask2)
       {
         return setupTask1.getPriority() - setupTask2.getPriority();
       }
-        });
+    });
 
     reorder(setupTasks, new DependencyProvider<SetupTask>()
-        {
+    {
       public Collection<SetupTask> getDependencies(SetupTask setupTask)
       {
         return setupTask.getRequirements();
       }
-        });
+    });
   }
 
   private String getLabel(SetupTask setupTask)

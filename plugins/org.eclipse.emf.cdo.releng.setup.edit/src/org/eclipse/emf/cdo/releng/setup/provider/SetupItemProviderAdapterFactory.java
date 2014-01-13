@@ -599,28 +599,28 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MylynQuery} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Query} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected MylynQueryItemProvider mylynQueryItemProvider;
+  protected QueryItemProvider queryItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQuery}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Query}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createMylynQueryAdapter()
+  public Adapter createQueryAdapter()
   {
-    if (mylynQueryItemProvider == null)
+    if (queryItemProvider == null)
     {
-      mylynQueryItemProvider = new MylynQueryItemProvider(this);
+      queryItemProvider = new QueryItemProvider(this);
     }
 
-    return mylynQueryItemProvider;
+    return queryItemProvider;
   }
 
   /**
@@ -1387,9 +1387,9 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       mylynQueriesTaskItemProvider.dispose();
     }
-    if (mylynQueryItemProvider != null)
+    if (queryItemProvider != null)
     {
-      mylynQueryItemProvider.dispose();
+      queryItemProvider.dispose();
     }
     if (queryAttributeItemProvider != null)
     {

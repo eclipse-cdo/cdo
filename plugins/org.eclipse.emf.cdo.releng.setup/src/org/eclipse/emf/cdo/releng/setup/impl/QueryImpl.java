@@ -3,7 +3,7 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
-import org.eclipse.emf.cdo.releng.setup.MylynQuery;
+import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -20,21 +20,21 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Mylyn Query</b></em>'.
+ * An implementation of the model object '<em><b>Query</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getTask <em>Task</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getSummary <em>Summary</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getURL <em>URL</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl#getTask <em>Task</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl#getSummary <em>Summary</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl#getURL <em>URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class MylynQueryImpl extends MinimalEObjectImpl.Container implements MylynQuery
+public class QueryImpl extends MinimalEObjectImpl.Container implements Query
 {
   /**
    * The default value of the '{@link #getSummary() <em>Summary</em>}' attribute.
@@ -91,7 +91,7 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
    * <!-- end-user-doc -->
    * @generated
    */
-  protected MylynQueryImpl()
+  protected QueryImpl()
   {
     super();
   }
@@ -104,7 +104,81 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   @Override
   protected EClass eStaticClass()
   {
-    return SetupPackage.Literals.MYLYN_QUERY;
+    return SetupPackage.Literals.QUERY;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MylynQueriesTask getTask()
+  {
+    if (eContainerFeatureID() != SetupPackage.QUERY__TASK)
+    {
+      return null;
+    }
+    return (MylynQueriesTask)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MylynQueriesTask basicGetTask()
+  {
+    if (eContainerFeatureID() != SetupPackage.QUERY__TASK)
+    {
+      return null;
+    }
+    return (MylynQueriesTask)eInternalContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetTask(MylynQueriesTask newTask, NotificationChain msgs)
+  {
+    msgs = eBasicSetContainer((InternalEObject)newTask, SetupPackage.QUERY__TASK, msgs);
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTask(MylynQueriesTask newTask)
+  {
+    if (newTask != eInternalContainer() || eContainerFeatureID() != SetupPackage.QUERY__TASK && newTask != null)
+    {
+      if (EcoreUtil.isAncestor(this, newTask))
+      {
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null)
+      {
+        msgs = eBasicRemoveFromContainer(msgs);
+      }
+      if (newTask != null)
+      {
+        msgs = ((InternalEObject)newTask).eInverseAdd(this, SetupPackage.MYLYN_QUERIES_TASK__QUERIES,
+            MylynQueriesTask.class, msgs);
+      }
+      msgs = basicSetTask(newTask, msgs);
+      if (msgs != null)
+      {
+        msgs.dispatch();
+      }
+    }
+    else if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.QUERY__TASK, newTask, newTask));
+    }
   }
 
   /**
@@ -128,7 +202,7 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
     summary = newSummary;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY__SUMMARY, oldSummary, summary));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.QUERY__SUMMARY, oldSummary, summary));
     }
   }
 
@@ -153,7 +227,7 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
     uRL = newURL;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY__URL, oldURL, uRL));
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.QUERY__URL, oldURL, uRL));
     }
   }
 
@@ -167,83 +241,9 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
     if (attributes == null)
     {
       attributes = new EcoreEMap<String, String>(SetupPackage.Literals.QUERY_ATTRIBUTE, QueryAttributeImpl.class, this,
-          SetupPackage.MYLYN_QUERY__ATTRIBUTES);
+          SetupPackage.QUERY__ATTRIBUTES);
     }
     return attributes;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public MylynQueriesTask getTask()
-  {
-    if (eContainerFeatureID() != SetupPackage.MYLYN_QUERY__TASK)
-    {
-      return null;
-    }
-    return (MylynQueriesTask)eContainer();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public MylynQueriesTask basicGetTask()
-  {
-    if (eContainerFeatureID() != SetupPackage.MYLYN_QUERY__TASK)
-    {
-      return null;
-    }
-    return (MylynQueriesTask)eInternalContainer();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetTask(MylynQueriesTask newTask, NotificationChain msgs)
-  {
-    msgs = eBasicSetContainer((InternalEObject)newTask, SetupPackage.MYLYN_QUERY__TASK, msgs);
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTask(MylynQueriesTask newTask)
-  {
-    if (newTask != eInternalContainer() || eContainerFeatureID() != SetupPackage.MYLYN_QUERY__TASK && newTask != null)
-    {
-      if (EcoreUtil.isAncestor(this, newTask))
-      {
-        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
-      NotificationChain msgs = null;
-      if (eInternalContainer() != null)
-      {
-        msgs = eBasicRemoveFromContainer(msgs);
-      }
-      if (newTask != null)
-      {
-        msgs = ((InternalEObject)newTask).eInverseAdd(this, SetupPackage.MYLYN_QUERIES_TASK__QUERIES,
-            MylynQueriesTask.class, msgs);
-      }
-      msgs = basicSetTask(newTask, msgs);
-      if (msgs != null)
-      {
-        msgs.dispatch();
-      }
-    }
-    else if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY__TASK, newTask, newTask));
-    }
   }
 
   /**
@@ -256,7 +256,7 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       if (eInternalContainer() != null)
       {
         msgs = eBasicRemoveFromContainer(msgs);
@@ -276,9 +276,9 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       return basicSetTask(null, msgs);
-    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+    case SetupPackage.QUERY__ATTRIBUTES:
       return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -294,7 +294,7 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (eContainerFeatureID())
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       return eInternalContainer().eInverseRemove(this, SetupPackage.MYLYN_QUERIES_TASK__QUERIES,
           MylynQueriesTask.class, msgs);
     }
@@ -311,17 +311,17 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       if (resolve)
       {
         return getTask();
       }
       return basicGetTask();
-    case SetupPackage.MYLYN_QUERY__SUMMARY:
+    case SetupPackage.QUERY__SUMMARY:
       return getSummary();
-    case SetupPackage.MYLYN_QUERY__URL:
+    case SetupPackage.QUERY__URL:
       return getURL();
-    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+    case SetupPackage.QUERY__ATTRIBUTES:
       if (coreType)
       {
         return getAttributes();
@@ -344,16 +344,16 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       setTask((MylynQueriesTask)newValue);
       return;
-    case SetupPackage.MYLYN_QUERY__SUMMARY:
+    case SetupPackage.QUERY__SUMMARY:
       setSummary((String)newValue);
       return;
-    case SetupPackage.MYLYN_QUERY__URL:
+    case SetupPackage.QUERY__URL:
       setURL((String)newValue);
       return;
-    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+    case SetupPackage.QUERY__ATTRIBUTES:
       ((EStructuralFeature.Setting)getAttributes()).set(newValue);
       return;
     }
@@ -370,16 +370,16 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       setTask((MylynQueriesTask)null);
       return;
-    case SetupPackage.MYLYN_QUERY__SUMMARY:
+    case SetupPackage.QUERY__SUMMARY:
       setSummary(SUMMARY_EDEFAULT);
       return;
-    case SetupPackage.MYLYN_QUERY__URL:
+    case SetupPackage.QUERY__URL:
       setURL(URL_EDEFAULT);
       return;
-    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+    case SetupPackage.QUERY__ATTRIBUTES:
       getAttributes().clear();
       return;
     }
@@ -396,13 +396,13 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERY__TASK:
+    case SetupPackage.QUERY__TASK:
       return basicGetTask() != null;
-    case SetupPackage.MYLYN_QUERY__SUMMARY:
+    case SetupPackage.QUERY__SUMMARY:
       return SUMMARY_EDEFAULT == null ? summary != null : !SUMMARY_EDEFAULT.equals(summary);
-    case SetupPackage.MYLYN_QUERY__URL:
+    case SetupPackage.QUERY__URL:
       return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
-    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+    case SetupPackage.QUERY__ATTRIBUTES:
       return attributes != null && !attributes.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -430,4 +430,4 @@ public class MylynQueryImpl extends MinimalEObjectImpl.Container implements Myly
     return result.toString();
   }
 
-} // MylynQueryImpl
+} // QueryImpl

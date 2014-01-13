@@ -965,12 +965,12 @@ public class SetupModelWizard extends Wizard implements INewWizard
       }
 
       Collections.sort(templates, new Comparator<ProjectTemplate>()
-          {
+      {
         public int compare(ProjectTemplate t1, ProjectTemplate t2)
         {
           return t1.getLabel().compareTo(t2.getLabel());
         }
-          });
+      });
     }
 
     public Project getProject()

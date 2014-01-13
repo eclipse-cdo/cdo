@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -71,6 +72,8 @@ public class ConfirmationDialog extends AbstractSetupDialog
   private TreeViewer childrenViewer;
 
   private PropertiesViewer propertiesViewer;
+
+  private ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
 
   public ConfirmationDialog(Shell parentShell, Setup setup, EList<SetupTask> neededSetupTasks)
   {
@@ -205,7 +208,7 @@ public class ConfirmationDialog extends AbstractSetupDialog
       }
     });
 
-    viewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY)
+    viewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory)
     {
       @Override
       public String getText(Object object)
@@ -261,14 +264,13 @@ public class ConfirmationDialog extends AbstractSetupDialog
         }
       }
     });
-
   }
 
   private void fillChildrenPane(SashForm verticalSash)
   {
     childrenViewer = new TreeViewer(verticalSash, SWT.NO_SCROLL | SWT.V_SCROLL);
-    childrenViewer.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
-    childrenViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
+    childrenViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+    childrenViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory)
     {
       @Override
       public Object[] getElements(Object object)

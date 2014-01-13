@@ -54,9 +54,6 @@ public final class EMFUtil extends Plugin
 
   public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
 
-  public static final ComposedAdapterFactory ADAPTER_FACTORY = new ComposedAdapterFactory(
-      ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
   private static final URI REDIRECTED_CONFIGURATION_URI = getSetupURI();
 
   private static final URI BRANCH_URI = getBranchURI();
@@ -65,6 +62,11 @@ public final class EMFUtil extends Plugin
 
   private EMFUtil()
   {
+  }
+
+  public static ComposedAdapterFactory createAdapterFactory()
+  {
+    return new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
   }
 
   public static ResourceSet createResourceSet()

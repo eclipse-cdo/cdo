@@ -30,7 +30,7 @@ public class SetupLabelProvider extends AdapterFactoryLabelProvider.ColorProvide
 
   public SetupLabelProvider(Viewer viewer)
   {
-    this(EMFUtil.ADAPTER_FACTORY, viewer);
+    this(EMFUtil.createAdapterFactory(), viewer);
   }
 
   public SetupLabelProvider(AdapterFactory adapterFactory, Viewer viewer)

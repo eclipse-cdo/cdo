@@ -206,7 +206,8 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
     ItemProvider input = new ItemProvider();
     final EList<Object> children = input.getChildren();
-    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
+    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
+        EMFUtil.createAdapterFactory())
     {
       @Override
       public Object getParent(Object object)

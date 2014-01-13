@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.ui.ImageURIRegistry;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -34,11 +35,16 @@ import java.util.List;
  */
 public class ToolTipLabelProvider extends DecoratingColumLabelProvider
 {
-  private AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(EMFUtil.ADAPTER_FACTORY);
+  private AdapterFactoryItemDelegator itemDelegator;
 
   public ToolTipLabelProvider()
   {
-    super(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY), new ILabelDecorator()
+    this(EMFUtil.createAdapterFactory());
+  }
+
+  private ToolTipLabelProvider(ComposedAdapterFactory adapterFactory)
+  {
+    super(new AdapterFactoryLabelProvider(adapterFactory), new ILabelDecorator()
     {
       public void removeListener(ILabelProviderListener listener)
       {
@@ -67,6 +73,8 @@ public class ToolTipLabelProvider extends DecoratingColumLabelProvider
         return image;
       }
     });
+
+    itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
   }
 
   @Override

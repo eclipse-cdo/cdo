@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -169,6 +170,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private Link versionLink;
 
+  private ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
+
   public InstallerDialog(Shell parentShell, StartType startType, boolean considerVisibleProjects)
   {
     super(parentShell, "Install Development Environments", 500, 500, Activator.getDefault().getBundle(),
@@ -230,7 +233,7 @@ public class InstallerDialog extends AbstractSetupDialog
     tree.setHeaderVisible(true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY)
+    final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory)
     {
       @Override
       public boolean hasChildren(Object object)
@@ -344,7 +347,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
     viewer.setContentProvider(contentProvider);
 
-    DialogLabelProvider labelProvider = new DialogLabelProvider(EMFUtil.ADAPTER_FACTORY, viewer);
+    DialogLabelProvider labelProvider = new DialogLabelProvider(adapterFactory, viewer);
     viewer.setLabelProvider(labelProvider);
     viewer.setCellModifier(new ICellModifier()
     {
@@ -420,7 +423,7 @@ public class InstallerDialog extends AbstractSetupDialog
     });
 
     viewer.setCellEditors(new CellEditor[] { null, cellEditor });
-    cellEditor.setLabelProvider(new AdapterFactoryLabelProvider(EMFUtil.ADAPTER_FACTORY));
+    cellEditor.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 
     viewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
@@ -1081,7 +1084,7 @@ public class InstallerDialog extends AbstractSetupDialog
               bundlePoolTPFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-tp")));
             }
 
-            ItemProvider input = new ItemProvider(EMFUtil.ADAPTER_FACTORY);
+            ItemProvider input = new ItemProvider(adapterFactory);
             EList<Object> projects = input.getChildren();
 
             for (int i = 0; i < configuredProjects.size(); i++)

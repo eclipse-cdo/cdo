@@ -60,6 +60,7 @@ import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
 import org.eclipse.core.resources.IWorkspace;
@@ -125,6 +126,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private List<ContextVariableTask> resolvedVariables = new ArrayList<ContextVariableTask>();
 
   private Set<String> undeclaredVariables = new HashSet<String>(); // TODO Should these be called "Unspecified"?
+
+  private ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
 
   public SetupTaskPerformer(Trigger trigger, String installFolder, Setup setup)
   {
@@ -595,7 +598,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     SetupResource resource = EMFUtil.loadResourceSafely(EMFUtil.createResourceSet(), preferences.eResource().getURI());
     preferences = (Preferences)resource.getContents().get(0);
 
-    AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(EMFUtil.ADAPTER_FACTORY);
+    AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
     EList<SetupTask> setupTasks = preferences.getSetupTasks();
     for (ContextVariableTask contextVariableTask : unresolvedVariables)
     {
@@ -1084,10 +1087,9 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     });
   }
 
-  private static String getLabel(SetupTask setupTask)
+  private String getLabel(SetupTask setupTask)
   {
-    IItemLabelProvider labelProvider = (IItemLabelProvider)EMFUtil.ADAPTER_FACTORY.adapt(setupTask,
-        IItemLabelProvider.class);
+    IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(setupTask, IItemLabelProvider.class);
     String type;
 
     try

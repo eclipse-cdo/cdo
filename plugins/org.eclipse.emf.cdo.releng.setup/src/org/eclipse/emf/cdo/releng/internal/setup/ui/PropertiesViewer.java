@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -97,10 +98,13 @@ public class PropertiesViewer extends TableViewer
    */
   private final class PropertiesContentProvider implements IStructuredContentProvider
   {
-    private final AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(EMFUtil.ADAPTER_FACTORY);
+    private final ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
+
+    private final AdapterFactoryItemDelegator itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
 
     public void dispose()
     {
+      adapterFactory.dispose();
     }
 
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)

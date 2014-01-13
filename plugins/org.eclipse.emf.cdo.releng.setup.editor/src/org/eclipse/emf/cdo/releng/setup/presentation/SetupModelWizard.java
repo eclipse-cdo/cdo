@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -964,12 +965,12 @@ public class SetupModelWizard extends Wizard implements INewWizard
       }
 
       Collections.sort(templates, new Comparator<ProjectTemplate>()
-      {
+          {
         public int compare(ProjectTemplate t1, ProjectTemplate t2)
         {
           return t1.getLabel().compareTo(t2.getLabel());
         }
-      });
+          });
     }
 
     public Project getProject()
@@ -1022,8 +1023,9 @@ public class SetupModelWizard extends Wizard implements INewWizard
       UIUtil.grabVertical(UIUtil.applyGridData(sash));
 
       preViewer = new TreeViewer(sash, SWT.BORDER);
-      preViewer.setLabelProvider(new SetupLabelProvider(EMFUtil.ADAPTER_FACTORY, preViewer));
-      preViewer.setContentProvider(new AdapterFactoryContentProvider(EMFUtil.ADAPTER_FACTORY));
+      AdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
+      preViewer.setLabelProvider(new SetupLabelProvider(adapterFactory, preViewer));
+      preViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
       preViewer.addSelectionChangedListener(new ISelectionChangedListener()
       {
         public void selectionChanged(SelectionChangedEvent event)

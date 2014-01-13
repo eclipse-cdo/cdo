@@ -263,7 +263,7 @@ public class JRETaskImpl extends SetupTaskImpl implements JRETask
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    return JREHelper.isNeeded(context, getVersion());
+    return JREHelper.isNeeded(context, getVersion(), getLocation());
   }
 
   public void perform(SetupTaskContext context) throws Exception
@@ -313,7 +313,7 @@ public class JRETaskImpl extends SetupTaskImpl implements JRETask
       }
     }
 
-    public static boolean isNeeded(SetupTaskContext context, String version) throws Exception
+    public static boolean isNeeded(SetupTaskContext context, String version, String location) throws Exception
     {
       IExecutionEnvironment[] executionEnvironments = JavaRuntime.getExecutionEnvironmentsManager()
           .getExecutionEnvironments();
@@ -328,7 +328,11 @@ public class JRETaskImpl extends SetupTaskImpl implements JRETask
           {
             if (executionEnvironment.isStrictlyCompatible(vmInstall))
             {
-              return false;
+              File installLocation = vmInstall.getInstallLocation();
+              if (new File(location).equals(installLocation))
+              {
+                return false;
+              }
             }
           }
         }

@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Shell;
@@ -157,7 +158,7 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     valueListeners.remove(listener);
   }
 
-  public final void fill(Composite parent)
+  public final void fill(final Composite parent)
   {
     checkParentLayout(parent);
 
@@ -200,16 +201,23 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
       helpButton.setImage(JFaceResources.getImage(Dialog.DLG_IMG_HELP));
       helpButton.setToolTipText("Show variable description");
       final Label description = new Label(parent, SWT.WRAP | SWT.BORDER);
-      GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1);
-      description.setLayoutData(gridData);
-      description.setText(descriptionText);
+      final GridData invisibleGridData = new GridData(0, 0);
+      invisibleGridData.horizontalSpan = 4;
+      invisibleGridData.heightHint = 0;
+      final GridData visibleGridData = new GridData(SWT.FILL, SWT.TOP, true, false, 4, 1);
+      description.setLayoutData(invisibleGridData);
       description.setVisible(false);
+      description.setText(descriptionText);
       helpButton.addSelectionListener(new SelectionAdapter()
       {
         @Override
         public void widgetSelected(SelectionEvent e)
         {
-          description.setVisible(!description.getVisible());
+          boolean visible = !description.getVisible();
+          description.setVisible(visible);
+          description.setLayoutData(visible ? visibleGridData : invisibleGridData);
+          parent.layout();
+          parent.notifyListeners(SWT.Resize, new Event());
         }
       });
     }

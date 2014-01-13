@@ -25,12 +25,17 @@ import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
@@ -47,7 +52,7 @@ public class PromptDialog extends AbstractSetupDialog
 
   public PromptDialog(Shell parentShell, List<SetupTaskPerformer> setupTaskPerformers)
   {
-    super(parentShell, "Unspecified Variables", 400, 400);
+    super(parentShell, "Unspecified Variables", 500, 400);
     this.setupTaskPerformers = setupTaskPerformers;
   }
 
@@ -68,25 +73,52 @@ public class PromptDialog extends AbstractSetupDialog
   {
     headerFont = ExtendedFontRegistry.INSTANCE.getFont(parent.getFont(), URI.createURI("font:///+2/bold"));
 
-    GridLayout layout = (GridLayout)parent.getLayout();
-    layout.numColumns = 4;
+    GridLayout parentLayout = (GridLayout)parent.getLayout();
+    parentLayout.numColumns = 1;
+    parentLayout.marginHeight = 0;
+    parentLayout.marginWidth = 0;
+
+    final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.VERTICAL);
+    scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    scrolledComposite.setExpandHorizontal(true);
+    scrolledComposite.setExpandVertical(true);
+
+    GridLayout layout = new GridLayout(4, false);
     layout.horizontalSpacing = 10;
-    layout.verticalSpacing = 10;
+    layout.verticalSpacing = 20;
+
+    final Composite composite = new Composite(scrolledComposite, SWT.NONE);
+    composite.setLayout(layout);
+    scrolledComposite.setContent(composite);
+    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
     for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
     {
       List<ContextVariableTask> variables = setupTaskPerformer.getUnresolvedVariables();
       if (!variables.isEmpty())
       {
-        createHeader(parent, setupTaskPerformer);
+        createHeader(composite, setupTaskPerformer);
 
         for (ContextVariableTask variable : variables)
         {
           PropertyField<?, ?> field = createField(variable);
-          field.fill(parent);
+          field.fill(composite);
         }
       }
     }
+
+    ControlAdapter resizeListener = new ControlAdapter()
+    {
+      @Override
+      public void controlResized(ControlEvent event)
+      {
+        Point size = composite.computeSize(scrolledComposite.getClientArea().width, SWT.DEFAULT);
+        scrolledComposite.setMinSize(size);
+      }
+    };
+    scrolledComposite.addControlListener(resizeListener);
+    composite.addControlListener(resizeListener);
+    composite.notifyListeners(SWT.Resize, new Event());
   }
 
   @Override

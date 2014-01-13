@@ -298,6 +298,17 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         throw new RuntimeException("Missing variables for " + undeclaredVariables);
       }
 
+      if (!unresolvedVariables.isEmpty())
+      {
+        if (!ProgressDialog.promptUnresolvedVariables(UIUtil.getShell(), Collections.singletonList(this)))
+        {
+          return neededSetupTasks;
+        }
+
+        resolveSettings();
+        unresolvedVariables.clear();
+      }
+
       if (triggeredSetupTasks != null)
       {
         for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
@@ -452,7 +463,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   private void expandStrings(EList<SetupTask> setupTasks)
   {
-    Set<String> keys = new HashSet<String>();
+    Set<String> keys = new LinkedHashSet<String>();
     for (SetupTask setupTask : setupTasks)
     {
       expand(keys, unresolvedSettings, setupTask);

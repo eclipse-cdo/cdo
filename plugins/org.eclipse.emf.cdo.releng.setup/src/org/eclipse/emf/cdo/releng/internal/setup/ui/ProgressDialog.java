@@ -560,7 +560,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     }
   }
 
-  private static boolean promptUnresolvedVariables(Shell shell, List<SetupTaskPerformer> setupTaskPerformers)
+  public static boolean promptUnresolvedVariables(Shell shell, List<SetupTaskPerformer> setupTaskPerformers)
   {
     final PromptDialog promptDialog = new PromptDialog(shell, setupTaskPerformers);
 

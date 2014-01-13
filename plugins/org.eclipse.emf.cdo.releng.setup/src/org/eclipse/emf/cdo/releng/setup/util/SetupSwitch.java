@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
-import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -55,7 +54,6 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
-import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
@@ -741,34 +739,6 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
-    case SetupPackage.URL_QUERY:
-    {
-      URLQuery urlQuery = (URLQuery)theEObject;
-      T result = caseURLQuery(urlQuery);
-      if (result == null)
-      {
-        result = caseMylynQuery(urlQuery);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.ATTRIBUTES_QUERY:
-    {
-      AttributesQuery attributesQuery = (AttributesQuery)theEObject;
-      T result = caseAttributesQuery(attributesQuery);
-      if (result == null)
-      {
-        result = caseMylynQuery(attributesQuery);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
     case SetupPackage.QUERY_ATTRIBUTE:
     {
       @SuppressWarnings("unchecked")
@@ -1227,38 +1197,6 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMylynQuery(MylynQuery object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>URL Query</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>URL Query</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseURLQuery(URLQuery object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attributes Query</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attributes Query</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributesQuery(AttributesQuery object)
   {
     return null;
   }

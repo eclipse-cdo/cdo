@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.Shell;
 
@@ -213,6 +214,14 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   public Trigger getTrigger()
   {
     return trigger;
+  }
+
+  public void checkCancelation()
+  {
+    if (isCancelled())
+    {
+      throw new OperationCanceledException();
+    }
   }
 
   public boolean isPerforming()

@@ -3,11 +3,15 @@
 package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.MylynQuery;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -57,6 +61,7 @@ public class MylynQueryItemProvider extends ItemProviderAdapter implements IEdit
       super.getPropertyDescriptors(object);
 
       addSummaryPropertyDescriptor(object);
+      addURLPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -78,6 +83,55 @@ public class MylynQueryItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
+   * This adds a property descriptor for the URL feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addURLPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_MylynQuery_uRL_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MylynQuery_uRL_feature", "_UI_MylynQuery_type"),
+        SetupPackage.Literals.MYLYN_QUERY__URL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
+  }
+
+  /**
+   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+  {
+    if (childrenFeatures == null)
+    {
+      super.getChildrenFeatures(object);
+      childrenFeatures.add(SetupPackage.Literals.MYLYN_QUERY__ATTRIBUTES);
+    }
+    return childrenFeatures;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EStructuralFeature getChildFeature(Object object, Object child)
+  {
+    // Check the type of the specified child object and return the proper feature to use for
+    // adding (see {@link AddCommand}) it as a child.
+
+    return super.getChildFeature(object, child);
+  }
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -86,6 +140,18 @@ public class MylynQueryItemProvider extends ItemProviderAdapter implements IEdit
   public boolean hasChildren(Object object)
   {
     return hasChildren(object, true);
+  }
+
+  /**
+   * This returns MylynQuery.gif.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object getImage(Object object)
+  {
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/MylynQuery"));
   }
 
   /**
@@ -108,8 +174,9 @@ public class MylynQueryItemProvider extends ItemProviderAdapter implements IEdit
   @Override
   public String getText(Object object)
   {
-    String label = ((MylynQuery)object).getSummary();
-    return label == null || label.length() == 0 ? getString("_UI_MylynQuery_type") : label;
+    String summary = ((MylynQuery)object).getSummary();
+    String url = ((MylynQuery)object).getURL();
+    return StringUtil.isEmpty(summary) ? getString("_UI_MylynQuery_type") : "" + summary + ": " + url;
   }
 
   /**
@@ -127,7 +194,11 @@ public class MylynQueryItemProvider extends ItemProviderAdapter implements IEdit
     switch (notification.getFeatureID(MylynQuery.class))
     {
     case SetupPackage.MYLYN_QUERY__SUMMARY:
+    case SetupPackage.MYLYN_QUERY__URL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
     super.notifyChanged(notification);
@@ -144,6 +215,9 @@ public class MylynQueryItemProvider extends ItemProviderAdapter implements IEdit
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.MYLYN_QUERY__ATTRIBUTES,
+        SetupFactory.eINSTANCE.create(SetupPackage.Literals.QUERY_ATTRIBUTE)));
   }
 
   /**

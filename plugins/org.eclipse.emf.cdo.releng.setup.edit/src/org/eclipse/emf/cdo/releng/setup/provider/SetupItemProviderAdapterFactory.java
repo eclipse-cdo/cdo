@@ -599,53 +599,28 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.URLQuery} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MylynQuery} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected URLQueryItemProvider urlQueryItemProvider;
+  protected MylynQueryItemProvider mylynQueryItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.URLQuery}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynQuery}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createURLQueryAdapter()
+  public Adapter createMylynQueryAdapter()
   {
-    if (urlQueryItemProvider == null)
+    if (mylynQueryItemProvider == null)
     {
-      urlQueryItemProvider = new URLQueryItemProvider(this);
+      mylynQueryItemProvider = new MylynQueryItemProvider(this);
     }
 
-    return urlQueryItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.AttributesQuery} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected AttributesQueryItemProvider attributesQueryItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.AttributesQuery}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createAttributesQueryAdapter()
-  {
-    if (attributesQueryItemProvider == null)
-    {
-      attributesQueryItemProvider = new AttributesQueryItemProvider(this);
-    }
-
-    return attributesQueryItemProvider;
+    return mylynQueryItemProvider;
   }
 
   /**
@@ -1412,13 +1387,9 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       mylynQueriesTaskItemProvider.dispose();
     }
-    if (urlQueryItemProvider != null)
+    if (mylynQueryItemProvider != null)
     {
-      urlQueryItemProvider.dispose();
-    }
-    if (attributesQueryItemProvider != null)
-    {
-      attributesQueryItemProvider.dispose();
+      mylynQueryItemProvider.dispose();
     }
     if (queryAttributeItemProvider != null)
     {

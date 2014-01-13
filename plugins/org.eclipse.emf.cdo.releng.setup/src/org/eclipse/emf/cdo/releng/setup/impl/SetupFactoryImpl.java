@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
-import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
@@ -36,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
+import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
@@ -53,7 +53,6 @@ import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
-import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
@@ -200,10 +199,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createMylynQueryTask();
     case SetupPackage.MYLYN_QUERIES_TASK:
       return createMylynQueriesTask();
-    case SetupPackage.URL_QUERY:
-      return createURLQuery();
-    case SetupPackage.ATTRIBUTES_QUERY:
-      return createAttributesQuery();
+    case SetupPackage.MYLYN_QUERY:
+      return createMylynQuery();
     case SetupPackage.QUERY_ATTRIBUTE:
       return (EObject)createQueryAttribute();
     case SetupPackage.JRE_TASK:
@@ -540,21 +537,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public URLQuery createURLQuery()
+  public MylynQuery createMylynQuery()
   {
-    URLQueryImpl urlQuery = new URLQueryImpl();
-    return urlQuery;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AttributesQuery createAttributesQuery()
-  {
-    AttributesQueryImpl attributesQuery = new AttributesQueryImpl();
-    return attributesQuery;
+    MylynQueryImpl mylynQuery = new MylynQueryImpl();
+    return mylynQuery;
   }
 
   /**

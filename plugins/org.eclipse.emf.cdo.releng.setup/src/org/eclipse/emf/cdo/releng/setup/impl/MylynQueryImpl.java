@@ -5,17 +5,18 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQuery;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
-
-import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,12 +27,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getTask <em>Task</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getSummary <em>Summary</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getURL <em>URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryImpl#getAttributes <em>Attributes</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implements MylynQuery
+public class MylynQueryImpl extends MinimalEObjectImpl.Container implements MylynQuery
 {
   /**
    * The default value of the '{@link #getSummary() <em>Summary</em>}' attribute.
@@ -53,7 +56,35 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
    */
   protected String summary = SUMMARY_EDEFAULT;
 
-  private transient MylynHelper mylynHelper;
+  /**
+   * The default value of the '{@link #getURL() <em>URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getURL()
+   * @generated
+   * @ordered
+   */
+  protected static final String URL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getURL() <em>URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getURL()
+   * @generated
+   * @ordered
+   */
+  protected String uRL = URL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' map.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAttributes()
+   * @generated
+   * @ordered
+   */
+  protected EMap<String, String> attributes;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,6 +130,46 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
     {
       eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY__SUMMARY, oldSummary, summary));
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getURL()
+  {
+    return uRL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setURL(String newURL)
+  {
+    String oldURL = uRL;
+    uRL = newURL;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERY__URL, oldURL, uRL));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EMap<String, String> getAttributes()
+  {
+    if (attributes == null)
+    {
+      attributes = new EcoreEMap<String, String>(SetupPackage.Literals.QUERY_ATTRIBUTE, QueryAttributeImpl.class, this,
+          SetupPackage.MYLYN_QUERY__ATTRIBUTES);
+    }
+    return attributes;
   }
 
   /**
@@ -207,6 +278,8 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
     {
     case SetupPackage.MYLYN_QUERY__TASK:
       return basicSetTask(null, msgs);
+    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+      return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -246,6 +319,17 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
       return basicGetTask();
     case SetupPackage.MYLYN_QUERY__SUMMARY:
       return getSummary();
+    case SetupPackage.MYLYN_QUERY__URL:
+      return getURL();
+    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+      if (coreType)
+      {
+        return getAttributes();
+      }
+      else
+      {
+        return getAttributes().map();
+      }
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -265,6 +349,12 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
       return;
     case SetupPackage.MYLYN_QUERY__SUMMARY:
       setSummary((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERY__URL:
+      setURL((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+      ((EStructuralFeature.Setting)getAttributes()).set(newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -286,6 +376,12 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
     case SetupPackage.MYLYN_QUERY__SUMMARY:
       setSummary(SUMMARY_EDEFAULT);
       return;
+    case SetupPackage.MYLYN_QUERY__URL:
+      setURL(URL_EDEFAULT);
+      return;
+    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+      getAttributes().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -304,6 +400,10 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
       return basicGetTask() != null;
     case SetupPackage.MYLYN_QUERY__SUMMARY:
       return SUMMARY_EDEFAULT == null ? summary != null : !SUMMARY_EDEFAULT.equals(summary);
+    case SetupPackage.MYLYN_QUERY__URL:
+      return URL_EDEFAULT == null ? uRL != null : !URL_EDEFAULT.equals(uRL);
+    case SetupPackage.MYLYN_QUERY__ATTRIBUTES:
+      return attributes != null && !attributes.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -324,98 +424,10 @@ public abstract class MylynQueryImpl extends MinimalEObjectImpl.Container implem
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (summary: ");
     result.append(summary);
+    result.append(", uRL: ");
+    result.append(uRL);
     result.append(')');
     return result.toString();
-  }
-
-  public boolean isNeeded(SetupTaskContext context, String connectorKind, String repositoryURL) throws Exception
-  {
-    mylynHelper = createMylynHelper();
-    return mylynHelper.isNeeded(context, this);
-  }
-
-  public void perform(SetupTaskContext context, String connectorKind, String repositoryURL) throws Exception
-  {
-    mylynHelper.perform(context, this);
-  }
-
-  protected abstract MylynHelper createMylynHelper();
-
-  /**
-   * @author Eike Stepper
-   */
-  protected interface MylynHelper
-  {
-    public boolean isNeeded(SetupTaskContext context, MylynQuery mylynQuery) throws Exception;
-
-    public void perform(SetupTaskContext context, MylynQuery mylynQuery) throws Exception;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  @SuppressWarnings("restriction")
-  protected static abstract class AbstractMylynHelper implements MylynHelper
-  {
-    private org.eclipse.mylyn.internal.tasks.core.TaskList taskList;
-
-    private org.eclipse.mylyn.internal.tasks.core.RepositoryQuery repositoryQuery;
-
-    public boolean isNeeded(SetupTaskContext context, MylynQuery mylynQuery) throws Exception
-    {
-      String summary = mylynQuery.getSummary();
-
-      taskList = org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
-
-      repositoryQuery = lookupQuery(summary);
-      return repositoryQuery == null || isQueryDifferent(context, mylynQuery, repositoryQuery);
-    }
-
-    public void perform(SetupTaskContext context, MylynQuery mylynQuery) throws Exception
-    {
-      String connectorKind = mylynQuery.getTask().getConnectorKind();
-      String repositoryURL = mylynQuery.getTask().getRepositoryURL();
-      String summary = mylynQuery.getSummary();
-
-      if (repositoryQuery == null)
-      {
-        context.log("Adding " + connectorKind + " query " + summary);
-        String handle = taskList.getUniqueHandleIdentifier();
-        repositoryQuery = new org.eclipse.mylyn.internal.tasks.core.RepositoryQuery(connectorKind, handle);
-        repositoryQuery.setSummary(summary);
-        repositoryQuery.setRepositoryUrl(repositoryURL);
-        configureQuery(context, mylynQuery, repositoryQuery);
-
-        taskList.addQuery(repositoryQuery);
-      }
-      else
-      {
-        context.log("Changing " + connectorKind + " query " + summary);
-        repositoryQuery.setRepositoryUrl(repositoryURL);
-        configureQuery(context, mylynQuery, repositoryQuery);
-
-        taskList.notifyElementChanged(repositoryQuery);
-      }
-    }
-
-    protected abstract boolean isQueryDifferent(SetupTaskContext context, MylynQuery mylynQuery,
-        org.eclipse.mylyn.internal.tasks.core.RepositoryQuery repositoryQuery);
-
-    protected abstract void configureQuery(SetupTaskContext context, MylynQuery mylynQuery,
-        org.eclipse.mylyn.internal.tasks.core.RepositoryQuery repositoryQuery);
-
-    private org.eclipse.mylyn.internal.tasks.core.RepositoryQuery lookupQuery(String summary) throws Exception
-    {
-      for (org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query : taskList.getQueries())
-      {
-        if (ObjectUtil.equals(query.getSummary(), summary))
-        {
-          return query;
-        }
-      }
-
-      return null;
-    }
   }
 
 } // MylynQueryImpl

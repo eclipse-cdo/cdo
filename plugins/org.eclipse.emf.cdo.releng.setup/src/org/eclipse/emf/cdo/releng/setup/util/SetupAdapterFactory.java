@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
-import org.eclipse.emf.cdo.releng.setup.AttributesQuery;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
@@ -55,7 +54,6 @@ import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
-import org.eclipse.emf.cdo.releng.setup.URLQuery;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
@@ -391,18 +389,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseMylynQuery(MylynQuery object)
     {
       return createMylynQueryAdapter();
-    }
-
-    @Override
-    public Adapter caseURLQuery(URLQuery object)
-    {
-      return createURLQueryAdapter();
-    }
-
-    @Override
-    public Adapter caseAttributesQuery(AttributesQuery object)
-    {
-      return createAttributesQueryAdapter();
     }
 
     @Override
@@ -764,36 +750,6 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMylynQueryAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.URLQuery <em>URL Query</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.URLQuery
-   * @generated
-   */
-  public Adapter createURLQueryAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.AttributesQuery <em>Attributes Query</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.setup.AttributesQuery
-   * @generated
-   */
-  public Adapter createAttributesQueryAdapter()
   {
     return null;
   }

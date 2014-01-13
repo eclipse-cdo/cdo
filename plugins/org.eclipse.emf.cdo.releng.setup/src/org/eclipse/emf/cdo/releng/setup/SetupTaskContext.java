@@ -27,6 +27,8 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
 {
   public Trigger getTrigger();
 
+  public void checkCancelation();
+
   public boolean isPerforming();
 
   public boolean isRestartNeeded();

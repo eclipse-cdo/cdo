@@ -2,6 +2,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,11 +15,13 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getTask <em>Task</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getSummary <em>Summary</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getURL <em>URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getAttributes <em>Attributes</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQuery()
- * @model abstract="true"
+ * @model
  * @generated
  */
 public interface MylynQuery extends EObject
@@ -50,6 +53,49 @@ public interface MylynQuery extends EObject
   void setSummary(String value);
 
   /**
+   * Returns the value of the '<em><b>URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>URL</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>URL</em>' attribute.
+   * @see #setURL(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQuery_URL()
+   * @model extendedMetaData="kind='attribute' name='url'"
+   * @generated
+   */
+  String getURL();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQuery#getURL <em>URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>URL</em>' attribute.
+   * @see #getURL()
+   * @generated
+   */
+  void setURL(String value);
+
+  /**
+   * Returns the value of the '<em><b>Attributes</b></em>' map.
+   * The key is of type {@link java.lang.String},
+   * and the value is of type {@link java.lang.String},
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Attributes</em>' map isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Attributes</em>' map.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQuery_Attributes()
+   * @model mapType="org.eclipse.emf.cdo.releng.setup.QueryAttribute<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+   * @generated
+   */
+  EMap<String, String> getAttributes();
+
+  /**
    * Returns the value of the '<em><b>Task</b></em>' container reference.
    * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getQueries <em>Queries</em>}'.
    * <!-- begin-user-doc -->
@@ -76,9 +122,5 @@ public interface MylynQuery extends EObject
    * @generated
    */
   void setTask(MylynQueriesTask value);
-
-  boolean isNeeded(SetupTaskContext context, String connectorKind, String repositoryURL) throws Exception;
-
-  void perform(SetupTaskContext context, String connectorKind, String repositoryURL) throws Exception;
 
 } // MylynQuery

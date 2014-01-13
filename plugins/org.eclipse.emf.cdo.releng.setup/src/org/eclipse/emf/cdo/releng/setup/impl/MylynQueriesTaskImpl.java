@@ -8,9 +8,10 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -18,7 +19,19 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.mylyn.internal.tasks.core.RepositoryQuery;
+import org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin;
+import org.eclipse.mylyn.internal.tasks.ui.util.TasksUiInternal;
+import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
+import org.eclipse.mylyn.tasks.core.TaskRepository;
+import org.eclipse.mylyn.tasks.ui.TasksUi;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -28,36 +41,17 @@ import java.util.Set;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getRepositoryURL <em>Repository URL</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getConnectorKind <em>Connector Kind</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getRepositoryURL <em>Repository URL</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getQueries <em>Queries</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
+@SuppressWarnings("restriction")
 public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesTask
 {
-  /**
-   * The default value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRepositoryURL()
-   * @generated
-   * @ordered
-   */
-  protected static final String REPOSITORY_URL_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRepositoryURL()
-   * @generated
-   * @ordered
-   */
-  protected String repositoryURL = REPOSITORY_URL_EDEFAULT;
-
   /**
    * The default value of the '{@link #getConnectorKind() <em>Connector Kind</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -79,6 +73,26 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   protected String connectorKind = CONNECTOR_KIND_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRepositoryURL()
+   * @generated
+   * @ordered
+   */
+  protected static final String REPOSITORY_URL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getRepositoryURL() <em>Repository URL</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRepositoryURL()
+   * @generated
+   * @ordered
+   */
+  protected String repositoryURL = REPOSITORY_URL_EDEFAULT;
+
+  /**
    * The cached value of the '{@link #getQueries() <em>Queries</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -88,7 +102,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
    */
   protected EList<MylynQuery> queries;
 
-  private EList<MylynQuery> neededQueries;
+  private transient MylynHelper mylynHelper;
 
   /**
    * <!-- begin-user-doc -->
@@ -221,10 +235,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
-      return getRepositoryURL();
     case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
       return getConnectorKind();
+    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
+      return getRepositoryURL();
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       return getQueries();
     }
@@ -242,11 +256,11 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
-      setRepositoryURL((String)newValue);
-      return;
     case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
       setConnectorKind((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
+      setRepositoryURL((String)newValue);
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
@@ -266,11 +280,11 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
-      setRepositoryURL(REPOSITORY_URL_EDEFAULT);
-      return;
     case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
       setConnectorKind(CONNECTOR_KIND_EDEFAULT);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
+      setRepositoryURL(REPOSITORY_URL_EDEFAULT);
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
@@ -289,10 +303,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   {
     switch (featureID)
     {
-    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
-      return REPOSITORY_URL_EDEFAULT == null ? repositoryURL != null : !REPOSITORY_URL_EDEFAULT.equals(repositoryURL);
     case SetupPackage.MYLYN_QUERIES_TASK__CONNECTOR_KIND:
       return CONNECTOR_KIND_EDEFAULT == null ? connectorKind != null : !CONNECTOR_KIND_EDEFAULT.equals(connectorKind);
+    case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
+      return REPOSITORY_URL_EDEFAULT == null ? repositoryURL != null : !REPOSITORY_URL_EDEFAULT.equals(repositoryURL);
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       return queries != null && !queries.isEmpty();
     }
@@ -313,10 +327,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (repositoryURL: ");
-    result.append(repositoryURL);
-    result.append(", connectorKind: ");
+    result.append(" (connectorKind: ");
     result.append(connectorKind);
+    result.append(", repositoryURL: ");
+    result.append(repositoryURL);
     result.append(')');
     return result.toString();
   }
@@ -329,29 +343,180 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    String connectorKind = getConnectorKind();
-    String repositoryURL = getRepositoryURL();
-
-    neededQueries = new BasicEList<MylynQuery>();
-    for (MylynQuery query : getQueries())
-    {
-      if (query.isNeeded(context, connectorKind, repositoryURL))
-      {
-        neededQueries.add(query);
-      }
-    }
-
-    return !neededQueries.isEmpty();
+    mylynHelper = MylynHelperImpl.create();
+    return mylynHelper.isNeeded(context, this);
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    String connectorKind = getConnectorKind();
-    String repositoryURL = getRepositoryURL();
+    mylynHelper.perform(context, this);
+  }
 
-    for (MylynQuery query : neededQueries)
+  /**
+   * @author Eike Stepper
+   */
+  protected interface MylynHelper
+  {
+    public boolean isNeeded(SetupTaskContext context, MylynQueriesTask task) throws Exception;
+
+    public void perform(SetupTaskContext context, MylynQueriesTask task) throws Exception;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class MylynHelperImpl implements MylynHelper
+  {
+    private TaskRepository repository;
+
+    private Map<MylynQuery, RepositoryQuery> repositoryQueries = new HashMap<MylynQuery, RepositoryQuery>();
+
+    public boolean isNeeded(SetupTaskContext context, MylynQueriesTask task) throws Exception
     {
-      query.perform(context, connectorKind, repositoryURL);
+      String connectorKind = task.getConnectorKind();
+      String repositoryURL = task.getRepositoryURL();
+      repository = TasksUi.getRepositoryManager().getRepository(connectorKind, repositoryURL);
+
+      for (MylynQuery query : task.getQueries())
+      {
+        context.checkCancelation();
+
+        RepositoryQuery repositoryQuery = getRepositoryQuery(query);
+        if (repositoryQuery == null || isQueryDifferent(query, repositoryQuery))
+        {
+          repositoryQueries.put(query, repositoryQuery);
+        }
+      }
+
+      if (repository == null)
+      {
+        return true;
+      }
+
+      if (!repositoryQueries.isEmpty())
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public void perform(SetupTaskContext context, MylynQueriesTask task) throws Exception
+    {
+      String connectorKind = task.getConnectorKind();
+      String repositoryURL = task.getRepositoryURL();
+
+      if (repository == null)
+      {
+        context.log("Adding " + connectorKind + " repository: " + repositoryURL);
+        repository = new TaskRepository(connectorKind, repositoryURL);
+        TasksUi.getRepositoryManager().addRepository(repository);
+      }
+
+      for (Map.Entry<MylynQuery, RepositoryQuery> entry : repositoryQueries.entrySet())
+      {
+        MylynQuery mylynQuery = entry.getKey();
+        RepositoryQuery repositoryQuery = entry.getValue();
+
+        String summary = mylynQuery.getSummary();
+
+        if (repositoryQuery == null)
+        {
+          context.log("Adding " + connectorKind + " query: " + summary);
+          String handle = TasksUiPlugin.getTaskList().getUniqueHandleIdentifier();
+          repositoryQuery = new RepositoryQuery(connectorKind, handle);
+          repositoryQuery.setSummary(summary);
+          entry.setValue(repositoryQuery);
+
+          repositoryQuery.setRepositoryUrl(repositoryURL);
+          configureQuery(context, mylynQuery, repositoryQuery);
+
+          TasksUiPlugin.getTaskList().addQuery(repositoryQuery);
+        }
+        else
+        {
+          context.log("Changing " + connectorKind + " query: " + summary);
+
+          repositoryQuery.setRepositoryUrl(repositoryURL);
+          configureQuery(context, mylynQuery, repositoryQuery);
+        }
+      }
+
+      Set<RepositoryQuery> queries = new HashSet<RepositoryQuery>(repositoryQueries.values());
+      TasksUiPlugin.getTaskList().notifyElementsChanged(queries);
+
+      AbstractRepositoryConnector connector = TasksUi.getRepositoryManager().getRepositoryConnector(connectorKind);
+      TasksUiInternal.synchronizeQueries(connector, repository, queries, null, true);
+    }
+
+    private RepositoryQuery getRepositoryQuery(MylynQuery mylynQuery) throws Exception
+    {
+      for (RepositoryQuery repositoryQuery : TasksUiPlugin.getTaskList().getQueries())
+      {
+        if (ObjectUtil.equals(repositoryQuery.getSummary(), mylynQuery.getSummary()))
+        {
+          return repositoryQuery;
+        }
+      }
+
+      return null;
+    }
+
+    private boolean isQueryDifferent(MylynQuery mylynQuery, RepositoryQuery repositoryQuery) throws Exception
+    {
+      String url = mylynQuery.getURL();
+      if (!ObjectUtil.equals(repositoryQuery.getUrl(), url))
+      {
+        return true;
+      }
+
+      Map<String, String> attributes = mylynQuery.getAttributes().map();
+      if (!ObjectUtil.equals(repositoryQuery.getAttributes(), attributes))
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    private void configureQuery(SetupTaskContext context, MylynQuery mylynQuery, RepositoryQuery repositoryQuery)
+    {
+      String url = mylynQuery.getURL();
+      if (!ObjectUtil.equals(url, repositoryQuery.getUrl()))
+      {
+        context.log("Setting query URL = " + url);
+        repositoryQuery.setUrl(url);
+      }
+
+      Map<String, String> repositoryAttributes = repositoryQuery.getAttributes();
+      Map<String, String> attributes = mylynQuery.getAttributes().map();
+
+      for (Entry<String, String> entry : attributes.entrySet())
+      {
+        String key = entry.getKey();
+        String value = entry.getValue();
+
+        String repositoryValue = repositoryAttributes.get(key);
+        if (!ObjectUtil.equals(value, repositoryValue))
+        {
+          context.log("Setting query attribute " + key + " = " + value);
+          repositoryQuery.setAttribute(key, value);
+        }
+      }
+
+      for (String key : new ArrayList<String>(repositoryAttributes.keySet()))
+      {
+        if (!attributes.containsKey(key))
+        {
+          context.log("Removing query attribute " + key);
+          repositoryQuery.setAttribute(key, null);
+        }
+      }
+    }
+
+    public static MylynHelper create()
+    {
+      return new MylynHelperImpl();
     }
   }
 } // MylynQueriesTaskImpl

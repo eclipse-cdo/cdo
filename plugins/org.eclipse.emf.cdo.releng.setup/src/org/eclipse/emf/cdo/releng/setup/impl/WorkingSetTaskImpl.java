@@ -215,6 +215,8 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
     Set<String> newIds = new HashSet<String>();
     for (WorkingSet workingSet : getWorkingSets())
     {
+      context.checkCancelation();
+
       String id = prefix + workingSet.getName();
       workingSet.setId(id);
       newIds.add(id);
@@ -238,6 +240,8 @@ public class WorkingSetTaskImpl extends SetupTaskImpl implements WorkingSetTask
     int index = 0;
     for (WorkingSet workingSet : new ArrayList<WorkingSet>(newWorkingSetGroups))
     {
+      context.checkCancelation();
+
       String id = workingSet.getId();
       if (!existingIds.contains(id))
       {

@@ -2408,20 +2408,21 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     }
   }
 
-  public static void open(final IWorkbenchPage page, final URI uri)
+  public static void open(final IWorkbenchPage page, URI uri)
   {
     Display display = page.getWorkbenchWindow().getShell().getDisplay();
+    final URI normalizedURI = EMFUtil.createResourceSet().getURIConverter().normalize(uri);
     display.asyncExec(new Runnable()
     {
       public void run()
       {
         try
         {
-          IEditorInput editorInput = new URIEditorInput(uri, uri.lastSegment());
-          if (uri.isFile())
+          IEditorInput editorInput = new URIEditorInput(normalizedURI, normalizedURI.lastSegment());
+          if (normalizedURI.isFile())
           {
             IFile[] files = ResourcesPlugin.getWorkspace().getRoot()
-                .findFilesForLocationURI(new java.net.URI(uri.toString()));
+                .findFilesForLocationURI(new java.net.URI(normalizedURI.toString()));
             if (files.length > 0)
             {
               editorInput = new FileEditorInput(files[0]);

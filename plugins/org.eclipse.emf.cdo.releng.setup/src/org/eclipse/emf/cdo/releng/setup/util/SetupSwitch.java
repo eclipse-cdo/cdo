@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -750,6 +752,30 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.MYLYN_BUILDS_TASK:
+    {
+      MylynBuildsTask mylynBuildsTask = (MylynBuildsTask)theEObject;
+      T result = caseMylynBuildsTask(mylynBuildsTask);
+      if (result == null)
+      {
+        result = caseSetupTask(mylynBuildsTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.BUILD_PLAN:
+    {
+      BuildPlan buildPlan = (BuildPlan)theEObject;
+      T result = caseBuildPlan(buildPlan);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.JRE_TASK:
     {
       JRETask jreTask = (JRETask)theEObject;
@@ -1213,6 +1239,38 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseQueryAttribute(Map.Entry<String, String> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mylyn Builds Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mylyn Builds Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMylynBuildsTask(MylynBuildsTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Build Plan</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Build Plan</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBuildPlan(BuildPlan object)
   {
     return null;
   }

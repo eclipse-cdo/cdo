@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -395,6 +397,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseQueryAttribute(Map.Entry<String, String> object)
     {
       return createQueryAttributeAdapter();
+    }
+
+    @Override
+    public Adapter caseMylynBuildsTask(MylynBuildsTask object)
+    {
+      return createMylynBuildsTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseBuildPlan(BuildPlan object)
+    {
+      return createBuildPlanAdapter();
     }
 
     @Override
@@ -765,6 +779,36 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createQueryAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask <em>Mylyn Builds Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask
+   * @generated
+   */
+  public Adapter createMylynBuildsTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.BuildPlan <em>Build Plan</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.BuildPlan
+   * @generated
+   */
+  public Adapter createBuildPlanAdapter()
   {
     return null;
   }

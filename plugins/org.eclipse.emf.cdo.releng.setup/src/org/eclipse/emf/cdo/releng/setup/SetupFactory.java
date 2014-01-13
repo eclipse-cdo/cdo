@@ -227,6 +227,24 @@ public interface SetupFactory extends EFactory
   Query createQuery();
 
   /**
+   * Returns a new object of class '<em>Mylyn Builds Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mylyn Builds Task</em>'.
+   * @generated
+   */
+  MylynBuildsTask createMylynBuildsTask();
+
+  /**
+   * Returns a new object of class '<em>Build Plan</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Build Plan</em>'.
+   * @generated
+   */
+  BuildPlan createBuildPlan();
+
+  /**
    * Returns a new object of class '<em>JRE Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

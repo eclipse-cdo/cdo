@@ -649,6 +649,56 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected MylynBuildsTaskItemProvider mylynBuildsTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createMylynBuildsTaskAdapter()
+  {
+    if (mylynBuildsTaskItemProvider == null)
+    {
+      mylynBuildsTaskItemProvider = new MylynBuildsTaskItemProvider(this);
+    }
+
+    return mylynBuildsTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.BuildPlan} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected BuildPlanItemProvider buildPlanItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.BuildPlan}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createBuildPlanAdapter()
+  {
+    if (buildPlanItemProvider == null)
+    {
+      buildPlanItemProvider = new BuildPlanItemProvider(this);
+    }
+
+    return buildPlanItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.JRETask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1394,6 +1444,14 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (queryAttributeItemProvider != null)
     {
       queryAttributeItemProvider.dispose();
+    }
+    if (mylynBuildsTaskItemProvider != null)
+    {
+      mylynBuildsTaskItemProvider.dispose();
+    }
+    if (buildPlanItemProvider != null)
+    {
+      buildPlanItemProvider.dispose();
     }
     if (jreTaskItemProvider != null)
     {

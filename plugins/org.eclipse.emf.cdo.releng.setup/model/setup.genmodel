@@ -257,15 +257,23 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/repositoryURL"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynQueriesTask/queries"/>
     </genClasses>
-    <genClasses ecoreClass="setup.ecore#//MylynQuery">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//MylynQuery/task"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQuery/summary"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQuery/uRL"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynQuery/attributes"/>
+    <genClasses ecoreClass="setup.ecore#//Query">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Query/task"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Query/summary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Query/uRL"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//Query/attributes"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//QueryAttribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//QueryAttribute/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//QueryAttribute/value"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//MylynBuildsTask" labelFeature="#//setup/MylynBuildsTask/serverURL">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynBuildsTask/connectorKind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynBuildsTask/serverURL"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynBuildsTask/buildPlans"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//BuildPlan">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BuildPlan/name"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//JRETask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//JRETask/version"/>

@@ -2266,7 +2266,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
    * @generated
    */
-  int JRE_TASK = 45;
+  int JRE_TASK = 47;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
@@ -3219,6 +3219,134 @@ public interface SetupPackage extends EPackage
   int QUERY_ATTRIBUTE_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl <em>Mylyn Builds Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynBuildsTask()
+   * @generated
+   */
+  int MYLYN_BUILDS_TASK = 45;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Connector Kind</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__CONNECTOR_KIND = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Server URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__SERVER_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Build Plans</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__BUILD_PLANS = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Mylyn Builds Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuildPlan()
+   * @generated
+   */
+  int BUILD_PLAN = 46;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BUILD_PLAN__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Build Plan</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BUILD_PLAN_FEATURE_COUNT = 1;
+
+  /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3307,7 +3435,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 46;
+  int SETUP_TASK_SCOPE = 48;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -3317,7 +3445,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 47;
+  int TRIGGER = 49;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -3327,7 +3455,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 48;
+  int COMPONENT_TYPE = 50;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -3337,7 +3465,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 49;
+  int VARIABLE_TYPE = 51;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -3347,7 +3475,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 52;
+  int URI = 54;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -3357,7 +3485,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 53;
+  int LICENSE_INFO = 55;
 
   /**
    * The meta object id for the '<em>Version Range</em>' data type.
@@ -3367,7 +3495,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
-  int VERSION_RANGE = 54;
+  int VERSION_RANGE = 56;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Eclipse <em>Eclipse</em>}'.
@@ -3409,7 +3537,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 51;
+  int EXCEPTION = 53;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -3419,7 +3547,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 50;
+  int TRIGGER_SET = 52;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -4368,6 +4496,70 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getQueryAttribute_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask <em>Mylyn Builds Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Mylyn Builds Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask
+   * @generated
+   */
+  EClass getMylynBuildsTask();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getConnectorKind <em>Connector Kind</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Connector Kind</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getConnectorKind()
+   * @see #getMylynBuildsTask()
+   * @generated
+   */
+  EAttribute getMylynBuildsTask_ConnectorKind();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getServerURL <em>Server URL</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Server URL</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getServerURL()
+   * @see #getMylynBuildsTask()
+   * @generated
+   */
+  EAttribute getMylynBuildsTask_ServerURL();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getBuildPlans <em>Build Plans</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Build Plans</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getBuildPlans()
+   * @see #getMylynBuildsTask()
+   * @generated
+   */
+  EReference getMylynBuildsTask_BuildPlans();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.BuildPlan <em>Build Plan</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Build Plan</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.BuildPlan
+   * @generated
+   */
+  EClass getBuildPlan();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.BuildPlan#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.BuildPlan#getName()
+   * @see #getBuildPlan()
+   * @generated
+   */
+  EAttribute getBuildPlan_Name();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.JRETask <em>JRE Task</em>}'.
@@ -5997,6 +6189,58 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute QUERY_ATTRIBUTE__VALUE = eINSTANCE.getQueryAttribute_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl <em>Mylyn Builds Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynBuildsTask()
+     * @generated
+     */
+    EClass MYLYN_BUILDS_TASK = eINSTANCE.getMylynBuildsTask();
+
+    /**
+     * The meta object literal for the '<em><b>Connector Kind</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_BUILDS_TASK__CONNECTOR_KIND = eINSTANCE.getMylynBuildsTask_ConnectorKind();
+
+    /**
+     * The meta object literal for the '<em><b>Server URL</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_BUILDS_TASK__SERVER_URL = eINSTANCE.getMylynBuildsTask_ServerURL();
+
+    /**
+     * The meta object literal for the '<em><b>Build Plans</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MYLYN_BUILDS_TASK__BUILD_PLANS = eINSTANCE.getMylynBuildsTask_BuildPlans();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuildPlan()
+     * @generated
+     */
+    EClass BUILD_PLAN = eINSTANCE.getBuildPlan();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BUILD_PLAN__NAME = eINSTANCE.getBuildPlan_Name();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.

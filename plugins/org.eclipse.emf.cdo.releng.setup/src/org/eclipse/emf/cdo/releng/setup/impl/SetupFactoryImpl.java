@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -203,6 +205,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createQuery();
     case SetupPackage.QUERY_ATTRIBUTE:
       return (EObject)createQueryAttribute();
+    case SetupPackage.MYLYN_BUILDS_TASK:
+      return createMylynBuildsTask();
+    case SetupPackage.BUILD_PLAN:
+      return createBuildPlan();
     case SetupPackage.JRE_TASK:
       return createJRETask();
     default:
@@ -552,6 +558,28 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     QueryAttributeImpl queryAttribute = new QueryAttributeImpl();
     return queryAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MylynBuildsTask createMylynBuildsTask()
+  {
+    MylynBuildsTaskImpl mylynBuildsTask = new MylynBuildsTaskImpl();
+    return mylynBuildsTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BuildPlan createBuildPlan()
+  {
+    BuildPlanImpl buildPlan = new BuildPlanImpl();
+    return buildPlan;
   }
 
   /**

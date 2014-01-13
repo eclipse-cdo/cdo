@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -247,6 +249,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass queryAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mylynBuildsTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass buildPlanEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1456,6 +1472,66 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getMylynBuildsTask()
+  {
+    return mylynBuildsTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynBuildsTask_ConnectorKind()
+  {
+    return (EAttribute)mylynBuildsTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynBuildsTask_ServerURL()
+  {
+    return (EAttribute)mylynBuildsTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMylynBuildsTask_BuildPlans()
+  {
+    return (EReference)mylynBuildsTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBuildPlan()
+  {
+    return buildPlanEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBuildPlan_Name()
+  {
+    return (EAttribute)buildPlanEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getJRETask()
   {
     return jreTaskEClass;
@@ -2466,6 +2542,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(queryAttributeEClass, QUERY_ATTRIBUTE__KEY);
     createEAttribute(queryAttributeEClass, QUERY_ATTRIBUTE__VALUE);
 
+    mylynBuildsTaskEClass = createEClass(MYLYN_BUILDS_TASK);
+    createEAttribute(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__CONNECTOR_KIND);
+    createEAttribute(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__SERVER_URL);
+    createEReference(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__BUILD_PLANS);
+
+    buildPlanEClass = createEClass(BUILD_PLAN);
+    createEAttribute(buildPlanEClass, BUILD_PLAN__NAME);
+
     jreTaskEClass = createEClass(JRE_TASK);
     createEAttribute(jreTaskEClass, JRE_TASK__VERSION);
     createEAttribute(jreTaskEClass, JRE_TASK__LOCATION);
@@ -2552,6 +2636,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     keyBindingTaskEClass.getESuperTypes().add(getSetupTask());
     mylynQueryTaskEClass.getESuperTypes().add(getSetupTask());
     mylynQueriesTaskEClass.getESuperTypes().add(getSetupTask());
+    mylynBuildsTaskEClass.getESuperTypes().add(getSetupTask());
     jreTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
@@ -3001,6 +3086,22 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getQueryAttribute_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(mylynBuildsTaskEClass, MylynBuildsTask.class, "MylynBuildsTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMylynBuildsTask_ConnectorKind(), ecorePackage.getEString(), "connectorKind",
+        "org.eclipse.mylyn.hudson", 1, 1, MylynBuildsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynBuildsTask_ServerURL(), ecorePackage.getEString(), "serverURL", null, 1, 1,
+        MylynBuildsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getMylynBuildsTask_BuildPlans(), getBuildPlan(), null, "buildPlans", null, 1, -1,
+        MylynBuildsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(buildPlanEClass, BuildPlan.class, "BuildPlan", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBuildPlan_Name(), ecorePackage.getEString(), "name", null, 1, 1, BuildPlan.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(jreTaskEClass, JRETask.class, "JRETask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getJRETask_Version(), ecorePackage.getEString(), "version", null, 1, 1, JRETask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3107,6 +3208,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         "http://download.eclipse.org/mylyn/releases/latest", "installableUnits",
         "org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui" });
     addAnnotation(mylynQueriesTaskEClass, source, new String[] { "variableName", "setup.mylyn.p2", "repository",
+        "http://download.eclipse.org/mylyn/releases/latest", "installableUnits",
+        "org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui" });
+    addAnnotation(mylynBuildsTaskEClass, source, new String[] { "variableName", "setup.mylyn.p2", "repository",
         "http://download.eclipse.org/mylyn/releases/latest", "installableUnits",
         "org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui" });
   }

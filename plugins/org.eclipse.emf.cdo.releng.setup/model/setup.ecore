@@ -343,6 +343,22 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MylynBuildsTask" eSuperTypes="#//SetupTask">
+    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
+      <details key="variableName" value="setup.mylyn.p2"/>
+      <details key="repository" value="http://download.eclipse.org/mylyn/releases/latest"/>
+      <details key="installableUnits" value="org.eclipse.mylyn.tasks.core org.eclipse.mylyn.tasks.ui"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectorKind" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="org.eclipse.mylyn.hudson"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverURL" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="buildPlans" lowerBound="1"
+        upperBound="-1" eType="#//BuildPlan" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BuildPlan">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JRETask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

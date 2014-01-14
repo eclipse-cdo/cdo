@@ -70,6 +70,8 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
 
   private HELPER helper;
 
+  private boolean enabled = true;
+
   public PropertyField()
   {
     this(null);
@@ -222,6 +224,7 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
       });
     }
 
+    setEnabled(enabled);
     transferValueToControl(value, control);
   }
 
@@ -248,23 +251,35 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     }
   }
 
+  public final boolean isEnabled()
+  {
+    return enabled;
+  }
+
   public final void setEnabled(boolean enabled)
   {
+    this.enabled = enabled;
+
     if (label != null)
     {
       label.setEnabled(enabled);
     }
 
-    Control mainControl = getMainControl();
-    if (mainControl != null)
-    {
-      mainControl.setEnabled(enabled);
-    }
+    setControlEnabled(enabled);
 
     Control mainHelper = getMainHelper();
     if (mainHelper != null)
     {
       mainHelper.setEnabled(enabled);
+    }
+  }
+
+  protected void setControlEnabled(boolean enabled)
+  {
+    Control mainControl = getMainControl();
+    if (mainControl != null)
+    {
+      mainControl.setEnabled(enabled);
     }
   }
 
@@ -445,25 +460,28 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
       mainLayout.marginHeight = 0;
       mainLayout.horizontalSpacing = 0;
 
+      final Text[] text = { null };
       mainControl = new Composite(parent, SWT.NULL)
       {
         @Override
         public void setEnabled(boolean enabled)
         {
-          super.setEnabled(enabled);
+          text[0].setEnabled(enabled);
 
-          Control[] children = getChildren();
-          for (int i = 0; i < children.length; i++)
-          {
-            Control child = children[i];
-            child.setEnabled(enabled);
-          }
+          // super.setEnabled(enabled);
+          //
+          // Control[] children = getChildren();
+          // for (int i = 0; i < children.length; i++)
+          // {
+          // Control child = children[i];
+          // child.setEnabled(enabled);
+          // }
         }
       };
       mainControl.setLayout(mainLayout);
 
-      Text text = createText(mainControl);
-      text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+      text[0] = createText(mainControl);
+      text[0].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
       ToolBar toolBar = new ToolBar(mainControl, SWT.FLAT | SWT.NO_FOCUS);
       toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -492,7 +510,7 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
 
       setLinkedFromValue();
 
-      return text;
+      return text[0];
     }
 
     protected String computeLinkedValue(String thisValue, String linkValue)

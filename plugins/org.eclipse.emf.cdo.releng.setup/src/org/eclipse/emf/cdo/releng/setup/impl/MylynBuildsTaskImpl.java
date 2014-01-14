@@ -31,16 +31,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.builds.core.IBuildPlan;
 import org.eclipse.mylyn.builds.core.IBuildServer;
 import org.eclipse.mylyn.builds.internal.core.BuildFactory;
-import org.eclipse.mylyn.builds.internal.core.BuildModel;
 import org.eclipse.mylyn.builds.ui.BuildsUi;
 import org.eclipse.mylyn.commons.repositories.core.RepositoryLocation;
 import org.eclipse.mylyn.internal.builds.ui.BuildsUiInternal;
 import org.eclipse.mylyn.internal.builds.ui.BuildsUiPlugin;
-import org.eclipse.swt.widgets.Display;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -411,6 +408,9 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
             server.setLocation(new RepositoryLocation(serverURL));
             server.setUrl(serverURL);
             server.setName(serverURL);
+            server.getAttributes().put("id", serverURL);
+            server.getAttributes().put("url", serverURL);
+            server.getAttributes().put("label", serverURL);
 
             BuildsUiInternal.getModel().getServers().add(server);
           }
@@ -449,44 +449,6 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
     public static MylynHelper create()
     {
       return new MylynHelperImpl();
-    }
-  }
-
-  public static class MylynBuildHelper
-  {
-    public static void perform(SetupTaskContext context, final String location, final String name,
-        final EList<BuildPlan> buildPlans) throws Exception
-    {
-      Display.getDefault().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          BuildModel model = BuildsUiInternal.getModel();
-          List<IBuildServer> servers = model.getServers();
-          IBuildServer server = BuildsUi.createServer("");
-          if (!ObjectUtil.isEmpty(name))
-          {
-            server.setName(name);
-          }
-          server.setLocation(new RepositoryLocation(location));
-          server.setUrl(location);
-          server.getAttributes().put("id", location);
-          server.getAttributes().put("url", location);
-          servers.add(server);
-
-          List<IBuildPlan> plans = model.getPlans();
-          IBuildPlan plan;
-          for (BuildPlan buildPlan : buildPlans)
-          {
-            plan = BuildFactory.eINSTANCE.createBuildPlan();
-            plan.setId(buildPlan.getName());
-            plan.setName(buildPlan.getName());
-            plan.setServer(server);
-            plan.setSelected(true);
-            plans.add(plan);
-          }
-        }
-      });
     }
   }
 

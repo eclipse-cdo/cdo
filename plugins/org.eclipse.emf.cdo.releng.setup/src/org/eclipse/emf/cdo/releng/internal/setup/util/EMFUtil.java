@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.internal.setup.util;
 
 import org.eclipse.emf.cdo.releng.internal.setup.AbstractSetupTaskContext;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -26,6 +28,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
@@ -50,11 +53,12 @@ public final class EMFUtil extends Plugin
   public static final URI CONFIGURATION_URI = URI
       .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup");
 
+  public static final URI META_INDEX_URI = URI
+      .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/MetaIndex.setup");
+
   public static final String EXAMPLE_URI = System.getProperty(SetupConstants.PROP_EXAMPLE_URI);
 
   public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
-
-  private static final URI REDIRECTED_CONFIGURATION_URI = getSetupURI();
 
   private static final URI BRANCH_URI = getBranchURI();
 
@@ -88,9 +92,10 @@ public final class EMFUtil extends Plugin
     EList<URIHandler> uriHandlers = uriConverter.getURIHandlers();
     uriHandlers.add(4, new ECFURIHandlerImpl());
 
-    if (!CONFIGURATION_URI.equals(REDIRECTED_CONFIGURATION_URI))
+    URI redirectedConfigurationURI = getSetupURI(resourceSet);
+    if (!CONFIGURATION_URI.equals(redirectedConfigurationURI))
     {
-      uriMap.put(CONFIGURATION_URI, REDIRECTED_CONFIGURATION_URI);
+      uriMap.put(CONFIGURATION_URI, redirectedConfigurationURI);
     }
 
     if (BRANCH_URI != null && REDIRECTED_BRANCH_URI != null && !BRANCH_URI.equals(REDIRECTED_BRANCH_URI)
@@ -133,15 +138,56 @@ public final class EMFUtil extends Plugin
     }
   }
 
-  private static URI getSetupURI()
+  private static URI getSetupURI(ResourceSet resourceSet)
   {
-    String uri = System.getProperty(SetupConstants.PROP_SETUP_URI);
-    if (uri == null || !uri.startsWith("file:"))
+    String prop = System.getProperty(SetupConstants.PROP_SETUP_URI);
+    if (prop == null)
     {
       return CONFIGURATION_URI;
     }
 
-    return URI.createURI(uri.replace('\\', '/'));
+    URI uri = URI.createURI(prop.replace('\\', '/'));
+    if (CONFIGURATION_URI.equals(uri))
+    {
+      return CONFIGURATION_URI;
+    }
+
+    if ("file".equals(uri.scheme()))
+    {
+      return uri;
+    }
+
+    try
+    {
+      // Make sure the meta index URI is not redirected
+      URI normalizedMetaIndexURI = resourceSet.getURIConverter().normalize(META_INDEX_URI);
+      if (META_INDEX_URI.equals(normalizedMetaIndexURI))
+      {
+        Resource metaIndexResource = resourceSet.getResource(META_INDEX_URI, true);
+        if (metaIndexResource != null)
+        {
+          EList<EObject> contents = metaIndexResource.getContents();
+          if (!contents.isEmpty())
+          {
+            MetaIndex metaIndex = (MetaIndex)contents.get(0);
+            for (Index index : metaIndex.getIndexes())
+            {
+              URI indexURI = index.getURI();
+              if (indexURI.equals(uri))
+              {
+                return uri;
+              }
+            }
+          }
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return CONFIGURATION_URI;
   }
 
   private static URI getBranchURI()

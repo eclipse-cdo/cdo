@@ -915,11 +915,11 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public URI createURIFromString(EDataType eDataType, String initialValue)
   {
-    return (URI)super.createFromString(eDataType, initialValue);
+    return URI.createURI(initialValue);
   }
 
   /**

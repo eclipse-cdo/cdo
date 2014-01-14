@@ -35,6 +35,11 @@
       <rootComponents name="org.eclipse.egit"/>
       <rootComponents name="org.eclipse.buckminster.core.feature"/>
       <rootComponents name="org.eclipse.pde.api.tools.ee.feature"/>
+      <rootComponents name="org.eclipse.mylyn.sdk_feature"/>
+      <rootComponents name="org.eclipse.mylyn.bugzilla_feature"/>
+      <rootComponents name="org.eclipse.mylyn.builds.sdk"/>
+      <rootComponents name="org.apache.httpcomponents.httpcore" type="osgi.bundle" versionRange="4.2.5"/>
+      <rootComponents name="org.apache.httpcomponents.httpclient" type="osgi.bundle" versionRange="4.2.6"/>
       <rootComponents name="org.apache.ws.commons.util" type="osgi.bundle"/>
       <rootComponents name="org.apache.commons.io" type="osgi.bundle"/>
       <rootComponents name="javax.xml.bind" type="osgi.bundle"/>

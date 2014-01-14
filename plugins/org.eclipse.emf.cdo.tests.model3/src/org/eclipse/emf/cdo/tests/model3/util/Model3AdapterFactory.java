@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.Diagram;
+import org.eclipse.emf.cdo.tests.model3.Edge;
+import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
@@ -24,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.NodeE;
+import org.eclipse.emf.cdo.tests.model3.NodeF;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -171,6 +175,30 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     public Adapter caseClassWithJavaObjectAttribute(ClassWithJavaObjectAttribute object)
     {
       return createClassWithJavaObjectAttributeAdapter();
+    }
+
+    @Override
+    public Adapter caseEdgeTarget(EdgeTarget object)
+    {
+      return createEdgeTargetAdapter();
+    }
+
+    @Override
+    public Adapter caseNodeF(NodeF object)
+    {
+      return createNodeFAdapter();
+    }
+
+    @Override
+    public Adapter caseEdge(Edge object)
+    {
+      return createEdgeAdapter();
+    }
+
+    @Override
+    public Adapter caseDiagram(Diagram object)
+    {
+      return createDiagramAdapter();
     }
 
     @Override
@@ -385,6 +413,66 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClassWithJavaObjectAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget <em>Edge Target</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.EdgeTarget
+   * @generated
+   */
+  public Adapter createEdgeTargetAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.NodeF <em>Node F</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeF
+   * @generated
+   */
+  public Adapter createNodeFAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.Edge <em>Edge</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.Edge
+   * @generated
+   */
+  public Adapter createEdgeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.Diagram <em>Diagram</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.Diagram
+   * @generated
+   */
+  public Adapter createDiagramAdapter()
   {
     return null;
   }

@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.Diagram;
+import org.eclipse.emf.cdo.tests.model3.Edge;
+import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
@@ -25,6 +28,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.NodeE;
+import org.eclipse.emf.cdo.tests.model3.NodeF;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -111,6 +115,14 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createClassWithJavaClassAttribute();
     case Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE:
       return createClassWithJavaObjectAttribute();
+    case Model3Package.EDGE_TARGET:
+      return createEdgeTarget();
+    case Model3Package.NODE_F:
+      return createNodeF();
+    case Model3Package.EDGE:
+      return createEdge();
+    case Model3Package.DIAGRAM:
+      return createDiagram();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -289,6 +301,50 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     ClassWithJavaObjectAttributeImpl classWithJavaObjectAttribute = new ClassWithJavaObjectAttributeImpl();
     return classWithJavaObjectAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EdgeTarget createEdgeTarget()
+  {
+    EdgeTargetImpl edgeTarget = new EdgeTargetImpl();
+    return edgeTarget;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NodeF createNodeF()
+  {
+    NodeFImpl nodeF = new NodeFImpl();
+    return nodeF;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Edge createEdge()
+  {
+    EdgeImpl edge = new EdgeImpl();
+    return edge;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Diagram createDiagram()
+  {
+    DiagramImpl diagram = new DiagramImpl();
+    return diagram;
   }
 
   /**

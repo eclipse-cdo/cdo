@@ -90,6 +90,25 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaObject" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"
         iD="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeTarget">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingEdges" upperBound="-1"
+        eType="#//Edge" eOpposite="#//Edge/sourceNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingEdges" upperBound="-1"
+        eType="#//Edge" eOpposite="#//Edge/targetNode"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeF" eSuperTypes="#//EdgeTarget"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Edge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceNode" lowerBound="1"
+        eType="#//EdgeTarget" eOpposite="#//EdgeTarget/outgoingEdges"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetNode" lowerBound="1"
+        eType="#//EdgeTarget" eOpposite="#//EdgeTarget/incomingEdges"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Diagram">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
+        eType="#//Edge" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edgeTargets" upperBound="-1"
+        eType="#//EdgeTarget" containment="true"/>
+  </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
       nsPrefix="subpackage">
     <eClassifiers xsi:type="ecore:EClass" name="Class2">

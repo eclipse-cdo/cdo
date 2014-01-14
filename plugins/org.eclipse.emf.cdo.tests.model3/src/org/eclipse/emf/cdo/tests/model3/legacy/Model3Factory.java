@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.Diagram;
+import org.eclipse.emf.cdo.tests.model3.Edge;
+import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
@@ -22,6 +25,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.NodeE;
+import org.eclipse.emf.cdo.tests.model3.NodeF;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -158,6 +162,42 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute();
+
+  /**
+   * Returns a new object of class '<em>Edge Target</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Edge Target</em>'.
+   * @generated
+   */
+  EdgeTarget createEdgeTarget();
+
+  /**
+   * Returns a new object of class '<em>Node F</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node F</em>'.
+   * @generated
+   */
+  NodeF createNodeF();
+
+  /**
+   * Returns a new object of class '<em>Edge</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Edge</em>'.
+   * @generated
+   */
+  Edge createEdge();
+
+  /**
+   * Returns a new object of class '<em>Diagram</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Diagram</em>'.
+   * @generated
+   */
+  Diagram createDiagram();
 
   /**
    * Returns the package supported by this factory.

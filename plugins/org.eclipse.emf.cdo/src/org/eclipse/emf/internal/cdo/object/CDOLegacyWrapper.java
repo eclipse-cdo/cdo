@@ -722,7 +722,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
         if (oppositeReference != null)
         {
-          if (object != null)
+          if (object != null && object != instance.eGet(feature))
           {
             // If you have a containment reference but the container is not set, but the object is attached to a
             // resource

@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.Diagram;
+import org.eclipse.emf.cdo.tests.model3.Edge;
+import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
@@ -23,6 +26,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.NodeE;
+import org.eclipse.emf.cdo.tests.model3.NodeF;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -132,6 +136,34 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass classWithJavaObjectAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass edgeTargetEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass nodeFEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass edgeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass diagramEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -645,6 +677,106 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEdgeTarget()
+  {
+    return edgeTargetEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEdgeTarget_OutgoingEdges()
+  {
+    return (EReference)edgeTargetEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEdgeTarget_IncomingEdges()
+  {
+    return (EReference)edgeTargetEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getNodeF()
+  {
+    return nodeFEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEdge()
+  {
+    return edgeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEdge_SourceNode()
+  {
+    return (EReference)edgeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEdge_TargetNode()
+  {
+    return (EReference)edgeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDiagram()
+  {
+    return diagramEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDiagram_Edges()
+  {
+    return (EReference)diagramEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDiagram_EdgeTargets()
+  {
+    return (EReference)diagramEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -744,6 +876,20 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     classWithJavaObjectAttributeEClass = createEClass(CLASS_WITH_JAVA_OBJECT_ATTRIBUTE);
     createEAttribute(classWithJavaObjectAttributeEClass, CLASS_WITH_JAVA_OBJECT_ATTRIBUTE__JAVA_OBJECT);
 
+    edgeTargetEClass = createEClass(EDGE_TARGET);
+    createEReference(edgeTargetEClass, EDGE_TARGET__OUTGOING_EDGES);
+    createEReference(edgeTargetEClass, EDGE_TARGET__INCOMING_EDGES);
+
+    nodeFEClass = createEClass(NODE_F);
+
+    edgeEClass = createEClass(EDGE);
+    createEReference(edgeEClass, EDGE__SOURCE_NODE);
+    createEReference(edgeEClass, EDGE__TARGET_NODE);
+
+    diagramEClass = createEClass(DIAGRAM);
+    createEReference(diagramEClass, DIAGRAM__EDGES);
+    createEReference(diagramEClass, DIAGRAM__EDGE_TARGETS);
+
     // Create data types
     pointEDataType = createEDataType(POINT);
   }
@@ -787,6 +933,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    nodeFEClass.getESuperTypes().add(getEdgeTarget());
 
     // Initialize classes and features; add operations and parameters
     initEClass(class1EClass, Class1.class, "Class1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -910,6 +1057,33 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     initEAttribute(getClassWithJavaObjectAttribute_JavaObject(), theEcorePackage.getEJavaObject(), "javaObject", null,
         0, 1, ClassWithJavaObjectAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(edgeTargetEClass, EdgeTarget.class, "EdgeTarget", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEdgeTarget_OutgoingEdges(), getEdge(), getEdge_SourceNode(), "outgoingEdges", null, 0, -1,
+        EdgeTarget.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEdgeTarget_IncomingEdges(), getEdge(), getEdge_TargetNode(), "incomingEdges", null, 0, -1,
+        EdgeTarget.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeFEClass, NodeF.class, "NodeF", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(edgeEClass, Edge.class, "Edge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEdge_SourceNode(), getEdgeTarget(), getEdgeTarget_OutgoingEdges(), "sourceNode", null, 1, 1,
+        Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEdge_TargetNode(), getEdgeTarget(), getEdgeTarget_IncomingEdges(), "targetNode", null, 1, 1,
+        Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(diagramEClass, Diagram.class, "Diagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDiagram_Edges(), getEdge(), null, "edges", null, 0, -1, Diagram.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getDiagram_EdgeTargets(), getEdgeTarget(), null, "edgeTargets", null, 0, -1, Diagram.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(pointEDataType, Point.class, "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

@@ -143,6 +143,42 @@ public interface Model3Factory extends EFactory
   ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute();
 
   /**
+   * Returns a new object of class '<em>Edge Target</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Edge Target</em>'.
+   * @generated
+   */
+  EdgeTarget createEdgeTarget();
+
+  /**
+   * Returns a new object of class '<em>Node F</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Node F</em>'.
+   * @generated
+   */
+  NodeF createNodeF();
+
+  /**
+   * Returns a new object of class '<em>Edge</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Edge</em>'.
+   * @generated
+   */
+  Edge createEdge();
+
+  /**
+   * Returns a new object of class '<em>Diagram</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Diagram</em>'.
+   * @generated
+   */
+  Diagram createDiagram();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.

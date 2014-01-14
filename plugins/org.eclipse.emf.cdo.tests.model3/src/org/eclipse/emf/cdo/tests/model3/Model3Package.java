@@ -588,13 +588,161 @@ public interface Model3Package extends EPackage
   int CLASS_WITH_JAVA_OBJECT_ATTRIBUTE_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.EdgeTargetImpl <em>Edge Target</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.impl.EdgeTargetImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getEdgeTarget()
+   * @generated
+   */
+  int EDGE_TARGET = 14;
+
+  /**
+   * The feature id for the '<em><b>Outgoing Edges</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EDGE_TARGET__OUTGOING_EDGES = 0;
+
+  /**
+   * The feature id for the '<em><b>Incoming Edges</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EDGE_TARGET__INCOMING_EDGES = 1;
+
+  /**
+   * The number of structural features of the '<em>Edge Target</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EDGE_TARGET_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeFImpl <em>Node F</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.impl.NodeFImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeF()
+   * @generated
+   */
+  int NODE_F = 15;
+
+  /**
+   * The feature id for the '<em><b>Outgoing Edges</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_F__OUTGOING_EDGES = EDGE_TARGET__OUTGOING_EDGES;
+
+  /**
+   * The feature id for the '<em><b>Incoming Edges</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_F__INCOMING_EDGES = EDGE_TARGET__INCOMING_EDGES;
+
+  /**
+   * The number of structural features of the '<em>Node F</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_F_FEATURE_COUNT = EDGE_TARGET_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.EdgeImpl <em>Edge</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.impl.EdgeImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getEdge()
+   * @generated
+   */
+  int EDGE = 16;
+
+  /**
+   * The feature id for the '<em><b>Source Node</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EDGE__SOURCE_NODE = 0;
+
+  /**
+   * The feature id for the '<em><b>Target Node</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EDGE__TARGET_NODE = 1;
+
+  /**
+   * The number of structural features of the '<em>Edge</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EDGE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.DiagramImpl <em>Diagram</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.impl.DiagramImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getDiagram()
+   * @generated
+   */
+  int DIAGRAM = 17;
+
+  /**
+   * The feature id for the '<em><b>Edges</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIAGRAM__EDGES = 0;
+
+  /**
+   * The feature id for the '<em><b>Edge Targets</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIAGRAM__EDGE_TARGETS = 1;
+
+  /**
+   * The number of structural features of the '<em>Diagram</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIAGRAM_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '<em>Point</em>' data type.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model3.Point
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 14;
+  int POINT = 18;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Class1 <em>Class1</em>}'. <!--
@@ -1073,6 +1221,112 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EAttribute getClassWithJavaObjectAttribute_JavaObject();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget <em>Edge Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Edge Target</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.EdgeTarget
+   * @generated
+   */
+  EClass getEdgeTarget();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget#getOutgoingEdges <em>Outgoing Edges</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Outgoing Edges</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.EdgeTarget#getOutgoingEdges()
+   * @see #getEdgeTarget()
+   * @generated
+   */
+  EReference getEdgeTarget_OutgoingEdges();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget#getIncomingEdges <em>Incoming Edges</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Incoming Edges</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.EdgeTarget#getIncomingEdges()
+   * @see #getEdgeTarget()
+   * @generated
+   */
+  EReference getEdgeTarget_IncomingEdges();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeF <em>Node F</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Node F</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeF
+   * @generated
+   */
+  EClass getNodeF();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Edge <em>Edge</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Edge</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Edge
+   * @generated
+   */
+  EClass getEdge();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.Edge#getSourceNode <em>Source Node</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Source Node</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Edge#getSourceNode()
+   * @see #getEdge()
+   * @generated
+   */
+  EReference getEdge_SourceNode();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.Edge#getTargetNode <em>Target Node</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Target Node</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Edge#getTargetNode()
+   * @see #getEdge()
+   * @generated
+   */
+  EReference getEdge_TargetNode();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Diagram <em>Diagram</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Diagram</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Diagram
+   * @generated
+   */
+  EClass getDiagram();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.Diagram#getEdges <em>Edges</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Edges</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Diagram#getEdges()
+   * @see #getDiagram()
+   * @generated
+   */
+  EReference getDiagram_Edges();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.Diagram#getEdgeTargets <em>Edge Targets</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Edge Targets</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Diagram#getEdgeTargets()
+   * @see #getDiagram()
+   * @generated
+   */
+  EReference getDiagram_EdgeTargets();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--

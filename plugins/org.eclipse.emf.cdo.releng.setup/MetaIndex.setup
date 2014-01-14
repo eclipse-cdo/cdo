@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<setup:MetaIndex setup:toolVersion="4" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
-  <indexes xsi:type="setup:Index" uri="http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration2.setup"/>
+<?xml version="1.0" encoding="ASCII"?>
+<setup:MetaIndex setup:toolVersion="5" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
+  <indexes uri="http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration2.setup"/>
 </setup:MetaIndex>

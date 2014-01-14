@@ -37,7 +37,7 @@ import java.util.List;
  * @generated
  */
 public class MylynQueriesTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -83,7 +83,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_MylynQueriesTask_connectorKind_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_MylynQueriesTask_connectorKind_feature",
             "_UI_MylynQueriesTask_type"), SetupPackage.Literals.MYLYN_QUERIES_TASK__CONNECTOR_KIND, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -100,7 +100,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_MylynQueriesTask_repositoryURL_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_MylynQueriesTask_repositoryURL_feature",
             "_UI_MylynQueriesTask_type"), SetupPackage.Literals.MYLYN_QUERIES_TASK__REPOSITORY_URL, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

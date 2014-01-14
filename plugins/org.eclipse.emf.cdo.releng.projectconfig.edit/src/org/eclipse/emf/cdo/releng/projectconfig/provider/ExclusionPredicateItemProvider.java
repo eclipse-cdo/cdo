@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2013, 2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
@@ -34,7 +42,7 @@ import java.util.Set;
  * @generated
  */
 public class ExclusionPredicateItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   public static void filterCircularPreferenceProfiles(EObject root, Collection<?> objects)
   {
@@ -131,8 +139,8 @@ public class ExclusionPredicateItemProvider extends ItemProviderAdapter implemen
         getString("_UI_ExclusionPredicate_excludedPreferenceProfiles_feature"), getString(
             "_UI_PropertyDescriptor_description", "_UI_ExclusionPredicate_excludedPreferenceProfiles_feature",
             "_UI_ExclusionPredicate_type"),
-        ProjectConfigPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES, true, false, true, null, null,
-        null)
+            ProjectConfigPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES, true, false, true, null, null,
+            null)
     {
       @Override
       public Collection<?> getChoiceOfValues(Object object)

@@ -243,7 +243,23 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     collectNewChildDescriptorsGen(newChildDescriptors, object);
+    removeDeprecatedChildren(newChildDescriptors);
+  }
 
+  /**
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ResourceLocator getResourceLocator()
+  {
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
+  }
+
+  public static void removeDeprecatedChildren(Collection<Object> newChildDescriptors)
+  {
     for (Iterator<Object> it = newChildDescriptors.iterator(); it.hasNext();)
     {
       Object newChildDescriptor = it.next();
@@ -258,27 +274,18 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
     }
   }
 
-  @SuppressWarnings("deprecation")
-  private boolean isDeprecated(Object value)
+  private static boolean isDeprecated(Object value)
   {
-    if (value instanceof org.eclipse.emf.cdo.releng.setup.MylynQueryTask)
+    if (value != null)
     {
-      return true;
+      Deprecated annotation = value.getClass().getAnnotation(Deprecated.class);
+      if (annotation != null)
+      {
+        return true;
+      }
     }
 
     return false;
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

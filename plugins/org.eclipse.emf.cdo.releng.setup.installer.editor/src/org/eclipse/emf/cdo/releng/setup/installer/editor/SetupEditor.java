@@ -938,7 +938,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
       selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(new SetupLabelProvider(adapterFactory,
           selectionViewer), new DiagnosticDecorator(editingDomain, selectionViewer, SetupEditorPlugin.getPlugin()
-              .getDialogSettings())));
+          .getDialogSettings())));
 
       Resource resource = editingDomain.getResourceSet().getResources().get(0);
       selectionViewer.setInput(resource);

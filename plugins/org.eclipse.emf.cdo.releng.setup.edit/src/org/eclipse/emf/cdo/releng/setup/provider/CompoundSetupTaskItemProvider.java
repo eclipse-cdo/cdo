@@ -191,8 +191,7 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+  protected void collectNewChildDescriptorsGen(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
@@ -264,6 +263,13 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createJRETask()));
+  }
+
+  @Override
+  protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+  {
+    collectNewChildDescriptorsGen(newChildDescriptors, object);
+    SetupTaskContainerItemProvider.removeDeprecatedChildren(newChildDescriptors);
   }
 
 }

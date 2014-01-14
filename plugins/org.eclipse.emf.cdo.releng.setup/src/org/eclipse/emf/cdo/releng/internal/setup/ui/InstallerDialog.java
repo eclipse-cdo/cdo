@@ -1403,6 +1403,7 @@ public class InstallerDialog extends AbstractSetupDialog
         Setup setup = getSetup(branch);
         if (setup != null)
         {
+          setup.eResource().setURI(getSetupURI(branch));
           EMFUtil.saveEObject(setup);
 
           SetupTaskPerformer performer = new SetupTaskPerformer(Trigger.BOOTSTRAP, installFolder, setup);

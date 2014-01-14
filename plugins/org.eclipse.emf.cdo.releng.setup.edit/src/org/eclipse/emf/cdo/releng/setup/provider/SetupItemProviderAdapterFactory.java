@@ -97,6 +97,56 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MetaIndex} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected MetaIndexItemProvider metaIndexItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MetaIndex}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createMetaIndexAdapter()
+  {
+    if (metaIndexItemProvider == null)
+    {
+      metaIndexItemProvider = new MetaIndexItemProvider(this);
+    }
+
+    return metaIndexItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Index} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected IndexItemProvider indexItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Index}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createIndexAdapter()
+  {
+    if (indexItemProvider == null)
+    {
+      indexItemProvider = new IndexItemProvider(this);
+    }
+
+    return indexItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Eclipse} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1289,6 +1339,14 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    */
   public void dispose()
   {
+    if (metaIndexItemProvider != null)
+    {
+      metaIndexItemProvider.dispose();
+    }
+    if (indexItemProvider != null)
+    {
+      indexItemProvider.dispose();
+    }
     if (eclipseItemProvider != null)
     {
       eclipseItemProvider.dispose();

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
+import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
@@ -37,6 +38,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
@@ -89,6 +91,20 @@ import java.util.Set;
 @SuppressWarnings("deprecation")
 public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass metaIndexEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass indexEClass = null;
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -555,6 +571,56 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(SetupPackage.eNS_URI, theSetupPackage);
     return theSetupPackage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMetaIndex()
+  {
+    return metaIndexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMetaIndex_Indexes()
+  {
+    return (EReference)metaIndexEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIndex()
+  {
+    return indexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIndex_URI()
+  {
+    return (EAttribute)indexEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIndex_OldURIs()
+  {
+    return (EAttribute)indexEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2340,6 +2406,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     isCreated = true;
 
     // Create classes and their features
+    metaIndexEClass = createEClass(META_INDEX);
+    createEReference(metaIndexEClass, META_INDEX__INDEXES);
+
+    indexEClass = createEClass(INDEX);
+    createEAttribute(indexEClass, INDEX__URI);
+    createEAttribute(indexEClass, INDEX__OLD_UR_IS);
+
     eclipseEClass = createEClass(ECLIPSE);
     createEReference(eclipseEClass, ECLIPSE__CONFIGURATION);
     createEAttribute(eclipseEClass, ECLIPSE__VERSION);
@@ -2640,6 +2713,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     jreTaskEClass.getESuperTypes().add(getSetupTask());
 
     // Initialize classes and features; add operations and parameters
+    initEClass(metaIndexEClass, MetaIndex.class, "MetaIndex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMetaIndex_Indexes(), getIndex(), null, "indexes", null, 0, -1, MetaIndex.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(indexEClass, Index.class, "Index", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIndex_URI(), getURI(), "uRI", null, 1, 1, Index.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getIndex_OldURIs(), getURI(), "oldURIs", null, 0, -1, Index.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(eclipseEClass, Eclipse.class, "Eclipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEclipse_Configuration(), getConfiguration(), getConfiguration_EclipseVersions(), "configuration",
         null, 0, 1, Eclipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
@@ -3174,6 +3258,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
   protected void createExtendedMetaDataAnnotations()
   {
     String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+    addAnnotation(getIndex_URI(), source, new String[] { "kind", "attribute", "name", "uri" });
     addAnnotation(getInstallableUnit_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getP2Repository_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getFileEditor_ID(), source, new String[] { "kind", "attribute", "name", "id" });

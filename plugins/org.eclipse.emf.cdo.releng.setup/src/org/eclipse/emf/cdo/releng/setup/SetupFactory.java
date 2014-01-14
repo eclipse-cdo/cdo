@@ -33,6 +33,24 @@ public interface SetupFactory extends EFactory
   SetupFactory eINSTANCE = org.eclipse.emf.cdo.releng.setup.impl.SetupFactoryImpl.init();
 
   /**
+   * Returns a new object of class '<em>Meta Index</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Meta Index</em>'.
+   * @generated
+   */
+  MetaIndex createMetaIndex();
+
+  /**
+   * Returns a new object of class '<em>Index</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Index</em>'.
+   * @generated
+   */
+  Index createIndex();
+
+  /**
    * Returns a new object of class '<em>Eclipse</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

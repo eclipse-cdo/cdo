@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
+import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
@@ -129,6 +131,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    */
   protected SetupSwitch<Adapter> modelSwitch = new SetupSwitch<Adapter>()
   {
+    @Override
+    public Adapter caseMetaIndex(MetaIndex object)
+    {
+      return createMetaIndexAdapter();
+    }
+
+    @Override
+    public Adapter caseIndex(Index object)
+    {
+      return createIndexAdapter();
+    }
+
     @Override
     public Adapter caseEclipse(Eclipse object)
     {
@@ -436,6 +450,36 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   public Adapter createAdapter(Notifier target)
   {
     return modelSwitch.doSwitch((EObject)target);
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MetaIndex <em>Meta Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.MetaIndex
+   * @generated
+   */
+  public Adapter createMetaIndexAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Index <em>Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.Index
+   * @generated
+   */
+  public Adapter createIndexAdapter()
+  {
+    return null;
   }
 
   /**

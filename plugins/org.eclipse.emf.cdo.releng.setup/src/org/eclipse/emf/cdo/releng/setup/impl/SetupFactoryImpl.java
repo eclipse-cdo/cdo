@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
+import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.JRETask;
 import org.eclipse.emf.cdo.releng.setup.KeyBindingContext;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueryTask;
@@ -127,6 +129,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     switch (eClass.getClassifierID())
     {
+    case SetupPackage.META_INDEX:
+      return createMetaIndex();
+    case SetupPackage.INDEX:
+      return createIndex();
     case SetupPackage.ECLIPSE:
       return createEclipse();
     case SetupPackage.CONFIGURATION:
@@ -280,6 +286,28 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MetaIndex createMetaIndex()
+  {
+    MetaIndexImpl metaIndex = new MetaIndexImpl();
+    return metaIndex;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Index createIndex()
+  {
+    IndexImpl index = new IndexImpl();
+    return index;
   }
 
   /**

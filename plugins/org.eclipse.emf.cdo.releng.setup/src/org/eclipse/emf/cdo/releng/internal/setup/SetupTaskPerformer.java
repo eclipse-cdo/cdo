@@ -314,13 +314,21 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         for (Iterator<SetupTask> it = triggeredSetupTasks.iterator(); it.hasNext();)
         {
           SetupTask setupTask = it.next();
-          if (setupTask.isNeeded(this))
+
+          try
           {
-            neededSetupTasks.add(setupTask);
+            if (setupTask.isNeeded(this))
+            {
+              neededSetupTasks.add(setupTask);
+            }
+            else
+            {
+              setupTask.dispose();
+            }
           }
-          else
+          catch (NoClassDefFoundError ex)
           {
-            setupTask.dispose();
+            // Don't perform tasks that can't load their enabling dependencies
           }
         }
       }
@@ -854,8 +862,16 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
         task(neededTask);
         log("Performing setup task " + getLabel(neededTask));
-        neededTask.perform(this);
-        neededTask.dispose();
+
+        try
+        {
+          neededTask.perform(this);
+          neededTask.dispose();
+        }
+        catch (NoClassDefFoundError ex)
+        {
+          log(ex);
+        }
       }
     }
     finally

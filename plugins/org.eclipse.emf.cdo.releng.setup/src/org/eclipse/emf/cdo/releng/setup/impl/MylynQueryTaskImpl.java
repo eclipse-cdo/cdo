@@ -404,7 +404,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       String queryURL = getQueryURL(repositoryURL, relativeURL);
 
       org.eclipse.mylyn.internal.tasks.core.TaskList taskList = //
-      org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
+          org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
 
       org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query = lookupQuery(taskList, summary);
       return query == null || !ObjectUtil.equals(query.getUrl(), queryURL);
@@ -412,11 +412,11 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
 
     public static void perform(SetupTaskContext context, String connectorKind, String summary, String repositoryURL,
         String relativeURL) throws Exception
-    {
+        {
       String queryURL = getQueryURL(repositoryURL, relativeURL);
 
       org.eclipse.mylyn.internal.tasks.core.TaskList taskList = //
-      org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
+          org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin.getTaskList();
 
       org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query = lookupQuery(taskList, summary);
       if (query == null)
@@ -435,17 +435,11 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
         query.setRepositoryUrl(repositoryURL);
         query.setUrl(queryURL);
       }
-
-      // AbstractRepositoryConnector connector = TasksUi.getRepositoryManager().getRepositoryConnector(connectorKind);
-      // if (connector != null)
-      // {
-      // org.eclipse.mylyn.internal.tasks.ui.util.TasksUiInternal.synchronizeQuery(connector, query, null, true);
-      // }
-    }
+        }
 
     private static org.eclipse.mylyn.internal.tasks.core.RepositoryQuery lookupQuery(
         org.eclipse.mylyn.internal.tasks.core.TaskList taskList, String summary) throws Exception
-    {
+        {
       for (org.eclipse.mylyn.internal.tasks.core.RepositoryQuery query : taskList.getQueries())
       {
         if (ObjectUtil.equals(query.getSummary(), summary))
@@ -455,7 +449,7 @@ public class MylynQueryTaskImpl extends SetupTaskImpl implements MylynQueryTask
       }
 
       return null;
-    }
+        }
 
     private static String getQueryURL(String repositoryURL, String relativeURL)
     {

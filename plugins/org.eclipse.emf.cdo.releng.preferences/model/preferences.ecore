@@ -44,6 +44,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PreferenceNode"
         eOpposite="#//PreferenceNode/properties"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//EscapedString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nonDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="EscapedString" instanceClassName="java.lang.String"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>

@@ -413,13 +413,22 @@ public interface PreferencesPackage extends EPackage
   int PROPERTY__VALUE = PREFERENCE_ITEM_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Non Default</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY__NON_DEFAULT = PREFERENCE_ITEM_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Property</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROPERTY_FEATURE_COUNT = PREFERENCE_ITEM_FEATURE_COUNT + 2;
+  int PROPERTY_FEATURE_COUNT = PREFERENCE_ITEM_FEATURE_COUNT + 3;
 
   /**
    * The operation id for the '<em>Get Parent</em>' operation.
@@ -691,6 +700,17 @@ public interface PreferencesPackage extends EPackage
   EAttribute getProperty_Value();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.preferences.Property#isNonDefault <em>Non Default</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Non Default</em>'.
+   * @see org.eclipse.emf.cdo.releng.preferences.Property#isNonDefault()
+   * @see #getProperty()
+   * @generated
+   */
+  EAttribute getProperty_NonDefault();
+
+  /**
    * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.preferences.Property#getAncestor() <em>Get Ancestor</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -919,6 +939,14 @@ public interface PreferencesPackage extends EPackage
      * @generated
      */
     EAttribute PROPERTY__VALUE = eINSTANCE.getProperty_Value();
+
+    /**
+     * The meta object literal for the '<em><b>Non Default</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PROPERTY__NON_DEFAULT = eINSTANCE.getProperty_NonDefault();
 
     /**
      * The meta object literal for the '<em><b>Get Ancestor</b></em>' operation.

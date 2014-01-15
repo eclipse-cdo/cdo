@@ -62,6 +62,7 @@ public class PropertyItemProvider extends PreferenceItemItemProvider implements 
       super.getPropertyDescriptors(object);
 
       addValuePropertyDescriptor(object);
+      addNonDefaultPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -80,6 +81,22 @@ public class PropertyItemProvider extends PreferenceItemItemProvider implements 
         getString("_UI_PropertyDescriptor_description", "_UI_Property_value_feature", "_UI_Property_type"),
         PreferencesPackage.Literals.PROPERTY__VALUE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Non Default feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addNonDefaultPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Property_nonDefault_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Property_nonDefault_feature", "_UI_Property_type"),
+        PreferencesPackage.Literals.PROPERTY__NON_DEFAULT, false, false, false,
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -134,6 +151,7 @@ public class PropertyItemProvider extends PreferenceItemItemProvider implements 
     switch (notification.getFeatureID(Property.class))
     {
     case PreferencesPackage.PROPERTY__VALUE:
+    case PreferencesPackage.PROPERTY__NON_DEFAULT:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

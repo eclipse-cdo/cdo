@@ -34,6 +34,7 @@ import java.lang.reflect.InvocationTargetException;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.impl.PropertyImpl#isNonDefault <em>Non Default</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,6 +61,16 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
    * @ordered
    */
   protected String value = VALUE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isNonDefault() <em>Non Default</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNonDefault()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NON_DEFAULT_EDEFAULT = false;
 
   /**
    * <!-- begin-user-doc -->
@@ -174,6 +185,24 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  public boolean isNonDefault()
+  {
+    Property ancestor = getAncestor();
+    if (ancestor != null)
+    {
+      String ancestorValue = ancestor.getValue();
+      String value = getValue();
+      return value == null ? ancestorValue == null : value.equals(ancestorValue);
+    }
+
+    return false;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   @Override
   public Property getAncestor()
   {
@@ -269,6 +298,8 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
       return getParent();
     case PreferencesPackage.PROPERTY__VALUE:
       return getValue();
+    case PreferencesPackage.PROPERTY__NON_DEFAULT:
+      return isNonDefault();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -327,6 +358,8 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
       return getParent() != null;
     case PreferencesPackage.PROPERTY__VALUE:
       return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+    case PreferencesPackage.PROPERTY__NON_DEFAULT:
+      return isNonDefault() != NON_DEFAULT_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }

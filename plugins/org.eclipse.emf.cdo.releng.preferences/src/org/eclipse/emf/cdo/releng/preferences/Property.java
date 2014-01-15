@@ -20,6 +20,7 @@ package org.eclipse.emf.cdo.releng.preferences;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.Property#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.preferences.Property#getValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.preferences.Property#isNonDefault <em>Non Default</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,6 +83,21 @@ public interface Property extends PreferenceItem
    * @generated
    */
   void setValue(String value);
+
+  /**
+   * Returns the value of the '<em><b>Non Default</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Non Default</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Non Default</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.preferences.PreferencesPackage#getProperty_NonDefault()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  boolean isNonDefault();
 
   /**
    * <!-- begin-user-doc -->

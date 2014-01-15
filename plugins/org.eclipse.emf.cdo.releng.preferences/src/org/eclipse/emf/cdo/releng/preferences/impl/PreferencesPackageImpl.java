@@ -96,7 +96,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link PreferencesPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -348,6 +348,16 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getProperty_NonDefault()
+  {
+    return (EAttribute)propertyEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EOperation getProperty__GetAncestor()
   {
     return propertyEClass.getEOperations().get(0);
@@ -429,6 +439,7 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
     propertyEClass = createEClass(PROPERTY);
     createEReference(propertyEClass, PROPERTY__PARENT);
     createEAttribute(propertyEClass, PROPERTY__VALUE);
+    createEAttribute(propertyEClass, PROPERTY__NON_DEFAULT);
     createEOperation(propertyEClass, PROPERTY___GET_ANCESTOR);
 
     // Create data types
@@ -531,6 +542,8 @@ public class PreferencesPackageImpl extends EPackageImpl implements PreferencesP
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProperty_Value(), getEscapedString(), "value", null, 0, 1, Property.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProperty_NonDefault(), ecorePackage.getEBoolean(), "nonDefault", null, 0, 1, Property.class,
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEOperation(getProperty__GetAncestor(), getProperty(), "getAncestor", 0, 1, IS_UNIQUE, IS_ORDERED);
 

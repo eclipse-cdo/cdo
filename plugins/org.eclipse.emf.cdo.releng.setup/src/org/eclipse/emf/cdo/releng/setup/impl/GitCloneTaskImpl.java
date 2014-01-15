@@ -907,6 +907,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       super(GitCloneTaskImpl.this);
       setLabel((used ? "Used" : "Unused") + " Git clones");
       setDescription("Creates tasks for the " + StringUtil.uncap(getLabel()) + ".");
+      this.used = used;
     }
 
     @SuppressWarnings("restriction")
@@ -982,7 +983,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       StoredConfig config = repository.getConfig();
       RemoteConfig remoteConfig = getRemoteConfig(config);
       String remoteURI = getRemoteURI(remoteConfig);
-      String userID = null;
+      String userID = ANONYMOUS;
 
       URI uri = URI.createURI(remoteURI);
       if (uri.userInfo() != null)

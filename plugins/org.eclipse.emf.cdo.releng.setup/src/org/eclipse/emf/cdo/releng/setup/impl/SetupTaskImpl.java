@@ -10,19 +10,25 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
+
+import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -33,11 +39,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -627,6 +636,104 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
   public MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception
   {
     return null;
+  }
+
+  public List<Sniffer> getSniffers()
+  {
+    return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class BasicSniffer implements Sniffer
+  {
+    private Object icon;
+
+    private String label;
+
+    private String description;
+
+    public BasicSniffer()
+    {
+    }
+
+    public BasicSniffer(Object icon, String label, String description)
+    {
+      this.icon = icon;
+      this.label = label;
+      this.description = description;
+    }
+
+    public BasicSniffer(EObject object)
+    {
+      ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
+      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
+
+      icon = labelProvider.getImage(object);
+      label = labelProvider.getText(object);
+    }
+
+    public Object getIcon()
+    {
+      return icon;
+    }
+
+    public void setIcon(Object icon)
+    {
+      this.icon = icon;
+    }
+
+    public String getLabel()
+    {
+      return label;
+    }
+
+    public void setLabel(String label)
+    {
+      this.label = label;
+    }
+
+    public String getDescription()
+    {
+      return description;
+    }
+
+    public void setDescription(String description)
+    {
+      this.description = description;
+    }
+
+    public int getWork()
+    {
+      return 1;
+    }
+
+    @Override
+    public String toString()
+    {
+      return label;
+    }
+
+    public static CompoundSetupTask getCompound(SetupTaskContainer container, String name)
+    {
+      EList<SetupTask> children = container.getSetupTasks();
+      for (SetupTask setupTask : children)
+      {
+        if (setupTask instanceof CompoundSetupTask)
+        {
+          CompoundSetupTask compound = (CompoundSetupTask)setupTask;
+          if (ObjectUtil.equals(compound.getName(), name))
+          {
+            return compound;
+          }
+        }
+      }
+
+      CompoundSetupTask compound = SetupFactory.eINSTANCE.createCompoundSetupTask(name);
+      children.add(compound);
+      return compound;
+    }
   }
 
   /**

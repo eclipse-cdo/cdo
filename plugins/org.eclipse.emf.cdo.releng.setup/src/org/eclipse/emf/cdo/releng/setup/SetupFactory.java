@@ -388,6 +388,8 @@ public interface SetupFactory extends EFactory
    */
   CompoundSetupTask createCompoundSetupTask();
 
+  CompoundSetupTask createCompoundSetupTask(String name);
+
   /**
    * Returns a new object of class '<em>Buckminster Import Task</em>'.
    * <!-- begin-user-doc -->

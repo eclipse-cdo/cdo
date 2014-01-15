@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -223,6 +224,8 @@ public interface SetupTask extends EObject
 
   MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception;
 
+  public List<Sniffer> getSniffers();
+
   /**
    * @author Eike Stepper
    */
@@ -237,6 +240,22 @@ public interface SetupTask extends EObject
   public interface MirrorRunnable
   {
     public void run(IProgressMonitor monitor) throws Exception;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Sniffer
+  {
+    public Object getIcon();
+
+    public String getLabel();
+
+    public String getDescription();
+
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception;
+
+    public int getWork();
   }
 
 } // SetupTask

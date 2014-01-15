@@ -10,14 +10,21 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.PreferencesFactory;
+import org.eclipse.emf.cdo.releng.preferences.Property;
 import org.eclipse.emf.cdo.releng.preferences.util.PreferencesUtil;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
@@ -26,8 +33,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -317,6 +327,99 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
         preferenceProperty.getNode().flush();
       }
     });
+  }
+
+  @Override
+  public List<Sniffer> getSniffers()
+  {
+    List<Sniffer> sniffers = new ArrayList<Sniffer>();
+    sniffers.add(new PreferenceSniffer("configuration"));
+    sniffers.add(new PreferenceSniffer("instance"));
+    sniffers.add(new PreferenceSniffer("project")
+    {
+      @Override
+      public int getWork()
+      {
+        return 100;
+      }
+    });
+
+    return sniffers;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class PreferenceSniffer extends BasicSniffer
+  {
+    private String scope;
+
+    public PreferenceSniffer(String scope)
+    {
+      super(EclipsePreferenceTaskImpl.this);
+      setLabel(StringUtil.cap(scope) + "-scoped preferences");
+      setDescription("Creates tasks for the non-default Eclipse preferences in the " + scope + " scope.");
+      this.scope = scope;
+    }
+
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+    {
+      try
+      {
+        PreferenceNode node = PreferencesUtil.getRootPreferenceNode().getNode(scope);
+        if (node != null)
+        {
+          List<Property> properties = new ArrayList<Property>();
+          collectNonDefaultProperties(node, properties);
+
+          if (!properties.isEmpty())
+          {
+            monitor.beginTask("", properties.size());
+
+            CompoundSetupTask compound = getCompound(container, getLabel());
+            for (Property property : properties)
+            {
+              addTaskForProperty(compound, property);
+              monitor.worked(1);
+            }
+          }
+        }
+      }
+      finally
+      {
+        monitor.done();
+      }
+    }
+
+    private void collectNonDefaultProperties(PreferenceNode node, List<Property> properties)
+    {
+      for (PreferenceNode child : node.getChildren())
+      {
+        collectNonDefaultProperties(child, properties);
+      }
+
+      for (Property property : node.getProperties())
+      {
+        if (property.isNonDefault())
+        {
+          properties.add(property);
+        }
+      }
+    }
+
+    private void addTaskForProperty(CompoundSetupTask compound, Property property)
+    {
+      URI path = property.getAbsolutePath();
+      for (String segment : path.trimSegments(1).segments())
+      {
+        compound = getCompound(compound, segment);
+      }
+
+      EclipsePreferenceTask task = SetupFactory.eINSTANCE.createEclipsePreferenceTask();
+      task.setKey(PreferencesFactory.eINSTANCE.convertURI(path));
+      task.setValue(SetupUtil.escape(property.getValue()));
+      compound.getSetupTasks().add(task);
+    }
   }
 
 } // EclipsePreferenceTaskImpl

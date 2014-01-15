@@ -428,8 +428,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
     List<File> additionalResources = analyzeAdditionalResources(componentLocations);
     if (additionalResources.size() > 1)
     {
-      CompoundSetupTask compound = SetupFactory.eINSTANCE.createCompoundSetupTask();
-      compound.setName("Possible Materializations");
+      CompoundSetupTask compound = SetupFactory.eINSTANCE.createCompoundSetupTask("Possible Materializations");
       compound
           .setDocumentation("There are several possible materializations. By default all but the last one are disabled.");
 

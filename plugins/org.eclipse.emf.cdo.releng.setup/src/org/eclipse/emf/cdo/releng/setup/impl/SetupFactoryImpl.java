@@ -868,6 +868,13 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
     return compoundSetupTask;
   }
 
+  public CompoundSetupTask createCompoundSetupTask(String name)
+  {
+    CompoundSetupTask compoundSetupTask = createCompoundSetupTask();
+    compoundSetupTask.setName(name);
+    return compoundSetupTask;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

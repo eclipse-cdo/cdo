@@ -183,6 +183,8 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
 
   private PreferenceRecorderToolbarAction recordPreferencesAction = new PreferenceRecorderToolbarAction(true);
 
+  private SniffAction sniffAction = new SniffAction(true);
+
   private CommandTableAction commandTableAction = new CommandTableAction();
 
   private EditorTableAction editorTableAction = new EditorTableAction();
@@ -216,6 +218,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
   {
     toolBarManager.add(new Separator("setup-settings"));
     toolBarManager.add(recordPreferencesAction);
+    toolBarManager.add(sniffAction);
     toolBarManager.add(commandTableAction);
     toolBarManager.add(editorTableAction);
     toolBarManager.add(testInstallAction);
@@ -361,6 +364,7 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
   {
     selectionChangedGen(event);
     recordPreferencesAction.selectionChanged(event);
+    sniffAction.selectionChanged(event);
     testInstallAction.selectionChanged(event);
   }
 
@@ -599,6 +603,63 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
   /**
    * @author Eike Stepper
    */
+  private class TestInstallAction extends Action
+  {
+    private Project project;
+
+    public TestInstallAction()
+    {
+      super("Test Install", AS_PUSH_BUTTON);
+      setImageDescriptor(Activator.imageDescriptorFromPlugin(SetupEditorPlugin.PLUGIN_ID, "icons/run.gif"));
+      setToolTipText("Launch the installer with the current project");
+    }
+
+    public void selectionChanged(SelectionChangedEvent event)
+    {
+      ISelection selection = event.getSelection();
+      if (selection instanceof IStructuredSelection)
+      {
+        IStructuredSelection structuredSelection = (IStructuredSelection)selection;
+        if (structuredSelection.size() == 1)
+        {
+          Object element = structuredSelection.getFirstElement();
+          if (element instanceof EObject)
+          {
+            project = getProject((EObject)element);
+            if (project != null)
+            {
+              setEnabled(true);
+              return;
+            }
+          }
+        }
+      }
+
+      project = null;
+      setEnabled(false);
+    }
+
+    @Override
+    public void run()
+    {
+      InstallerDialog dialog = new InstallerDialog(activeEditorPart.getSite().getShell(), project);
+      dialog.open();
+    }
+
+    private Project getProject(EObject object)
+    {
+      while (object != null && !(object instanceof Project))
+      {
+        object = object.eContainer();
+      }
+
+      return (Project)object;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class CommandTableAction extends AbstractTableAction
   {
     public CommandTableAction()
@@ -751,63 +812,6 @@ public class SetupActionBarContributor extends EditingDomainActionBarContributor
         return "UTF-8 is unsupported";
       }
 
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private class TestInstallAction extends Action
-  {
-    private Project project;
-
-    public TestInstallAction()
-    {
-      super("Test Install", AS_PUSH_BUTTON);
-      setImageDescriptor(Activator.imageDescriptorFromPlugin(SetupEditorPlugin.PLUGIN_ID, "icons/run.gif"));
-      setToolTipText("Launch the installer with the current project");
-    }
-
-    public void selectionChanged(SelectionChangedEvent event)
-    {
-      ISelection selection = event.getSelection();
-      if (selection instanceof IStructuredSelection)
-      {
-        IStructuredSelection structuredSelection = (IStructuredSelection)selection;
-        if (structuredSelection.size() == 1)
-        {
-          Object element = structuredSelection.getFirstElement();
-          if (element instanceof EObject)
-          {
-            project = getProject((EObject)element);
-            if (project != null)
-            {
-              setEnabled(true);
-              return;
-            }
-          }
-        }
-      }
-
-      project = null;
-      setEnabled(false);
-    }
-
-    @Override
-    public void run()
-    {
-      InstallerDialog dialog = new InstallerDialog(activeEditorPart.getSite().getShell(), project);
-      dialog.open();
-    }
-
-    private Project getProject(EObject object)
-    {
-      while (object != null && !(object instanceof Project))
-      {
-        object = object.eContainer();
-      }
-
-      return (Project)object;
     }
   }
 }

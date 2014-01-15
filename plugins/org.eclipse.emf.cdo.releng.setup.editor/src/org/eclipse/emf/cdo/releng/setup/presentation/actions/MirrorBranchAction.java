@@ -135,8 +135,7 @@ public class MirrorBranchAction extends AbstractSetupAction
         }
       }
 
-      CompoundSetupTask container = SetupFactory.eINSTANCE.createCompoundSetupTask();
-      container.setName(name);
+      CompoundSetupTask container = SetupFactory.eINSTANCE.createCompoundSetupTask(name);
       container.getRestrictions().add(branch);
 
       tasks.add(container);

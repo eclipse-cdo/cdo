@@ -21,50 +21,30 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
-import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
-import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.edit.command.ChangeCommand;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class PreferenceRecorderAction extends Action
+public class PreferenceRecorderAction extends AbstractContainerAction
 {
   private final boolean withDialog;
-
-  private SetupTaskContainer container;
 
   private PreferenceNode rootPreferenceNode;
 
   private EContentAdapter preferenceAdapter;
-
-  private ISelectionProvider selectionProvider;
 
   public PreferenceRecorderAction(boolean withDialog)
   {
@@ -81,74 +61,37 @@ public class PreferenceRecorderAction extends Action
     }
   }
 
-  public void selectionChanged(SelectionChangedEvent event)
+  @Override
+  protected boolean runInit(SetupTaskContainer container)
   {
-    if (!isChecked())
+    preferenceAdapter = createPreferenceAdapter();
+    rootPreferenceNode = PreferencesUtil.getRootPreferenceNode(true);
+    rootPreferenceNode.eAdapters().add(preferenceAdapter);
+    return true;
+  }
+
+  @Override
+  protected void runModify(SetupTaskContainer container)
+  {
+    if (withDialog)
     {
-      selectionProvider = event.getSelectionProvider();
-
-      ISelection selection = event.getSelection();
-      if (selection instanceof IStructuredSelection)
-      {
-        IStructuredSelection structuredSelection = (IStructuredSelection)selection;
-        if (structuredSelection.size() == 1)
-        {
-          Object element = structuredSelection.getFirstElement();
-          if (element instanceof EObject)
-          {
-            container = getSetupTaskContainer((EObject)element);
-            if (container != null)
-            {
-              setEnabled(true);
-              return;
-            }
-          }
-        }
-      }
-
-      container = null;
-      setEnabled(false);
+      PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(null, null, null, null);
+      dialog.open();
     }
   }
 
   @Override
-  public void run()
+  protected void runDone(SetupTaskContainer container)
   {
-    if (isChecked())
-    {
-      preferenceAdapter = createPreferenceAdapter();
-      rootPreferenceNode = PreferencesUtil.getRootPreferenceNode(true);
-      rootPreferenceNode.eAdapters().add(preferenceAdapter);
-
-      if (withDialog)
-      {
-        ChangeCommand command = new ChangeCommand(container.eResource())
-        {
-          @Override
-          protected void doExecute()
-          {
-            PreferenceDialog dialog = org.eclipse.ui.dialogs.PreferencesUtil.createPreferenceDialogOn(null, null, null,
-                null);
-            dialog.open();
-          }
-        };
-
-        EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(container);
-        CommandStack commandStack = editingDomain.getCommandStack();
-        commandStack.execute(command);
-      }
-
-      rootPreferenceNode.eAdapters().remove(preferenceAdapter);
-      rootPreferenceNode = null;
-      preferenceAdapter = null;
-      setChecked(false);
-    }
+    rootPreferenceNode.eAdapters().remove(preferenceAdapter);
+    rootPreferenceNode = null;
+    preferenceAdapter = null;
   }
 
   protected void updatePreference(URI key, String value)
   {
     String path = PreferencesFactory.eINSTANCE.convertURI(key);
-    for (TreeIterator<EObject> it = container.eResource().getAllContents(); it.hasNext();)
+    for (TreeIterator<EObject> it = getContainer().eResource().getAllContents(); it.hasNext();)
     {
       EObject object = it.next();
       if (object instanceof EclipsePreferenceTask)
@@ -173,49 +116,9 @@ public class PreferenceRecorderAction extends Action
     expandItem(task);
   }
 
-  private void expandItem(final EObject object)
-  {
-    if (selectionProvider instanceof IViewerProvider)
-    {
-      IViewerProvider viewerProvider = (IViewerProvider)selectionProvider;
-      final Viewer viewer = viewerProvider.getViewer();
-      if (viewer instanceof TreeViewer)
-      {
-        UIUtil.getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            TreeViewer treeViewer = (TreeViewer)viewer;
-            expand(treeViewer, object);
-
-            IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
-
-            @SuppressWarnings("unchecked")
-            List<Object> list = selection.toList();
-            list = new ArrayList<Object>(list);
-            list.add(object);
-
-            treeViewer.setSelection(new StructuredSelection(list));
-          }
-
-          private void expand(TreeViewer treeViewer, EObject object)
-          {
-            treeViewer.setExpandedState(object, true);
-
-            EObject eContainer = object.eContainer();
-            if (eContainer != null)
-            {
-              expand(treeViewer, eContainer);
-            }
-          }
-        });
-      }
-    }
-  }
-
   private CompoundSetupTask getCompoundTask(String pluginID)
   {
-    EList<SetupTask> setupTasks = container.getSetupTasks();
+    EList<SetupTask> setupTasks = getContainer().getSetupTasks();
     for (Iterator<SetupTask> it = setupTasks.iterator(); it.hasNext();)
     {
       SetupTask setupTask = it.next();
@@ -229,20 +132,10 @@ public class PreferenceRecorderAction extends Action
       }
     }
 
-    CompoundSetupTask compoundTask = SetupFactory.eINSTANCE.createCompoundSetupTask();
+    CompoundSetupTask compoundTask = SetupFactory.eINSTANCE.createCompoundSetupTask(pluginID);
     compoundTask.setName(pluginID);
     setupTasks.add(compoundTask);
     return compoundTask;
-  }
-
-  private SetupTaskContainer getSetupTaskContainer(EObject object)
-  {
-    while (object != null && !(object instanceof SetupTaskContainer))
-    {
-      object = object.eContainer();
-    }
-
-    return (SetupTaskContainer)object;
   }
 
   private EContentAdapter createPreferenceAdapter()

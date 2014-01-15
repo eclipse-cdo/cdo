@@ -565,7 +565,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
 
         for (Map.Entry<String, String> entry : repositoryQuery.getAttributes().entrySet())
         {
-          query.getAttributes().add(entry);
+          query.getAttributes().put(entry.getKey(), entry.getValue());
         }
       }
     }

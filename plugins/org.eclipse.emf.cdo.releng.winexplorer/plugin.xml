@@ -18,7 +18,7 @@
       <objectContribution
             adaptable="true"
             id="org.eclipse.emf.cdo.releng.winexplorer.contribution"
-            objectClass="org.eclipse.core.resources.IResource">
+            objectClass="java.lang.Object">
          <action
                class="org.eclipse.emf.cdo.releng.winexplorer.PromptAction"
                enablesFor="1"
@@ -29,21 +29,6 @@
                state="true"
                style="push"
                tooltip="Open Command Prompt"/>
-         <action
-               class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
-               enablesFor="1"
-               icon="icons/explorer.gif"
-               id="org.eclipse.emf.cdo.releng.ExplorerAction"
-               label="Windows Explorer"
-               menubarPath="additions"
-               state="true"
-               style="push"
-               tooltip="Open Windows Explorer"/>
-      </objectContribution>
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.cdo.releng.winexplorer.contribution2"
-            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
          <action
                class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
                enablesFor="1"

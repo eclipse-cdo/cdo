@@ -55,6 +55,8 @@ import java.util.regex.Pattern;
  */
 public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> implements SetupTaskContext
 {
+  private static final String[] FEATURE_TO_UPDATE = { "org.eclipse.emf.cdo.releng.setup.feature.group" };
+
   private static boolean NEEDS_PATH_SEPARATOR_CONVERSION = File.separatorChar == '\\';
 
   private static final Pattern STRING_EXPANSION_PATTERN = Pattern.compile("\\$(\\{([^${}|]+)(\\|([^}]+))?}|\\$)");
@@ -115,7 +117,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
         if (setupResource.getToolVersion() > SetupTaskMigrator.TOOL_VERSION)
         {
           Shell shell = UIUtil.getShell();
-          if (UpdateUtil.update(shell, true, false, null, null))
+          if (UpdateUtil.update(shell, FEATURE_TO_UPDATE, true, false, null, null))
           {
             throw new UpdatingException();
           }

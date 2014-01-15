@@ -630,7 +630,7 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
     bundlePoolTPField
-        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
+    .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
     bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
     bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
     bundlePoolTPField.setLinkField(installFolderField);
@@ -742,8 +742,8 @@ public class InstallerDialog extends AbstractSetupDialog
       }
     };
 
-    return UpdateUtil
-        .update(InstallerDialog.this.getShell(), needsEarlyConfirmation, true, postInstall, restartHandler);
+    return UpdateUtil.update(InstallerDialog.this.getShell(), null, needsEarlyConfirmation, true, postInstall,
+        restartHandler);
   }
 
   private void initUpdateSearch()
@@ -794,7 +794,7 @@ public class InstallerDialog extends AbstractSetupDialog
 
           try
           {
-            IStatus status = UpdateUtil.checkForUpdates(agent, true, null, SubMonitor.convert(null));
+            IStatus status = UpdateUtil.checkForUpdates(agent, null, true, null, SubMonitor.convert(null));
             if (status == UpdateUtil.UPDATE_FOUND_STATUS)
             {
               updateSearchState = UpdateSearchState.FOUND;
@@ -867,7 +867,7 @@ public class InstallerDialog extends AbstractSetupDialog
     {
       ProvisioningSession session = new ProvisioningSession(agent);
       Pair<String, List<IInstallableUnit>> profileAndIUs = UpdateUtil.getInstalledUnits(session, UpdateUtil.PRODUCT_ID);
-      if ("SelfHostingProfile".equals(profileAndIUs.getElement1()))
+      if (UpdateUtil.SELF_HOSTING_PROFILE.equals(profileAndIUs.getElement1()))
       {
         return "Self Hosting";
       }
@@ -1571,12 +1571,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-        {
+            {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-        });
+            });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 

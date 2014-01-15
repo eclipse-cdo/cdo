@@ -55,6 +55,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class UpdateUtil extends Plugin
 {
+  public static final String SELF_HOSTING_PROFILE = "SelfHostingProfile";
+
   public static final IStatus UPDATE_FOUND_STATUS = new Status(IStatus.OK, Activator.PLUGIN_ID, "Updates found");
 
   public static final String PRODUCT_ID = "org.eclipse.emf.cdo.releng.setup.installer.product";
@@ -65,8 +67,8 @@ public final class UpdateUtil extends Plugin
   {
   }
 
-  public static boolean update(final Shell shell, final boolean needsEarlyConfirmation, final boolean async,
-      final Runnable postInstall, final Runnable restartHandler)
+  public static boolean update(final Shell shell, final String[] iuPrefixes, final boolean needsEarlyConfirmation,
+      final boolean async, final Runnable postInstall, final Runnable restartHandler)
   {
     final Display display = shell.getDisplay();
 
@@ -107,7 +109,7 @@ public final class UpdateUtil extends Plugin
             SubMonitor sub = SubMonitor.convert(monitor, needsEarlyConfirmation ? "Updating..."
                 : "Checking for updates...", 1000);
 
-            IStatus updateStatus = checkForUpdates(agent, false, postInstall, sub);
+            IStatus updateStatus = checkForUpdates(agent, iuPrefixes, false, postInstall, sub);
 
             if (updateStatus.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE)
             {
@@ -178,8 +180,8 @@ public final class UpdateUtil extends Plugin
     return true;
   }
 
-  public static IStatus checkForUpdates(IProvisioningAgent agent, boolean resolveOnly, Runnable postInstall,
-      SubMonitor sub)
+  public static IStatus checkForUpdates(IProvisioningAgent agent, String[] iuPrefixes, boolean resolveOnly,
+      Runnable postInstall, SubMonitor sub)
   {
     try
     {
@@ -192,8 +194,13 @@ public final class UpdateUtil extends Plugin
         return ex.getStatus();
       }
 
+      if (iuPrefixes == null)
+      {
+        iuPrefixes = UpdateUtil.PRODUCT_PREFIXES;
+      }
+
       ProvisioningSession session = new ProvisioningSession(agent);
-      List<IInstallableUnit> ius = getInstalledUnits(session, UpdateUtil.PRODUCT_PREFIXES).getElement2();
+      List<IInstallableUnit> ius = getInstalledUnits(session, iuPrefixes).getElement2();
 
       UpdateOperation operation = new UpdateOperation(session, ius);
       IStatus status = operation.resolveModal(sub.newChild(300));
@@ -259,7 +266,7 @@ public final class UpdateUtil extends Plugin
     if (profile == null)
     {
       List<IInstallableUnit> none = Collections.emptyList();
-      return Pair.create("SelfHostingProfile", none);
+      return Pair.create(SELF_HOSTING_PROFILE, none);
     }
 
     IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);

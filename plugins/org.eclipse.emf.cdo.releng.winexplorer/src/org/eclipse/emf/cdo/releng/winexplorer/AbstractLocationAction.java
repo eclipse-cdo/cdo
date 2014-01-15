@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.winexplorer;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -148,11 +149,21 @@ public abstract class AbstractLocationAction implements IObjectActionDelegate
    */
   private static final class GitHelper
   {
+    @SuppressWarnings("restriction")
     public static File getWorkTree(Object element)
     {
       if (element instanceof Repository)
       {
         return ((Repository)element).getWorkTree();
+      }
+
+      if (element instanceof org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode)
+      {
+        IPath path = ((org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode<?>)element).getPath();
+        if (path != null)
+        {
+          return new File(path.toString());
+        }
       }
 
       if (element instanceof IAdaptable)

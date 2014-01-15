@@ -433,7 +433,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return CHECKOUT_BRANCH_EDEFAULT == null ? checkoutBranch != null : !CHECKOUT_BRANCH_EDEFAULT
-          .equals(checkoutBranch);
+      .equals(checkoutBranch);
     }
     return super.eIsSet(featureID);
   }
@@ -566,7 +566,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
     public boolean isNeeded(SetupTaskContext context, String location, String checkoutBranch, String remoteName)
         throws Exception
-    {
+        {
       workDir = new File(location);
       if (!workDir.isDirectory())
       {
@@ -613,11 +613,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
         throw new Exception(ex);
       }
-    }
+        }
 
     public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
         String userID) throws Exception
-    {
+        {
       try
       {
         if (cachedGit == null)
@@ -646,7 +646,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
         throw new Exception(ex);
       }
-    }
+        }
 
     public void dispose()
     {
@@ -672,7 +672,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
     private static Git cloneRepository(SetupTaskContext context, File workDir, String checkoutBranch,
         String remoteName, String remoteURI, String userID) throws Exception
-    {
+        {
       String remote;
 
       URI baseURI = URI.createURI(remoteURI);
@@ -718,11 +718,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       command.setTimeout(10);
       command.setProgressMonitor(new ProgressLogWrapper(context));
       return command.call();
-    }
+        }
 
     private static void configureRepository(SetupTaskContext context, Repository repository, String checkoutBranch,
         String remoteName) throws Exception, IOException
-    {
+        {
       StoredConfig config = repository.getConfig();
 
       boolean changed = false;
@@ -732,11 +732,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       {
         config.save();
       }
-    }
+        }
 
     private static boolean configureLineEndingConversion(SetupTaskContext context, StoredConfig config)
         throws Exception
-    {
+        {
       if (context.getOS().isLineEndingConversionNeeded())
       {
         if (context.isPerforming())
@@ -749,11 +749,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
 
       return false;
-    }
+        }
 
     private static boolean addPushRefSpec(SetupTaskContext context, StoredConfig config, String checkoutBranch,
         String remoteName) throws Exception
-    {
+        {
       String gerritQueue = "refs/for/" + checkoutBranch;
       for (RemoteConfig remoteConfig : RemoteConfig.getAllRemoteConfigs(config))
       {
@@ -779,7 +779,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
 
       return false;
-    }
+        }
 
     private static boolean hasGerritPushRefSpec(List<RefSpec> pushRefSpecs, String gerritQueue)
     {
@@ -796,7 +796,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
     private static void createBranch(SetupTaskContext context, Git git, String checkoutBranch, String remoteName)
         throws Exception
-    {
+        {
       context.log("Creating local branch " + checkoutBranch);
 
       CreateBranchCommand command = git.branchCreate();
@@ -808,7 +808,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       StoredConfig config = git.getRepository().getConfig();
       config.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION, checkoutBranch, ConfigConstants.CONFIG_KEY_REBASE, true);
       config.save();
-    }
+        }
 
     private static void checkout(SetupTaskContext context, Git git, String checkoutBranch) throws Exception
     {
@@ -919,7 +919,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         RepositoryUtil repositoryUtil = org.eclipse.egit.ui.Activator.getDefault().getRepositoryUtil();
         for (String path : repositoryUtil.getConfiguredRepositories())
         {
-          if (used == isUsed(new Path(path)))
+          if (used == isUsed(new Path(path).removeLastSegments(1)))
           {
             Git git = Git.open(new File(path));
             Repository repository = git.getRepository();
@@ -931,10 +931,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         {
           monitor.beginTask("", repositories.size());
 
-          CompoundSetupTask compound = getCompound(container, getLabel());
           for (Repository repository : repositories)
           {
-            addTaskForRepository(compound, repository);
+            addTaskForRepository(container, repository);
             monitor.worked(1);
           }
         }
@@ -978,10 +977,15 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return true;
     }
 
-    private void addTaskForRepository(CompoundSetupTask compound, Repository repository) throws Exception
+    private void addTaskForRepository(SetupTaskContainer container, Repository repository) throws Exception
     {
       StoredConfig config = repository.getConfig();
       RemoteConfig remoteConfig = getRemoteConfig(config);
+      if (remoteConfig == null)
+      {
+        return;
+      }
+
       String remoteURI = getRemoteURI(remoteConfig);
       String userID = ANONYMOUS;
 
@@ -1003,6 +1007,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       task.setRemoteURI(remoteURI);
       task.setUserID(userID);
 
+      CompoundSetupTask compound = getCompound(container, getLabel());
       compound.getSetupTasks().add(task);
     }
 

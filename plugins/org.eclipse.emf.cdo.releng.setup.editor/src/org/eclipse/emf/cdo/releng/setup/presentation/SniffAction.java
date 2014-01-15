@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.presentation.templates.AutomaticProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -33,12 +35,21 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
@@ -100,6 +111,7 @@ public class SniffAction extends AbstractContainerAction
           try
           {
             CompoundSetupTask compound = SetupFactory.eINSTANCE.createCompoundSetupTask("Import from " + new Date());
+            compound.setDisabled(true);
             container.getSetupTasks().add(compound);
 
             for (Sniffer sniffer : sniffers)
@@ -190,7 +202,49 @@ public class SniffAction extends AbstractContainerAction
     @Override
     protected void createUI(Composite parent)
     {
-      viewer = CheckboxTableViewer.newCheckList(parent, SWT.NONE);
+      SashForm sashForm = new SashForm(parent, SWT.VERTICAL | SWT.SMOOTH);
+      sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+      // sashForm.setSashWidth(5);
+
+      GridLayout layout = new GridLayout(1, false);
+      layout.marginWidth = 0;
+      layout.marginHeight = 0;
+      layout.verticalSpacing = 0;
+
+      Composite upper = new Composite(sashForm, SWT.NONE);
+      upper.setLayout(layout);
+
+      viewer = CheckboxTableViewer.newCheckList(upper, SWT.NONE);
+      UIUtil.grabVertical(UIUtil.applyGridData(viewer.getTable()));
+      UIUtil.applyGridData(createSeparator(upper));
+
+      Composite lower = new Composite(sashForm, SWT.NONE);
+      lower.setLayout(new GridLayout(1, false));
+
+      final Label descriptionLabel = new Label(lower, SWT.WRAP);
+      UIUtil.grabVertical(UIUtil.applyGridData(descriptionLabel));
+
+      viewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          Sniffer sniffer = (Sniffer)((IStructuredSelection)event.getSelection()).getFirstElement();
+          if (sniffer != null)
+          {
+            descriptionLabel.setText(StringUtil.safe(sniffer.getDescription()));
+          }
+        }
+      });
+
+      viewer.addCheckStateListener(new ICheckStateListener()
+      {
+        public void checkStateChanged(CheckStateChangedEvent event)
+        {
+          Object element = event.getElement();
+          viewer.setSelection(new StructuredSelection(element));
+        }
+      });
+
       viewer.setContentProvider(new ArrayContentProvider());
       viewer.setLabelProvider(new SnifferLabelProvider());
       viewer.setInput(sniffers);
@@ -210,6 +264,8 @@ public class SniffAction extends AbstractContainerAction
           }
         }
       }
+
+      sashForm.setWeights(new int[] { 3, 1 });
     }
 
     @Override

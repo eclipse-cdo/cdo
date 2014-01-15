@@ -18,8 +18,10 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
@@ -440,15 +442,18 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   private static Set<IInstallableUnit> getInstalledUnits()
   {
     Set<IInstallableUnit> result = new HashSet<IInstallableUnit>();
+
     ProvisioningUI provisioningUI = ProvisioningUI.getDefaultUI();
     ProvisioningSession session = provisioningUI.getSession();
     String profileId = provisioningUI.getProfileId();
     IProfile profile = ProvUI.getProfileRegistry(session).getProfile(profileId);
-    IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
-
-    for (IInstallableUnit installableUnit : queryResult)
+    if (profile != null)
     {
-      result.add(installableUnit);
+      IQueryResult<IInstallableUnit> queryResult = profile.query(QueryUtil.createIUAnyQuery(), null);
+      for (IInstallableUnit installableUnit : queryResult)
+      {
+        result.add(installableUnit);
+      }
     }
 
     return result;
@@ -701,7 +706,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void processLicenses(final SetupTaskContext context, IProvisioningPlan provisioningPlan,
       IProgressMonitor monitor) throws Exception
-  {
+      {
     if (isLicenseConfirmationDisabled())
     {
       return;
@@ -786,7 +791,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         throw exception[0];
       }
     }
-  }
+      }
 
   private ProvisioningContext makeProvisioningContext(ProvisioningSession session, Collection<java.net.URI> repositories)
   {
@@ -931,9 +936,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
               IProgressMonitor monitor)
-          {
+              {
             return delegate.updatesFor(iu, context, monitor);
-          }
+              }
         };
 
         targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
@@ -1059,7 +1064,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
               Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
-              + versionRange);
+                  + versionRange);
           rootsToInstall.add(query);
         }
       }
@@ -1211,7 +1216,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         String contents = DownloadUtil.load(context.getURIConverter(), URI.createFileURI(iniFile.toString()), null);
         Pattern section = Pattern.compile(
             "^(-vmargs)([\n\r]+.*)\\z|^(-[^\\n\\r]*[\\n\\r]*)((?:^[^-][^\\n\\r]*)*[\\n\\r]*)", Pattern.MULTILINE
-                | Pattern.DOTALL);
+            | Pattern.DOTALL);
         Map<String, String> map = new LinkedHashMap<String, String>();
         for (Matcher matcher = section.matcher(contents); matcher.find();)
         {
@@ -1284,7 +1289,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   @Override
   public MirrorRunnable mirror(final MirrorContext context, final File mirrorsDir, boolean includingLocals)
       throws Exception
-  {
+      {
     return new MirrorRunnable()
     {
       public void run(IProgressMonitor monitor) throws Exception
@@ -1371,7 +1376,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       private void initSourceRepos(MirrorApplication app, final MirrorContext context, String targetURL)
           throws URISyntaxException
-      {
+          {
         for (P2Repository p2Repository : getP2Repositories())
         {
           String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
@@ -1382,7 +1387,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           context.addRedirection(sourceURL, targetURL);
         }
-      }
+          }
 
       private void initRootIUs(MirrorApplication app)
       {
@@ -1404,5 +1409,40 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         ReflectUtil.setValue(field, app, rootIUs);
       }
     };
+      }
+
+  @Override
+  public void collectSniffers(List<Sniffer> sniffers)
+  {
+    sniffers.add(new BasicSniffer(P2TaskImpl.this, "Creates a task to install the current software.")
+    {
+      public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+      {
+        Set<IInstallableUnit> installedUnits = getInstalledUnits();
+        Set<String> knownRepositories = getKnownRepositories();
+        if (installedUnits.isEmpty() && knownRepositories.isEmpty())
+        {
+          return;
+        }
+
+        P2Task task = SetupFactory.eINSTANCE.createP2Task();
+        container.getSetupTasks().add(task);
+
+        for (IInstallableUnit installedUnit : installedUnits)
+        {
+          InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
+          installableUnit.setID(installedUnit.getId());
+          task.getInstallableUnits().add(installableUnit);
+        }
+
+        for (String repository : knownRepositories)
+        {
+          P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
+          p2Repository.setURL(repository);
+          task.getP2Repositories().add(p2Repository);
+        }
+      }
+    });
   }
+
 } // InstallTaskImpl

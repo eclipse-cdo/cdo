@@ -653,10 +653,6 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
 
     private String description;
 
-    public BasicSniffer()
-    {
-    }
-
     public BasicSniffer(Object icon, String label, String description)
     {
       this.icon = icon;
@@ -664,13 +660,23 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       this.description = description;
     }
 
-    public BasicSniffer(EObject object)
+    public BasicSniffer(EObject object, String description)
     {
+      this.description = description;
       ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
       IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
-
+    
       icon = labelProvider.getImage(object);
       label = labelProvider.getText(object);
+    }
+
+    public BasicSniffer(EObject object)
+    {
+      this(object, null);
+    }
+
+    public BasicSniffer()
+    {
     }
 
     public Object getIcon()

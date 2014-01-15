@@ -10,13 +10,17 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +28,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
@@ -41,9 +50,12 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.URIish;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -511,6 +523,13 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     };
   }
 
+  @Override
+  public void collectSniffers(List<Sniffer> sniffers)
+  {
+    sniffers.add(new CloneSniffer(true));
+    sniffers.add(new CloneSniffer(false));
+  }
+
   /**
    * @author Ed Merks
    */
@@ -873,6 +892,157 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         this.totalWork = totalWork;
         work = 0;
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class CloneSniffer extends BasicSniffer
+  {
+    private boolean used;
+
+    public CloneSniffer(boolean used)
+    {
+      super(GitCloneTaskImpl.this);
+      setLabel((used ? "Used" : "Unused") + " Git clones");
+      setDescription("Creates tasks for the " + StringUtil.uncap(getLabel()) + ".");
+    }
+
+    @SuppressWarnings("restriction")
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+    {
+      try
+      {
+        List<Repository> repositories = new ArrayList<Repository>();
+        RepositoryUtil repositoryUtil = org.eclipse.egit.ui.Activator.getDefault().getRepositoryUtil();
+        for (String path : repositoryUtil.getConfiguredRepositories())
+        {
+          if (used == isUsed(new Path(path)))
+          {
+            Git git = Git.open(new File(path));
+            Repository repository = git.getRepository();
+            repositories.add(repository);
+          }
+        }
+
+        if (!repositories.isEmpty())
+        {
+          monitor.beginTask("", repositories.size());
+
+          CompoundSetupTask compound = getCompound(container, getLabel());
+          for (Repository repository : repositories)
+          {
+            addTaskForRepository(compound, repository);
+            monitor.worked(1);
+          }
+        }
+      }
+      finally
+      {
+        monitor.done();
+      }
+    }
+
+    private boolean isUsed(IPath path)
+    {
+      for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects())
+      {
+        if (contains(path, project.getLocation()))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    private boolean contains(IPath container, IPath contained)
+    {
+      String[] containerSegments = container.segments();
+      String[] containedSegments = contained.segments();
+      if (containedSegments.length < containerSegments.length)
+      {
+        return false;
+      }
+
+      for (int i = 0; i < containerSegments.length; i++)
+      {
+        if (!containerSegments[i].equals(containedSegments[i]))
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    private void addTaskForRepository(CompoundSetupTask compound, Repository repository) throws Exception
+    {
+      StoredConfig config = repository.getConfig();
+      RemoteConfig remoteConfig = getRemoteConfig(config);
+      String remoteURI = getRemoteURI(remoteConfig);
+      String userID = null;
+
+      URI uri = URI.createURI(remoteURI);
+      if (uri.userInfo() != null)
+      {
+        String authority = uri.authority();
+        int pos = authority.indexOf('@');
+        userID = authority.substring(0, pos);
+        authority = authority.substring(pos + 1);
+        remoteURI = URI.createHierarchicalURI(uri.scheme(), authority, uri.device(), uri.segments(), uri.query(),
+            uri.fragment()).toString();
+      }
+
+      GitCloneTask task = SetupFactory.eINSTANCE.createGitCloneTask();
+      task.setCheckoutBranch(repository.getBranch());
+      task.setLocation("${setup.branch.dir/git/" + repository.getWorkTree().getName() + "}");
+      task.setRemoteName(remoteConfig.getName());
+      task.setRemoteURI(remoteURI);
+      task.setUserID(userID);
+
+      compound.getSetupTasks().add(task);
+    }
+
+    private RemoteConfig getRemoteConfig(StoredConfig config) throws URISyntaxException
+    {
+      RemoteConfig firstConfig = null;
+      for (RemoteConfig remoteConfig : RemoteConfig.getAllRemoteConfigs(config))
+      {
+        if ("origin".equals(remoteConfig.getName()))
+        {
+          return remoteConfig;
+        }
+
+        if (firstConfig == null)
+        {
+          firstConfig = remoteConfig;
+        }
+      }
+
+      return firstConfig;
+    }
+
+    private String getRemoteURI(RemoteConfig remoteConfig)
+    {
+      String remoteURI = getRemoteURI(remoteConfig.getPushURIs());
+      if (StringUtil.isEmpty(remoteURI))
+      {
+        remoteURI = getRemoteURI(remoteConfig.getURIs());
+      }
+
+      return remoteURI;
+    }
+
+    private String getRemoteURI(List<URIish> uris)
+    {
+      if (uris == null || uris.isEmpty())
+      {
+        return "";
+      }
+
+      return uris.get(0).toString();
     }
   }
 

@@ -638,9 +638,8 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
     return null;
   }
 
-  public List<Sniffer> getSniffers()
+  public void collectSniffers(List<Sniffer> sniffers)
   {
-    return null;
   }
 
   /**

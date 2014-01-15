@@ -151,11 +151,14 @@ public class SniffAction extends AbstractContainerAction
         EClass eClass = (EClass)eClassifier;
         if (!eClass.isAbstract() && SetupPackage.Literals.SETUP_TASK.isSuperTypeOf(eClass))
         {
-          SetupTask task = (SetupTask)EcoreUtil.create(eClass);
-          List<Sniffer> taskSniffers = task.getSniffers();
-          if (taskSniffers != null)
+          try
           {
-            sniffers.addAll(taskSniffers);
+            SetupTask task = (SetupTask)EcoreUtil.create(eClass);
+            task.collectSniffers(sniffers);
+          }
+          catch (NoClassDefFoundError ex)
+          {
+            SetupEditorPlugin.getPlugin().log(ex);
           }
         }
       }

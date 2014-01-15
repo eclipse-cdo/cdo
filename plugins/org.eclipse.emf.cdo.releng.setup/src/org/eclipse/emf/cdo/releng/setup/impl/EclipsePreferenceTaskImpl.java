@@ -330,9 +330,8 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
   }
 
   @Override
-  public List<Sniffer> getSniffers()
+  public void collectSniffers(List<Sniffer> sniffers)
   {
-    List<Sniffer> sniffers = new ArrayList<Sniffer>();
     sniffers.add(new PreferenceSniffer("configuration"));
     sniffers.add(new PreferenceSniffer("instance"));
     sniffers.add(new PreferenceSniffer("project")
@@ -343,8 +342,6 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
         return 100;
       }
     });
-
-    return sniffers;
   }
 
   /**

@@ -224,7 +224,7 @@ public interface SetupTask extends EObject
 
   MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception;
 
-  public List<Sniffer> getSniffers();
+  void collectSniffers(List<Sniffer> sniffers);
 
   /**
    * @author Eike Stepper

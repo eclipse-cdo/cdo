@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.internal.tasks.core.RepositoryQuery;
 import org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin;
 import org.eclipse.mylyn.internal.tasks.ui.util.TasksUiInternal;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -360,6 +364,20 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     mylynHelper.perform(context, this);
   }
 
+  @Override
+  public void collectSniffers(List<Sniffer> sniffers)
+  {
+    sniffers.add(new BasicSniffer(MylynQueriesTaskImpl.this,
+        "Creates one or several tasks for the queries in the Mylyn task list.")
+    {
+      public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+      {
+        MylynHelper mylynHelper = MylynHelperImpl.create();
+        mylynHelper.sniff(container, monitor);
+      }
+    });
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -368,6 +386,8 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     public boolean isNeeded(SetupTaskContext context, MylynQueriesTask task) throws Exception;
 
     public void perform(SetupTaskContext context, MylynQueriesTask task) throws Exception;
+
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor);
   }
 
   /**
@@ -518,6 +538,34 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
         {
           context.log("Removing query attribute " + key);
           repositoryQuery.setAttribute(key, null);
+        }
+      }
+    }
+
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor)
+    {
+      Map<String, MylynQueriesTask> tasks = new HashMap<String, MylynQueriesTask>();
+      for (RepositoryQuery repositoryQuery : TasksUiPlugin.getTaskList().getQueries())
+      {
+        String repositoryURL = repositoryQuery.getRepositoryUrl();
+        MylynQueriesTask task = tasks.get(repositoryURL);
+        if (task == null)
+        {
+          task = SetupFactory.eINSTANCE.createMylynQueriesTask();
+          task.setRepositoryURL(repositoryURL);
+          task.setConnectorKind(repositoryQuery.getConnectorKind());
+          container.getSetupTasks().add(task);
+          tasks.put(repositoryURL, task);
+        }
+
+        Query query = SetupFactory.eINSTANCE.createQuery();
+        query.setSummary(repositoryQuery.getSummary());
+        query.setURL(repositoryQuery.getUrl());
+        task.getQueries().add(query);
+
+        for (Map.Entry<String, String> entry : repositoryQuery.getAttributes().entrySet())
+        {
+          query.getAttributes().add(entry);
         }
       }
     }

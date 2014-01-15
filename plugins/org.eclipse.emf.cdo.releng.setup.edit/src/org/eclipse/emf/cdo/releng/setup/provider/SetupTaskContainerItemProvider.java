@@ -40,7 +40,7 @@ import java.util.List;
  * @generated
  */
 public class SetupTaskContainerItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -165,6 +165,7 @@ public class SetupTaskContainerItemProvider extends ItemProviderAdapter implemen
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("deprecation")
   protected void collectNewChildDescriptorsGen(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);

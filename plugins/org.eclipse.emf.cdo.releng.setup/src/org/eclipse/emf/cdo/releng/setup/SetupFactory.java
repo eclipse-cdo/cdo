@@ -223,7 +223,7 @@ public interface SetupFactory extends EFactory
    * @return a new object of class '<em>Mylyn Query Task</em>'.
    * @generated
    */
-  @SuppressWarnings("deprecation")
+  @Deprecated
   MylynQueryTask createMylynQueryTask();
 
   /**

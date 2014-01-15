@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.builds.core.IBuildPlan;
 import org.eclipse.mylyn.builds.core.IBuildServer;
 import org.eclipse.mylyn.builds.internal.core.BuildFactory;
@@ -37,7 +40,10 @@ import org.eclipse.mylyn.internal.builds.ui.BuildsUiInternal;
 import org.eclipse.mylyn.internal.builds.ui.BuildsUiPlugin;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -341,6 +347,20 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
     mylynHelper.perform(context, this);
   }
 
+  @Override
+  public void collectSniffers(List<Sniffer> sniffers)
+  {
+    sniffers.add(new BasicSniffer(MylynBuildsTaskImpl.this,
+        "Creates one or several tasks for the build plans in the Mylyn builds list.")
+    {
+      public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+      {
+        MylynHelper mylynHelper = MylynHelperImpl.create();
+        mylynHelper.sniff(container, monitor);
+      }
+    });
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -349,6 +369,8 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
     public boolean isNeeded(SetupTaskContext context, MylynBuildsTask task) throws Exception;
 
     public void perform(SetupTaskContext context, MylynBuildsTask task) throws Exception;
+
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor);
   }
 
   /**
@@ -444,6 +466,29 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
       }
 
       return null;
+    }
+
+    public void sniff(SetupTaskContainer container, IProgressMonitor monitor)
+    {
+      Map<String, MylynBuildsTask> tasks = new HashMap<String, MylynBuildsTask>();
+      for (IBuildPlan buildPlan : BuildsUiInternal.getModel().getPlans())
+      {
+        IBuildServer buildServer = buildPlan.getServer();
+        String serverURL = buildServer.getUrl();
+        MylynBuildsTask task = tasks.get(serverURL);
+        if (task == null)
+        {
+          task = SetupFactory.eINSTANCE.createMylynBuildsTask();
+          task.setServerURL(serverURL);
+          task.setConnectorKind(buildServer.getConnectorKind());
+          container.getSetupTasks().add(task);
+          tasks.put(serverURL, task);
+        }
+
+        BuildPlan plan = SetupFactory.eINSTANCE.createBuildPlan();
+        plan.setName(buildPlan.getName());
+        task.getBuildPlans().add(plan);
+      }
     }
 
     public static MylynHelper create()

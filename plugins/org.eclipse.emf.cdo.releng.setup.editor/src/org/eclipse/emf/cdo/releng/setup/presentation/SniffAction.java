@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.setup.presentation;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractContainerAction;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.AbstractSetupDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -24,6 +25,9 @@ import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -31,6 +35,7 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -48,6 +53,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -56,9 +62,13 @@ import org.eclipse.swt.widgets.Table;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -68,6 +78,8 @@ public class SniffAction extends AbstractContainerAction
   private static final String TITLE = "Import From IDE";
 
   private List<Sniffer> sniffers;
+
+  private Map<Sniffer, List<Sniffer>> dependenciesMap = new HashMap<Sniffer, List<Sniffer>>();
 
   public SniffAction(boolean withDialog)
   {
@@ -79,6 +91,7 @@ public class SniffAction extends AbstractContainerAction
   @Override
   protected boolean runInit(SetupTaskContainer container)
   {
+
     sniffers = getSniffers();
     if (sniffers.isEmpty())
     {
@@ -120,8 +133,11 @@ public class SniffAction extends AbstractContainerAction
 
               try
               {
-                int work = sniffer.getWork();
-                sniffer.sniff(compound, new SubProgressMonitor(monitor, work));
+                List<Sniffer> dependencies = dependenciesMap.get(sniffer);
+                dependencies.retainAll(sniffers);
+
+                IProgressMonitor subMonitor = new SubProgressMonitor(monitor, sniffer.getWork());
+                sniffer.sniff(compound, dependencies, subMonitor);
               }
               catch (NoClassDefFoundError ex)
               {
@@ -150,12 +166,13 @@ public class SniffAction extends AbstractContainerAction
   protected void runDone(SetupTaskContainer container)
   {
     sniffers = null;
+    dependenciesMap.clear();
     super.runDone(container);
   }
 
-  private List<Sniffer> getSniffers()
+  private EList<Sniffer> getSniffers()
   {
-    List<Sniffer> sniffers = new ArrayList<Sniffer>();
+    final EList<Sniffer> sniffers = new BasicEList<Sniffer>();
     for (EClassifier eClassifier : SetupPackage.eINSTANCE.getEClassifiers())
     {
       if (eClassifier instanceof EClass)
@@ -176,6 +193,25 @@ public class SniffAction extends AbstractContainerAction
       }
     }
 
+    ECollections.sort(sniffers, new Comparator<Sniffer>()
+    {
+      public int compare(Sniffer sniffer1, Sniffer sniffer2)
+      {
+        return sniffer1.getPriority() - sniffer2.getPriority();
+      }
+    });
+
+    EMFUtil.reorder(sniffers, new EMFUtil.DependencyProvider<Sniffer>()
+    {
+      public Collection<? extends Sniffer> getDependencies(Sniffer sniffer)
+      {
+        List<Sniffer> dependencies = new ArrayList<Sniffer>(sniffers);
+        sniffer.retainDependencies(dependencies);
+        dependenciesMap.put(sniffer, dependencies);
+        return dependencies;
+      }
+    });
+
     return sniffers;
   }
 
@@ -190,7 +226,7 @@ public class SniffAction extends AbstractContainerAction
 
     public SelectSniffersDialog(Shell parentShell)
     {
-      super(parentShell, TITLE, 500, 400);
+      super(parentShell, TITLE, 500, 600);
     }
 
     @Override
@@ -204,7 +240,6 @@ public class SniffAction extends AbstractContainerAction
     {
       SashForm sashForm = new SashForm(parent, SWT.VERTICAL | SWT.SMOOTH);
       sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-      // sashForm.setSashWidth(5);
 
       GridLayout layout = new GridLayout(1, false);
       layout.marginWidth = 0;
@@ -242,6 +277,8 @@ public class SniffAction extends AbstractContainerAction
         {
           Object element = event.getElement();
           viewer.setSelection(new StructuredSelection(element));
+
+          updateEnablement();
         }
       });
 
@@ -265,7 +302,14 @@ public class SniffAction extends AbstractContainerAction
         }
       }
 
-      sashForm.setWeights(new int[] { 3, 1 });
+      sashForm.setWeights(new int[] { 5, 1 });
+    }
+
+    @Override
+    protected void createButtonsForButtonBar(Composite parent)
+    {
+      super.createButtonsForButtonBar(parent);
+      updateEnablement();
     }
 
     @Override
@@ -282,6 +326,16 @@ public class SniffAction extends AbstractContainerAction
 
       getSettings().put(LAST_SNIFFERS, labels.toArray(new String[labels.size()]));
       super.okPressed();
+    }
+
+    private void updateEnablement()
+    {
+      Button button = getButton(IDialogConstants.OK_ID);
+      if (button != null)
+      {
+        button.setText("Import");
+        button.setEnabled(viewer.getCheckedElements().length != 0);
+      }
     }
 
     private IDialogSettings getSettings()

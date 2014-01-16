@@ -714,6 +714,16 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       return 1;
     }
 
+    public int getPriority()
+    {
+      return DEFAULT_PRIORITY;
+    }
+
+    public void retainDependencies(List<Sniffer> dependencies)
+    {
+      dependencies.clear();
+    }
+
     @Override
     public String toString()
     {

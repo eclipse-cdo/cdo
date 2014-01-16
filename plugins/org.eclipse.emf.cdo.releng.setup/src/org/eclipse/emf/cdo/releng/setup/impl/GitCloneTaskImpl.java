@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
+import org.eclipse.emf.cdo.releng.setup.SourceFolderProvider;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
@@ -57,7 +58,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -898,8 +901,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * @author Eike Stepper
    */
-  private class CloneSniffer extends BasicSniffer
+  private class CloneSniffer extends BasicSniffer implements SourceFolderProvider
   {
+    private final Map<File, String> sourceFolders = new HashMap<File, String>();
+
     private boolean used;
 
     public CloneSniffer(boolean used)
@@ -910,8 +915,14 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       this.used = used;
     }
 
+    public Map<File, String> getSourceFolders()
+    {
+      return sourceFolders;
+    }
+
     @SuppressWarnings("restriction")
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+        throws Exception
     {
       try
       {
@@ -986,6 +997,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         return;
       }
 
+      File workTree = repository.getWorkTree();
+      String location = "${setup.branch.dir/git/" + workTree.getName() + "}";
+      sourceFolders.put(workTree, location);
+
       String remoteURI = getRemoteURI(remoteConfig);
       String userID = ANONYMOUS;
 
@@ -1002,7 +1017,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
       GitCloneTask task = SetupFactory.eINSTANCE.createGitCloneTask();
       task.setCheckoutBranch(repository.getBranch());
-      task.setLocation("${setup.branch.dir/git/" + repository.getWorkTree().getName() + "}");
+      task.setLocation(location);
       task.setRemoteName(remoteConfig.getName());
       task.setRemoteURI(remoteURI);
       task.setUserID(userID);

@@ -353,10 +353,11 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
     sniffers.add(new BasicSniffer(MylynBuildsTaskImpl.this,
         "Creates one or several tasks for the build plans in the Mylyn builds list.")
     {
-      public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+      public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+          throws Exception
       {
         MylynHelper mylynHelper = MylynHelperImpl.create();
-        mylynHelper.sniff(container, monitor);
+        mylynHelper.sniff(container, null, monitor);
       }
     });
   }
@@ -370,7 +371,7 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
 
     public void perform(SetupTaskContext context, MylynBuildsTask task) throws Exception;
 
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor);
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor);
   }
 
   /**
@@ -468,7 +469,7 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
       return null;
     }
 
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor)
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
     {
       Map<String, MylynBuildsTask> tasks = new HashMap<String, MylynBuildsTask>();
       for (IBuildPlan buildPlan : BuildsUiInternal.getModel().getPlans())

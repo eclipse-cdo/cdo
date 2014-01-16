@@ -17,9 +17,12 @@ import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
+import org.eclipse.emf.cdo.releng.setup.SourceFolderProvider;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 
@@ -378,6 +381,57 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     }
 
     return null;
+  }
+
+  @Override
+  public void collectSniffers(List<Sniffer> sniffers)
+  {
+    sniffers.add(new BasicSniffer(MaterializationTaskImpl.this,
+        "Creates a task that materializes the current sources and their target platform.")
+    {
+      @Override
+      public void retainDependencies(List<Sniffer> dependencies)
+      {
+        for (Iterator<Sniffer> it = dependencies.iterator(); it.hasNext();)
+        {
+          Sniffer sniffer = it.next();
+          if (sniffer instanceof SourceFolderProvider)
+          {
+            continue;
+          }
+
+          it.remove();
+        }
+      }
+
+      public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+          throws Exception
+      {
+        Map<File, String> sourceFolders = new HashMap<File, String>();
+        for (Sniffer sniffer : dependencies)
+        {
+          sourceFolders.putAll(((SourceFolderProvider)sniffer).getSourceFolders());
+        }
+
+        if (sourceFolders.isEmpty())
+        {
+          return;
+        }
+
+        MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
+        task.setTargetPlatform("${setup.branch.dir/tp}");
+
+        for (String sourceFolderMapping : sourceFolders.values())
+        {
+          AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+          sourceLocator.setRootFolder(sourceFolderMapping);
+
+          task.getSourceLocators().add(sourceLocator);
+        }
+
+        container.getSetupTasks().add(task);
+      }
+    });
   }
 
   public static DocumentBuilder createDocumentBuilder() throws ParserConfigurationException

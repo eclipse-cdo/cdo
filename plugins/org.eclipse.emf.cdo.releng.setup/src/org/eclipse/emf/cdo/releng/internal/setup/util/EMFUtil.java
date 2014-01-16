@@ -42,6 +42,7 @@ import org.eclipse.core.runtime.Plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -284,5 +285,48 @@ public final class EMFUtil extends Plugin
     }
 
     setupTasks.addAll(scope.getSetupTasks());
+  }
+
+  public static <T> void reorder(EList<T> values, DependencyProvider<T> dependencyProvider)
+  {
+    for (int i = 0, size = values.size(), count = 0; i < size; ++i)
+    {
+      T value = values.get(i);
+      if (count == size)
+      {
+        throw new IllegalArgumentException("Circular dependencies " + value);
+      }
+
+      boolean changed = false;
+
+      // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
+      for (T dependency : dependencyProvider.getDependencies(value))
+      {
+        int index = values.indexOf(dependency);
+        if (index > i)
+        {
+          values.move(i, index);
+          changed = true;
+        }
+      }
+
+      if (changed)
+      {
+        --i;
+        ++count;
+      }
+      else
+      {
+        count = 0;
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface DependencyProvider<T>
+  {
+    Collection<? extends T> getDependencies(T value);
   }
 }

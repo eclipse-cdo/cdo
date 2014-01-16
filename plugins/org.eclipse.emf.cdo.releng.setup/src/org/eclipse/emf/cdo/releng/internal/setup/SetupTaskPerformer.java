@@ -1075,7 +1075,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   {
     EList<Map.Entry<String, Set<String>>> list = new BasicEList<Map.Entry<String, Set<String>>>(variables.entrySet());
 
-    reorder(list, new DependencyProvider<Map.Entry<String, Set<String>>>()
+    EMFUtil.reorder(list, new EMFUtil.DependencyProvider<Map.Entry<String, Set<String>>>()
     {
       public Collection<Map.Entry<String, Set<String>>> getDependencies(Map.Entry<String, Set<String>> variable)
       {
@@ -1108,7 +1108,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       }
     });
 
-    reorder(setupTasks, new DependencyProvider<SetupTask>()
+    EMFUtil.reorder(setupTasks, new EMFUtil.DependencyProvider<SetupTask>()
     {
       public Collection<SetupTask> getDependencies(SetupTask setupTask)
       {
@@ -1147,41 +1147,6 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     SetupTaskPerformer.progress = progress;
   }
 
-  public static <T> void reorder(EList<T> values, DependencyProvider<T> dependencyProvider)
-  {
-    for (int i = 0, size = values.size(), count = 0; i < size; ++i)
-    {
-      T value = values.get(i);
-      if (count == size)
-      {
-        throw new IllegalArgumentException("Circular dependencies " + value);
-      }
-
-      boolean changed = false;
-
-      // TODO Consider basing this on a provider that just returns a boolean based on "does v1 depend on v2".
-      for (T dependency : dependencyProvider.getDependencies(value))
-      {
-        int index = values.indexOf(dependency);
-        if (index > i)
-        {
-          values.move(i, index);
-          changed = true;
-        }
-      }
-
-      if (changed)
-      {
-        --i;
-        ++count;
-      }
-      else
-      {
-        count = 0;
-      }
-    }
-  }
-
   public static boolean disableAutoBuilding() throws CoreException
   {
     boolean autoBuilding = ResourcesPlugin.getWorkspace().isAutoBuilding();
@@ -1202,10 +1167,5 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
       ResourcesPlugin.getWorkspace().setDescription(description);
     }
-  }
-
-  public interface DependencyProvider<T>
-  {
-    Collection<? extends T> getDependencies(T value);
   }
 }

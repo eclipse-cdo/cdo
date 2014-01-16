@@ -1416,7 +1416,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   {
     sniffers.add(new BasicSniffer(P2TaskImpl.this, "Creates a task to install the current software.")
     {
-      public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+      public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+          throws Exception
       {
         Set<IInstallableUnit> installedUnits = getInstalledUnits();
         Set<String> knownRepositories = getKnownRepositories();

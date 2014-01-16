@@ -359,7 +359,14 @@ public class EclipsePreferenceTaskImpl extends SetupTaskImpl implements EclipseP
       this.scope = scope;
     }
 
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+    @Override
+    public int getPriority()
+    {
+      return scope.equals("project") ? PROJECT_PRIORITY : PRIORITY;
+    }
+
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+        throws Exception
     {
       try
       {

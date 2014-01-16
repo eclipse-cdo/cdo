@@ -253,9 +253,14 @@ public interface SetupTask extends EObject
 
     public String getDescription();
 
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception;
-
     public int getWork();
+
+    public int getPriority();
+
+    public void retainDependencies(List<Sniffer> dependencies);
+
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+        throws Exception;
   }
 
 } // SetupTask

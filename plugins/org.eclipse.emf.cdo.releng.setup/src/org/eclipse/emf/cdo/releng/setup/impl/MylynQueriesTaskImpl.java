@@ -370,10 +370,11 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     sniffers.add(new BasicSniffer(MylynQueriesTaskImpl.this,
         "Creates one or several tasks for the queries in the Mylyn task list.")
     {
-      public void sniff(SetupTaskContainer container, IProgressMonitor monitor) throws Exception
+      public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+          throws Exception
       {
         MylynHelper mylynHelper = MylynHelperImpl.create();
-        mylynHelper.sniff(container, monitor);
+        mylynHelper.sniff(container, null, monitor);
       }
     });
   }
@@ -387,7 +388,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
 
     public void perform(SetupTaskContext context, MylynQueriesTask task) throws Exception;
 
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor);
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor);
   }
 
   /**
@@ -542,7 +543,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       }
     }
 
-    public void sniff(SetupTaskContainer container, IProgressMonitor monitor)
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
     {
       Map<String, MylynQueriesTask> tasks = new HashMap<String, MylynQueriesTask>();
       for (RepositoryQuery repositoryQuery : TasksUiPlugin.getTaskList().getQueries())

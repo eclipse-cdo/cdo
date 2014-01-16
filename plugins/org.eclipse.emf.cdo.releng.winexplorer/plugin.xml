@@ -14,32 +14,90 @@
 <plugin>
 
    <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.cdo.releng.winexplorer.contribution"
-            objectClass="java.lang.Object">
-         <action
-               class="org.eclipse.emf.cdo.releng.winexplorer.PromptAction"
-               enablesFor="1"
-               icon="icons/prompt.gif"
-               id="org.eclipse.emf.cdo.releng.PromptAction"
-               label="Command Prompt"
-               menubarPath="additions"
-               state="true"
-               style="push"
-               tooltip="Open Command Prompt"/>
-         <action
-               class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
-               enablesFor="1"
-               icon="icons/explorer.gif"
-               id="org.eclipse.emf.cdo.releng.ExplorerAction"
-               label="Windows Explorer"
-               menubarPath="additions"
-               state="true"
-               style="push"
-               tooltip="Open Windows Explorer"/>
-      </objectContribution>
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.eclipse.emf.cdo.releng.winexplorer.folderProvider">
+         <or>
+            <adapt
+                  type="org.eclipse.core.resources.IResource">
+            </adapt>
+            <adapt
+                  type="java.io.File">
+            </adapt>
+            <adapt
+                  type="org.eclipse.jgit.lib.Repository">
+            </adapt>
+            <adapt
+                  type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+            </adapt>
+         </or>
+      </definition>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.cdo.releng.winexplorer.ExplorerHandler"
+            id="org.eclipse.emf.cdo.releng.winexplorer.commands.Explorer"
+            name="Windows Explorer">
+      </command>
+      <command
+            defaultHandler="org.eclipse.emf.cdo.releng.winexplorer.PromptHandler"
+            id="org.eclipse.emf.cdo.releng.winexplorer.commands.Prompt"
+            name="Command Prompt">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.releng.winexplorer.commands.Explorer"
+               icon="icons/explorer.gif"
+               label="Windows Explorer"
+               style="push"
+               tooltip="Open Windows Explorer">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <reference
+                           definitionId="org.eclipse.emf.cdo.releng.winexplorer.folderProvider">
+                     </reference>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.releng.winexplorer.commands.Prompt"
+               icon="icons/prompt.gif"
+               label="Command Prompt"
+               style="push"
+               tooltip="Open Command Prompt">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <reference
+                           definitionId="org.eclipse.emf.cdo.releng.winexplorer.folderProvider">
+                     </reference>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   
+   
 
 </plugin>

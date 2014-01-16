@@ -10,49 +10,61 @@
  */
 package org.eclipse.emf.cdo.releng.winexplorer;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.io.File;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractLocationAction implements IObjectActionDelegate
+public abstract class AbstractLocationHandler extends AbstractHandler
 {
-  private File location;
-
-  public AbstractLocationAction()
+  public AbstractLocationHandler()
   {
   }
 
-  public void setActivePart(IAction action, IWorkbenchPart targetPart)
+  public Object execute(ExecutionEvent event) throws ExecutionException
   {
+    ISelection selection = HandlerUtil.getActiveMenuSelection(event);
+    File location = getLocation(selection);
+
+    try
+    {
+      execute(location);
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+
+    return null;
   }
 
-  public void selectionChanged(IAction action, ISelection selection)
+  protected abstract void execute(File location) throws Exception;
+
+  public static File getLocation(ISelection selection)
   {
     if (selection instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)selection;
       Object element = ssel.getFirstElement();
-      location = getLocation(element);
+      return getLocation(element);
     }
-    else
-    {
-      location = null;
-    }
+
+    return null;
   }
 
-  protected File getLocation(Object element)
+  private static File getLocation(Object element)
   {
     IContainer container = getContainer(element);
     if (container != null)
@@ -75,7 +87,7 @@ public abstract class AbstractLocationAction implements IObjectActionDelegate
     return null;
   }
 
-  protected IContainer getContainer(Object element)
+  private static IContainer getContainer(Object element)
   {
     if (element instanceof IContainer)
     {
@@ -96,7 +108,7 @@ public abstract class AbstractLocationAction implements IObjectActionDelegate
     return null;
   }
 
-  protected File getDirectory(Object element)
+  private static File getDirectory(Object element)
   {
     if (element instanceof File)
     {
@@ -118,7 +130,7 @@ public abstract class AbstractLocationAction implements IObjectActionDelegate
     return null;
   }
 
-  protected File getWorkTree(Object element)
+  private static File getWorkTree(Object element)
   {
     try
     {
@@ -129,20 +141,6 @@ public abstract class AbstractLocationAction implements IObjectActionDelegate
       return null;
     }
   }
-
-  public void run(IAction action)
-  {
-    try
-    {
-      run(location);
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-  }
-
-  protected abstract void run(File location) throws Exception;
 
   /**
    * @author Eike Stepper

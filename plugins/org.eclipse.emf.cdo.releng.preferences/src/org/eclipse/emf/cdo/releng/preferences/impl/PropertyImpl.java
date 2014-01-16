@@ -192,10 +192,10 @@ public class PropertyImpl extends PreferenceItemImpl implements Property
     {
       String ancestorValue = ancestor.getValue();
       String value = getValue();
-      return value == null ? ancestorValue == null : value.equals(ancestorValue);
+      return value == null ? ancestorValue != null : !value.equals(ancestorValue);
     }
 
-    return false;
+    return true;
   }
 
   /**

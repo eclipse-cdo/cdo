@@ -42,7 +42,7 @@ import java.util.List;
  * @generated
  */
 public class QueryItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -183,7 +183,8 @@ public class QueryItemProvider extends ItemProviderAdapter implements IEditingDo
   {
     String summary = ((Query)object).getSummary();
     String url = ((Query)object).getURL();
-    return StringUtil.isEmpty(summary) ? getString("_UI_Query_type") : "" + summary + ": " + url;
+    return StringUtil.isEmpty(summary) ? getString("_UI_Query_type") : "" + summary
+        + (StringUtil.isEmpty(url) ? "" : ": " + url);
   }
 
   /**

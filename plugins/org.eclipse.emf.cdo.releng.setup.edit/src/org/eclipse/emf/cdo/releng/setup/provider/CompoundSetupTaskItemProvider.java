@@ -38,7 +38,7 @@ import java.util.List;
  * @generated
  */
 public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -88,7 +88,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_CompoundSetupTask_name_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_CompoundSetupTask_name_feature",
             "_UI_CompoundSetupTask_type"), SetupPackage.Literals.COMPOUND_SETUP_TASK__NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

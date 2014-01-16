@@ -665,7 +665,7 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       this.description = description;
       ComposedAdapterFactory adapterFactory = EMFUtil.createAdapterFactory();
       IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
-    
+
       icon = labelProvider.getImage(object);
       label = labelProvider.getText(object);
     }

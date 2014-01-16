@@ -50,7 +50,7 @@ public class LobTest extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+      inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
       CDOBlob blob = new CDOBlob(inputStream);
 
       Image image = getModel3Factory().createImage();
@@ -105,11 +105,11 @@ public class LobTest extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+      inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
 
       File file = getModel3Factory().createFile();
-      file.setName("copyright.txt");
+      file.setName("Superstructure.uml");
       file.setData(clob);
 
       CDOSession session = openSession();
@@ -137,7 +137,7 @@ public class LobTest extends AbstractCDOTest
     CDOResource resource = view.getResource(getResourcePath("res"));
 
     File file = (File)resource.getContents().get(0);
-    assertEquals("copyright.txt", file.getName());
+    assertEquals("Superstructure.uml", file.getName());
 
     CDOClob clob = file.getData();
     Reader reader = clob.getContents();

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -43,7 +43,7 @@ public class Bugzilla_351096_Test extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+      inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
       CDOBlob blob = new CDOBlob(inputStream);
 
       Image image = getModel3Factory().createImage();
@@ -83,10 +83,10 @@ public class Bugzilla_351096_Test extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+      inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
       File file = getModel3Factory().createFile();
-      file.setName("copyright.txt");
+      file.setName("Superstructure.uml");
       file.setData(clob);
 
       resource.getContents().add(file);

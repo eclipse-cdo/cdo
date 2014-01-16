@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cs:cspecExtension xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0">
+
+	<cs:dependencies>
+		<cs:dependency name="org.eclipse.jgit" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
+
+		<cs:dependency name="org.apache.httpcomponents.httpcore" componentType="osgi.bundle" versionDesignator="4.2.5"/>
+		<cs:dependency name="org.apache.httpcomponents.httpclient" componentType="osgi.bundle" versionDesignator="4.2.6"/>
+		<cs:dependency name="org.eclipse.mylyn.sdk_feature.feature.group" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.mylyn.bugzilla_feature.feature.group" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.mylyn.builds.sdk.feature.group" componentType="eclipse.feature"/>
+
+		<cs:dependency name="org.eclipse.buckminster.core.feature.feature.group" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.buckminster.git.feature.feature.group" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.buckminster.pde.feature.feature.group" componentType="eclipse.feature"/>
+
+		<cs:dependency name="javax.activation" componentType="osgi.bundle"/>
+		<cs:dependency name="javax.xml.bind" componentType="osgi.bundle"/>
+		<cs:dependency name="javax.xml.stream" componentType="osgi.bundle"/>
+		<cs:dependency name="org.apache.ws.commons.util" componentType="osgi.bundle"/>
+		<cs:dependency name="org.apache.commons.io" componentType="osgi.bundle"/>
+	</cs:dependencies>
+
+</cs:cspecExtension>

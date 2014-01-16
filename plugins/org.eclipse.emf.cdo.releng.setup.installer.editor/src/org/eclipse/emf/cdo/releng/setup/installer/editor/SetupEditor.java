@@ -871,7 +871,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
   public void createModel()
   {
     createModelGen();
-    EMFUtil.loadResourceSafely(editingDomain.getResourceSet(), EMFUtil.CONFIGURATION_URI);
+    EMFUtil.loadResourceSafely(editingDomain.getResourceSet(), EMFUtil.ECLIPSE_INDEX_URI);
   }
 
   /**

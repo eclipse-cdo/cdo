@@ -51,6 +51,14 @@
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
     <genDataTypes ecoreDataType="setup.ecore#//LicenseInfo"/>
     <genDataTypes ecoreDataType="setup.ecore#//VersionRange"/>
+    <genClasses ecoreClass="setup.ecore#//MetaIndex">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MetaIndex/indexes"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Index">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Index/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Index/uRI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Index/oldURIs"/>
+    </genClasses>
     <genClasses ecoreClass="setup.ecore#//Eclipse">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Eclipse/configuration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//Eclipse/version"/>

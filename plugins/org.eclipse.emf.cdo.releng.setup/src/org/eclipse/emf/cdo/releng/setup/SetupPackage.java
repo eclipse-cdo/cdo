@@ -106,13 +106,22 @@ public interface SetupPackage extends EPackage
   int INDEX = 1;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INDEX__NAME = 0;
+
+  /**
    * The feature id for the '<em><b>URI</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INDEX__URI = 0;
+  int INDEX__URI = 1;
 
   /**
    * The feature id for the '<em><b>Old UR Is</b></em>' attribute list.
@@ -121,7 +130,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INDEX__OLD_UR_IS = 1;
+  int INDEX__OLD_UR_IS = 2;
 
   /**
    * The number of structural features of the '<em>Index</em>' class.
@@ -130,7 +139,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INDEX_FEATURE_COUNT = 2;
+  int INDEX_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupTaskContainerImpl <em>Task Container</em>}' class.
@@ -3594,6 +3603,17 @@ public interface SetupPackage extends EPackage
   EClass getIndex();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Index#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.Index#getName()
+   * @see #getIndex()
+   * @generated
+   */
+  EAttribute getIndex_Name();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Index#getURI <em>URI</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5561,6 +5581,14 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EClass INDEX = eINSTANCE.getIndex();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INDEX__NAME = eINSTANCE.getIndex_Name();
 
     /**
      * The meta object literal for the '<em><b>URI</b></em>' attribute feature.

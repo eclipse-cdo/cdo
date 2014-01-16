@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
+import org.eclipse.emf.cdo.releng.setup.Index;
+import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -36,6 +38,7 @@ import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -154,6 +157,8 @@ public class InstallerDialog extends AbstractSetupDialog
 
   private Configuration configuration;
 
+  private ComboViewer metaIndexViewer;
+
   private CheckboxTreeViewer viewer;
 
   private ComboBoxViewerCellEditor cellEditor;
@@ -226,12 +231,53 @@ public class InstallerDialog extends AbstractSetupDialog
   @Override
   protected void createUI(Composite parent)
   {
+    if (SetupConstants.META_INDEX)
+    {
+      metaIndexViewer = new ComboViewer(parent, SWT.READ_ONLY | SWT.DROP_DOWN);
+      metaIndexViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+      metaIndexViewer.setContentProvider(new IStructuredContentProvider()
+      {
+        public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+        {
+        }
+
+        public void dispose()
+        {
+        }
+
+        public Object[] getElements(Object inputElement)
+        {
+          return getIndexes(inputElement);
+        }
+      });
+
+      metaIndexViewer.setLabelProvider(new LabelProvider()
+      {
+        @Override
+        public String getText(Object element)
+        {
+          return ((Index)element).getName();
+        }
+      });
+
+      metaIndexViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+        public void selectionChanged(SelectionChangedEvent event)
+        {
+          // TODO
+          // IStructuredSelection selection = (IStructuredSelection)metaIndexViewer.getSelection();
+          // Index index = (Index)selection.getFirstElement();
+        }
+      });
+    }
+
     viewer = new CheckboxTreeViewer(parent, SWT.FULL_SELECTION | SWT.NO_SCROLL | SWT.V_SCROLL);
 
     final Tree tree = viewer.getTree();
     tree.setLinesVisible(true);
     tree.setHeaderVisible(true);
-    tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
     final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory)
     {
@@ -994,6 +1040,27 @@ public class InstallerDialog extends AbstractSetupDialog
     return projects;
   }
 
+  private Index[] getIndexes(Object element)
+  {
+    List<Index> indexes = new ArrayList<Index>();
+    indexes.add(EMFUtil.ECLIPSE_INDEX);
+
+    if (element instanceof MetaIndex)
+    {
+      MetaIndex metaIndex = (MetaIndex)element;
+
+      for (Index index : metaIndex.getIndexes())
+      {
+        if (!StringUtil.isEmpty(index.getName()) && index.getURI() != null)
+        {
+          indexes.add(index);
+        }
+      }
+    }
+
+    return indexes.toArray(new Index[indexes.size()]);
+  }
+
   private void init()
   {
     try
@@ -1008,10 +1075,16 @@ public class InstallerDialog extends AbstractSetupDialog
           try
           {
             monitor.beginTask("Loading "
-                + resourceSet.getURIConverter().normalize(EMFUtil.CONFIGURATION_URI).trimFragment(),
+                + resourceSet.getURIConverter().normalize(EMFUtil.ECLIPSE_INDEX_URI).trimFragment(),
                 IProgressMonitor.UNKNOWN);
 
-            Resource configurationResource = loadResourceSafely(EMFUtil.CONFIGURATION_URI);
+            Resource metaIndexResource = null;
+            if (metaIndexViewer != null)
+            {
+              metaIndexResource = loadResourceSafely(EMFUtil.META_INDEX_URI);
+            }
+
+            Resource configurationResource = loadResourceSafely(EMFUtil.ECLIPSE_INDEX_URI);
 
             EList<EObject> contents = configurationResource.getContents();
             if (contents.isEmpty())
@@ -1022,7 +1095,7 @@ public class InstallerDialog extends AbstractSetupDialog
                 {
                   boolean confirmation = MessageDialog.openQuestion(null, SHELL_TEXT,
                       "The configuration could not be loaded so it's likely you're not connected to the internet or are behind a firewall."
-                          + "The following URI is inaccessable:\n" + "  " + EMFUtil.CONFIGURATION_URI + "\n\n"
+                          + "The following URI is inaccessible:\n" + "  " + EMFUtil.ECLIPSE_INDEX_URI + "\n\n"
                           + "Do you wish to configure your network connections?");
                   if (confirmation)
                   {
@@ -1114,7 +1187,7 @@ public class InstallerDialog extends AbstractSetupDialog
               projects.add(project);
             }
 
-            initUI(input, installFolder, bundlePoolFolder, bundlePoolTPFolder);
+            initUI(metaIndexResource, input, installFolder, bundlePoolFolder, bundlePoolTPFolder);
           }
           catch (UpdateUtil.UpdatingException ex)
           {
@@ -1143,13 +1216,40 @@ public class InstallerDialog extends AbstractSetupDialog
     }
   }
 
-  private void initUI(final ItemProvider input, final String installFolder, final String bundlePoolFolder,
-      final String bundlePoolTPFolder)
+  private void initUI(final Resource metaIndexResource, final ItemProvider input, final String installFolder,
+      final String bundlePoolFolder, final String bundlePoolTPFolder)
   {
     viewer.getControl().getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {
+        if (metaIndexResource != null)
+        {
+          MetaIndex metaIndex = null;
+
+          EList<EObject> contents = metaIndexResource.getContents();
+          if (contents.isEmpty())
+          {
+            metaIndexViewer.setInput(new Object());
+          }
+          else
+          {
+            metaIndex = (MetaIndex)contents.get(0);
+            metaIndexViewer.setInput(metaIndex);
+            metaIndexViewer.setInput(metaIndex);
+          }
+
+          URI redirectedURI = resourceSet.getURIConverter().normalize(EMFUtil.ECLIPSE_INDEX_URI);
+          for (Index index : getIndexes(metaIndex))
+          {
+            if (redirectedURI.equals(index.getURI()))
+            {
+              metaIndexViewer.setSelection(new StructuredSelection(index));
+              break;
+            }
+          }
+        }
+
         installFolderField.setValue(installFolder);
 
         if (bundlePoolFolder.length() != 0)
@@ -1533,7 +1633,7 @@ public class InstallerDialog extends AbstractSetupDialog
     @Override
     protected String getDefaultMessage()
     {
-      URI uri = EMFUtil.CONFIGURATION_URI;
+      URI uri = EMFUtil.ECLIPSE_INDEX_URI;
       uri = resourceSet.getURIConverter().normalize(uri);
       return "The current product version is " + version + ".\n" + uri;
     }

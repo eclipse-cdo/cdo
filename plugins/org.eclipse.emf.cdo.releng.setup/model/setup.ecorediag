@@ -1203,6 +1203,10 @@
   <children xmi:type="notation:Node" xmi:id="_7Yh5MHz2EeO2a_HibubRpw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_7Yh5M3z2EeO2a_HibubRpw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_7Yh5NHz2EeO2a_HibubRpw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_go8EcH6TEeOKv_eY8Fg9zA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//Index/label"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_go8EcX6TEeOKv_eY8Fg9zA"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_BOPvYHz3EeO2a_HibubRpw" type="2001">
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//Index/uRI"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_BOPvYXz3EeO2a_HibubRpw"/>

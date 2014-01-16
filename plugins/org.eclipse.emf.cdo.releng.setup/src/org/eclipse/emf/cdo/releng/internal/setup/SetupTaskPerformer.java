@@ -756,7 +756,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       {
         EclipseIniTask setupURIEnvironmentVariableTask = SetupFactory.eINSTANCE.createEclipseIniTask();
         setupURIEnvironmentVariableTask.setVm(true);
-        setupURIEnvironmentVariableTask.setValue("=" + redirect(EMFUtil.CONFIGURATION_URI));
+        setupURIEnvironmentVariableTask.setValue("=" + redirect(EMFUtil.ECLIPSE_INDEX_URI));
         setupURIEnvironmentVariableTask.setOption("-D" + SetupConstants.PROP_SETUP_URI);
         if (setupURIEnvironmentVariableTask.isNeeded(this))
         {

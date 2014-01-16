@@ -55,6 +55,8 @@ public interface SetupConstants
 
   public static final String PROP_P2_TASK_SKIP = "org.eclipse.emf.cdo.releng.setup.skip.p2";
 
+  public static final String PROP_META_INDEX = "meta.index";
+
   public static final String PROP_SETUP_URI = "setup.uri";
 
   public static final String PROP_EXAMPLE_URI = "example.uri";
@@ -64,6 +66,8 @@ public interface SetupConstants
   public static final String PROP_SETUP_BRANCH_URI = "setup.branch.uri";
 
   public static final String RELENG_URL = System.getProperty(PROP_RELENG_URL, Activator.CDO_URL).replace('\\', '/');
+
+  public static final boolean META_INDEX = "true".equalsIgnoreCase(System.getProperty(PROP_META_INDEX, "false"));
 
   public static final boolean SETUP_IDE = "true".equalsIgnoreCase(System.getProperty(PROP_SETUP_IDE, "false"));
 

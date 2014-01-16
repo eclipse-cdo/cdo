@@ -6,6 +6,7 @@
         eType="#//Index" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Index">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRI" lowerBound="1" eType="#//URI">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>

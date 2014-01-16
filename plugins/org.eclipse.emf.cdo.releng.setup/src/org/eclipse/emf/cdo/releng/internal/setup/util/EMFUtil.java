@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
@@ -50,8 +51,9 @@ import java.util.Set;
  */
 public final class EMFUtil extends Plugin
 {
-  public static final URI CONFIGURATION_URI = URI
-      .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup");
+  public static final Index ECLIPSE_INDEX = createEclipseIndex();
+
+  public static final URI ECLIPSE_INDEX_URI = ECLIPSE_INDEX.getURI();
 
   public static final URI META_INDEX_URI = URI
       .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/MetaIndex.setup");
@@ -66,6 +68,16 @@ public final class EMFUtil extends Plugin
 
   private EMFUtil()
   {
+  }
+
+  private static Index createEclipseIndex()
+  {
+    Index eclipseIndex = SetupFactory.eINSTANCE.createIndex();
+    eclipseIndex.setName("Eclipse.org");
+    eclipseIndex
+        .setURI(URI
+            .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/Configuration.setup"));
+    return eclipseIndex;
   }
 
   public static ComposedAdapterFactory createAdapterFactory()
@@ -93,9 +105,9 @@ public final class EMFUtil extends Plugin
     uriHandlers.add(4, new ECFURIHandlerImpl());
 
     URI redirectedConfigurationURI = getSetupURI(resourceSet);
-    if (!CONFIGURATION_URI.equals(redirectedConfigurationURI))
+    if (!ECLIPSE_INDEX_URI.equals(redirectedConfigurationURI))
     {
-      uriMap.put(CONFIGURATION_URI, redirectedConfigurationURI);
+      uriMap.put(ECLIPSE_INDEX_URI, redirectedConfigurationURI);
     }
 
     if (BRANCH_URI != null && REDIRECTED_BRANCH_URI != null && !BRANCH_URI.equals(REDIRECTED_BRANCH_URI)
@@ -143,13 +155,13 @@ public final class EMFUtil extends Plugin
     String prop = System.getProperty(SetupConstants.PROP_SETUP_URI);
     if (prop == null)
     {
-      return CONFIGURATION_URI;
+      return ECLIPSE_INDEX_URI;
     }
 
     URI uri = URI.createURI(prop.replace('\\', '/'));
-    if (CONFIGURATION_URI.equals(uri))
+    if (ECLIPSE_INDEX_URI.equals(uri))
     {
-      return CONFIGURATION_URI;
+      return ECLIPSE_INDEX_URI;
     }
 
     if ("file".equals(uri.scheme()))
@@ -187,7 +199,7 @@ public final class EMFUtil extends Plugin
       //$FALL-THROUGH$
     }
 
-    return CONFIGURATION_URI;
+    return ECLIPSE_INDEX_URI;
   }
 
   private static URI getBranchURI()

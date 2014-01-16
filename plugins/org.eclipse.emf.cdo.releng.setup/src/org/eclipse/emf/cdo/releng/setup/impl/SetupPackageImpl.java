@@ -608,7 +608,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIndex_URI()
+  public EAttribute getIndex_Name()
   {
     return (EAttribute)indexEClass.getEStructuralFeatures().get(0);
   }
@@ -618,9 +618,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIndex_OldURIs()
+  public EAttribute getIndex_URI()
   {
     return (EAttribute)indexEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIndex_OldURIs()
+  {
+    return (EAttribute)indexEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -2410,6 +2420,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(metaIndexEClass, META_INDEX__INDEXES);
 
     indexEClass = createEClass(INDEX);
+    createEAttribute(indexEClass, INDEX__NAME);
     createEAttribute(indexEClass, INDEX__URI);
     createEAttribute(indexEClass, INDEX__OLD_UR_IS);
 
@@ -2719,6 +2730,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         IS_ORDERED);
 
     initEClass(indexEClass, Index.class, "Index", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIndex_Name(), ecorePackage.getEString(), "name", null, 1, 1, Index.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getIndex_URI(), getURI(), "uRI", null, 1, 1, Index.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getIndex_OldURIs(), getURI(), "oldURIs", null, 0, -1, Index.class, !IS_TRANSIENT, !IS_VOLATILE,

@@ -22,6 +22,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.IndexImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.IndexImpl#getURI <em>URI</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.IndexImpl#getOldURIs <em>Old UR Is</em>}</li>
  * </ul>
@@ -31,6 +32,26 @@ import java.util.Collection;
  */
 public class IndexImpl extends MinimalEObjectImpl.Container implements Index
 {
+  /**
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
   /**
    * The default value of the '{@link #getURI() <em>URI</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -87,6 +108,31 @@ public class IndexImpl extends MinimalEObjectImpl.Container implements Index
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.INDEX__NAME, oldName, name));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public URI getURI()
   {
     return uRI;
@@ -131,6 +177,8 @@ public class IndexImpl extends MinimalEObjectImpl.Container implements Index
   {
     switch (featureID)
     {
+    case SetupPackage.INDEX__NAME:
+      return getName();
     case SetupPackage.INDEX__URI:
       return getURI();
     case SetupPackage.INDEX__OLD_UR_IS:
@@ -150,6 +198,9 @@ public class IndexImpl extends MinimalEObjectImpl.Container implements Index
   {
     switch (featureID)
     {
+    case SetupPackage.INDEX__NAME:
+      setName((String)newValue);
+      return;
     case SetupPackage.INDEX__URI:
       setURI((URI)newValue);
       return;
@@ -171,6 +222,9 @@ public class IndexImpl extends MinimalEObjectImpl.Container implements Index
   {
     switch (featureID)
     {
+    case SetupPackage.INDEX__NAME:
+      setName(NAME_EDEFAULT);
+      return;
     case SetupPackage.INDEX__URI:
       setURI(URI_EDEFAULT);
       return;
@@ -191,6 +245,8 @@ public class IndexImpl extends MinimalEObjectImpl.Container implements Index
   {
     switch (featureID)
     {
+    case SetupPackage.INDEX__NAME:
+      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     case SetupPackage.INDEX__URI:
       return URI_EDEFAULT == null ? uRI != null : !URI_EDEFAULT.equals(uRI);
     case SetupPackage.INDEX__OLD_UR_IS:
@@ -213,7 +269,9 @@ public class IndexImpl extends MinimalEObjectImpl.Container implements Index
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (uRI: ");
+    result.append(" (name: ");
+    result.append(name);
+    result.append(", uRI: ");
     result.append(uRI);
     result.append(", oldURIs: ");
     result.append(oldURIs);

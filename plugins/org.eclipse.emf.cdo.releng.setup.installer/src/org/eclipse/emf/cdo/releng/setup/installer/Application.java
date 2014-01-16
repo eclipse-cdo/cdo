@@ -25,9 +25,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -66,11 +64,10 @@ public class Application implements IApplication
     try
     {
       final Display display = Display.getDefault();
-      Shell shell = new Shell(display, SWT.ON_TOP);
 
       for (;;)
       {
-        InstallerDialog dialog = new InstallerDialog(shell, startType, true);
+        InstallerDialog dialog = new InstallerDialog(null, startType, true);
         final int retcode = dialog.open();
 
         if (retcode == InstallerDialog.RETURN_RESTART)

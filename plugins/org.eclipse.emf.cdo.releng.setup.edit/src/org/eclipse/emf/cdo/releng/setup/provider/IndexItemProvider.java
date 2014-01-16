@@ -8,7 +8,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -57,10 +56,26 @@ public class IndexItemProvider extends ItemProviderAdapter implements IEditingDo
     {
       super.getPropertyDescriptors(object);
 
+      addNamePropertyDescriptor(object);
       addURIPropertyDescriptor(object);
       addOldURIsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the Name feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addNamePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Index_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Index_name_feature", "_UI_Index_type"),
+        SetupPackage.Literals.INDEX__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -137,7 +152,12 @@ public class IndexItemProvider extends ItemProviderAdapter implements IEditingDo
   @Override
   public String getText(Object object)
   {
-    URI labelValue = ((Index)object).getURI();
+    Object labelValue = ((Index)object).getName();
+    if (labelValue == null)
+    {
+      labelValue = ((Index)object).getURI();
+    }
+
     String label = labelValue == null ? null : labelValue.toString();
     return label == null || label.length() == 0 ? getString("_UI_Index_type") : label;
   }
@@ -156,6 +176,7 @@ public class IndexItemProvider extends ItemProviderAdapter implements IEditingDo
 
     switch (notification.getFeatureID(Index.class))
     {
+    case SetupPackage.INDEX__NAME:
     case SetupPackage.INDEX__URI:
     case SetupPackage.INDEX__OLD_UR_IS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

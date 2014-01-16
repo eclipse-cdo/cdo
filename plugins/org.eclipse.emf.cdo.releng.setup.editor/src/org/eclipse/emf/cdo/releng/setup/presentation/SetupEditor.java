@@ -1120,7 +1120,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
     if (!(rootObject instanceof Configuration))
     {
       SetupResource configurationResource = EMFUtil.loadResourceSafely(editingDomain.getResourceSet(),
-          EMFUtil.CONFIGURATION_URI);
+          EMFUtil.ECLIPSE_INDEX_URI);
       editingDomain.getResourceToReadOnlyMap().put(configurationResource, true);
     }
   }
@@ -1522,7 +1522,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
           {
             SetupTask setupTask = (SetupTask)object;
             Resource resource = setupTask.eResource();
-            if (resource == null || resource.getURI().equals(EMFUtil.CONFIGURATION_URI))
+            if (resource == null || resource.getURI().equals(EMFUtil.ECLIPSE_INDEX_URI))
             {
               result = ExtendedFontRegistry.INSTANCE.getFont(result != null ? result : font,
                   IItemFontProvider.ITALIC_FONT);
@@ -1611,7 +1611,7 @@ public class SetupEditor extends MultiPageEditorPart implements IEditingDomainPr
         ItemProvider input = null;
         if (eObject instanceof Project)
         {
-          Resource configurationResource = resourceSet.getResource(EMFUtil.CONFIGURATION_URI, false);
+          Resource configurationResource = resourceSet.getResource(EMFUtil.ECLIPSE_INDEX_URI, false);
           configuration = (Configuration)configurationResource.getContents().get(0);
           if (eclipseVersion == null)
           {

@@ -753,15 +753,15 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       }
     }
 
-    public static Map<File, IPath> getSourceFolders(List<Sniffer> dependencies)
+    public static Map<File, IPath> getSourcePaths(List<Sniffer> dependencies)
     {
-      Map<File, IPath> sourceFolders = new HashMap<File, IPath>();
+      Map<File, IPath> sourcePaths = new HashMap<File, IPath>();
       for (Sniffer sniffer : dependencies)
       {
-        sourceFolders.putAll(((SourcePathProvider)sniffer).getSourcePaths());
+        sourcePaths.putAll(((SourcePathProvider)sniffer).getSourcePaths());
       }
 
-      return sourceFolders;
+      return sourcePaths;
     }
 
     public static CompoundSetupTask getCompound(SetupTaskContainer container, String name)

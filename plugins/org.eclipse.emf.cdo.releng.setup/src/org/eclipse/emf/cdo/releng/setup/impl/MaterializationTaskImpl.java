@@ -964,16 +964,16 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
     private static final String RM = "http://www.eclipse.org/buckminster/RMap-1.0";
 
-    private boolean used;
+    // private boolean used;
 
-    private DocumentBuilder documentBuilder;
+    // private DocumentBuilder documentBuilder;
 
     public MaterializationSniffer(EObject object, boolean used)
     {
       super(object, "Creates a task that materializes the " + (used ? "current" : "all")
           + " source projects and their target platform.");
       setLabel("Materialize  " + (used ? "current" : "all") + " projects");
-      this.used = used;
+      // this.used = used;
     }
 
     @Override
@@ -985,7 +985,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
         throws Exception
     {
-      Map<File, IPath> sourcePaths = getSourceFolders(dependencies);
+      Map<File, IPath> sourcePaths = getSourcePaths(dependencies);
       if (sourcePaths.isEmpty())
       {
         return;
@@ -1005,15 +1005,15 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       container.getSetupTasks().add(task);
     }
 
-    private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException
-    {
-      if (documentBuilder == null)
-      {
-        documentBuilder = createDocumentBuilder();
-      }
-
-      return documentBuilder;
-    }
+    // private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException
+    // {
+    // if (documentBuilder == null)
+    // {
+    // documentBuilder = createDocumentBuilder();
+    // }
+    //
+    // return documentBuilder;
+    // }
 
     public static void analyzeMaterialization(SetupTaskContainer mainContainer, File folder, String location,
         List<EObject> elements, Set<String> variableNames, SetupTask requirement, DocumentBuilder documentBuilder,

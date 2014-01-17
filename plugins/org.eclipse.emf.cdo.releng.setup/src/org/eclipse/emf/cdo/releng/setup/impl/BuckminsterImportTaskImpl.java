@@ -244,14 +244,14 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
     @Override
     protected void sniff(SetupTaskContainer container, List<Sniffer> dependencies, List<IResource> resources,
         IProgressMonitor monitor) throws Exception
-        {
-      Map<File, IPath> sourceFolders = getSourceFolders(dependencies);
+    {
+      Map<File, IPath> sourcePaths = getSourcePaths(dependencies);
 
       boolean first = true;
       for (IResource resource : resources)
       {
         BuckminsterImportTask task = SetupFactory.eINSTANCE.createBuckminsterImportTask();
-        task.setMspec(getMspec(resource.getLocation(), sourceFolders));
+        task.setMspec(getMspec(resource.getLocation(), sourcePaths));
         task.setTargetPlatform("${setup.branch.dir/tp}");
         container.getSetupTasks().add(task);
 
@@ -264,7 +264,7 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
           task.setDisabled(true);
         }
       }
-        }
+    }
 
     private String getMspec(IPath location, Map<File, IPath> sourcePaths)
     {

@@ -354,10 +354,10 @@ public class MylynBuildsTaskImpl extends SetupTaskImpl implements MylynBuildsTas
     {
       public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
           throws Exception
-          {
+      {
         MylynHelper mylynHelper = MylynHelperImpl.create();
         mylynHelper.sniff(container, null, monitor);
-          }
+      }
     });
   }
 

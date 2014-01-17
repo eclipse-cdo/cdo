@@ -371,10 +371,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     {
       public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
           throws Exception
-          {
+      {
         MylynHelper mylynHelper = MylynHelperImpl.create();
         mylynHelper.sniff(container, null, monitor);
-          }
+      }
     });
   }
 

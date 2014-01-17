@@ -459,7 +459,7 @@ public class OfflineTest extends AbstractSyncingTest
 
       try
       {
-        inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+        inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
         CDOBlob blob = new CDOBlob(inputStream);
 
         Image image = getModel3Factory().createImage();
@@ -492,7 +492,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     try
     {
-      fromDisk = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      fromDisk = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       IOUtil.equals(fromDisk, image.getData().getContents());
     }
     finally
@@ -519,11 +519,11 @@ public class OfflineTest extends AbstractSyncingTest
 
       try
       {
-        inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+        inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
         CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
 
         File file = getModel3Factory().createFile();
-        file.setName("Superstructure.uml");
+        file.setName("Ecore.uml");
         file.setData(clob);
 
         masterResource.getContents().add(file);
@@ -535,7 +535,7 @@ public class OfflineTest extends AbstractSyncingTest
 
       try
       {
-        inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+        inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
         CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
 
         File file = getModel3Factory().createFile();
@@ -567,7 +567,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     try
     {
-      fromDisk = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      fromDisk = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       IOUtil.equals(new InputStreamReader(fromDisk), file.getData().getContents());
     }
     finally

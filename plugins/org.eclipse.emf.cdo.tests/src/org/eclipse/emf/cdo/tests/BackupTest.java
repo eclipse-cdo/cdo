@@ -108,7 +108,7 @@ public class BackupTest extends AbstractCDOTest
 
     try
     {
-      blobStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      blobStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       CDOBlob blob = new CDOBlob(blobStream);
 
       Image image = getModel3Factory().createImage();
@@ -141,11 +141,11 @@ public class BackupTest extends AbstractCDOTest
 
     try
     {
-      clobStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      clobStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
 
       File file = getModel3Factory().createFile();
-      file.setName("Superstructure.uml");
+      file.setName("Ecore.uml");
       file.setData(clob);
 
       CDOSession session = openSession();
@@ -319,7 +319,7 @@ public class BackupTest extends AbstractCDOTest
 
     try
     {
-      blobStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      blobStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       CDOBlob blob = new CDOBlob(blobStream);
 
       Image image = getModel3Factory().createImage();
@@ -359,11 +359,11 @@ public class BackupTest extends AbstractCDOTest
 
     try
     {
-      clobStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      clobStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
 
       File file = getModel3Factory().createFile();
-      file.setName("Superstructure.uml");
+      file.setName("Ecore.uml");
       file.setData(clob);
 
       CDOSession session = openSession();

@@ -43,7 +43,7 @@ public class Bugzilla_351096_Test extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       CDOBlob blob = new CDOBlob(inputStream);
 
       Image image = getModel3Factory().createImage();
@@ -83,10 +83,10 @@ public class Bugzilla_351096_Test extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("uml2/Superstructure.uml");
+      inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
       File file = getModel3Factory().createFile();
-      file.setName("Superstructure.uml");
+      file.setName("Ecore.uml");
       file.setData(clob);
 
       resource.getContents().add(file);

@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
-import org.eclipse.emf.cdo.releng.setup.SourceFolderProvider;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 
@@ -60,6 +59,7 @@ import org.eclipse.buckminster.rmap.ResourceMap;
 import org.eclipse.buckminster.rmap.RmapFactory;
 import org.eclipse.buckminster.rmap.SearchPath;
 import org.eclipse.buckminster.sax.Utils;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
@@ -392,28 +392,14 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       @Override
       public void retainDependencies(List<Sniffer> dependencies)
       {
-        for (Iterator<Sniffer> it = dependencies.iterator(); it.hasNext();)
-        {
-          Sniffer sniffer = it.next();
-          if (sniffer instanceof SourceFolderProvider)
-          {
-            continue;
-          }
-
-          it.remove();
-        }
+        retainType(dependencies, SourcePathProvider.class);
       }
 
       public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
           throws Exception
       {
-        Map<File, String> sourceFolders = new HashMap<File, String>();
-        for (Sniffer sniffer : dependencies)
-        {
-          sourceFolders.putAll(((SourceFolderProvider)sniffer).getSourceFolders());
-        }
-
-        if (sourceFolders.isEmpty())
+        Map<File, IPath> sourcePaths = getSourceFolders(dependencies);
+        if (sourcePaths.isEmpty())
         {
           return;
         }
@@ -421,10 +407,10 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
         task.setTargetPlatform("${setup.branch.dir/tp}");
 
-        for (String sourceFolderMapping : sourceFolders.values())
+        for (IPath relativePath : sourcePaths.values())
         {
           AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
-          sourceLocator.setRootFolder(sourceFolderMapping);
+          sourceLocator.setRootFolder("${setup.branch.dir/" + relativePath + "}");
 
           task.getSourceLocators().add(sourceLocator);
         }

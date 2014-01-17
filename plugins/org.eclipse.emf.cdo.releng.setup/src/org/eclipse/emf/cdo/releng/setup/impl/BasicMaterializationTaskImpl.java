@@ -219,7 +219,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
       return TARGET_PLATFORM_EDEFAULT == null ? targetPlatform != null : !TARGET_PLATFORM_EDEFAULT
-      .equals(targetPlatform);
+          .equals(targetPlatform);
     }
     return super.eIsSet(featureID);
   }
@@ -459,7 +459,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
 
     private static void materialize(final SetupTaskContext context, String mSpec, IProgressMonitor monitor)
         throws MalformedURLException, Exception
-        {
+    {
       context.log("Clearing caches for remote files and URLs");
       CorePlugin plugin = CorePlugin.getDefault();
       plugin.clearRemoteFileCache();
@@ -643,7 +643,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
       {
         throw new CoreException(status);
       }
-        }
+    }
   }
 
 } // BuckminsterImportTaskImpl

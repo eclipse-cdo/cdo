@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTask.Sniffer.SourcePathProvider;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
-import org.eclipse.emf.cdo.releng.setup.SourceFolderProvider;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
@@ -901,9 +901,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   /**
    * @author Eike Stepper
    */
-  private class CloneSniffer extends BasicSniffer implements SourceFolderProvider
+  private class CloneSniffer extends BasicSniffer implements SourcePathProvider
   {
-    private final Map<File, String> sourceFolders = new HashMap<File, String>();
+    private final Map<File, IPath> sourcePaths = new HashMap<File, IPath>();
 
     private boolean used;
 
@@ -915,9 +915,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       this.used = used;
     }
 
-    public Map<File, String> getSourceFolders()
+    public Map<File, IPath> getSourcePaths()
     {
-      return sourceFolders;
+      return sourcePaths;
     }
 
     @SuppressWarnings("restriction")
@@ -998,8 +998,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
 
       File workTree = repository.getWorkTree();
-      String location = "${setup.branch.dir/git/" + workTree.getName() + "}";
-      sourceFolders.put(workTree, location);
+      IPath relativePath = new Path("git").append(workTree.getName());
+      String location = "${setup.branch.dir/" + relativePath + "}";
+      sourcePaths.put(workTree, relativePath);
 
       String remoteURI = getRemoteURI(remoteConfig);
       String userID = ANONYMOUS;

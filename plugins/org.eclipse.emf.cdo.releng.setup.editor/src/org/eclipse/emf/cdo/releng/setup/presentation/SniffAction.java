@@ -19,7 +19,9 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTask.Sniffer;
+import org.eclipse.emf.cdo.releng.setup.SetupTask.Sniffer.ResourceHandler;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
+import org.eclipse.emf.cdo.releng.setup.impl.SetupTaskImpl.BasicSniffer;
 import org.eclipse.emf.cdo.releng.setup.presentation.templates.AutomaticProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
@@ -33,6 +35,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -127,6 +133,8 @@ public class SniffAction extends AbstractContainerAction
             compound.setDisabled(true);
             container.getSetupTasks().add(compound);
 
+            handleWorkspace();
+
             for (Sniffer sniffer : sniffers)
             {
               monitor.subTask(sniffer.getLabel());
@@ -213,6 +221,41 @@ public class SniffAction extends AbstractContainerAction
     });
 
     return sniffers;
+  }
+
+  private void handleWorkspace()
+  {
+    final List<Sniffer> resourceHandlers = new ArrayList<Sniffer>(sniffers);
+    BasicSniffer.retainType(resourceHandlers, ResourceHandler.class);
+    if (!resourceHandlers.isEmpty())
+    {
+      try
+      {
+        ResourcesPlugin.getWorkspace().getRoot().accept(new IResourceVisitor()
+        {
+          public boolean visit(IResource resource) throws CoreException
+          {
+            for (Sniffer sniffer : resourceHandlers)
+            {
+              try
+              {
+                ((ResourceHandler)sniffer).handleResource(resource);
+              }
+              catch (Exception ex)
+              {
+                // Ignore
+              }
+            }
+
+            return true;
+          }
+        });
+      }
+      catch (CoreException ex)
+      {
+        SetupEditorPlugin.getPlugin().log(ex);
+      }
+    }
   }
 
   /**

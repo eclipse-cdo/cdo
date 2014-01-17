@@ -11,14 +11,25 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -199,5 +210,112 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
   protected String getMspec(SetupTaskContext context)
   {
     return getMspec();
+  }
+
+  @Override
+  public void collectSniffers(List<Sniffer> sniffers)
+  {
+    sniffers.add(new MSpecSniffer(BuckminsterImportTaskImpl.this));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class MSpecSniffer extends ResourceSniffer
+  {
+    public MSpecSniffer(EObject object)
+    {
+      super(object, "Creates tasks that import the MSpecs and CQueries found in this workspace.");
+    }
+
+    @Override
+    public void retainDependencies(List<Sniffer> dependencies)
+    {
+      retainType(dependencies, SourcePathProvider.class);
+    }
+
+    @Override
+    protected boolean filterResource(IResource resource)
+    {
+      return resource.getType() == IResource.FILE
+          && ("mspec".equals(resource.getFileExtension()) || "cquery".equals(resource.getFileExtension()));
+    }
+
+    @Override
+    protected void sniff(SetupTaskContainer container, List<Sniffer> dependencies, List<IResource> resources,
+        IProgressMonitor monitor) throws Exception
+    {
+      Map<File, IPath> sourceFolders = getSourceFolders(dependencies);
+
+      boolean first = true;
+      for (IResource resource : resources)
+      {
+        BuckminsterImportTask task = SetupFactory.eINSTANCE.createBuckminsterImportTask();
+        task.setMspec(getMspec(resource.getLocation(), sourceFolders));
+        task.setTargetPlatform("${setup.branch.dir/tp}");
+        container.getSetupTasks().add(task);
+
+        if (first)
+        {
+          first = false;
+        }
+        else
+        {
+          task.setDisabled(true);
+        }
+      }
+    }
+
+    private String getMspec(IPath location, Map<File, IPath> sourcePaths)
+    {
+      IPath sourcePath = getSourcePath(location, sourcePaths);
+      if (sourcePath != null)
+      {
+        return "${setup.branch.dir|uri}/" + sourcePath;
+      }
+
+      return location.toString();
+    }
+
+    private static IPath getSourcePath(IPath location, Map<File, IPath> sourcePaths)
+    {
+      for (Map.Entry<File, IPath> entry : sourcePaths.entrySet())
+      {
+        IPath relativePath = getRelativePath(location, new Path(entry.getKey().toString()));
+        if (relativePath != null)
+        {
+          return entry.getValue().append(relativePath);
+        }
+      }
+
+      return null;
+    }
+
+    private static IPath getRelativePath(IPath path, IPath base)
+    {
+      String[] pathSegments = path.segments();
+      String[] baseSegments = base.segments();
+      int n = getEqualSegmentCount(pathSegments, baseSegments);
+      if (n > 0)
+      {
+        return path.removeFirstSegments(n).makeRelative();
+      }
+
+      return null;
+    }
+
+    private static int getEqualSegmentCount(String[] segments1, String[] segments2)
+    {
+      int min = Math.min(segments1.length, segments2.length);
+      for (int i = 0; i < min; i++)
+      {
+        if (!segments1[i].equals(segments2[i]))
+        {
+          return i;
+        }
+      }
+
+      return min;
+    }
   }
 } // BuckminsterImportTaskImpl

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
+import org.eclipse.emf.cdo.releng.setup.SetupTask.Sniffer.ResourceHandler;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
@@ -42,11 +43,19 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -730,6 +739,31 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       return label;
     }
 
+    public static void retainType(Collection<?> c, Class<?> type)
+    {
+      for (Iterator<?> it = c.iterator(); it.hasNext();)
+      {
+        Object element = it.next();
+        if (type.isInstance(element))
+        {
+          continue;
+        }
+
+        it.remove();
+      }
+    }
+
+    public static Map<File, IPath> getSourceFolders(List<Sniffer> dependencies)
+    {
+      Map<File, IPath> sourceFolders = new HashMap<File, IPath>();
+      for (Sniffer sniffer : dependencies)
+      {
+        sourceFolders.putAll(((SourcePathProvider)sniffer).getSourcePaths());
+      }
+
+      return sourceFolders;
+    }
+
     public static CompoundSetupTask getCompound(SetupTaskContainer container, String name)
     {
       EList<SetupTask> children = container.getSetupTasks();
@@ -749,6 +783,52 @@ public abstract class SetupTaskImpl extends MinimalEObjectImpl.Container impleme
       children.add(compound);
       return compound;
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class ResourceSniffer extends BasicSniffer implements ResourceHandler
+  {
+    private List<IResource> resources = new ArrayList<IResource>();
+
+    public ResourceSniffer()
+    {
+    }
+
+    public ResourceSniffer(EObject object, String description)
+    {
+      super(object, description);
+    }
+
+    public ResourceSniffer(EObject object)
+    {
+      super(object);
+    }
+
+    public ResourceSniffer(Object icon, String label, String description)
+    {
+      super(icon, label, description);
+    }
+
+    public void handleResource(IResource resource) throws Exception
+    {
+      if (filterResource(resource))
+      {
+        resources.add(resource);
+      }
+    }
+
+    public final void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+        throws Exception
+    {
+      sniff(container, dependencies, resources, monitor);
+    }
+
+    protected abstract boolean filterResource(IResource resource);
+
+    protected abstract void sniff(SetupTaskContainer container, List<Sniffer> dependencies, List<IResource> resources,
+        IProgressMonitor monitor) throws Exception;
   }
 
   /**

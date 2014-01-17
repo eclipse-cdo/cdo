@@ -13,10 +13,13 @@ package org.eclipse.emf.cdo.releng.setup;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -261,6 +264,22 @@ public interface SetupTask extends EObject
 
     public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
         throws Exception;
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface ResourceHandler
+    {
+      public void handleResource(IResource resource) throws Exception;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface SourcePathProvider
+    {
+      public Map<File, IPath> getSourcePaths();
+    }
   }
 
 } // SetupTask

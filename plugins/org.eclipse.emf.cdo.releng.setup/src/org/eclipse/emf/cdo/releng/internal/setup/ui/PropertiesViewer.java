@@ -90,7 +90,8 @@ public class PropertiesViewer extends TableViewer
       }
     };
 
-    table.addControlListener(columnResizer);
+    // TODO Can lead to temporary UI freeze
+    // table.addControlListener(columnResizer);
   }
 
   /**

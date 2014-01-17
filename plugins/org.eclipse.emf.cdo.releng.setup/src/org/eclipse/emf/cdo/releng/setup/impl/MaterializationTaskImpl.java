@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.Component;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
+import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -25,14 +26,17 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -87,6 +91,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -386,38 +391,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
   @Override
   public void collectSniffers(List<Sniffer> sniffers)
   {
-    sniffers.add(new BasicSniffer(MaterializationTaskImpl.this,
-        "Creates a task that materializes the current sources and their target platform.")
-    {
-      @Override
-      public void retainDependencies(List<Sniffer> dependencies)
-      {
-        retainType(dependencies, SourcePathProvider.class);
-      }
-
-      public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
-          throws Exception
-      {
-        Map<File, IPath> sourcePaths = getSourceFolders(dependencies);
-        if (sourcePaths.isEmpty())
-        {
-          return;
-        }
-
-        MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
-        task.setTargetPlatform("${setup.branch.dir/tp}");
-
-        for (IPath relativePath : sourcePaths.values())
-        {
-          AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
-          sourceLocator.setRootFolder("${setup.branch.dir/" + relativePath + "}");
-
-          task.getSourceLocators().add(sourceLocator);
-        }
-
-        container.getSetupTasks().add(task);
-      }
-    });
+    sniffers.add(new MaterializationSniffer(this, true));
+    sniffers.add(new MaterializationSniffer(this, false));
   }
 
   public static DocumentBuilder createDocumentBuilder() throws ParserConfigurationException
@@ -428,63 +403,15 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     return documentBuilder;
   }
 
-  public static Element loadRootElement(DocumentBuilder documentBuilder, File file) throws Exception
+  private static Element loadRootElement(DocumentBuilder documentBuilder, File file) throws Exception
   {
     Document document = loadDocument(documentBuilder, file);
     return document.getDocumentElement();
   }
 
-  public static Document loadDocument(DocumentBuilder documentBuilder, File file) throws SAXException, IOException
+  private static Document loadDocument(DocumentBuilder documentBuilder, File file) throws SAXException, IOException
   {
     return documentBuilder.parse(file);
-  }
-
-  public static Set<Pair<String, ComponentType>> analyzeRoots(File folder, boolean locateNestedProjects,
-      List<String> locations, IProgressMonitor monitor) throws ParserConfigurationException
-  {
-    Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
-    Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
-
-    Map<String, List<ComponentLocation>> componentLocations = analyzeFolder(folder, locateNestedProjects, monitor);
-    for (Map.Entry<String, List<ComponentLocation>> entry : componentLocations.entrySet())
-    {
-      String name = entry.getKey();
-      for (ComponentLocation location : entry.getValue())
-      {
-        ComponentType type = location.getComponentType();
-        if (locations != null)
-        {
-          locations.add(location.getLocation());
-        }
-
-        Pair<String, ComponentType> component = Pair.create(name, type);
-        roots.add(component);
-
-        Set<Pair<String, ComponentType>> children = location.getChildren();
-        components.put(component, children);
-      }
-    }
-
-    for (Set<Pair<String, ComponentType>> children : components.values())
-    {
-      for (Pair<String, ComponentType> child : children)
-      {
-        roots.remove(child);
-      }
-    }
-
-    return roots;
-  }
-
-  public static Map<String, List<ComponentLocation>> analyzeFolder(File folder, boolean locateNestedProjects,
-      IProgressMonitor monitor) throws ParserConfigurationException
-  {
-    Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
-
-    DocumentBuilder documentBuilder = createDocumentBuilder();
-    analyze(componentMap, documentBuilder, folder, locateNestedProjects, monitor);
-
-    return componentMap;
   }
 
   private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
@@ -786,8 +713,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       // declaredProperties.put("target.arch", "*");
 
       ComponentQuery componentQuery = componentQueryBuilder.createComponentQuery();
-
       FileOutputStream cqueryOutputStream = null;
+
       try
       {
         cqueryOutputStream = new FileOutputStream(new File(buckminsterFolder, "buckminster.cquery"));
@@ -857,6 +784,8 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       {
         int sourceProviderIndex = 0;
         HashMap<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
+        DocumentBuilder documentBuilder = null;
+
         for (SourceLocator sourceLocator : sourceLocators)
         {
           if (sourceLocator instanceof ManualSourceLocator)
@@ -922,7 +851,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             File rootFolder = new File(automaticSourceLocator.getRootFolder());
             boolean locateNestedProjects = automaticSourceLocator.isLocateNestedProjects();
 
-            DocumentBuilder documentBuilder = createDocumentBuilder();
+            if (documentBuilder == null)
+            {
+              documentBuilder = createDocumentBuilder();
+            }
+
             analyze(componentMap, documentBuilder, rootFolder, locateNestedProjects, new ProgressLogMonitor(context));
           }
         }
@@ -1019,6 +952,373 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     private static Pattern exactPattern(String componentName)
     {
       return Pattern.compile("^" + Pattern.quote(componentName) + "$");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class MaterializationSniffer extends BasicSniffer
+  {
+    private static final String BC = "http://www.eclipse.org/buckminster/Common-1.0";
+
+    private static final String RM = "http://www.eclipse.org/buckminster/RMap-1.0";
+
+    private boolean used;
+
+    private DocumentBuilder documentBuilder;
+
+    public MaterializationSniffer(EObject object, boolean used)
+    {
+      super(object, "Creates a task that materializes the " + (used ? "current" : "all")
+          + " source projects and their target platform.");
+      setLabel("Materialize  " + (used ? "current" : "all") + " projects");
+      this.used = used;
+    }
+
+    @Override
+    public void retainDependencies(List<Sniffer> dependencies)
+    {
+      retainType(dependencies, SourcePathProvider.class);
+    }
+
+    public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
+        throws Exception
+    {
+      Map<File, IPath> sourcePaths = getSourceFolders(dependencies);
+      if (sourcePaths.isEmpty())
+      {
+        return;
+      }
+
+      MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
+      task.setTargetPlatform("${setup.branch.dir/tp}");
+
+      for (IPath relativePath : sourcePaths.values())
+      {
+        AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+        sourceLocator.setRootFolder("${setup.branch.dir/" + relativePath + "}");
+
+        task.getSourceLocators().add(sourceLocator);
+      }
+
+      container.getSetupTasks().add(task);
+    }
+
+    private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException
+    {
+      if (documentBuilder == null)
+      {
+        documentBuilder = createDocumentBuilder();
+      }
+
+      return documentBuilder;
+    }
+
+    public static void analyzeMaterialization(SetupTaskContainer mainContainer, File folder, String location,
+        List<EObject> elements, Set<String> variableNames, SetupTask requirement, DocumentBuilder documentBuilder,
+        IProgressMonitor monitor) throws ParserConfigurationException, SAXException, IOException
+    {
+      List<String> componentLocations = new ArrayList<String>();
+      Set<Pair<String, ComponentType>> roots = analyzeRoots(folder, false, componentLocations, monitor);
+
+      SetupTaskContainer container = mainContainer;
+      MaterializationTask lastTask = null;
+
+      List<File> additionalResources = analyzeAdditionalResources(componentLocations);
+      if (additionalResources.size() > 1)
+      {
+        CompoundSetupTask compound = SetupFactory.eINSTANCE.createCompoundSetupTask("Possible Materializations");
+        compound
+            .setDocumentation("There are several possible materializations. By default all but the last one are disabled.");
+
+        elements.add(compound);
+        mainContainer.getSetupTasks().add(compound);
+        container = compound;
+      }
+
+      for (File additionalResource : additionalResources)
+      {
+        MaterializationTask task = SetupFactory.eINSTANCE.createMaterializationTask();
+        task.setDocumentation("Generated from " + additionalResource);
+        task.setDisabled(true);
+
+        if (requirement != null)
+        {
+          task.getRequirements().add(requirement);
+        }
+
+        AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+        sourceLocator.setRootFolder(location);
+        task.getSourceLocators().add(sourceLocator);
+
+        for (Pair<String, ComponentType> root : roots)
+        {
+          Component component = SetupFactory.eINSTANCE.createComponent();
+          component.setName(root.getElement1());
+          component.setType(root.getElement2());
+          task.getRootComponents().add(component);
+        }
+
+        Document document = loadDocument(documentBuilder, additionalResource);
+
+        String name = additionalResource.getName();
+        if (name.endsWith(".target"))
+        {
+          analyzeTargetDefinition(task, document);
+        }
+        else if (additionalResource.getName().endsWith(".rmap"))
+        {
+          analyzeResourceMap(task, document, variableNames);
+        }
+
+        sortChildren(task);
+
+        if (container == mainContainer)
+        {
+          elements.add(task);
+        }
+
+        container.getSetupTasks().add(task);
+        lastTask = task;
+      }
+
+      if (lastTask != null)
+      {
+        lastTask.setDisabled(false);
+      }
+      else
+      {
+        // TODO
+      }
+    }
+
+    private static Set<Pair<String, ComponentType>> analyzeRoots(File folder, boolean locateNestedProjects,
+        List<String> locations, IProgressMonitor monitor) throws ParserConfigurationException
+    {
+      Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
+      Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
+
+      Map<String, List<ComponentLocation>> componentLocations = analyzeFolder(folder, locateNestedProjects, monitor);
+      for (Map.Entry<String, List<ComponentLocation>> entry : componentLocations.entrySet())
+      {
+        String name = entry.getKey();
+        for (ComponentLocation location : entry.getValue())
+        {
+          ComponentType type = location.getComponentType();
+          if (locations != null)
+          {
+            locations.add(location.getLocation());
+          }
+
+          Pair<String, ComponentType> component = Pair.create(name, type);
+          roots.add(component);
+
+          Set<Pair<String, ComponentType>> children = location.getChildren();
+          components.put(component, children);
+        }
+      }
+
+      for (Set<Pair<String, ComponentType>> children : components.values())
+      {
+        for (Pair<String, ComponentType> child : children)
+        {
+          roots.remove(child);
+        }
+      }
+
+      return roots;
+    }
+
+    private static Map<String, List<ComponentLocation>> analyzeFolder(File folder, boolean locateNestedProjects,
+        IProgressMonitor monitor) throws ParserConfigurationException
+    {
+      Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
+
+      DocumentBuilder documentBuilder = createDocumentBuilder();
+      analyze(componentMap, documentBuilder, folder, locateNestedProjects, monitor);
+
+      return componentMap;
+    }
+
+    private static List<File> analyzeAdditionalResources(List<String> componentLocations)
+    {
+      List<File> additionalResources = new ArrayList<File>();
+      for (String componentLocation : componentLocations)
+      {
+        analyzeAdditionalResources(additionalResources, new File(componentLocation));
+      }
+
+      Collections.sort(additionalResources, new Comparator<File>()
+      {
+        public int compare(File o1, File o2)
+        {
+          return o1.getName().compareTo(o2.getName());
+        }
+      });
+
+      return additionalResources;
+    }
+
+    private static void analyzeAdditionalResources(List<File> result, File folder)
+    {
+      File[] files = folder.listFiles();
+      for (int i = 0; i < files.length; i++)
+      {
+        File file = files[i];
+        if (file.isDirectory())
+        {
+          analyzeAdditionalResources(result, file);
+        }
+        else
+        {
+          String name = file.getName();
+          if (name.endsWith(".target") || name.endsWith(".rmap"))
+          {
+            result.add(file);
+          }
+        }
+      }
+    }
+
+    private static void analyzeTargetDefinition(MaterializationTask task, Document document)
+    {
+      NodeList units = document.getElementsByTagNameNS("*", "unit");
+      for (int i = 0; i < units.getLength(); i++)
+      {
+        Element unit = (Element)units.item(i);
+        String id = unit.getAttribute("id");
+        String version = unit.getAttribute("version");
+
+        ComponentType type = id.endsWith(".feature.group") ? ComponentType.ECLIPSE_FEATURE : ComponentType.OSGI_BUNDLE;
+        addRootComponent(task, id, type, version);
+      }
+
+      NodeList repositories = document.getElementsByTagNameNS("*", "repository");
+      for (int i = 0; i < repositories.getLength(); i++)
+      {
+        Element repository = (Element)repositories.item(i);
+        String location = repository.getAttribute("location");
+
+        addP2Repository(task, location);
+      }
+    }
+
+    private static void analyzeResourceMap(MaterializationTask task, Document document, Set<String> variableNames)
+    {
+      Map<String, String> propertiesMap = new HashMap<String, String>();
+
+      NodeList properties = document.getElementsByTagNameNS(RM, "property");
+      for (int i = 0; i < properties.getLength(); i++)
+      {
+        Element property = (Element)properties.item(i);
+        String key = property.getAttribute("key");
+        String value = property.getAttribute("value");
+
+        if (value != null)
+        {
+          propertiesMap.put(key, value);
+        }
+      }
+
+      NodeList providers = document.getElementsByTagNameNS(RM, "provider");
+      for (int i = 0; i < providers.getLength(); i++)
+      {
+        Element provider = (Element)providers.item(i);
+        String readerType = provider.getAttribute("readerType");
+        if ("p2".equals(readerType))
+        {
+          NodeList uris = provider.getElementsByTagNameNS(RM, "uri");
+          for (int j = 0; j < uris.getLength(); j++)
+          {
+            Element uri = (Element)uris.item(j);
+            String format = uri.getAttribute("format");
+
+            NodeList propertyRefs = provider.getElementsByTagNameNS(BC, "propertyRef");
+            for (int k = 0; k < propertyRefs.getLength(); k++)
+            {
+              Element propertyRef = (Element)propertyRefs.item(k);
+              String key = propertyRef.getAttribute("key");
+
+              if (key != null)
+              {
+                String value = propertiesMap.get(key);
+                if (value == null)
+                {
+                  value = "#{" + key + "}";
+                  variableNames.add(key);
+                }
+
+                format = format.replace("{" + k + "}", value);
+              }
+            }
+
+            format = format.replace('#', '$');
+            addP2Repository(task, format);
+          }
+        }
+      }
+    }
+
+    private static void addRootComponent(MaterializationTask task, String id, ComponentType type, String version)
+    {
+      if (id.endsWith(".source"))
+      {
+        return;
+      }
+
+      Component rootComponent = SetupFactory.eINSTANCE.createComponent();
+      rootComponent.setName(id);
+      rootComponent.setType(type);
+
+      if (!Version.emptyVersion.equals(Version.parseVersion(version)))
+      {
+        VersionRange versionRange = new VersionRange("[" + version + "," + version + "]");
+        rootComponent.setVersionRange(versionRange);
+      }
+
+      task.getRootComponents().add(rootComponent);
+    }
+
+    private static void addP2Repository(MaterializationTask task, String url)
+    {
+      if (url.endsWith("/"))
+      {
+        url = url.substring(0, url.length() - 1);
+      }
+
+      EList<P2Repository> p2Repositories = task.getP2Repositories();
+      for (P2Repository repository : p2Repositories)
+      {
+        if (ObjectUtil.equals(repository.getURL(), url))
+        {
+          return;
+        }
+      }
+
+      P2Repository repository = SetupFactory.eINSTANCE.createP2Repository();
+      repository.setURL(url);
+
+      p2Repositories.add(repository);
+    }
+
+    private static void sortChildren(MaterializationTask task)
+    {
+      ECollections.sort(task.getRootComponents(), new Comparator<Component>()
+      {
+        public int compare(Component o1, Component o2)
+        {
+          return o1.getName().compareTo(o2.getName());
+        }
+      });
+
+      ECollections.sort(task.getP2Repositories(), new Comparator<P2Repository>()
+      {
+        public int compare(P2Repository o1, P2Repository o2)
+        {
+          return o1.getURL().compareTo(o2.getURL());
+        }
+      });
     }
   }
 } // MaterializationTaskImpl

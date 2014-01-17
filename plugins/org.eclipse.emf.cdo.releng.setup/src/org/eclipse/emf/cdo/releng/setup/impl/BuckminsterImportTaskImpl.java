@@ -215,7 +215,7 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
   @Override
   public void collectSniffers(List<Sniffer> sniffers)
   {
-    sniffers.add(new MSpecSniffer(BuckminsterImportTaskImpl.this));
+    sniffers.add(new MSpecSniffer(this));
   }
 
   /**
@@ -244,7 +244,7 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
     @Override
     protected void sniff(SetupTaskContainer container, List<Sniffer> dependencies, List<IResource> resources,
         IProgressMonitor monitor) throws Exception
-    {
+        {
       Map<File, IPath> sourceFolders = getSourceFolders(dependencies);
 
       boolean first = true;
@@ -264,7 +264,7 @@ public class BuckminsterImportTaskImpl extends BasicMaterializationTaskImpl impl
           task.setDisabled(true);
         }
       }
-    }
+        }
 
     private String getMspec(IPath location, Map<File, IPath> sourcePaths)
     {

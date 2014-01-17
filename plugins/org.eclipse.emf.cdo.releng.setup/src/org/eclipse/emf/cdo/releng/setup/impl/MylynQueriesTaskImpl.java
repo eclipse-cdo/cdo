@@ -367,15 +367,14 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
   @Override
   public void collectSniffers(List<Sniffer> sniffers)
   {
-    sniffers.add(new BasicSniffer(MylynQueriesTaskImpl.this,
-        "Creates one or several tasks for the queries in the Mylyn task list.")
+    sniffers.add(new BasicSniffer(this, "Creates one or several tasks for the queries in the Mylyn task list.")
     {
       public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
           throws Exception
-      {
+          {
         MylynHelper mylynHelper = MylynHelperImpl.create();
         mylynHelper.sniff(container, null, monitor);
-      }
+          }
     });
   }
 

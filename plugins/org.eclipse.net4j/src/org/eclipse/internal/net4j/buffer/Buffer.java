@@ -23,6 +23,8 @@ import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.InternalBuffer;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -439,5 +441,69 @@ public class Buffer implements InternalBuffer
       exception.initCause(ex);
       throw exception;
     }
+  }
+
+  private static String formatHex(String hex)
+  {
+    StringBuilder builder = new StringBuilder();
+
+    int length = hex.length();
+    for (int i = 0; i < length; i++)
+    {
+      builder.append(hex.charAt(i));
+      if (i % 2 == 1 && i < length - 1)
+      {
+        builder.append(' ');
+      }
+    }
+
+    return builder.toString();
+  }
+
+  private static void decodeBuffer(String hex) throws IOException
+  {
+    System.out.println("Buffer: " + formatHex(hex));
+    DataInputStream in = new DataInputStream(new ByteArrayInputStream(HexUtil.hexToBytes(hex)));
+
+    short channelID = in.readShort();
+
+    boolean eos = false;
+    short payloadSize = in.readShort();
+    if (payloadSize < 0)
+    {
+      payloadSize = (short)-payloadSize;
+      eos = true;
+    }
+
+    payloadSize -= EOS_OFFSET;
+
+    System.out.println("channelID:     " + channelID);
+    System.out.println("payloadSize:   " + payloadSize);
+    System.out.println("eos:           " + eos);
+
+    String type = "request";
+    int correlationID = in.readInt();
+    if (correlationID < 0)
+    {
+      correlationID = -correlationID;
+      type = "response";
+    }
+    else if (in.available() >= 2)
+    {
+      short signalID = in.readShort();
+      System.out.println("signalID:      " + signalID);
+    }
+
+    System.out.println("correlationID: " + correlationID);
+    System.out.println("type:          " + type);
+    System.out.println();
+  }
+
+  public static void main(String[] args) throws Exception
+  {
+    decodeBuffer("0001ffea0000026b001a0000000101ff000000000000058d00");
+    decodeBuffer("0001fffafffffd9500");
+    decodeBuffer("0001ffea00000064001a0000000101ff000000000000040c00");
+    decodeBuffer("0001fffaffffff9c00");
   }
 }

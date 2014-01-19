@@ -110,7 +110,7 @@ public class PreferenceRecorderAction extends AbstractContainerAction
     task.setKey(path);
     task.setValue(SetupUtil.escape(value));
 
-    String pluginID = key.segment(1).toString();
+    String pluginID = key.segment(0).toString();
     CompoundSetupTask compoundTask = getCompoundTask(pluginID);
     compoundTask.getSetupTasks().add(task);
     expandItem(task);

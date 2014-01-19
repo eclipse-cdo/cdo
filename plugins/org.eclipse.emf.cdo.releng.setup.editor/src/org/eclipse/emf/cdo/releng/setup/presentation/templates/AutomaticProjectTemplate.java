@@ -19,10 +19,10 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
-import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl;
 import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl.MaterializationSniffer;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -408,7 +408,7 @@ public class AutomaticProjectTemplate extends ProjectTemplate
   {
     if (documentBuilder == null)
     {
-      documentBuilder = MaterializationTaskImpl.createDocumentBuilder();
+      documentBuilder = XMLUtil.createDocumentBuilder();
     }
 
     return documentBuilder;

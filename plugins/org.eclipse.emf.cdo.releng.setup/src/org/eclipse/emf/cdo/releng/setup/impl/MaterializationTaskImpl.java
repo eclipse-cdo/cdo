@@ -25,10 +25,10 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -80,7 +80,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
@@ -395,25 +394,6 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     sniffers.add(new MaterializationSniffer(this, false));
   }
 
-  public static DocumentBuilder createDocumentBuilder() throws ParserConfigurationException
-  {
-    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-    documentBuilderFactory.setNamespaceAware(true);
-    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-    return documentBuilder;
-  }
-
-  private static Element loadRootElement(DocumentBuilder documentBuilder, File file) throws Exception
-  {
-    Document document = loadDocument(documentBuilder, file);
-    return document.getDocumentElement();
-  }
-
-  private static Document loadDocument(DocumentBuilder documentBuilder, File file) throws SAXException, IOException
-  {
-    return documentBuilder.parse(file);
-  }
-
   private static void analyze(Map<String, List<ComponentLocation>> componentMap, DocumentBuilder documentBuilder,
       File folder, boolean locateNestedProjects, IProgressMonitor monitor)
   {
@@ -427,111 +407,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     {
       try
       {
-        String componentName = null;
-        ComponentType componentType = null;
-        Set<Pair<String, ComponentType>> children = new HashSet<Pair<String, ComponentType>>();
-
-        File manifestFile = new File(folder, "META-INF/MANIFEST.MF");
-        if (manifestFile.exists())
-        {
-          FileInputStream manifestFileInputStream = null;
-
-          try
-          {
-            manifestFileInputStream = new FileInputStream(manifestFile);
-            Manifest manifest = new Manifest(manifestFileInputStream);
-            String bundleSymbolicName = manifest.getMainAttributes().getValue("Bundle-SymbolicName").trim();
-            int index = bundleSymbolicName.indexOf(';');
-            if (index != -1)
-            {
-              bundleSymbolicName = bundleSymbolicName.substring(0, index).trim();
-            }
-
-            componentName = bundleSymbolicName;
-            componentType = ComponentType.OSGI_BUNDLE;
-
-            addChildren(manifest, children);
-          }
-          catch (IOException ex)
-          {
-            Activator.log(ex);
-          }
-          finally
-          {
-            IOUtil.close(manifestFileInputStream);
-          }
-        }
-        else
-        {
-          File featureXMLFile = new File(folder, "feature.xml");
-          if (featureXMLFile.exists())
-          {
-            try
-            {
-              Element rootElement = loadRootElement(documentBuilder, featureXMLFile);
-              componentName = rootElement.getAttribute("id").trim();
-              componentType = ComponentType.ECLIPSE_FEATURE;
-
-              addChildren(rootElement, "includes", "id", children, ComponentType.ECLIPSE_FEATURE);
-              addChildren(rootElement, "plugin", "id", children, ComponentType.OSGI_BUNDLE);
-            }
-            catch (Exception ex)
-            {
-              Activator.log(ex);
-            }
-          }
-          else
-          {
-            File cspecFile = new File(folder, "buckminster.cspec");
-            if (cspecFile.exists())
-            {
-              Element rootElement = loadRootElement(documentBuilder, cspecFile);
-              componentName = rootElement.getAttribute("name").trim();
-              componentType = ComponentType.BUCKMINSTER;
-
-              analyzeComponentSpec(rootElement, children);
-            }
-            else
-            {
-              Element rootElement = loadRootElement(documentBuilder, projectFile);
-
-              NodeList namesList = rootElement.getElementsByTagName("name");
-              if (namesList.getLength() != 0)
-              {
-                Element nameElement = (Element)namesList.item(0);
-
-                componentName = nameElement.getTextContent().trim();
-                componentType = ComponentType.UNKNOWN;
-              }
-            }
-          }
-        }
-
-        if (componentName != null)
-        {
-          File cspexFile = new File(folder, "buckminster.cspex");
-          if (cspexFile.exists())
-          {
-            Element rootElement = loadRootElement(documentBuilder, cspexFile);
-            analyzeComponentSpec(rootElement, children);
-          }
-
-          List<ComponentLocation> locations = componentMap.get(componentName);
-          if (locations == null)
-          {
-            locations = new ArrayList<ComponentLocation>();
-            componentMap.put(componentName, locations);
-          }
-
-          ComponentLocation componentLocation = new ComponentLocation(componentType, folder.toString());
-          componentLocation.addChildren(children);
-          locations.add(componentLocation);
-
-          if (!locateNestedProjects)
-          {
-            return;
-          }
-        }
+        analyzeProject(componentMap, documentBuilder, folder, locateNestedProjects, projectFile);
       }
       catch (Exception ex)
       {
@@ -542,8 +418,9 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     File[] listFiles = folder.listFiles();
     if (listFiles != null)
     {
-      for (File file : listFiles)
+      for (int i = 0; i < listFiles.length; i++)
       {
+        File file = listFiles[i];
         if (file.isDirectory())
         {
           analyze(componentMap, documentBuilder, file, locateNestedProjects, monitor);
@@ -552,7 +429,132 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     }
   }
 
-  private static void analyzeComponentSpec(Element rootElement, Set<Pair<String, ComponentType>> children)
+  private static void analyzeProject(Map<String, List<ComponentLocation>> componentMap,
+      DocumentBuilder documentBuilder, File folder, boolean locateNestedProjects, File projectFile) throws Exception
+  {
+    ComponentID componentID = null;
+    Set<ComponentID> children = new HashSet<ComponentID>();
+
+    File manifestFile = new File(folder, "META-INF/MANIFEST.MF");
+    if (manifestFile.exists())
+    {
+      componentID = analyzeBundleManifest(manifestFile, children);
+    }
+    else
+    {
+      File featureXMLFile = new File(folder, "feature.xml");
+      if (featureXMLFile.exists())
+      {
+        componentID = analyzeFeatureManifest(featureXMLFile, children, documentBuilder);
+      }
+      else
+      {
+        File cspecFile = new File(folder, "buckminster.cspec");
+        if (cspecFile.exists())
+        {
+          Element rootElement = XMLUtil.loadRootElement(documentBuilder, cspecFile);
+          componentID = new ComponentID(ComponentType.BUCKMINSTER, rootElement.getAttribute("name").trim());
+
+          analyzeComponentSpec(rootElement, children);
+        }
+        else
+        {
+          Element rootElement = XMLUtil.loadRootElement(documentBuilder, projectFile);
+
+          NodeList namesList = rootElement.getElementsByTagName("name");
+          if (namesList.getLength() != 0)
+          {
+            Element nameElement = (Element)namesList.item(0);
+            componentID = new ComponentID(ComponentType.UNKNOWN, nameElement.getTextContent().trim());
+          }
+        }
+      }
+    }
+
+    if (componentID != null)
+    {
+      File cspexFile = new File(folder, "buckminster.cspex");
+      if (cspexFile.exists())
+      {
+        Element rootElement = XMLUtil.loadRootElement(documentBuilder, cspexFile);
+        analyzeComponentSpec(rootElement, children);
+      }
+
+      ComponentType componentType = componentID.getComponentType();
+      String componentName = componentID.getName();
+
+      List<ComponentLocation> locations = componentMap.get(componentName);
+      if (locations == null)
+      {
+        locations = new ArrayList<ComponentLocation>();
+        componentMap.put(componentName, locations);
+      }
+
+      ComponentLocation componentLocation = new ComponentLocation(componentType, folder.toString());
+      componentLocation.addChildren(children);
+      locations.add(componentLocation);
+
+      if (!locateNestedProjects)
+      {
+        return;
+      }
+    }
+  }
+
+  private static ComponentID analyzeBundleManifest(File file, Set<ComponentID> children) throws BundleException
+  {
+    ComponentID componentID = null;
+    FileInputStream manifestFileInputStream = null;
+
+    try
+    {
+      manifestFileInputStream = new FileInputStream(file);
+      Manifest manifest = new Manifest(manifestFileInputStream);
+      String bundleSymbolicName = manifest.getMainAttributes().getValue("Bundle-SymbolicName").trim();
+      int index = bundleSymbolicName.indexOf(';');
+      if (index != -1)
+      {
+        bundleSymbolicName = bundleSymbolicName.substring(0, index).trim();
+      }
+
+      componentID = new ComponentID(ComponentType.OSGI_BUNDLE, bundleSymbolicName);
+
+      addBundleChildren(manifest, children);
+    }
+    catch (IOException ex)
+    {
+      Activator.log(ex);
+    }
+    finally
+    {
+      IOUtil.close(manifestFileInputStream);
+    }
+
+    return componentID;
+  }
+
+  private static ComponentID analyzeFeatureManifest(File file, Set<ComponentID> children,
+      DocumentBuilder documentBuilder)
+  {
+    ComponentID componentID = null;
+
+    try
+    {
+      Element rootElement = XMLUtil.loadRootElement(documentBuilder, file);
+      componentID = new ComponentID(ComponentType.ECLIPSE_FEATURE, rootElement.getAttribute("id").trim());
+
+      addFeatureChildren(rootElement, "includes", "id", children, ComponentType.ECLIPSE_FEATURE);
+      addFeatureChildren(rootElement, "plugin", "id", children, ComponentType.OSGI_BUNDLE);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+
+    return componentID;
+  }
+
+  private static void analyzeComponentSpec(Element rootElement, Set<ComponentID> children)
   {
     NodeList dependenciesList = rootElement.getElementsByTagName("dependencies");
     for (int i = 0; i < dependenciesList.getLength(); i++)
@@ -570,7 +572,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           ComponentType enumValue = ComponentType.get(type);
           if (enumValue != null)
           {
-            children.add(Pair.create(id, enumValue));
+            children.add(new ComponentID(enumValue, id));
           }
         }
         catch (Exception ex)
@@ -581,7 +583,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     }
   }
 
-  private static void addChildren(Manifest manifest, Set<Pair<String, ComponentType>> children) throws BundleException
+  private static void addBundleChildren(Manifest manifest, Set<ComponentID> children) throws BundleException
   {
     String requireBundle = manifest.getMainAttributes().getValue(Constants.REQUIRE_BUNDLE);
     if (requireBundle != null)
@@ -594,22 +596,48 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
           String[] valueComponents = manifestElement.getValueComponents();
           for (String valueComponent : valueComponents)
           {
-            children.add(Pair.create(valueComponent, ComponentType.OSGI_BUNDLE));
+            children.add(new ComponentID(ComponentType.OSGI_BUNDLE, valueComponent));
           }
         }
       }
     }
   }
 
-  private static void addChildren(Element rootElement, String tag, String attribute,
-      Set<Pair<String, ComponentType>> children, ComponentType type)
+  private static void addFeatureChildren(Element rootElement, String tag, String attribute, Set<ComponentID> children,
+      ComponentType type)
   {
     NodeList features = rootElement.getElementsByTagName(tag);
     for (int i = 0; i < features.getLength(); i++)
     {
       Element plugin = (Element)features.item(i);
       String id = plugin.getAttribute(attribute);
-      children.add(Pair.create(id, type));
+      children.add(new ComponentID(type, id));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ComponentID
+  {
+    private final ComponentType componentType;
+
+    private final String name;
+
+    public ComponentID(ComponentType componentType, String name)
+    {
+      this.componentType = componentType;
+      this.name = name;
+    }
+
+    public ComponentType getComponentType()
+    {
+      return componentType;
+    }
+
+    public String getName()
+    {
+      return name;
     }
   }
 
@@ -622,7 +650,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
     private final String location;
 
-    private Set<Pair<String, ComponentType>> children;
+    private Set<ComponentID> children;
 
     public ComponentLocation(ComponentType componentType, String location)
     {
@@ -640,7 +668,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       return location;
     }
 
-    public Set<Pair<String, ComponentType>> getChildren()
+    public Set<ComponentID> getChildren()
     {
       if (children == null)
       {
@@ -650,11 +678,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       return children;
     }
 
-    void addChildren(Set<Pair<String, ComponentType>> children)
+    void addChildren(Set<ComponentID> children)
     {
       if (this.children == null)
       {
-        this.children = new HashSet<Pair<String, ComponentType>>();
+        this.children = new HashSet<ComponentID>();
       }
 
       this.children.addAll(children);
@@ -671,8 +699,17 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     {
       File workspaceDir = context.getWorkspaceDir();
       File buckminsterFolder = new File(workspaceDir, ".buckminster");
-      URI mspecURI = URI.createFileURI(new File(buckminsterFolder, "buckminster.mspec").toString());
 
+      URI mspecURI = generateMSpec(context, buckminsterFolder);
+      generateCQuery(context, buckminsterFolder);
+      generateCSpec(context, buckminsterFolder, rootComponents);
+      generateRMap(context, buckminsterFolder, sourceLocators, p2Repositories);
+
+      return mspecURI.toString();
+    }
+
+    private static URI generateMSpec(SetupTaskContext context, File buckminsterFolder) throws Exception
+    {
       MaterializationSpec mspec = MspecFactory.eINSTANCE.createMaterializationSpec();
 
       mspec.setInstallLocation(new Path(""));
@@ -691,11 +728,17 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       materializationNode.setFilter(FilterFactory.newInstance("(buckminster.source=true)"));
       mspec.getMspecNodes().add(materializationNode);
 
+      URI mspecURI = URI.createFileURI(new File(buckminsterFolder, mspec.getName()).toString());
       ResourceSet resourceSet = new ResourceSetImpl();
+
       Resource mspecResource = resourceSet.createResource(mspecURI);
       mspecResource.getContents().add(mspec);
       mspecResource.save(null);
+      return mspecURI;
+    }
 
+    private static void generateCQuery(SetupTaskContext context, File buckminsterFolder) throws Exception
+    {
       ComponentRequestBuilder componentRequestBuilder = new ComponentRequestBuilder();
       componentRequestBuilder.setName(".buckminster");
       componentRequestBuilder.setComponentTypeID("buckminster");
@@ -724,7 +767,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       {
         IOUtil.close(cqueryOutputStream);
       }
+    }
 
+    private static void generateCSpec(SetupTaskContext context, File buckminsterFolder, EList<Component> rootComponents)
+        throws Exception
+    {
       CSpecBuilder cspecBuilder = new CSpecBuilder();
       cspecBuilder.setComponentTypeID("buckminster");
       cspecBuilder.setName(".buckminster");
@@ -756,7 +803,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       {
         IOUtil.close(cspecOutputStream);
       }
+    }
 
+    private static URI generateRMap(SetupTaskContext context, File buckminsterFolder,
+        EList<SourceLocator> sourceLocators, EList<P2Repository> p2Repositories) throws Exception
+    {
       ResourceMap rmap = RmapFactory.eINSTANCE.createResourceMap();
       EList<Matcher> matchers = rmap.getMatchers();
 
@@ -853,7 +904,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
 
             if (documentBuilder == null)
             {
-              documentBuilder = createDocumentBuilder();
+              documentBuilder = XMLUtil.createDocumentBuilder();
             }
 
             analyze(componentMap, documentBuilder, rootFolder, locateNestedProjects, new ProgressLogMonitor(context));
@@ -891,9 +942,9 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             }
 
             out.println(componentName + " - " + type + " - " + location);
-            for (Pair<String, ComponentType> child : componentLocation.getChildren())
+            for (ComponentID child : componentLocation.getChildren())
             {
-              out.println("    " + child.getElement1() + " - " + child.getElement2());
+              out.println("    " + child.getName() + " - " + child.getComponentType());
             }
           }
 
@@ -942,11 +993,14 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         rmap.getSearchPaths().add(p2SearchPath);
       }
 
-      Resource rmapResource = resourceSet.createResource(mspecURI.trimSegments(1).appendSegment("buckminster.rmap"));
+      URI rmapURI = URI.createFileURI(new File(buckminsterFolder, "buckminster.rmap").toString());
+      ResourceSet resourceSet = new ResourceSetImpl();
+
+      Resource rmapResource = resourceSet.createResource(rmapURI);
       rmapResource.getContents().add(rmap);
       rmapResource.save(null);
 
-      return mspecURI.toString();
+      return rmapURI;
     }
 
     private static Pattern exactPattern(String componentName)
@@ -1020,7 +1074,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         IProgressMonitor monitor) throws ParserConfigurationException, SAXException, IOException
     {
       List<String> componentLocations = new ArrayList<String>();
-      Set<Pair<String, ComponentType>> roots = analyzeRoots(folder, false, componentLocations, monitor);
+      Set<ComponentID> roots = analyzeRoots(folder, false, componentLocations, monitor);
 
       SetupTaskContainer container = mainContainer;
       MaterializationTask lastTask = null;
@@ -1052,15 +1106,15 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
         sourceLocator.setRootFolder(location);
         task.getSourceLocators().add(sourceLocator);
 
-        for (Pair<String, ComponentType> root : roots)
+        for (ComponentID root : roots)
         {
           Component component = SetupFactory.eINSTANCE.createComponent();
-          component.setName(root.getElement1());
-          component.setType(root.getElement2());
+          component.setName(root.getName());
+          component.setType(root.getComponentType());
           task.getRootComponents().add(component);
         }
 
-        Document document = loadDocument(documentBuilder, additionalResource);
+        Document document = XMLUtil.loadDocument(documentBuilder, additionalResource);
 
         String name = additionalResource.getName();
         if (name.endsWith(".target"))
@@ -1093,11 +1147,11 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
       }
     }
 
-    private static Set<Pair<String, ComponentType>> analyzeRoots(File folder, boolean locateNestedProjects,
-        List<String> locations, IProgressMonitor monitor) throws ParserConfigurationException
+    private static Set<ComponentID> analyzeRoots(File folder, boolean locateNestedProjects, List<String> locations,
+        IProgressMonitor monitor) throws ParserConfigurationException
     {
-      Set<Pair<String, ComponentType>> roots = new HashSet<Pair<String, ComponentType>>();
-      Map<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>> components = new HashMap<Pair<String, ComponentType>, Set<Pair<String, ComponentType>>>();
+      Set<ComponentID> roots = new HashSet<ComponentID>();
+      Map<ComponentID, Set<ComponentID>> components = new HashMap<ComponentID, Set<ComponentID>>();
 
       Map<String, List<ComponentLocation>> componentLocations = analyzeFolder(folder, locateNestedProjects, monitor);
       for (Map.Entry<String, List<ComponentLocation>> entry : componentLocations.entrySet())
@@ -1111,17 +1165,17 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
             locations.add(location.getLocation());
           }
 
-          Pair<String, ComponentType> component = Pair.create(name, type);
+          ComponentID component = new ComponentID(type, name);
           roots.add(component);
 
-          Set<Pair<String, ComponentType>> children = location.getChildren();
+          Set<ComponentID> children = location.getChildren();
           components.put(component, children);
         }
       }
 
-      for (Set<Pair<String, ComponentType>> children : components.values())
+      for (Set<ComponentID> children : components.values())
       {
-        for (Pair<String, ComponentType> child : children)
+        for (ComponentID child : children)
         {
           roots.remove(child);
         }
@@ -1135,7 +1189,7 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     {
       Map<String, List<ComponentLocation>> componentMap = new HashMap<String, List<ComponentLocation>>();
 
-      DocumentBuilder documentBuilder = createDocumentBuilder();
+      DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
       analyze(componentMap, documentBuilder, folder, locateNestedProjects, monitor);
 
       return componentMap;

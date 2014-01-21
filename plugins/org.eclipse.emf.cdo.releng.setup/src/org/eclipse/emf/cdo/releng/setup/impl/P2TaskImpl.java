@@ -586,7 +586,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     return false;
   }
 
-  public void perform(SetupTaskContext context) throws Exception
+  public void perform(final SetupTaskContext context) throws Exception
   {
     if (SetupConstants.SETUP_IDE)
     {
@@ -700,7 +700,96 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
     else
     {
-      callDirectorApp(context);
+      callDirectorApp(context, getP2Repositories(), getInstallableUnits(), new LicenseProcessor()
+      {
+        public void processLicenses(IProvisioningPlan provisioningPlan, IProgressMonitor monitor) throws Exception
+        {
+          if (isLicenseConfirmationDisabled())
+          {
+            return;
+          }
+
+          final Preferences preferences = context.getPreferences();
+          Set<LicenseInfo> acceptedLicenses = new HashSet<LicenseInfo>(preferences.getAcceptedLicenses());
+
+          final Map<ILicense, List<IInstallableUnit>> licensesToIUs = new HashMap<ILicense, List<IInstallableUnit>>();
+          Set<Pair<ILicense, String>> set = new HashSet<Pair<ILicense, String>>();
+
+          IQueryable<IInstallableUnit> queryable = provisioningPlan.getAdditions();
+          IQueryResult<IInstallableUnit> result = queryable.query(QueryUtil.ALL_UNITS, monitor);
+          for (IInstallableUnit iu : result)
+          {
+            Collection<ILicense> licenses = iu.getLicenses(null);
+            for (ILicense license : licenses)
+            {
+              String uuid = license.getUUID();
+              if (acceptedLicenses.contains(new LicenseInfo(uuid, null)))
+              {
+                continue;
+              }
+
+              String name = iu.getProperty(IInstallableUnit.PROP_NAME, null);
+              if (name == null)
+              {
+                name = iu.getId();
+              }
+
+              if (!set.add(Pair.create(license, name)))
+              {
+                continue;
+              }
+
+              List<IInstallableUnit> ius = licensesToIUs.get(license);
+              if (ius == null)
+              {
+                ius = new ArrayList<IInstallableUnit>();
+                licensesToIUs.put(license, ius);
+              }
+
+              ius.add(iu);
+            }
+          }
+
+          if (!licensesToIUs.isEmpty())
+          {
+            final Exception exception[] = { null };
+            Display.getDefault().syncExec(new Runnable()
+            {
+              public void run()
+              {
+                try
+                {
+                  LicenseDialog dialog = new LicenseDialog(null, licensesToIUs);
+                  if (dialog.open() == LicenseDialog.OK)
+                  {
+                    if (dialog.isRememberAcceptedLicenses())
+                    {
+                      for (ILicense license : licensesToIUs.keySet())
+                      {
+                        LicenseInfo licenseInfo = new LicenseInfo(license);
+                        context.getPreferences().getAcceptedLicenses().add(licenseInfo);
+                      }
+                    }
+                  }
+                  else
+                  {
+                    throw new UnsupportedOperationException("Licenses have been declined");
+                  }
+                }
+                catch (Exception ex)
+                {
+                  exception[0] = ex;
+                }
+              }
+            });
+
+            if (exception[0] != null)
+            {
+              throw exception[0];
+            }
+          }
+        }
+      });
     }
   }
 
@@ -811,7 +900,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   // sub.done();
   // }
 
-  private void callDirectorApp(final SetupTaskContext context) throws Exception
+  public static void callDirectorApp(final SetupTaskContext context, EList<P2Repository> p2Repositories,
+      final EList<InstallableUnit> installableUnits, final LicenseProcessor licenseProcessor) throws Exception
   {
     if (context.put(FIRST_CALL_DETECTION_KEY, Boolean.TRUE) == null)
     {
@@ -833,9 +923,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     String os = context.getOS().getOsgiOS();
     String ws = context.getOS().getOsgiWS();
     String arch = context.getOS().getOsgiArch();
-
-    EList<P2Repository> p2Repositories = getP2Repositories();
-    EList<InstallableUnit> installableUnits = getInstallableUnits();
 
     context.log("Calling director to install " + installableUnits.size()
         + (installableUnits.size() == 1 ? " unit" : " units") + " from " + p2Repositories.size()
@@ -912,13 +999,16 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
             IProvisioningPlan provisioningPlan = delegate.getProvisioningPlan(profileChangeRequest,
                 provisioningContext, monitor);
 
-            try
+            if (licenseProcessor != null)
             {
-              processLicenses(context, provisioningPlan, monitor);
-            }
-            catch (Exception ex)
-            {
-              throw new RuntimeException(ex);
+              try
+              {
+                licenseProcessor.processLicenses(provisioningPlan, monitor);
+              }
+              catch (Exception ex)
+              {
+                throw new RuntimeException(ex);
+              }
             }
 
             return provisioningPlan;
@@ -1053,7 +1143,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         List<IQuery<IInstallableUnit>> rootsToInstall = getRootsToInstall();
         rootsToInstall.clear();
 
-        for (InstallableUnit installableUnit : getInstallableUnits())
+        for (InstallableUnit installableUnit : installableUnits)
         {
           String id = installableUnit.getID();
           VersionRange versionRange = installableUnit.getVersionRange();
@@ -1211,6 +1301,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     if (checkForDuplicates)
     {
       FileOutputStream out = null;
+
       try
       {
         String contents = DownloadUtil.load(context.getURIConverter(), URI.createFileURI(iniFile.toString()), null);
@@ -1264,7 +1355,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     }
   }
 
-  private String makeList(SetupTaskContext context, EList<? extends EObject> objects, EAttribute attribute)
+  private static String makeList(SetupTaskContext context, EList<? extends EObject> objects, EAttribute attribute)
   {
     StringBuilder builder = new StringBuilder();
     for (EObject object : objects)
@@ -1444,6 +1535,14 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         }
       }
     });
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface LicenseProcessor
+  {
+    public void processLicenses(IProvisioningPlan provisioningPlan, IProgressMonitor monitor) throws Exception;
   }
 
 } // InstallTaskImpl

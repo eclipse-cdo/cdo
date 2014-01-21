@@ -62,4 +62,46 @@
       </page>
    </extension>
 
+   <extension
+         point="org.eclipse.pde.core.targetLocations">
+      <targetLocation
+            canUpdate="true"
+            locationFactory="org.eclipse.emf.cdo.releng.setup.impl.Targlet$Factory"
+            type="Targlet">
+      </targetLocation>
+   </extension>
+
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.pde.core.target.ITargetLocation"
+            class="org.eclipse.emf.cdo.releng.setup.impl.Targlet$UIFactory">
+         <adapter
+               type="org.eclipse.jface.viewers.ILabelProvider">
+         </adapter>
+         <adapter
+               type="org.eclipse.jface.viewers.ITreeContentProvider">
+         </adapter>
+         <adapter
+               type="org.eclipse.pde.ui.target.ITargetLocationEditor">
+         </adapter>
+         <adapter
+               type="org.eclipse.pde.ui.target.ITargetLocationUpdater">
+         </adapter>
+      </factory>
+   </extension>
+   
+   <extension
+         point="org.eclipse.pde.ui.targetLocationProvisioners">
+      <locationProvider
+            class="org.eclipse.emf.cdo.releng.setup.impl.Targlet$UIFactory$NewTargletWizard"
+            icon="icons/profile.gif"
+            id="org.eclipse.emf.cdo.releng.setup.TargletProvisioner"
+            name="Targlet">
+         <description>
+            Download plug-ins from a software site such as a p2 repository or update site.
+         </description>
+      </locationProvider>
+   </extension>
+
 </plugin>

@@ -421,4 +421,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="LicenseInfo" instanceClassName="org.eclipse.emf.cdo.releng.setup.LicenseInfo"/>
   <eClassifiers xsi:type="ecore:EDataType" name="VersionRange" instanceClassName="org.eclipse.equinox.p2.metadata.VersionRange"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TargletTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="roots" lowerBound="1" upperBound="-1"
+        eType="#//InstallableUnit" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="repositoryLists" upperBound="-1"
+        eType="#//RepositoryList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceLocators" upperBound="-1"
+        eType="#//AutomaticSourceLocator" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activeRepositoryList" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RepositoryList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p2Repositories" upperBound="-1"
+        eType="#//P2Repository" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

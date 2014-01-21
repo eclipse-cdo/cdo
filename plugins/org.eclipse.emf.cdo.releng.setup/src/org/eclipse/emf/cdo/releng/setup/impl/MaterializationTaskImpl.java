@@ -68,8 +68,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.equinox.p2.metadata.IVersionedId;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
+import org.eclipse.equinox.p2.metadata.VersionedId;
 import org.eclipse.osgi.util.ManifestElement;
 
 import org.osgi.framework.BundleException;
@@ -365,6 +367,21 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     }
 
     super.consolidate();
+  }
+
+  @Override
+  public void perform(SetupTaskContext context) throws Exception
+  {
+    File p2PoolDir = context.getP2PoolDir();
+    File p2AgentDir = context.getP2AgentDir();
+    String profileID = context.getP2ProfileName() + "_tpX"; // XXX
+    String destination = getTargetPlatform() + "X"; // XXX
+
+    java.net.URI[] p2Repositories = { new java.net.URI("http://download.eclipse.org/releases/luna") };
+    IVersionedId[] rootComponents = { new VersionedId("org.eclipse.emf.ecore.feature.group", Version.emptyVersion) };
+
+    Targlet.create(p2PoolDir, p2AgentDir, profileID, destination, p2Repositories, rootComponents,
+        new ProgressLogMonitor(context));
   }
 
   @Override

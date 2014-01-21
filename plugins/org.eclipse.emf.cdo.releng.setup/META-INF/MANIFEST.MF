@@ -75,6 +75,11 @@ Export-Package: org.eclipse.emf.cdo.releng.internal.setup;version="1.0.0";
    org.eclipse.emf.cdo.releng.setup.editor,
    org.eclipse.emf.cdo.releng.setup.installer.editor,
    org.eclipse.emf.cdo.releng.setup.edit",
+ org.eclipse.emf.cdo.releng.internal.setup.targlets;version="1.0.0";
+  x-friends:="org.eclipse.emf.cdo.releng.setup.installer,
+   org.eclipse.emf.cdo.releng.setup.editor,
+   org.eclipse.emf.cdo.releng.setup.installer.editor,
+   org.eclipse.emf.cdo.releng.setup.edit",
  org.eclipse.emf.cdo.releng.internal.setup.ui;version="1.0.0";
   x-friends:="org.eclipse.emf.cdo.releng.setup.installer,
    org.eclipse.emf.cdo.releng.setup.editor,

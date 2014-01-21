@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
+import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
@@ -56,6 +57,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
+import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.VariableChoice;
@@ -511,6 +514,44 @@ public class SetupSwitch<T> extends Switch<T>
       {
         result = caseSourceLocator(automaticSourceLocator);
       }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.TARGLET_TASK:
+    {
+      TargletTask targletTask = (TargletTask)theEObject;
+      T result = caseTargletTask(targletTask);
+      if (result == null)
+      {
+        result = caseSetupTask(targletTask);
+      }
+      if (result == null)
+      {
+        result = caseTarglet(targletTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.TARGLET:
+    {
+      Targlet targlet = (Targlet)theEObject;
+      T result = caseTarglet(targlet);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.REPOSITORY_LIST:
+    {
+      RepositoryList repositoryList = (RepositoryList)theEObject;
+      T result = caseRepositoryList(repositoryList);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -1405,6 +1446,54 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAutomaticSourceLocator(AutomaticSourceLocator object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Targlet Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Targlet Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTargletTask(TargletTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Targlet</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Targlet</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTarglet(Targlet object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Repository List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Repository List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRepositoryList(RepositoryList object)
   {
     return null;
   }

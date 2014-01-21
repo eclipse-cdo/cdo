@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
+import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.ScopeRoot;
@@ -60,6 +61,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
+import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -314,6 +317,27 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass automaticSourceLocatorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass targletTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass targletEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass repositoryListEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1748,6 +1772,116 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getTargletTask()
+  {
+    return targletTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTarglet()
+  {
+    return targletEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTarglet_Name()
+  {
+    return (EAttribute)targletEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTarglet_Roots()
+  {
+    return (EReference)targletEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTarglet_SourceLocators()
+  {
+    return (EReference)targletEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTarglet_RepositoryLists()
+  {
+    return (EReference)targletEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTarglet_ActiveRepositoryList()
+  {
+    return (EAttribute)targletEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTarglet_ActiveP2Repositories()
+  {
+    return (EReference)targletEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRepositoryList()
+  {
+    return repositoryListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRepositoryList_P2Repositories()
+  {
+    return (EReference)repositoryListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRepositoryList_Name()
+  {
+    return (EAttribute)repositoryListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getRedirectionTask()
   {
     return redirectionTaskEClass;
@@ -2534,6 +2668,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS);
 
+    targletTaskEClass = createEClass(TARGLET_TASK);
+
+    targletEClass = createEClass(TARGLET);
+    createEAttribute(targletEClass, TARGLET__NAME);
+    createEReference(targletEClass, TARGLET__ROOTS);
+    createEReference(targletEClass, TARGLET__SOURCE_LOCATORS);
+    createEReference(targletEClass, TARGLET__REPOSITORY_LISTS);
+    createEAttribute(targletEClass, TARGLET__ACTIVE_REPOSITORY_LIST);
+    createEReference(targletEClass, TARGLET__ACTIVE_P2_REPOSITORIES);
+
+    repositoryListEClass = createEClass(REPOSITORY_LIST);
+    createEReference(repositoryListEClass, REPOSITORY_LIST__P2_REPOSITORIES);
+    createEAttribute(repositoryListEClass, REPOSITORY_LIST__NAME);
+
     redirectionTaskEClass = createEClass(REDIRECTION_TASK);
     createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__SOURCE_URL);
     createEAttribute(redirectionTaskEClass, REDIRECTION_TASK__TARGET_URL);
@@ -2706,6 +2854,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     materializationTaskEClass.getESuperTypes().add(getBasicMaterializationTask());
     manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
+    targletTaskEClass.getESuperTypes().add(getSetupTask());
+    targletTaskEClass.getESuperTypes().add(getTarglet());
     redirectionTaskEClass.getESuperTypes().add(getSetupTask());
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
@@ -2981,6 +3131,36 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getAutomaticSourceLocator_LocateNestedProjects(), ecorePackage.getEBoolean(),
         "locateNestedProjects", null, 0, 1, AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(targletTaskEClass, TargletTask.class, "TargletTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(targletEClass, Targlet.class, "Targlet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTarglet_Name(), ecorePackage.getEString(), "name", null, 1, 1, Targlet.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTarglet_Roots(), getInstallableUnit(), null, "roots", null, 1, -1, Targlet.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getTarglet_SourceLocators(), getAutomaticSourceLocator(), null, "sourceLocators", null, 0, -1,
+        Targlet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTarglet_RepositoryLists(), getRepositoryList(), null, "repositoryLists", null, 0, -1,
+        Targlet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTarglet_ActiveRepositoryList(), ecorePackage.getEString(), "activeRepositoryList", null, 0, 1,
+        Targlet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getTarglet_ActiveP2Repositories(), getP2Repository(), null, "activeP2Repositories", null, 0, -1,
+        Targlet.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+    initEClass(repositoryListEClass, RepositoryList.class, "RepositoryList", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRepositoryList_P2Repositories(), getP2Repository(), null, "p2Repositories", null, 0, -1,
+        RepositoryList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRepositoryList_Name(), ecorePackage.getEString(), "name", null, 1, 1, RepositoryList.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(redirectionTaskEClass, RedirectionTask.class, "RedirectionTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

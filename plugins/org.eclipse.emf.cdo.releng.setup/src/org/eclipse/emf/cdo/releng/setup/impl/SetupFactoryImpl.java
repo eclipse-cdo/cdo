@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
+import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.ResourceCopyTask;
 import org.eclipse.emf.cdo.releng.setup.ResourceCreationTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
@@ -54,6 +55,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
+import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
@@ -171,6 +174,12 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createManualSourceLocator();
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
       return createAutomaticSourceLocator();
+    case SetupPackage.TARGLET_TASK:
+      return createTargletTask();
+    case SetupPackage.TARGLET:
+      return createTarglet();
+    case SetupPackage.REPOSITORY_LIST:
+      return createRepositoryList();
     case SetupPackage.REDIRECTION_TASK:
       return createRedirectionTask();
     case SetupPackage.API_BASELINE_TASK:
@@ -663,6 +672,39 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     AutomaticSourceLocatorImpl automaticSourceLocator = new AutomaticSourceLocatorImpl();
     return automaticSourceLocator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TargletTask createTargletTask()
+  {
+    TargletTaskImpl targletTask = new TargletTaskImpl();
+    return targletTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Targlet createTarglet()
+  {
+    TargletImpl targlet = new TargletImpl();
+    return targlet;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RepositoryList createRepositoryList()
+  {
+    RepositoryListImpl repositoryList = new RepositoryListImpl();
+    return repositoryList;
   }
 
   /**

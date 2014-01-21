@@ -874,6 +874,81 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargletTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TargletTaskItemProvider targletTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createTargletTaskAdapter()
+  {
+    if (targletTaskItemProvider == null)
+    {
+      targletTaskItemProvider = new TargletTaskItemProvider(this);
+    }
+
+    return targletTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Targlet} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TargletItemProvider targletItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.Targlet}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createTargletAdapter()
+  {
+    if (targletItemProvider == null)
+    {
+      targletItemProvider = new TargletItemProvider(this);
+    }
+
+    return targletItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.RepositoryList} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected RepositoryListItemProvider repositoryListItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.RepositoryList}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createRepositoryListAdapter()
+  {
+    if (repositoryListItemProvider == null)
+    {
+      repositoryListItemProvider = new RepositoryListItemProvider(this);
+    }
+
+    return repositoryListItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1422,6 +1497,18 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (automaticSourceLocatorItemProvider != null)
     {
       automaticSourceLocatorItemProvider.dispose();
+    }
+    if (targletTaskItemProvider != null)
+    {
+      targletTaskItemProvider.dispose();
+    }
+    if (targletItemProvider != null)
+    {
+      targletItemProvider.dispose();
+    }
+    if (repositoryListItemProvider != null)
+    {
+      repositoryListItemProvider.dispose();
     }
     if (redirectionTaskItemProvider != null)
     {

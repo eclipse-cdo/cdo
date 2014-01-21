@@ -308,6 +308,33 @@ public interface SetupFactory extends EFactory
   AutomaticSourceLocator createAutomaticSourceLocator();
 
   /**
+   * Returns a new object of class '<em>Targlet Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Targlet Task</em>'.
+   * @generated
+   */
+  TargletTask createTargletTask();
+
+  /**
+   * Returns a new object of class '<em>Targlet</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Targlet</em>'.
+   * @generated
+   */
+  Targlet createTarglet();
+
+  /**
+   * Returns a new object of class '<em>Repository List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Repository List</em>'.
+   * @generated
+   */
+  RepositoryList createRepositoryList();
+
+  /**
    * Returns a new object of class '<em>Redirection Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

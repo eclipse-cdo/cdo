@@ -66,7 +66,7 @@
          point="org.eclipse.pde.core.targetLocations">
       <targetLocation
             canUpdate="true"
-            locationFactory="org.eclipse.emf.cdo.releng.setup.impl.Targlet$Factory"
+            locationFactory="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$Factory"
             type="Targlet">
       </targetLocation>
    </extension>
@@ -75,7 +75,7 @@
          point="org.eclipse.core.runtime.adapters">
       <factory
             adaptableType="org.eclipse.pde.core.target.ITargetLocation"
-            class="org.eclipse.emf.cdo.releng.setup.impl.Targlet$UIFactory">
+            class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$UIFactory">
          <adapter
                type="org.eclipse.jface.viewers.ILabelProvider">
          </adapter>
@@ -94,14 +94,37 @@
    <extension
          point="org.eclipse.pde.ui.targetLocationProvisioners">
       <locationProvider
-            class="org.eclipse.emf.cdo.releng.setup.impl.Targlet$UIFactory$NewTargletWizard"
-            icon="icons/profile.gif"
+            class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$UIFactory$NewTargletWizard"
+            icon="icons/targlets.gif"
             id="org.eclipse.emf.cdo.releng.setup.TargletProvisioner"
             name="Targlet">
          <description>
             Download plug-ins from a software site such as a p2 repository or update site.
          </description>
       </locationProvider>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.eclipse.emf.cdo.releng.setup.actionSet"
+            label="Test"
+            visible="true">
+         <menu
+               id="setupMenu"
+               label="Setup &amp;Menu">
+            <separator
+                  name="setupGroup">
+            </separator>
+         </menu>
+         <action
+               class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TestAction"
+               id="org.eclipse.emf.cdo.releng.internal.setup.targlets.TestAction"
+               label="&amp;Test"
+               style="push"
+               toolbarPath="setupGroup">
+         </action>
+      </actionSet>
    </extension>
 
 </plugin>

@@ -16,6 +16,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.IVersionedId;
 import org.eclipse.equinox.p2.metadata.Version;
@@ -112,7 +114,15 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
 
   public IStatus update(ITargetDefinition target, ITargetLocation targetLocation, IProgressMonitor monitor)
   {
-    return ((TargletBundleContainer)targetLocation).update(target, monitor);
+    try
+    {
+      ((TargletBundleContainer)targetLocation).updateProfile(monitor);
+      return Status.OK_STATUS;
+    }
+    catch (ProvisionException ex)
+    {
+      return ex.getStatus();
+    }
   }
 
   private ILabelProvider getLabelProvider()

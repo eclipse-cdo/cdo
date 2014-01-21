@@ -55,9 +55,7 @@ import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetLocationFactory;
 import org.eclipse.pde.core.target.TargetBundle;
 import org.eclipse.pde.core.target.TargetFeature;
-import org.eclipse.pde.internal.core.PDECore;
 import org.eclipse.pde.internal.core.target.AbstractBundleContainer;
-import org.eclipse.pde.internal.core.target.Messages;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -80,6 +78,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.StringWriter;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -96,13 +95,13 @@ public class TargletBundleContainer extends AbstractBundleContainer
 {
   public static final String TYPE = "Targlet";
 
-  private static final String PROP_TARGLET = "targlet.profile";
-
-  private static final String PROP_P2_PROFILE = "eclipse.p2.profile";
+  private static final String PROP_TARGLET_PROFILE = "targlet.profile";
 
   private static final String FOLLOW_ARTIFACT_REPOSITORY_REFERENCES = "org.eclipse.equinox.p2.director.followArtifactRepositoryReferences";
 
   private static final String TRUE = Boolean.TRUE.toString();
+
+  private static final String CURRENT_AGENT_FILTER = '(' + IProvisioningAgent.SERVICE_CURRENT + '=' + TRUE + ')';
 
   private static final String FALSE = Boolean.FALSE.toString();
 
@@ -110,11 +109,9 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private List<Targlet> targlets = new ArrayList<Targlet>();
 
-  private transient IProvisioningAgent agent;
+  private transient IProvisioningAgent currentAgent;
 
-  private transient String cacheDir;
-
-  private transient IProfile profile;
+  private transient String bundlePool;
 
   private transient IInstallableUnit[] units;
 
@@ -129,23 +126,9 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return TYPE;
   }
 
-  @Override
-  public String getLocation(boolean resolve) throws CoreException
-  {
-    return cacheDir;
-  }
-
   public String getProfileID()
   {
     return profileID;
-  }
-
-  /*
-   * Is only called by content provider and only if this targlet is resolved.
-   */
-  public IInstallableUnit[] getUnits() throws CoreException
-  {
-    return units;
   }
 
   public List<Targlet> getTarglets()
@@ -170,58 +153,108 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return profileID;
   }
 
-  public IStatus update(ITargetDefinition target, IProgressMonitor monitor)
+  /*
+   * Is only called by content provider and only if this targlet is resolved.
+   */
+  public IInstallableUnit[] getUnits() throws CoreException
+  {
+    return units;
+  }
+
+  private void init() throws ProvisionException
   {
     try
     {
-      IProvisioningAgent agent = getAgent();
-      IProfile profile = getProfile();
+      if (currentAgent == null)
+      {
+        currentAgent = getCurrentAgent();
+        IProfileRegistry profileRegistry = getProfileRegistry(currentAgent);
 
-      // IProvisioningAgent agent = createAgent(agentDir);
-      // agent.registerService(PROP_P2_PROFILE, profileID);
-      // agent.registerService(UIServices.SERVICE_NAME, new AvoidTrustPromptService());
-      //
-      // IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.SERVICE_NAME);
-      // if (profileRegistry == null)
-      // {
-      // throw new ProvisionException("Profile registry could not be loaded");
-      // }
-      //
-      // profileRegistry.removeProfile(profileID);
-      //
-      // Map<String, String> props = new HashMap<String, String>();
-      // // props.put(IProfile.PROP_INSTALL_FOLDER, destination); // XXX Doesn't seem to be used
-      // props.put(IProfile.PROP_CACHE, cacheDir.getAbsolutePath());
-      // props.put("org.eclipse.update.install.features", TRUE);
-      //
-      // IProfile profile = profileRegistry.addProfile(profileID, props);
+        IProfile currentProfile = profileRegistry.getProfile(IProfileRegistry.SELF);
+        if (currentProfile == null)
+        {
+          throw new ProvisionException("Current profile could not be loaded");
+        }
 
-      MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(agent);
-      agent.registerService(IMetadataRepositoryManager.SERVICE_NAME, metadataRepositoryManager);
+        if ("SelfHostingProfile".equals(currentProfile.getProfileId()))
+        {
+          // cacheDir = P2TargetUtils.BUNDLE_POOL.toOSString();
+          bundlePool = System.getProperty("targlet.bundle.pool");
+        }
+        else
+        {
+          bundlePool = currentProfile.getProperty(IProfile.PROP_CACHE);
+        }
+
+        if (bundlePool == null)
+        {
+          throw new ProvisionException("Current profile has no bundle pool");
+        }
+      }
+    }
+    catch (Throwable t)
+    {
+      currentAgent = null;
+      bundlePool = null;
+      throwProvisionException(t);
+    }
+  }
+
+  @Override
+  public String getLocation(boolean resolve) throws CoreException
+  {
+    init();
+    return bundlePool;
+  }
+
+  public void updateProfile(IProgressMonitor monitor) throws ProvisionException
+  {
+    init();
+
+    IProfileRegistry profileRegistry = getProfileRegistry(currentAgent);
+    profileRegistry.removeProfile(profileID);
+
+    IProvisioningAgent specialAgent = null; // ;-)
+
+    try
+    {
+      specialAgent = createSpecialAgent(currentAgent);
+
+      IProfile profile = createProfile(specialAgent, profileID);
+
+      MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(specialAgent);
+      specialAgent.registerService(IMetadataRepositoryManager.SERVICE_NAME, metadataRepositoryManager);
       for (URI uri : metadataRepositoryManager.getKnownRepositories(IRepositoryManager.REPOSITORIES_ALL))
       {
         metadataRepositoryManager.removeRepository(uri);
       }
 
-      ArtifactRepositoryManager artifactRepositoryManager = new ArtifactRepositoryManager(agent);
-      agent.registerService(IArtifactRepositoryManager.SERVICE_NAME, artifactRepositoryManager);
+      ArtifactRepositoryManager artifactRepositoryManager = new ArtifactRepositoryManager(specialAgent);
+      specialAgent.registerService(IArtifactRepositoryManager.SERVICE_NAME, artifactRepositoryManager);
       for (URI uri : artifactRepositoryManager.getKnownRepositories(IRepositoryManager.REPOSITORIES_ALL))
       {
         artifactRepositoryManager.removeRepository(uri);
       }
 
-      List<URI> uris = new ArrayList();
+      List<URI> uris = new ArrayList<URI>();
       for (Targlet targlet : targlets)
       {
         for (P2Repository p2Repository : targlet.getActiveP2Repositories())
         {
-          URI uri = new URI(p2Repository.getURL());
-          metadataRepositoryManager.addRepository(uri);
-          artifactRepositoryManager.addRepository(uri);
+          try
+          {
+            URI uri = new URI(p2Repository.getURL());
+            metadataRepositoryManager.addRepository(uri);
+            artifactRepositoryManager.addRepository(uri);
+          }
+          catch (URISyntaxException ex)
+          {
+            throw new ProvisionException(ex.getMessage(), ex);
+          }
         }
       }
 
-      ProvisioningContext provisioningContext = new ProvisioningContext(agent)
+      ProvisioningContext provisioningContext = new ProvisioningContext(specialAgent)
       {
         @Override
         public IQueryable<IInstallableUnit> getMetadata(IProgressMonitor monitor)
@@ -253,46 +286,36 @@ public class TargletBundleContainer extends AbstractBundleContainer
         }
       }
 
-      IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
-      if (planner == null)
-      {
-        throw new ProvisionException("Planner could not be loaded");
-      }
-
+      IPlanner planner = getPlanner(specialAgent);
       IProvisioningPlan result = planner.getProvisioningPlan(request, provisioningContext, new NullProgressMonitor());
-      IStatus status1 = result.getStatus();
-      if (!status1.isOK())
+      if (!result.getStatus().isOK())
       {
-        throw new CoreException(status1);
+        throw new ProvisionException(result.getStatus());
       }
 
-      IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
-      if (engine == null)
+      IEngine engine = getEngine(specialAgent);
+      IStatus status = PlanExecutionHelper.executePlan(result, engine, provisioningContext, new NullProgressMonitor());
+      if (!status.isOK())
       {
-        throw new ProvisionException("Engine could not be loaded");
+        throw new ProvisionException(status);
       }
 
-      IStatus status2 = PlanExecutionHelper.executePlan(result, engine, provisioningContext, new NullProgressMonitor());
-      if (!status2.isOK())
-      {
-        throw new CoreException(status2);
-      }
+      // return new Status(IStatus.OK, PDECore.PLUGIN_ID, ITargetLocationUpdater.STATUS_CODE_NO_CHANGE,
+      // "Targlet container update completed successfully", null);
     }
-    catch (Exception ex)
+    finally
     {
-      return Activator.getStatus(ex);
+      if (specialAgent != null)
+      {
+        specialAgent.stop();
+      }
     }
-
-    // return new Status(IStatus.OK, PDECore.PLUGIN_ID, ITargetLocationUpdater.STATUS_CODE_NO_CHANGE,
-    // "Targlet container update completed successfully", null);
-
-    return Status.OK_STATUS;
   }
 
   @Override
   protected TargetBundle[] resolveBundles(ITargetDefinition definition, IProgressMonitor monitor) throws CoreException
   {
-    resolveUnits(definition, monitor);
+    resolveUnits(monitor);
     return fBundles;
   }
 
@@ -303,16 +326,25 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return fFeatures;
       }
 
-  private void resolveUnits(ITargetDefinition definition, IProgressMonitor monitor) throws CoreException
+  private void resolveUnits(IProgressMonitor monitor) throws ProvisionException
   {
     try
     {
-      IFileArtifactRepository bundlePool = getCache();
-      IProfile profile = getProfile();
+      init();
+
+      IProfileRegistry profileRegistry = getProfileRegistry(currentAgent);
+      IProfile profile = profileRegistry.getProfile(profileID);
+      if (!isValidProfile(profile))
+      {
+        updateProfile(monitor);
+        profile = profileRegistry.getProfile(profileID);
+      }
 
       List<IInstallableUnit> units = new ArrayList<IInstallableUnit>();
       List<TargetBundle> bundles = new ArrayList<TargetBundle>();
       List<TargetFeature> features = new ArrayList<TargetFeature>();
+
+      IFileArtifactRepository cache = getBundlePoolRepository();
 
       IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), null);
       for (Iterator<IInstallableUnit> i = result.iterator(); i.hasNext();)
@@ -322,7 +354,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
         if (isOSGiBundle(unit))
         {
-          generateBundle(unit, bundlePool, bundles);
+          generateBundle(unit, cache, bundles);
+
           // if (getIncludeSource())
           // {
           // // bit of a hack using the bundle naming convention for finding source bundles
@@ -338,7 +371,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
         }
         else if (isFeatureJar(unit))
         {
-          generateFeature(unit, bundlePool, features);
+          generateFeature(unit, cache, features);
         }
       }
 
@@ -346,11 +379,33 @@ public class TargletBundleContainer extends AbstractBundleContainer
       fBundles = bundles.toArray(new TargetBundle[bundles.size()]);
       fFeatures = features.toArray(new TargetFeature[features.size()]);
     }
-    catch (RuntimeException ex)
+    catch (Throwable t)
     {
-      Activator.log(ex);
-      throw ex;
+      Activator.log(t);
+      throwProvisionException(t);
     }
+  }
+
+  private boolean isValidProfile(IProfile profile)
+  {
+    if (profile == null)
+    {
+      return false;
+    }
+
+    String propTarglet = profile.getProperty(PROP_TARGLET_PROFILE);
+    if (!TRUE.equals(propTarglet))
+    {
+      return false;
+    }
+
+    String propCache = profile.getProperty(IProfile.PROP_CACHE);
+    if (!bundlePool.equals(propCache))
+    {
+      return false;
+    }
+
+    return true;
   }
 
   private void generateBundle(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetBundle> bundles)
@@ -406,130 +461,30 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return false;
   }
 
-  private void init() throws ProvisionException
+  private IProfile createProfile(IProvisioningAgent agent, String profileID) throws ProvisionException
   {
-    IProvisioningAgent currentAgent = getCurrentAgent();
-    if (currentAgent == null)
-    {
-      throw new ProvisionException("Current provisioning agent could not be loaded");
-    }
+    IProfileRegistry profileRegistry = getProfileRegistry(agent);
+    profileRegistry.removeProfile(profileID);
 
-    IAgentLocation currentLocation = (IAgentLocation)currentAgent.getService(IAgentLocation.SERVICE_NAME);
-    if (currentLocation == null)
-    {
-      throw new ProvisionException("Current provisioning agent has no location");
-    }
+    Map<String, String> props = new HashMap<String, String>();
+    // props.put(IProfile.PROP_INSTALL_FOLDER, destination); // XXX Doesn't seem to be used
+    props.put(IProfile.PROP_CACHE, bundlePool);
+    props.put(PROP_TARGLET_PROFILE, TRUE);
+    props.put("org.eclipse.update.install.features", TRUE);
 
-    IProfileRegistry currentProfileRegistry = (IProfileRegistry)currentAgent.getService(IProfileRegistry.SERVICE_NAME);
-    if (currentProfileRegistry == null)
-    {
-      throw new ProvisionException("Current profile registry could not be loaded");
-    }
-
-    IProfile currentProfile = currentProfileRegistry.getProfile(IProfileRegistry.SELF);
-    if (currentProfile == null)
-    {
-      throw new ProvisionException("Current profile could not be loaded");
-    }
-
-    cacheDir = currentProfile.getProperty(IProfile.PROP_CACHE);
-    if (cacheDir == null)
-    {
-      throw new ProvisionException("Current profile has no cache");
-    }
-
-    agent = createAgent(currentLocation.getRootLocation());
-    IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.SERVICE_NAME);
-    if (profileRegistry == null)
-    {
-      throw new ProvisionException("Profile registry could not be loaded");
-    }
-
-    profile = profileRegistry.getProfile(profileID);
-    if (profile == null)
-    {
-      Map<String, String> props = new HashMap<String, String>();
-      // props.put(IProfile.PROP_INSTALL_FOLDER, destination); // XXX Doesn't seem to be used
-      props.put(IProfile.PROP_CACHE, cacheDir);
-      props.put(PROP_TARGLET, TRUE);
-      props.put("org.eclipse.update.install.features", TRUE);
-
-      profile = profileRegistry.addProfile(profileID, props);
-    }
-    else
-    {
-      String propTarglet = profile.getProperty(PROP_TARGLET);
-      if (!TRUE.equals(propTarglet))
-      {
-        throw new ProvisionException("Profile is not for targlets");
-      }
-
-      String propCache = profile.getProperty(IProfile.PROP_CACHE);
-      if (!cacheDir.equals(propCache))
-      {
-        throw new ProvisionException("Profile has wrong cache: " + propCache);
-      }
-    }
+    return profileRegistry.addProfile(profileID, props);
   }
 
-  private static IProvisioningAgent getCurrentAgent()
+  private IFileArtifactRepository getBundlePoolRepository() throws ProvisionException
   {
-    Collection<ServiceReference<IProvisioningAgent>> ref = null;
-    BundleContext context = Activator.getBundleContext();
-
-    try
-    {
-      String filter = '(' + IProvisioningAgent.SERVICE_CURRENT + '=' + TRUE + ')';
-      ref = context.getServiceReferences(IProvisioningAgent.class, filter);
-    }
-    catch (InvalidSyntaxException e)
-    {
-      // Can't happen because we write the filter ourselves
-    }
-
-    if (ref == null || ref.size() == 0)
-    {
-      throw new IllegalStateException(
-          "This installation has not been configured properly. No provisioning agent can be found.");
-    }
-
-    IProvisioningAgent agent = context.getService(ref.iterator().next());
-    context.ungetService(ref.iterator().next());
-    return agent;
-  }
-
-  private static IProvisioningAgent createAgent(URI location) throws ProvisionException
-  {
-    BundleContext bundleContext = Activator.getBundleContext();
-    ServiceReference<IProvisioningAgentProvider> providerRef = bundleContext
-        .getServiceReference(IProvisioningAgentProvider.class);
-
-    try
-    {
-      IProvisioningAgentProvider provider = bundleContext.getService(providerRef);
-      return provider.createAgent(location);
-    }
-    finally
-    {
-      bundleContext.ungetService(providerRef);
-    }
-  }
-
-  private IFileArtifactRepository getCache() throws CoreException
-  {
-    if (cacheDir == null)
-    {
-      init();
-    }
-
-    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)getAgent().getService(
-        IArtifactRepositoryManager.SERVICE_NAME);
+    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)currentAgent
+        .getService(IArtifactRepositoryManager.SERVICE_NAME);
     if (manager == null)
     {
-      throw new CoreException(new Status(IStatus.ERROR, PDECore.PLUGIN_ID, Messages.IUBundleContainer_3));
+      throw new ProvisionException("Artifact respository manager could not be loaded");
     }
 
-    URI uri = new File(cacheDir).toURI();
+    URI uri = new File(bundlePool).toURI();
 
     try
     {
@@ -538,35 +493,116 @@ public class TargletBundleContainer extends AbstractBundleContainer
         return (IFileArtifactRepository)manager.loadRepository(uri, null);
       }
     }
-    catch (CoreException e)
+    catch (ProvisionException ex)
     {
-      // could not load or there wasn't one, fall through to create
+      // Could not load or there wasn't one, fall through to create
     }
 
-    String repoName = "Shared Bundle Pool";
-    IArtifactRepository result = manager.createRepository(uri, repoName,
+    IArtifactRepository result = manager.createRepository(uri, "Shared Bundle Pool",
         IArtifactRepositoryManager.TYPE_SIMPLE_REPOSITORY, null);
     return (IFileArtifactRepository)result;
   }
 
-  private IProvisioningAgent getAgent() throws ProvisionException
+  private static IProvisioningAgent getCurrentAgent() throws ProvisionException
   {
-    if (agent == null)
+    Collection<ServiceReference<IProvisioningAgent>> ref = null;
+    BundleContext context = Activator.getBundleContext();
+
+    try
     {
-      init();
+      ref = context.getServiceReferences(IProvisioningAgent.class, CURRENT_AGENT_FILTER);
+    }
+    catch (InvalidSyntaxException e)
+    {
+      // Can't happen because we write the filter ourselves
     }
 
+    if (ref == null || ref.size() == 0)
+    {
+      throw new ProvisionException("Current provisioning agent could not be loaded");
+    }
+
+    IProvisioningAgent agent = context.getService(ref.iterator().next());
+    context.ungetService(ref.iterator().next());
     return agent;
   }
 
-  private IProfile getProfile() throws ProvisionException
+  private static IAgentLocation getAgentLocation(IProvisioningAgent agent) throws ProvisionException
   {
-    if (profile == null)
+    IAgentLocation agentLocation = (IAgentLocation)agent.getService(IAgentLocation.SERVICE_NAME);
+    if (agentLocation == null)
     {
-      init();
+      throw new ProvisionException("Provisioning agent has no location");
     }
 
-    return profile;
+    return agentLocation;
+  }
+
+  private static IProfileRegistry getProfileRegistry(IProvisioningAgent agent) throws ProvisionException
+  {
+    IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.SERVICE_NAME);
+    if (profileRegistry == null)
+    {
+      throw new ProvisionException("Profile registry could not be loaded");
+    }
+
+    return profileRegistry;
+  }
+
+  private static IPlanner getPlanner(IProvisioningAgent agent) throws ProvisionException
+  {
+    IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
+    if (planner == null)
+    {
+      throw new ProvisionException("Planner could not be loaded");
+    }
+
+    return planner;
+  }
+
+  private static IEngine getEngine(IProvisioningAgent agent) throws ProvisionException
+  {
+    IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
+    if (engine == null)
+    {
+      throw new ProvisionException("Engine could not be loaded");
+    }
+
+    return engine;
+  }
+
+  private static IProvisioningAgent createSpecialAgent(IProvisioningAgent currentAgent) throws ProvisionException
+  {
+    IAgentLocation currentLocation = getAgentLocation(currentAgent);
+
+    BundleContext bundleContext = Activator.getBundleContext();
+    ServiceReference<IProvisioningAgentProvider> providerRef = bundleContext
+        .getServiceReference(IProvisioningAgentProvider.class);
+
+    try
+    {
+      IProvisioningAgentProvider provider = bundleContext.getService(providerRef);
+      return provider.createAgent(currentLocation.getRootLocation());
+    }
+    finally
+    {
+      bundleContext.ungetService(providerRef);
+    }
+  }
+
+  private static void throwProvisionException(Throwable t) throws ProvisionException
+  {
+    if (t instanceof ProvisionException)
+    {
+      throw (ProvisionException)t;
+    }
+
+    if (t instanceof Error)
+    {
+      throw (Error)t;
+    }
+
+    throw new ProvisionException(t.getMessage(), t);
   }
 
   /**

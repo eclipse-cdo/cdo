@@ -7,6 +7,7 @@ import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
@@ -231,16 +233,27 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public EList<P2Repository> getActiveP2Repositories()
   {
-    // TODO: implement this method to return the 'Active P2 Repositories' reference list
-    // Ensure that you remove @generated or mark it @generated NOT
-    // The list is expected to implement org.eclipse.emf.ecore.util.InternalEList and
-    // org.eclipse.emf.ecore.EStructuralFeature.Setting
-    // so it's likely that an appropriate subclass of org.eclipse.emf.ecore.util.EcoreEList should be used.
-    throw new UnsupportedOperationException();
+    EList<P2Repository> result = new EObjectEList<P2Repository>(P2Repository.class, this,
+        SetupPackage.TARGLET__ACTIVE_P2_REPOSITORIES);
+
+    String name = getActiveRepositoryList();
+    if (name != null)
+    {
+      for (RepositoryList repositoryList : getRepositoryLists())
+      {
+        if (name.equals(repositoryList.getName()))
+        {
+          result.addAll(repositoryList.getP2Repositories());
+          break;
+        }
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -460,6 +473,16 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
     result.append(activeRepositoryList);
     result.append(')');
     return result.toString();
+  }
+
+  public boolean isNeeded(SetupTaskContext context) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void perform(SetupTaskContext context) throws Exception
+  {
+    throw new UnsupportedOperationException();
   }
 
 } // TargletTaskImpl

@@ -18,9 +18,11 @@ import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.pde.core.target.ITargetDefinition;
+import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetPlatformService;
 import org.eclipse.pde.internal.core.PDECore;
@@ -65,38 +67,48 @@ public class TestAction implements IWorkbenchWindowActionDelegate
 
   private static void initTargetPlatform() throws Exception
   {
-    InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
-    installableUnit.setID("org.eclipse.emf.ecore.feature.group");
-
-    P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
-    p2Repository.setURL("http://download.eclipse.org/releases/luna");
-
     RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
     repositoryList.setName("Luna");
-    repositoryList.getP2Repositories().add(p2Repository);
+    repositoryList.getP2Repositories().add(repository("http://download.eclipse.org/releases/luna"));
+    // repositoryList.getP2Repositories().add(repository("http://download.eclipse.org/eclipse/updates/4.4milestones"));
 
     Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
-    targlet.setName("Test Targlet");
-    targlet.setActiveRepositoryList(repositoryList.getName());
+    targlet.setName("EMF");
+    // targlet.getRoots().add(component("org.eclipse.emf.ecore"));
+    targlet.getRoots().add(component("org.eclipse.emf.ecore.feature.group"));
+    // targlet.getRoots().add(component("org.eclipse.platform.ide.feature.group"));
     targlet.getRepositoryLists().add(repositoryList);
-    targlet.getRoots().add(installableUnit);
+    targlet.setActiveRepositoryList(repositoryList.getName());
 
-    long time = System.currentTimeMillis();
-    TargletBundleContainer container = new TargletBundleContainer("TargletContainer-" + time);
+    TargletBundleContainer container = new TargletBundleContainer();
     container.addTarglet(targlet);
     ITargetLocation[] locations = { container };
 
     TargetPlatformService targetService = (TargetPlatformService)PDECore.getDefault().acquireService(
         ITargetPlatformService.class.getName());
 
-    // for (ITargetHandle handle : targetService.getTargets(new NullProgressMonitor()))
-    // {
-    // targetService.deleteTarget(handle);
-    // }
+    for (ITargetHandle handle : targetService.getTargets(new NullProgressMonitor()))
+    {
+      targetService.deleteTarget(handle);
+    }
 
     ITargetDefinition target = targetService.newTarget();
-    target.setName("Modular Target " + time);
+    target.setName("Modular Target " + System.currentTimeMillis());
     target.setTargetLocations(locations);
     targetService.saveTargetDefinition(target);
+  }
+
+  private static InstallableUnit component(String id)
+  {
+    InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
+    installableUnit.setID(id);
+    return installableUnit;
+  }
+
+  private static P2Repository repository(String url)
+  {
+    P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
+    p2Repository.setURL(url);
+    return p2Repository;
   }
 }

@@ -59,15 +59,20 @@ public final class HashBag<T> implements Set<T>
 
   public boolean add(T o)
   {
+    return add(o, 1);
+  }
+
+  public boolean add(T o, int count)
+  {
     HashBag.Counter counter = map.get(o);
     if (counter == null)
     {
-      counter = new Counter();
+      counter = new Counter(count);
       map.put(o, counter);
       return true;
     }
 
-    counter.incValue();
+    counter.incValue(count);
     return false;
   }
 
@@ -108,13 +113,18 @@ public final class HashBag<T> implements Set<T>
 
   public boolean remove(Object o)
   {
+    return remove(o, 1);
+  }
+
+  public boolean remove(Object o, int count)
+  {
     HashBag.Counter counter = map.get(o);
     if (counter == null)
     {
       return false;
     }
 
-    if (counter.decValue() == 0)
+    if (counter.decValue(count) <= 0)
     {
       map.remove(o);
     }
@@ -157,15 +167,22 @@ public final class HashBag<T> implements Set<T>
     return map.keySet().toArray(a);
   }
 
+  @Override
+  public String toString()
+  {
+    return map.toString();
+  }
+
   /**
    * @author Eike Stepper
    */
   private static final class Counter
   {
-    private int value = 1;
+    private int value;
 
-    public Counter()
+    public Counter(int value)
     {
+      this.value = value;
     }
 
     public int getValue()
@@ -173,14 +190,20 @@ public final class HashBag<T> implements Set<T>
       return value;
     }
 
-    public int incValue()
+    public int incValue(int count)
     {
-      return ++value;
+      return value += count;
     }
 
-    public int decValue()
+    public int decValue(int count)
     {
-      return --value;
+      return value -= count;
+    }
+
+    @Override
+    public String toString()
+    {
+      return Integer.toString(value);
     }
   }
 }

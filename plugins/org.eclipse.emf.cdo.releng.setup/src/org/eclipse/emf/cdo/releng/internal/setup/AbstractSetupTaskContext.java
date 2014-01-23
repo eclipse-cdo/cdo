@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -379,10 +380,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   public String getP2ProfileName()
   {
     String profileName = getBranchDir().toString();
-    profileName = profileName.replace(':', '_');
-    profileName = profileName.replace('/', '_');
-    profileName = profileName.replace('\\', '_');
-    return profileName;
+    return SetupUtil.encodePath(profileName);
   }
 
   public File getP2ProfileDir()

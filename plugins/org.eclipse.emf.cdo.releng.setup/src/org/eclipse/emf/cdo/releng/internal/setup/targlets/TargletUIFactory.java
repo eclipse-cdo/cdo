@@ -11,14 +11,22 @@
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.Targlet;
 
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.core.ProvisionException;
-import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.IVersionedId;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionedId;
@@ -45,6 +53,7 @@ import org.eclipse.swt.widgets.Label;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,8 +62,8 @@ import java.util.Map;
 @SuppressWarnings("restriction")
 public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor, ITargetLocationUpdater
 {
-  private static final Class<?>[] ADAPTERS = { ILabelProvider.class, ITreeContentProvider.class,
-      ITargetLocationEditor.class, ITargetLocationUpdater.class };
+  private static final Class<?>[] ADAPTERS = { ITreeContentProvider.class, ILabelProvider.class,
+    ITargetLocationEditor.class, ITargetLocationUpdater.class };
 
   private ILabelProvider labelProvider;
 
@@ -68,19 +77,18 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     return ADAPTERS;
   }
 
-  @SuppressWarnings("rawtypes")
-  public Object getAdapter(Object adaptableObject, Class adapterType)
+  public Object getAdapter(Object adaptableObject, @SuppressWarnings("rawtypes") Class adapterType)
   {
     if (adaptableObject instanceof TargletBundleContainer)
     {
-      if (adapterType == ILabelProvider.class)
-      {
-        return getLabelProvider();
-      }
-
       if (adapterType == ITreeContentProvider.class)
       {
         return getContentProvider();
+      }
+
+      if (adapterType == ILabelProvider.class)
+      {
+        return getLabelProvider();
       }
 
       if (adapterType == ITargetLocationEditor.class)
@@ -125,6 +133,11 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     }
   }
 
+  private ITreeContentProvider getContentProvider()
+  {
+    return new TargletContentProvider();
+  }
+
   private ILabelProvider getLabelProvider()
   {
     if (labelProvider == null)
@@ -135,9 +148,100 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     return labelProvider;
   }
 
-  private ITreeContentProvider getContentProvider()
+  private static void registerAdditionalAdpter(IAdapterFactory factory, EClass eClass)
   {
-    return new TargletContentProvider();
+    EObject eObject = EcoreUtil.create(eClass);
+    Class<?> adaptable = eObject.getClass();
+    Platform.getAdapterManager().registerAdapters(factory, adaptable);
+  }
+
+  static
+  {
+    final Class<?>[] adapters = { ITreeContentProvider.class, ILabelProvider.class };
+
+    IAdapterFactory factory = new IAdapterFactory()
+    {
+      @SuppressWarnings("rawtypes")
+      public Class[] getAdapterList()
+      {
+        return adapters;
+      }
+
+      public Object getAdapter(Object adaptableObject, @SuppressWarnings("rawtypes") Class adapterType)
+      {
+        if (adapterType == ITreeContentProvider.class)
+        {
+          return new AdapterFactoryContentProvider(EMFUtil.createAdapterFactory());
+        }
+
+        if (adapterType == ILabelProvider.class)
+        {
+          return new AdapterFactoryLabelProvider(EMFUtil.createAdapterFactory());
+        }
+
+        return null;
+      }
+    };
+
+    registerAdditionalAdpter(factory, SetupPackage.Literals.TARGLET);
+    registerAdditionalAdpter(factory, SetupPackage.Literals.INSTALLABLE_UNIT);
+    registerAdditionalAdpter(factory, SetupPackage.Literals.REPOSITORY_LIST);
+    registerAdditionalAdpter(factory, SetupPackage.Literals.P2_REPOSITORY);
+    registerAdditionalAdpter(factory, SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class TargletContentProvider implements ITreeContentProvider
+  {
+    private Map<Targlet, TargletBundleContainer> parents = new HashMap<Targlet, TargletBundleContainer>();
+
+    public TargletContentProvider()
+    {
+    }
+
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+    {
+    }
+
+    public void dispose()
+    {
+      // TODO dispose() is not called by PDE!
+      parents = null;
+    }
+
+    public Object[] getElements(Object element)
+    {
+      return getChildren(element);
+    }
+
+    public Object[] getChildren(Object element)
+    {
+      if (element instanceof TargletBundleContainer)
+      {
+        TargletBundleContainer location = (TargletBundleContainer)element;
+        List<Targlet> targlets = location.getTarglets();
+        for (Targlet targlet : targlets)
+        {
+          parents.put(targlet, location);
+        }
+
+        return targlets.toArray(new Targlet[targlets.size()]);
+      }
+
+      return new Object[0];
+    }
+
+    public boolean hasChildren(Object element)
+    {
+      return getChildren(element).length != 0;
+    }
+
+    public Object getParent(Object element)
+    {
+      return parents.get(element);
+    }
   }
 
   /**
@@ -166,81 +270,10 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     {
       if (element instanceof TargletBundleContainer)
       {
-        TargletBundleContainer targlet = (TargletBundleContainer)element;
-        return targlet.getProfileID();
+        return ((TargletBundleContainer)element).toString();
       }
 
       return super.getText(element);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class TargletContentProvider implements ITreeContentProvider
-  {
-    private Map<IInstallableUnit, TargletBundleContainer> parents = new HashMap<IInstallableUnit, TargletBundleContainer>();
-
-    public TargletContentProvider()
-    {
-    }
-
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-    {
-    }
-
-    public void dispose()
-    {
-      // TODO dispose() is not called by PDE!
-      parents = null;
-    }
-
-    public Object[] getElements(Object inputElement)
-    {
-      return getChildren(inputElement);
-    }
-
-    public Object[] getChildren(Object parentElement)
-    {
-      if (false)
-      {
-        TargletBundleContainer location = (TargletBundleContainer)parentElement;
-        if (location.isResolved())
-        {
-          try
-          {
-            // // if this is a bundle container then we must be sure that all bundle containers are
-            // // happy since they all share the same profile.
-            // ITargetDefinition target = location.getTarget();
-            // if (target != null && P2TargetUtils.isResolved(target))
-            // {
-            IInstallableUnit[] units = location.getUnits();
-            for (int i = 0; i < units.length; i++)
-            {
-              parents.put(units[i], location);
-            }
-
-            return units;
-            // }
-          }
-          catch (CoreException e)
-          {
-            return new Object[] { e.getStatus() };
-          }
-        }
-      }
-
-      return new Object[0];
-    }
-
-    public boolean hasChildren(Object element)
-    {
-      return getChildren(element).length != 0;
-    }
-
-    public Object getParent(Object element)
-    {
-      return parents.get(element);
     }
   }
 
@@ -251,8 +284,6 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     private TargletBundleContainer targlet;
 
     private TargletUIFactory.TargletWizardPage page;
-
-    private static final String SETTINGS_SECTION = "editBundleContainerWizard";
 
     public NewTargletWizard()
     {
@@ -267,14 +298,6 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     @Override
     public void addPages()
     {
-      // IDialogSettings settings = PDEPlugin.getDefault().getDialogSettings().getSection(SETTINGS_SECTION);
-      // if (settings == null)
-      // {
-      // settings = PDEPlugin.getDefault().getDialogSettings().addNewSection(SETTINGS_SECTION);
-      // }
-      //
-      // setDialogSettings(settings);
-
       page = new TargletWizardPage(target);
       addPage(page);
     }
@@ -361,11 +384,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
         java.net.URI[] p2Repositories = { new java.net.URI("http://download.eclipse.org/releases/luna") };
         IVersionedId[] rootComponents = { new VersionedId("org.eclipse.emf.ecore.feature.group", Version.emptyVersion) };
 
-        int xxx;
         return null;
-
-        // return create(p2PoolDir, p2AgentDir, profileID, destination, p2Repositories, rootComponents,
-        // new NullProgressMonitor());
       }
       catch (RuntimeException ex)
       {
@@ -379,13 +398,6 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
 
     public void storeSettings()
     {
-      // IDialogSettings settings = getDialogSettings();
-      // if (settings != null)
-      // {
-      // settings.put(SETTINGS_GROUP_BY_CATEGORY, fShowCategoriesButton.getSelection());
-      // settings.put(SETTINGS_SHOW_OLD_VERSIONS, fShowOldVersionsButton.getSelection());
-      // settings.put(SETTINGS_SELECTED_REPOSITORY, fRepoLocation != null ? fRepoLocation.toString() : null);
-      // }
     }
 
     public void createControl(Composite parent)
@@ -396,18 +408,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
       label.setText("Targlet Info");
       label.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-      // restoreWidgetState();
       setControl(composite);
-      // setPageComplete(false);
-
-      // if (fEditContainer == null)
-      // {
-      // PlatformUI.getWorkbench().getHelpSystem().setHelp(composite, IHelpContextIds.LOCATION_ADD_SITE_WIZARD);
-      // }
-      // else
-      // {
-      // PlatformUI.getWorkbench().getHelpSystem().setHelp(composite, IHelpContextIds.LOCATION_EDIT_SITE_WIZARD);
-      // }
     }
 
     /**
@@ -415,23 +416,8 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
      */
     void pageChanged()
     {
-      // if (fSelectedIUStatus.getSeverity() == IStatus.ERROR)
-      // {
-      // setErrorMessage(fSelectedIUStatus.getMessage());
-      // setPageComplete(false);
-      // }
-      // else if (fAvailableIUGroup != null && fAvailableIUGroup.getCheckedLeafIUs().length == 0)
-      // {
-      // // On page load and when sites are selected, we might not have an error status, but we want finish to
-      // remain
-      // // disabled
-      // setPageComplete(false);
-      // }
-      // else
-      {
-        setErrorMessage(null);
-        setPageComplete(true);
-      }
+      setErrorMessage(null);
+      setPageComplete(true);
     }
 
     /**
@@ -439,156 +425,6 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
      */
     private void restoreWidgetState()
     {
-      // IDialogSettings settings = getDialogSettings();
-      // URI uri = null;
-      // boolean showCategories = fQueryContext.shouldGroupByCategories();
-      // boolean showOldVersions = fQueryContext.getShowLatestVersionsOnly();
-      //
-      // // Init the checkboxes and repo selector combo
-      // if (fEditContainer != null)
-      // {
-      // if (fEditContainer.getRepositories() != null)
-      // {
-      // uri = fEditContainer.getRepositories()[0];
-      // }
-      // }
-      // else if (settings != null)
-      // {
-      // String stringURI = settings.get(SETTINGS_SELECTED_REPOSITORY);
-      // if (stringURI != null && stringURI.trim().length() > 0)
-      // {
-      // try
-      // {
-      // uri = new URI(stringURI);
-      // }
-      // catch (URISyntaxException e)
-      // {
-      // PDEPlugin.log(e);
-      // }
-      // }
-      // }
-      //
-      // if (settings != null)
-      // {
-      // if (settings.get(SETTINGS_GROUP_BY_CATEGORY) != null)
-      // {
-      // showCategories = settings.getBoolean(SETTINGS_GROUP_BY_CATEGORY);
-      // }
-      // if (settings.get(SETTINGS_SHOW_OLD_VERSIONS) != null)
-      // {
-      // showOldVersions = settings.getBoolean(SETTINGS_SHOW_OLD_VERSIONS);
-      // }
-      // }
-      //
-      // if (uri != null)
-      // {
-      // fRepoSelector.setRepositorySelection(AvailableIUGroup.AVAILABLE_SPECIFIED, uri);
-      // }
-      // else if (fEditContainer != null)
-      // {
-      // fRepoSelector.setRepositorySelection(AvailableIUGroup.AVAILABLE_ALL, null);
-      // }
-      // else
-      // {
-      // fRepoSelector.setRepositorySelection(AvailableIUGroup.AVAILABLE_NONE, null);
-      // }
-      //
-      // fShowCategoriesButton.setSelection(showCategories);
-      // fShowOldVersionsButton.setSelection(showOldVersions);
-      //
-      // if (fEditContainer != null)
-      // {
-      // fIncludeRequiredButton.setSelection(fEditContainer.getIncludeAllRequired());
-      // fAllPlatformsButton.setSelection(fEditContainer.getIncludeAllEnvironments());
-      // fIncludeSourceButton.setSelection(fEditContainer.getIncludeSource());
-      // fConfigurePhaseButton.setSelection(fEditContainer.getIncludeConfigurePhase());
-      // }
-      // else
-      // {
-      // // If we are creating a new container, but there is an existing iu container we should use it's settings
-      // // (otherwise we overwrite them)
-      // ITargetLocation[] knownContainers = fTarget.getTargetLocations();
-      // if (knownContainers != null)
-      // {
-      // for (int i = 0; i < knownContainers.length; i++)
-      // {
-      // if (knownContainers[i] instanceof IUBundleContainer)
-      // {
-      // fIncludeRequiredButton.setSelection(((IUBundleContainer)knownContainers[i]).getIncludeAllRequired());
-      // fAllPlatformsButton.setSelection(((IUBundleContainer)knownContainers[i]).getIncludeAllEnvironments());
-      // fIncludeSourceButton.setSelection(((IUBundleContainer)knownContainers[i]).getIncludeSource());
-      // fConfigurePhaseButton
-      // .setSelection(((IUBundleContainer)knownContainers[i]).getIncludeConfigurePhase());
-      // }
-      // }
-      // }
-      // }
-      //
-      // // If the user can create two containers with different settings for include required we won't resolve
-      // // correctly
-      // // If the user has an existing container, don't let them edit the options, bug 275013
-      // if (fTarget != null)
-      // {
-      // ITargetLocation[] containers = fTarget.getTargetLocations();
-      // if (containers != null)
-      // {
-      // for (int i = 0; i < containers.length; i++)
-      // {
-      // if (containers[i] instanceof IUBundleContainer && containers[i] != fEditContainer)
-      // {
-      // fIncludeRequiredButton.setSelection(((IUBundleContainer)containers[i]).getIncludeAllRequired());
-      // fAllPlatformsButton.setSelection(((IUBundleContainer)containers[i]).getIncludeAllEnvironments());
-      // break;
-      // }
-      // }
-      // }
-      // }
-      //
-      // fAllPlatformsButton.setEnabled(!fIncludeRequiredButton.getSelection());
-      //
-      // updateViewContext();
-      // fRepoSelector.getDefaultFocusControl().setFocus();
-      // updateDetails();
-      //
-      // // If we are editing a bundle check any installable units
-      // if (fEditContainer != null)
-      // {
-      // try
-      // {
-      // // TODO This code does not do a good job, selecting, revealing, and collapsing all
-      // // Only able to check items if we don't have categories
-      // fQueryContext.setViewType(IUViewQueryContext.AVAILABLE_VIEW_FLAT);
-      // fAvailableIUGroup.updateAvailableViewState();
-      // fAvailableIUGroup.setChecked(fEditContainer.getInstallableUnits());
-      // // Make sure view is back in proper state
-      // updateViewContext();
-      // IInstallableUnit[] units = fAvailableIUGroup.getCheckedLeafIUs();
-      // if (units.length > 0)
-      // {
-      // fAvailableIUGroup.getCheckboxTreeViewer().setSelection(new StructuredSelection(units[0]), true);
-      // if (units.length == 1)
-      // {
-      // fSelectionCount.setText(NLS.bind(Messages.EditIUContainerPage_itemSelected,
-      // Integer.toString(units.length)));
-      // }
-      // else
-      // {
-      // fSelectionCount.setText(NLS.bind(Messages.EditIUContainerPage_itemsSelected,
-      // Integer.toString(units.length)));
-      // }
-      // }
-      // else
-      // {
-      // fSelectionCount.setText(NLS.bind(Messages.EditIUContainerPage_itemsSelected, Integer.toString(0)));
-      // }
-      // fAvailableIUGroup.getCheckboxTreeViewer().collapseAll();
-      //
-      // }
-      // catch (CoreException e)
-      // {
-      // PDEPlugin.log(e);
-      // }
-      // }
     }
   }
 }

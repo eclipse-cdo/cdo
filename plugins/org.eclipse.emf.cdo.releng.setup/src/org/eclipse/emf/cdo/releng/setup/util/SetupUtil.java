@@ -25,4 +25,9 @@ public final class SetupUtil
   {
     return AbstractSetupTaskContext.escape(string);
   }
+
+  public static String encodePath(String path)
+  {
+    return path.replace(':', '_').replace('/', '_').replace('\\', '_');
+  }
 }

@@ -66,7 +66,7 @@
          point="org.eclipse.pde.core.targetLocations">
       <targetLocation
             canUpdate="true"
-            locationFactory="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$Factory"
+            locationFactory="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$Persistence"
             type="Targlet">
       </targetLocation>
    </extension>
@@ -74,8 +74,8 @@
    <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
-            adaptableType="org.eclipse.pde.core.target.ITargetLocation"
-            class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$UIFactory">
+            adaptableType="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer"
+            class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletUIFactory">
          <adapter
                type="org.eclipse.jface.viewers.ILabelProvider">
          </adapter>
@@ -94,7 +94,7 @@
    <extension
          point="org.eclipse.pde.ui.targetLocationProvisioners">
       <locationProvider
-            class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer$UIFactory$NewTargletWizard"
+            class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletUIFactory$NewTargletWizard"
             icon="icons/targlets.gif"
             id="org.eclipse.emf.cdo.releng.setup.TargletProvisioner"
             name="Targlet">

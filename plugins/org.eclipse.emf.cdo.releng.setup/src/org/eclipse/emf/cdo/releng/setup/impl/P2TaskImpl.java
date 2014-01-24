@@ -795,7 +795,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private void processLicenses(final SetupTaskContext context, IProvisioningPlan provisioningPlan,
       IProgressMonitor monitor) throws Exception
-      {
+  {
     if (isLicenseConfirmationDisabled())
     {
       return;
@@ -880,7 +880,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         throw exception[0];
       }
     }
-      }
+  }
 
   private ProvisioningContext makeProvisioningContext(ProvisioningSession session, Collection<java.net.URI> repositories)
   {
@@ -902,7 +902,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   public static void callDirectorApp(final SetupTaskContext context, EList<P2Repository> p2Repositories,
       final EList<InstallableUnit> installableUnits, final LicenseProcessor licenseProcessor) throws Exception
-      {
+  {
     if (context.put(FIRST_CALL_DETECTION_KEY, Boolean.TRUE) == null)
     {
       FileUtil.delete(new File(context.getEclipseDir(),
@@ -1026,9 +1026,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
               IProgressMonitor monitor)
-              {
+          {
             return delegate.updatesFor(iu, context, monitor);
-              }
+          }
         };
 
         targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
@@ -1154,7 +1154,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
               Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
-                  + versionRange);
+              + versionRange);
           rootsToInstall.add(query);
         }
       }
@@ -1307,7 +1307,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         String contents = DownloadUtil.load(context.getURIConverter(), URI.createFileURI(iniFile.toString()), null);
         Pattern section = Pattern.compile(
             "^(-vmargs)([\n\r]+.*)\\z|^(-[^\\n\\r]*[\\n\\r]*)((?:^[^-][^\\n\\r]*)*[\\n\\r]*)", Pattern.MULTILINE
-            | Pattern.DOTALL);
+                | Pattern.DOTALL);
         Map<String, String> map = new LinkedHashMap<String, String>();
         for (Matcher matcher = section.matcher(contents); matcher.find();)
         {
@@ -1353,7 +1353,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     {
       throw new CoreException(Status.CANCEL_STATUS);
     }
-      }
+  }
 
   private static String makeList(SetupTaskContext context, EList<? extends EObject> objects, EAttribute attribute)
   {
@@ -1380,7 +1380,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   @Override
   public MirrorRunnable mirror(final MirrorContext context, final File mirrorsDir, boolean includingLocals)
       throws Exception
-      {
+  {
     return new MirrorRunnable()
     {
       public void run(IProgressMonitor monitor) throws Exception
@@ -1467,7 +1467,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
       private void initSourceRepos(MirrorApplication app, final MirrorContext context, String targetURL)
           throws URISyntaxException
-          {
+      {
         for (P2Repository p2Repository : getP2Repositories())
         {
           String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
@@ -1478,7 +1478,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           context.addRedirection(sourceURL, targetURL);
         }
-          }
+      }
 
       private void initRootIUs(MirrorApplication app)
       {
@@ -1500,7 +1500,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         ReflectUtil.setValue(field, app, rootIUs);
       }
     };
-      }
+  }
 
   @Override
   public void collectSniffers(List<Sniffer> sniffers)
@@ -1509,7 +1509,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     {
       public void sniff(SetupTaskContainer container, List<Sniffer> dependencies, IProgressMonitor monitor)
           throws Exception
-          {
+      {
         Set<IInstallableUnit> installedUnits = getInstalledUnits();
         Set<String> knownRepositories = getKnownRepositories();
         if (installedUnits.isEmpty() && knownRepositories.isEmpty())
@@ -1533,7 +1533,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
           p2Repository.setURL(repository);
           task.getP2Repositories().add(p2Repository);
         }
-          }
+      }
     });
   }
 

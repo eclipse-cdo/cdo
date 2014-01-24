@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.FeatureIUGenerator;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
@@ -30,10 +32,12 @@ import org.eclipse.pde.internal.core.target.TargetPlatformService;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "unused" })
 public class TestAction implements IWorkbenchWindowActionDelegate
 {
   public TestAction()
@@ -56,6 +60,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
   {
     try
     {
+      // generateFeatureIU();
       initTargetPlatform();
     }
     catch (Throwable ex)
@@ -63,6 +68,20 @@ public class TestAction implements IWorkbenchWindowActionDelegate
       Activator.log(ex);
       ErrorDialog.open(ex);
     }
+  }
+
+  private static void generateFeatureIU() throws Exception
+  {
+    IUGenerator generator = FeatureIUGenerator.INSTANCE;
+
+    System.out.println(generator.generateIU(
+        new File("C:/develop/cdo/master/git/cdo/features/org.eclipse.emf.cdo.site-feature")).getRequirements());
+
+    System.out.println(generator.generateIU(
+        new File("C:/develop/cdo/master/git/cdo/features/org.eclipse.emf.cdo.sdk-feature")).getRequirements());
+
+    System.out.println(generator.generateIU(
+        new File("C:/develop/cdo/master/git/cdo/features/org.eclipse.emf.cdo-feature")).getRequirements());
   }
 
   private static void initTargetPlatform() throws Exception
@@ -74,9 +93,15 @@ public class TestAction implements IWorkbenchWindowActionDelegate
 
     Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
     targlet.setName("EMF");
+
+    targlet.getRoots().add(component("org.eclipse.net4j.feature.group"));
+    targlet.getRoots().add(component("org.eclipse.net4j.db.feature.group"));
     // targlet.getRoots().add(component("org.eclipse.emf.ecore"));
-    targlet.getRoots().add(component("org.eclipse.emf.ecore.feature.group"));
+    // targlet.getRoots().add(component("org.eclipse.emf.ecore.feature.group"));
     // targlet.getRoots().add(component("org.eclipse.platform.ide.feature.group"));
+
+    targlet.getSourceLocators().add(sourceLocator("C:/develop/cdo/master/git/cdo", false));
+
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
 
@@ -103,6 +128,14 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
     installableUnit.setID(id);
     return installableUnit;
+  }
+
+  private static AutomaticSourceLocator sourceLocator(String rootFolder, boolean locateNestedProjects)
+  {
+    AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+    sourceLocator.setRootFolder(rootFolder);
+    sourceLocator.setLocateNestedProjects(locateNestedProjects);
+    return sourceLocator;
   }
 
   private static P2Repository repository(String url)

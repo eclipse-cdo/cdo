@@ -10,12 +10,18 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectAnalyzer;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -242,6 +248,15 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     result.append(locateNestedProjects);
     result.append(')');
     return result.toString();
+  }
+
+  public <T> List<T> accept(Visitor<T> visitor, IProgressMonitor monitor)
+  {
+    File rootFolder = new File(getRootFolder());
+    boolean locateNestedProjects = isLocateNestedProjects();
+
+    BasicProjectAnalyzer<T> projectAnalyzer = new BasicProjectAnalyzer<T>();
+    return projectAnalyzer.analyze(rootFolder, locateNestedProjects, visitor, monitor);
   }
 
 } // AutomaticSourceLocatorImpl

@@ -26,10 +26,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.equinox.internal.p2.engine.Phase;
+import org.eclipse.equinox.internal.p2.engine.PhaseSet;
+import org.eclipse.equinox.internal.p2.engine.phases.Collect;
+import org.eclipse.equinox.internal.p2.engine.phases.Install;
+import org.eclipse.equinox.internal.p2.engine.phases.Property;
 import org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IEngine;
+import org.eclipse.equinox.p2.engine.IPhaseSet;
 import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
@@ -39,6 +45,7 @@ import org.eclipse.equinox.p2.metadata.IProvidedCapability;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.equinox.p2.planner.IPlanner;
 import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
+import org.eclipse.equinox.p2.query.CollectionResult;
 import org.eclipse.equinox.p2.query.IQuery;
 import org.eclipse.equinox.p2.query.IQueryResult;
 import org.eclipse.equinox.p2.query.IQueryable;
@@ -256,25 +263,41 @@ public class TargletBundleContainer extends AbstractBundleContainer
   {
     initProfile();
 
-    IProvisioningAgent agent = TargletProfileManager.getInstance().getAgent();
-
-    IMetadataRepositoryManager metadataRepositoryManager = (IMetadataRepositoryManager)agent
-        .getService(IMetadataRepositoryManager.SERVICE_NAME);
-    IArtifactRepositoryManager artifactRepositoryManager = (IArtifactRepositoryManager)agent
-        .getService(IArtifactRepositoryManager.SERVICE_NAME);
-
-    List<URI> uris = new ArrayList<URI>();
+    List<InstallableUnit> roots = new ArrayList<InstallableUnit>();
     for (Targlet targlet : targlets)
     {
+      for (InstallableUnit root : targlet.getRoots())
+      {
+        roots.add(root);
+      }
+    }
+
+    if (roots.isEmpty())
+    {
+      return;
+    }
+
+    final IUAnalyzer analyzer = new IUAnalyzer();
+    final List<IInstallableUnit> sources = new ArrayList<IInstallableUnit>();
+    List<URI> uris = new ArrayList<URI>();
+
+    for (Targlet targlet : targlets)
+    {
+      for (AutomaticSourceLocator sourceLocator : targlet.getSourceLocators())
+      {
+        boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
+        File rootFolder = new File(sourceLocator.getRootFolder());
+
+        List<IInstallableUnit> ius = analyzer.analyze(rootFolder, locateNestedProjects, monitor);
+        sources.addAll(ius);
+      }
+
       for (P2Repository p2Repository : targlet.getActiveP2Repositories())
       {
         try
         {
           URI uri = new URI(p2Repository.getURL());
           uris.add(uri);
-
-          metadataRepositoryManager.addRepository(uri);
-          artifactRepositoryManager.addRepository(uri);
         }
         catch (URISyntaxException ex)
         {
@@ -283,12 +306,43 @@ public class TargletBundleContainer extends AbstractBundleContainer
       }
     }
 
+    IProvisioningAgent agent = TargletProfileManager.getInstance().getAgent();
+
+    IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
+        .getService(IMetadataRepositoryManager.SERVICE_NAME);
+    IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager)agent
+        .getService(IArtifactRepositoryManager.SERVICE_NAME);
+
+    for (URI uri : uris)
+    {
+      metadataManager.addRepository(uri);
+      artifactManager.addRepository(uri);
+    }
+
     ProvisioningContext provisioningContext = new ProvisioningContext(agent)
     {
+      private CollectionResult<IInstallableUnit> result;
+
       @Override
       public IQueryable<IInstallableUnit> getMetadata(IProgressMonitor monitor)
       {
-        return super.getMetadata(monitor); // XXX
+        if (result == null)
+        {
+          IQueryResult<IInstallableUnit> query = super.getMetadata(monitor)
+              .query(QueryUtil.createIUAnyQuery(), monitor);
+          for (Iterator<IInstallableUnit> it = query.iterator(); it.hasNext();)
+          {
+            IInstallableUnit iu = it.next();
+            if (!analyzer.hasIU(iu.getId()))
+            {
+              sources.add(iu);
+            }
+          }
+
+          result = new CollectionResult<IInstallableUnit>(sources);
+        }
+
+        return result;
       }
     };
 
@@ -305,44 +359,37 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
 
     IProfileChangeRequest request = planner.createChangeRequest(profile);
-
-    boolean empty = true;
-    for (Targlet targlet : targlets)
+    IQueryable<IInstallableUnit> metadata = provisioningContext.getMetadata(monitor);
+    for (InstallableUnit root : roots)
     {
-      for (InstallableUnit root : targlet.getRoots())
-      {
-        IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
-        IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
+      IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
+      IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
 
-        for (IInstallableUnit installableUnit : metadataRepositoryManager.query(latestQuery, new ProgressMonitor()))
-        {
-          request.setInstallableUnitProfileProperty(installableUnit, IProfile.PROP_PROFILE_ROOT_IU,
-              Boolean.TRUE.toString());
-          request.add(installableUnit);
-          empty = false;
-        }
+      for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor()))
+      {
+        request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, Boolean.TRUE.toString());
+        request.add(iu);
       }
     }
 
-    if (!empty)
+    IProvisioningPlan result = planner.getProvisioningPlan(request, provisioningContext, new ProgressMonitor());
+    if (!result.getStatus().isOK())
     {
-      IProvisioningPlan result = planner.getProvisioningPlan(request, provisioningContext, new ProgressMonitor());
-      if (!result.getStatus().isOK())
-      {
-        throw new ProvisionException(result.getStatus());
-      }
+      throw new ProvisionException(result.getStatus());
+    }
 
-      IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
-      if (engine == null)
-      {
-        throw new ProvisionException("Engine could not be loaded");
-      }
+    IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
+    if (engine == null)
+    {
+      throw new ProvisionException("Engine could not be loaded");
+    }
 
-      IStatus status = PlanExecutionHelper.executePlan(result, engine, provisioningContext, new ProgressMonitor());
-      if (!status.isOK())
-      {
-        throw new ProvisionException(status);
-      }
+    IPhaseSet phaseSet = createPhaseSet();
+    IStatus status = PlanExecutionHelper.executePlan(result, engine, phaseSet, provisioningContext,
+        new ProgressMonitor());
+    if (!status.isOK())
+    {
+      throw new ProvisionException(status);
     }
 
     profileNeedsUpdate.set(false);
@@ -351,31 +398,15 @@ public class TargletBundleContainer extends AbstractBundleContainer
     // "Targlet container update completed successfully", null);
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static class ProgressMonitor extends NullProgressMonitor
+  private IPhaseSet createPhaseSet()
   {
-    @Override
-    public void beginTask(String name, int totalWork)
-    {
-      super.beginTask(name, totalWork);
-      System.out.println(name);
-    }
+    ArrayList<Phase> phases = new ArrayList<Phase>(4);
+    phases.add(new Collect(100));
+    phases.add(new Property(1));
+    phases.add(new Install(50));
+    // phases.add(new CollectNativesPhase(100));
 
-    @Override
-    public void setTaskName(String name)
-    {
-      super.setTaskName(name);
-      System.out.println(name);
-    }
-
-    @Override
-    public void subTask(String name)
-    {
-      super.subTask(name);
-      System.out.println(name);
-    }
+    return new PhaseSet(phases.toArray(new Phase[phases.size()]));
   }
 
   @Override
@@ -388,9 +419,9 @@ public class TargletBundleContainer extends AbstractBundleContainer
   @Override
   protected TargetFeature[] resolveFeatures(ITargetDefinition definition, IProgressMonitor monitor)
       throws CoreException
-      {
+  {
     return fFeatures;
-      }
+  }
 
   private void resolveUnits(IProgressMonitor monitor) throws ProvisionException
   {
@@ -447,7 +478,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private void generateBundle(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetBundle> bundles)
       throws CoreException
-      {
+  {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
     for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
     {
@@ -458,11 +489,11 @@ public class TargletBundleContainer extends AbstractBundleContainer
         bundles.add(bundle);
       }
     }
-      }
+  }
 
   private void generateFeature(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetFeature> features)
       throws CoreException
-      {
+  {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
     for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
     {
@@ -473,7 +504,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
         features.add(feature);
       }
     }
-      }
+  }
 
   private boolean isOSGiBundle(IInstallableUnit unit)
   {
@@ -539,6 +570,33 @@ public class TargletBundleContainer extends AbstractBundleContainer
     IArtifactRepository result = manager.createRepository(uri, "Shared Bundle Pool",
         IArtifactRepositoryManager.TYPE_SIMPLE_REPOSITORY, null);
     return (IFileArtifactRepository)result;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class ProgressMonitor extends NullProgressMonitor
+  {
+    @Override
+    public void beginTask(String name, int totalWork)
+    {
+      super.beginTask(name, totalWork);
+      System.out.println(name);
+    }
+
+    @Override
+    public void setTaskName(String name)
+    {
+      super.setTaskName(name);
+      System.out.println(name);
+    }
+
+    @Override
+    public void subTask(String name)
+    {
+      super.subTask(name);
+      System.out.println(name);
+    }
   }
 
   /**

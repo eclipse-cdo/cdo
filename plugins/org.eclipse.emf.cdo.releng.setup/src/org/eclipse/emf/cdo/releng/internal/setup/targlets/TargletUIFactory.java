@@ -63,7 +63,7 @@ import java.util.Map;
 public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor, ITargetLocationUpdater
 {
   private static final Class<?>[] ADAPTERS = { ITreeContentProvider.class, ILabelProvider.class,
-    ITargetLocationEditor.class, ITargetLocationUpdater.class };
+      ITargetLocationEditor.class, ITargetLocationUpdater.class };
 
   private ILabelProvider labelProvider;
 
@@ -345,6 +345,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
   /**
    * @author Eike Stepper
    */
+  @SuppressWarnings("unused")
   private static class TargletWizardPage extends WizardPage implements IEditBundleContainerPage
   {
     private ITargetDefinition target;

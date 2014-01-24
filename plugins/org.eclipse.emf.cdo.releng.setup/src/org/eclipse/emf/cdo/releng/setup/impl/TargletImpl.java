@@ -383,7 +383,7 @@ public class TargletImpl extends MinimalEObjectImpl.Container implements Targlet
       return repositoryLists != null && !repositoryLists.isEmpty();
     case SetupPackage.TARGLET__ACTIVE_REPOSITORY_LIST:
       return ACTIVE_REPOSITORY_LIST_EDEFAULT == null ? activeRepositoryList != null : !ACTIVE_REPOSITORY_LIST_EDEFAULT
-      .equals(activeRepositoryList);
+          .equals(activeRepositoryList);
     case SetupPackage.TARGLET__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
     }

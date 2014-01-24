@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
 import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
+import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
+import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -513,6 +515,30 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseSourceLocator(automaticSourceLocator);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.COMPONENT_EXTENSION:
+    {
+      ComponentExtension componentExtension = (ComponentExtension)theEObject;
+      T result = caseComponentExtension(componentExtension);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.COMPONENT_DEFINITION:
+    {
+      ComponentDefinition componentDefinition = (ComponentDefinition)theEObject;
+      T result = caseComponentDefinition(componentDefinition);
+      if (result == null)
+      {
+        result = caseComponentExtension(componentDefinition);
       }
       if (result == null)
       {
@@ -1382,6 +1408,38 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseJRETask(JRETask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Component Extension</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Component Extension</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComponentExtension(ComponentExtension object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Component Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Component Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComponentDefinition(ComponentDefinition object)
   {
     return null;
   }

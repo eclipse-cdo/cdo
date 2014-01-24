@@ -211,7 +211,7 @@ public final class TargletProfileManager
 
     @SuppressWarnings("restriction")
     ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
-    .acquireService(ITargetPlatformService.class.getName());
+        .acquireService(ITargetPlatformService.class.getName());
 
     for (ITargetHandle targetHandle : targetService.getTargets(monitor))
     {

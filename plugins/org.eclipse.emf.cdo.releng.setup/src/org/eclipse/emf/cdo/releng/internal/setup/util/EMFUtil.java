@@ -95,8 +95,13 @@ public final class EMFUtil extends Plugin
 
   public static void configureResourceSet(ResourceSet resourceSet)
   {
+    Resource.Factory factory = new SetupResourceFactoryImpl();
+
     Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    extensionToFactoryMap.put("xmi", new SetupResourceFactoryImpl());
+    extensionToFactoryMap.put("xmi", factory);
+    extensionToFactoryMap.put("targlet", factory);
+    extensionToFactoryMap.put("def", factory);
+    extensionToFactoryMap.put("ext", factory);
 
     URIConverter uriConverter = resourceSet.getURIConverter();
     Map<URI, URI> uriMap = uriConverter.getURIMap();

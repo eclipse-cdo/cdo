@@ -367,21 +367,6 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
     super.consolidate();
   }
 
-  // @Override
-  // public void perform(SetupTaskContext context) throws Exception
-  // {
-  // File p2PoolDir = context.getP2PoolDir();
-  // File p2AgentDir = context.getP2AgentDir();
-  // String profileID = context.getP2ProfileName() + "_tpX"; // XXX
-  // String destination = getTargetPlatform() + "X"; // XXX
-  //
-  // java.net.URI[] p2Repositories = { new java.net.URI("http://download.eclipse.org/releases/luna") };
-  // IVersionedId[] rootComponents = { new VersionedId("org.eclipse.emf.ecore.feature.group", Version.emptyVersion) };
-  //
-  // TargletBundleContainer.create(p2PoolDir, p2AgentDir, profileID, destination, p2Repositories, rootComponents,
-  // new ProgressLogMonitor(context));
-  // }
-
   @Override
   protected String getMspec(SetupTaskContext context) throws Exception
   {

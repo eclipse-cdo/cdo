@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
 import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
+import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
+import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -294,6 +296,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseAutomaticSourceLocator(AutomaticSourceLocator object)
     {
       return createAutomaticSourceLocatorAdapter();
+    }
+
+    @Override
+    public Adapter caseComponentExtension(ComponentExtension object)
+    {
+      return createComponentExtensionAdapter();
+    }
+
+    @Override
+    public Adapter caseComponentDefinition(ComponentDefinition object)
+    {
+      return createComponentDefinitionAdapter();
     }
 
     @Override
@@ -889,6 +903,36 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJRETaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ComponentExtension <em>Component Extension</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ComponentExtension
+   * @generated
+   */
+  public Adapter createComponentExtensionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ComponentDefinition <em>Component Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ComponentDefinition
+   * @generated
+   */
+  public Adapter createComponentDefinitionAdapter()
   {
     return null;
   }

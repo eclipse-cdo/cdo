@@ -272,6 +272,24 @@ public interface SetupFactory extends EFactory
   JRETask createJRETask();
 
   /**
+   * Returns a new object of class '<em>Component Extension</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Component Extension</em>'.
+   * @generated
+   */
+  ComponentExtension createComponentExtension();
+
+  /**
+   * Returns a new object of class '<em>Component Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Component Definition</em>'.
+   * @generated
+   */
+  ComponentDefinition createComponentDefinition();
+
+  /**
    * Returns a new object of class '<em>File Association Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

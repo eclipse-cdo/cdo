@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
 import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
+import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
+import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.Configuration;
@@ -73,6 +75,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import java.util.HashSet;
@@ -174,6 +177,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createManualSourceLocator();
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR:
       return createAutomaticSourceLocator();
+    case SetupPackage.COMPONENT_EXTENSION:
+      return createComponentExtension();
+    case SetupPackage.COMPONENT_DEFINITION:
+      return createComponentDefinition();
     case SetupPackage.TARGLET_TASK:
       return createTargletTask();
     case SetupPackage.TARGLET:
@@ -257,6 +264,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createURIFromString(eDataType, initialValue);
     case SetupPackage.LICENSE_INFO:
       return createLicenseInfoFromString(eDataType, initialValue);
+    case SetupPackage.VERSION:
+      return createVersionFromString(eDataType, initialValue);
     case SetupPackage.VERSION_RANGE:
       return createVersionRangeFromString(eDataType, initialValue);
     default:
@@ -290,6 +299,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return convertURIToString(eDataType, instanceValue);
     case SetupPackage.LICENSE_INFO:
       return convertLicenseInfoToString(eDataType, instanceValue);
+    case SetupPackage.VERSION:
+      return convertVersionToString(eDataType, instanceValue);
     case SetupPackage.VERSION_RANGE:
       return convertVersionRangeToString(eDataType, instanceValue);
     default:
@@ -628,6 +639,28 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     JRETaskImpl jreTask = new JRETaskImpl();
     return jreTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ComponentExtension createComponentExtension()
+  {
+    ComponentExtensionImpl componentExtension = new ComponentExtensionImpl();
+    return componentExtension;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ComponentDefinition createComponentDefinition()
+  {
+    ComponentDefinitionImpl componentDefinition = new ComponentDefinitionImpl();
+    return componentDefinition;
   }
 
   /**
@@ -997,6 +1030,26 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * @generated
    */
   public String convertLicenseInfoToString(EDataType eDataType, Object instanceValue)
+  {
+    return super.convertToString(eDataType, instanceValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Version createVersionFromString(EDataType eDataType, String initialValue)
+  {
+    return (Version)super.createFromString(eDataType, initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertVersionToString(EDataType eDataType, Object instanceValue)
   {
     return super.convertToString(eDataType, instanceValue);
   }

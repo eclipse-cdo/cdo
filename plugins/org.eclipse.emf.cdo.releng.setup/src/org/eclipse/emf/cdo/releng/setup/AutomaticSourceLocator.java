@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Automatic Source Locator</b></em>'.
+ * @extends ProjectProvider
  * <!-- end-user-doc -->
  *
  * <p>
@@ -27,7 +30,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * @model
  * @generated
  */
-public interface AutomaticSourceLocator extends SourceLocator
+public interface AutomaticSourceLocator extends SourceLocator, ProjectProvider
 {
   /**
    * Returns the value of the '<em><b>Root Folder</b></em>' attribute.

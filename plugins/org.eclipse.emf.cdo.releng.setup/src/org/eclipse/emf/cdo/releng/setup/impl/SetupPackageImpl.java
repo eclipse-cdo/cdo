@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.releng.setup.BuckminsterImportTask;
 import org.eclipse.emf.cdo.releng.setup.BuildPlan;
 import org.eclipse.emf.cdo.releng.setup.CommandParameter;
 import org.eclipse.emf.cdo.releng.setup.Component;
+import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
+import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.CompoundSetupTask;
 import org.eclipse.emf.cdo.releng.setup.ConfigurableItem;
@@ -80,6 +82,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import java.util.Map;
@@ -289,6 +292,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass jreTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass componentExtensionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass componentDefinitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -506,6 +523,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EDataType licenseInfoEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType versionEDataType = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1662,6 +1686,56 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getComponentExtension()
+  {
+    return componentExtensionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getComponentExtension_Dependencies()
+  {
+    return (EReference)componentExtensionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getComponentDefinition()
+  {
+    return componentDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponentDefinition_ID()
+  {
+    return (EAttribute)componentDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponentDefinition_Version()
+  {
+    return (EAttribute)componentDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getFileAssociationTask()
   {
     return fileAssociationTaskEClass;
@@ -2492,6 +2566,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EDataType getVersion()
+  {
+    return versionEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EDataType getVersionRange()
   {
     return versionRangeEDataType;
@@ -2668,6 +2752,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS);
 
+    componentExtensionEClass = createEClass(COMPONENT_EXTENSION);
+    createEReference(componentExtensionEClass, COMPONENT_EXTENSION__DEPENDENCIES);
+
+    componentDefinitionEClass = createEClass(COMPONENT_DEFINITION);
+    createEAttribute(componentDefinitionEClass, COMPONENT_DEFINITION__ID);
+    createEAttribute(componentDefinitionEClass, COMPONENT_DEFINITION__VERSION);
+
     targletTaskEClass = createEClass(TARGLET_TASK);
 
     targletEClass = createEClass(TARGLET);
@@ -2797,6 +2888,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     exceptionEDataType = createEDataType(EXCEPTION);
     uriEDataType = createEDataType(URI);
     licenseInfoEDataType = createEDataType(LICENSE_INFO);
+    versionEDataType = createEDataType(VERSION);
     versionRangeEDataType = createEDataType(VERSION_RANGE);
   }
 
@@ -2854,6 +2946,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     materializationTaskEClass.getESuperTypes().add(getBasicMaterializationTask());
     manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
+    componentDefinitionEClass.getESuperTypes().add(getComponentExtension());
     targletTaskEClass.getESuperTypes().add(getSetupTask());
     targletTaskEClass.getESuperTypes().add(getTarglet());
     redirectionTaskEClass.getESuperTypes().add(getSetupTask());
@@ -3131,6 +3224,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getAutomaticSourceLocator_LocateNestedProjects(), ecorePackage.getEBoolean(),
         "locateNestedProjects", null, 0, 1, AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(componentExtensionEClass, ComponentExtension.class, "ComponentExtension", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getComponentExtension_Dependencies(), getInstallableUnit(), null, "dependencies", null, 0, -1,
+        ComponentExtension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(componentDefinitionEClass, ComponentDefinition.class, "ComponentDefinition", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getComponentDefinition_ID(), ecorePackage.getEString(), "iD", null, 1, 1, ComponentDefinition.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponentDefinition_Version(), getVersion(), "version", "1.0.0", 0, 1, ComponentDefinition.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(targletTaskEClass, TargletTask.class, "TargletTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -3429,6 +3535,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE,
         !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(licenseInfoEDataType, LicenseInfo.class, "LicenseInfo", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(versionEDataType, Version.class, "Version", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(versionRangeEDataType, VersionRange.class, "VersionRange", IS_SERIALIZABLE,
         !IS_GENERATED_INSTANCE_CLASS);
 
@@ -3454,6 +3561,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     addAnnotation(getIndex_URI(), source, new String[] { "kind", "attribute", "name", "uri" });
     addAnnotation(getInstallableUnit_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getP2Repository_URL(), source, new String[] { "kind", "attribute", "name", "url" });
+    addAnnotation(getComponentDefinition_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getFileEditor_ID(), source, new String[] { "kind", "attribute", "name", "id" });
     addAnnotation(getTextModifyTask_URL(), source, new String[] { "kind", "attribute", "name", "url" });
     addAnnotation(getKeyBindingContext_ID(), source, new String[] { "kind", "attribute", "name", "id" });

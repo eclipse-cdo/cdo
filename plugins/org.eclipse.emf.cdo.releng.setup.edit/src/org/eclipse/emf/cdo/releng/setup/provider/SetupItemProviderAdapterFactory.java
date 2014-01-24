@@ -774,6 +774,56 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ComponentExtension} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ComponentExtensionItemProvider componentExtensionItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ComponentExtension}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createComponentExtensionAdapter()
+  {
+    if (componentExtensionItemProvider == null)
+    {
+      componentExtensionItemProvider = new ComponentExtensionItemProvider(this);
+    }
+
+    return componentExtensionItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ComponentDefinition} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ComponentDefinitionItemProvider componentDefinitionItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ComponentDefinition}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createComponentDefinitionAdapter()
+  {
+    if (componentDefinitionItemProvider == null)
+    {
+      componentDefinitionItemProvider = new ComponentDefinitionItemProvider(this);
+    }
+
+    return componentDefinitionItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1497,6 +1547,14 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (automaticSourceLocatorItemProvider != null)
     {
       automaticSourceLocatorItemProvider.dispose();
+    }
+    if (componentExtensionItemProvider != null)
+    {
+      componentExtensionItemProvider.dispose();
+    }
+    if (componentDefinitionItemProvider != null)
+    {
+      componentDefinitionItemProvider.dispose();
     }
     if (targletTaskItemProvider != null)
     {

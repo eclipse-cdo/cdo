@@ -50,6 +50,7 @@
     <genDataTypes ecoreDataType="setup.ecore#//Exception"/>
     <genDataTypes ecoreDataType="setup.ecore#//URI"/>
     <genDataTypes ecoreDataType="setup.ecore#//LicenseInfo"/>
+    <genDataTypes ecoreDataType="setup.ecore#//Version"/>
     <genDataTypes ecoreDataType="setup.ecore#//VersionRange"/>
     <genClasses ecoreClass="setup.ecore#//MetaIndex">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MetaIndex/indexes"/>
@@ -182,6 +183,33 @@
     <genClasses ecoreClass="setup.ecore#//AutomaticSourceLocator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/rootFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/locateNestedProjects"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ComponentExtension">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ComponentExtension/dependencies"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//ComponentDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ComponentDefinition/iD"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ComponentDefinition/version"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//TargletImportTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletImportTask/targletURI"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//TargletTask"/>
+    <genClasses ecoreClass="setup.ecore#//TargletContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TargletContainer/targlets"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//Targlet"/>
+    <genClasses image="false" ecoreClass="setup.ecore#//TargletData">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletData/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TargletData/roots"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TargletData/sourceLocators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TargletData/repositoryLists"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletData/activeRepositoryList"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//TargletData/activeP2Repositories"/>
+    </genClasses>
+    <genClasses ecoreClass="setup.ecore#//RepositoryList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//RepositoryList/p2Repositories"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RepositoryList/name"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//RedirectionTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//RedirectionTask/sourceURL"/>

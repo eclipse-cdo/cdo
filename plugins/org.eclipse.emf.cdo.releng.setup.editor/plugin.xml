@@ -48,6 +48,15 @@
          <description>%_UI_CExt_ModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IProject"/>
       </wizard>
+      <wizard
+            id="org.eclipse.emf.cdo.releng.setup.presentation.TargletModelWizardID"
+            name="%_UI_TargletModelWizard_label"
+            class="org.eclipse.emf.cdo.releng.setup.presentation.TargletModelWizard"
+            category="org.eclipse.emf.cdo.releng"
+            icon="icons/full/obj16/targlet_file.gif">
+         <description>%_UI_CExt_ModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IProject"/>
+      </wizard>
    </extension>
 
 
@@ -74,6 +83,14 @@
             name="%_UI_CExt_Editor_label"
             icon="icons/full/obj16/cext_file.gif"
             extensions="ext"
+            class="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditor"
+            contributorClass="org.eclipse.emf.cdo.releng.setup.presentation.SetupActionBarContributor">
+      </editor>
+      <editor
+            id="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID"
+            name="%_UI_Targlet_Editor_label"
+            icon="icons/full/obj16/targlet_file.gif"
+            extensions="targlet"
             class="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditor"
             contributorClass="org.eclipse.emf.cdo.releng.setup.presentation.SetupActionBarContributor">
       </editor>

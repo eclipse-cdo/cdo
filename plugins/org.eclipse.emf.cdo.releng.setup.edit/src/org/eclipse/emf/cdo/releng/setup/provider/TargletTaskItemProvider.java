@@ -57,7 +57,6 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
 
       addNamePropertyDescriptor(object);
       addActiveRepositoryListPropertyDescriptor(object);
-      addActiveP2RepositoriesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -93,23 +92,6 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_activeRepositoryList_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__ACTIVE_REPOSITORY_LIST, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Active P2 Repositories feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addActiveP2RepositoriesPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_TargletData_activeP2Repositories_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_TargletData_activeP2Repositories_feature",
-            "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__ACTIVE_P2_REPOSITORIES, false, false, false,
-        null, null, null));
   }
 
   /**

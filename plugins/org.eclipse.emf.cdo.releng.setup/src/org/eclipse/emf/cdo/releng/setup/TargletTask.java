@@ -12,6 +12,6 @@ package org.eclipse.emf.cdo.releng.setup;
  * @model
  * @generated
  */
-public interface TargletTask extends SetupTask, Targlet
+public interface TargletTask extends SetupTask, TargletData
 {
 } // TargletTask

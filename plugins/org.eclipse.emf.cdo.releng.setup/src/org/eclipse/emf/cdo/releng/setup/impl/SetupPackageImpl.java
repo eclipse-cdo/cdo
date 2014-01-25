@@ -64,6 +64,9 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletContainer;
+import org.eclipse.emf.cdo.releng.setup.TargletData;
+import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
@@ -312,6 +315,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass targletImportTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass fileAssociationTaskEClass = null;
 
   /**
@@ -347,7 +357,21 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass targletContainerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass targletEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass targletDataEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1736,6 +1760,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getTargletImportTask()
+  {
+    return targletImportTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTargletImportTask_TargletURI()
+  {
+    return (EAttribute)targletImportTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getFileAssociationTask()
   {
     return fileAssociationTaskEClass;
@@ -1856,6 +1900,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getTargletContainer()
+  {
+    return targletContainerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTargletContainer_Targlets()
+  {
+    return (EReference)targletContainerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getTarglet()
   {
     return targletEClass;
@@ -1866,9 +1930,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTarglet_Name()
+  public EClass getTargletData()
   {
-    return (EAttribute)targletEClass.getEStructuralFeatures().get(0);
+    return targletDataEClass;
   }
 
   /**
@@ -1876,9 +1940,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTarglet_Roots()
+  public EAttribute getTargletData_Name()
   {
-    return (EReference)targletEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)targletDataEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1886,9 +1950,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTarglet_SourceLocators()
+  public EReference getTargletData_Roots()
   {
-    return (EReference)targletEClass.getEStructuralFeatures().get(2);
+    return (EReference)targletDataEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1896,9 +1960,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTarglet_RepositoryLists()
+  public EReference getTargletData_SourceLocators()
   {
-    return (EReference)targletEClass.getEStructuralFeatures().get(3);
+    return (EReference)targletDataEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1906,9 +1970,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTarglet_ActiveRepositoryList()
+  public EReference getTargletData_RepositoryLists()
   {
-    return (EAttribute)targletEClass.getEStructuralFeatures().get(4);
+    return (EReference)targletDataEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1916,9 +1980,19 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTarglet_ActiveP2Repositories()
+  public EAttribute getTargletData_ActiveRepositoryList()
   {
-    return (EReference)targletEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)targletDataEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTargletData_ActiveP2Repositories()
+  {
+    return (EReference)targletDataEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -2759,15 +2833,23 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(componentDefinitionEClass, COMPONENT_DEFINITION__ID);
     createEAttribute(componentDefinitionEClass, COMPONENT_DEFINITION__VERSION);
 
+    targletImportTaskEClass = createEClass(TARGLET_IMPORT_TASK);
+    createEAttribute(targletImportTaskEClass, TARGLET_IMPORT_TASK__TARGLET_URI);
+
     targletTaskEClass = createEClass(TARGLET_TASK);
 
+    targletContainerEClass = createEClass(TARGLET_CONTAINER);
+    createEReference(targletContainerEClass, TARGLET_CONTAINER__TARGLETS);
+
     targletEClass = createEClass(TARGLET);
-    createEAttribute(targletEClass, TARGLET__NAME);
-    createEReference(targletEClass, TARGLET__ROOTS);
-    createEReference(targletEClass, TARGLET__SOURCE_LOCATORS);
-    createEReference(targletEClass, TARGLET__REPOSITORY_LISTS);
-    createEAttribute(targletEClass, TARGLET__ACTIVE_REPOSITORY_LIST);
-    createEReference(targletEClass, TARGLET__ACTIVE_P2_REPOSITORIES);
+
+    targletDataEClass = createEClass(TARGLET_DATA);
+    createEAttribute(targletDataEClass, TARGLET_DATA__NAME);
+    createEReference(targletDataEClass, TARGLET_DATA__ROOTS);
+    createEReference(targletDataEClass, TARGLET_DATA__SOURCE_LOCATORS);
+    createEReference(targletDataEClass, TARGLET_DATA__REPOSITORY_LISTS);
+    createEAttribute(targletDataEClass, TARGLET_DATA__ACTIVE_REPOSITORY_LIST);
+    createEReference(targletDataEClass, TARGLET_DATA__ACTIVE_P2_REPOSITORIES);
 
     repositoryListEClass = createEClass(REPOSITORY_LIST);
     createEReference(repositoryListEClass, REPOSITORY_LIST__P2_REPOSITORIES);
@@ -2947,8 +3029,10 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     componentDefinitionEClass.getESuperTypes().add(getComponentExtension());
+    targletImportTaskEClass.getESuperTypes().add(getSetupTask());
     targletTaskEClass.getESuperTypes().add(getSetupTask());
-    targletTaskEClass.getESuperTypes().add(getTarglet());
+    targletTaskEClass.getESuperTypes().add(getTargletData());
+    targletEClass.getESuperTypes().add(getTargletData());
     redirectionTaskEClass.getESuperTypes().add(getSetupTask());
     apiBaselineTaskEClass.getESuperTypes().add(getSetupTask());
     gitCloneTaskEClass.getESuperTypes().add(getSetupTask());
@@ -3238,27 +3322,42 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getComponentDefinition_Version(), getVersion(), "version", "1.0.0", 0, 1, ComponentDefinition.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(targletImportTaskEClass, TargletImportTask.class, "TargletImportTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTargletImportTask_TargletURI(), ecorePackage.getEString(), "targletURI", null, 1, 1,
+        TargletImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(targletTaskEClass, TargletTask.class, "TargletTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(targletContainerEClass, TargletContainer.class, "TargletContainer", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTargletContainer_Targlets(), getTarglet(), null, "targlets", null, 0, -1, TargletContainer.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(targletEClass, Targlet.class, "Targlet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getTarglet_Name(), ecorePackage.getEString(), "name", null, 1, 1, Targlet.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTarglet_Roots(), getInstallableUnit(), null, "roots", null, 1, -1, Targlet.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getTarglet_SourceLocators(), getAutomaticSourceLocator(), null, "sourceLocators", null, 0, -1,
-        Targlet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTarglet_RepositoryLists(), getRepositoryList(), null, "repositoryLists", null, 0, -1,
-        Targlet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTarglet_ActiveRepositoryList(), ecorePackage.getEString(), "activeRepositoryList", null, 0, 1,
-        Targlet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getTarglet_ActiveP2Repositories(), getP2Repository(), null, "activeP2Repositories", null, 0, -1,
-        Targlet.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+    initEClass(targletDataEClass, TargletData.class, "TargletData", IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTargletData_Name(), ecorePackage.getEString(), "name", null, 1, 1, TargletData.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTargletData_Roots(), getInstallableUnit(), null, "roots", null, 1, -1, TargletData.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getTargletData_SourceLocators(), getAutomaticSourceLocator(), null, "sourceLocators", null, 0, -1,
+        TargletData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTargletData_RepositoryLists(), getRepositoryList(), null, "repositoryLists", null, 0, -1,
+        TargletData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTargletData_ActiveRepositoryList(), ecorePackage.getEString(), "activeRepositoryList", null, 0,
+        1, TargletData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getTargletData_ActiveP2Repositories(), getP2Repository(), null, "activeP2Repositories", null, 0, -1,
+        TargletData.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(repositoryListEClass, RepositoryList.class, "RepositoryList", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

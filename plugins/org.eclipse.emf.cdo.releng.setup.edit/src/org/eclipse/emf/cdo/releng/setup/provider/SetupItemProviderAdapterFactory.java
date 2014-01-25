@@ -824,6 +824,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargletImportTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TargletImportTaskItemProvider targletImportTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletImportTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createTargletImportTaskAdapter()
+  {
+    if (targletImportTaskItemProvider == null)
+    {
+      targletImportTaskItemProvider = new TargletImportTaskItemProvider(this);
+    }
+
+    return targletImportTaskItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -946,6 +971,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     }
 
     return targletTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargletContainer} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected TargletContainerItemProvider targletContainerItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletContainer}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createTargletContainerAdapter()
+  {
+    if (targletContainerItemProvider == null)
+    {
+      targletContainerItemProvider = new TargletContainerItemProvider(this);
+    }
+
+    return targletContainerItemProvider;
   }
 
   /**
@@ -1556,9 +1606,17 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       componentDefinitionItemProvider.dispose();
     }
+    if (targletImportTaskItemProvider != null)
+    {
+      targletImportTaskItemProvider.dispose();
+    }
     if (targletTaskItemProvider != null)
     {
       targletTaskItemProvider.dispose();
+    }
+    if (targletContainerItemProvider != null)
+    {
+      targletContainerItemProvider.dispose();
     }
     if (targletItemProvider != null)
     {

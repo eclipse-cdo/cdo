@@ -239,7 +239,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
    * @generated
    */
-  int ECLIPSE_PREFERENCE_TASK = 37;
+  int ECLIPSE_PREFERENCE_TASK = 40;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -587,7 +587,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
    * @generated
    */
-  int API_BASELINE_TASK = 33;
+  int API_BASELINE_TASK = 36;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl <em>Git Clone Task</em>}' class.
@@ -597,7 +597,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getGitCloneTask()
    * @generated
    */
-  int GIT_CLONE_TASK = 34;
+  int GIT_CLONE_TASK = 37;
 
   /**
    * The feature id for the '<em><b>Branch</b></em>' reference.
@@ -706,7 +706,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
    * @generated
    */
-  int WORKING_SET_TASK = 40;
+  int WORKING_SET_TASK = 43;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
@@ -837,7 +837,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
    * @generated
    */
-  int RESOURCE_COPY_TASK = 41;
+  int RESOURCE_COPY_TASK = 44;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
@@ -847,7 +847,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
    */
-  int TEXT_MODIFY_TASK = 43;
+  int TEXT_MODIFY_TASK = 46;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
@@ -857,7 +857,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
    */
-  int TEXT_MODIFICATION = 44;
+  int TEXT_MODIFICATION = 47;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
@@ -867,7 +867,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
    * @generated
    */
-  int KEY_BINDING_TASK = 45;
+  int KEY_BINDING_TASK = 48;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
@@ -877,7 +877,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
    * @generated
    */
-  int COMMAND_PARAMETER = 47;
+  int COMMAND_PARAMETER = 50;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
@@ -897,7 +897,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
    * @generated
    */
-  int RESOURCE_CREATION_TASK = 42;
+  int RESOURCE_CREATION_TASK = 45;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl <em>Materialization Task</em>}' class.
@@ -937,7 +937,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
    * @generated
    */
-  int MYLYN_QUERY_TASK = 48;
+  int MYLYN_QUERY_TASK = 51;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
@@ -967,7 +967,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
    * @generated
    */
-  int REDIRECTION_TASK = 32;
+  int REDIRECTION_TASK = 35;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1806,7 +1806,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletTask()
    * @generated
    */
-  int TARGLET_TASK = 29;
+  int TARGLET_TASK = 30;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImpl <em>Targlet</em>}' class.
@@ -1816,7 +1816,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTarglet()
    * @generated
    */
-  int TARGLET = 30;
+  int TARGLET = 32;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl <em>Repository List</em>}' class.
@@ -1826,7 +1826,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRepositoryList()
    * @generated
    */
-  int REPOSITORY_LIST = 31;
+  int REPOSITORY_LIST = 34;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
@@ -1836,7 +1836,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectSetImportTask()
    * @generated
    */
-  int PROJECT_SET_IMPORT_TASK = 35;
+  int PROJECT_SET_IMPORT_TASK = 38;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingContextImpl <em>Key Binding Context</em>}' class.
@@ -1846,7 +1846,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingContext()
    * @generated
    */
-  int KEY_BINDING_CONTEXT = 46;
+  int KEY_BINDING_CONTEXT = 49;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
@@ -1856,7 +1856,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
    * @generated
    */
-  int TARGET_PLATFORM_TASK = 36;
+  int TARGET_PLATFORM_TASK = 39;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.
@@ -1866,7 +1866,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
    * @generated
    */
-  int JRE_TASK = 54;
+  int JRE_TASK = 57;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
@@ -1876,7 +1876,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationTask()
    * @generated
    */
-  int FILE_ASSOCIATION_TASK = 38;
+  int FILE_ASSOCIATION_TASK = 41;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl <em>File Editor</em>}' class.
@@ -1886,7 +1886,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileEditor()
    * @generated
    */
-  int FILE_EDITOR = 39;
+  int FILE_EDITOR = 42;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl <em>Mylyn Queries Task</em>}' class.
@@ -1896,7 +1896,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueriesTask()
    * @generated
    */
-  int MYLYN_QUERIES_TASK = 49;
+  int MYLYN_QUERIES_TASK = 52;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
@@ -1906,7 +1906,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQuery()
    * @generated
    */
-  int QUERY = 50;
+  int QUERY = 53;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
@@ -1916,7 +1916,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQueryAttribute()
    * @generated
    */
-  int QUERY_ATTRIBUTE = 51;
+  int QUERY_ATTRIBUTE = 54;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl <em>Mylyn Builds Task</em>}' class.
@@ -1926,7 +1926,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynBuildsTask()
    * @generated
    */
-  int MYLYN_BUILDS_TASK = 52;
+  int MYLYN_BUILDS_TASK = 55;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.
@@ -1936,7 +1936,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuildPlan()
    * @generated
    */
-  int BUILD_PLAN = 53;
+  int BUILD_PLAN = 56;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentExtensionImpl <em>Component Extension</em>}' class.
@@ -2011,6 +2011,88 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int COMPONENT_DEFINITION_FEATURE_COUNT = COMPONENT_EXTENSION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl <em>Targlet Import Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletImportTask()
+   * @generated
+   */
+  int TARGLET_IMPORT_TASK = 29;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Targlet URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK__TARGLET_URI = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Targlet Import Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_IMPORT_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2130,13 +2212,51 @@ public interface SetupPackage extends EPackage
   int TARGLET_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 6;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletContainerImpl <em>Targlet Container</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletContainerImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletContainer()
+   * @generated
+   */
+  int TARGLET_CONTAINER = 31;
+
+  /**
+   * The feature id for the '<em><b>Targlets</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_CONTAINER__TARGLETS = 0;
+
+  /**
+   * The number of structural features of the '<em>Targlet Container</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_CONTAINER_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl <em>Targlet Data</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletData()
+   * @generated
+   */
+  int TARGLET_DATA = 33;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TARGLET__NAME = 0;
+  int TARGLET_DATA__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Roots</b></em>' containment reference list.
@@ -2145,7 +2265,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TARGLET__ROOTS = 1;
+  int TARGLET_DATA__ROOTS = 1;
 
   /**
    * The feature id for the '<em><b>Source Locators</b></em>' containment reference list.
@@ -2154,7 +2274,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TARGLET__SOURCE_LOCATORS = 2;
+  int TARGLET_DATA__SOURCE_LOCATORS = 2;
 
   /**
    * The feature id for the '<em><b>Repository Lists</b></em>' containment reference list.
@@ -2163,7 +2283,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TARGLET__REPOSITORY_LISTS = 3;
+  int TARGLET_DATA__REPOSITORY_LISTS = 3;
 
   /**
    * The feature id for the '<em><b>Active Repository List</b></em>' attribute.
@@ -2172,7 +2292,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TARGLET__ACTIVE_REPOSITORY_LIST = 4;
+  int TARGLET_DATA__ACTIVE_REPOSITORY_LIST = 4;
 
   /**
    * The feature id for the '<em><b>Active P2 Repositories</b></em>' reference list.
@@ -2181,7 +2301,70 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TARGLET__ACTIVE_P2_REPOSITORIES = 5;
+  int TARGLET_DATA__ACTIVE_P2_REPOSITORIES = 5;
+
+  /**
+   * The number of structural features of the '<em>Targlet Data</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_DATA_FEATURE_COUNT = 6;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__NAME = TARGLET_DATA__NAME;
+
+  /**
+   * The feature id for the '<em><b>Roots</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__ROOTS = TARGLET_DATA__ROOTS;
+
+  /**
+   * The feature id for the '<em><b>Source Locators</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__SOURCE_LOCATORS = TARGLET_DATA__SOURCE_LOCATORS;
+
+  /**
+   * The feature id for the '<em><b>Repository Lists</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__REPOSITORY_LISTS = TARGLET_DATA__REPOSITORY_LISTS;
+
+  /**
+   * The feature id for the '<em><b>Active Repository List</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__ACTIVE_REPOSITORY_LIST = TARGLET_DATA__ACTIVE_REPOSITORY_LIST;
+
+  /**
+   * The feature id for the '<em><b>Active P2 Repositories</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__ACTIVE_P2_REPOSITORIES = TARGLET_DATA__ACTIVE_P2_REPOSITORIES;
 
   /**
    * The number of structural features of the '<em>Targlet</em>' class.
@@ -2190,7 +2373,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TARGLET_FEATURE_COUNT = 6;
+  int TARGLET_FEATURE_COUNT = TARGLET_DATA_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>P2 Repositories</b></em>' containment reference list.
@@ -3820,7 +4003,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 55;
+  int SETUP_TASK_SCOPE = 58;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -3830,7 +4013,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 56;
+  int TRIGGER = 59;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -3840,7 +4023,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 57;
+  int COMPONENT_TYPE = 60;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -3850,7 +4033,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 58;
+  int VARIABLE_TYPE = 61;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -3860,7 +4043,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 61;
+  int URI = 64;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -3870,7 +4053,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 62;
+  int LICENSE_INFO = 65;
 
   /**
    * The meta object id for the '<em>Version</em>' data type.
@@ -3880,7 +4063,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersion()
    * @generated
    */
-  int VERSION = 63;
+  int VERSION = 66;
 
   /**
    * The meta object id for the '<em>Version Range</em>' data type.
@@ -3890,7 +4073,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
-  int VERSION_RANGE = 64;
+  int VERSION_RANGE = 67;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MetaIndex <em>Meta Index</em>}'.
@@ -3996,7 +4179,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 60;
+  int EXCEPTION = 63;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -4006,7 +4189,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 59;
+  int TRIGGER_SET = 62;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -5106,6 +5289,27 @@ public interface SetupPackage extends EPackage
   EAttribute getComponentDefinition_Version();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargletImportTask <em>Targlet Import Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Targlet Import Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletImportTask
+   * @generated
+   */
+  EClass getTargletImportTask();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargletImportTask#getTargletURI <em>Targlet URI</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Targlet URI</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletImportTask#getTargletURI()
+   * @see #getTargletImportTask()
+   * @generated
+   */
+  EAttribute getTargletImportTask_TargletURI();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask <em>File Association Task</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5233,6 +5437,27 @@ public interface SetupPackage extends EPackage
   EClass getTargletTask();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargletContainer <em>Targlet Container</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Targlet Container</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletContainer
+   * @generated
+   */
+  EClass getTargletContainer();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.TargletContainer#getTarglets <em>Targlets</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Targlets</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletContainer#getTarglets()
+   * @see #getTargletContainer()
+   * @generated
+   */
+  EReference getTargletContainer_Targlets();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Targlet <em>Targlet</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5243,70 +5468,80 @@ public interface SetupPackage extends EPackage
   EClass getTarglet();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Targlet#getName <em>Name</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargletData <em>Targlet Data</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Targlet Data</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData
+   * @generated
+   */
+  EClass getTargletData();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargletData#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Targlet#getName()
-   * @see #getTarglet()
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#getName()
+   * @see #getTargletData()
    * @generated
    */
-  EAttribute getTarglet_Name();
+  EAttribute getTargletData_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.Targlet#getRoots <em>Roots</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.TargletData#getRoots <em>Roots</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Roots</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Targlet#getRoots()
-   * @see #getTarglet()
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#getRoots()
+   * @see #getTargletData()
    * @generated
    */
-  EReference getTarglet_Roots();
+  EReference getTargletData_Roots();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.Targlet#getSourceLocators <em>Source Locators</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.TargletData#getSourceLocators <em>Source Locators</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Source Locators</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Targlet#getSourceLocators()
-   * @see #getTarglet()
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#getSourceLocators()
+   * @see #getTargletData()
    * @generated
    */
-  EReference getTarglet_SourceLocators();
+  EReference getTargletData_SourceLocators();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.Targlet#getRepositoryLists <em>Repository Lists</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.TargletData#getRepositoryLists <em>Repository Lists</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Repository Lists</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Targlet#getRepositoryLists()
-   * @see #getTarglet()
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#getRepositoryLists()
+   * @see #getTargletData()
    * @generated
    */
-  EReference getTarglet_RepositoryLists();
+  EReference getTargletData_RepositoryLists();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Targlet#getActiveRepositoryList <em>Active Repository List</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargletData#getActiveRepositoryList <em>Active Repository List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Active Repository List</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Targlet#getActiveRepositoryList()
-   * @see #getTarglet()
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#getActiveRepositoryList()
+   * @see #getTargletData()
    * @generated
    */
-  EAttribute getTarglet_ActiveRepositoryList();
+  EAttribute getTargletData_ActiveRepositoryList();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.setup.Targlet#getActiveP2Repositories <em>Active P2 Repositories</em>}'.
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.setup.TargletData#getActiveP2Repositories <em>Active P2 Repositories</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference list '<em>Active P2 Repositories</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Targlet#getActiveP2Repositories()
-   * @see #getTarglet()
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#getActiveP2Repositories()
+   * @see #getTargletData()
    * @generated
    */
-  EReference getTarglet_ActiveP2Repositories();
+  EReference getTargletData_ActiveP2Repositories();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RepositoryList <em>Repository List</em>}'.
@@ -7006,6 +7241,24 @@ public interface SetupPackage extends EPackage
     EAttribute COMPONENT_DEFINITION__VERSION = eINSTANCE.getComponentDefinition_Version();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl <em>Targlet Import Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletImportTask()
+     * @generated
+     */
+    EClass TARGLET_IMPORT_TASK = eINSTANCE.getTargletImportTask();
+
+    /**
+     * The meta object literal for the '<em><b>Targlet URI</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TARGLET_IMPORT_TASK__TARGLET_URI = eINSTANCE.getTargletImportTask_TargletURI();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7113,6 +7366,24 @@ public interface SetupPackage extends EPackage
     EClass TARGLET_TASK = eINSTANCE.getTargletTask();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletContainerImpl <em>Targlet Container</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.TargletContainerImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletContainer()
+     * @generated
+     */
+    EClass TARGLET_CONTAINER = eINSTANCE.getTargletContainer();
+
+    /**
+     * The meta object literal for the '<em><b>Targlets</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TARGLET_CONTAINER__TARGLETS = eINSTANCE.getTargletContainer_Targlets();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImpl <em>Targlet</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7123,12 +7394,22 @@ public interface SetupPackage extends EPackage
     EClass TARGLET = eINSTANCE.getTarglet();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl <em>Targlet Data</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletData()
+     * @generated
+     */
+    EClass TARGLET_DATA = eINSTANCE.getTargletData();
+
+    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TARGLET__NAME = eINSTANCE.getTarglet_Name();
+    EAttribute TARGLET_DATA__NAME = eINSTANCE.getTargletData_Name();
 
     /**
      * The meta object literal for the '<em><b>Roots</b></em>' containment reference list feature.
@@ -7136,7 +7417,7 @@ public interface SetupPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TARGLET__ROOTS = eINSTANCE.getTarglet_Roots();
+    EReference TARGLET_DATA__ROOTS = eINSTANCE.getTargletData_Roots();
 
     /**
      * The meta object literal for the '<em><b>Source Locators</b></em>' containment reference list feature.
@@ -7144,7 +7425,7 @@ public interface SetupPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TARGLET__SOURCE_LOCATORS = eINSTANCE.getTarglet_SourceLocators();
+    EReference TARGLET_DATA__SOURCE_LOCATORS = eINSTANCE.getTargletData_SourceLocators();
 
     /**
      * The meta object literal for the '<em><b>Repository Lists</b></em>' containment reference list feature.
@@ -7152,7 +7433,7 @@ public interface SetupPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TARGLET__REPOSITORY_LISTS = eINSTANCE.getTarglet_RepositoryLists();
+    EReference TARGLET_DATA__REPOSITORY_LISTS = eINSTANCE.getTargletData_RepositoryLists();
 
     /**
      * The meta object literal for the '<em><b>Active Repository List</b></em>' attribute feature.
@@ -7160,7 +7441,7 @@ public interface SetupPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TARGLET__ACTIVE_REPOSITORY_LIST = eINSTANCE.getTarglet_ActiveRepositoryList();
+    EAttribute TARGLET_DATA__ACTIVE_REPOSITORY_LIST = eINSTANCE.getTargletData_ActiveRepositoryList();
 
     /**
      * The meta object literal for the '<em><b>Active P2 Repositories</b></em>' reference list feature.
@@ -7168,7 +7449,7 @@ public interface SetupPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TARGLET__ACTIVE_P2_REPOSITORIES = eINSTANCE.getTarglet_ActiveP2Repositories();
+    EReference TARGLET_DATA__ACTIVE_P2_REPOSITORIES = eINSTANCE.getTargletData_ActiveP2Repositories();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl <em>Repository List</em>}' class.

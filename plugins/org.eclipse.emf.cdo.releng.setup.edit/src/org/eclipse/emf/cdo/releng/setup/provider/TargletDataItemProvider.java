@@ -4,12 +4,14 @@ package org.eclipse.emf.cdo.releng.setup.provider;
 
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.TargletTask;
+import org.eclipse.emf.cdo.releng.setup.TargletData;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -17,18 +19,19 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletData} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class TargletTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class TargletDataItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -37,7 +40,7 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
    * <!-- end-user-doc -->
    * @generated
    */
-  public TargletTaskItemProvider(AdapterFactory adapterFactory)
+  public TargletDataItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -148,15 +151,14 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
   }
 
   /**
-   * This returns TargletTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Object getImage(Object object)
+  public boolean hasChildren(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/TargletTask"));
+    return hasChildren(object, true);
   }
 
   /**
@@ -179,8 +181,8 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
   @Override
   public String getText(Object object)
   {
-    String label = ((TargletTask)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_TargletTask_type") : label;
+    String label = ((TargletData)object).getName();
+    return label == null || label.length() == 0 ? getString("_UI_TargletData_type") : label;
   }
 
   /**
@@ -195,15 +197,15 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(TargletTask.class))
+    switch (notification.getFeatureID(TargletData.class))
     {
-    case SetupPackage.TARGLET_TASK__NAME:
-    case SetupPackage.TARGLET_TASK__ACTIVE_REPOSITORY_LIST:
+    case SetupPackage.TARGLET_DATA__NAME:
+    case SetupPackage.TARGLET_DATA__ACTIVE_REPOSITORY_LIST:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
-    case SetupPackage.TARGLET_TASK__ROOTS:
-    case SetupPackage.TARGLET_TASK__SOURCE_LOCATORS:
-    case SetupPackage.TARGLET_TASK__REPOSITORY_LISTS:
+    case SetupPackage.TARGLET_DATA__ROOTS:
+    case SetupPackage.TARGLET_DATA__SOURCE_LOCATORS:
+    case SetupPackage.TARGLET_DATA__REPOSITORY_LISTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -230,6 +232,18 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.TARGLET_DATA__REPOSITORY_LISTS,
         SetupFactory.eINSTANCE.createRepositoryList()));
+  }
+
+  /**
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ResourceLocator getResourceLocator()
+  {
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

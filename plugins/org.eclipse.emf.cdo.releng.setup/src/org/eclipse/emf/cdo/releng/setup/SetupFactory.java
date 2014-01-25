@@ -290,6 +290,15 @@ public interface SetupFactory extends EFactory
   ComponentDefinition createComponentDefinition();
 
   /**
+   * Returns a new object of class '<em>Targlet Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Targlet Import Task</em>'.
+   * @generated
+   */
+  TargletImportTask createTargletImportTask();
+
+  /**
    * Returns a new object of class '<em>File Association Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -333,6 +342,15 @@ public interface SetupFactory extends EFactory
    * @generated
    */
   TargletTask createTargletTask();
+
+  /**
+   * Returns a new object of class '<em>Targlet Container</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Targlet Container</em>'.
+   * @generated
+   */
+  TargletContainer createTargletContainer();
 
   /**
    * Returns a new object of class '<em>Targlet</em>'.

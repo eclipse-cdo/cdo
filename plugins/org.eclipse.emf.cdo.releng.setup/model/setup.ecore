@@ -204,8 +204,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="#//Version"
         defaultValueLiteral="1.0.0"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TargletTask" eSuperTypes="#//SetupTask #//Targlet"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Targlet">
+  <eClassifiers xsi:type="ecore:EClass" name="TargletImportTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targletURI" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TargletTask" eSuperTypes="#//SetupTask #//TargletData"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TargletContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targlets" upperBound="-1"
+        eType="#//Targlet" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Targlet" eSuperTypes="#//TargletData"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TargletData" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="roots" lowerBound="1" upperBound="-1"
         eType="#//InstallableUnit" containment="true"/>

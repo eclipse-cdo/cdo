@@ -39,6 +39,7 @@ import org.eclipse.equinox.p2.engine.IPhaseSet;
 import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
+import org.eclipse.equinox.p2.engine.query.IUProfilePropertyQuery;
 import org.eclipse.equinox.p2.metadata.IArtifactKey;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.IProvidedCapability;
@@ -101,6 +102,10 @@ public class TargletBundleContainer extends AbstractBundleContainer
   private static final String FOLLOW_ARTIFACT_REPOSITORY_REFERENCES = "org.eclipse.equinox.p2.director.followArtifactRepositoryReferences";
 
   private static final byte[] BUFFER = new byte[8192];
+
+  private static final String TRUE = Boolean.TRUE.toString();
+
+  private static final String FALSE = Boolean.FALSE.toString();
 
   private final AtomicBoolean profileNeedsUpdate = new AtomicBoolean();
 
@@ -349,8 +354,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
     URI[] uriArray = uris.toArray(new URI[uris.size()]);
     provisioningContext.setMetadataRepositories(uriArray);
     provisioningContext.setArtifactRepositories(uriArray);
-    provisioningContext.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, Boolean.FALSE.toString());
-    provisioningContext.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, Boolean.FALSE.toString());
+    provisioningContext.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
+    provisioningContext.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
 
     IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
     if (planner == null)
@@ -359,6 +364,10 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
 
     IProfileChangeRequest request = planner.createChangeRequest(profile);
+    IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
+    IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor());
+    request.removeAll(installedIUs.toUnmodifiableSet());
+
     IQueryable<IInstallableUnit> metadata = provisioningContext.getMetadata(monitor);
     for (InstallableUnit root : roots)
     {
@@ -367,7 +376,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
       for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor()))
       {
-        request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, Boolean.TRUE.toString());
+        request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
         request.add(iu);
       }
     }

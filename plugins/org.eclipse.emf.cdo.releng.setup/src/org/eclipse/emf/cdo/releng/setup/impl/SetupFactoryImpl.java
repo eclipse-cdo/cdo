@@ -58,6 +58,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletContainer;
+import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
@@ -181,8 +183,12 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createComponentExtension();
     case SetupPackage.COMPONENT_DEFINITION:
       return createComponentDefinition();
+    case SetupPackage.TARGLET_IMPORT_TASK:
+      return createTargletImportTask();
     case SetupPackage.TARGLET_TASK:
       return createTargletTask();
+    case SetupPackage.TARGLET_CONTAINER:
+      return createTargletContainer();
     case SetupPackage.TARGLET:
       return createTarglet();
     case SetupPackage.REPOSITORY_LIST:
@@ -668,6 +674,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public TargletImportTask createTargletImportTask()
+  {
+    TargletImportTaskImpl targletImportTask = new TargletImportTaskImpl();
+    return targletImportTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public FileAssociationTask createFileAssociationTask()
   {
     FileAssociationTaskImpl fileAssociationTask = new FileAssociationTaskImpl();
@@ -716,6 +733,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     TargletTaskImpl targletTask = new TargletTaskImpl();
     return targletTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TargletContainer createTargletContainer()
+  {
+    TargletContainerImpl targletContainer = new TargletContainerImpl();
+    return targletContainer;
   }
 
   /**
@@ -1037,21 +1065,21 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public Version createVersionFromString(EDataType eDataType, String initialValue)
   {
-    return (Version)super.createFromString(eDataType, initialValue);
+    return initialValue == null ? null : Version.create(initialValue);
   }
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public String convertVersionToString(EDataType eDataType, Object instanceValue)
   {
-    return super.convertToString(eDataType, instanceValue);
+    return instanceValue == null ? null : ((Version)instanceValue).toString();
   }
 
   /**

@@ -2,8 +2,8 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -17,20 +17,17 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.equinox.p2.metadata.Version;
-
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.ComponentDefinition} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletImportTask} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvider implements
-    IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-    IItemPropertySource
+public class TargletImportTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -38,7 +35,7 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
    * <!-- end-user-doc -->
    * @generated
    */
-  public ComponentDefinitionItemProvider(AdapterFactory adapterFactory)
+  public TargletImportTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -56,48 +53,30 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
     {
       super.getPropertyDescriptors(object);
 
-      addIDPropertyDescriptor(object);
-      addVersionPropertyDescriptor(object);
+      addTargletURIPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the ID feature.
+   * This adds a property descriptor for the Targlet URI feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addIDPropertyDescriptor(Object object)
+  protected void addTargletURIPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_ComponentDefinition_iD_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ComponentDefinition_iD_feature",
-            "_UI_ComponentDefinition_type"), SetupPackage.Literals.COMPONENT_DEFINITION__ID, true, false, false,
+        getString("_UI_TargletImportTask_targletURI_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TargletImportTask_targletURI_feature",
+            "_UI_TargletImportTask_type"), SetupPackage.Literals.TARGLET_IMPORT_TASK__TARGLET_URI, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This adds a property descriptor for the Version feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addVersionPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_ComponentDefinition_version_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ComponentDefinition_version_feature",
-            "_UI_ComponentDefinition_type"), SetupPackage.Literals.COMPONENT_DEFINITION__VERSION, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This returns ComponentDefinition.gif.
+   * This returns TargletImportTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -105,7 +84,7 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/ComponentDefinition"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/TargletImportTask"));
   }
 
   /**
@@ -128,11 +107,8 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
   @Override
   public String getText(Object object)
   {
-    ComponentDefinition componentDefinition = (ComponentDefinition)object;
-    String label = componentDefinition.getID();
-    Version version = componentDefinition.getVersion();
-    return (label == null || label.length() == 0 ? getString("_UI_ComponentDefinition_type") : label)
-        + (version == null || Version.emptyVersion.equals(version) ? "" : " " + version.toString());
+    String label = ((TargletImportTask)object).getTargletURI();
+    return label == null || label.length() == 0 ? getString("_UI_TargletImportTask_type") : label;
   }
 
   /**
@@ -147,10 +123,9 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(ComponentDefinition.class))
+    switch (notification.getFeatureID(TargletImportTask.class))
     {
-    case SetupPackage.COMPONENT_DEFINITION__ID:
-    case SetupPackage.COMPONENT_DEFINITION__VERSION:
+    case SetupPackage.TARGLET_IMPORT_TASK__TARGLET_URI:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

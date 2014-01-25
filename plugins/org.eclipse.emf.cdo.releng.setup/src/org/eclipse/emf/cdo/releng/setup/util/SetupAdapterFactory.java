@@ -60,6 +60,9 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletContainer;
+import org.eclipse.emf.cdo.releng.setup.TargletData;
+import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
 import org.eclipse.emf.cdo.releng.setup.TextModifyTask;
@@ -311,15 +314,33 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseTargletImportTask(TargletImportTask object)
+    {
+      return createTargletImportTaskAdapter();
+    }
+
+    @Override
     public Adapter caseTargletTask(TargletTask object)
     {
       return createTargletTaskAdapter();
     }
 
     @Override
+    public Adapter caseTargletContainer(TargletContainer object)
+    {
+      return createTargletContainerAdapter();
+    }
+
+    @Override
     public Adapter caseTarglet(Targlet object)
     {
       return createTargletAdapter();
+    }
+
+    @Override
+    public Adapter caseTargletData(TargletData object)
+    {
+      return createTargletDataAdapter();
     }
 
     @Override
@@ -938,6 +959,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TargletImportTask <em>Targlet Import Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletImportTask
+   * @generated
+   */
+  public Adapter createTargletImportTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask <em>File Association Task</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1013,6 +1049,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TargletContainer <em>Targlet Container</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletContainer
+   * @generated
+   */
+  public Adapter createTargletContainerAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.Targlet <em>Targlet</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1023,6 +1074,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTargletAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.TargletData <em>Targlet Data</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData
+   * @generated
+   */
+  public Adapter createTargletDataAdapter()
   {
     return null;
   }

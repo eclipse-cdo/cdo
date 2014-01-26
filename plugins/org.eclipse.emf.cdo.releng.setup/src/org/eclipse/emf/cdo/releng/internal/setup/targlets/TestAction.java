@@ -154,7 +154,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     roots.add(component("javax.annotation"));
     roots.add(component("oracle.database.driver"));
 
-    targlet.getSourceLocators().add(sourceLocator("C:/develop/cdo/master/git/cdo", false));
+    targlet.getSourceLocators().add(sourceLocator("C:/cdo", false));
 
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());

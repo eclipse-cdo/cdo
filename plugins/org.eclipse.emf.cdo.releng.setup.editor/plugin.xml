@@ -71,7 +71,7 @@
             contributorClass="org.eclipse.emf.cdo.releng.setup.presentation.SetupActionBarContributor">
       </editor>
       <editor
-            id="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID"
+            id="org.eclipse.emf.cdo.releng.setup.presentation.CDefEditorID"
             name="%_UI_CDef_Editor_label"
             icon="icons/full/obj16/cdef_file.gif"
             extensions="def"
@@ -79,7 +79,7 @@
             contributorClass="org.eclipse.emf.cdo.releng.setup.presentation.SetupActionBarContributor">
       </editor>
       <editor
-            id="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID"
+            id="org.eclipse.emf.cdo.releng.setup.presentation.CExtEditorID"
             name="%_UI_CExt_Editor_label"
             icon="icons/full/obj16/cext_file.gif"
             extensions="ext"
@@ -87,7 +87,7 @@
             contributorClass="org.eclipse.emf.cdo.releng.setup.presentation.SetupActionBarContributor">
       </editor>
       <editor
-            id="org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorID"
+            id="org.eclipse.emf.cdo.releng.setup.presentation.TargletEditorID"
             name="%_UI_Targlet_Editor_label"
             icon="icons/full/obj16/targlet_file.gif"
             extensions="targlet"

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -135,5 +136,34 @@ public class BasicProjectVisitor<T> implements Visitor<T>
 
   protected void visitCSpex(Element rootElement, T host, IProgressMonitor monitor) throws Exception
   {
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class BuckminsterDependencyHandler
+  {
+    public void handleDependencies(Element rootElement, IProgressMonitor monitor) throws Exception
+    {
+      XMLUtil.handleElementsByTagName(rootElement, "cs:dependencies", new ElementHandler()
+      {
+        public void handleElement(Element dependencies) throws Exception
+        {
+          XMLUtil.handleElementsByTagName(dependencies, "cs:dependency", new ElementHandler()
+          {
+            public void handleElement(Element dependency) throws Exception
+            {
+              String id = dependency.getAttribute("name");
+              String type = dependency.getAttribute("componentType");
+              String versionDesignator = dependency.getAttribute("versionDesignator");
+
+              handleDependency(id, type, versionDesignator);
+            }
+          });
+        }
+      });
+    }
+
+    protected abstract void handleDependency(String id, String type, String versionDesignator) throws Exception;
   }
 }

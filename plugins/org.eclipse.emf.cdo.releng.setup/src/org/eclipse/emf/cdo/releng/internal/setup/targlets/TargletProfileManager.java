@@ -22,6 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
@@ -177,13 +178,15 @@ public final class TargletProfileManager
       IProfile profile = profileRegistry.getProfile(profileID);
       if (profile == null)
       {
-        Map<String, String> props = new HashMap<String, String>();
-        props.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
-        props.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
-        props.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
-        props.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
+        properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
+        properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
+        properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
+        properties.put(IProfile.PROP_ENVIRONMENTS, generateEnvironmentProperties(container.getTarget()));
+        properties.put(IProfile.PROP_NL, generateNLProperty(container.getTarget()));
 
-        profile = profileRegistry.addProfile(profileID, props);
+        profile = profileRegistry.addProfile(profileID, properties);
 
         digests.add(digest);
         writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
@@ -197,6 +200,51 @@ public final class TargletProfileManager
 
       return profile;
     }
+  }
+
+  private String generateEnvironmentProperties(ITargetDefinition target)
+  {
+    // TODO: are there constants for these keys?
+    StringBuffer env = new StringBuffer();
+    String ws = target.getWS();
+    if (ws == null)
+    {
+      ws = Platform.getWS();
+    }
+    env.append("osgi.ws="); //$NON-NLS-1$
+    env.append(ws);
+    env.append(","); //$NON-NLS-1$
+    String os = target.getOS();
+    if (os == null)
+    {
+      os = Platform.getOS();
+    }
+    env.append("osgi.os="); //$NON-NLS-1$
+    env.append(os);
+    env.append(","); //$NON-NLS-1$
+    String arch = target.getArch();
+    if (arch == null)
+    {
+      arch = Platform.getOSArch();
+    }
+    env.append("osgi.arch="); //$NON-NLS-1$
+    env.append(arch);
+    return env.toString();
+  }
+
+  /**
+   * Generates the NL property for this target definition's p2 profile.
+   *
+   * @return NL profile property
+   */
+  private String generateNLProperty(ITargetDefinition target)
+  {
+    String nl = target.getNL();
+    if (nl == null)
+    {
+      nl = Platform.getNL();
+    }
+    return nl;
   }
 
   private void initialize(IProgressMonitor monitor) throws Exception

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -33,7 +34,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -248,9 +248,7 @@ public class ProjectSetImportTaskImpl extends SetupTaskImpl implements ProjectSe
       {
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        documentBuilderFactory.setNamespaceAware(true);
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
 
         inputStream = context.getURIConverter().createInputStream(uri, null);
         Document document = documentBuilder.parse(inputStream);

@@ -10,22 +10,30 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.BundleIUGenerator;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.FeatureIUGenerator;
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectAnalyzer;
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectVisitor;
 import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
+import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.equinox.internal.p2.metadata.InstallableUnit;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
+import org.eclipse.equinox.p2.metadata.IRequirement;
+import org.eclipse.equinox.p2.metadata.MetadataFactory;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,18 +41,18 @@ import java.util.Set;
  */
 public class IUAnalyzer extends BasicProjectAnalyzer<IInstallableUnit>
 {
-  private Set<String> ids = new HashSet<String>();
+  private final Set<String> ids = new HashSet<String>();
 
   public IUAnalyzer()
   {
   }
 
-  public boolean hasIU(String id)
+  public Set<String> getIDs()
   {
-    return ids.contains(id);
+    return ids;
   }
 
-  public List<IInstallableUnit> analyze(File folder, boolean locateNestedProjects, IProgressMonitor monitor)
+  public Map<IInstallableUnit, File> analyze(File folder, boolean locateNestedProjects, IProgressMonitor monitor)
   {
     Visitor<IInstallableUnit> visitor = new IUVisitor();
     return analyze(folder, locateNestedProjects, visitor, monitor);
@@ -99,7 +107,57 @@ public class IUAnalyzer extends BasicProjectAnalyzer<IInstallableUnit>
     @Override
     protected void visitCSpex(Element rootElement, IInstallableUnit host, IProgressMonitor monitor) throws Exception
     {
-      super.visitCSpex(rootElement, host, monitor);
+      if (host instanceof InstallableUnit)
+      {
+        InstallableUnit iu = (InstallableUnit)host;
+
+        final List<IRequirement> requirements = new ArrayList<IRequirement>(iu.getRequirements());
+        new BuckminsterDependencyHandler()
+        {
+          @Override
+          protected void handleDependency(String id, String type, String versionDesignator) throws Exception
+          {
+            try
+            {
+              ComponentType componentType = ComponentType.get(type);
+              if (componentType != null)
+              {
+                String namespace = null;
+
+                switch (componentType)
+                {
+                case ECLIPSE_FEATURE:
+                  namespace = IInstallableUnit.NAMESPACE_IU_ID;
+                  id += ".feature.group";
+                  break;
+
+                case OSGI_BUNDLE:
+                  namespace = componentType.toString();
+                  break;
+                }
+
+                if (namespace != null)
+                {
+                  IRequirement requirement = createRequirement(namespace, id, versionDesignator);
+                  requirements.add(requirement);
+                }
+              }
+            }
+            catch (Exception ex)
+            {
+              Activator.log(ex);
+            }
+          }
+        }.handleDependencies(rootElement, monitor);
+
+        iu.setRequiredCapabilities(requirements.toArray(new IRequirement[requirements.size()]));
+      }
+    }
+
+    private IRequirement createRequirement(String namespace, String id, String range)
+    {
+      VersionRange versionRange = range == null ? VersionRange.emptyRange : new VersionRange(range);
+      return MetadataFactory.createRequirement(namespace, id, versionRange, null, false, true, true);
     }
   }
 }

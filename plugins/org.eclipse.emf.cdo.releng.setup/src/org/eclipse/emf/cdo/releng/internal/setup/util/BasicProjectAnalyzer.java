@@ -17,22 +17,22 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class BasicProjectAnalyzer<T>
 {
-  public List<T> analyze(File folder, boolean locateNestedProjects, Visitor<T> visitor, IProgressMonitor monitor)
+  public Map<T, File> analyze(File folder, boolean locateNestedProjects, Visitor<T> visitor, IProgressMonitor monitor)
   {
-    List<T> results = new ArrayList<T>();
+    Map<T, File> results = new HashMap<T, File>();
     analyze(folder, locateNestedProjects, results, visitor, monitor);
     return results;
   }
 
-  private void analyze(File folder, boolean locateNestedProjects, List<T> results, Visitor<T> visitor,
+  private void analyze(File folder, boolean locateNestedProjects, Map<T, File> results, Visitor<T> visitor,
       IProgressMonitor monitor)
   {
     if (monitor != null && monitor.isCanceled())
@@ -63,7 +63,7 @@ public class BasicProjectAnalyzer<T>
           result = filter(result);
           if (result != null)
           {
-            results.add(result);
+            results.put(result, folder);
           }
 
           if (!locateNestedProjects)

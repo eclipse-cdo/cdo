@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
-import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -250,7 +250,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     return result.toString();
   }
 
-  public <T> List<T> accept(Visitor<T> visitor, IProgressMonitor monitor)
+  public <T> Map<T, File> accept(Visitor<T> visitor, IProgressMonitor monitor)
   {
     File rootFolder = new File(getRootFolder());
     boolean locateNestedProjects = isLocateNestedProjects();

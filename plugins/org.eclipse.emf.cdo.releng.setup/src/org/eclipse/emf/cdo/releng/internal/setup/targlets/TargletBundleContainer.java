@@ -43,6 +43,8 @@ import org.eclipse.equinox.p2.engine.query.IUProfilePropertyQuery;
 import org.eclipse.equinox.p2.metadata.IArtifactKey;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.IProvidedCapability;
+import org.eclipse.equinox.p2.metadata.MetadataFactory;
+import org.eclipse.equinox.p2.metadata.MetadataFactory.InstallableUnitDescription;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.equinox.p2.planner.IPlanner;
 import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
@@ -68,6 +70,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -81,14 +84,18 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -97,6 +104,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @SuppressWarnings("restriction")
 public class TargletBundleContainer extends AbstractBundleContainer
 {
+  private static final String FEATURE_SUFFIX = ".feature.group";
+
   public static final String TYPE = "Targlet";
 
   private static final String FOLLOW_ARTIFACT_REPOSITORY_REFERENCES = "org.eclipse.equinox.p2.director.followArtifactRepositoryReferences";
@@ -111,6 +120,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private List<Targlet> targlets = new ArrayList<Targlet>();
 
+  private transient ITargetDefinition target;
+
   private transient String digest;
 
   private transient IProfile profile;
@@ -123,6 +134,11 @@ public class TargletBundleContainer extends AbstractBundleContainer
   public String getType()
   {
     return TYPE;
+  }
+
+  public ITargetDefinition getTarget()
+  {
+    return target;
   }
 
   public List<Targlet> getTarglets()
@@ -145,7 +161,15 @@ public class TargletBundleContainer extends AbstractBundleContainer
   @Override
   public String serialize()
   {
-    return Persistence.toXML(targlets);
+    try
+    {
+      return Persistence.toXML(targlets).toString();
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+      return null;
+    }
   }
 
   public String getDigest()
@@ -283,7 +307,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
 
     final IUAnalyzer analyzer = new IUAnalyzer();
-    final List<IInstallableUnit> sources = new ArrayList<IInstallableUnit>();
+    final Map<IInstallableUnit, File> sources = new HashMap<IInstallableUnit, File>();
     List<URI> uris = new ArrayList<URI>();
 
     for (Targlet targlet : targlets)
@@ -293,8 +317,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
         boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
         File rootFolder = new File(sourceLocator.getRootFolder());
 
-        List<IInstallableUnit> ius = analyzer.analyze(rootFolder, locateNestedProjects, monitor);
-        sources.addAll(ius);
+        Map<IInstallableUnit, File> ius = analyzer.analyze(rootFolder, locateNestedProjects, monitor);
+        sources.putAll(ius);
       }
 
       for (P2Repository p2Repository : targlet.getActiveP2Repositories())
@@ -333,21 +357,67 @@ public class TargletBundleContainer extends AbstractBundleContainer
       {
         if (result == null)
         {
-          IQueryResult<IInstallableUnit> query = super.getMetadata(monitor)
-              .query(QueryUtil.createIUAnyQuery(), monitor);
-          for (Iterator<IInstallableUnit> it = query.iterator(); it.hasNext();)
+          List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
+          Set<String> ids = analyzer.getIDs();
+          prepareSources(ius, ids);
+
+          IQueryable<IInstallableUnit> metadata = super.getMetadata(monitor);
+          IQueryResult<IInstallableUnit> metadataResult = metadata.query(QueryUtil.createIUAnyQuery(), monitor);
+
+          for (Iterator<IInstallableUnit> it = metadataResult.iterator(); it.hasNext();)
           {
             IInstallableUnit iu = it.next();
-            if (!analyzer.hasIU(iu.getId()))
+            if (!ids.contains(iu.getId()))
             {
-              sources.add(iu);
+              ius.add(iu);
             }
           }
 
-          result = new CollectionResult<IInstallableUnit>(sources);
+          result = new CollectionResult<IInstallableUnit>(ius);
         }
 
         return result;
+      }
+
+      private void prepareSources(List<IInstallableUnit> ius, Set<String> ids)
+      {
+        for (IInstallableUnit iu : sources.keySet())
+        {
+          ius.add(iu);
+
+          String id = iu.getId();
+          String suffix = "";
+
+          if (id.endsWith(FEATURE_SUFFIX))
+          {
+            id = id.substring(0, id.length() - FEATURE_SUFFIX.length());
+            suffix = FEATURE_SUFFIX;
+          }
+
+          InstallableUnitDescription description = new MetadataFactory.InstallableUnitDescription();
+          description.setId(id + ".source" + suffix);
+          description.setVersion(iu.getVersion());
+
+          for (Map.Entry<String, String> property : iu.getProperties().entrySet())
+          {
+            String key = property.getKey();
+            String value = property.getValue();
+
+            if ("org.eclipse.equinox.p2.name".equals(key))
+            {
+              value = "Source for " + value;
+            }
+
+            description.setProperty(key, value);
+          }
+
+          description.addProvidedCapabilities(Collections.singleton(MetadataFactory.createProvidedCapability(
+              IInstallableUnit.NAMESPACE_IU_ID, description.getId(), description.getVersion())));
+
+          IInstallableUnit sourceIU = MetadataFactory.createInstallableUnit(description);
+          ius.add(sourceIU);
+          ids.add(sourceIU.getId());
+        }
       }
     };
 
@@ -419,15 +489,15 @@ public class TargletBundleContainer extends AbstractBundleContainer
   }
 
   @Override
-  protected TargetBundle[] resolveBundles(ITargetDefinition definition, IProgressMonitor monitor) throws CoreException
+  protected TargetBundle[] resolveBundles(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
   {
+    this.target = target;
     resolveUnits(monitor);
     return fBundles;
   }
 
   @Override
-  protected TargetFeature[] resolveFeatures(ITargetDefinition definition, IProgressMonitor monitor)
-      throws CoreException
+  protected TargetFeature[] resolveFeatures(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
   {
     return fFeatures;
   }
@@ -590,21 +660,29 @@ public class TargletBundleContainer extends AbstractBundleContainer
     public void beginTask(String name, int totalWork)
     {
       super.beginTask(name, totalWork);
-      System.out.println(name);
+      log(name);
     }
 
     @Override
     public void setTaskName(String name)
     {
       super.setTaskName(name);
-      System.out.println(name);
+      log(name);
     }
 
     @Override
     public void subTask(String name)
     {
       super.subTask(name);
-      System.out.println(name);
+      log(name);
+    }
+
+    private void log(String string)
+    {
+      if (string != null && string.length() != 0)
+      {
+        System.out.println(string);
+      }
     }
   }
 
@@ -743,23 +821,12 @@ public class TargletBundleContainer extends AbstractBundleContainer
       return null;
     }
 
-    public static String toXML(List<Targlet> targlets)
+    public static Writer toXML(List<Targlet> targlets) throws ParserConfigurationException, TransformerException
     {
-      Element containerElement;
-      Document document;
+      DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Document document = docBuilder.newDocument();
 
-      try
-      {
-        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        document = docBuilder.newDocument();
-      }
-      catch (Exception ex)
-      {
-        Activator.log(ex);
-        return null;
-      }
-
-      containerElement = document.createElement(LOCATION);
+      Element containerElement = document.createElement(LOCATION);
       containerElement.setAttribute(LOCATION_TYPE, TYPE);
       document.appendChild(containerElement);
 
@@ -802,19 +869,12 @@ public class TargletBundleContainer extends AbstractBundleContainer
         }
       }
 
-      try
-      {
-        StreamResult result = new StreamResult(new StringWriter());
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        transformer.transform(new DOMSource(document), result);
+      StreamResult result = new StreamResult(new StringWriter());
+      Transformer transformer = TransformerFactory.newInstance().newTransformer();
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+      transformer.transform(new DOMSource(document), result);
 
-        return result.getWriter().toString();
-      }
-      catch (TransformerException ex)
-      {
-        return null;
-      }
+      return result.getWriter();
     }
   }
 }

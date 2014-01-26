@@ -13,14 +13,14 @@ package org.eclipse.emf.cdo.releng.setup.util;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public interface ProjectProvider
 {
-  public <T> List<T> accept(Visitor<T> visitor, IProgressMonitor monitor);
+  public <T> Map<T, File> accept(Visitor<T> visitor, IProgressMonitor monitor);
 
   /**
    * @author Eike Stepper

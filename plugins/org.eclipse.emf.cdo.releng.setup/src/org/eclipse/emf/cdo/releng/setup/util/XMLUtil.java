@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.releng.setup.util;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -34,6 +36,7 @@ public final class XMLUtil
   {
     DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     documentBuilderFactory.setNamespaceAware(true);
+    documentBuilderFactory.setValidating(false);
     return documentBuilderFactory.newDocumentBuilder();
   }
 
@@ -46,5 +49,55 @@ public final class XMLUtil
   public static Document loadDocument(DocumentBuilder documentBuilder, File file) throws SAXException, IOException
   {
     return documentBuilder.parse(file);
+  }
+
+  public static int handleElements(NodeList nodeList, ElementHandler handler) throws Exception
+  {
+    int count = 0;
+    for (int i = 0; i < nodeList.getLength(); i++)
+    {
+      Node node = nodeList.item(i);
+      if (node instanceof Element)
+      {
+        Element element = (Element)node;
+        handler.handleElement(element);
+        ++count;
+      }
+    }
+
+    return count;
+  }
+
+  public static int handleChildElements(Element rootElement, ElementHandler handler) throws Exception
+  {
+    NodeList childNodes = rootElement.getChildNodes();
+    return handleElements(childNodes, handler);
+  }
+
+  public static int handleElementsByTagName(Element rootElement, String tagName, ElementHandler handler)
+      throws Exception
+  {
+    int count = 0;
+
+    NodeList nodeList = rootElement.getElementsByTagName(tagName);
+    count += handleElements(nodeList, handler);
+
+    int pos = tagName.indexOf(':');
+    if (pos != -1)
+    {
+      tagName = tagName.substring(pos + 1);
+      nodeList = rootElement.getElementsByTagName(tagName);
+      count += handleElements(nodeList, handler);
+    }
+
+    return count;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ElementHandler
+  {
+    public void handleElement(Element element) throws Exception;
   }
 }

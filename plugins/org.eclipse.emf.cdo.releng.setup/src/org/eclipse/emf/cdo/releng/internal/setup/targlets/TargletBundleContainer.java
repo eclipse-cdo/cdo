@@ -17,14 +17,22 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.internal.p2.engine.Phase;
 import org.eclipse.equinox.internal.p2.engine.PhaseSet;
@@ -97,6 +105,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -348,7 +357,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
       artifactManager.addRepository(uri);
     }
 
-    ProvisioningContext provisioningContext = new ProvisioningContext(agent)
+    ProvisioningContext context = new ProvisioningContext(agent)
     {
       private CollectionResult<IInstallableUnit> result;
 
@@ -422,10 +431,10 @@ public class TargletBundleContainer extends AbstractBundleContainer
     };
 
     URI[] uriArray = uris.toArray(new URI[uris.size()]);
-    provisioningContext.setMetadataRepositories(uriArray);
-    provisioningContext.setArtifactRepositories(uriArray);
-    provisioningContext.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
-    provisioningContext.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
+    context.setMetadataRepositories(uriArray);
+    context.setArtifactRepositories(uriArray);
+    context.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
+    context.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
 
     IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
     if (planner == null)
@@ -438,7 +447,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
     IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor());
     request.removeAll(installedIUs.toUnmodifiableSet());
 
-    IQueryable<IInstallableUnit> metadata = provisioningContext.getMetadata(monitor);
+    IQueryable<IInstallableUnit> metadata = context.getMetadata(monitor);
     for (InstallableUnit root : roots)
     {
       IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
@@ -451,10 +460,10 @@ public class TargletBundleContainer extends AbstractBundleContainer
       }
     }
 
-    IProvisioningPlan result = planner.getProvisioningPlan(request, provisioningContext, new ProgressMonitor());
-    if (!result.getStatus().isOK())
+    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, new ProgressMonitor());
+    if (!plan.getStatus().isOK())
     {
-      throw new ProvisionException(result.getStatus());
+      throw new ProvisionException(plan.getStatus());
     }
 
     IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
@@ -464,17 +473,84 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
 
     IPhaseSet phaseSet = createPhaseSet();
-    IStatus status = PlanExecutionHelper.executePlan(result, engine, phaseSet, provisioningContext,
-        new ProgressMonitor());
+    IStatus status = PlanExecutionHelper.executePlan(plan, engine, phaseSet, context, new ProgressMonitor());
     if (!status.isOK())
     {
       throw new ProvisionException(status);
     }
 
+    updateWorkspace(sources, new ProgressMonitor());
     profileNeedsUpdate.set(false);
 
     // return new Status(IStatus.OK, PDECore.PLUGIN_ID, ITargetLocationUpdater.STATUS_CODE_NO_CHANGE,
     // "Targlet container update completed successfully", null);
+  }
+
+  private void updateWorkspace(Map<IInstallableUnit, File> sources, IProgressMonitor monitor) throws ProvisionException
+  {
+    try
+    {
+      DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
+      IWorkspace workspace = ResourcesPlugin.getWorkspace();
+      IWorkspaceRoot root = workspace.getRoot();
+
+      // plan.getAdditions() would probably also do and be cheaper
+      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
+      for (IInstallableUnit iu : result.toUnmodifiableSet())
+      {
+        File folder = sources.get(iu);
+        if (folder != null)
+        {
+          final AtomicReference<String> projectName = new AtomicReference<String>();
+
+          Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
+          XMLUtil.handleChildElements(rootElement, new ElementHandler()
+          {
+            public void handleElement(Element element) throws Exception
+            {
+              if ("name".equals(element.getTagName()))
+              {
+                projectName.set(element.getTextContent().trim());
+              }
+            }
+          });
+
+          String name = projectName.get();
+          if (name != null && name.length() != 0)
+          {
+            File location = folder.getCanonicalFile();
+
+            IProject project = root.getProject(name);
+            if (project.exists())
+            {
+              // project.delete(false, true, monitor);
+              File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
+              if (!existingLocation.equals(location))
+              {
+                System.err.println("Project " + name + " exists in different location: " + existingLocation);
+                continue;
+              }
+            }
+            else
+            {
+              System.out.println("Importing project " + name);
+              IProjectDescription projectDescription = workspace.newProjectDescription(name);
+              projectDescription.setLocation(new Path(location.getAbsolutePath()));
+              project.create(projectDescription, monitor);
+            }
+
+            if (!project.isOpen())
+            {
+              project.open(monitor);
+            }
+          }
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      TargletProfileManager.throwProvisionException(ex);
+    }
   }
 
   private IPhaseSet createPhaseSet()
@@ -557,7 +633,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private void generateBundle(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetBundle> bundles)
       throws CoreException
-  {
+      {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
     for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
     {
@@ -568,11 +644,11 @@ public class TargletBundleContainer extends AbstractBundleContainer
         bundles.add(bundle);
       }
     }
-  }
+      }
 
   private void generateFeature(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetFeature> features)
       throws CoreException
-  {
+      {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
     for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
     {
@@ -583,7 +659,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
         features.add(feature);
       }
     }
-  }
+      }
 
   private boolean isOSGiBundle(IInstallableUnit unit)
   {

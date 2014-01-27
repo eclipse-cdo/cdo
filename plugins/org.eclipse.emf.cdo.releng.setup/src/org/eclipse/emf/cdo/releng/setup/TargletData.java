@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.TargletData#getRepositoryLists <em>Repository Lists</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.TargletData#getActiveRepositoryList <em>Active Repository List</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.TargletData#getActiveP2Repositories <em>Active P2 Repositories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeSources <em>Include Sources</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeAllPlatforms <em>Include All Platforms</em>}</li>
  * </ul>
  * </p>
  *
@@ -143,5 +145,57 @@ public interface TargletData extends EObject
    * @generated
    */
   EList<P2Repository> getActiveP2Repositories();
+
+  /**
+   * Returns the value of the '<em><b>Include Sources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Include Sources</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Include Sources</em>' attribute.
+   * @see #setIncludeSources(boolean)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTargletData_IncludeSources()
+   * @model
+   * @generated
+   */
+  boolean isIncludeSources();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeSources <em>Include Sources</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Include Sources</em>' attribute.
+   * @see #isIncludeSources()
+   * @generated
+   */
+  void setIncludeSources(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Include All Platforms</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Include All Platforms</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Include All Platforms</em>' attribute.
+   * @see #setIncludeAllPlatforms(boolean)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTargletData_IncludeAllPlatforms()
+   * @model
+   * @generated
+   */
+  boolean isIncludeAllPlatforms();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeAllPlatforms <em>Include All Platforms</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Include All Platforms</em>' attribute.
+   * @see #isIncludeAllPlatforms()
+   * @generated
+   */
+  void setIncludeAllPlatforms(boolean value);
 
 } // TargletData

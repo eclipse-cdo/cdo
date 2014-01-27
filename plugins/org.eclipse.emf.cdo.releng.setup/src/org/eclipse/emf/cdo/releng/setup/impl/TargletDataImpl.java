@@ -35,6 +35,8 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl#getRepositoryLists <em>Repository Lists</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl#getActiveRepositoryList <em>Active Repository List</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl#getActiveP2Repositories <em>Active P2 Repositories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl#isIncludeSources <em>Include Sources</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl#isIncludeAllPlatforms <em>Include All Platforms</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,6 +113,46 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
    * @ordered
    */
   protected String activeRepositoryList = ACTIVE_REPOSITORY_LIST_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isIncludeSources() <em>Include Sources</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIncludeSources()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean INCLUDE_SOURCES_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isIncludeSources() <em>Include Sources</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIncludeSources()
+   * @generated
+   * @ordered
+   */
+  protected boolean includeSources = INCLUDE_SOURCES_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isIncludeAllPlatforms() <em>Include All Platforms</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIncludeAllPlatforms()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean INCLUDE_ALL_PLATFORMS_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isIncludeAllPlatforms() <em>Include All Platforms</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIncludeAllPlatforms()
+   * @generated
+   * @ordered
+   */
+  protected boolean includeAllPlatforms = INCLUDE_ALL_PLATFORMS_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -260,6 +302,58 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isIncludeSources()
+  {
+    return includeSources;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIncludeSources(boolean newIncludeSources)
+  {
+    boolean oldIncludeSources = includeSources;
+    includeSources = newIncludeSources;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TARGLET_DATA__INCLUDE_SOURCES,
+          oldIncludeSources, includeSources));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isIncludeAllPlatforms()
+  {
+    return includeAllPlatforms;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIncludeAllPlatforms(boolean newIncludeAllPlatforms)
+  {
+    boolean oldIncludeAllPlatforms = includeAllPlatforms;
+    includeAllPlatforms = newIncludeAllPlatforms;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.TARGLET_DATA__INCLUDE_ALL_PLATFORMS,
+          oldIncludeAllPlatforms, includeAllPlatforms));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -297,6 +391,10 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
       return getActiveRepositoryList();
     case SetupPackage.TARGLET_DATA__ACTIVE_P2_REPOSITORIES:
       return getActiveP2Repositories();
+    case SetupPackage.TARGLET_DATA__INCLUDE_SOURCES:
+      return isIncludeSources();
+    case SetupPackage.TARGLET_DATA__INCLUDE_ALL_PLATFORMS:
+      return isIncludeAllPlatforms();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -330,6 +428,12 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
     case SetupPackage.TARGLET_DATA__ACTIVE_REPOSITORY_LIST:
       setActiveRepositoryList((String)newValue);
       return;
+    case SetupPackage.TARGLET_DATA__INCLUDE_SOURCES:
+      setIncludeSources((Boolean)newValue);
+      return;
+    case SetupPackage.TARGLET_DATA__INCLUDE_ALL_PLATFORMS:
+      setIncludeAllPlatforms((Boolean)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -359,6 +463,12 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
     case SetupPackage.TARGLET_DATA__ACTIVE_REPOSITORY_LIST:
       setActiveRepositoryList(ACTIVE_REPOSITORY_LIST_EDEFAULT);
       return;
+    case SetupPackage.TARGLET_DATA__INCLUDE_SOURCES:
+      setIncludeSources(INCLUDE_SOURCES_EDEFAULT);
+      return;
+    case SetupPackage.TARGLET_DATA__INCLUDE_ALL_PLATFORMS:
+      setIncludeAllPlatforms(INCLUDE_ALL_PLATFORMS_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -386,6 +496,10 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
           .equals(activeRepositoryList);
     case SetupPackage.TARGLET_DATA__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
+    case SetupPackage.TARGLET_DATA__INCLUDE_SOURCES:
+      return includeSources != INCLUDE_SOURCES_EDEFAULT;
+    case SetupPackage.TARGLET_DATA__INCLUDE_ALL_PLATFORMS:
+      return includeAllPlatforms != INCLUDE_ALL_PLATFORMS_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -408,6 +522,10 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
     result.append(name);
     result.append(", activeRepositoryList: ");
     result.append(activeRepositoryList);
+    result.append(", includeSources: ");
+    result.append(includeSources);
+    result.append(", includeAllPlatforms: ");
+    result.append(includeAllPlatforms);
     result.append(')');
     return result.toString();
   }

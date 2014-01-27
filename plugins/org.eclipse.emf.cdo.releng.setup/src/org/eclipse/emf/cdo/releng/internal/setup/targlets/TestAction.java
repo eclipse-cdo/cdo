@@ -120,6 +120,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
 
     Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
     targlet.setName("EMF");
+    targlet.setIncludeSources(true);
 
     EList<InstallableUnit> roots = targlet.getRoots();
     roots.add(component("org.eclipse.emf.cdo.site.feature.group"));

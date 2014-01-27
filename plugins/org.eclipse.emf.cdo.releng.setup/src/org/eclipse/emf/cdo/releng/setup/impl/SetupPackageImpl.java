@@ -2000,6 +2000,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getTargletData_IncludeSources()
+  {
+    return (EAttribute)targletDataEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTargletData_IncludeAllPlatforms()
+  {
+    return (EAttribute)targletDataEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getRepositoryList()
   {
     return repositoryListEClass;
@@ -2850,6 +2870,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEReference(targletDataEClass, TARGLET_DATA__REPOSITORY_LISTS);
     createEAttribute(targletDataEClass, TARGLET_DATA__ACTIVE_REPOSITORY_LIST);
     createEReference(targletDataEClass, TARGLET_DATA__ACTIVE_P2_REPOSITORIES);
+    createEAttribute(targletDataEClass, TARGLET_DATA__INCLUDE_SOURCES);
+    createEAttribute(targletDataEClass, TARGLET_DATA__INCLUDE_ALL_PLATFORMS);
 
     repositoryListEClass = createEClass(REPOSITORY_LIST);
     createEReference(repositoryListEClass, REPOSITORY_LIST__P2_REPOSITORIES);
@@ -3358,6 +3380,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getTargletData_ActiveP2Repositories(), getP2Repository(), null, "activeP2Repositories", null, 0, -1,
         TargletData.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTargletData_IncludeSources(), ecorePackage.getEBoolean(), "includeSources", null, 0, 1,
+        TargletData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEAttribute(getTargletData_IncludeAllPlatforms(), ecorePackage.getEBoolean(), "includeAllPlatforms", null, 0, 1,
+        TargletData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(repositoryListEClass, RepositoryList.class, "RepositoryList", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

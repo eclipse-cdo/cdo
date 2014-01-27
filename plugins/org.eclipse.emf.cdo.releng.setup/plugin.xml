@@ -97,7 +97,7 @@
             class="org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletUIFactory$NewTargletWizard"
             icon="icons/targlets.gif"
             id="org.eclipse.emf.cdo.releng.setup.TargletProvisioner"
-            name="Targlet">
+            name="Targlet Container">
          <description>
             Download plug-ins from a software site such as a p2 repository or update site.
          </description>

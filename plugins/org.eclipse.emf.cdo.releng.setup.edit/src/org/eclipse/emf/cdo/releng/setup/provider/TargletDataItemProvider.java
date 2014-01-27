@@ -60,6 +60,8 @@ public class TargletDataItemProvider extends ItemProviderAdapter implements IEdi
 
       addNamePropertyDescriptor(object);
       addActiveRepositoryListPropertyDescriptor(object);
+      addIncludeSourcesPropertyDescriptor(object);
+      addIncludeAllPlatformsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -95,6 +97,40 @@ public class TargletDataItemProvider extends ItemProviderAdapter implements IEdi
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_activeRepositoryList_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__ACTIVE_REPOSITORY_LIST, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Include Sources feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIncludeSourcesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_TargletData_includeSources_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TargletData_includeSources_feature",
+            "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__INCLUDE_SOURCES, true, false, false,
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Include All Platforms feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIncludeAllPlatformsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_TargletData_includeAllPlatforms_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TargletData_includeAllPlatforms_feature",
+            "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__INCLUDE_ALL_PLATFORMS, true, false, false,
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -183,6 +219,8 @@ public class TargletDataItemProvider extends ItemProviderAdapter implements IEdi
     {
     case SetupPackage.TARGLET_DATA__NAME:
     case SetupPackage.TARGLET_DATA__ACTIVE_REPOSITORY_LIST:
+    case SetupPackage.TARGLET_DATA__INCLUDE_SOURCES:
+    case SetupPackage.TARGLET_DATA__INCLUDE_ALL_PLATFORMS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.TARGLET_DATA__ROOTS:

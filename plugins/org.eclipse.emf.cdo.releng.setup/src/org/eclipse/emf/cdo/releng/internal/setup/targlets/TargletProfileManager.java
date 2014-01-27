@@ -19,10 +19,8 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
@@ -70,12 +68,6 @@ public final class TargletProfileManager
 
   private static final String PROP_TARGLET_CONTAINER_DIGEST = "targlet.container.digest"; //$NON-NLS-1$
 
-  private static final String PROP_ARCH = "osgi.arch"; //$NON-NLS-1$
-
-  private static final String PROP_OS = "osgi.os"; //$NON-NLS-1$
-
-  private static final String PROP_WS = "osgi.ws"; //$NON-NLS-1$
-
   private static final String WORKSPACE_RELATIVE_PROPERTIES = ".metadata/.plugins/" + Activator.PLUGIN_ID //$NON-NLS-1$
       + "/targlet-container.properties"; //$NON-NLS-1$
 
@@ -92,8 +84,6 @@ public final class TargletProfileManager
   private IProvisioningAgent agent;
 
   private IProfileRegistry profileRegistry;
-
-  private HashBag<String> digests;
 
   private TargletProfileManager() throws ProvisionException
   {
@@ -172,8 +162,8 @@ public final class TargletProfileManager
     return agent;
   }
 
-  public synchronized IProfile getProfile(TargletBundleContainer container, AtomicBoolean needsUpdate)
-      throws ProvisionException
+  public synchronized IProfile getProfile(TargletBundleContainer container, AtomicBoolean needsUpdate,
+      IProgressMonitor monitor) throws ProvisionException
   {
     waitUntilInitialized();
 
@@ -186,15 +176,14 @@ public final class TargletProfileManager
       Map<String, String> properties = new HashMap<String, String>();
       properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
       properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
+      properties.put(IProfile.PROP_ENVIRONMENTS, container.getEnvironmentProperties());
+      properties.put(IProfile.PROP_NL, container.getNLProperty());
       properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
       properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
-      properties.put(IProfile.PROP_ENVIRONMENTS, generateEnvironmentProperties(container.getTarget()));
-      properties.put(IProfile.PROP_NL, generateNLProperty(container.getTarget()));
 
       profile = profileRegistry.addProfile(profileID, properties);
 
-      digests.add(digest);
-      writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
+      initialize(monitor);
     }
 
     if (needsUpdate != null)
@@ -206,15 +195,15 @@ public final class TargletProfileManager
     return profile;
   }
 
-  private void initialize(IProgressMonitor monitor) throws Exception
+  private void initialize(IProgressMonitor monitor) throws ProvisionException
   {
-    collectDigests(monitor);
-    removeGarbageProfiles();
+    HashBag<String> currentDigests = collectCurrentDigests(monitor);
+    removeGarbageProfiles(currentDigests);
   }
 
-  private void collectDigests(IProgressMonitor monitor) throws CoreException
+  private HashBag<String> collectCurrentDigests(IProgressMonitor monitor) throws ProvisionException
   {
-    digests = new HashBag<String>();
+    HashBag<String> digests = new HashBag<String>();
 
     @SuppressWarnings("restriction")
     ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
@@ -222,25 +211,33 @@ public final class TargletProfileManager
 
     for (ITargetHandle targetHandle : targetService.getTargets(monitor))
     {
-      ITargetDefinition definition = targetHandle.getTargetDefinition();
-      for (ITargetLocation targetLocation : definition.getTargetLocations())
+      try
       {
-        if (targetLocation instanceof TargletBundleContainer)
+        ITargetDefinition definition = targetHandle.getTargetDefinition();
+        for (ITargetLocation targetLocation : definition.getTargetLocations())
         {
-          TargletBundleContainer targletContainer = (TargletBundleContainer)targetLocation;
-          String digest = targletContainer.getDigest();
-          digests.add(digest);
+          if (targetLocation instanceof TargletBundleContainer)
+          {
+            TargletBundleContainer targletContainer = (TargletBundleContainer)targetLocation;
+            String digest = targletContainer.getDigest();
+            digests.add(digest);
+          }
         }
+      }
+      catch (Exception ex)
+      {
+        throwProvisionException(ex);
       }
     }
 
     writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
+    return digests;
   }
 
-  private void removeGarbageProfiles()
+  private void removeGarbageProfiles(HashBag<String> currentDigests)
   {
     Map<String, HashBag<String>> workspaces = new HashMap<String, HashBag<String>>();
-    workspaces.put(WORKSPACE_LOCATION, digests);
+    workspaces.put(WORKSPACE_LOCATION, currentDigests);
 
     for (IProfile profile : profileRegistry.getProfiles())
     {
@@ -292,52 +289,6 @@ public final class TargletProfileManager
     {
       throwProvisionException(initializationProblem);
     }
-  }
-
-  private static String generateEnvironmentProperties(ITargetDefinition target)
-  {
-    StringBuilder builder = new StringBuilder();
-    String ws = target.getWS();
-    if (ws == null)
-    {
-      ws = Platform.getWS();
-    }
-
-    builder.append(PROP_WS);
-    builder.append("="); //$NON-NLS-1$
-    builder.append(ws);
-    builder.append(","); //$NON-NLS-1$
-    String os = target.getOS();
-    if (os == null)
-    {
-      os = Platform.getOS();
-    }
-
-    builder.append(PROP_OS);
-    builder.append("="); //$NON-NLS-1$
-    builder.append(os);
-    builder.append(","); //$NON-NLS-1$
-    String arch = target.getArch();
-    if (arch == null)
-    {
-      arch = Platform.getOSArch();
-    }
-
-    builder.append(PROP_ARCH);
-    builder.append("="); //$NON-NLS-1$
-    builder.append(arch);
-    return builder.toString();
-  }
-
-  private static String generateNLProperty(ITargetDefinition target)
-  {
-    String nl = target.getNL();
-    if (nl == null)
-    {
-      nl = Platform.getNL();
-    }
-
-    return nl;
   }
 
   private static void writeDigests(File file, HashBag<String> digests)

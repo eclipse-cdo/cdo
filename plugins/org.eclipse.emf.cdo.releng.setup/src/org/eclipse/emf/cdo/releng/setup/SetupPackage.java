@@ -2203,13 +2203,31 @@ public interface SetupPackage extends EPackage
   int TARGLET_TASK__ACTIVE_P2_REPOSITORIES = SETUP_TASK_FEATURE_COUNT + 5;
 
   /**
+   * The feature id for the '<em><b>Include Sources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_TASK__INCLUDE_SOURCES = SETUP_TASK_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Include All Platforms</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_TASK__INCLUDE_ALL_PLATFORMS = SETUP_TASK_FEATURE_COUNT + 7;
+
+  /**
    * The number of structural features of the '<em>Targlet Task</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TARGLET_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 6;
+  int TARGLET_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 8;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletContainerImpl <em>Targlet Container</em>}' class.
@@ -2304,13 +2322,31 @@ public interface SetupPackage extends EPackage
   int TARGLET_DATA__ACTIVE_P2_REPOSITORIES = 5;
 
   /**
+   * The feature id for the '<em><b>Include Sources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_DATA__INCLUDE_SOURCES = 6;
+
+  /**
+   * The feature id for the '<em><b>Include All Platforms</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET_DATA__INCLUDE_ALL_PLATFORMS = 7;
+
+  /**
    * The number of structural features of the '<em>Targlet Data</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TARGLET_DATA_FEATURE_COUNT = 6;
+  int TARGLET_DATA_FEATURE_COUNT = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2365,6 +2401,24 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int TARGLET__ACTIVE_P2_REPOSITORIES = TARGLET_DATA__ACTIVE_P2_REPOSITORIES;
+
+  /**
+   * The feature id for the '<em><b>Include Sources</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__INCLUDE_SOURCES = TARGLET_DATA__INCLUDE_SOURCES;
+
+  /**
+   * The feature id for the '<em><b>Include All Platforms</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TARGLET__INCLUDE_ALL_PLATFORMS = TARGLET_DATA__INCLUDE_ALL_PLATFORMS;
 
   /**
    * The number of structural features of the '<em>Targlet</em>' class.
@@ -5544,6 +5598,28 @@ public interface SetupPackage extends EPackage
   EReference getTargletData_ActiveP2Repositories();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeSources <em>Include Sources</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Include Sources</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeSources()
+   * @see #getTargletData()
+   * @generated
+   */
+  EAttribute getTargletData_IncludeSources();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeAllPlatforms <em>Include All Platforms</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Include All Platforms</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.TargletData#isIncludeAllPlatforms()
+   * @see #getTargletData()
+   * @generated
+   */
+  EAttribute getTargletData_IncludeAllPlatforms();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RepositoryList <em>Repository List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7450,6 +7526,22 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EReference TARGLET_DATA__ACTIVE_P2_REPOSITORIES = eINSTANCE.getTargletData_ActiveP2Repositories();
+
+    /**
+     * The meta object literal for the '<em><b>Include Sources</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TARGLET_DATA__INCLUDE_SOURCES = eINSTANCE.getTargletData_IncludeSources();
+
+    /**
+     * The meta object literal for the '<em><b>Include All Platforms</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TARGLET_DATA__INCLUDE_ALL_PLATFORMS = eINSTANCE.getTargletData_IncludeAllPlatforms();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl <em>Repository List</em>}' class.

@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.internal.p2.engine.Phase;
 import org.eclipse.equinox.internal.p2.engine.PhaseSet;
@@ -52,8 +53,10 @@ import org.eclipse.equinox.p2.engine.query.IUProfilePropertyQuery;
 import org.eclipse.equinox.p2.metadata.IArtifactKey;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.IProvidedCapability;
+import org.eclipse.equinox.p2.metadata.IRequirement;
 import org.eclipse.equinox.p2.metadata.MetadataFactory;
 import org.eclipse.equinox.p2.metadata.MetadataFactory.InstallableUnitDescription;
+import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.equinox.p2.planner.IPlanner;
 import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
@@ -120,7 +123,18 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private static final String FEATURE_SUFFIX = ".feature.group";
 
+  private static final String SOURCE_IU_ID = "org.eclipse.emf.cdo.releng.targlet.source.bundles"; //$NON-NLS-1$
+
+  private static final IRequirement BUNDLE_REQUIREMENT = MetadataFactory.createRequirement(
+      "org.eclipse.equinox.p2.eclipse.type", "bundle", null, null, false, false, false); //$NON-NLS-1$ //$NON-NLS-2$
+
   private static final byte[] BUFFER = new byte[8192];
+
+  private static final String PROP_ARCH = "osgi.arch"; //$NON-NLS-1$
+
+  private static final String PROP_OS = "osgi.os"; //$NON-NLS-1$
+
+  private static final String PROP_WS = "osgi.ws"; //$NON-NLS-1$
 
   private static final String TRUE = Boolean.TRUE.toString();
 
@@ -182,17 +196,96 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
   }
 
-  public String getDigest()
+  public boolean isIncludeSources()
+  {
+    for (Targlet targlet : targlets)
+    {
+      if (targlet.isIncludeSources())
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean isIncludeAllPlatforms()
+  {
+    for (Targlet targlet : targlets)
+    {
+      if (targlet.isIncludeAllPlatforms())
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public String getEnvironmentProperties()
+  {
+    StringBuilder builder = new StringBuilder();
+    String ws = target.getWS();
+    if (ws == null)
+    {
+      ws = Platform.getWS();
+    }
+
+    builder.append(PROP_WS);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(ws);
+    builder.append(","); //$NON-NLS-1$
+    String os = target.getOS();
+    if (os == null)
+    {
+      os = Platform.getOS();
+    }
+
+    builder.append(PROP_OS);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(os);
+    builder.append(","); //$NON-NLS-1$
+    String arch = target.getArch();
+    if (arch == null)
+    {
+      arch = Platform.getOSArch();
+    }
+
+    builder.append(PROP_ARCH);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(arch);
+    return builder.toString();
+  }
+
+  public String getNLProperty()
+  {
+    String nl = target.getNL();
+    if (nl == null)
+    {
+      nl = Platform.getNL();
+    }
+
+    return nl;
+  }
+
+  public String getDigest() throws ProvisionException
   {
     if (digest == null)
     {
-      String xml = serialize();
       InputStream stream = null;
 
       try
       {
+        Writer writer = Persistence.toXML(targlets);
+        writer.write("\n<!-- Environment Properties: ");
+        writer.write(getEnvironmentProperties());
+        writer.write(" -->");
+        writer.write("\n<!-- NL Property: ");
+        writer.write(getNLProperty());
+        writer.write(" -->\n");
+
         final MessageDigest digest = MessageDigest.getInstance("SHA-1");
-        stream = new FilterInputStream(new ByteArrayInputStream(xml.getBytes("UTF-8")))
+        stream = new FilterInputStream(new ByteArrayInputStream(writer.toString().getBytes("UTF-8")))
         {
           @Override
           public int read() throws IOException
@@ -298,193 +391,251 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return TargletProfileManager.POOL_FOLDER.getAbsolutePath();
   }
 
+  @Override
+  protected void associateWithTarget(ITargetDefinition target)
+  {
+    super.associateWithTarget(target);
+    this.target = target;
+
+  }
+
   public void updateProfile(IProgressMonitor monitor) throws ProvisionException
   {
-    initProfile();
+    initProfile(monitor);
 
-    List<InstallableUnit> roots = new ArrayList<InstallableUnit>();
-    for (Targlet targlet : targlets)
+    try
     {
-      for (InstallableUnit root : targlet.getRoots())
+      List<InstallableUnit> roots = new ArrayList<InstallableUnit>();
+      for (Targlet targlet : targlets)
       {
-        roots.add(root);
-      }
-    }
-
-    if (roots.isEmpty())
-    {
-      return;
-    }
-
-    final IUAnalyzer analyzer = new IUAnalyzer();
-    final Map<IInstallableUnit, File> sources = new HashMap<IInstallableUnit, File>();
-    List<URI> uris = new ArrayList<URI>();
-
-    for (Targlet targlet : targlets)
-    {
-      for (AutomaticSourceLocator sourceLocator : targlet.getSourceLocators())
-      {
-        boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
-        File rootFolder = new File(sourceLocator.getRootFolder());
-
-        Map<IInstallableUnit, File> ius = analyzer.analyze(rootFolder, locateNestedProjects, monitor);
-        sources.putAll(ius);
-      }
-
-      for (P2Repository p2Repository : targlet.getActiveP2Repositories())
-      {
-        try
+        for (InstallableUnit root : targlet.getRoots())
         {
-          URI uri = new URI(p2Repository.getURL());
-          uris.add(uri);
-        }
-        catch (URISyntaxException ex)
-        {
-          throw new ProvisionException(ex.getMessage(), ex);
+          roots.add(root);
         }
       }
-    }
 
-    IProvisioningAgent agent = TargletProfileManager.getInstance().getAgent();
-
-    IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
-        .getService(IMetadataRepositoryManager.SERVICE_NAME);
-    IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager)agent
-        .getService(IArtifactRepositoryManager.SERVICE_NAME);
-
-    for (URI uri : uris)
-    {
-      metadataManager.addRepository(uri);
-      artifactManager.addRepository(uri);
-    }
-
-    ProvisioningContext context = new ProvisioningContext(agent)
-    {
-      private CollectionResult<IInstallableUnit> result;
-
-      @Override
-      public IQueryable<IInstallableUnit> getMetadata(IProgressMonitor monitor)
+      if (roots.isEmpty())
       {
-        if (result == null)
+        return;
+      }
+
+      final IUAnalyzer analyzer = new IUAnalyzer();
+      final Map<IInstallableUnit, File> sources = new HashMap<IInstallableUnit, File>();
+      List<URI> uris = new ArrayList<URI>();
+
+      for (Targlet targlet : targlets)
+      {
+        for (AutomaticSourceLocator sourceLocator : targlet.getSourceLocators())
         {
-          List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
-          Set<String> ids = analyzer.getIDs();
-          prepareSources(ius, ids);
+          boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
+          File rootFolder = new File(sourceLocator.getRootFolder());
 
-          IQueryable<IInstallableUnit> metadata = super.getMetadata(monitor);
-          IQueryResult<IInstallableUnit> metadataResult = metadata.query(QueryUtil.createIUAnyQuery(), monitor);
+          Map<IInstallableUnit, File> ius = analyzer.analyze(rootFolder, locateNestedProjects, monitor);
+          sources.putAll(ius);
+        }
 
-          for (Iterator<IInstallableUnit> it = metadataResult.iterator(); it.hasNext();)
+        for (P2Repository p2Repository : targlet.getActiveP2Repositories())
+        {
+          try
           {
-            IInstallableUnit iu = it.next();
-            if (!ids.contains(iu.getId()))
-            {
-              ius.add(iu);
-            }
+            URI uri = new URI(p2Repository.getURL());
+            uris.add(uri);
           }
-
-          result = new CollectionResult<IInstallableUnit>(ius);
+          catch (URISyntaxException ex)
+          {
+            throw new ProvisionException(ex.getMessage(), ex);
+          }
         }
-
-        return result;
       }
 
-      private void prepareSources(List<IInstallableUnit> ius, Set<String> ids)
+      IProvisioningAgent agent = TargletProfileManager.getInstance().getAgent();
+
+      IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
+          .getService(IMetadataRepositoryManager.SERVICE_NAME);
+      IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager)agent
+          .getService(IArtifactRepositoryManager.SERVICE_NAME);
+
+      for (URI uri : uris)
       {
-        for (IInstallableUnit iu : sources.keySet())
+        metadataManager.addRepository(uri);
+        artifactManager.addRepository(uri);
+      }
+
+      ProvisioningContext context = new ProvisioningContext(agent)
+      {
+        private CollectionResult<IInstallableUnit> result;
+
+        @Override
+        public IQueryable<IInstallableUnit> getMetadata(IProgressMonitor monitor)
         {
-          ius.add(iu);
-
-          String id = iu.getId();
-          String suffix = "";
-
-          if (id.endsWith(FEATURE_SUFFIX))
+          if (result == null)
           {
-            id = id.substring(0, id.length() - FEATURE_SUFFIX.length());
-            suffix = FEATURE_SUFFIX;
-          }
+            List<IInstallableUnit> ius = new ArrayList<IInstallableUnit>();
+            Set<String> ids = analyzer.getIDs();
+            prepareSources(ius, ids);
 
-          InstallableUnitDescription description = new MetadataFactory.InstallableUnitDescription();
-          description.setId(id + ".source" + suffix);
-          description.setVersion(iu.getVersion());
+            IQueryable<IInstallableUnit> metadata = super.getMetadata(monitor);
+            IQueryResult<IInstallableUnit> metadataResult = metadata.query(QueryUtil.createIUAnyQuery(), monitor);
 
-          for (Map.Entry<String, String> property : iu.getProperties().entrySet())
-          {
-            String key = property.getKey();
-            String value = property.getValue();
-
-            if ("org.eclipse.equinox.p2.name".equals(key))
+            for (Iterator<IInstallableUnit> it = metadataResult.iterator(); it.hasNext();)
             {
-              value = "Source for " + value;
+              IInstallableUnit iu = it.next();
+              if (!ids.contains(iu.getId()))
+              {
+                ius.add(iu);
+              }
             }
 
-            description.setProperty(key, value);
+            result = new CollectionResult<IInstallableUnit>(ius);
           }
 
-          description.addProvidedCapabilities(Collections.singleton(MetadataFactory.createProvidedCapability(
-              IInstallableUnit.NAMESPACE_IU_ID, description.getId(), description.getVersion())));
+          return result;
+        }
 
-          IInstallableUnit sourceIU = MetadataFactory.createInstallableUnit(description);
-          ius.add(sourceIU);
-          ids.add(sourceIU.getId());
+        private void prepareSources(List<IInstallableUnit> ius, Set<String> ids)
+        {
+          for (IInstallableUnit iu : sources.keySet())
+          {
+            ius.add(iu);
+
+            // TODO Should we create source IUs for source projects only if needed (i.e. required by feature content)?
+            String id = iu.getId();
+            String suffix = "";
+
+            if (id.endsWith(FEATURE_SUFFIX))
+            {
+              id = id.substring(0, id.length() - FEATURE_SUFFIX.length());
+              suffix = FEATURE_SUFFIX;
+            }
+
+            InstallableUnitDescription description = new MetadataFactory.InstallableUnitDescription();
+            description.setId(id + ".source" + suffix);
+            description.setVersion(iu.getVersion());
+
+            for (Map.Entry<String, String> property : iu.getProperties().entrySet())
+            {
+              String key = property.getKey();
+              String value = property.getValue();
+
+              if ("org.eclipse.equinox.p2.name".equals(key))
+              {
+                value = "Source for " + value;
+              }
+
+              description.setProperty(key, value);
+            }
+
+            description.addProvidedCapabilities(Collections.singleton(MetadataFactory.createProvidedCapability(
+                IInstallableUnit.NAMESPACE_IU_ID, description.getId(), description.getVersion())));
+
+            IInstallableUnit sourceIU = MetadataFactory.createInstallableUnit(description);
+            ius.add(sourceIU);
+            ids.add(sourceIU.getId());
+          }
+        }
+      };
+
+      URI[] uriArray = uris.toArray(new URI[uris.size()]);
+      context.setMetadataRepositories(uriArray);
+      context.setArtifactRepositories(uriArray);
+      context.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
+      context.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
+
+      Version sourceIUVersion = getSourceIUVersion();
+
+      IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
+      if (planner == null)
+      {
+        throw new ProvisionException("Planner could not be loaded");
+      }
+
+      IProfileChangeRequest request = planner.createChangeRequest(profile);
+      IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
+      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor());
+      request.removeAll(installedIUs.toUnmodifiableSet());
+
+      IQueryable<IInstallableUnit> metadata = context.getMetadata(monitor);
+      for (InstallableUnit root : roots)
+      {
+        IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
+        IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
+
+        for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor()))
+        {
+          request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
+          request.add(iu);
         }
       }
-    };
 
-    URI[] uriArray = uris.toArray(new URI[uris.size()]);
-    context.setMetadataRepositories(uriArray);
-    context.setArtifactRepositories(uriArray);
-    context.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
-    context.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
+      planAndInstall(agent, context, planner, request);
 
-    IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
-    if (planner == null)
+      if (isIncludeSources())
+      {
+        IInstallableUnit iu = generateSourceIU(sourceIUVersion);
+
+        IProfileChangeRequest sourceRequest = planner.createChangeRequest(profile);
+        sourceRequest.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
+        sourceRequest.add(iu);
+
+        planAndInstall(agent, context, planner, sourceRequest);
+      }
+
+      updateWorkspace(sources, new ProgressMonitor());
+      profileNeedsUpdate.set(false);
+    }
+    catch (Throwable t)
     {
-      throw new ProvisionException("Planner could not be loaded");
+      profileNeedsUpdate.set(true);
+      // TODO Handle update problems, e.g. "return" to last working profile
+    }
+  }
+
+  private Version getSourceIUVersion()
+  {
+    IQuery<IInstallableUnit> query = QueryUtil.createIUQuery(SOURCE_IU_ID);
+    IQueryResult<IInstallableUnit> result = profile.query(query, null);
+    if (!result.isEmpty())
+    {
+      IInstallableUnit currentSourceIU = result.iterator().next();
+      Integer major = (Integer)currentSourceIU.getVersion().getSegment(0);
+      return Version.createOSGi(major.intValue() + 1, 0, 0);
     }
 
-    IProfileChangeRequest request = planner.createChangeRequest(profile);
-    IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
-    IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor());
-    request.removeAll(installedIUs.toUnmodifiableSet());
+    return Version.createOSGi(1, 0, 0);
+  }
 
-    IQueryable<IInstallableUnit> metadata = context.getMetadata(monitor);
-    for (InstallableUnit root : roots)
+  private IInstallableUnit generateSourceIU(Version sourceIUVersion)
+  {
+    // Create and return an IU that has optional and greedy requirements on all source bundles
+    // related to bundle IUs in the profile
+    ArrayList<IRequirement> requirements = new ArrayList<IRequirement>();
+
+    IQueryResult<IInstallableUnit> profileIUs = profile.query(QueryUtil.createIUAnyQuery(), null);
+    for (Iterator<IInstallableUnit> i = profileIUs.iterator(); i.hasNext();)
     {
-      IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
-      IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
+      IInstallableUnit profileIU = i.next();
 
-      for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor()))
+      // TODO What about source features?
+      if (profileIU.satisfies(BUNDLE_REQUIREMENT))
       {
-        request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
-        request.add(iu);
+        String id = profileIU.getId() + ".source"; //$NON-NLS-1$
+        Version version = profileIU.getVersion();
+
+        IRequirement sourceRequirement = MetadataFactory.createRequirement(
+            "osgi.bundle", id, new VersionRange(version, true, version, true), null, true, false, true); //$NON-NLS-1$
+        requirements.add(sourceRequirement);
       }
     }
 
-    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, new ProgressMonitor());
-    if (!plan.getStatus().isOK())
-    {
-      throw new ProvisionException(plan.getStatus());
-    }
+    InstallableUnitDescription sourceIUDescription = new MetadataFactory.InstallableUnitDescription();
+    sourceIUDescription.setSingleton(true);
+    sourceIUDescription.setId(SOURCE_IU_ID);
+    sourceIUDescription.setVersion(sourceIUVersion);
+    sourceIUDescription.addRequirements(requirements);
+    sourceIUDescription.setCapabilities(new IProvidedCapability[] { MetadataFactory.createProvidedCapability(
+        IInstallableUnit.NAMESPACE_IU_ID, SOURCE_IU_ID, sourceIUVersion) });
 
-    IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
-    if (engine == null)
-    {
-      throw new ProvisionException("Engine could not be loaded");
-    }
-
-    IPhaseSet phaseSet = createPhaseSet();
-    IStatus status = PlanExecutionHelper.executePlan(plan, engine, phaseSet, context, new ProgressMonitor());
-    if (!status.isOK())
-    {
-      throw new ProvisionException(status);
-    }
-
-    updateWorkspace(sources, new ProgressMonitor());
-    profileNeedsUpdate.set(false);
-
-    // return new Status(IStatus.OK, PDECore.PLUGIN_ID, ITargetLocationUpdater.STATUS_CODE_NO_CHANGE,
-    // "Targlet container update completed successfully", null);
+    return MetadataFactory.createInstallableUnit(sourceIUDescription);
   }
 
   private void updateWorkspace(final Map<IInstallableUnit, File> sources, IProgressMonitor monitor)
@@ -502,7 +653,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
             DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
             IWorkspaceRoot root = workspace.getRoot();
 
-            // plan.getAdditions() would probably also do and be cheaper
+            // TODO plan.getAdditions() would probably also do and be cheaper
             IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
             for (IInstallableUnit iu : result.toUnmodifiableSet())
             {
@@ -567,26 +718,11 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
   }
 
-  @Override
-  protected TargetBundle[] resolveBundles(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
-  {
-    this.target = target;
-    resolveUnits(monitor);
-    return fBundles;
-  }
-
-  @Override
-  protected TargetFeature[] resolveFeatures(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
-  {
-    // All work has been done in resolveBundles() already
-    return fFeatures;
-  }
-
   private void resolveUnits(IProgressMonitor monitor) throws ProvisionException
   {
     try
     {
-      initProfile();
+      initProfile(monitor);
       if (profileNeedsUpdate.get())
       {
         updateProfile(monitor);
@@ -665,17 +801,48 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
   }
 
-  private boolean isOSGiBundle(IInstallableUnit unit)
+  @Override
+  protected TargetBundle[] resolveBundles(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
+  {
+    // TODO Distribute the progress more evenly between resolveBundles (2/3) and resolveFeatures (1/3)
+    resolveUnits(monitor);
+
+    return fBundles;
+  }
+
+  @Override
+  protected TargetFeature[] resolveFeatures(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
+  {
+    // All work has been done in resolveBundles() already
+    return fFeatures;
+  }
+
+  private void initProfile(IProgressMonitor monitor) throws ProvisionException
+  {
+    if (profile == null)
+    {
+      TargletProfileManager manager = TargletProfileManager.getInstance();
+      profile = manager.getProfile(this, profileNeedsUpdate, monitor);
+    }
+  }
+
+  private void resetProfile()
+  {
+    digest = null;
+    profile = null;
+  }
+
+  private static boolean isOSGiBundle(IInstallableUnit unit)
   {
     return providesNamespace(unit, "osgi.bundle");
   }
 
-  private boolean isFeatureJar(IInstallableUnit unit)
+  private static boolean isFeatureJar(IInstallableUnit unit)
   {
     return providesNamespace(unit, "org.eclipse.update.feature");
   }
 
-  private boolean providesNamespace(IInstallableUnit unit, String namespace)
+  private static boolean providesNamespace(IInstallableUnit unit, String namespace)
   {
     for (IProvidedCapability providedCapability : unit.getProvidedCapabilities())
     {
@@ -688,19 +855,27 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return false;
   }
 
-  private void initProfile() throws ProvisionException
+  private static void planAndInstall(IProvisioningAgent agent, ProvisioningContext context, IPlanner planner,
+      IProfileChangeRequest request) throws ProvisionException
   {
-    if (profile == null)
+    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, new ProgressMonitor());
+    if (!plan.getStatus().isOK())
     {
-      TargletProfileManager manager = TargletProfileManager.getInstance();
-      profile = manager.getProfile(this, profileNeedsUpdate);
+      throw new ProvisionException(plan.getStatus());
     }
-  }
 
-  private void resetProfile()
-  {
-    digest = null;
-    profile = null;
+    IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
+    if (engine == null)
+    {
+      throw new ProvisionException("Engine could not be loaded");
+    }
+
+    IPhaseSet phaseSet = createPhaseSet();
+    IStatus status = PlanExecutionHelper.executePlan(plan, engine, phaseSet, context, new ProgressMonitor());
+    if (!status.isOK())
+    {
+      throw new ProvisionException(status);
+    }
   }
 
   private static IPhaseSet createPhaseSet()
@@ -777,6 +952,22 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
   }
 
+  // /**
+  // * @author Eike Stepper
+  // */
+  // public static class ProfileDescriptor
+  // {
+  // private List<Targlet> targlets = new ArrayList<Targlet>();
+  //
+  // private String arch;
+  //
+  // private String os;
+  //
+  // private String ws;
+  //
+  // private String nl;
+  // }
+
   /**
    * @author Eike Stepper
    */
@@ -791,6 +982,10 @@ public class TargletBundleContainer extends AbstractBundleContainer
     private static final String TARGLET_NAME = "name";
 
     private static final String TARGLET_ACTIVE_REPOSITORY_LIST = "activeRepositoryList";
+
+    private static final String TARGLET_INCLUDE_SOURCES = "includeSources";
+
+    private static final String TARGLET_INCLUDE_ALL_PLATFORMS = "includeAllPlatforms";
 
     private static final String ROOT = "root";
 
@@ -855,6 +1050,9 @@ public class TargletBundleContainer extends AbstractBundleContainer
               Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
               targlet.setName(targletElement.getAttribute(TARGLET_NAME));
               targlet.setActiveRepositoryList(targletElement.getAttribute(TARGLET_ACTIVE_REPOSITORY_LIST));
+              targlet.setIncludeSources(Boolean.valueOf(targletElement.getAttribute(TARGLET_INCLUDE_SOURCES)));
+              targlet.setIncludeAllPlatforms( //
+                  Boolean.valueOf(targletElement.getAttribute(TARGLET_INCLUDE_ALL_PLATFORMS)));
               container.addTarglet(targlet);
 
               NodeList childNodes = targletElement.getChildNodes();
@@ -926,6 +1124,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
         Element targletElement = document.createElement(TARGLET);
         targletElement.setAttribute(TARGLET_NAME, targlet.getName());
         targletElement.setAttribute(TARGLET_ACTIVE_REPOSITORY_LIST, targlet.getActiveRepositoryList());
+        targletElement.setAttribute(TARGLET_INCLUDE_SOURCES, Boolean.toString(targlet.isIncludeSources()));
+        targletElement.setAttribute(TARGLET_INCLUDE_ALL_PLATFORMS, Boolean.toString(targlet.isIncludeAllPlatforms()));
         containerElement.appendChild(targletElement);
 
         for (InstallableUnit root : targlet.getRoots())

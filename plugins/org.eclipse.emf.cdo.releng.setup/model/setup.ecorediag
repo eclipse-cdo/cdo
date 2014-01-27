@@ -1235,6 +1235,14 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//TargletData/activeRepositoryList"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_w2yBMYJmEeO8te75KayH8A"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_2KrmwIcnEeOlU_tXctXy9g" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//TargletData/includeSources"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_2KrmwYcnEeOlU_tXctXy9g"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_3tZ9wIcnEeOlU_tXctXy9g" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//TargletData/includeAllPlatforms"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_3tZ9wYcnEeOlU_tXctXy9g"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_EUQsBYIDEeO8te75KayH8A"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_EUQsBoIDEeO8te75KayH8A"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_EUQsB4IDEeO8te75KayH8A"/>
@@ -1246,7 +1254,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_EUQsAYIDEeO8te75KayH8A" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="8047085" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//TargletData"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EUQsAoIDEeO8te75KayH8A" x="1018" y="973"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EUQsAoIDEeO8te75KayH8A" x="1018" y="940"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_SwVUAIIDEeO8te75KayH8A" type="1001">
     <children xmi:type="notation:Node" xmi:id="_SwVUA4IDEeO8te75KayH8A" type="4001"/>
@@ -1923,7 +1931,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_PMRXYYIDEeO8te75KayH8A" routing="Rectilinear" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_PMRXYoIDEeO8te75KayH8A" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="setup.ecore#//TargletData/roots"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_PMRXY4IDEeO8te75KayH8A" points="[-72, -9, 134, 26]$[-132, -9, 74, 26]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_PMRXY4IDEeO8te75KayH8A" points="[-98, 7, 142, 26]$[-166, 7, 74, 26]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_PMjrQIIDEeO8te75KayH8A" id="(0.6336633663366337,0.10294117647058823)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_jIRLwIIDEeO8te75KayH8A" type="3002" source="_SwVUAIIDEeO8te75KayH8A" target="_q3yi0OoOEeKpRf481yfX-g">

@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -113,11 +114,11 @@ import java.util.concurrent.atomic.AtomicReference;
 @SuppressWarnings("restriction")
 public class TargletBundleContainer extends AbstractBundleContainer
 {
-  private static final String FEATURE_SUFFIX = ".feature.group";
-
   public static final String TYPE = "Targlet";
 
   private static final String FOLLOW_ARTIFACT_REPOSITORY_REFERENCES = "org.eclipse.equinox.p2.director.followArtifactRepositoryReferences";
+
+  private static final String FEATURE_SUFFIX = ".feature.group";
 
   private static final byte[] BUFFER = new byte[8192];
 
@@ -486,82 +487,84 @@ public class TargletBundleContainer extends AbstractBundleContainer
     // "Targlet container update completed successfully", null);
   }
 
-  private void updateWorkspace(Map<IInstallableUnit, File> sources, IProgressMonitor monitor) throws ProvisionException
+  private void updateWorkspace(final Map<IInstallableUnit, File> sources, IProgressMonitor monitor)
+      throws ProvisionException
   {
     try
     {
-      DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
-      IWorkspace workspace = ResourcesPlugin.getWorkspace();
-      IWorkspaceRoot root = workspace.getRoot();
-
-      // plan.getAdditions() would probably also do and be cheaper
-      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
-      for (IInstallableUnit iu : result.toUnmodifiableSet())
+      final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+      workspace.run(new IWorkspaceRunnable()
       {
-        File folder = sources.get(iu);
-        if (folder != null)
+        public void run(IProgressMonitor monitor) throws CoreException
         {
-          final AtomicReference<String> projectName = new AtomicReference<String>();
-
-          Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
-          XMLUtil.handleChildElements(rootElement, new ElementHandler()
+          try
           {
-            public void handleElement(Element element) throws Exception
+            DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
+            IWorkspaceRoot root = workspace.getRoot();
+
+            // plan.getAdditions() would probably also do and be cheaper
+            IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
+            for (IInstallableUnit iu : result.toUnmodifiableSet())
             {
-              if ("name".equals(element.getTagName()))
+              File folder = sources.get(iu);
+              if (folder != null)
               {
-                projectName.set(element.getTextContent().trim());
+                final AtomicReference<String> projectName = new AtomicReference<String>();
+
+                Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
+                XMLUtil.handleChildElements(rootElement, new ElementHandler()
+                {
+                  public void handleElement(Element element) throws Exception
+                  {
+                    if ("name".equals(element.getTagName()))
+                    {
+                      projectName.set(element.getTextContent().trim());
+                    }
+                  }
+                });
+
+                String name = projectName.get();
+                if (name != null && name.length() != 0)
+                {
+                  File location = folder.getCanonicalFile();
+
+                  IProject project = root.getProject(name);
+                  if (project.exists())
+                  {
+                    // project.delete(false, true, monitor);
+                    File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
+                    if (!existingLocation.equals(location))
+                    {
+                      System.err.println("Project " + name + " exists in different location: " + existingLocation);
+                      continue;
+                    }
+                  }
+                  else
+                  {
+                    IProjectDescription projectDescription = workspace.newProjectDescription(name);
+                    projectDescription.setLocation(new Path(location.getAbsolutePath()));
+                    project.create(projectDescription, monitor);
+                  }
+
+                  if (!project.isOpen())
+                  {
+                    project.open(monitor);
+                  }
+                }
               }
-            }
-          });
-
-          String name = projectName.get();
-          if (name != null && name.length() != 0)
-          {
-            File location = folder.getCanonicalFile();
-
-            IProject project = root.getProject(name);
-            if (project.exists())
-            {
-              // project.delete(false, true, monitor);
-              File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
-              if (!existingLocation.equals(location))
-              {
-                System.err.println("Project " + name + " exists in different location: " + existingLocation);
-                continue;
-              }
-            }
-            else
-            {
-              System.out.println("Importing project " + name);
-              IProjectDescription projectDescription = workspace.newProjectDescription(name);
-              projectDescription.setLocation(new Path(location.getAbsolutePath()));
-              project.create(projectDescription, monitor);
-            }
-
-            if (!project.isOpen())
-            {
-              project.open(monitor);
             }
           }
+          catch (Exception ex)
+          {
+            TargletProfileManager.throwProvisionException(ex);
+          }
         }
-      }
+      }, monitor);
     }
     catch (Exception ex)
     {
       TargletProfileManager.throwProvisionException(ex);
     }
-  }
-
-  private IPhaseSet createPhaseSet()
-  {
-    ArrayList<Phase> phases = new ArrayList<Phase>(4);
-    phases.add(new Collect(100));
-    phases.add(new Property(1));
-    phases.add(new Install(50));
-    // phases.add(new CollectNativesPhase(100));
-
-    return new PhaseSet(phases.toArray(new Phase[phases.size()]));
   }
 
   @Override
@@ -575,6 +578,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
   @Override
   protected TargetFeature[] resolveFeatures(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
   {
+    // All work has been done in resolveBundles() already
     return fFeatures;
   }
 
@@ -633,7 +637,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private void generateBundle(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetBundle> bundles)
       throws CoreException
-      {
+  {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
     for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
     {
@@ -644,11 +648,11 @@ public class TargletBundleContainer extends AbstractBundleContainer
         bundles.add(bundle);
       }
     }
-      }
+  }
 
   private void generateFeature(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetFeature> features)
       throws CoreException
-      {
+  {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
     for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
     {
@@ -659,7 +663,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
         features.add(feature);
       }
     }
-      }
+  }
 
   private boolean isOSGiBundle(IInstallableUnit unit)
   {
@@ -697,6 +701,17 @@ public class TargletBundleContainer extends AbstractBundleContainer
   {
     digest = null;
     profile = null;
+  }
+
+  private static IPhaseSet createPhaseSet()
+  {
+    List<Phase> phases = new ArrayList<Phase>(4);
+    phases.add(new Collect(100));
+    phases.add(new Property(1));
+    phases.add(new Install(50));
+    // phases.add(new CollectNativesPhase(100));
+
+    return new PhaseSet(phases.toArray(new Phase[phases.size()]));
   }
 
   private static IFileArtifactRepository getBundlePool(IProvisioningAgent agent) throws ProvisionException

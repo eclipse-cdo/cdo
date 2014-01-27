@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.internal.setup.util;
 
 import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
+import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
@@ -164,6 +165,38 @@ public class BasicProjectVisitor<T> implements Visitor<T>
       });
     }
 
-    protected abstract void handleDependency(String id, String type, String versionDesignator) throws Exception;
+    protected void handleDependency(String id, String type, String versionDesignator) throws Exception
+    {
+      id = getP2ID(id, type);
+      if (id != null)
+      {
+        handleDependency(id, versionDesignator);
+      }
+    }
+
+    protected void handleDependency(String id, String versionDesignator) throws Exception
+    {
+    }
+
+    public static String getP2ID(String id, String type)
+    {
+      if (id != null && type != null)
+      {
+        ComponentType componentType = ComponentType.get(type);
+        if (componentType != null)
+        {
+          switch (componentType)
+          {
+          case ECLIPSE_FEATURE:
+            return id + ".feature.group";
+
+          case OSGI_BUNDLE:
+            return id;
+          }
+        }
+      }
+
+      return null;
+    }
   }
 }

@@ -60,18 +60,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class TargletProfileManager
 {
-  public static final File AGENT_FOLDER = new File(System.getProperty("user.home"), ".p2");
+  public static final File AGENT_FOLDER = new File(System.getProperty("user.home"), ".p2"); //$NON-NLS-1$
 
-  public static final File POOL_FOLDER = new File(AGENT_FOLDER, "pool");
+  public static final File POOL_FOLDER = new File(AGENT_FOLDER, "pool"); //$NON-NLS-1$
 
-  private static String AGENT_FILTER = "(locationURI=" + AGENT_FOLDER.toURI() + ")";
+  private static String AGENT_FILTER = "(locationURI=" + AGENT_FOLDER.toURI() + ")"; //$NON-NLS-1$
 
-  private static final String PROP_TARGLET_CONTAINER_WORKSPACE = "targlet.container.workspace";
+  private static final String PROP_TARGLET_CONTAINER_WORKSPACE = "targlet.container.workspace"; //$NON-NLS-1$
 
-  private static final String PROP_TARGLET_CONTAINER_DIGEST = "targlet.container.digest";
+  private static final String PROP_TARGLET_CONTAINER_DIGEST = "targlet.container.digest"; //$NON-NLS-1$
 
-  private static final String WORKSPACE_RELATIVE_PROPERTIES = ".metadata/.plugins/" + Activator.PLUGIN_ID
-      + "/targlet-container.properties";
+  private static final String PROP_ARCH = "osgi.arch"; //$NON-NLS-1$
+
+  private static final String PROP_OS = "osgi.os"; //$NON-NLS-1$
+
+  private static final String PROP_WS = "osgi.ws"; //$NON-NLS-1$
+
+  private static final String WORKSPACE_RELATIVE_PROPERTIES = ".metadata/.plugins/" + Activator.PLUGIN_ID //$NON-NLS-1$
+      + "/targlet-container.properties"; //$NON-NLS-1$
 
   private static final String WORKSPACE_LOCATION = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
 
@@ -166,85 +172,38 @@ public final class TargletProfileManager
     return agent;
   }
 
-  public IProfile getProfile(TargletBundleContainer container, AtomicBoolean needsUpdate) throws ProvisionException
+  public synchronized IProfile getProfile(TargletBundleContainer container, AtomicBoolean needsUpdate)
+      throws ProvisionException
   {
     waitUntilInitialized();
 
     String digest = container.getDigest();
     String profileID = SetupUtil.encodePath(WORKSPACE_LOCATION) + "-" + digest;
 
-    synchronized (instance)
+    IProfile profile = profileRegistry.getProfile(profileID);
+    if (profile == null)
     {
-      IProfile profile = profileRegistry.getProfile(profileID);
-      if (profile == null)
-      {
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
-        properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
-        properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
-        properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
-        properties.put(IProfile.PROP_ENVIRONMENTS, generateEnvironmentProperties(container.getTarget()));
-        properties.put(IProfile.PROP_NL, generateNLProperty(container.getTarget()));
+      Map<String, String> properties = new HashMap<String, String>();
+      properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
+      properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
+      properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
+      properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
+      properties.put(IProfile.PROP_ENVIRONMENTS, generateEnvironmentProperties(container.getTarget()));
+      properties.put(IProfile.PROP_NL, generateNLProperty(container.getTarget()));
 
-        profile = profileRegistry.addProfile(profileID, properties);
+      profile = profileRegistry.addProfile(profileID, properties);
 
-        digests.add(digest);
-        writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
-      }
-
-      if (needsUpdate != null)
-      {
-        long[] timestamps = profileRegistry.listProfileTimestamps(profile.getProfileId());
-        needsUpdate.set(timestamps == null || timestamps.length <= 1);
-      }
-
-      return profile;
+      digests.add(digest);
+      writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
     }
-  }
 
-  private String generateEnvironmentProperties(ITargetDefinition target)
-  {
-    // TODO: are there constants for these keys?
-    StringBuffer env = new StringBuffer();
-    String ws = target.getWS();
-    if (ws == null)
+    if (needsUpdate != null)
     {
-      ws = Platform.getWS();
+      long[] timestamps = profileRegistry.listProfileTimestamps(profile.getProfileId());
+      needsUpdate.set(timestamps == null || timestamps.length <= 1);
     }
-    env.append("osgi.ws="); //$NON-NLS-1$
-    env.append(ws);
-    env.append(","); //$NON-NLS-1$
-    String os = target.getOS();
-    if (os == null)
-    {
-      os = Platform.getOS();
-    }
-    env.append("osgi.os="); //$NON-NLS-1$
-    env.append(os);
-    env.append(","); //$NON-NLS-1$
-    String arch = target.getArch();
-    if (arch == null)
-    {
-      arch = Platform.getOSArch();
-    }
-    env.append("osgi.arch="); //$NON-NLS-1$
-    env.append(arch);
-    return env.toString();
-  }
 
-  /**
-   * Generates the NL property for this target definition's p2 profile.
-   *
-   * @return NL profile property
-   */
-  private String generateNLProperty(ITargetDefinition target)
-  {
-    String nl = target.getNL();
-    if (nl == null)
-    {
-      nl = Platform.getNL();
-    }
-    return nl;
+    return profile;
   }
 
   private void initialize(IProgressMonitor monitor) throws Exception
@@ -333,6 +292,52 @@ public final class TargletProfileManager
     {
       throwProvisionException(initializationProblem);
     }
+  }
+
+  private static String generateEnvironmentProperties(ITargetDefinition target)
+  {
+    StringBuilder builder = new StringBuilder();
+    String ws = target.getWS();
+    if (ws == null)
+    {
+      ws = Platform.getWS();
+    }
+
+    builder.append(PROP_WS);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(ws);
+    builder.append(","); //$NON-NLS-1$
+    String os = target.getOS();
+    if (os == null)
+    {
+      os = Platform.getOS();
+    }
+
+    builder.append(PROP_OS);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(os);
+    builder.append(","); //$NON-NLS-1$
+    String arch = target.getArch();
+    if (arch == null)
+    {
+      arch = Platform.getOSArch();
+    }
+
+    builder.append(PROP_ARCH);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(arch);
+    return builder.toString();
+  }
+
+  private static String generateNLProperty(ITargetDefinition target)
+  {
+    String nl = target.getNL();
+    if (nl == null)
+    {
+      nl = Platform.getNL();
+    }
+
+    return nl;
   }
 
   private static void writeDigests(File file, HashBag<String> digests)

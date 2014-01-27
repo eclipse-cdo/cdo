@@ -15,16 +15,23 @@ import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.BundleIUGe
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.FeatureIUGenerator;
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectAnalyzer;
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectVisitor;
+import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
-import org.eclipse.emf.cdo.releng.setup.ComponentType;
+import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
+import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.equinox.internal.p2.metadata.InstallableUnit;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.IRequirement;
 import org.eclipse.equinox.p2.metadata.MetadataFactory;
+import org.eclipse.equinox.p2.metadata.MetadataFactory.InstallableUnitDescription;
+import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import org.w3c.dom.Element;
@@ -88,76 +95,123 @@ public class IUAnalyzer extends BasicProjectAnalyzer<IInstallableUnit>
     protected IInstallableUnit visitComponentDefinition(ComponentDefinition componentDefinition,
         IProgressMonitor monitor) throws Exception
     {
-      return super.visitComponentDefinition(componentDefinition, monitor);
+      InstallableUnitDescription description = new InstallableUnitDescription();
+      description.setId(componentDefinition.getID());
+      description.setVersion(componentDefinition.getVersion());
+
+      IInstallableUnit iu = MetadataFactory.createInstallableUnit(description);
+      visitComponentExtension(componentDefinition, iu, monitor);
+      return iu;
     }
 
     @Override
     protected void visitComponentExtension(ComponentExtension componentExtension, IInstallableUnit host,
         IProgressMonitor monitor) throws Exception
     {
-      super.visitComponentExtension(componentExtension, host, monitor);
-    }
-
-    @Override
-    protected IInstallableUnit visitCSpec(Element rootElement, IProgressMonitor monitor) throws Exception
-    {
-      return super.visitCSpec(rootElement, monitor);
-    }
-
-    @Override
-    protected void visitCSpex(Element rootElement, IInstallableUnit host, IProgressMonitor monitor) throws Exception
-    {
-      if (host instanceof InstallableUnit)
+      // TODO It would be better to work with a new InstallableUnitDescription
+      if (host instanceof org.eclipse.equinox.internal.p2.metadata.InstallableUnit)
       {
-        InstallableUnit iu = (InstallableUnit)host;
+        org.eclipse.equinox.internal.p2.metadata.InstallableUnit iu = (org.eclipse.equinox.internal.p2.metadata.InstallableUnit)host;
+        List<IRequirement> requirements = new ArrayList<IRequirement>(iu.getRequirements());
 
-        final List<IRequirement> requirements = new ArrayList<IRequirement>(iu.getRequirements());
-        new BuckminsterDependencyHandler()
+        for (InstallableUnit dependency : componentExtension.getDependencies())
         {
-          @Override
-          protected void handleDependency(String id, String type, String versionDesignator) throws Exception
+          String id = dependency.getID();
+          VersionRange versionRange = dependency.getVersionRange();
+
+          String namespace;
+          if (id.endsWith(".feature.group"))
           {
-            try
-            {
-              ComponentType componentType = ComponentType.get(type);
-              if (componentType != null)
-              {
-                String namespace = null;
-
-                switch (componentType)
-                {
-                case ECLIPSE_FEATURE:
-                  namespace = IInstallableUnit.NAMESPACE_IU_ID;
-                  id += ".feature.group";
-                  break;
-
-                case OSGI_BUNDLE:
-                  namespace = componentType.toString();
-                  break;
-                }
-
-                if (namespace != null)
-                {
-                  IRequirement requirement = createRequirement(namespace, id, versionDesignator);
-                  requirements.add(requirement);
-                }
-              }
-            }
-            catch (Exception ex)
-            {
-              Activator.log(ex);
-            }
+            namespace = IInstallableUnit.NAMESPACE_IU_ID;
           }
-        }.handleDependencies(rootElement, monitor);
+          else
+          {
+            namespace = "osgi.bundle";
+          }
+
+          requirements.add(MetadataFactory.createRequirement(namespace, id, versionRange, null, false, true, true));
+        }
 
         iu.setRequiredCapabilities(requirements.toArray(new IRequirement[requirements.size()]));
       }
     }
 
-    private IRequirement createRequirement(String namespace, String id, String range)
+    @Override
+    public IInstallableUnit visitCSpec(File cspecFile, IProgressMonitor monitor) throws Exception
     {
-      VersionRange versionRange = range == null ? VersionRange.emptyRange : new VersionRange(range);
-      return MetadataFactory.createRequirement(namespace, id, versionRange, null, false, true, true);
+      File cdefFile = new File(cspecFile.getParentFile(), "component.def");
+      if (cdefFile.exists())
+      {
+        return null;
+      }
+
+      Element rootElement = XMLUtil.loadRootElement(getDocumentBuilder(), cspecFile);
+      String id = BuckminsterDependencyHandler.getP2ID(rootElement.getAttribute("name"),
+          rootElement.getAttribute("componentType"));
+      if (id == null)
+      {
+        return null;
+      }
+
+      ComponentDefinition componentDefinition = SetupFactory.eINSTANCE.createComponentDefinition();
+      componentDefinition.setID(id);
+      componentDefinition.setVersion(Version.create(rootElement.getAttribute("version")));
+
+      handleBuckminsterDependencies(rootElement, componentDefinition, monitor);
+
+      Resource resource = getResourceSet().createResource(URI.createFileURI(cdefFile.getAbsolutePath()));
+      resource.getContents().add(componentDefinition);
+      EMFUtil.saveEObject(componentDefinition);
+
+      return visitComponentDefinition(componentDefinition, monitor);
+    }
+
+    @Override
+    public void visitCSpex(File cspexFile, IInstallableUnit host, IProgressMonitor monitor) throws Exception
+    {
+      File cextFile = new File(cspexFile.getParentFile(), "component.ext");
+      if (cextFile.exists())
+      {
+        return;
+      }
+
+      ComponentExtension componentExtension = SetupFactory.eINSTANCE.createComponentExtension();
+
+      Element rootElement = XMLUtil.loadRootElement(getDocumentBuilder(), cspexFile);
+      handleBuckminsterDependencies(rootElement, componentExtension, monitor);
+
+      Resource resource = getResourceSet().createResource(URI.createFileURI(cextFile.getAbsolutePath()));
+      resource.getContents().add(componentExtension);
+      EMFUtil.saveEObject(componentExtension);
+
+      visitComponentExtension(componentExtension, host, monitor);
+    }
+
+    private void handleBuckminsterDependencies(Element rootElement, final ComponentExtension componentExtension,
+        IProgressMonitor monitor) throws Exception
+    {
+      new BuckminsterDependencyHandler()
+      {
+        @Override
+        protected void handleDependency(String id, String versionDesignator) throws Exception
+        {
+          try
+          {
+            InstallableUnit dependency = SetupFactory.eINSTANCE.createInstallableUnit();
+            dependency.setID(id);
+            if (versionDesignator != null)
+            {
+              dependency.setVersionRange(new VersionRange(versionDesignator));
+            }
+
+            componentExtension.getDependencies().add(dependency);
+          }
+          catch (Exception ex)
+          {
+            Activator.log(ex);
+          }
+        }
+      }.handleDependencies(rootElement, monitor);
     }
   }
 }

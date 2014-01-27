@@ -29,8 +29,6 @@ import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetPlatformService;
-import org.eclipse.pde.internal.core.PDECore;
-import org.eclipse.pde.internal.core.target.TargetPlatformService;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
@@ -39,7 +37,7 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings({ "restriction", "unused" })
+@SuppressWarnings("unused")
 public class TestAction implements IWorkbenchWindowActionDelegate
 {
   public TestAction()
@@ -164,8 +162,9 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     container.addTarglet(targlet);
     ITargetLocation[] locations = { container };
 
-    TargetPlatformService targetService = (TargetPlatformService)PDECore.getDefault().acquireService(
-        ITargetPlatformService.class.getName());
+    @SuppressWarnings("restriction")
+    ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
+        .acquireService(ITargetPlatformService.class.getName());
 
     for (ITargetHandle handle : targetService.getTargets(new NullProgressMonitor()))
     {

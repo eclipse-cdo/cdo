@@ -18,6 +18,7 @@ package org.eclipse.emf.cdo.releng.setup;
  * @model
  * @generated
  */
+@Deprecated
 public interface TargletImportTask extends SetupTask
 {
   /**

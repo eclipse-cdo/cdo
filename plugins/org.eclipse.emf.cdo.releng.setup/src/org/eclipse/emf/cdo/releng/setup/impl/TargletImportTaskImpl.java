@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
+@Deprecated
 public class TargletImportTaskImpl extends SetupTaskImpl implements TargletImportTask
 {
   /**

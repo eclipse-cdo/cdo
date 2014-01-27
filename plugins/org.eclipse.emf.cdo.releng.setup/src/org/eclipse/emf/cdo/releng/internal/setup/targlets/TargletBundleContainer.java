@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.resources.IProject;
@@ -170,16 +171,42 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return Collections.unmodifiableList(targlets);
   }
 
+  public Targlet getTarglet(String name)
+  {
+    for (Targlet targlet : targlets)
+    {
+      if (ObjectUtil.equals(targlet.getName(), name))
+      {
+        return targlet;
+      }
+    }
+
+    return null;
+  }
+
   public void addTarglet(Targlet targlet)
   {
-    targlets.add(targlet);
+    Targlet copy = SetupFactory.eINSTANCE.createTarglet(targlet);
+
+    removeTarglet(copy.getName());
+    targlets.add(copy);
     resetProfile();
   }
 
-  public void removeTarglet(Targlet targlet)
+  public Targlet removeTarglet(String name)
   {
-    targlets.remove(targlet);
-    resetProfile();
+    for (Iterator<Targlet> it = targlets.iterator(); it.hasNext();)
+    {
+      Targlet targlet = it.next();
+      if (ObjectUtil.equals(targlet.getName(), name))
+      {
+        it.remove();
+        resetProfile();
+        return targlet;
+      }
+    }
+
+    return null;
   }
 
   @Override

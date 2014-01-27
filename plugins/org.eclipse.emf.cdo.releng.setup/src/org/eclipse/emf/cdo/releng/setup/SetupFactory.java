@@ -296,6 +296,7 @@ public interface SetupFactory extends EFactory
    * @return a new object of class '<em>Targlet Import Task</em>'.
    * @generated
    */
+  @SuppressWarnings("deprecation")
   TargletImportTask createTargletImportTask();
 
   /**
@@ -360,6 +361,8 @@ public interface SetupFactory extends EFactory
    * @generated
    */
   Targlet createTarglet();
+
+  Targlet createTarglet(TargletData source);
 
   /**
    * Returns a new object of class '<em>Repository List</em>'.

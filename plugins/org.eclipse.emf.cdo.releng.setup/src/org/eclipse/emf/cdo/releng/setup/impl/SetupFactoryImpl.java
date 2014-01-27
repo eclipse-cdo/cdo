@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.cdo.releng.setup.TargletContainer;
+import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
 import org.eclipse.emf.cdo.releng.setup.TextModification;
@@ -76,6 +77,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
@@ -754,6 +756,32 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   public Targlet createTarglet()
   {
     TargletImpl targlet = new TargletImpl();
+    return targlet;
+  }
+
+  public Targlet createTarglet(TargletData source)
+  {
+    Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
+    targlet.setName(source.getName());
+    targlet.setActiveRepositoryList(source.getActiveRepositoryList());
+    targlet.setIncludeSources(source.isIncludeSources());
+    targlet.setIncludeAllPlatforms(source.isIncludeAllPlatforms());
+
+    for (InstallableUnit root : source.getRoots())
+    {
+      targlet.getRoots().add(EcoreUtil.copy(root));
+    }
+
+    for (AutomaticSourceLocator sourceLocator : source.getSourceLocators())
+    {
+      targlet.getSourceLocators().add(EcoreUtil.copy(sourceLocator));
+    }
+
+    for (RepositoryList repositoryList : source.getRepositoryLists())
+    {
+      targlet.getRepositoryLists().add(EcoreUtil.copy(repositoryList));
+    }
+
     return targlet;
   }
 

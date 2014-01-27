@@ -2,14 +2,19 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
+import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
+import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
+import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
+import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,7 +24,16 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.pde.core.target.ITargetDefinition;
+import org.eclipse.pde.core.target.ITargetHandle;
+import org.eclipse.pde.core.target.ITargetLocation;
+import org.eclipse.pde.core.target.ITargetPlatformService;
+import org.eclipse.pde.core.target.LoadTargetDefinitionJob;
 
 import java.util.Collection;
 
@@ -154,6 +168,14 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
    * @ordered
    */
   protected boolean includeAllPlatforms = INCLUDE_ALL_PLATFORMS_EDEFAULT;
+
+  private static final String TARGET_NAME = "Modular Target";
+
+  private transient Targlet targlet;
+
+  private transient TargletBundleContainer targletContainer;
+
+  private transient ITargetDefinition target;
 
   /**
    * <!-- begin-user-doc -->
@@ -603,12 +625,127 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    throw new UnsupportedOperationException();
+    targlet = SetupFactory.eINSTANCE.createTarglet(this);
+
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      ITargetDefinition activeTarget = service.getWorkspaceTargetDefinition();
+
+      target = getTarget(context, service);
+      if (target == null)
+      {
+        return true;
+      }
+
+      boolean targetNeedsActivation = true;
+      if (target.equals(activeTarget))
+      {
+        targetNeedsActivation = false;
+      }
+
+      targletContainer = getTargletContainer();
+      if (targletContainer == null)
+      {
+        return true;
+      }
+
+      Targlet targlet = targletContainer.getTarglet(getName());
+      if (targlet == null || !EcoreUtil.equals(targlet, this.targlet))
+      {
+        return true;
+      }
+
+      return targetNeedsActivation;
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    throw new UnsupportedOperationException();
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      if (target == null)
+      {
+        target = service.newTarget();
+        target.setName(TARGET_NAME);
+      }
+
+      if (targletContainer == null)
+      {
+        targletContainer = new TargletBundleContainer();
+
+        ITargetLocation[] oldLocations = target.getTargetLocations();
+        ITargetLocation[] newLocations = new ITargetLocation[oldLocations.length + 1];
+        System.arraycopy(oldLocations, 0, newLocations, 0, oldLocations.length);
+        newLocations[oldLocations.length] = targletContainer;
+
+        target.setTargetLocations(newLocations);
+      }
+
+      targletContainer.addTarglet(targlet);
+      service.saveTargetDefinition(target);
+
+      target.resolve(new ProgressLogMonitor(context));
+
+      LoadTargetDefinitionJob job = new LoadTargetDefinitionJob(target);
+      IStatus status = job.run(new ProgressLogMonitor(context));
+      if (status.getSeverity() == IStatus.ERROR)
+      {
+        throw new CoreException(status);
+      }
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
+  }
+
+  private ITargetDefinition getTarget(SetupTaskContext context, ITargetPlatformService service) throws CoreException
+  {
+    for (ITargetHandle targetHandle : service.getTargets(new ProgressLogMonitor(context)))
+    {
+      ITargetDefinition target = targetHandle.getTargetDefinition();
+      if (TARGET_NAME.equals(target.getName()))
+      {
+        return target;
+      }
+    }
+
+    return null;
+  }
+
+  private TargletBundleContainer getTargletContainer()
+  {
+    TargletBundleContainer firstTargletContainer = null;
+
+    for (ITargetLocation location : target.getTargetLocations())
+    {
+      if (location instanceof TargletBundleContainer)
+      {
+        TargletBundleContainer targletContainer = (TargletBundleContainer)location;
+        if (firstTargletContainer == null)
+        {
+          firstTargletContainer = targletContainer;
+        }
+
+        Targlet targlet = targletContainer.getTarglet(getName());
+        if (targlet != null)
+        {
+          return targletContainer;
+        }
+      }
+    }
+
+    return firstTargletContainer;
   }
 
 } // TargletTaskImpl

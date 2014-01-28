@@ -183,7 +183,7 @@ public final class TargletProfileManager
 
       profile = profileRegistry.addProfile(profileID, properties);
 
-      initialize(monitor);
+      // initialize(monitor);
     }
 
     if (needsUpdate != null)

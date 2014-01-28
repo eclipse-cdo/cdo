@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -158,8 +159,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
 
-    TargletBundleContainer container = new TargletBundleContainer();
-    container.addTarglet(targlet);
+    TargletBundleContainer container = new TargletBundleContainer(ECollections.singletonEList(targlet));
     ITargetLocation[] locations = { container };
 
     @SuppressWarnings("restriction")

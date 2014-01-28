@@ -3380,7 +3380,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getTargletData_ActiveP2Repositories(), getP2Repository(), null, "activeP2Repositories", null, 0, -1,
         TargletData.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTargletData_IncludeSources(), ecorePackage.getEBoolean(), "includeSources", null, 0, 1,
+    initEAttribute(getTargletData_IncludeSources(), ecorePackage.getEBoolean(), "includeSources", "true", 0, 1,
         TargletData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
     initEAttribute(getTargletData_IncludeAllPlatforms(), ecorePackage.getEBoolean(), "includeAllPlatforms", null, 0, 1,

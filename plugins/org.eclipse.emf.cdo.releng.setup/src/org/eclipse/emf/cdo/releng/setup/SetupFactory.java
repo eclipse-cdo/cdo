@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EFactory;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -363,6 +365,8 @@ public interface SetupFactory extends EFactory
   Targlet createTarglet();
 
   Targlet createTarglet(TargletData source);
+
+  EList<Targlet> createTarglets(Collection<? extends TargletData> targlets);
 
   /**
    * Returns a new object of class '<em>Repository List</em>'.

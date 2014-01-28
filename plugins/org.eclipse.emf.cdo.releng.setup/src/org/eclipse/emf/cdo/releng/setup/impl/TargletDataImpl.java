@@ -122,7 +122,7 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
    * @generated
    * @ordered
    */
-  protected static final boolean INCLUDE_SOURCES_EDEFAULT = false;
+  protected static final boolean INCLUDE_SOURCES_EDEFAULT = true;
 
   /**
    * The cached value of the '{@link #isIncludeSources() <em>Include Sources</em>}' attribute.
@@ -281,10 +281,16 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
     EList<P2Repository> result = new EObjectEList<P2Repository>(P2Repository.class, this,
         SetupPackage.TARGLET__ACTIVE_P2_REPOSITORIES);
 
+    EList<RepositoryList> repositoryLists = getRepositoryLists();
     String name = getActiveRepositoryList();
+    if (name == null && !repositoryLists.isEmpty())
+    {
+      name = repositoryLists.get(0).getName();
+    }
+
     if (name != null)
     {
-      for (RepositoryList repositoryList : getRepositoryLists())
+      for (RepositoryList repositoryList : repositoryLists)
       {
         if (name.equals(repositoryList.getName()))
         {

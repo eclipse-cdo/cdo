@@ -69,6 +69,7 @@ import org.eclipse.emf.cdo.releng.setup.VariableChoice;
 import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.WorkingSetTask;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -82,6 +83,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -761,9 +763,15 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
 
   public Targlet createTarglet(TargletData source)
   {
+    String activeRepositoryList = source.getActiveRepositoryList();
+    if (activeRepositoryList != null && activeRepositoryList.length() == 0)
+    {
+      activeRepositoryList = null;
+    }
+
     Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
     targlet.setName(source.getName());
-    targlet.setActiveRepositoryList(source.getActiveRepositoryList());
+    targlet.setActiveRepositoryList(activeRepositoryList);
     targlet.setIncludeSources(source.isIncludeSources());
     targlet.setIncludeAllPlatforms(source.isIncludeAllPlatforms());
 
@@ -783,6 +791,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
     }
 
     return targlet;
+  }
+
+  public EList<Targlet> createTarglets(Collection<? extends TargletData> targlets)
+  {
+    EList<Targlet> result = new BasicEList<Targlet>();
+    for (TargletData source : targlets)
+    {
+      result.add(createTarglet(source));
+    }
+
+    return result;
   }
 
   /**

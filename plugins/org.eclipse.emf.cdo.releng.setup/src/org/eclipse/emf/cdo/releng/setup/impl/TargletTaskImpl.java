@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -137,7 +138,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
    * @generated
    * @ordered
    */
-  protected static final boolean INCLUDE_SOURCES_EDEFAULT = false;
+  protected static final boolean INCLUDE_SOURCES_EDEFAULT = true;
 
   /**
    * The cached value of the '{@link #isIncludeSources() <em>Include Sources</em>}' attribute.
@@ -304,10 +305,16 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
     EList<P2Repository> result = new EObjectEList<P2Repository>(P2Repository.class, this,
         SetupPackage.TARGLET__ACTIVE_P2_REPOSITORIES);
 
+    EList<RepositoryList> repositoryLists = getRepositoryLists();
     String name = getActiveRepositoryList();
+    if (name == null && !repositoryLists.isEmpty())
+    {
+      name = repositoryLists.get(0).getName();
+    }
+
     if (name != null)
     {
-      for (RepositoryList repositoryList : getRepositoryLists())
+      for (RepositoryList repositoryList : repositoryLists)
       {
         if (name.equals(repositoryList.getName()))
         {
@@ -641,7 +648,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       }
 
       boolean targetNeedsActivation = true;
-      if (target.equals(activeTarget))
+      if (target.getHandle().equals(activeTarget.getHandle()))
       {
         targetNeedsActivation = false;
       }
@@ -679,19 +686,43 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
         target.setName(TARGET_NAME);
       }
 
+      EList<Targlet> targlets;
       if (targletContainer == null)
       {
         targletContainer = new TargletBundleContainer();
 
+        ITargetLocation[] newLocations;
         ITargetLocation[] oldLocations = target.getTargetLocations();
-        ITargetLocation[] newLocations = new ITargetLocation[oldLocations.length + 1];
-        System.arraycopy(oldLocations, 0, newLocations, 0, oldLocations.length);
-        newLocations[oldLocations.length] = targletContainer;
+        if (oldLocations != null && oldLocations.length != 0)
+        {
+          newLocations = new ITargetLocation[oldLocations.length + 1];
+          System.arraycopy(oldLocations, 0, newLocations, 0, oldLocations.length);
+          newLocations[oldLocations.length] = targletContainer;
+        }
+        else
+        {
+          newLocations = new ITargetLocation[] { targletContainer };
+        }
 
         target.setTargetLocations(newLocations);
+
+        targlets = ECollections.singletonEList(targlet);
+      }
+      else
+      {
+        targlets = targletContainer.getTarglets();
+        int index = targletContainer.getTargletIndex(targlet.getName());
+        if (index != -1)
+        {
+          targlets.set(index, targlet);
+        }
+        else
+        {
+          targlets.add(targlet);
+        }
       }
 
-      targletContainer.addTarglet(targlet);
+      targletContainer.setTarglets(targlets);
       service.saveTargetDefinition(target);
 
       target.resolve(new ProgressLogMonitor(context));

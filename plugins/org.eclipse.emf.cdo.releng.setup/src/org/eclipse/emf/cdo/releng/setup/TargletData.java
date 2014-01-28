@@ -148,6 +148,7 @@ public interface TargletData extends EObject
 
   /**
    * Returns the value of the '<em><b>Include Sources</b></em>' attribute.
+   * The default value is <code>"true"</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Include Sources</em>' attribute isn't clear,
@@ -157,7 +158,7 @@ public interface TargletData extends EObject
    * @return the value of the '<em>Include Sources</em>' attribute.
    * @see #setIncludeSources(boolean)
    * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getTargletData_IncludeSources()
-   * @model
+   * @model default="true"
    * @generated
    */
   boolean isIncludeSources();

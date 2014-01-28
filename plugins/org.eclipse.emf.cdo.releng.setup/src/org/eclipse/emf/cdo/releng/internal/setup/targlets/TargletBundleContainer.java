@@ -17,12 +17,16 @@ import org.eclipse.emf.cdo.releng.setup.P2Repository;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
+import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -36,7 +40,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.internal.p2.engine.Phase;
 import org.eclipse.equinox.internal.p2.engine.PhaseSet;
 import org.eclipse.equinox.internal.p2.engine.phases.Collect;
@@ -78,8 +81,6 @@ import org.eclipse.pde.internal.core.target.AbstractBundleContainer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -105,6 +106,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -143,7 +145,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private final AtomicBoolean profileNeedsUpdate = new AtomicBoolean();
 
-  private List<Targlet> targlets = new ArrayList<Targlet>();
+  private EList<Targlet> targlets = new BasicEList<Targlet>();
 
   private transient ITargetDefinition target;
 
@@ -153,6 +155,15 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   public TargletBundleContainer()
   {
+  }
+
+  /**
+   * Copies the passed targlets into this targlet container. Modifications of the passed targlets after the call
+   * to this constructor won't have an impact on this targlet container.
+   */
+  public TargletBundleContainer(Collection<? extends TargletData> targlets)
+  {
+    setTarglets(targlets);
   }
 
   @Override
@@ -166,47 +177,67 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return target;
   }
 
-  public List<Targlet> getTarglets()
-  {
-    return Collections.unmodifiableList(targlets);
-  }
-
+  /**
+   * Returns a copy of the targlet with the given name in this targlet container. This copy can be freely modified but the modifications won't have an impact
+   * on a targlet container unless the copy is set back into a container via {@link #setTarglets(Collection)}.
+   */
   public Targlet getTarglet(String name)
   {
-    for (Targlet targlet : targlets)
+    int index = getTargletIndex(name);
+    if (index != -1)
     {
-      if (ObjectUtil.equals(targlet.getName(), name))
-      {
-        return targlet;
-      }
+      return SetupFactory.eINSTANCE.createTarglet(targlets.get(index));
     }
 
     return null;
   }
 
-  public void addTarglet(Targlet targlet)
+  public int getTargletIndex(String name)
   {
-    Targlet copy = SetupFactory.eINSTANCE.createTarglet(targlet);
+    for (int i = 0; i < targlets.size(); i++)
+    {
+      Targlet targlet = targlets.get(i);
+      if (ObjectUtil.equals(targlet.getName(), name))
+      {
+        return i;
+      }
+    }
 
-    removeTarglet(copy.getName());
-    targlets.add(copy);
+    return -1;
+  }
+
+  public boolean hasTarglet(String name)
+  {
+    return getTargletIndex(name) != -1;
+  }
+
+  /**
+   * Returns a copy of the targlets in this targlet container. This copy can be freely modified but the modifications won't have an impact
+   * on a targlet container unless the copy is set back into a container via {@link #setTarglets(Collection)}.
+   */
+  public EList<Targlet> getTarglets()
+  {
+    return SetupFactory.eINSTANCE.createTarglets(targlets);
+  }
+
+  /**
+   * Copies the passed targlets into this targlet container. Modifications of the passed targlets after the call
+   * to this method won't have an impact on this targlet container.
+   */
+  public void setTarglets(Collection<? extends TargletData> targlets)
+  {
+    Set<String> names = new HashSet<String>();
+    for (TargletData targlet : targlets)
+    {
+      String name = targlet.getName();
+      if (!names.add(name))
+      {
+        throw new IllegalArgumentException("Duplicate targlet name: " + name);
+      }
+    }
+
+    this.targlets = SetupFactory.eINSTANCE.createTarglets(targlets);
     resetProfile();
-  }
-
-  public Targlet removeTarglet(String name)
-  {
-    for (Iterator<Targlet> it = targlets.iterator(); it.hasNext();)
-    {
-      Targlet targlet = it.next();
-      if (ObjectUtil.equals(targlet.getName(), name))
-      {
-        it.remove();
-        resetProfile();
-        return targlet;
-      }
-    }
-
-    return null;
   }
 
   @Override
@@ -423,7 +454,6 @@ public class TargletBundleContainer extends AbstractBundleContainer
   {
     super.associateWithTarget(target);
     this.target = target;
-
   }
 
   public void updateProfile(IProgressMonitor monitor) throws ProvisionException
@@ -614,6 +644,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
     {
       profileNeedsUpdate.set(true);
       // TODO Handle update problems, e.g. "return" to last working profile
+      TargletProfileManager.throwProvisionException(t);
     }
   }
 
@@ -768,19 +799,6 @@ public class TargletBundleContainer extends AbstractBundleContainer
         if (isOSGiBundle(unit))
         {
           generateBundle(unit, cache, bundles);
-
-          // if (getIncludeSource())
-          // {
-          // // bit of a hack using the bundle naming convention for finding source bundles
-          // // but this matches what we do when adding source to the profile so...
-          // IQuery<IInstallableUnit> sourceQuery = QueryUtil.createIUQuery(unit.getId() + ".source",
-          // unit.getVersion());
-          // IQueryResult<IInstallableUnit> result = metadata.query(sourceQuery, null);
-          // if (!result.isEmpty())
-          // {
-          // generateBundle(result.iterator().next(), artifacts, bundles);
-          // }
-          // }
         }
         else if (isFeatureJar(unit))
         {
@@ -1044,94 +1062,81 @@ public class TargletBundleContainer extends AbstractBundleContainer
       return null;
     }
 
-    public static TargletBundleContainer fromXML(String xml) throws CoreException
+    public static TargletBundleContainer fromXML(String xml) throws ProvisionException
     {
-      Element containerElement;
-
       try
       {
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = docBuilder.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-        containerElement = document.getDocumentElement();
-      }
-      catch (Exception e)
-      {
-        throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-      }
 
-      if (containerElement != null)
-      {
-        String locationType = containerElement.getAttribute(LOCATION_TYPE);
-        if (locationType.equals(TYPE))
+        Element containerElement = document.getDocumentElement();
+        if (containerElement != null)
         {
-          TargletBundleContainer container = new TargletBundleContainer();
-
-          NodeList targletNodes = containerElement.getChildNodes();
-          for (int i = 0; i < targletNodes.getLength(); i++)
+          String locationType = containerElement.getAttribute(LOCATION_TYPE);
+          if (locationType.equals(TYPE))
           {
-            Node targletNode = targletNodes.item(i);
-            if (targletNode instanceof Element)
+            final EList<Targlet> targlets = new BasicEList<Targlet>();
+
+            XMLUtil.handleChildElements(containerElement, new ElementHandler()
             {
-              Element targletElement = (Element)targletNode;
-
-              Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
-              targlet.setName(targletElement.getAttribute(TARGLET_NAME));
-              targlet.setActiveRepositoryList(targletElement.getAttribute(TARGLET_ACTIVE_REPOSITORY_LIST));
-              targlet.setIncludeSources(Boolean.valueOf(targletElement.getAttribute(TARGLET_INCLUDE_SOURCES)));
-              targlet.setIncludeAllPlatforms( //
-                  Boolean.valueOf(targletElement.getAttribute(TARGLET_INCLUDE_ALL_PLATFORMS)));
-              container.addTarglet(targlet);
-
-              NodeList childNodes = targletElement.getChildNodes();
-              for (int j = 0; j < childNodes.getLength(); j++)
+              public void handleElement(Element targletElement) throws Exception
               {
-                Node childNode = childNodes.item(j);
-                if (childNode instanceof Element)
+                final Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
+                targlet.setName(targletElement.getAttribute(TARGLET_NAME));
+                targlet.setActiveRepositoryList(targletElement.getAttribute(TARGLET_ACTIVE_REPOSITORY_LIST));
+                targlet.setIncludeSources(Boolean.valueOf(targletElement.getAttribute(TARGLET_INCLUDE_SOURCES)));
+                targlet.setIncludeAllPlatforms( //
+                    Boolean.valueOf(targletElement.getAttribute(TARGLET_INCLUDE_ALL_PLATFORMS)));
+                targlets.add(targlet);
+
+                XMLUtil.handleChildElements(targletElement, new ElementHandler()
                 {
-                  Element childElement = (Element)childNode;
-                  String tag = childElement.getTagName();
-                  if (ROOT.equals(tag))
+                  public void handleElement(Element childElement) throws Exception
                   {
-                    InstallableUnit root = SetupFactory.eINSTANCE.createInstallableUnit();
-                    root.setID(childElement.getAttribute(ROOT_ID));
-                    root.setVersionRange(new VersionRange(childElement.getAttribute(ROOT_VERSION_RANGE)));
-                    targlet.getRoots().add(root);
-                  }
-                  else if (SOURCE_LOCATOR.equals(tag))
-                  {
-                    AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
-                    sourceLocator.setRootFolder(childElement.getAttribute(SOURCE_LOCATOR_ROOT_FOLDER));
-                    sourceLocator.setLocateNestedProjects(Boolean.valueOf(childElement
-                        .getAttribute(SOURCE_LOCATOR_LOCATE_NESTED_PROJECTS)));
-                    targlet.getSourceLocators().add(sourceLocator);
-                  }
-                  else if (REPOSITORY_LIST.equals(tag))
-                  {
-                    RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
-                    repositoryList.setName(childElement.getAttribute(REPOSITORY_LIST_NAME));
-                    targlet.getRepositoryLists().add(repositoryList);
-
-                    NodeList repositoryNodes = childElement.getChildNodes();
-                    for (int k = 0; k < repositoryNodes.getLength(); k++)
+                    String tag = childElement.getTagName();
+                    if (ROOT.equals(tag))
                     {
-                      Node repositoryNode = repositoryNodes.item(k);
-                      if (repositoryNode instanceof Element)
-                      {
-                        Element repositoryElement = (Element)repositoryNode;
+                      InstallableUnit root = SetupFactory.eINSTANCE.createInstallableUnit();
+                      root.setID(childElement.getAttribute(ROOT_ID));
+                      root.setVersionRange(new VersionRange(childElement.getAttribute(ROOT_VERSION_RANGE)));
+                      targlet.getRoots().add(root);
+                    }
+                    else if (SOURCE_LOCATOR.equals(tag))
+                    {
+                      AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+                      sourceLocator.setRootFolder(childElement.getAttribute(SOURCE_LOCATOR_ROOT_FOLDER));
+                      sourceLocator.setLocateNestedProjects(Boolean.valueOf(childElement
+                          .getAttribute(SOURCE_LOCATOR_LOCATE_NESTED_PROJECTS)));
+                      targlet.getSourceLocators().add(sourceLocator);
+                    }
+                    else if (REPOSITORY_LIST.equals(tag))
+                    {
+                      final RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
+                      repositoryList.setName(childElement.getAttribute(REPOSITORY_LIST_NAME));
+                      targlet.getRepositoryLists().add(repositoryList);
 
-                        P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
-                        p2Repository.setURL(repositoryElement.getAttribute(REPOSITORY_URL));
-                        repositoryList.getP2Repositories().add(p2Repository);
-                      }
+                      XMLUtil.handleChildElements(childElement, new ElementHandler()
+                      {
+                        public void handleElement(Element repositoryElement) throws Exception
+                        {
+                          P2Repository p2Repository = SetupFactory.eINSTANCE.createP2Repository();
+                          p2Repository.setURL(repositoryElement.getAttribute(REPOSITORY_URL));
+                          repositoryList.getP2Repositories().add(p2Repository);
+                        }
+                      });
                     }
                   }
-                }
+                });
               }
-            }
-          }
+            });
 
-          return container;
+            return new TargletBundleContainer(targlets);
+          }
         }
+      }
+      catch (Exception ex)
+      {
+        TargletProfileManager.throwProvisionException(ex);
       }
 
       return null;

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.resources.WorkspaceLock">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.core.resources.WorkspaceLock"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui_1.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/presentation/DawnEmfGenmodelActionBarContributor.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelActionBarContributor">
         <filter id="338755678">
             <message_arguments>

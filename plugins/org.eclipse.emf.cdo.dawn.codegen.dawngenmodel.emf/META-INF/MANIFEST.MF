@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.codegen.ecore;bundle-version="[2.6.0,3.0.0)",
  org.eclipse.emf.codegen;bundle-version="[2.6.0,3.0.0)",
  org.eclipse.xpand;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.xtend;bundle-version="[1.1.0,2.0.0)"
+ org.eclipse.xtend;bundle-version="[2.0.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf;version="1.0.200",
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel;version="1.0.200",

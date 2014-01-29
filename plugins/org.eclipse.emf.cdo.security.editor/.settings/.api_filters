@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<component id="org.eclipse.emf.cdo.team" version="2">
+<component id="org.eclipse.emf.cdo.security.editor" version="2">
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.resources.WorkspaceLock">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.core.resources.WorkspaceLock"/>
-                <message_argument value="org.eclipse.emf.cdo.team_4.1.0"/>
+                <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.0"/>
             </message_arguments>
         </filter>
     </resource>

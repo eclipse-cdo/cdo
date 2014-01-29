@@ -18,9 +18,13 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 
+import org.eclipse.ecf.core.ContainerCreateException;
+import org.eclipse.ecf.core.ContainerFactory;
+import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.core.security.ConnectContextFactory;
 import org.eclipse.ecf.core.util.Proxy;
 import org.eclipse.ecf.filetransfer.IFileTransferListener;
+import org.eclipse.ecf.filetransfer.IRetrieveFileTransferContainerAdapter;
 import org.eclipse.ecf.filetransfer.IRetrieveFileTransferOptions;
 import org.eclipse.ecf.filetransfer.IncomingFileTransferException;
 import org.eclipse.ecf.filetransfer.events.IFileTransferEvent;
@@ -28,7 +32,6 @@ import org.eclipse.ecf.filetransfer.events.IIncomingFileTransferReceiveDoneEvent
 import org.eclipse.ecf.filetransfer.events.IIncomingFileTransferReceiveStartEvent;
 import org.eclipse.ecf.provider.filetransfer.identity.FileTransferID;
 import org.eclipse.ecf.provider.filetransfer.identity.FileTransferNamespace;
-import org.eclipse.ecf.provider.filetransfer.retrieve.UrlConnectionRetrieveFileTransfer;
 import org.eclipse.ecf.provider.filetransfer.util.ProxySetupHelper;
 
 import java.io.ByteArrayInputStream;
@@ -44,7 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -60,9 +62,14 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
   @Override
   public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException
   {
+    // UrlConnectionRetrieveFileTransfer fileTransfer = new UrlConnectionRetrieveFileTransfer();
+
+    IContainer container = createContainer();
+    IRetrieveFileTransferContainerAdapter fileTransfer = (IRetrieveFileTransferContainerAdapter)container
+        .getAdapter(IRetrieveFileTransferContainerAdapter.class);
+
     String uriString = uri.toString();
     Proxy proxy = ProxySetupHelper.getProxy(uriString);
-    UrlConnectionRetrieveFileTransfer fileTransfer = new UrlConnectionRetrieveFileTransfer();
     if (proxy != null)
     {
       fileTransfer.setProxy(proxy);
@@ -80,11 +87,12 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
       }
     }
 
-    final CountDownLatch receiveDoneLatch = new CountDownLatch(1);
-    final AtomicReference<Exception> exception = new AtomicReference<Exception>();
-
     class FileTransferListener implements IFileTransferListener
     {
+      public final CountDownLatch receiveLatch = new CountDownLatch(1);
+
+      public Exception exception;
+
       public ByteArrayOutputStream out;
 
       public void handleTransferEvent(IFileTransferEvent event)
@@ -99,7 +107,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
           }
           catch (IOException ex)
           {
-            exception.set(ex);
+            exception = ex;
           }
         }
         else if (event instanceof IIncomingFileTransferReceiveDoneEvent)
@@ -108,10 +116,10 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
           Exception ex = done.getException();
           if (ex != null)
           {
-            exception.set(ex);
+            exception = ex;
           }
 
-          receiveDoneLatch.countDown();
+          receiveLatch.countDown();
         }
       }
     }
@@ -141,23 +149,23 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
       try
       {
-        receiveDoneLatch.await(60, TimeUnit.SECONDS);
+        transferListener.receiveLatch.await(60, TimeUnit.SECONDS);
       }
       catch (InterruptedException ex)
       {
         throw new IOException(ex);
       }
 
-      if (exception.get() != null)
+      if (transferListener.exception != null)
       {
-        if (!(exception.get().getCause() instanceof SocketTimeoutException) || i > 2)
+        if (!(transferListener.exception.getCause() instanceof SocketTimeoutException) || i > 2)
         {
           if (cacheFile.isFile())
           {
             return new FileInputStream(cacheFile);
           }
 
-          throw new IOException(exception.get());
+          throw new IOException(transferListener.exception);
         }
 
         continue;
@@ -165,10 +173,22 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
       byte[] bytes = transferListener.out.toByteArray();
 
-      SetupConstants.CACHE_FOLDER.mkdirs();
+      cacheFile.getParentFile().mkdirs();
       IOUtil.writeFile(cacheFile, bytes);
 
       return new ByteArrayInputStream(bytes);
+    }
+  }
+
+  private IContainer createContainer() throws IOException
+  {
+    try
+    {
+      return ContainerFactory.getDefault().createContainer();
+    }
+    catch (ContainerCreateException ex)
+    {
+      throw new IOException(ex);
     }
   }
 }

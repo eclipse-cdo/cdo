@@ -58,7 +58,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
-import org.eclipse.emf.cdo.releng.setup.TargletContainer;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
@@ -191,8 +190,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createTargletImportTask();
     case SetupPackage.TARGLET_TASK:
       return createTargletTask();
-    case SetupPackage.TARGLET_CONTAINER:
-      return createTargletContainer();
     case SetupPackage.TARGLET:
       return createTarglet();
     case SetupPackage.REPOSITORY_LIST:
@@ -737,17 +734,6 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     TargletTaskImpl targletTask = new TargletTaskImpl();
     return targletTask;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TargletContainer createTargletContainer()
-  {
-    TargletContainerImpl targletContainer = new TargletContainerImpl();
-    return targletContainer;
   }
 
   /**

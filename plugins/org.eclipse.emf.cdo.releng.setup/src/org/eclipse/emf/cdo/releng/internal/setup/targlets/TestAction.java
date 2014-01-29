@@ -159,7 +159,8 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
 
-    TargletBundleContainer container = new TargletBundleContainer(ECollections.singletonEList(targlet));
+    String id = "" + System.currentTimeMillis();
+    TargletContainer container = new TargletContainer(id, ECollections.singletonEList(targlet));
     ITargetLocation[] locations = { container };
 
     @SuppressWarnings("restriction")
@@ -172,7 +173,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     }
 
     ITargetDefinition target = targetService.newTarget();
-    target.setName("Modular Target " + System.currentTimeMillis());
+    target.setName("Modular Target " + id);
     target.setTargetLocations(locations);
     targetService.saveTargetDefinition(target);
   }

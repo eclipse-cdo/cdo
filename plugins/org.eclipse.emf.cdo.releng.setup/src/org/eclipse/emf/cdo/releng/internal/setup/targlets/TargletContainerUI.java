@@ -60,14 +60,14 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @SuppressWarnings("restriction")
-public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor, ITargetLocationUpdater
+public class TargletContainerUI implements IAdapterFactory, ITargetLocationEditor, ITargetLocationUpdater
 {
   private static final Class<?>[] ADAPTERS = { ITreeContentProvider.class, ILabelProvider.class,
       ITargetLocationEditor.class, ITargetLocationUpdater.class };
 
   private ILabelProvider labelProvider;
 
-  public TargletUIFactory()
+  public TargletContainerUI()
   {
   }
 
@@ -79,7 +79,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
 
   public Object getAdapter(Object adaptableObject, @SuppressWarnings("rawtypes") Class adapterType)
   {
-    if (adaptableObject instanceof TargletBundleContainer)
+    if (adaptableObject instanceof TargletContainer)
     {
       if (adapterType == ITreeContentProvider.class)
       {
@@ -107,24 +107,24 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
 
   public boolean canEdit(ITargetDefinition target, ITargetLocation targetLocation)
   {
-    return targetLocation instanceof TargletBundleContainer;
+    return targetLocation instanceof TargletContainer;
   }
 
   public IWizard getEditWizard(ITargetDefinition target, ITargetLocation targetLocation)
   {
-    return new EditTargletWizard(target, (TargletBundleContainer)targetLocation);
+    return new EditTargletWizard(target, (TargletContainer)targetLocation);
   }
 
   public boolean canUpdate(ITargetDefinition target, ITargetLocation targetLocation)
   {
-    return targetLocation instanceof TargletBundleContainer;
+    return targetLocation instanceof TargletContainer;
   }
 
   public IStatus update(ITargetDefinition target, ITargetLocation targetLocation, IProgressMonitor monitor)
   {
     try
     {
-      ((TargletBundleContainer)targetLocation).updateProfile(monitor);
+      ((TargletContainer)targetLocation).updateProfile(monitor);
       return Status.OK_STATUS;
     }
     catch (ProvisionException ex)
@@ -195,7 +195,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
    */
   private static class TargletContentProvider implements ITreeContentProvider
   {
-    private Map<Targlet, TargletBundleContainer> parents = new HashMap<Targlet, TargletBundleContainer>();
+    private Map<Targlet, TargletContainer> parents = new HashMap<Targlet, TargletContainer>();
 
     public TargletContentProvider()
     {
@@ -218,9 +218,9 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
 
     public Object[] getChildren(Object element)
     {
-      if (element instanceof TargletBundleContainer)
+      if (element instanceof TargletContainer)
       {
-        TargletBundleContainer location = (TargletBundleContainer)element;
+        TargletContainer location = (TargletContainer)element;
         List<Targlet> targlets = location.getTarglets();
         for (Targlet targlet : targlets)
         {
@@ -257,7 +257,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     @Override
     public Image getImage(Object element)
     {
-      if (element instanceof TargletBundleContainer)
+      if (element instanceof TargletContainer)
       {
         return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/targlets.gif");
       }
@@ -268,9 +268,9 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     @Override
     public String getText(Object element)
     {
-      if (element instanceof TargletBundleContainer)
+      if (element instanceof TargletContainer)
       {
-        return ((TargletBundleContainer)element).toString();
+        return ((TargletContainer)element).toString();
       }
 
       return super.getText(element);
@@ -281,9 +281,9 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
   {
     private ITargetDefinition target;
 
-    private TargletBundleContainer targlet;
+    private TargletContainer targlet;
 
-    private TargletUIFactory.TargletWizardPage page;
+    private TargletContainerUI.TargletWizardPage page;
 
     public NewTargletWizard()
     {
@@ -320,13 +320,13 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
    */
   public static class EditTargletWizard extends EditBundleContainerWizard
   {
-    private TargletUIFactory.TargletWizardPage page;
+    private TargletContainerUI.TargletWizardPage page;
 
     private ITargetDefinition target;
 
-    private TargletBundleContainer targlet;
+    private TargletContainer targlet;
 
-    public EditTargletWizard(ITargetDefinition target, TargletBundleContainer targlet)
+    public EditTargletWizard(ITargetDefinition target, TargletContainer targlet)
     {
       super(target, targlet);
       this.target = target;
@@ -350,7 +350,7 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
   {
     private ITargetDefinition target;
 
-    private TargletBundleContainer targlet;
+    private TargletContainer targlet;
 
     /**
      * Constructor for creating a new container
@@ -366,14 +366,14 @@ public class TargletUIFactory implements IAdapterFactory, ITargetLocationEditor,
     /**
      * Constructor for editing an existing container
      */
-    public TargletWizardPage(ITargetDefinition target, TargletBundleContainer targlet)
+    public TargletWizardPage(ITargetDefinition target, TargletContainer targlet)
     {
       this(target);
       this.targlet = targlet;
       setTitle("Edit Targlet");
     }
 
-    public TargletBundleContainer getBundleContainer()
+    public TargletContainer getBundleContainer()
     {
       try
       {

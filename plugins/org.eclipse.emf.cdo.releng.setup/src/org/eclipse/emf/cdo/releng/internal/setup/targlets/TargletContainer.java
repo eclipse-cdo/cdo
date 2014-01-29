@@ -37,9 +37,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.equinox.internal.p2.engine.Phase;
 import org.eclipse.equinox.internal.p2.engine.PhaseSet;
 import org.eclipse.equinox.internal.p2.engine.phases.Collect;
@@ -111,14 +111,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
  */
 @SuppressWarnings("restriction")
-public class TargletBundleContainer extends AbstractBundleContainer
+public class TargletContainer extends AbstractBundleContainer
 {
   public static final String TYPE = "Targlet";
 
@@ -143,27 +142,31 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
   private static final String FALSE = Boolean.FALSE.toString();
 
-  private final AtomicBoolean profileNeedsUpdate = new AtomicBoolean();
+  private final TargletContainerDescriptor descriptor;
+
+  private ITargetDefinition target;
 
   private EList<Targlet> targlets = new BasicEList<Targlet>();
 
-  private transient ITargetDefinition target;
-
-  private transient String digest;
-
-  private transient IProfile profile;
-
-  public TargletBundleContainer()
+  public TargletContainer(String id) throws ProvisionException
   {
+    descriptor = TargletContainerManager.getInstance().getDescriptor(id);
   }
 
   /**
    * Copies the passed targlets into this targlet container. Modifications of the passed targlets after the call
    * to this constructor won't have an impact on this targlet container.
+   * @throws ProvisionException
    */
-  public TargletBundleContainer(Collection<? extends TargletData> targlets)
+  public TargletContainer(String id, Collection<? extends TargletData> targlets) throws ProvisionException
   {
+    this(id);
     setTarglets(targlets);
+  }
+
+  public String getID()
+  {
+    return descriptor.getID();
   }
 
   @Override
@@ -236,8 +239,10 @@ public class TargletBundleContainer extends AbstractBundleContainer
       }
     }
 
-    this.targlets = SetupFactory.eINSTANCE.createTarglets(targlets);
-    resetProfile();
+    EList<Targlet> copy = SetupFactory.eINSTANCE.createTarglets(targlets);
+    String digest = createDigest(copy);
+    descriptor.invalidate(digest);
+    this.targlets = copy;
   }
 
   @Override
@@ -245,7 +250,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
   {
     try
     {
-      return Persistence.toXML(targlets).toString();
+      return Persistence.toXML(getID(), targlets).toString();
     }
     catch (Exception ex)
     {
@@ -326,100 +331,99 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return nl;
   }
 
-  public String getDigest() throws ProvisionException
+  private String createDigest(EList<Targlet> targlets)
   {
-    if (digest == null)
+    InputStream stream = null;
+
+    try
     {
-      InputStream stream = null;
+      String id = getID();
+      String environmentProperties = getEnvironmentProperties();
+      String nlProperty = getNLProperty();
 
-      try
+      Writer writer = Persistence.toXML(id, targlets);
+      writer.write("\n<!-- Environment Properties: ");
+      writer.write(environmentProperties);
+      writer.write(" -->");
+      writer.write("\n<!-- NL Property: ");
+      writer.write(nlProperty);
+      writer.write(" -->\n");
+
+      final MessageDigest digest = MessageDigest.getInstance("SHA-1");
+      stream = new FilterInputStream(new ByteArrayInputStream(writer.toString().getBytes("UTF-8")))
       {
-        Writer writer = Persistence.toXML(targlets);
-        writer.write("\n<!-- Environment Properties: ");
-        writer.write(getEnvironmentProperties());
-        writer.write(" -->");
-        writer.write("\n<!-- NL Property: ");
-        writer.write(getNLProperty());
-        writer.write(" -->\n");
-
-        final MessageDigest digest = MessageDigest.getInstance("SHA-1");
-        stream = new FilterInputStream(new ByteArrayInputStream(writer.toString().getBytes("UTF-8")))
+        @Override
+        public int read() throws IOException
         {
-          @Override
-          public int read() throws IOException
+          for (;;)
           {
-            for (;;)
+            int ch = super.read();
+            switch (ch)
             {
-              int ch = super.read();
-              switch (ch)
-              {
-              case -1:
-                return -1;
-
-              case 10:
-              case 13:
-                continue;
-              }
-
-              digest.update((byte)ch);
-              return ch;
-            }
-          }
-
-          @Override
-          public int read(byte[] b, int off, int len) throws IOException
-          {
-            int read = super.read(b, off, len);
-            if (read == -1)
-            {
+            case -1:
               return -1;
+
+            case 10:
+            case 13:
+              continue;
             }
 
-            for (int i = off; i < off + read; i++)
-            {
-              byte c = b[i];
-              if (c == 10 || c == 13)
-              {
-                if (i + 1 < off + read)
-                {
-                  System.arraycopy(b, i + 1, b, i, read - i - 1);
-                  --i;
-                }
-
-                --read;
-              }
-            }
-
-            digest.update(b, off, read);
-            return read;
-          }
-        };
-
-        synchronized (BUFFER)
-        {
-          while (stream.read(BUFFER) != -1)
-          {
-            // Do nothing
+            digest.update((byte)ch);
+            return ch;
           }
         }
 
-        this.digest = HexUtil.bytesToHex(digest.digest());
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new RuntimeException(ex);
-      }
-      finally
-      {
-        IOUtil.close(stream);
-      }
-    }
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException
+        {
+          int read = super.read(b, off, len);
+          if (read == -1)
+          {
+            return -1;
+          }
 
-    return digest;
+          for (int i = off; i < off + read; i++)
+          {
+            byte c = b[i];
+            if (c == 10 || c == 13)
+            {
+              if (i + 1 < off + read)
+              {
+                System.arraycopy(b, i + 1, b, i, read - i - 1);
+                --i;
+              }
+
+              --read;
+            }
+          }
+
+          digest.update(b, off, read);
+          return read;
+        }
+      };
+
+      synchronized (BUFFER)
+      {
+        while (stream.read(BUFFER) != -1)
+        {
+          // Do nothing
+        }
+      }
+
+      return HexUtil.bytesToHex(digest.digest());
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new RuntimeException(ex);
+    }
+    finally
+    {
+      IOUtil.close(stream);
+    }
   }
 
   @Override
@@ -446,7 +450,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
   @Override
   public String getLocation(boolean resolve) throws CoreException
   {
-    return TargletProfileManager.POOL_FOLDER.getAbsolutePath();
+    return TargletContainerManager.POOL_FOLDER.getAbsolutePath();
   }
 
   @Override
@@ -456,9 +460,95 @@ public class TargletBundleContainer extends AbstractBundleContainer
     this.target = target;
   }
 
-  public void updateProfile(IProgressMonitor monitor) throws ProvisionException
+  @Override
+  protected TargetBundle[] resolveBundles(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
   {
-    initProfile(monitor);
+    // TODO Distribute the progress more evenly between resolveBundles (2/3) and resolveFeatures (1/3)
+    resolveUnits(monitor);
+
+    return fBundles;
+  }
+
+  @Override
+  protected TargetFeature[] resolveFeatures(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
+  {
+    // All work has been done in resolveBundles() already
+    return fFeatures;
+  }
+
+  private void resolveUnits(IProgressMonitor monitor) throws ProvisionException
+  {
+    try
+    {
+      IProfile profile = descriptor.getProfile(monitor);
+      if (profile == null)
+      {
+        profile = updateProfile(monitor);
+      }
+
+      List<TargetBundle> bundles = new ArrayList<TargetBundle>();
+      List<TargetFeature> features = new ArrayList<TargetFeature>();
+
+      IFileArtifactRepository cache = getBundlePool(TargletContainerManager.getInstance().getAgent());
+
+      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), null);
+      for (Iterator<IInstallableUnit> i = result.iterator(); i.hasNext();)
+      {
+        IInstallableUnit unit = i.next();
+
+        if (isOSGiBundle(unit))
+        {
+          generateBundle(unit, cache, bundles);
+        }
+        else if (isFeatureJar(unit))
+        {
+          generateFeature(unit, cache, features);
+        }
+      }
+
+      fBundles = bundles.toArray(new TargetBundle[bundles.size()]);
+      fFeatures = features.toArray(new TargetFeature[features.size()]);
+    }
+    catch (Throwable t)
+    {
+      Activator.log(t);
+      TargletContainerManager.throwProvisionException(t);
+    }
+  }
+
+  private void generateBundle(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetBundle> bundles)
+      throws CoreException
+  {
+    Collection<IArtifactKey> artifacts = unit.getArtifacts();
+    for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
+    {
+      File file = repo.getArtifactFile(iterator2.next());
+      if (file != null)
+      {
+        TargetBundle bundle = new TargetBundle(file);
+        bundles.add(bundle);
+      }
+    }
+  }
+
+  private void generateFeature(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetFeature> features)
+      throws CoreException
+  {
+    Collection<IArtifactKey> artifacts = unit.getArtifacts();
+    for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
+    {
+      File file = repo.getArtifactFile(iterator2.next());
+      if (file != null)
+      {
+        TargetFeature feature = new TargetFeature(file);
+        features.add(feature);
+      }
+    }
+  }
+
+  public IProfile updateProfile(IProgressMonitor monitor) throws ProvisionException
+  {
+    IProfile profile = descriptor.createProfile(getEnvironmentProperties(), getNLProperty(), monitor);
 
     try
     {
@@ -473,7 +563,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
       if (roots.isEmpty())
       {
-        return;
+        return profile;
       }
 
       final IUAnalyzer analyzer = new IUAnalyzer();
@@ -505,7 +595,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
         }
       }
 
-      IProvisioningAgent agent = TargletProfileManager.getInstance().getAgent();
+      IProvisioningAgent agent = TargletContainerManager.getInstance().getAgent();
 
       IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
           .getService(IMetadataRepositoryManager.SERVICE_NAME);
@@ -598,7 +688,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
       context.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
       context.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
 
-      Version sourceIUVersion = getSourceIUVersion();
+      Version sourceIUVersion = getSourceIUVersion(profile);
 
       IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
       if (planner == null)
@@ -608,7 +698,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
       IProfileChangeRequest request = planner.createChangeRequest(profile);
       IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
-      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor());
+      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor(monitor));
       request.removeAll(installedIUs.toUnmodifiableSet());
 
       IQueryable<IInstallableUnit> metadata = context.getMetadata(monitor);
@@ -617,38 +707,39 @@ public class TargletBundleContainer extends AbstractBundleContainer
         IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
         IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
 
-        for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor()))
+        for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor(monitor)))
         {
           request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
           request.add(iu);
         }
       }
 
-      planAndInstall(agent, context, planner, request);
+      planAndInstall(agent, context, planner, request, new ProgressMonitor(monitor));
 
       if (isIncludeSources())
       {
-        IInstallableUnit iu = generateSourceIU(sourceIUVersion);
+        IInstallableUnit iu = generateSourceIU(profile, sourceIUVersion);
 
         IProfileChangeRequest sourceRequest = planner.createChangeRequest(profile);
         sourceRequest.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
         sourceRequest.add(iu);
 
-        planAndInstall(agent, context, planner, sourceRequest);
+        planAndInstall(agent, context, planner, sourceRequest, new ProgressMonitor(monitor));
       }
 
-      updateWorkspace(sources, new ProgressMonitor());
-      profileNeedsUpdate.set(false);
+      descriptor.commitProfile(new ProgressMonitor(monitor));
+
+      updateWorkspace(profile, sources, new ProgressMonitor(monitor));
     }
     catch (Throwable t)
     {
-      profileNeedsUpdate.set(true);
-      // TODO Handle update problems, e.g. "return" to last working profile
-      TargletProfileManager.throwProvisionException(t);
+      profile = descriptor.rollbackProfile(new ProgressMonitor(monitor));
     }
+
+    return profile;
   }
 
-  private Version getSourceIUVersion()
+  private Version getSourceIUVersion(IProfile profile)
   {
     IQuery<IInstallableUnit> query = QueryUtil.createIUQuery(SOURCE_IU_ID);
     IQueryResult<IInstallableUnit> result = profile.query(query, null);
@@ -662,7 +753,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return Version.createOSGi(1, 0, 0);
   }
 
-  private IInstallableUnit generateSourceIU(Version sourceIUVersion)
+  private IInstallableUnit generateSourceIU(IProfile profile, Version sourceIUVersion)
   {
     // Create and return an IU that has optional and greedy requirements on all source bundles
     // related to bundle IUs in the profile
@@ -696,8 +787,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
     return MetadataFactory.createInstallableUnit(sourceIUDescription);
   }
 
-  private void updateWorkspace(final Map<IInstallableUnit, File> sources, IProgressMonitor monitor)
-      throws ProvisionException
+  private void updateWorkspace(final IProfile profile, final Map<IInstallableUnit, File> sources,
+      IProgressMonitor monitor) throws ProvisionException
   {
     try
     {
@@ -765,116 +856,15 @@ public class TargletBundleContainer extends AbstractBundleContainer
           }
           catch (Exception ex)
           {
-            TargletProfileManager.throwProvisionException(ex);
+            TargletContainerManager.throwProvisionException(ex);
           }
         }
       }, monitor);
     }
     catch (Exception ex)
     {
-      TargletProfileManager.throwProvisionException(ex);
+      TargletContainerManager.throwProvisionException(ex);
     }
-  }
-
-  private void resolveUnits(IProgressMonitor monitor) throws ProvisionException
-  {
-    try
-    {
-      initProfile(monitor);
-      if (profileNeedsUpdate.get())
-      {
-        updateProfile(monitor);
-      }
-
-      List<TargetBundle> bundles = new ArrayList<TargetBundle>();
-      List<TargetFeature> features = new ArrayList<TargetFeature>();
-
-      IFileArtifactRepository cache = getBundlePool(TargletProfileManager.getInstance().getAgent());
-
-      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), null);
-      for (Iterator<IInstallableUnit> i = result.iterator(); i.hasNext();)
-      {
-        IInstallableUnit unit = i.next();
-
-        if (isOSGiBundle(unit))
-        {
-          generateBundle(unit, cache, bundles);
-        }
-        else if (isFeatureJar(unit))
-        {
-          generateFeature(unit, cache, features);
-        }
-      }
-
-      fBundles = bundles.toArray(new TargetBundle[bundles.size()]);
-      fFeatures = features.toArray(new TargetFeature[features.size()]);
-    }
-    catch (Throwable t)
-    {
-      Activator.log(t);
-      TargletProfileManager.throwProvisionException(t);
-    }
-  }
-
-  private void generateBundle(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetBundle> bundles)
-      throws CoreException
-  {
-    Collection<IArtifactKey> artifacts = unit.getArtifacts();
-    for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
-    {
-      File file = repo.getArtifactFile(iterator2.next());
-      if (file != null)
-      {
-        TargetBundle bundle = new TargetBundle(file);
-        bundles.add(bundle);
-      }
-    }
-  }
-
-  private void generateFeature(IInstallableUnit unit, IFileArtifactRepository repo, List<TargetFeature> features)
-      throws CoreException
-  {
-    Collection<IArtifactKey> artifacts = unit.getArtifacts();
-    for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
-    {
-      File file = repo.getArtifactFile(iterator2.next());
-      if (file != null)
-      {
-        TargetFeature feature = new TargetFeature(file);
-        features.add(feature);
-      }
-    }
-  }
-
-  @Override
-  protected TargetBundle[] resolveBundles(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
-  {
-    // TODO Distribute the progress more evenly between resolveBundles (2/3) and resolveFeatures (1/3)
-    resolveUnits(monitor);
-
-    return fBundles;
-  }
-
-  @Override
-  protected TargetFeature[] resolveFeatures(ITargetDefinition target, IProgressMonitor monitor) throws CoreException
-  {
-    // All work has been done in resolveBundles() already
-    return fFeatures;
-  }
-
-  private void initProfile(IProgressMonitor monitor) throws ProvisionException
-  {
-    if (profile == null)
-    {
-      TargletProfileManager manager = TargletProfileManager.getInstance();
-      profile = manager.getProfile(this, profileNeedsUpdate, monitor);
-    }
-  }
-
-  private void resetProfile()
-  {
-    digest = null;
-    profile = null;
   }
 
   private static boolean isOSGiBundle(IInstallableUnit unit)
@@ -901,9 +891,9 @@ public class TargletBundleContainer extends AbstractBundleContainer
   }
 
   private static void planAndInstall(IProvisioningAgent agent, ProvisioningContext context, IPlanner planner,
-      IProfileChangeRequest request) throws ProvisionException
+      IProfileChangeRequest request, IProgressMonitor monitor) throws ProvisionException
   {
-    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, new ProgressMonitor());
+    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, new ProgressMonitor(monitor));
     if (!plan.getStatus().isOK())
     {
       throw new ProvisionException(plan.getStatus());
@@ -916,7 +906,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
     }
 
     IPhaseSet phaseSet = createPhaseSet();
-    IStatus status = PlanExecutionHelper.executePlan(plan, engine, phaseSet, context, new ProgressMonitor());
+    IStatus status = PlanExecutionHelper.executePlan(plan, engine, phaseSet, context, new ProgressMonitor(monitor));
     if (!status.isOK())
     {
       throw new ProvisionException(status);
@@ -943,7 +933,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
       throw new ProvisionException("Artifact respository manager could not be loaded");
     }
 
-    URI uri = TargletProfileManager.POOL_FOLDER.toURI();
+    URI uri = TargletContainerManager.POOL_FOLDER.toURI();
 
     try
     {
@@ -965,8 +955,13 @@ public class TargletBundleContainer extends AbstractBundleContainer
   /**
    * @author Eike Stepper
    */
-  private static class ProgressMonitor extends NullProgressMonitor
+  private static class ProgressMonitor extends SubProgressMonitor
   {
+    public ProgressMonitor(IProgressMonitor monitor)
+    {
+      super(monitor, 1);
+    }
+
     @Override
     public void beginTask(String name, int totalWork)
     {
@@ -1020,6 +1015,8 @@ public class TargletBundleContainer extends AbstractBundleContainer
   {
     private static final String LOCATION = "location";
 
+    private static final String LOCATION_ID = "id";
+
     private static final String LOCATION_TYPE = "type";
 
     private static final String TARGLET = "targlet";
@@ -1052,7 +1049,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
 
     private static final String REPOSITORY_URL = "url";
 
-    public TargletBundleContainer getTargetLocation(String type, String serializedXML) throws CoreException
+    public TargletContainer getTargetLocation(String type, String serializedXML) throws CoreException
     {
       if (TYPE.equals(type))
       {
@@ -1062,7 +1059,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
       return null;
     }
 
-    public static TargletBundleContainer fromXML(String xml) throws ProvisionException
+    public static TargletContainer fromXML(String xml) throws ProvisionException
     {
       try
       {
@@ -1075,6 +1072,7 @@ public class TargletBundleContainer extends AbstractBundleContainer
           String locationType = containerElement.getAttribute(LOCATION_TYPE);
           if (locationType.equals(TYPE))
           {
+            String locationID = containerElement.getAttribute(LOCATION_ID);
             final EList<Targlet> targlets = new BasicEList<Targlet>();
 
             XMLUtil.handleChildElements(containerElement, new ElementHandler()
@@ -1130,25 +1128,27 @@ public class TargletBundleContainer extends AbstractBundleContainer
               }
             });
 
-            return new TargletBundleContainer(targlets);
+            return new TargletContainer(locationID, targlets);
           }
         }
       }
       catch (Exception ex)
       {
-        TargletProfileManager.throwProvisionException(ex);
+        TargletContainerManager.throwProvisionException(ex);
       }
 
       return null;
     }
 
-    public static Writer toXML(List<Targlet> targlets) throws ParserConfigurationException, TransformerException
+    public static Writer toXML(String id, List<Targlet> targlets) throws ParserConfigurationException,
+        TransformerException
     {
       DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document document = docBuilder.newDocument();
 
       Element containerElement = document.createElement(LOCATION);
       containerElement.setAttribute(LOCATION_TYPE, TYPE);
+      containerElement.setAttribute(LOCATION_ID, id);
       document.appendChild(containerElement);
 
       for (Targlet targlet : targlets)

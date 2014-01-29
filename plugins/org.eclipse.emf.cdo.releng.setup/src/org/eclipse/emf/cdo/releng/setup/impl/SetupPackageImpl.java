@@ -64,7 +64,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskScope;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
-import org.eclipse.emf.cdo.releng.setup.TargletContainer;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
@@ -351,13 +350,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass targletTaskEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass targletContainerEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1900,26 +1892,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getTargletContainer()
-  {
-    return targletContainerEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getTargletContainer_Targlets()
-  {
-    return (EReference)targletContainerEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getTarglet()
   {
     return targletEClass;
@@ -2858,9 +2830,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     targletTaskEClass = createEClass(TARGLET_TASK);
 
-    targletContainerEClass = createEClass(TARGLET_CONTAINER);
-    createEReference(targletContainerEClass, TARGLET_CONTAINER__TARGLETS);
-
     targletEClass = createEClass(TARGLET);
 
     targletDataEClass = createEClass(TARGLET_DATA);
@@ -3352,12 +3321,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     initEClass(targletTaskEClass, TargletTask.class, "TargletTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(targletContainerEClass, TargletContainer.class, "TargletContainer", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTargletContainer_Targlets(), getTarglet(), null, "targlets", null, 0, -1, TargletContainer.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
 
     initEClass(targletEClass, Targlet.class, "Targlet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -974,31 +974,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.TargletContainer} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected TargletContainerItemProvider targletContainerItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.TargletContainer}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createTargletContainerAdapter()
-  {
-    if (targletContainerItemProvider == null)
-    {
-      targletContainerItemProvider = new TargletContainerItemProvider(this);
-    }
-
-    return targletContainerItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.Targlet} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1613,10 +1588,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (targletTaskItemProvider != null)
     {
       targletTaskItemProvider.dispose();
-    }
-    if (targletContainerItemProvider != null)
-    {
-      targletContainerItemProvider.dispose();
     }
     if (targletItemProvider != null)
     {

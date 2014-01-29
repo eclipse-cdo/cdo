@@ -60,7 +60,6 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargetPlatformTask;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
-import org.eclipse.emf.cdo.releng.setup.TargletContainer;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.TargletImportTask;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
@@ -575,16 +574,6 @@ public class SetupSwitch<T> extends Switch<T>
       {
         result = caseTargletData(targletTask);
       }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.TARGLET_CONTAINER:
-    {
-      TargletContainer targletContainer = (TargletContainer)theEObject;
-      T result = caseTargletContainer(targletContainer);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -1577,22 +1566,6 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTargletTask(TargletTask object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Targlet Container</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Targlet Container</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTargletContainer(TargletContainer object)
   {
     return null;
   }

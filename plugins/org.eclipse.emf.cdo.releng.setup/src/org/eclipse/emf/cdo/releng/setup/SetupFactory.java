@@ -347,15 +347,6 @@ public interface SetupFactory extends EFactory
   TargletTask createTargletTask();
 
   /**
-   * Returns a new object of class '<em>Targlet Container</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Targlet Container</em>'.
-   * @generated
-   */
-  TargletContainer createTargletContainer();
-
-  /**
    * Returns a new object of class '<em>Targlet</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

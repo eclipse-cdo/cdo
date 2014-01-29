@@ -2,7 +2,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
-import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletBundleContainer;
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainer;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -172,9 +172,11 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
 
   private static final String TARGET_NAME = "Modular Target";
 
+  private static final String CONTAINER_ID = "Setup";
+
   private transient Targlet targlet;
 
-  private transient TargletBundleContainer targletContainer;
+  private transient TargletContainer targletContainer;
 
   private transient ITargetDefinition target;
 
@@ -689,7 +691,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       EList<Targlet> targlets;
       if (targletContainer == null)
       {
-        targletContainer = new TargletBundleContainer();
+        targletContainer = new TargletContainer(CONTAINER_ID);
 
         ITargetLocation[] newLocations;
         ITargetLocation[] oldLocations = target.getTargetLocations();
@@ -754,15 +756,15 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
     return null;
   }
 
-  private TargletBundleContainer getTargletContainer()
+  private TargletContainer getTargletContainer()
   {
-    TargletBundleContainer firstTargletContainer = null;
+    TargletContainer firstTargletContainer = null;
 
     for (ITargetLocation location : target.getTargetLocations())
     {
-      if (location instanceof TargletBundleContainer)
+      if (location instanceof TargletContainer)
       {
-        TargletBundleContainer targletContainer = (TargletBundleContainer)location;
+        TargletContainer targletContainer = (TargletContainer)location;
         if (firstTargletContainer == null)
         {
           firstTargletContainer = targletContainer;

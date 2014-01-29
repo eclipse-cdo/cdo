@@ -62,6 +62,9 @@ public final class HashBag<T> implements Set<T>
     return add(o, 1);
   }
 
+  /**
+   * @since 3.4
+   */
   public boolean add(T o, int count)
   {
     HashBag.Counter counter = map.get(o);
@@ -116,6 +119,9 @@ public final class HashBag<T> implements Set<T>
     return remove(o, 1);
   }
 
+  /**
+   * @since 3.4
+   */
   public boolean remove(Object o, int count)
   {
     HashBag.Counter counter = map.get(o);

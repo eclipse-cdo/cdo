@@ -25,8 +25,8 @@
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the shared target platform bundle pool used by Buckminster in the self hosting IDE." name="launcher.setup.ide.p2pool" value="${setup.install.dir/.p2pool-tp}" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ApiBaselineTask" disabled="true" version="4.2" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.2-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:ResourceCreationTask" disabled="true" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;projectDescription>&#xD;&#xA;&#x9;&lt;name>.buckminster&lt;/name>&#xD;&#xA;&#x9;&lt;comment>&lt;/comment>&#xD;&#xA;&#x9;&lt;projects>&#xD;&#xA;&#x9;&lt;/projects>&#xD;&#xA;&#x9;&lt;buildSpec>&#xD;&#xA;&#x9;&lt;/buildSpec>&#xD;&#xA;&#x9;&lt;natures>&#xD;&#xA;&#x9;&lt;/natures>&#xD;&#xA;&lt;/projectDescription>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.buckminster/.project"/>
-    <setupTasks xsi:type="setup:MaterializationTask" disabled="true">
+    <setupTasks xsi:type="setup:ResourceCreationTask" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;projectDescription>&#xD;&#xA;&#x9;&lt;name>.buckminster&lt;/name>&#xD;&#xA;&#x9;&lt;comment>&lt;/comment>&#xD;&#xA;&#x9;&lt;projects>&#xD;&#xA;&#x9;&lt;/projects>&#xD;&#xA;&#x9;&lt;buildSpec>&#xD;&#xA;&#x9;&lt;/buildSpec>&#xD;&#xA;&#x9;&lt;natures>&#xD;&#xA;&#x9;&lt;/natures>&#xD;&#xA;&lt;/projectDescription>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.buckminster/.project"/>
+    <setupTasks xsi:type="setup:MaterializationTask">
       <rootComponents name="org.eclipse.sdk"/>
       <rootComponents name="org.eclipse.emf.cdo.releng.all"/>
       <rootComponents name="org.eclipse.emf.cdo.releng.release" type="osgi.bundle"/>
@@ -49,21 +49,6 @@
       <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/nightly"/>
       <p2Repositories url="http://download.eclipse.org/technology/nebula/snapshot"/>
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
-    </setupTasks>
-    <setupTasks xsi:type="setup:TargletTask" name="CDO Releng" activeRepositoryList="Milestones">
-      <roots id="org.eclipse.emf.cdo.releng.all.feature.group"/>
-      <roots id="org.eclipse.sdk.feature.group"/>
-      <sourceLocators rootFolder="${git.clone}"/>
-      <repositoryLists name="Milestones">
-        <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
-        <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20140116105218/repository"/>
-        <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
-        <p2Repositories url="http://download.eclipse.org/tools/gef/updates/milestones"/>
-        <p2Repositories url="http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"/>
-        <p2Repositories url="http://download.eclipse.org/egit/updates-stable-nightly"/>
-        <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
-        <p2Repositories url="http://download.eclipse.org/technology/nebula/snapshot"/>
-      </repositoryLists>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="Development Environment Setup">
@@ -101,7 +86,7 @@
       <workingSets name="Releng">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.cdo.releng.release"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.13/@workingSets.0 //@branches[name='master']/@setupTasks.13/@workingSets.1 //@branches[name='master']/@setupTasks.13/@workingSets.2 //@branches[name='master']/@setupTasks.13/@workingSets.3 //@branches[name='master']/@setupTasks.13/@workingSets.4 //@branches[name='master']/@setupTasks.13/@workingSets.5 //@branches[name='master']/@setupTasks.13/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.12/@workingSets.0 //@branches[name='master']/@setupTasks.12/@workingSets.1 //@branches[name='master']/@setupTasks.12/@workingSets.2 //@branches[name='master']/@setupTasks.12/@workingSets.3 //@branches[name='master']/@setupTasks.12/@workingSets.4 //@branches[name='master']/@setupTasks.12/@workingSets.5 //@branches[name='master']/@setupTasks.12/@workingSets.6"/>
         </predicates>
       </workingSets>
     </setupTasks>

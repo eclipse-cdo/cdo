@@ -28,6 +28,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class TargletTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {

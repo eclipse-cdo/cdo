@@ -58,6 +58,7 @@ import java.util.Collection;
  *
  * @generated
  */
+@Deprecated
 public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
 {
   /**

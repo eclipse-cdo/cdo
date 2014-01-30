@@ -39,19 +39,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.equinox.internal.p2.engine.Phase;
-import org.eclipse.equinox.internal.p2.engine.PhaseSet;
-import org.eclipse.equinox.internal.p2.engine.phases.Collect;
-import org.eclipse.equinox.internal.p2.engine.phases.Install;
-import org.eclipse.equinox.internal.p2.engine.phases.Property;
-import org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
-import org.eclipse.equinox.p2.engine.IEngine;
-import org.eclipse.equinox.p2.engine.IPhaseSet;
 import org.eclipse.equinox.p2.engine.IProfile;
-import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
 import org.eclipse.equinox.p2.engine.query.IUProfilePropertyQuery;
 import org.eclipse.equinox.p2.metadata.IArtifactKey;
@@ -62,14 +54,12 @@ import org.eclipse.equinox.p2.metadata.MetadataFactory;
 import org.eclipse.equinox.p2.metadata.MetadataFactory.InstallableUnitDescription;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
-import org.eclipse.equinox.p2.planner.IPlanner;
 import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
 import org.eclipse.equinox.p2.query.CollectionResult;
 import org.eclipse.equinox.p2.query.IQuery;
 import org.eclipse.equinox.p2.query.IQueryResult;
 import org.eclipse.equinox.p2.query.IQueryable;
 import org.eclipse.equinox.p2.query.QueryUtil;
-import org.eclipse.equinox.p2.repository.artifact.IArtifactRepository;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
@@ -239,10 +229,7 @@ public class TargletContainer extends AbstractBundleContainer
       }
     }
 
-    EList<Targlet> copy = SetupFactory.eINSTANCE.createTarglets(targlets);
-    String digest = createDigest(copy);
-    descriptor.invalidate(digest);
-    this.targlets = copy;
+    this.targlets = SetupFactory.eINSTANCE.createTarglets(targlets);
   }
 
   @Override
@@ -331,101 +318,6 @@ public class TargletContainer extends AbstractBundleContainer
     return nl;
   }
 
-  private String createDigest(EList<Targlet> targlets)
-  {
-    InputStream stream = null;
-
-    try
-    {
-      String id = getID();
-      String environmentProperties = getEnvironmentProperties();
-      String nlProperty = getNLProperty();
-
-      Writer writer = Persistence.toXML(id, targlets);
-      writer.write("\n<!-- Environment Properties: ");
-      writer.write(environmentProperties);
-      writer.write(" -->");
-      writer.write("\n<!-- NL Property: ");
-      writer.write(nlProperty);
-      writer.write(" -->\n");
-
-      final MessageDigest digest = MessageDigest.getInstance("SHA-1");
-      stream = new FilterInputStream(new ByteArrayInputStream(writer.toString().getBytes("UTF-8")))
-      {
-        @Override
-        public int read() throws IOException
-        {
-          for (;;)
-          {
-            int ch = super.read();
-            switch (ch)
-            {
-            case -1:
-              return -1;
-
-            case 10:
-            case 13:
-              continue;
-            }
-
-            digest.update((byte)ch);
-            return ch;
-          }
-        }
-
-        @Override
-        public int read(byte[] b, int off, int len) throws IOException
-        {
-          int read = super.read(b, off, len);
-          if (read == -1)
-          {
-            return -1;
-          }
-
-          for (int i = off; i < off + read; i++)
-          {
-            byte c = b[i];
-            if (c == 10 || c == 13)
-            {
-              if (i + 1 < off + read)
-              {
-                System.arraycopy(b, i + 1, b, i, read - i - 1);
-                --i;
-              }
-
-              --read;
-            }
-          }
-
-          digest.update(b, off, read);
-          return read;
-        }
-      };
-
-      synchronized (BUFFER)
-      {
-        while (stream.read(BUFFER) != -1)
-        {
-          // Do nothing
-        }
-      }
-
-      return HexUtil.bytesToHex(digest.digest());
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new RuntimeException(ex);
-    }
-    finally
-    {
-      IOUtil.close(stream);
-    }
-  }
-
   @Override
   public String toString()
   {
@@ -480,29 +372,45 @@ public class TargletContainer extends AbstractBundleContainer
   {
     try
     {
-      IProfile profile = descriptor.getProfile(monitor);
-      if (profile == null)
+      TargletContainerManager manager = TargletContainerManager.getInstance();
+
+      String environmentProperties = getEnvironmentProperties();
+      String nlProperty = getNLProperty();
+      String digest = createDigest(getID(), environmentProperties, nlProperty, targlets);
+
+      IProfile profile = null;
+
+      String workingDigest = descriptor.getWorkingDigest();
+      if (workingDigest != null && workingDigest.equals(digest))
       {
-        profile = updateProfile(monitor);
+        profile = manager.getProfile(workingDigest, monitor);
+      }
+
+      if (profile == null && descriptor.getUpdateProblem() == null)
+      {
+        profile = updateProfile(environmentProperties, nlProperty, digest, monitor);
       }
 
       List<TargetBundle> bundles = new ArrayList<TargetBundle>();
       List<TargetFeature> features = new ArrayList<TargetFeature>();
 
-      IFileArtifactRepository cache = getBundlePool(TargletContainerManager.getInstance().getAgent());
-
-      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), null);
-      for (Iterator<IInstallableUnit> i = result.iterator(); i.hasNext();)
+      if (profile != null)
       {
-        IInstallableUnit unit = i.next();
+        IFileArtifactRepository cache = manager.getBundlePool();
 
-        if (isOSGiBundle(unit))
+        IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), null);
+        for (Iterator<IInstallableUnit> it = result.iterator(); it.hasNext();)
         {
-          generateBundle(unit, cache, bundles);
-        }
-        else if (isFeatureJar(unit))
-        {
-          generateFeature(unit, cache, features);
+          IInstallableUnit unit = it.next();
+
+          if (isOSGiBundle(unit))
+          {
+            generateBundle(unit, cache, bundles);
+          }
+          else if (isFeatureJar(unit))
+          {
+            generateFeature(unit, cache, features);
+          }
         }
       }
 
@@ -546,9 +454,29 @@ public class TargletContainer extends AbstractBundleContainer
     }
   }
 
-  public IProfile updateProfile(IProgressMonitor monitor) throws ProvisionException
+  public IStatus updateProfile(IProgressMonitor monitor)
   {
-    IProfile profile = descriptor.createProfile(getEnvironmentProperties(), getNLProperty(), monitor);
+    try
+    {
+      String id = getID();
+      String environmentProperties = getEnvironmentProperties();
+      String nlProperty = getNLProperty();
+      String digest = createDigest(id, environmentProperties, nlProperty, targlets);
+
+      updateProfile(environmentProperties, nlProperty, digest, monitor);
+      return Status.OK_STATUS;
+    }
+    catch (ProvisionException ex)
+    {
+      return ex.getStatus();
+    }
+  }
+
+  private IProfile updateProfile(String environmentProperties, String nlProperty, String digest,
+      IProgressMonitor monitor) throws ProvisionException
+  {
+    long start = System.currentTimeMillis();
+    IProfile profile = descriptor.startUpdateTransaction(environmentProperties, nlProperty, digest, monitor);
 
     try
     {
@@ -563,7 +491,7 @@ public class TargletContainer extends AbstractBundleContainer
 
       if (roots.isEmpty())
       {
-        return profile;
+        return null;
       }
 
       final IUAnalyzer analyzer = new IUAnalyzer();
@@ -595,7 +523,8 @@ public class TargletContainer extends AbstractBundleContainer
         }
       }
 
-      IProvisioningAgent agent = TargletContainerManager.getInstance().getAgent();
+      TargletContainerManager manager = TargletContainerManager.getInstance();
+      IProvisioningAgent agent = manager.getAgent();
 
       IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
           .getService(IMetadataRepositoryManager.SERVICE_NAME);
@@ -690,15 +619,10 @@ public class TargletContainer extends AbstractBundleContainer
 
       Version sourceIUVersion = getSourceIUVersion(profile);
 
-      IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
-      if (planner == null)
-      {
-        throw new ProvisionException("Planner could not be loaded");
-      }
-
-      IProfileChangeRequest request = planner.createChangeRequest(profile);
       IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
       IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor(monitor));
+
+      IProfileChangeRequest request = manager.createProfileChangeRequest(profile);
       request.removeAll(installedIUs.toUnmodifiableSet());
 
       IQueryable<IInstallableUnit> metadata = context.getMetadata(monitor);
@@ -714,29 +638,33 @@ public class TargletContainer extends AbstractBundleContainer
         }
       }
 
-      planAndInstall(agent, context, planner, request, new ProgressMonitor(monitor));
+      manager.planAndInstall(request, context, new ProgressMonitor(monitor));
 
       if (isIncludeSources())
       {
         IInstallableUnit iu = generateSourceIU(profile, sourceIUVersion);
 
-        IProfileChangeRequest sourceRequest = planner.createChangeRequest(profile);
+        IProfileChangeRequest sourceRequest = manager.createProfileChangeRequest(profile);
         sourceRequest.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
         sourceRequest.add(iu);
 
-        planAndInstall(agent, context, planner, sourceRequest, new ProgressMonitor(monitor));
+        manager.planAndInstall(sourceRequest, context, new ProgressMonitor(monitor));
       }
 
-      descriptor.commitProfile(new ProgressMonitor(monitor));
+      descriptor.commitUpdateTransaction(digest, new ProgressMonitor(monitor));
 
       updateWorkspace(profile, sources, new ProgressMonitor(monitor));
+      return profile;
     }
     catch (Throwable t)
     {
-      profile = descriptor.rollbackProfile(new ProgressMonitor(monitor));
+      descriptor.rollbackUpdateTransaction(t, new ProgressMonitor(monitor));
+      throw new ProvisionException("Targlet container couldn't be updated", t);
     }
-
-    return profile;
+    finally
+    {
+      System.out.println("Update took " + (System.currentTimeMillis() - start) + " millis");
+    }
   }
 
   private Version getSourceIUVersion(IProfile profile)
@@ -867,6 +795,97 @@ public class TargletContainer extends AbstractBundleContainer
     }
   }
 
+  private static String createDigest(String id, String environmentProperties, String nlProperty, EList<Targlet> targlets)
+  {
+    InputStream stream = null;
+
+    try
+    {
+      Writer writer = Persistence.toXML(id, targlets);
+      writer.write("\n<!-- Environment Properties: ");
+      writer.write(environmentProperties);
+      writer.write(" -->");
+      writer.write("\n<!-- NL Property: ");
+      writer.write(nlProperty);
+      writer.write(" -->\n");
+
+      final MessageDigest digest = MessageDigest.getInstance("SHA-1");
+      stream = new FilterInputStream(new ByteArrayInputStream(writer.toString().getBytes("UTF-8")))
+      {
+        @Override
+        public int read() throws IOException
+        {
+          for (;;)
+          {
+            int ch = super.read();
+            switch (ch)
+            {
+            case -1:
+              return -1;
+
+            case 10:
+            case 13:
+              continue;
+            }
+
+            digest.update((byte)ch);
+            return ch;
+          }
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException
+        {
+          int read = super.read(b, off, len);
+          if (read == -1)
+          {
+            return -1;
+          }
+
+          for (int i = off; i < off + read; i++)
+          {
+            byte c = b[i];
+            if (c == 10 || c == 13)
+            {
+              if (i + 1 < off + read)
+              {
+                System.arraycopy(b, i + 1, b, i, read - i - 1);
+                --i;
+              }
+
+              --read;
+            }
+          }
+
+          digest.update(b, off, read);
+          return read;
+        }
+      };
+
+      synchronized (BUFFER)
+      {
+        while (stream.read(BUFFER) != -1)
+        {
+          // Do nothing
+        }
+      }
+
+      return HexUtil.bytesToHex(digest.digest());
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new RuntimeException(ex);
+    }
+    finally
+    {
+      IOUtil.close(stream);
+    }
+  }
+
   private static boolean isOSGiBundle(IInstallableUnit unit)
   {
     return providesNamespace(unit, "osgi.bundle");
@@ -890,72 +909,10 @@ public class TargletContainer extends AbstractBundleContainer
     return false;
   }
 
-  private static void planAndInstall(IProvisioningAgent agent, ProvisioningContext context, IPlanner planner,
-      IProfileChangeRequest request, IProgressMonitor monitor) throws ProvisionException
-  {
-    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, new ProgressMonitor(monitor));
-    if (!plan.getStatus().isOK())
-    {
-      throw new ProvisionException(plan.getStatus());
-    }
-
-    IEngine engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
-    if (engine == null)
-    {
-      throw new ProvisionException("Engine could not be loaded");
-    }
-
-    IPhaseSet phaseSet = createPhaseSet();
-    IStatus status = PlanExecutionHelper.executePlan(plan, engine, phaseSet, context, new ProgressMonitor(monitor));
-    if (!status.isOK())
-    {
-      throw new ProvisionException(status);
-    }
-  }
-
-  private static IPhaseSet createPhaseSet()
-  {
-    List<Phase> phases = new ArrayList<Phase>(4);
-    phases.add(new Collect(100));
-    phases.add(new Property(1));
-    phases.add(new Install(50));
-    // phases.add(new CollectNativesPhase(100));
-
-    return new PhaseSet(phases.toArray(new Phase[phases.size()]));
-  }
-
-  private static IFileArtifactRepository getBundlePool(IProvisioningAgent agent) throws ProvisionException
-  {
-    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
-        .getService(IArtifactRepositoryManager.SERVICE_NAME);
-    if (manager == null)
-    {
-      throw new ProvisionException("Artifact respository manager could not be loaded");
-    }
-
-    URI uri = TargletContainerManager.POOL_FOLDER.toURI();
-
-    try
-    {
-      if (manager.contains(uri))
-      {
-        return (IFileArtifactRepository)manager.loadRepository(uri, null);
-      }
-    }
-    catch (ProvisionException ex)
-    {
-      // Could not load or there wasn't one, fall through to create
-    }
-
-    IArtifactRepository result = manager.createRepository(uri, "Shared Bundle Pool",
-        IArtifactRepositoryManager.TYPE_SIMPLE_REPOSITORY, null);
-    return (IFileArtifactRepository)result;
-  }
-
   /**
    * @author Eike Stepper
    */
-  private static class ProgressMonitor extends SubProgressMonitor
+  static class ProgressMonitor extends SubProgressMonitor
   {
     public ProgressMonitor(IProgressMonitor monitor)
     {
@@ -987,7 +944,7 @@ public class TargletContainer extends AbstractBundleContainer
     {
       if (string != null && string.length() != 0)
       {
-        System.out.println(string);
+        // System.out.println(string);
       }
     }
   }

@@ -25,11 +25,11 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
 
   private String id;
 
-  private String currentDigest;
+  private String updateProblem;
 
   private String workingDigest;
 
-  private transient IProfile profile;
+  private transient IProfile transactionProfile;
 
   public TargletContainerDescriptor()
   {
@@ -45,56 +45,81 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
     return id;
   }
 
+  public String getUpdateProblem()
+  {
+    return updateProblem;
+  }
+
+  public String getWorkingDigest()
+  {
+    return workingDigest;
+  }
+
   public int compareTo(TargletContainerDescriptor o)
   {
     return id.compareTo(o.getID());
   }
 
-  public void invalidate(String newDigest)
+  public IProfile startUpdateTransaction(String environmentProperties, String nlProperty, String digest,
+      IProgressMonitor monitor) throws ProvisionException
   {
-    if (workingDigest != null)
+    if (transactionProfile != null)
     {
-      if (workingDigest.equals(newDigest))
-      {
-        currentDigest = workingDigest;
-        return;
-      }
-    }
-    else
-    {
-      workingDigest = currentDigest;
-      currentDigest = newDigest;
-    }
-  }
-
-  public IProfile getProfile(IProgressMonitor monitor) throws ProvisionException
-  {
-    if (profile == null)
-    {
-      String digest = workingDigest != null ? workingDigest : currentDigest;
-      if (digest != null)
-      {
-        TargletContainerManager manager = TargletContainerManager.getInstance();
-        profile = manager.getProfile(digest, monitor);
-      }
+      throw new ProvisionException("An update transaction is already ongoing");
     }
 
-    return profile;
-  }
-
-  public IProfile createProfile(String environmentProperties, String nlProperty, IProgressMonitor monitor)
-      throws ProvisionException
-  {
     TargletContainerManager manager = TargletContainerManager.getInstance();
-    return manager.createProfile(id, currentDigest, environmentProperties, nlProperty, monitor);
+    transactionProfile = manager.getOrCreateProfile(id, environmentProperties, nlProperty, digest, monitor);
+    return transactionProfile;
   }
 
-  public void commitProfile(IProgressMonitor progressMonitor) throws ProvisionException
+  public void commitUpdateTransaction(String digest, IProgressMonitor monitor) throws ProvisionException
   {
+    if (transactionProfile == null)
+    {
+      throw new ProvisionException("No update transaction is ongoing");
+    }
+
+    try
+    {
+      // TargletContainerManager manager = TargletContainerManager.getInstance();
+      // IProfile profile = manager.getPermanentProfile(transactionProfile, digest, monitor);
+      //
+      // IQuery<IInstallableUnit> installedIUsQuery = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
+      // IQueryResult<IInstallableUnit> installedIUs = profile.query(installedIUsQuery, monitor);
+      //
+      // IQuery<IInstallableUnit> newIUsQuery = QueryUtil.createIUAnyQuery();
+      // IQueryResult<IInstallableUnit> newIUs = transactionProfile.query(newIUsQuery, monitor);
+      //
+      // IPlanner planner = manager.getPlanner();
+      // IProfileChangeRequest request = planner.createChangeRequest(profile);
+      // request.removeAll(installedIUs.toUnmodifiableSet());
+      // request.addAll(newIUs.toUnmodifiableSet());
+      //
+      // IProvisioningAgent agent = manager.getAgent();
+      // ProvisioningContext context = new ProvisioningContext(agent);
+      // context.setMetadataRepositories(new URI[0]);
+      // context.setArtifactRepositories(new URI[0]);
+      //
+      // manager.planAndInstall(request, context, monitor);
+      // manager.removeProfile(transactionProfile);
+
+      workingDigest = digest;
+    }
+    catch (Throwable t)
+    {
+      t.printStackTrace();
+      updateProblem = t.toString();
+      throw new ProvisionException("Update transaction could not be committed", t);
+    }
+    finally
+    {
+      transactionProfile = null;
+    }
   }
 
-  public IProfile rollbackProfile(IProgressMonitor progressMonitor) throws ProvisionException
+  public void rollbackUpdateTransaction(Throwable t, IProgressMonitor monitor) throws ProvisionException
   {
-    return null;
+    updateProblem = t.toString();
   }
 }

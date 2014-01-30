@@ -23,11 +23,9 @@ import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.pde.core.target.ITargetDefinition;
-import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetPlatformService;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -88,78 +86,31 @@ public class TestAction implements IWorkbenchWindowActionDelegate
   private static void initTargetPlatform() throws Exception
   {
     RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
-    repositoryList.setName("Luna");
+    repositoryList.setName("Milestones");
     EList<P2Repository> repos = repositoryList.getP2Repositories();
-    repos.add(repository("http://download.eclipse.org/eclipse/updates/4.4milestones"));
-    repos.add(repository("http://download.eclipse.org/egit/updates-nightly"));
-    repos.add(repository("http://download.eclipse.org/graphiti/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/mmt/qvto/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/emf/compare/updates/milestones/2.1"));
-    repos.add(repository("http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/emf/teneo/updates/2.0.0/interim"));
-    repos.add(repository("http://download.eclipse.org/modeling/emf/transaction/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/emf/validation/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/emft/ecoretools/updates/1.2/201306071421"));
-    repos.add(repository("http://download.eclipse.org/modeling/emft/mwe/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/modeling/mdt/uml2/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/mylyn/snapshots/nightly"));
-    repos.add(repository("http://download.eclipse.org/releases/luna"));
-    repos.add(repository("http://download.eclipse.org/technology/nebula/snapshot"));
-    repos.add(repository("http://download.eclipse.org/technology/swtbot/releases/2.1.1"));
+    // repos.add(repository("http://download.eclipse.org/eclipse/updates/4.4milestones"));
+    repos.add(repository("http://download.eclipse.org/tools/orbit/downloads/drops/S20140116105218/repository"));
     repos.add(repository("http://download.eclipse.org/tools/buckminster/updates-4.3"));
     repos.add(repository("http://download.eclipse.org/tools/gef/updates/milestones"));
-    repos.add(repository("http://download.eclipse.org/tools/orbit/downloads/drops/S20131206110810/repository"));
-    repos.add(repository("http://download.oracle.com/otn_software/oepe/kepler"));
-    repos.add(repository("http://www.elver.org/eclipse/2.0.0/update"));
+    repos.add(repository("http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"));
+    repos.add(repository("http://download.eclipse.org/egit/updates-stable-nightly"));
+    repos.add(repository("http://download.eclipse.org/mylyn/snapshots/weekly"));
+    repos.add(repository("http://download.eclipse.org/technology/nebula/snapshot"));
 
     Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
-    targlet.setName("EMF");
+    targlet.setName("CDO Releng");
     targlet.setIncludeSources(true);
 
     EList<InstallableUnit> roots = targlet.getRoots();
-    roots.add(component("org.eclipse.emf.cdo.site.feature.group"));
-    roots.add(component("org.eclipse.emf.cdo.releng.release"));
-    roots.add(component("org.eclipse.emf.cdo.releng.version.tests"));
-    roots.add(component("org.eclipse.emf.cdo.examples.client"));
-    roots.add(component("org.eclipse.emf.cdo.examples.client.offline"));
-    roots.add(component("org.eclipse.emf.cdo.examples.master"));
-    roots.add(component("org.eclipse.emf.cdo.examples.clone"));
-    roots.add(component("org.eclipse.emf.cdo.efs"));
-    roots.add(component("org.eclipse.emf.cdo.ui.efs"));
-    roots.add(component("org.eclipse.platform.feature.group"));
-    roots.add(component("org.eclipse.jdt.feature.group"));
-    roots.add(component("org.eclipse.pde.feature.group"));
-    roots.add(component("org.eclipse.emf.feature.group"));
-    roots.add(component("org.eclipse.ocl.feature.group"));
-    roots.add(component("org.eclipse.emf.compare.feature.group"));
-    roots.add(component("org.eclipse.emf.compare.ide.ui.feature.group"));
-    roots.add(component("org.eclipse.emf.transaction.feature.group"));
-    roots.add(component("org.eclipse.emf.workspace.feature.group"));
-    roots.add(component("org.eclipse.emf.teneo.hibernate.feature.group"));
-    roots.add(component("org.eclipse.swtbot.feature.group"));
-    roots.add(component("org.eclipse.swtbot.eclipse.feature.group"));
-    roots.add(component("org.eclipse.swtbot.eclipse.gef.feature.group"));
-    roots.add(component("com.mysql.jdbc.feature.group"));
-    roots.add(component("org.hsqldb.feature.group"));
-    roots.add(component("org.postgresql.feature.group"));
-    roots.add(component("com.db4o.feature.group"));
-    roots.add(component("org.hibernate.feature.group"));
-    roots.add(component("org.dom4j.feature.group"));
-    roots.add(component("javax.persistence.feature.group"));
-    roots.add(component("javax.annotation"));
-    roots.add(component("oracle.database.driver"));
+    roots.add(component("org.eclipse.emf.cdo.releng.all.feature.group"));
+    roots.add(component("org.eclipse.sdk.feature.group"));
 
     targlet.getSourceLocators().add(sourceLocator("C:/cdo", false));
 
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
 
-    String id = "" + System.currentTimeMillis();
+    String id = "Test-" + System.currentTimeMillis();
     TargletContainer container = new TargletContainer(id, ECollections.singletonEList(targlet));
     ITargetLocation[] locations = { container };
 
@@ -167,10 +118,10 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
         .acquireService(ITargetPlatformService.class.getName());
 
-    for (ITargetHandle handle : targetService.getTargets(new NullProgressMonitor()))
-    {
-      targetService.deleteTarget(handle);
-    }
+    // for (ITargetHandle handle : targetService.getTargets(new NullProgressMonitor()))
+    // {
+    // targetService.deleteTarget(handle);
+    // }
 
     ITargetDefinition target = targetService.newTarget();
     target.setName("Modular Target " + id);

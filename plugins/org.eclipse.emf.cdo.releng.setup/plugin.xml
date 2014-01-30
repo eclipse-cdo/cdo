@@ -62,7 +62,6 @@
       </page>
    </extension>
 
-  <!--
    <extension
          point="org.eclipse.pde.core.targetLocations">
       <targetLocation
@@ -91,7 +90,7 @@
          </adapter>
       </factory>
    </extension>
-   
+
    <extension
          point="org.eclipse.pde.ui.targetLocationProvisioners">
       <locationProvider
@@ -127,6 +126,5 @@
          </action>
       </actionSet>
    </extension>
-  -->
-  
+
 </plugin>

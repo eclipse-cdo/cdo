@@ -25,8 +25,6 @@ import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.metadata.IVersionedId;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionedId;
@@ -122,15 +120,7 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
 
   public IStatus update(ITargetDefinition target, ITargetLocation targetLocation, IProgressMonitor monitor)
   {
-    try
-    {
-      ((TargletContainer)targetLocation).updateProfile(monitor);
-      return Status.OK_STATUS;
-    }
-    catch (ProvisionException ex)
-    {
-      return ex.getStatus();
-    }
+    return ((TargletContainer)targetLocation).updateProfile(monitor);
   }
 
   private ITreeContentProvider getContentProvider()

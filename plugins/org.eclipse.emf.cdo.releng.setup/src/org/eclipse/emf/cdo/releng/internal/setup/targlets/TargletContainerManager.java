@@ -22,11 +22,25 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.equinox.internal.p2.engine.Phase;
+import org.eclipse.equinox.internal.p2.engine.PhaseSet;
+import org.eclipse.equinox.internal.p2.engine.phases.Collect;
+import org.eclipse.equinox.internal.p2.engine.phases.Install;
+import org.eclipse.equinox.internal.p2.engine.phases.Property;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.IProvisioningAgentProvider;
 import org.eclipse.equinox.p2.core.ProvisionException;
+import org.eclipse.equinox.p2.engine.IEngine;
+import org.eclipse.equinox.p2.engine.IPhaseSet;
 import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProfileRegistry;
+import org.eclipse.equinox.p2.engine.IProvisioningPlan;
+import org.eclipse.equinox.p2.engine.ProvisioningContext;
+import org.eclipse.equinox.p2.planner.IPlanner;
+import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
+import org.eclipse.equinox.p2.repository.artifact.IArtifactRepository;
+import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
+import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -38,8 +52,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -67,6 +84,8 @@ public final class TargletContainerManager
 
   private static final File WORKSPACE_PROPERTIES_FILE = new File(WORKSPACE_LOCATION, WORKSPACE_RELATIVE_PROPERTIES);
 
+  private static final String TRUE = Boolean.TRUE.toString();
+
   private static TargletContainerManager instance;
 
   private final CountDownLatch initialized = new CountDownLatch(1);
@@ -77,7 +96,11 @@ public final class TargletContainerManager
 
   private IProfileRegistry profileRegistry;
 
+  private IPlanner planner;
+
   private Map<String, TargletContainerDescriptor> descriptors = new HashMap<String, TargletContainerDescriptor>();
+
+  private IEngine engine;
 
   private TargletContainerManager() throws ProvisionException
   {
@@ -125,6 +148,18 @@ public final class TargletContainerManager
     if (profileRegistry == null)
     {
       throw new ProvisionException("Profile registry could not be loaded");
+    }
+
+    planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
+    if (planner == null)
+    {
+      throw new ProvisionException("Planner could not be loaded");
+    }
+
+    engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
+    if (engine == null)
+    {
+      throw new ProvisionException("Engine could not be loaded");
     }
 
     new Job("Initialize Targlet Containers")
@@ -308,25 +343,66 @@ public final class TargletContainerManager
     return profileRegistry.getProfile(profileID);
   }
 
-  private String getProfileID(String digest)
+  public boolean isProfileInitial(IProfile profile)
   {
-    return SetupUtil.encodePath(WORKSPACE_LOCATION) + "-" + digest;
+    long[] timestamps = profileRegistry.listProfileTimestamps(profile.getProfileId());
+    return timestamps == null || timestamps.length <= 1;
   }
 
-  public IProfile createProfile(String id, String digest, String environmentProperties, String nlProperty,
+  public IProfile getOrCreateProfile(String id, String environmentProperties, String nlProperty, String digest,
       IProgressMonitor monitor) throws ProvisionException
   {
-    Map<String, String> properties = new HashMap<String, String>();
-    properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
-    properties.put(PROP_TARGLET_CONTAINER_ID, id);
-    properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
-    properties.put(IProfile.PROP_ENVIRONMENTS, environmentProperties);
-    properties.put(IProfile.PROP_NL, nlProperty);
-    properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
-    properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
+    waitUntilInitialized();
 
     String profileID = getProfileID(digest);
-    return profileRegistry.addProfile(profileID, properties);
+    IProfile profile = profileRegistry.getProfile(profileID);
+    if (profile == null)
+    {
+      Map<String, String> properties = new HashMap<String, String>();
+      properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
+      properties.put(PROP_TARGLET_CONTAINER_ID, id);
+      properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
+      properties.put(IProfile.PROP_ENVIRONMENTS, environmentProperties);
+      properties.put(IProfile.PROP_NL, nlProperty);
+      properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
+      properties.put(IProfile.PROP_INSTALL_FEATURES, TRUE);
+
+      profile = profileRegistry.addProfile(profileID, properties);
+    }
+
+    return profile;
+  }
+
+  // public IProfile getPermanentProfile(IProfile tempProfile, String digest, IProgressMonitor monitor)
+  // throws ProvisionException
+  // {
+  // Map<String, String> properties = new HashMap<String, String>();
+  // properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, tempProfile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE));
+  // properties.put(PROP_TARGLET_CONTAINER_ID, tempProfile.getProperty(PROP_TARGLET_CONTAINER_ID));
+  // properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
+  // properties.put(IProfile.PROP_ENVIRONMENTS, tempProfile.getProperty(IProfile.PROP_ENVIRONMENTS));
+  // properties.put(IProfile.PROP_NL, tempProfile.getProperty(IProfile.PROP_NL));
+  // properties.put(IProfile.PROP_CACHE, tempProfile.getProperty(IProfile.PROP_CACHE));
+  // properties.put(IProfile.PROP_INSTALL_FEATURES, tempProfile.getProperty(IProfile.PROP_INSTALL_FEATURES));
+  //
+  // String profileID = getProfileID(digest);
+  // profileRegistry.removeProfile(profileID);
+  // return profileRegistry.addProfile(profileID, properties);
+  // }
+
+  public void removeProfile(IProfile profile)
+  {
+    profileRegistry.removeProfile(profile.getProfileId());
+  }
+
+  public IProfileChangeRequest createProfileChangeRequest(IProfile profile)
+  {
+    return planner.createChangeRequest(profile);
+  }
+
+  private String getProfileID(String suffix)
+  {
+    return SetupUtil.encodePath(WORKSPACE_LOCATION) + "-" + suffix;
   }
 
   private void saveDescriptors()
@@ -580,5 +656,77 @@ public final class TargletContainerManager
     }
 
     return instance;
+  }
+
+  public IPlanner getPlanner() throws ProvisionException
+  {
+    IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
+    if (planner == null)
+    {
+      throw new ProvisionException("Planner could not be loaded");
+    }
+
+    return planner;
+  }
+
+  public void planAndInstall(IProfileChangeRequest request, ProvisioningContext context, IProgressMonitor monitor)
+      throws ProvisionException
+  {
+    IProvisioningPlan plan = planner.getProvisioningPlan(request, context,
+        new TargletContainer.ProgressMonitor(monitor));
+    if (!plan.getStatus().isOK())
+    {
+      throw new ProvisionException(plan.getStatus());
+    }
+
+    IPhaseSet phaseSet = createPhaseSet();
+
+    @SuppressWarnings("restriction")
+    IStatus status = org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper.executePlan(plan, engine,
+        phaseSet, context, new TargletContainer.ProgressMonitor(monitor));
+
+    if (!status.isOK())
+    {
+      throw new ProvisionException(status);
+    }
+  }
+
+  public IFileArtifactRepository getBundlePool() throws ProvisionException
+  {
+    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
+        .getService(IArtifactRepositoryManager.SERVICE_NAME);
+    if (manager == null)
+    {
+      throw new ProvisionException("Artifact respository manager could not be loaded");
+    }
+
+    URI uri = POOL_FOLDER.toURI();
+
+    try
+    {
+      if (manager.contains(uri))
+      {
+        return (IFileArtifactRepository)manager.loadRepository(uri, null);
+      }
+    }
+    catch (ProvisionException ex)
+    {
+      // Could not load or there wasn't one, fall through to create
+    }
+
+    IArtifactRepository result = manager.createRepository(uri, "Shared Bundle Pool",
+        IArtifactRepositoryManager.TYPE_SIMPLE_REPOSITORY, null);
+    return (IFileArtifactRepository)result;
+  }
+
+  private static IPhaseSet createPhaseSet()
+  {
+    List<Phase> phases = new ArrayList<Phase>(4);
+    phases.add(new Collect(100));
+    phases.add(new Property(1));
+    phases.add(new Install(50));
+    // phases.add(new CollectNativesPhase(100));
+
+    return new PhaseSet(phases.toArray(new Phase[phases.size()]));
   }
 }

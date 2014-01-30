@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 /**
  * @author Eike Stepper
@@ -600,5 +602,40 @@ public class ContainmentTest extends AbstractCDOTest
     company.getCategories().remove(category);
 
     transaction.commit();
+  }
+
+  public void testContainmentChangeInSameResource()
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new Resource.Factory()
+    {
+      public Resource createResource(URI uri)
+      {
+        return new XMIResourceImpl(uri)
+        {
+          @Override
+          protected boolean useUUIDs()
+          {
+            return true;
+          }
+        };
+      }
+    });
+
+    Category category1 = Model1Factory.eINSTANCE.createCategory();
+    Category category2 = Model1Factory.eINSTANCE.createCategory();
+
+    Company company = Model1Factory.eINSTANCE.createCompany();
+    company.getCategories().add(category1);
+    company.getCategories().add(category2);
+
+    Resource resource = resourceSet.createResource(URI.createURI("test.model1", true));
+    resource.getContents().add(company);
+
+    String originalID = resource.getURIFragment(category2);
+
+    // Change object of containment feature
+    category1.getCategories().add(category2);
+    assertEquals("The id of the object changed while it should not", originalID, resource.getURIFragment(category2));
   }
 }

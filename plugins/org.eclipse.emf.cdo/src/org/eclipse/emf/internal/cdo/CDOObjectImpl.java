@@ -765,7 +765,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         : null;
 
     boolean moved = oldView != null && oldView == newView;
-    if (!moved && oldResource != null && !isResourceRoot)
+    if (!moved && oldResource != null && oldResource != newResource && !isResourceRoot)
     {
       oldResource.detached(this);
     }
@@ -773,7 +773,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     int oldContainerFeatureID = eContainerFeatureID();
     eBasicSetContainer(newContainer, newContainerFeatureID);
 
-    if (!moved && oldResource != newResource && newResource != null)
+    if (!moved && newResource != null && newResource != oldResource)
     {
       newResource.attached(this);
     }

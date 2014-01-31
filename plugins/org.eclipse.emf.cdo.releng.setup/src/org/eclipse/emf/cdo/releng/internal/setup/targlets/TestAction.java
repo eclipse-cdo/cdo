@@ -111,7 +111,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     repositoryList.setName("Milestones");
     EList<P2Repository> repos = repositoryList.getP2Repositories();
     repos.add(repository("http://download.eclipse.org/eclipse/updates/4.4milestones"));
-    // repos.add(repository("http://download.eclipse.org/tools/orbit/downloads/drops/S20140116105218/repository"));
+    repos.add(repository("http://download.eclipse.org/tools/orbit/downloads/drops/S20140116105218/repository"));
     repos.add(repository("http://download.eclipse.org/tools/buckminster/updates-4.3"));
     repos.add(repository("http://download.eclipse.org/tools/gef/updates/milestones"));
     repos.add(repository("http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"));
@@ -130,7 +130,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
   {
     @SuppressWarnings("restriction")
     ITargetPlatformService service = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
-        .acquireService(ITargetPlatformService.class.getName());
+    .acquireService(ITargetPlatformService.class.getName());
 
     for (ITargetHandle handle : service.getTargets(new NullProgressMonitor()))
     {

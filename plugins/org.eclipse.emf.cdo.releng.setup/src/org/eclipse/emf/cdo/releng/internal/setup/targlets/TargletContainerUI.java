@@ -10,10 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerDescriptor.UpdateProblem;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.Targlet;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -50,6 +51,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,7 @@ import java.util.Map;
 public class TargletContainerUI implements IAdapterFactory, ITargetLocationEditor, ITargetLocationUpdater
 {
   private static final Class<?>[] ADAPTERS = { ITreeContentProvider.class, ILabelProvider.class,
-      ITargetLocationEditor.class, ITargetLocationUpdater.class };
+    ITargetLocationEditor.class, ITargetLocationUpdater.class };
 
   private ILabelProvider labelProvider;
 
@@ -185,7 +187,9 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
    */
   private static class TargletContentProvider implements ITreeContentProvider
   {
-    private Map<Targlet, TargletContainer> parents = new HashMap<Targlet, TargletContainer>();
+    private static final Object[] NO_CHILDREN = new Object[0];
+
+    private Map<Object, TargletContainer> parents = new HashMap<Object, TargletContainer>();
 
     public TargletContentProvider()
     {
@@ -211,16 +215,39 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
       if (element instanceof TargletContainer)
       {
         TargletContainer location = (TargletContainer)element;
-        List<Targlet> targlets = location.getTarglets();
-        for (Targlet targlet : targlets)
+        List<Object> children = new ArrayList<Object>();
+
+        TargletContainerDescriptor descriptor = location.getDescriptor();
+        if (descriptor != null)
         {
-          parents.put(targlet, location);
+          UpdateProblem updateProblem = descriptor.getUpdateProblem();
+          if (updateProblem != null)
+          {
+            IStatus status = updateProblem.toStatus();
+            children.add(status);
+            parents.put(status, location);
+
+            if (descriptor.getWorkingDigest() != null)
+            {
+              IStatus info = Activator.getStatus("Location content is available from the last working profile.");
+              children.add(info);
+              parents.put(info, location);
+            }
+          }
+          else
+          {
+            for (Object targlet : location.getTarglets())
+            {
+              children.add(targlet);
+              parents.put(targlet, location);
+            }
+          }
         }
 
-        return targlets.toArray(new Targlet[targlets.size()]);
+        return children.toArray(new Object[children.size()]);
       }
 
-      return new Object[0];
+      return NO_CHILDREN;
     }
 
     public boolean hasChildren(Object element)
@@ -249,7 +276,20 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
     {
       if (element instanceof TargletContainer)
       {
-        return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/targlet_container.gif");
+        TargletContainer location = (TargletContainer)element;
+        String key = "icons/targlet_container";
+
+        TargletContainerDescriptor descriptor = location.getDescriptor();
+        if (descriptor != null)
+        {
+          UpdateProblem updateProblem = descriptor.getUpdateProblem();
+          if (updateProblem != null)
+          {
+            key += "_problem";
+          }
+        }
+
+        return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", key + ".gif");
       }
 
       return super.getImage(element);

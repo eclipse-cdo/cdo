@@ -166,21 +166,27 @@ public class Activator extends AbstractUIPlugin
     return status.getMessage();
   }
 
-  public static IStatus getStatus(Throwable t)
+  public static IStatus getStatus(Object obj)
   {
-    if (t instanceof CoreException)
+    if (obj instanceof CoreException)
     {
-      CoreException coreException = (CoreException)t;
+      CoreException coreException = (CoreException)obj;
       return coreException.getStatus();
     }
 
-    String msg = t.getLocalizedMessage();
-    if (msg == null || msg.length() == 0)
+    if (obj instanceof Throwable)
     {
-      msg = t.getClass().getName();
+      Throwable t = (Throwable)obj;
+      String msg = t.getLocalizedMessage();
+      if (msg == null || msg.length() == 0)
+      {
+        msg = t.getClass().getName();
+      }
+
+      return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
     }
 
-    return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
+    return new Status(IStatus.INFO, PLUGIN_ID, obj.toString(), null);
   }
 
   public static BundleContext getBundleContext()

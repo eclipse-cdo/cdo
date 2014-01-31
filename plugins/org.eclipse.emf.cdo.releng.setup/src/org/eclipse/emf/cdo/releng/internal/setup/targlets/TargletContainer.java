@@ -38,6 +38,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -149,7 +150,7 @@ public class TargletContainer extends AbstractBundleContainer
    * to this constructor won't have an impact on this targlet container.
    * @throws ProvisionException
    */
-  public TargletContainer(String id, Collection<? extends TargletData> targlets) throws ProvisionException
+  private TargletContainer(String id, Collection<? extends TargletData> targlets) throws ProvisionException
   {
     this(id);
     basicSetTarglets(targlets);
@@ -164,6 +165,20 @@ public class TargletContainer extends AbstractBundleContainer
   public String getType()
   {
     return TYPE;
+  }
+
+  public TargletContainerDescriptor getDescriptor()
+  {
+    try
+    {
+      TargletContainerManager manager = TargletContainerManager.getInstance();
+      return manager.getDescriptor(id, new NullProgressMonitor());
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+      return null;
+    }
   }
 
   public ITargetDefinition getTarget()
@@ -221,6 +236,12 @@ public class TargletContainer extends AbstractBundleContainer
   public void setTarglets(Collection<? extends TargletData> targlets) throws CoreException
   {
     basicSetTarglets(targlets);
+
+    TargletContainerDescriptor descriptor = getDescriptor();
+    if (descriptor != null)
+    {
+      descriptor.resetUpdateProblem();
+    }
 
     ITargetPlatformService service = null;
 
@@ -412,7 +433,7 @@ public class TargletContainer extends AbstractBundleContainer
         profile = manager.getProfile(workingDigest, monitor);
       }
 
-      if (profile == null || !workingDigest.equals(digest) || descriptor.getUpdateProblem() != null)
+      if (profile == null || !workingDigest.equals(digest) && descriptor.getUpdateProblem() == null)
       {
         try
         {
@@ -703,6 +724,8 @@ public class TargletContainer extends AbstractBundleContainer
     catch (Throwable t)
     {
       descriptor.rollbackUpdateTransaction(t, monitor);
+
+      Activator.log(t);
       throw new ProvisionException("Targlet container couldn't be updated", t);
     }
     finally
@@ -794,7 +817,6 @@ public class TargletContainer extends AbstractBundleContainer
             DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
             IWorkspaceRoot root = workspace.getRoot();
 
-            // TODO plan.getAdditions() would probably also do and be cheaper
             IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
             for (IInstallableUnit iu : result.toUnmodifiableSet())
             {
@@ -823,7 +845,6 @@ public class TargletContainer extends AbstractBundleContainer
                   IProject project = root.getProject(name);
                   if (project.exists())
                   {
-                    // project.delete(false, true, monitor);
                     File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
                     if (!existingLocation.equals(location))
                     {
@@ -1106,7 +1127,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     public static Writer toXML(String id, List<Targlet> targlets) throws ParserConfigurationException,
-        TransformerException
+    TransformerException
     {
       DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document document = docBuilder.newDocument();

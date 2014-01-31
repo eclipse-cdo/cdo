@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -41,6 +42,10 @@ import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepository;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
+import org.eclipse.pde.core.target.ITargetDefinition;
+import org.eclipse.pde.core.target.ITargetHandle;
+import org.eclipse.pde.core.target.ITargetLocation;
+import org.eclipse.pde.core.target.ITargetPlatformService;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -56,8 +61,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -77,12 +84,12 @@ public final class TargletContainerManager
 
   private static final String PROP_TARGLET_CONTAINER_DIGEST = "targlet.container.digest"; //$NON-NLS-1$
 
-  private static final String WORKSPACE_RELATIVE_PROPERTIES = ".metadata/.plugins/" + Activator.PLUGIN_ID //$NON-NLS-1$
-      + "/targlet-container.properties"; //$NON-NLS-1$
-
   private static final String WORKSPACE_LOCATION = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
 
-  private static final File WORKSPACE_PROPERTIES_FILE = new File(WORKSPACE_LOCATION, WORKSPACE_RELATIVE_PROPERTIES);
+  private static final String WORKSPACE_STATE_RELATIVE_PATH = ".metadata/.plugins/" + Activator.PLUGIN_ID //$NON-NLS-1$
+      + "/targlet-containers.state"; //$NON-NLS-1$
+
+  private static final File WORKSPACE_STATE_FILE = new File(WORKSPACE_LOCATION, WORKSPACE_STATE_RELATIVE_PATH);
 
   private static final String TRUE = Boolean.TRUE.toString();
 
@@ -98,9 +105,9 @@ public final class TargletContainerManager
 
   private IPlanner planner;
 
-  private Map<String, TargletContainerDescriptor> descriptors = new HashMap<String, TargletContainerDescriptor>();
-
   private IEngine engine;
+
+  private Map<String, TargletContainerDescriptor> descriptors;
 
   private TargletContainerManager() throws ProvisionException
   {
@@ -169,7 +176,7 @@ public final class TargletContainerManager
       {
         try
         {
-          // initialize(monitor);
+          initialize(monitor);
         }
         catch (Throwable t)
         {
@@ -186,117 +193,50 @@ public final class TargletContainerManager
     }.schedule();
   }
 
-  // public synchronized IProfile getProfile(TargletContainer container, AtomicBoolean needsUpdate,
-  // IProgressMonitor monitor) throws ProvisionException
-  // {
-  // waitUntilInitialized();
-  //
-  // String digest = container.getDigest();
-  // String profileID = getProfileID(digest);
-  //
-  // IProfile profile = profileRegistry.getProfile(profileID);
-  // if (profile == null)
-  // {
-  // Map<String, String> properties = new HashMap<String, String>();
-  // properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
-  // properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
-  // properties.put(IProfile.PROP_ENVIRONMENTS, container.getEnvironmentProperties());
-  // properties.put(IProfile.PROP_NL, container.getNLProperty());
-  // properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
-  // properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
-  //
-  // profile = profileRegistry.addProfile(profileID, properties);
-  //
-  // // initialize(monitor);
-  // }
-  //
-  // if (needsUpdate != null)
-  // {
-  // long[] timestamps = profileRegistry.listProfileTimestamps(profile.getProfileId());
-  // needsUpdate.set(timestamps == null || timestamps.length <= 1);
-  // }
-  //
-  // return profile;
-  // }
-  //
-  // private void initialize(IProgressMonitor monitor) throws ProvisionException
-  // {
-  // HashBag<String> currentDigests = collectCurrentDigests(monitor);
-  // removeGarbageProfiles(currentDigests);
-  // }
-  //
-  // private HashBag<String> collectCurrentDigests(IProgressMonitor monitor) throws ProvisionException
-  // {
-  // HashBag<String> digests = new HashBag<String>();
-  //
-  // @SuppressWarnings("restriction")
-  // ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
-  // .acquireService(ITargetPlatformService.class.getName());
-  //
-  // for (ITargetHandle targetHandle : targetService.getTargets(monitor))
-  // {
-  // try
-  // {
-  // ITargetDefinition definition = targetHandle.getTargetDefinition();
-  // for (ITargetLocation targetLocation : definition.getTargetLocations())
-  // {
-  // if (targetLocation instanceof TargletContainer)
-  // {
-  // TargletContainer targletContainer = (TargletContainer)targetLocation;
-  // String digest = targletContainer.getDigest();
-  // digests.add(digest);
-  // }
-  // }
-  // }
-  // catch (Exception ex)
-  // {
-  // throwProvisionException(ex);
-  // }
-  // }
-  //
-  // writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
-  // return digests;
-  // }
-  //
-  // private void removeGarbageProfiles(HashBag<String> currentDigests)
-  // {
-  // Map<String, HashBag<String>> workspaces = new HashMap<String, HashBag<String>>();
-  // workspaces.put(WORKSPACE_LOCATION, currentDigests);
-  //
-  // for (IProfile profile : profileRegistry.getProfiles())
-  // {
-  // String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
-  // if (workspace != null)
-  // {
-  // HashBag<String> workspaceDigests = workspaces.get(workspace);
-  // if (workspaceDigests == null)
-  // {
-  // File file = new File(workspace, WORKSPACE_RELATIVE_PROPERTIES);
-  // if (!file.exists())
-  // {
-  // removeProfile(profile, workspace);
-  // continue;
-  // }
-  //
-  // workspaceDigests = readDigests(file);
-  // workspaces.put(workspace, workspaceDigests);
-  // }
-  //
-  // String digest = profile.getProperty(PROP_TARGLET_CONTAINER_DIGEST);
-  // if (!workspaceDigests.contains(digest))
-  // {
-  // removeProfile(profile, workspace);
-  // }
-  // }
-  // }
-  // }
-  //
-  // private void removeProfile(IProfile profile, String workspace)
-  // {
-  // String profileID = profile.getProfileId();
-  // profileRegistry.removeProfile(profileID);
-  // Activator.log("Profile " + profileID + " for workspace " + workspace + " removed");
-  // }
+  private void initialize(IProgressMonitor monitor) throws ProvisionException
+  {
+    if (WORKSPACE_STATE_FILE.exists())
+    {
+      descriptors = loadDescriptors(WORKSPACE_STATE_FILE);
+    }
+    else
+    {
+      descriptors = new HashMap<String, TargletContainerDescriptor>();
+    }
+
+    saveDescriptors(monitor);
+
+    Set<String> workspaces = new HashSet<String>();
+    workspaces.add(WORKSPACE_LOCATION);
+
+    Set<String> workingDigests = new HashSet<String>();
+    addWorkingDigests(workingDigests, descriptors);
+
+    for (IProfile profile : profileRegistry.getProfiles())
+    {
+      String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
+      if (workspace != null)
+      {
+        if (workspaces.add(workspace))
+        {
+          File file = new File(workspace, WORKSPACE_STATE_RELATIVE_PATH);
+          if (file.exists())
+          {
+            Map<String, TargletContainerDescriptor> workspaceDescriptors = loadDescriptors(file);
+            addWorkingDigests(workingDigests, workspaceDescriptors);
+          }
+        }
+
+        String digest = profile.getProperty(PROP_TARGLET_CONTAINER_DIGEST);
+        if (!workingDigests.contains(digest))
+        {
+          String profileID = profile.getProfileId();
+          profileRegistry.removeProfile(profileID);
+          Activator.log("Profile " + profileID + " for workspace " + workspace + " removed");
+        }
+      }
+    }
+  }
 
   private void waitUntilInitialized() throws ProvisionException
   {
@@ -320,7 +260,7 @@ public final class TargletContainerManager
     return agent;
   }
 
-  public synchronized TargletContainerDescriptor getDescriptor(String id) throws ProvisionException
+  public TargletContainerDescriptor getDescriptor(String id, IProgressMonitor monitor) throws ProvisionException
   {
     waitUntilInitialized();
 
@@ -329,9 +269,9 @@ public final class TargletContainerManager
     {
       descriptor = new TargletContainerDescriptor(id);
       descriptors.put(id, descriptor);
+      saveDescriptors(monitor);
     }
 
-    saveDescriptors();
     return descriptor;
   }
 
@@ -341,12 +281,6 @@ public final class TargletContainerManager
 
     String profileID = getProfileID(digest);
     return profileRegistry.getProfile(profileID);
-  }
-
-  public boolean isProfileInitial(IProfile profile)
-  {
-    long[] timestamps = profileRegistry.listProfileTimestamps(profile.getProfileId());
-    return timestamps == null || timestamps.length <= 1;
   }
 
   public IProfile getOrCreateProfile(String id, String environmentProperties, String nlProperty, String digest,
@@ -373,307 +307,15 @@ public final class TargletContainerManager
     return profile;
   }
 
-  // public IProfile getPermanentProfile(IProfile tempProfile, String digest, IProgressMonitor monitor)
-  // throws ProvisionException
-  // {
-  // Map<String, String> properties = new HashMap<String, String>();
-  // properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, tempProfile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE));
-  // properties.put(PROP_TARGLET_CONTAINER_ID, tempProfile.getProperty(PROP_TARGLET_CONTAINER_ID));
-  // properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
-  // properties.put(IProfile.PROP_ENVIRONMENTS, tempProfile.getProperty(IProfile.PROP_ENVIRONMENTS));
-  // properties.put(IProfile.PROP_NL, tempProfile.getProperty(IProfile.PROP_NL));
-  // properties.put(IProfile.PROP_CACHE, tempProfile.getProperty(IProfile.PROP_CACHE));
-  // properties.put(IProfile.PROP_INSTALL_FEATURES, tempProfile.getProperty(IProfile.PROP_INSTALL_FEATURES));
-  //
-  // String profileID = getProfileID(digest);
-  // profileRegistry.removeProfile(profileID);
-  // return profileRegistry.addProfile(profileID, properties);
-  // }
-
-  public void removeProfile(IProfile profile)
-  {
-    profileRegistry.removeProfile(profile.getProfileId());
-  }
-
   public IProfileChangeRequest createProfileChangeRequest(IProfile profile)
   {
     return planner.createChangeRequest(profile);
   }
 
-  private String getProfileID(String suffix)
-  {
-    return SetupUtil.encodePath(WORKSPACE_LOCATION) + "-" + suffix;
-  }
-
-  private void saveDescriptors()
-  {
-    WORKSPACE_PROPERTIES_FILE.getParentFile().mkdirs();
-    FileOutputStream out = null;
-
-    try
-    {
-      out = new FileOutputStream(WORKSPACE_PROPERTIES_FILE);
-
-      ObjectOutputStream stream = new ObjectOutputStream(out);
-      stream.writeObject(descriptors);
-      stream.close();
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
-    finally
-    {
-      IOUtil.close(out);
-    }
-  }
-
-  @SuppressWarnings("unused")
-  private static Map<String, TargletContainerDescriptor> loadDescriptors(File file)
-  {
-    FileInputStream in = null;
-
-    try
-    {
-      in = new FileInputStream(file);
-      ObjectInputStream stream = new ObjectInputStream(in);
-
-      @SuppressWarnings("unchecked")
-      Map<String, TargletContainerDescriptor> result = (Map<String, TargletContainerDescriptor>)stream.readObject();
-      return result;
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
-    catch (ClassNotFoundException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
-    finally
-    {
-      IOUtil.close(in);
-    }
-  }
-
-  // public synchronized IProfile getProfile(TargletContainer container, AtomicBoolean needsUpdate,
-  // IProgressMonitor monitor) throws ProvisionException
-  // {
-  // waitUntilInitialized();
-  //
-  // String digest = container.getDigest();
-  // String profileID = getProfileID(digest);
-  //
-  // IProfile profile = profileRegistry.getProfile(profileID);
-  // if (profile == null)
-  // {
-  // Map<String, String> properties = new HashMap<String, String>();
-  // properties.put(PROP_TARGLET_CONTAINER_WORKSPACE, WORKSPACE_LOCATION);
-  // properties.put(PROP_TARGLET_CONTAINER_DIGEST, digest);
-  // properties.put(IProfile.PROP_ENVIRONMENTS, container.getEnvironmentProperties());
-  // properties.put(IProfile.PROP_NL, container.getNLProperty());
-  // properties.put(IProfile.PROP_CACHE, POOL_FOLDER.getAbsolutePath());
-  // properties.put(IProfile.PROP_INSTALL_FEATURES, Boolean.TRUE.toString());
-  //
-  // profile = profileRegistry.addProfile(profileID, properties);
-  //
-  // // initialize(monitor);
-  // }
-  //
-  // if (needsUpdate != null)
-  // {
-  // long[] timestamps = profileRegistry.listProfileTimestamps(profile.getProfileId());
-  // needsUpdate.set(timestamps == null || timestamps.length <= 1);
-  // }
-  //
-  // return profile;
-  // }
-  //
-  // private void initialize(IProgressMonitor monitor) throws ProvisionException
-  // {
-  // HashBag<String> currentDigests = collectCurrentDigests(monitor);
-  // removeGarbageProfiles(currentDigests);
-  // }
-  //
-  // private HashBag<String> collectCurrentDigests(IProgressMonitor monitor) throws ProvisionException
-  // {
-  // HashBag<String> digests = new HashBag<String>();
-  //
-  // @SuppressWarnings("restriction")
-  // ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
-  // .acquireService(ITargetPlatformService.class.getName());
-  //
-  // for (ITargetHandle targetHandle : targetService.getTargets(monitor))
-  // {
-  // try
-  // {
-  // ITargetDefinition definition = targetHandle.getTargetDefinition();
-  // for (ITargetLocation targetLocation : definition.getTargetLocations())
-  // {
-  // if (targetLocation instanceof TargletContainer)
-  // {
-  // TargletContainer targletContainer = (TargletContainer)targetLocation;
-  // String digest = targletContainer.getDigest();
-  // digests.add(digest);
-  // }
-  // }
-  // }
-  // catch (Exception ex)
-  // {
-  // throwProvisionException(ex);
-  // }
-  // }
-  //
-  // writeDigests(WORKSPACE_PROPERTIES_FILE, digests);
-  // return digests;
-  // }
-  //
-  // private void removeGarbageProfiles(HashBag<String> currentDigests)
-  // {
-  // Map<String, HashBag<String>> workspaces = new HashMap<String, HashBag<String>>();
-  // workspaces.put(WORKSPACE_LOCATION, currentDigests);
-  //
-  // for (IProfile profile : profileRegistry.getProfiles())
-  // {
-  // String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
-  // if (workspace != null)
-  // {
-  // HashBag<String> workspaceDigests = workspaces.get(workspace);
-  // if (workspaceDigests == null)
-  // {
-  // File file = new File(workspace, WORKSPACE_RELATIVE_PROPERTIES);
-  // if (!file.exists())
-  // {
-  // removeProfile(profile, workspace);
-  // continue;
-  // }
-  //
-  // workspaceDigests = readDigests(file);
-  // workspaces.put(workspace, workspaceDigests);
-  // }
-  //
-  // String digest = profile.getProperty(PROP_TARGLET_CONTAINER_DIGEST);
-  // if (!workspaceDigests.contains(digest))
-  // {
-  // removeProfile(profile, workspace);
-  // }
-  // }
-  // }
-  // }
-  //
-  // private void removeProfile(IProfile profile, String workspace)
-  // {
-  // String profileID = profile.getProfileId();
-  // profileRegistry.removeProfile(profileID);
-  // Activator.log("Profile " + profileID + " for workspace " + workspace + " removed");
-  // }
-  //
-  // private static void writeDigests(File file, HashBag<String> digests)
-  // {
-  // file.getParentFile().mkdirs();
-  // FileWriter out = null;
-  //
-  // try
-  // {
-  // out = new FileWriter(file);
-  // BufferedWriter writer = new BufferedWriter(out);
-  //
-  // List<String> list = new ArrayList<String>(digests);
-  // Collections.sort(list);
-  //
-  // for (String digest : list)
-  // {
-  // String line = digest + "=" + digests.getCounterFor(digest);
-  // writer.write(line);
-  // writer.newLine();
-  // }
-  //
-  // writer.close();
-  // }
-  // catch (IOException ex)
-  // {
-  // throw new IORuntimeException(ex);
-  // }
-  // finally
-  // {
-  // IOUtil.close(out);
-  // }
-  // }
-  //
-  // private static HashBag<String> readDigests(File file)
-  // {
-  // Reader in = null;
-  //
-  // try
-  // {
-  // in = new FileReader(file);
-  // BufferedReader reader = new BufferedReader(in);
-  //
-  // HashBag<String> digests = new HashBag<String>();
-  // String line;
-  //
-  // while ((line = reader.readLine()) != null)
-  // {
-  // int pos = line.indexOf('=');
-  // String digest = line.substring(0, pos).trim();
-  // String count = line.substring(pos + 1).trim();
-  //
-  // digests.add(digest, Integer.valueOf(count));
-  // }
-  //
-  // return digests;
-  // }
-  // catch (IOException ex)
-  // {
-  // throw new IORuntimeException(ex);
-  // }
-  // finally
-  // {
-  // IOUtil.close(in);
-  // }
-  // }
-
-  static void throwProvisionException(Throwable t) throws ProvisionException
-  {
-    if (t instanceof ProvisionException)
-    {
-      throw (ProvisionException)t;
-    }
-
-    if (t instanceof Error)
-    {
-      throw (Error)t;
-    }
-
-    throw new ProvisionException(t.getMessage(), t);
-  }
-
-  public static synchronized TargletContainerManager getInstance() throws ProvisionException
-  {
-    if (instance == null)
-    {
-      instance = new TargletContainerManager();
-    }
-
-    return instance;
-  }
-
-  public IPlanner getPlanner() throws ProvisionException
-  {
-    IPlanner planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
-    if (planner == null)
-    {
-      throw new ProvisionException("Planner could not be loaded");
-    }
-
-    return planner;
-  }
-
   public void planAndInstall(IProfileChangeRequest request, ProvisioningContext context, IProgressMonitor monitor)
       throws ProvisionException
   {
-    IProvisioningPlan plan = planner.getProvisioningPlan(request, context,
-        new TargletContainer.ProgressMonitor(monitor));
+    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, monitor);
     if (!plan.getStatus().isOK())
     {
       throw new ProvisionException(plan.getStatus());
@@ -683,7 +325,7 @@ public final class TargletContainerManager
 
     @SuppressWarnings("restriction")
     IStatus status = org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper.executePlan(plan, engine,
-        phaseSet, context, new TargletContainer.ProgressMonitor(monitor));
+        phaseSet, context, monitor);
 
     if (!status.isOK())
     {
@@ -711,12 +353,148 @@ public final class TargletContainerManager
     }
     catch (ProvisionException ex)
     {
-      // Could not load or there wasn't one, fall through to create
+      //$FALL-THROUGH$
     }
 
     IArtifactRepository result = manager.createRepository(uri, "Shared Bundle Pool",
         IArtifactRepositoryManager.TYPE_SIMPLE_REPOSITORY, null);
     return (IFileArtifactRepository)result;
+  }
+
+  public void saveDescriptors(IProgressMonitor monitor)
+  {
+    // Remove unused descriptors
+    Set<String> containerIDs = getContainerIDs(monitor);
+    descriptors.keySet().retainAll(containerIDs);
+
+    WORKSPACE_STATE_FILE.getParentFile().mkdirs();
+    FileOutputStream out = null;
+
+    try
+    {
+      out = new FileOutputStream(WORKSPACE_STATE_FILE);
+
+      ObjectOutputStream stream = new ObjectOutputStream(out);
+      stream.writeObject(descriptors);
+      stream.close();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      IOUtil.close(out);
+    }
+
+    for (IProfile profile : profileRegistry.getProfiles())
+    {
+      String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
+      if (WORKSPACE_LOCATION.equals(workspace))
+      {
+        String id = profile.getProperty(PROP_TARGLET_CONTAINER_ID);
+        TargletContainerDescriptor descriptor = descriptors.get(id);
+        if (descriptor != null)
+        {
+          String workingDigest = descriptor.getWorkingDigest();
+          if (workingDigest != null)
+          {
+            String digest = profile.getProperty(PROP_TARGLET_CONTAINER_DIGEST);
+            if (workingDigest.equals(digest))
+            {
+              continue;
+            }
+          }
+        }
+
+        removeProfile(profile);
+      }
+    }
+  }
+
+  private void removeProfile(IProfile profile)
+  {
+    String profileID = profile.getProfileId();
+    profileRegistry.removeProfile(profileID);
+    Activator.log("Profile " + profileID + " removed");
+  }
+
+  private static Set<String> getContainerIDs(IProgressMonitor monitor)
+  {
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      Set<String> ids = new HashSet<String>();
+
+      for (ITargetHandle targetHandle : service.getTargets(monitor))
+      {
+        try
+        {
+          ITargetDefinition definition = targetHandle.getTargetDefinition();
+          for (ITargetLocation targetLocation : definition.getTargetLocations())
+          {
+            if (targetLocation instanceof TargletContainer)
+            {
+              TargletContainer targletContainer = (TargletContainer)targetLocation;
+              String id = targletContainer.getID();
+              ids.add(id);
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+
+      return ids;
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
+  }
+
+  private static String getProfileID(String suffix)
+  {
+    return SetupUtil.encodePath(WORKSPACE_LOCATION) + "-" + suffix;
+  }
+
+  private static Map<String, TargletContainerDescriptor> loadDescriptors(File file)
+  {
+    FileInputStream in = null;
+
+    try
+    {
+      in = new FileInputStream(file);
+      ObjectInputStream stream = new ObjectInputStream(in);
+
+      @SuppressWarnings("unchecked")
+      Map<String, TargletContainerDescriptor> result = (Map<String, TargletContainerDescriptor>)stream.readObject();
+      return result;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    catch (ClassNotFoundException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      IOUtil.close(in);
+    }
+  }
+
+  private static void addWorkingDigests(Set<String> workingDigests, Map<String, TargletContainerDescriptor> descriptors)
+  {
+    for (TargletContainerDescriptor descriptor : descriptors.values())
+    {
+      workingDigests.add(descriptor.getWorkingDigest());
+    }
   }
 
   private static IPhaseSet createPhaseSet()
@@ -728,5 +506,30 @@ public final class TargletContainerManager
     // phases.add(new CollectNativesPhase(100));
 
     return new PhaseSet(phases.toArray(new Phase[phases.size()]));
+  }
+
+  public static void throwProvisionException(Throwable t) throws ProvisionException
+  {
+    if (t instanceof ProvisionException)
+    {
+      throw (ProvisionException)t;
+    }
+
+    if (t instanceof Error)
+    {
+      throw (Error)t;
+    }
+
+    throw new ProvisionException(t.getMessage(), t);
+  }
+
+  public static synchronized TargletContainerManager getInstance() throws ProvisionException
+  {
+    if (instance == null)
+    {
+      instance = new TargletContainerManager();
+    }
+
+    return instance;
   }
 }

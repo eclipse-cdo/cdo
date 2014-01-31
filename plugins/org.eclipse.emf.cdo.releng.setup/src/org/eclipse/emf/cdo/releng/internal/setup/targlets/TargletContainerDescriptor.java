@@ -82,29 +82,11 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
 
     try
     {
-      // TargletContainerManager manager = TargletContainerManager.getInstance();
-      // IProfile profile = manager.getPermanentProfile(transactionProfile, digest, monitor);
-      //
-      // IQuery<IInstallableUnit> installedIUsQuery = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
-      // IQueryResult<IInstallableUnit> installedIUs = profile.query(installedIUsQuery, monitor);
-      //
-      // IQuery<IInstallableUnit> newIUsQuery = QueryUtil.createIUAnyQuery();
-      // IQueryResult<IInstallableUnit> newIUs = transactionProfile.query(newIUsQuery, monitor);
-      //
-      // IPlanner planner = manager.getPlanner();
-      // IProfileChangeRequest request = planner.createChangeRequest(profile);
-      // request.removeAll(installedIUs.toUnmodifiableSet());
-      // request.addAll(newIUs.toUnmodifiableSet());
-      //
-      // IProvisioningAgent agent = manager.getAgent();
-      // ProvisioningContext context = new ProvisioningContext(agent);
-      // context.setMetadataRepositories(new URI[0]);
-      // context.setArtifactRepositories(new URI[0]);
-      //
-      // manager.planAndInstall(request, context, monitor);
-      // manager.removeProfile(transactionProfile);
-
+      updateProblem = null;
       workingDigest = digest;
+
+      TargletContainerManager manager = TargletContainerManager.getInstance();
+      manager.saveDescriptors(monitor);
     }
     catch (Throwable t)
     {
@@ -120,6 +102,10 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
 
   public void rollbackUpdateTransaction(Throwable t, IProgressMonitor monitor) throws ProvisionException
   {
+    transactionProfile = null;
     updateProblem = t.toString();
+
+    TargletContainerManager manager = TargletContainerManager.getInstance();
+    manager.saveDescriptors(monitor);
   }
 }

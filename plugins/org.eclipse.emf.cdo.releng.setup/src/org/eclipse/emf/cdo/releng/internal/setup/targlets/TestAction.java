@@ -23,9 +23,12 @@ import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.pde.core.target.ITargetDefinition;
+import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetPlatformService;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -39,6 +42,10 @@ import java.io.File;
 @SuppressWarnings("unused")
 public class TestAction implements IWorkbenchWindowActionDelegate
 {
+  private static final String TARGET_NAME = "Modular Target";
+
+  private static final String CONTAINER_ID = "Test";
+
   public TestAction()
   {
   }
@@ -85,48 +92,97 @@ public class TestAction implements IWorkbenchWindowActionDelegate
 
   private static void initTargetPlatform() throws Exception
   {
+    // Targlets
+    Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
+    targlet.setName("CDO Releng");
+    targlet.setIncludeSources(true);
+
+    // Roots
+    EList<InstallableUnit> roots = targlet.getRoots();
+    roots.add(component("org.eclipse.emf.cdo.releng.all.feature.group"));
+    roots.add(component("org.eclipse.net4j.util.ui.feature.group"));
+    roots.add(component("org.eclipse.sdk.feature.group"));
+
+    // Sources
+    targlet.getSourceLocators().add(sourceLocator("C:/cdo", false));
+
+    // Repos
     RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
     repositoryList.setName("Milestones");
     EList<P2Repository> repos = repositoryList.getP2Repositories();
-    // repos.add(repository("http://download.eclipse.org/eclipse/updates/4.4milestones"));
-    repos.add(repository("http://download.eclipse.org/tools/orbit/downloads/drops/S20140116105218/repository"));
+    repos.add(repository("http://download.eclipse.org/eclipse/updates/4.4milestones"));
+    // repos.add(repository("http://download.eclipse.org/tools/orbit/downloads/drops/S20140116105218/repository"));
     repos.add(repository("http://download.eclipse.org/tools/buckminster/updates-4.3"));
     repos.add(repository("http://download.eclipse.org/tools/gef/updates/milestones"));
     repos.add(repository("http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"));
     repos.add(repository("http://download.eclipse.org/egit/updates-stable-nightly"));
     repos.add(repository("http://download.eclipse.org/mylyn/snapshots/weekly"));
     repos.add(repository("http://download.eclipse.org/technology/nebula/snapshot"));
-
-    Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
-    targlet.setName("CDO Releng");
-    targlet.setIncludeSources(true);
-
-    EList<InstallableUnit> roots = targlet.getRoots();
-    roots.add(component("org.eclipse.emf.cdo.releng.all.feature.group"));
-    roots.add(component("org.eclipse.sdk.feature.group"));
-
-    targlet.getSourceLocators().add(sourceLocator("C:/cdo", false));
-
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
 
-    String id = "Test-" + System.currentTimeMillis();
-    TargletContainer container = new TargletContainer(id, ECollections.singletonEList(targlet));
-    ITargetLocation[] locations = { container };
+    // Container
+    TargletContainer container = getContainer();
+    container.setTarglets(ECollections.singletonEList(targlet));
+  }
 
+  private static ITargetDefinition getTarget() throws CoreException
+  {
     @SuppressWarnings("restriction")
-    ITargetPlatformService targetService = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
+    ITargetPlatformService service = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
         .acquireService(ITargetPlatformService.class.getName());
 
-    // for (ITargetHandle handle : targetService.getTargets(new NullProgressMonitor()))
-    // {
-    // targetService.deleteTarget(handle);
-    // }
+    for (ITargetHandle handle : service.getTargets(new NullProgressMonitor()))
+    {
+      ITargetDefinition target = handle.getTargetDefinition();
+      if (TARGET_NAME.equals(target.getName()))
+      {
+        return target;
+      }
+    }
 
-    ITargetDefinition target = targetService.newTarget();
-    target.setName("Modular Target " + id);
-    target.setTargetLocations(locations);
-    targetService.saveTargetDefinition(target);
+    ITargetDefinition target = service.newTarget();
+    target.setName(TARGET_NAME);
+    return target;
+  }
+
+  private static TargletContainer getContainer() throws Exception
+  {
+    ITargetDefinition target = getTarget();
+
+    ITargetLocation[] locations = target.getTargetLocations();
+    if (locations != null)
+    {
+      for (ITargetLocation location : locations)
+      {
+        if (location instanceof TargletContainer)
+        {
+          TargletContainer container = (TargletContainer)location;
+          if (CONTAINER_ID.equals(container.getID()))
+          {
+            return container;
+          }
+        }
+      }
+    }
+
+    TargletContainer container = new TargletContainer(CONTAINER_ID);
+
+    ITargetLocation[] newLocations;
+    ITargetLocation[] oldLocations = locations;
+    if (oldLocations != null && oldLocations.length != 0)
+    {
+      newLocations = new ITargetLocation[oldLocations.length + 1];
+      System.arraycopy(oldLocations, 0, newLocations, 0, oldLocations.length);
+      newLocations[oldLocations.length] = container;
+    }
+    else
+    {
+      newLocations = new ITargetLocation[] { container };
+    }
+
+    target.setTargetLocations(newLocations);
+    return container;
   }
 
   private static InstallableUnit component(String id)

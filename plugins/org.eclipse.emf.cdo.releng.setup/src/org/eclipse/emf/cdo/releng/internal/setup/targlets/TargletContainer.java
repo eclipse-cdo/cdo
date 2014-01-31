@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
+import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
@@ -40,7 +41,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IProfile;
@@ -65,6 +65,7 @@ import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetLocationFactory;
+import org.eclipse.pde.core.target.ITargetPlatformService;
 import org.eclipse.pde.core.target.TargetBundle;
 import org.eclipse.pde.core.target.TargetFeature;
 import org.eclipse.pde.internal.core.target.AbstractBundleContainer;
@@ -132,7 +133,7 @@ public class TargletContainer extends AbstractBundleContainer
 
   private static final String FALSE = Boolean.FALSE.toString();
 
-  private final TargletContainerDescriptor descriptor;
+  private final String id;
 
   private ITargetDefinition target;
 
@@ -140,7 +141,7 @@ public class TargletContainer extends AbstractBundleContainer
 
   public TargletContainer(String id) throws ProvisionException
   {
-    descriptor = TargletContainerManager.getInstance().getDescriptor(id);
+    this.id = id;
   }
 
   /**
@@ -151,12 +152,12 @@ public class TargletContainer extends AbstractBundleContainer
   public TargletContainer(String id, Collection<? extends TargletData> targlets) throws ProvisionException
   {
     this(id);
-    setTarglets(targlets);
+    basicSetTarglets(targlets);
   }
 
   public String getID()
   {
-    return descriptor.getID();
+    return id;
   }
 
   @Override
@@ -217,7 +218,24 @@ public class TargletContainer extends AbstractBundleContainer
    * Copies the passed targlets into this targlet container. Modifications of the passed targlets after the call
    * to this method won't have an impact on this targlet container.
    */
-  public void setTarglets(Collection<? extends TargletData> targlets)
+  public void setTarglets(Collection<? extends TargletData> targlets) throws CoreException
+  {
+    basicSetTarglets(targlets);
+
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      service.saveTargetDefinition(target);
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
+  }
+
+  private void basicSetTarglets(Collection<? extends TargletData> targlets)
   {
     Set<String> names = new HashSet<String>();
     for (TargletData targlet : targlets)
@@ -237,7 +255,7 @@ public class TargletContainer extends AbstractBundleContainer
   {
     try
     {
-      return Persistence.toXML(getID(), targlets).toString();
+      return Persistence.toXML(id, targlets).toString();
     }
     catch (Exception ex)
     {
@@ -345,6 +363,13 @@ public class TargletContainer extends AbstractBundleContainer
     return TargletContainerManager.POOL_FOLDER.getAbsolutePath();
   }
 
+  public String getDigest()
+  {
+    String environmentProperties = getEnvironmentProperties();
+    String nlProperty = getNLProperty();
+    return createDigest(id, environmentProperties, nlProperty, targlets);
+  }
+
   @Override
   protected void associateWithTarget(ITargetDefinition target)
   {
@@ -376,19 +401,34 @@ public class TargletContainer extends AbstractBundleContainer
 
       String environmentProperties = getEnvironmentProperties();
       String nlProperty = getNLProperty();
-      String digest = createDigest(getID(), environmentProperties, nlProperty, targlets);
+      String digest = createDigest(id, environmentProperties, nlProperty, targlets);
 
       IProfile profile = null;
 
+      TargletContainerDescriptor descriptor = manager.getDescriptor(id, monitor);
       String workingDigest = descriptor.getWorkingDigest();
-      if (workingDigest != null && workingDigest.equals(digest))
+      if (workingDigest != null)
       {
         profile = manager.getProfile(workingDigest, monitor);
       }
 
-      if (profile == null && descriptor.getUpdateProblem() == null)
+      if (profile == null || !workingDigest.equals(digest) || descriptor.getUpdateProblem() != null)
       {
-        profile = updateProfile(environmentProperties, nlProperty, digest, monitor);
+        try
+        {
+          IProfile newProfile = updateProfile(environmentProperties, nlProperty, digest, monitor);
+          if (newProfile != null)
+          {
+            profile = newProfile;
+          }
+        }
+        catch (ProvisionException ex)
+        {
+          if (profile == null)
+          {
+            throw ex;
+          }
+        }
       }
 
       List<TargetBundle> bundles = new ArrayList<TargetBundle>();
@@ -458,7 +498,6 @@ public class TargletContainer extends AbstractBundleContainer
   {
     try
     {
-      String id = getID();
       String environmentProperties = getEnvironmentProperties();
       String nlProperty = getNLProperty();
       String digest = createDigest(id, environmentProperties, nlProperty, targlets);
@@ -476,6 +515,9 @@ public class TargletContainer extends AbstractBundleContainer
       IProgressMonitor monitor) throws ProvisionException
   {
     long start = System.currentTimeMillis();
+
+    TargletContainerManager manager = TargletContainerManager.getInstance();
+    TargletContainerDescriptor descriptor = manager.getDescriptor(id, monitor);
     IProfile profile = descriptor.startUpdateTransaction(environmentProperties, nlProperty, digest, monitor);
 
     try
@@ -523,9 +565,7 @@ public class TargletContainer extends AbstractBundleContainer
         }
       }
 
-      TargletContainerManager manager = TargletContainerManager.getInstance();
       IProvisioningAgent agent = manager.getAgent();
-
       IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
           .getService(IMetadataRepositoryManager.SERVICE_NAME);
       IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager)agent
@@ -620,7 +660,7 @@ public class TargletContainer extends AbstractBundleContainer
       Version sourceIUVersion = getSourceIUVersion(profile);
 
       IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
-      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, new ProgressMonitor(monitor));
+      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, monitor);
 
       IProfileChangeRequest request = manager.createProfileChangeRequest(profile);
       request.removeAll(installedIUs.toUnmodifiableSet());
@@ -631,14 +671,14 @@ public class TargletContainer extends AbstractBundleContainer
         IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
         IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
 
-        for (IInstallableUnit iu : metadata.query(latestQuery, new ProgressMonitor(monitor)))
+        for (IInstallableUnit iu : metadata.query(latestQuery, monitor))
         {
           request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
           request.add(iu);
         }
       }
 
-      manager.planAndInstall(request, context, new ProgressMonitor(monitor));
+      manager.planAndInstall(request, context, monitor);
 
       if (isIncludeSources())
       {
@@ -648,22 +688,46 @@ public class TargletContainer extends AbstractBundleContainer
         sourceRequest.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
         sourceRequest.add(iu);
 
-        manager.planAndInstall(sourceRequest, context, new ProgressMonitor(monitor));
+        manager.planAndInstall(sourceRequest, context, monitor);
       }
 
-      descriptor.commitUpdateTransaction(digest, new ProgressMonitor(monitor));
+      descriptor.commitUpdateTransaction(digest, monitor);
 
-      updateWorkspace(profile, sources, new ProgressMonitor(monitor));
+      if (isActive())
+      {
+        updateWorkspace(profile, sources, monitor);
+      }
+
       return profile;
     }
     catch (Throwable t)
     {
-      descriptor.rollbackUpdateTransaction(t, new ProgressMonitor(monitor));
+      descriptor.rollbackUpdateTransaction(t, monitor);
       throw new ProvisionException("Targlet container couldn't be updated", t);
     }
     finally
     {
       System.out.println("Update took " + (System.currentTimeMillis() - start) + " millis");
+    }
+  }
+
+  private boolean isActive()
+  {
+    ITargetPlatformService service = null;
+
+    try
+    {
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      return ObjectUtil.equals(service.getWorkspaceTargetHandle(), target.getHandle());
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+      return false;
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
     }
   }
 
@@ -908,62 +972,6 @@ public class TargletContainer extends AbstractBundleContainer
 
     return false;
   }
-
-  /**
-   * @author Eike Stepper
-   */
-  static class ProgressMonitor extends SubProgressMonitor
-  {
-    public ProgressMonitor(IProgressMonitor monitor)
-    {
-      super(monitor, 1);
-    }
-
-    @Override
-    public void beginTask(String name, int totalWork)
-    {
-      super.beginTask(name, totalWork);
-      log(name);
-    }
-
-    @Override
-    public void setTaskName(String name)
-    {
-      super.setTaskName(name);
-      log(name);
-    }
-
-    @Override
-    public void subTask(String name)
-    {
-      super.subTask(name);
-      log(name);
-    }
-
-    private void log(String string)
-    {
-      if (string != null && string.length() != 0)
-      {
-        // System.out.println(string);
-      }
-    }
-  }
-
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static class ProfileDescriptor
-  // {
-  // private List<Targlet> targlets = new ArrayList<Targlet>();
-  //
-  // private String arch;
-  //
-  // private String os;
-  //
-  // private String ws;
-  //
-  // private String nl;
-  // }
 
   /**
    * @author Eike Stepper

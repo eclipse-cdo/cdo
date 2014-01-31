@@ -249,7 +249,7 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
     {
       if (element instanceof TargletContainer)
       {
-        return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/targlets.gif");
+        return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/targlet_container.gif");
       }
 
       return super.getImage(element);

@@ -726,8 +726,6 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       }
 
       targletContainer.setTarglets(targlets);
-      service.saveTargetDefinition(target);
-
       target.resolve(new ProgressLogMonitor(context));
 
       LoadTargetDefinitionJob job = new LoadTargetDefinitionJob(target);
@@ -761,20 +759,24 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
   {
     TargletContainer firstTargletContainer = null;
 
-    for (ITargetLocation location : target.getTargetLocations())
+    ITargetLocation[] locations = target.getTargetLocations();
+    if (locations != null)
     {
-      if (location instanceof TargletContainer)
+      for (ITargetLocation location : locations)
       {
-        TargletContainer targletContainer = (TargletContainer)location;
-        if (firstTargletContainer == null)
+        if (location instanceof TargletContainer)
         {
-          firstTargletContainer = targletContainer;
-        }
+          TargletContainer targletContainer = (TargletContainer)location;
+          if (firstTargletContainer == null)
+          {
+            firstTargletContainer = targletContainer;
+          }
 
-        Targlet targlet = targletContainer.getTarglet(getName());
-        if (targlet != null)
-        {
-          return targletContainer;
+          Targlet targlet = targletContainer.getTarglet(getName());
+          if (targlet != null)
+          {
+            return targletContainer;
+          }
         }
       }
     }

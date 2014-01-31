@@ -34,6 +34,9 @@ public interface SetupTaskMigrator
       // v5: Add MylynQueriesTask and MylynBuildsTask
       null,
 
+      // v6: Add TargletTask and TargletImportTask
+      null,
+
   };
 
   public static final int TOOL_VERSION = MIGRATORS.length;

@@ -344,7 +344,6 @@ public interface SetupFactory extends EFactory
    * @return a new object of class '<em>Targlet Task</em>'.
    * @generated
    */
-  @SuppressWarnings("deprecation")
   TargletTask createTargletTask();
 
   /**

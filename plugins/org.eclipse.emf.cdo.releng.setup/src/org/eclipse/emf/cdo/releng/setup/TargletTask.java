@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.releng.setup;
  * @model
  * @generated
  */
-@Deprecated
 public interface TargletTask extends SetupTask, TargletData
 {
 } // TargletTask

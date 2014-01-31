@@ -130,7 +130,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
   {
     @SuppressWarnings("restriction")
     ITargetPlatformService service = (ITargetPlatformService)org.eclipse.pde.internal.core.PDECore.getDefault()
-    .acquireService(ITargetPlatformService.class.getName());
+        .acquireService(ITargetPlatformService.class.getName());
 
     for (ITargetHandle handle : service.getTargets(new NullProgressMonitor()))
     {

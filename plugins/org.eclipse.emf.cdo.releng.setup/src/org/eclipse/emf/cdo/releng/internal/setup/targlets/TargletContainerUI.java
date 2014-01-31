@@ -63,7 +63,7 @@ import java.util.Map;
 public class TargletContainerUI implements IAdapterFactory, ITargetLocationEditor, ITargetLocationUpdater
 {
   private static final Class<?>[] ADAPTERS = { ITreeContentProvider.class, ILabelProvider.class,
-    ITargetLocationEditor.class, ITargetLocationUpdater.class };
+      ITargetLocationEditor.class, ITargetLocationUpdater.class };
 
   private ILabelProvider labelProvider;
 

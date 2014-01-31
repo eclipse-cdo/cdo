@@ -42,6 +42,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IProfile;
@@ -65,8 +68,10 @@ import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.pde.core.target.ITargetDefinition;
+import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetLocationFactory;
 import org.eclipse.pde.core.target.ITargetPlatformService;
+import org.eclipse.pde.core.target.LoadTargetDefinitionJob;
 import org.eclipse.pde.core.target.TargetBundle;
 import org.eclipse.pde.core.target.TargetFeature;
 import org.eclipse.pde.internal.core.target.AbstractBundleContainer;
@@ -535,8 +540,6 @@ public class TargletContainer extends AbstractBundleContainer
   private IProfile updateProfile(String environmentProperties, String nlProperty, String digest,
       IProgressMonitor monitor) throws ProvisionException
   {
-    long start = System.currentTimeMillis();
-
     TargletContainerManager manager = TargletContainerManager.getInstance();
     TargletContainerDescriptor descriptor = manager.getDescriptor(id, monitor);
     IProfile profile = descriptor.startUpdateTransaction(environmentProperties, nlProperty, digest, monitor);
@@ -712,45 +715,15 @@ public class TargletContainer extends AbstractBundleContainer
         manager.planAndInstall(sourceRequest, context, monitor);
       }
 
-      descriptor.commitUpdateTransaction(digest, monitor);
-
-      if (isActive())
-      {
-        updateWorkspace(profile, sources, monitor);
-      }
-
+      Set<File> projectLocations = getProjectLocations(profile, sources, monitor);
+      descriptor.commitUpdateTransaction(digest, projectLocations, monitor);
       return profile;
     }
     catch (Throwable t)
     {
       descriptor.rollbackUpdateTransaction(t, monitor);
-
       Activator.log(t);
       throw new ProvisionException("Targlet container couldn't be updated", t);
-    }
-    finally
-    {
-      System.out.println("Update took " + (System.currentTimeMillis() - start) + " millis");
-    }
-  }
-
-  private boolean isActive()
-  {
-    ITargetPlatformService service = null;
-
-    try
-    {
-      service = ServiceUtil.getService(ITargetPlatformService.class);
-      return ObjectUtil.equals(service.getWorkspaceTargetHandle(), target.getHandle());
-    }
-    catch (Exception ex)
-    {
-      Activator.log(ex);
-      return false;
-    }
-    finally
-    {
-      ServiceUtil.ungetService(service);
     }
   }
 
@@ -800,84 +773,6 @@ public class TargletContainer extends AbstractBundleContainer
         IInstallableUnit.NAMESPACE_IU_ID, SOURCE_IU_ID, sourceIUVersion) });
 
     return MetadataFactory.createInstallableUnit(sourceIUDescription);
-  }
-
-  private void updateWorkspace(final IProfile profile, final Map<IInstallableUnit, File> sources,
-      IProgressMonitor monitor) throws ProvisionException
-  {
-    try
-    {
-      final IWorkspace workspace = ResourcesPlugin.getWorkspace();
-      workspace.run(new IWorkspaceRunnable()
-      {
-        public void run(IProgressMonitor monitor) throws CoreException
-        {
-          try
-          {
-            DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
-            IWorkspaceRoot root = workspace.getRoot();
-
-            IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
-            for (IInstallableUnit iu : result.toUnmodifiableSet())
-            {
-              File folder = sources.get(iu);
-              if (folder != null)
-              {
-                final AtomicReference<String> projectName = new AtomicReference<String>();
-
-                Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
-                XMLUtil.handleChildElements(rootElement, new ElementHandler()
-                {
-                  public void handleElement(Element element) throws Exception
-                  {
-                    if ("name".equals(element.getTagName()))
-                    {
-                      projectName.set(element.getTextContent().trim());
-                    }
-                  }
-                });
-
-                String name = projectName.get();
-                if (name != null && name.length() != 0)
-                {
-                  File location = folder.getCanonicalFile();
-
-                  IProject project = root.getProject(name);
-                  if (project.exists())
-                  {
-                    File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
-                    if (!existingLocation.equals(location))
-                    {
-                      System.err.println("Project " + name + " exists in different location: " + existingLocation);
-                      continue;
-                    }
-                  }
-                  else
-                  {
-                    IProjectDescription projectDescription = workspace.newProjectDescription(name);
-                    projectDescription.setLocation(new Path(location.getAbsolutePath()));
-                    project.create(projectDescription, monitor);
-                  }
-
-                  if (!project.isOpen())
-                  {
-                    project.open(monitor);
-                  }
-                }
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            TargletContainerManager.throwProvisionException(ex);
-          }
-        }
-      }, monitor);
-    }
-    catch (Exception ex)
-    {
-      TargletContainerManager.throwProvisionException(ex);
-    }
   }
 
   private static String createDigest(String id, String environmentProperties, String nlProperty, EList<Targlet> targlets)
@@ -992,6 +887,156 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     return false;
+  }
+
+  private static Set<File> getProjectLocations(IProfile profile, Map<IInstallableUnit, File> sources,
+      IProgressMonitor monitor)
+  {
+    Set<File> projectLocations = new HashSet<File>();
+    IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
+    for (IInstallableUnit iu : result.toUnmodifiableSet())
+    {
+      File folder = sources.get(iu);
+      if (folder != null)
+      {
+        projectLocations.add(folder);
+      }
+    }
+
+    return projectLocations;
+  }
+
+  private static void updateWorkspace(final Set<File> projectLocations) throws Exception
+  {
+    new Job("Import projects")
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        try
+        {
+          final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+          workspace.run(new IWorkspaceRunnable()
+          {
+            public void run(IProgressMonitor monitor) throws CoreException
+            {
+              try
+              {
+                DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
+                IWorkspaceRoot root = workspace.getRoot();
+
+                for (File folder : projectLocations)
+                {
+                  final AtomicReference<String> projectName = new AtomicReference<String>();
+
+                  Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
+                  XMLUtil.handleChildElements(rootElement, new ElementHandler()
+                  {
+                    public void handleElement(Element element) throws Exception
+                    {
+                      if ("name".equals(element.getTagName()))
+                      {
+                        projectName.set(element.getTextContent().trim());
+                      }
+                    }
+                  });
+
+                  String name = projectName.get();
+                  if (name != null && name.length() != 0)
+                  {
+                    File location = folder.getCanonicalFile();
+
+                    IProject project = root.getProject(name);
+                    if (project.exists())
+                    {
+                      File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
+                      if (!existingLocation.equals(location))
+                      {
+                        Activator.log("Project " + name + " exists in different location: " + existingLocation);
+                        continue;
+                      }
+                    }
+                    else
+                    {
+                      IProjectDescription projectDescription = workspace.newProjectDescription(name);
+                      projectDescription.setLocation(new Path(location.getAbsolutePath()));
+                      project.create(projectDescription, monitor);
+                    }
+
+                    if (!project.isOpen())
+                    {
+                      project.open(monitor);
+                    }
+                  }
+                }
+              }
+              catch (Exception ex)
+              {
+                TargletContainerManager.throwProvisionException(ex);
+              }
+            }
+          }, monitor);
+
+          return Status.OK_STATUS;
+        }
+        catch (Exception ex)
+        {
+          return Activator.getStatus(ex);
+        }
+      }
+    }.schedule();
+  }
+
+  static
+  {
+    Job.getJobManager().addJobChangeListener(new JobChangeAdapter()
+    {
+      @Override
+      public void done(IJobChangeEvent event)
+      {
+        if (event.getJob() instanceof LoadTargetDefinitionJob)
+        {
+          ITargetPlatformService service = null;
+
+          try
+          {
+            service = ServiceUtil.getService(ITargetPlatformService.class);
+            Set<File> projectLocations = new HashSet<File>();
+
+            ITargetDefinition target = service.getWorkspaceTargetDefinition();
+            if (target != null)
+            {
+              for (ITargetLocation location : target.getTargetLocations())
+              {
+                if (location instanceof TargletContainer)
+                {
+                  TargletContainer container = (TargletContainer)location;
+                  TargletContainerDescriptor descriptor = container.getDescriptor();
+                  if (descriptor != null)
+                  {
+                    Set<File> workingProjects = descriptor.getWorkingProjects();
+                    if (workingProjects != null)
+                    {
+                      projectLocations.addAll(workingProjects);
+                    }
+                  }
+                }
+              }
+            }
+
+            updateWorkspace(projectLocations);
+          }
+          catch (Exception ex)
+          {
+            Activator.log(ex);
+          }
+          finally
+          {
+            ServiceUtil.ungetService(service);
+          }
+        }
+      }
+    });
   }
 
   /**
@@ -1127,7 +1172,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     public static Writer toXML(String id, List<Targlet> targlets) throws ParserConfigurationException,
-    TransformerException
+        TransformerException
     {
       DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document document = docBuilder.newDocument();

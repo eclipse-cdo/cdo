@@ -21,8 +21,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IProfile;
 
+import java.io.File;
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -34,6 +36,8 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
   private String id;
 
   private String workingDigest;
+
+  private Set<File> workingProjects;
 
   private UpdateProblem updateProblem;
 
@@ -56,6 +60,11 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
   public String getWorkingDigest()
   {
     return workingDigest;
+  }
+
+  public Set<File> getWorkingProjects()
+  {
+    return workingProjects;
   }
 
   public UpdateProblem getUpdateProblem()
@@ -130,16 +139,18 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
     return transactionProfile;
   }
 
-  void commitUpdateTransaction(String digest, IProgressMonitor monitor) throws ProvisionException
+  void commitUpdateTransaction(String digest, Set<File> projectLocations, IProgressMonitor monitor)
+      throws ProvisionException
   {
     if (transactionProfile == null)
     {
       throw new ProvisionException("No update transaction is ongoing");
     }
 
-    resetUpdateProblem();
-    workingDigest = digest;
     transactionProfile = null;
+    workingDigest = digest;
+    workingProjects = projectLocations;
+    resetUpdateProblem();
 
     saveDescriptors(monitor);
   }
